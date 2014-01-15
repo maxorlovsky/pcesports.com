@@ -1,53 +1,71 @@
 <?php
 /**
- * The Header template for our theme
- *
- * Displays all of the <head> section and everything up till <div id="main">
- *
- * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
+ * @package Pentaclick
+ * @since v1
  */
 ?><!DOCTYPE html>
-<!--[if IE 7]>
-<html class="ie ie7" <?php language_attributes(); ?>>
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8" <?php language_attributes(); ?>>
-<![endif]-->
-<!--[if !(IE 7) | !(IE 8)  ]><!-->
 <html <?php language_attributes(); ?>>
-<!--<![endif]-->
 <head>
-<meta charset="<?php bloginfo( 'charset' ); ?>" />
-<meta name="viewport" content="width=device-width" />
-<title><?php wp_title( '|', true, 'right' ); ?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
-<?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
-<!--[if lt IE 9]>
-<script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
-<![endif]-->
-<?php wp_head(); ?>
+    <meta charset="<?php bloginfo( 'charset' ); ?>" />
+	<meta name="description" content="Pentaclick eSports is a monthly based video games tournaments, held up in Europe. Currently we marked only 1 game - League of Legends." />
+	<meta name="keywords" content="esports, league of legends tournament, pentaclick" />	
+	<meta name="author" content="MaxOrlovsky.net" />
+    <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    
+    <title><?php wp_title( '|', true, 'right' ); ?></title>
+    
+    <script>
+        var site = 'http://<?=substr(esc_url(home_url()),7)?>';
+    </script>
+    
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
+    
+    <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
-	<header id="masthead" class="site-header" role="banner">
-		<hgroup>
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-		</hgroup>
+<body>
+<!--[if lt IE 10]>
+<div style="clear:both;text-align:center;position:relative;">
+<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a></div>
+<![endif]-->
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<h3 class="menu-toggle"><?php _e( 'Menu', 'twentytwelve' ); ?></h3>
-			<a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentytwelve' ); ?>"><?php _e( 'Skip to content', 'twentytwelve' ); ?></a>
-			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>
-		</nav><!-- #site-navigation -->
+<div id="fb-root"></div>
+<script>
 
-		<?php if ( get_header_image() ) : ?>
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php header_image(); ?>" class="header-image" width="<?php echo get_custom_header()->width; ?>" height="<?php echo get_custom_header()->height; ?>" alt="" /></a>
-		<?php endif; ?>
-	</header><!-- #masthead -->
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=410840362357950";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
 
-	<div id="main" class="wrapper">
+<header id="header" class="move">
+    <?/*<article class="languages">
+		<a href="<?=qtrans_convertURL(get_permalink(), 'en')?>" <?=(qtrans_getLanguage()=='en'?'class="active"':null)?>><div class="english"></div></a>
+        <a href="<?=qtrans_convertURL(get_permalink(), 'ru')?>" <?=(qtrans_getLanguage()=='ru'?'class="active"':null)?>><div class="russian"></div></a>
+	</article>*/?>
+    <article class="socicons">
+        <a href="https://www.facebook.com/pages/Pentaclick-eSports/521490341298749" target="_blank" class="facebook"></a>
+        <a href="https://www.twitter.com/pentaclick" target="_blank" class="twitter"></a>
+        <a href="http://www.twitch.tv/pentaclick_tv" target="_blank" class="twitch"></a>
+        <a href="https://vk.com/pentaclickesports" target="_blank" class="vk"></a>
+        <a href="skype:?chat&amp;blob=5OQXjmArliuzMMSBcbTbp_5AS12FBOMCQHsik7Tty_-acWKgxKsd8sabSWKtWCGseh4mTzrw6NLaVRnYrqyrSQk8RlPU77I" class="skype"></a>
+        <a href="http://www.youtube.com/pentaclickesports" target="_blank" class="youtube"></a>
+    </article>
+    <section id="navbar">
+        <article class="logo"><a href="#home" title="Home" class="scroll"><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
+        <nav class="globalnav">
+            <ul>
+                <li id="home-url"><a href="#home" class="scroll" title="Home">Home<br /><small>Promo/Twitch player</small></a></li>
+                <li id="connect-url"><a href="#connect" class="scroll" title="Connect">Connect<br /><small>with us!!</small></a></li>
+                <li id="participants-url"><a href="#participants" class="scroll" title="Participants">Participants<br /><small>list of participating teams</small></a></li>
+                <li id="register-url"><a href="#register" class="scroll" title="Register">Register<br /><small>register your team</small></a></li>
+                <li id="format-url"><a href="#format" class="scroll" title="Format">Format<br /><small>tournament format and rules</small></a></li>
+            </ul>
+        </nav>
+    </section>
+</header>
+
+<section id="wrapper" class="clearfix">

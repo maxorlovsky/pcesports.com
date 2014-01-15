@@ -139,13 +139,13 @@ button:active, input[type='submit']:active, #reg-button:active {
 #header {overflow:hidden;position:fixed; width: 100%;height:114px;top:0;left:0;z-index: 100;}
 #header .languages { float:right; }
 #header .languages div {margin-left:7px;float:left;}
-#header .languages .russian, #header .languages .english, #header .languages .latvian, #header .languages .active .russian, #header .languages .active .english, #header .languages .active .latvian {background-image:url('../images/design/sprite_flags.png');background-repeat:no-repeat;background-color:transparent;}
+#header .languages .russian, #header .languages .english, #header .languages .latvian, #header .languages .active .russian, #header .languages .active .english, #header .languages .active .latvian {background-image:url('images/design/sprite_flags.png');background-repeat:no-repeat;background-color:transparent;}
 #header .languages .english {width:24px;height:24px;background-position:-53px -1px;}
 #header .languages .english:hover {width:24px;height:24px; background-position:-27px -1px;}
 #header .languages .english:active {width:24px;height:24px;background-position:-1px -1px;}
 #header .languages .active .english {width:24px;height:24px;background-position:-1px -1px;}
 #header .socicons {margin:2px 30px 0 0;height:22px;float:right;}
-#header .socicons .facebook, #header .socicons .twitter, #header .socicons .twitch, #header .socicons .skype, #header .socicons .youtube, #header .socicons .vk {background-image:url('../images/design/header_socicons.png');background-repeat:no-repeat;margin: 0 8px;background-color:transparent;float:left;}
+#header .socicons .facebook, #header .socicons .twitter, #header .socicons .twitch, #header .socicons .skype, #header .socicons .youtube, #header .socicons .vk {background-image:url('images/design/header_socicons.png');background-repeat:no-repeat;margin: 0 8px;background-color:transparent;float:left;}
 #header .socicons .facebook {width:20px;height:20px;background-position:-2px -2px;}
 #header .socicons .facebook:hover {background-position:-2px -27px;}
 #header .socicons .twitter {width:20px;height:16px;background-position:-32px -4px;margin-top:2px;}
@@ -159,7 +159,7 @@ button:active, input[type='submit']:active, #reg-button:active {
 #header .socicons .vk {width:20px;height:20px;background-position:-58px -54px;}
 #header .socicons .vk:hover {background-position:-58px -80px;}
 
-#navbar {background-color:transparent;background:url('../images/design/navbar-bg.png') repeat-x;width:100%;height:71px;margin-top: 24px;border-bottom: 1px solid #999;}
+#navbar {background-color:transparent;background:url('images/design/navbar-bg.png') repeat-x;width:100%;height:71px;margin-top: 24px;border-bottom: 1px solid #999;}
 #navbar .logo {width:115px;height:104px;margin:-16px 0 0 44px;float:left;}
 #navbar .white_letter { color:#fff; }
 #navbar .white_letter:hover { text-decoration:none; }
@@ -185,7 +185,7 @@ button:active, input[type='submit']:active, #reg-button:active {
 }
 #home-content .promo {
     position: relative;
-    background: url('../images/promo.png') no-repeat 100% 100%;
+    background: url('images/promo.png') no-repeat 100% 100%;
     width: 1280px;
     height: 600px;
     margin: 0 auto;
@@ -340,11 +340,11 @@ button:active, input[type='submit']:active, #reg-button:active {
     margin-top: 2px;
 }
 #join-form .error {
-    background: url('../images/design/error.png') no-repeat left center;
+    background: url('images/design/error.png') no-repeat left center;
     color: #ea6b6b;
 }
 #join-form .success {
-    background: url('../images/design/success.png') no-repeat left center;
+    background: url('images/design/success.png') no-repeat left center;
     color: #32b229;
 }
 .reg-closed {
