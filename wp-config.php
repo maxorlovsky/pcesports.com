@@ -24,11 +24,11 @@ if ($breakdown[0] == 'dev') {
     define('ENV', 'dev');
 }
 else {
-    define('DB_USER', 'pcuserdev');
-    define('DB_PASSWORD', 'd9829*d@)09aSJD22@');
-    define('DB_NAME', 'pentaclick_dev');
+    define('DB_USER', 'pcuserprod');
+    define('DB_PASSWORD', 'ASDIJ201*S*D912kka');
+    define('DB_NAME', 'pentaclick_prod');
     define('DB_HOST', '127.0.0.1');
-    define('ENV', 'test');
+    define('ENV', 'prod');
 }
 
 /** Database Charset to use in creating database tables. */

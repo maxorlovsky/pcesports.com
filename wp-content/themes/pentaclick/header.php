@@ -20,6 +20,18 @@
     
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
     
+    <? if (ENV == 'prod') { ?>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-47216717-1', 'pcesports.com');
+      ga('send', 'pageview');
+    </script>
+    <? } ?>
+    
     <?php wp_head(); ?>
 </head>
 
@@ -58,11 +70,11 @@
         <article class="logo"><a href="#home" title="Home" class="scroll"><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
         <nav class="globalnav">
             <ul>
-                <li id="home-url"><a href="#home" class="scroll" title="Home">Home<br /><small>Promo/Twitch player</small></a></li>
-                <li id="connect-url"><a href="#connect" class="scroll" title="Connect">Connect<br /><small>with us!!</small></a></li>
-                <li id="participants-url"><a href="#participants" class="scroll" title="Participants">Participants<br /><small>list of participating teams</small></a></li>
-                <li id="register-url"><a href="#register" class="scroll" title="Register">Register<br /><small>register your team</small></a></li>
-                <li id="format-url"><a href="#format" class="scroll" title="Format">Format<br /><small>tournament format and rules</small></a></li>
+                <li id="home-url"><a href="#home" class="scroll" title="<?=_e('home', 'pentaclick')?>"><?=_e('home', 'pentaclick')?><br /><small><?=_e('home-sub', 'pentaclick')?></small></a></li>
+                <li id="connect-url"><a href="#connect" class="scroll" title="<?=_e('connect', 'pentaclick')?>"><?=_e('connect', 'pentaclick')?><br /><small><?=_e('connect-sub', 'pentaclick')?></small></a></li>
+                <li id="participants-url"><a href="#participants" class="scroll" title="<?=_e('participants', 'pentaclick')?>"><?=_e('participants', 'pentaclick')?><br /><small><?=_e('participants-sub', 'pentaclick')?></small></a></li>
+                <li id="register-url"><a href="#register" class="scroll" title="<?=_e('register', 'pentaclick')?>"><?=_e('register', 'pentaclick')?><br /><small><?=_e('register-sub', 'pentaclick')?></small></a></li>
+                <li id="format-url"><a href="#format" class="scroll" title="<?=_e('format', 'pentaclick')?>"><?=_e('format', 'pentaclick')?><br /><small><?=_e('format-sub', 'pentaclick')?></small></a></li>
             </ul>
         </nav>
     </section>

@@ -169,3 +169,40 @@ function pentaclick_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 }
 add_action( 'customize_register', 'pentaclick_customize_register' );
+
+/**
+ * Admin functions 
+*/
+function pentaclick_admin_menus() {
+     add_menu_page('PentaClick settings', 'PC eSports', 'edit_posts', 'options-pentaclick.php', '', '', 50);   
+}
+
+add_action("admin_menu", "pentaclick_admin_menus");
+
+/**
+ * Getting options for PentaClick
+ *
+ * @since v1
+ */
+$q = mysql_query('SELECT * FROM options');
+$siteData = array();
+while ($r = mysql_fetch_object($q)) {
+    $siteData[$r->name] = $r->value;
+}
+
+function cOptions($key) {
+    global $siteData;
+    
+    return $siteData[$key];
+}
+
+function dump($array) {
+    echo '<pre>';
+    print_r($array);
+    echo '</pre>';
+}
+
+function ddump($array) {
+    dump($array);
+    die;
+}
