@@ -179,6 +179,23 @@ function pentaclick_admin_menus() {
 
 add_action("admin_menu", "pentaclick_admin_menus");
 
+function getRewriteRules() {
+    global $wp_rewrite; // Global WP_Rewrite class object
+    return $wp_rewrite->rewrite_rules(); 
+}
+function addPentaClickRewrite() {
+    global $wp_rewrite; // Global WP_Rewrite class object
+    
+    add_rewrite_tag('%team_id%', '([^/]*)');
+    add_rewrite_tag('%code%', '([^/]*)');
+    add_rewrite_rule('^verify/([^/]*)/([^/]*)/?','index.php?pagename=verify&team_id=$matches[1]&code=$matches[2]','top');
+    add_rewrite_rule('^delete/([^/]*)/([^/]*)/?','index.php?pagename=delete&team_id=$matches[1]&code=$matches[2]','top');
+    
+    $wp_rewrite->flush_rules(1);
+}
+addPentaClickRewrite();
+//dump(getRewriteRules());
+
 /**
  * Getting options for PentaClick
  *

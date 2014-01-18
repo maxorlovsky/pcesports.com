@@ -406,6 +406,21 @@ button:active, input[type='submit']:active, #reg-button:active {
 .contact .right h2 {margin: 20px 0 -10px 0 !important;}
 .contact .right h5 {margin: 40px 0 15px 0 !important; }
 
+.text-content-wrapper {
+    background-color: #fff;
+}
+#text-content {
+    width: 1280px;
+    margin: 90px auto 0 auto;
+    color: #222;
+    font-size: 20px;
+    padding-bottom: 60px
+}
+#text-content h1 {
+    padding-top: 30px;
+    margin-bottom: 15px;
+}
+
 footer {background-color: #000;line-height: 60px;color:#fff;}
 footer .holder {width:1280px;text-align:center;margin:0 auto;}
 footer .logos {}

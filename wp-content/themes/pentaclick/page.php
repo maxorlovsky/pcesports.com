@@ -4,13 +4,16 @@
  */
 
 get_header();
-
-get_template_part( 'content', 'home' );
-get_template_part( 'content', 'connect' );
-get_template_part( 'content', 'participants' );
-get_template_part( 'content', 'register' );
-get_template_part( 'content', 'format' );
-
-get_footer();
-
 ?>
+
+<article class="text-content-wrapper">
+    <div class="content" id="text-content">
+        <?php while ( have_posts() ) : the_post(); ?>
+            <h1><?php the_title(); ?></h1>
+            <?php the_content(); ?>
+        <?php endwhile; ?>
+    </div>
+</article>
+
+<? get_footer();?>
+

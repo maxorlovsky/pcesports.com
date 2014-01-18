@@ -14,11 +14,16 @@ get_header();
         
         twentytwelve_content_nav( 'nav-below' );
     else :*/
+    if (is_home()) {
         get_template_part( 'content', 'home' );
         get_template_part( 'content', 'connect' );
         get_template_part( 'content', 'participants' );
         get_template_part( 'content', 'register' );
         get_template_part( 'content', 'format' );
+    }
+    else {
+        get_template_part( 'content', 'none' );
+    }
     //endif;
 
 get_footer();

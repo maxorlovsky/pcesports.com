@@ -1,10 +1,16 @@
 <?php
 /**
  * The template for displaying 404 pages (Not Found)
- *
- * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
+ * @since v1
  */
-exit('Nope');
-?>
+get_header(); ?>
+
+
+<article class="text-content-wrapper">
+    <div class="content" id="text-content">
+        <h1>404</h1>
+        <p>Page not found</p>
+    </div>
+</article>
+
+<?php get_footer(); ?>
