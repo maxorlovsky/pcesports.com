@@ -82,6 +82,7 @@ $('#add-team').on('click', function() {
         return false;
     }
     
+    var errRegistered = 0;
     formInProgress = 1;
     $('#da-form .message').hide();
     $('#da-form .message').removeClass('error success');
@@ -98,14 +99,24 @@ $('#add-team').on('click', function() {
             $('#add-team').removeClass('alpha');
             formInProgress = 0;
             
-            console.log(answer);
-            if (answer.ok != 1) {
-                $.each(answer.err, function(k, v) {
-                    $('#'+k+'-msg').html(v);
-                    $('#'+k+'-msg').show();
-                    $('#'+k+'-msg').addClass('error');
+            if (answer.ok == 1) {
+                $('#register-url a').trigger('click');
+                $('#join-form').slideUp(1000, function() {
+                    $('.reg-completed').slideDown(1000);
                 });
-                //$('#da-form .message').
+            }
+            else {
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('#'+k+'-msg').html(answ[1]);
+                    $('#'+k+'-msg').show();
+                    if (answ[0] == 1) {
+                        $('#'+k+'-msg').addClass('success');
+                    }
+                    else {
+                        $('#'+k+'-msg').addClass('error');
+                    }
+                });
             }
         },
         error: function() {

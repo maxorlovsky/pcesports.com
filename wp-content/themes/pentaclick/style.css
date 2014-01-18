@@ -328,7 +328,7 @@ button:active, input[type='submit']:active, #reg-button:active {
     padding-top: 40px;
 }
 #register-content input[type='text'], #register-content textarea {
-    width: 70%;
+    width: 60%;
     height: 40px;
     float: left;
     margin-bottom: 10px;
@@ -359,6 +359,15 @@ button:active, input[type='submit']:active, #reg-button:active {
 #join-form .success {
     background: url('images/design/success.png') no-repeat left center;
     color: #32b229;
+}
+.reg-completed {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    width: 100%;
+    padding-top: 40px;
+    display: none;
 }
 .reg-closed {
     text-align: center;

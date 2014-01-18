@@ -16,7 +16,6 @@ $.fn.isOnScreen = function(){
 
 $(document).ready( function(){
 	if (viewport.top > 24 && $('#header').hasClass('force-move')) {
-        $.fn.off = true;
         $('.socicons').css({marginTop: -20});
         $('#navbar').css({marginTop: 0});
         $('#navbar .logo').css({marginTop: 0});

@@ -10,7 +10,7 @@
 	<meta name="description" content="Pentaclick eSports is a monthly based video games tournaments, held up in Europe. Currently we marked only 1 game - League of Legends." />
 	<meta name="keywords" content="esports, league of legends tournament, pentaclick" />	
 	<meta name="author" content="MaxOrlovsky.net" />
-    <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     
     <title><?php wp_title( '|', true, 'right' ); ?></title>
     

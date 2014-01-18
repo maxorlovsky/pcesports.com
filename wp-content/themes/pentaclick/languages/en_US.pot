@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-01-16 11:31+0200\n"
-"PO-Revision-Date: 2014-01-16 11:32+0200\n"
+"POT-Creation-Date: 2014-01-18 04:53+0200\n"
+"PO-Revision-Date: 2014-01-18 04:54+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -17,10 +17,6 @@ msgstr ""
 "X-Poedit-Basepath: D:\\Work\\pcesports\\\n"
 "X-Poedit-SearchPath-0: D:\\Work\\pcesports\\wp-content\\themes\\pentaclick\n"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/404.php:17
-msgid "This is somewhat embarrassing, isn&rsquo;t it?"
-msgstr ""
-
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-home.php:5
 msgid "register_in_tournament"
 msgstr "Register in tournament"
@@ -30,57 +26,56 @@ msgid "watch_twitch"
 msgstr "Watch live video from Pentaclick_tv on"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:15
 msgid "no_teams_registered"
 msgstr "No teams registered"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:8
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:10
-msgid "team_name"
-msgstr "Team name"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:13
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:25
 msgid "players"
 msgstr "Players"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:16
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:14
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:16
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:18
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:20
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:22
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:24
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:26
-msgid "member"
-msgstr "Member"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:5
 msgid "tournament_reg_closed"
 msgstr "Tournament registration is closed"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:8
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:34
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:7
+msgid "tournament_reg_finished"
+msgstr ""
+"Registration is almost complete, in a few moment you will receive an email "
+"with a link. Please use it to verify your participation."
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:9
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:27
 msgid "join_tournament"
 msgstr "Join tournament"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:12
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:11
+msgid "team_name"
+msgstr "Team name"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:13
 msgid "contact_email"
 msgstr "Contact email"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:14
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
 msgid "cpt_nickname"
 msgstr "Captain nickname"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:28
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:18
+msgid "member"
+msgstr "Member"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
 msgid "contact_info"
 msgstr "Contact information"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:28
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
 msgid "contact_info_add"
 msgstr ""
 "(skype, facebook or other social network, phone number or all of the above)"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:32
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:25
 msgid "join"
 msgstr "Join"
 
