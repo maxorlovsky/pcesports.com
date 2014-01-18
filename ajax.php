@@ -125,7 +125,7 @@ else {
     <b>Verification link: <a href="http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/</a></b><br />
     <br />
     If you will decide not to participate in the tournament before 1st of february, you can use the link below to delete your team from the link.<br />
-    <b>Deletion link: <a href="http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/</a></b><br />
+    <b>Deletion link: <a href="http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/</a></b>
     <p style="color: red;">This link will delete the team from the list even if it was verified, so use carefully and don\'t give it to anyone else!</p>
     <br />
     If you want to contact PentaClick eSports managers, just reply to this email or visit our website <a href="http://www.pcesports.com" target="_blank">http://www.pcesports.com</a><br />
