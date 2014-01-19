@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-01-16 11:31+0200\n"
-"PO-Revision-Date: 2014-01-16 11:36+0200\n"
+"POT-Creation-Date: 2014-01-19 13:10+0200\n"
+"PO-Revision-Date: 2014-01-19 13:12+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -13,13 +13,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: _e\n"
+"X-Poedit-KeywordsList: _e;_p\n"
 "X-Poedit-Basepath: D:\\Work\\pcesports\\\n"
 "X-Poedit-SearchPath-0: D:\\Work\\pcesports\\wp-content\\themes\\pentaclick\n"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/404.php:17
-msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:20
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:33
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:43
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:53
+msgid "field_empty"
+msgstr "Поле не может быть пустым"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:23
+msgid "team_name_small"
+msgstr "Название команды должно быть не менее 4 символов"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:26
+msgid "team_name_big"
+msgstr "Название команды должно быть не более 60 символов"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:29
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:39
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:46
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:79
+msgid "approved"
+msgstr "Подтверждено"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:36
+msgid "email_invalid"
 msgstr ""
+"Е-почта должна быть правильная, поскольку будет использоватся в будущем"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:65
+msgid "summoner_not_found_euw"
+msgstr "Призыватель не найден на сервере EUW"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:68
+msgid "summoner_low_lvl"
+msgstr "Уровень призывателя не 30"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:71
+msgid "same_summoner"
+msgstr "Один и тот же Призыватель не может быть в одной команде"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:74
+msgid "summoner_already_registered"
+msgstr "Призыватель уже зарегистрирован в турнире"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-home.php:5
 msgid "register_in_tournament"
@@ -30,95 +69,117 @@ msgid "watch_twitch"
 msgstr "Смотреть видео Pentaclick_tv на"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:15
 msgid "no_teams_registered"
 msgstr "Не зарегистрирована не одна команда"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:8
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:10
-msgid "team_name"
-msgstr "Название команды"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:13
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:25
 msgid "players"
 msgstr "Игроки"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:16
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:14
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:16
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:18
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:20
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:22
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:24
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:26
-msgid "member"
-msgstr "Участник"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:5
 msgid "tournament_reg_closed"
 msgstr "Регистрация на турнир закрыта"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:8
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:34
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:7
+msgid "tournament_reg_finished"
+msgstr ""
+"Регистрация почти завершена, через пару секунд вы получите письмо. "
+"Пожалуйста используйте ссылку указанную внутри письма, что бы подтвердить "
+"ваше участие."
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:9
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:27
 msgid "join_tournament"
 msgstr "Участвовать в турнире"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:12
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:11
+msgid "team_name"
+msgstr "Название команды"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:13
 msgid "contact_email"
 msgstr "Контактная E-почта"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:14
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
 msgid "cpt_nickname"
 msgstr "Имя капитана"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:28
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:18
+msgid "member"
+msgstr "Участник"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
 msgid "contact_info"
 msgstr "Контактная информация"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:28
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
 msgid "contact_info_add"
 msgstr "(skype, facebook, вконтакте, номер телефона или все что описано выше)"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:32
+#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:25
 msgid "join"
 msgstr "Вступить"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:73
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:82
 msgid "home"
 msgstr "Главная"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:73
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:82
 msgid "home-sub"
 msgstr "Промо/Twitch плеер"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:74
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:83
 msgid "connect"
 msgstr "Присоединится"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:74
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:83
 msgid "connect-sub"
 msgstr "к нам!"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:75
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
 msgid "participants"
 msgstr "Участники"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:75
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
 msgid "participants-sub"
 msgstr "список участвующих команд"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:76
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
 msgid "register"
 msgstr "Регистрация"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:76
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
 msgid "register-sub"
 msgstr "зарегистрируйте свою команду"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:77
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
 msgid "format"
 msgstr "Формат"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:77
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
 msgid "format-sub"
 msgstr "правила и формат турнира"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:26
+msgid "incorrect_link"
+msgstr "Не верная ссылка!"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:27
+msgid "check_incorrect_link"
+msgstr ""
+"Проверьте еще раз или если вы думаете что ссылка должна работать, то "
+"напишите нам письмо на"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:31
+msgid "double_click"
+msgstr "Двойной клик!"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:32
+msgid "double_click-sub"
+msgstr "Не волнуйтесь, ваша команда уже зарегстрированна и находится в"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:32
+msgid "list"
+msgstr "списке"

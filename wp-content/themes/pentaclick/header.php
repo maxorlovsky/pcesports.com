@@ -16,6 +16,7 @@
     
     <script>
         var site = 'http://<?=substr(esc_url(home_url()),7)?>';
+        var lang = '<?=qtrans_getLanguage()?>';
     </script>
     
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
@@ -54,10 +55,6 @@
 </script>
 
 <header id="header" class="move">
-    <?/*<article class="languages">
-		<a href="<?=qtrans_convertURL(get_permalink(), 'en')?>" <?=(qtrans_getLanguage()=='en'?'class="active"':null)?>><div class="english"></div></a>
-        <a href="<?=qtrans_convertURL(get_permalink(), 'ru')?>" <?=(qtrans_getLanguage()=='ru'?'class="active"':null)?>><div class="russian"></div></a>
-	</article>*/?>
     <article class="socicons">
         <a href="https://www.facebook.com/pages/Pentaclick-eSports/521490341298749" target="_blank" class="facebook"></a>
         <a href="https://www.twitter.com/pentaclick" target="_blank" class="twitter"></a>
@@ -65,9 +62,21 @@
         <a href="https://vk.com/pentaclickesports" target="_blank" class="vk"></a>
         <a href="skype:?chat&amp;blob=5OQXjmArliuzMMSBcbTbp_5AS12FBOMCQHsik7Tty_-acWKgxKsd8sabSWKtWCGseh4mTzrw6NLaVRnYrqyrSQk8RlPU77I" class="skype"></a>
         <a href="http://www.youtube.com/pentaclickesports" target="_blank" class="youtube"></a>
+        <article class="languages">
+            <div class="current-lang"><?=qtrans_getLanguageName()?></div>
+            <div class="popup-langs">
+                <?
+                foreach(qtrans_getSortedLanguages() as $f) {
+                    if ($f != qtrans_getLanguage()) {
+                        echo '<a href="'.qtrans_convertURL(get_site_url(), $f).'">'.qtrans_getLanguageName($f).'</a>';
+                    }
+                }
+                ?>
+            </div>
+    	</article>
     </article>
     <section id="navbar">
-        <article class="logo"><a href="#home" title="Home" <?=is_home()?'class="scroll"':null?>><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
+        <article class="logo"><a href="<?=get_site_url()?>#home" title="Home" <?=is_home()?'class="scroll"':null?>><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
         <nav class="globalnav">
             <ul>
                 <li id="home-url"><a href="<?=get_site_url()?>#home" <?=is_home()?'class="scroll"':null?> title="<?=_e('home', 'pentaclick')?>"><?=_e('home', 'pentaclick')?><br /><small><?=_e('home-sub', 'pentaclick')?></small></a></li>

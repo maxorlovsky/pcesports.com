@@ -18,7 +18,7 @@
                 $i = 1;
                 while($r = mysql_fetch_object($q)) { ?>
                     <div class="block" title="<?=$r->name?> #<?=$i?>">
-                        <h3><?=strlen($r->name > 15)?substr($r->name,0,10).'...':$r->name?></h3>
+                        <h3 title="<?=strlen($r->name) > 16?substr($r->name,0,14).'...':$r->name?>"><?=strlen($r->name) > 16?substr($r->name,0,14).'...':$r->name?></h3>
                         <span class="team-num">#<?=$i?></span>
                         <div class="clear"></div>
                         <div class="hidden player-list">

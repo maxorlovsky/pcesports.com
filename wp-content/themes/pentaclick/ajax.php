@@ -3,7 +3,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 	exit();
 }
 
-require_once dirname(__FILE__).'/wp-config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
 $dbcnx = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD);
 if (!$dbcnx) {
@@ -17,43 +17,43 @@ $err = array();
 parse_str($_POST['post'], $post);
 
 if (!$post['team']) {
-    $err['team'] = '0;Field can not be empty';    
+    $err['team'] = '0;'._p('field_empty', 'pentaclick');
 }    
 else if (strlen($post['team']) < 4) {
-    $err['team'] = '0;Team name must be at least 4 symbols';
+    $err['team'] = '0;'._p('team_name_small', 'pentaclick');
 }
 else if (strlen($post['team']) > 60) {
-    $err['team'] = '0;Team name must be less then 60 symbols';
+    $err['team'] = '0;'._p('team_name_big', 'pentaclick');
 }
 else {
-    $suc['team'] = '1;Approved';
+    $suc['team'] = '1;'._p('approved', 'pentaclick');
 }
 
 if (!$post['email']) {
-    $err['email'] = '0;Field can not be empty';    
+    $err['email'] = '0;'._p('field_empty', 'pentaclick');
 }    
 else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-    $err['email'] = '0;Email must be valid it will be used in the future';
+    $err['email'] = '0;'._p('email_invalid', 'pentaclick');
 }
 else {
-    $suc['email'] = '1;Approved';
+    $suc['email'] = '1;'._p('approved', 'pentaclick');
 }
 
 if (!$post['contact']) {
-    $err['contact'] = '0;Field can not be empty';    
+    $err['contact'] = '0;'._p('field_empty', 'pentaclick');
 }
 else if($post['contact']) {
-    $suc['contact'] = '1;Approved';
+    $suc['contact'] = '1;'._p('approved', 'pentaclick');
 }
 
 $players = array();
 $checkForSame = array();
 for($i=1;$i<=7;++$i) {
     if (!$post['mem'.$i] && $i < 6) {
-        $err['mem'.$i] = '0;Field can not be empty';    
+        $err['mem'.$i] = '0;'._p('field_empty', 'pentaclick');    
     }
     else if ($post['mem'.$i]) {
-        $response = runAPI('/euw/v1.3/summoner/by-name/'.htmlentities($post['mem'.$i]));
+        $response = runAPI('/euw/v1.3/summoner/by-name/'.rawurlencode(htmlentities($post['mem'.$i])));
         $q = mysql_query(
     		'SELECT * FROM `players` WHERE '.
     		' `tournament_id` = 1 AND '.
@@ -62,21 +62,21 @@ for($i=1;$i<=7;++$i) {
             ' `approved` = 1'
         );
         if (!$response) {
-            $err['mem'.$i] = '0;Summoner is not found on EUW server';
+            $err['mem'.$i] = '0;'._p('summoner_not_found_euw', 'pentaclick');
         }
         else if ($response && $response->summonerLevel != 30) {
-            $err['mem'.$i] = '0;Summoner level is not 30';
+            $err['mem'.$i] = '0;'._p('summoner_low_lvl', 'pentaclick');
         }
         else if (in_array($post['mem'.$i], $checkForSame)) {
-            $err['mem'.$i] = '0;Same Summoner can not be in one team';
+            $err['mem'.$i] = '0;'._p('same_summoner', 'pentaclick');
         }
         else if (mysql_num_rows($q) != 0) {
-            $err['mem'.$i] = '0;Summoner is already registered in the tournament';
+            $err['mem'.$i] = '0;'._p('summoner_already_registered', 'pentaclick');
         }
         else {
             $players[$i]['id'] = $response->id;
             $players[$i]['name'] = $response->name;
-            $suc['mem'.$i] = '1;Approved';
+            $suc['mem'.$i] = '1;'._p('approved', 'pentaclick');
         }
         
         $checkForSame[] = $post['mem'.$i];
@@ -85,6 +85,9 @@ for($i=1;$i<=7;++$i) {
 
 if ($err) {
     $answer['ok'] = 0;
+    if ($suc) {
+        $err = array_merge($err, $suc);
+    }
     $answer['err'] = $err;
 }
 else {
@@ -118,21 +121,41 @@ else {
         );
     }
     
-    $text = 'Hello <b>'.$players[1]['name'].'</b><br />
-    Your team <b>"'.$post['team'].'"</b> were successfully registered in the PentaClick eSports LoL tournament.<br />
-    All what is left for you to do is to verify your participation by click a link below.<br />
-    <br />
-    <b>Verification link: <a href="http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/</a></b><br />
-    <br />
-    If you will decide not to participate in the tournament before 1st of february, you can use the link below to delete your team from the link.<br />
-    <b>Deletion link: <a href="http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/</a></b>
-    <p style="color: red;">This link will delete the team from the list even if it was verified, so use carefully and don\'t give it to anyone else!</p>
-    <br />
-    If you want to contact PentaClick eSports managers, just reply to this email or visit our website <a href="http://www.pcesports.com" target="_blank">http://www.pcesports.com</a><br />
-    <br />
-    Best regard.<br />
-    PentaClick eSports
-    ';
+    if ($_GET['lang'] == 'ru') {
+        $text = 'Привет <b>'.$players[1]['name'].'</b><br />
+        Твоя команда <b>"'.$post['team'].'"</b> была успешно зарегистрирована на турнире PentaClick eSports по LoL.<br />
+        Всё что тебе осталось сделать это подтвердить ваше участие пройдя по ссылке указаную ниже.<br />
+        <br />
+        <b>Ссылка подтверждения: <a href="http://www.pcesports.com/ru/verify/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/ru/verify/'.$teamId.'/'.$code.'/</a></b><br />
+        <br />
+        Если вы решите не участвовать в турнире до 1 февраля, то вы можете использовать ссылку указаную ниже для того что бы удалить вашу команду из списка.<br />
+        <b>Ссылка удаления: <a href="http://www.pcesports.com/ru/delete/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/ru/delete/'.$teamId.'/'.$code.'/</a></b>
+        <p style="color: red;">Эта ссылка удалит команду даже после её подтверждения, так что будте осторожнее и никому её не давайте!</p>
+        <br />
+        Если вы хотите связатся с организаторами PentaClick eSports, просто ответьте на это письмо или посетите наш сайт <a href="http://www.pcesports.com" target="_blank">http://www.pcesports.com</a><br />
+        <br />
+        С уважением.<br />
+        PentaClick eSports
+        ';
+    }
+    else {
+        $text = 'Hello <b>'.$players[1]['name'].'</b><br />
+        Your team <b>"'.$post['team'].'"</b> were successfully registered in the PentaClick eSports LoL tournament.<br />
+        All what is left for you to do is to verify your participation by click a link below.<br />
+        <br />
+        <b>Verification link: <a href="http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/verify/'.$teamId.'/'.$code.'/</a></b><br />
+        <br />
+        If you will decide not to participate in the tournament before 1st of february, you can use the link below to delete your team from the link.<br />
+        <b>Deletion link: <a href="http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/" target="_blank">http://www.pcesports.com/delete/'.$teamId.'/'.$code.'/</a></b>
+        <p style="color: red;">This link will delete the team from the list even if it was verified, so use carefully and don\'t give it to anyone else!</p>
+        <br />
+        If you want to contact PentaClick eSports managers, just reply to this email or visit our website <a href="http://www.pcesports.com" target="_blank">http://www.pcesports.com</a><br />
+        <br />
+        Best regard.<br />
+        PentaClick eSports
+        ';
+    }
+    
     sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
 }
 
@@ -289,4 +312,8 @@ function serverParse($socket, $response, $line = __LINE__) {
         return false;
     }
     return true;
+}
+
+function _p($text, $domain) {
+    return __($text, $domain);
 }

@@ -129,9 +129,27 @@ $('#add-team').on('click', function() {
     ajax(query);
 });
 
+$('.popup-langs').css('min-width', $('.languages').width()+'px');
+
+var langMenuOpened = 0;
+$('.current-lang').on('click', function() {
+    if (langMenuOpened == 0) {
+        langMenuOpened = 1;
+        $(this).addClass('up');
+        $('#header .languages').css('background-color', '#999');
+        $('#header .popup-langs').stop().slideDown('fast');
+    }
+    else {
+        langMenuOpened = 0;
+        $(this).removeClass('up');
+        $('#header .languages').css('background-color', '');
+        $('#header .popup-langs').stop().slideUp('fast');
+    }
+});
+
 function ajax(object) {
     if (!object.url) {
-        object.url = 'ajax.php';
+        object.url = site+'/wp-content/themes/pentaclick/ajax.php?lang='+lang;
     }
     if (!object.async) {
         object.async = true;

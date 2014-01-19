@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-01-18 04:53+0200\n"
-"PO-Revision-Date: 2014-01-18 04:54+0200\n"
+"POT-Creation-Date: 2014-01-19 13:10+0200\n"
+"PO-Revision-Date: 2014-01-19 13:12+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -13,9 +13,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: _e\n"
+"X-Poedit-KeywordsList: _e;_p\n"
 "X-Poedit-Basepath: D:\\Work\\pcesports\\\n"
 "X-Poedit-SearchPath-0: D:\\Work\\pcesports\\wp-content\\themes\\pentaclick\n"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:20
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:33
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:43
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:53
+msgid "field_empty"
+msgstr "Field can not be empty"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:23
+msgid "team_name_small"
+msgstr "Team name must be at least 4 symbols"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:26
+msgid "team_name_big"
+msgstr "Team name must be less then 60 symbols"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:29
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:39
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:46
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:79
+msgid "approved"
+msgstr "Approved"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:36
+msgid "email_invalid"
+msgstr "Email must be valid it will be used in the future"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:65
+msgid "summoner_not_found_euw"
+msgstr "Summoner is not found on EUW server"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:68
+msgid "summoner_low_lvl"
+msgstr "Summoner level is not 30"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:71
+msgid "same_summoner"
+msgstr "Same Summoner can not be in one team"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:74
+msgid "summoner_already_registered"
+msgstr "Summoner is already registered in the tournament"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/content-home.php:5
 msgid "register_in_tournament"
@@ -79,42 +121,64 @@ msgstr ""
 msgid "join"
 msgstr "Join"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:73
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:82
 msgid "home"
 msgstr "Home"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:73
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:82
 msgid "home-sub"
 msgstr "Promo/Twitch player"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:74
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:83
 msgid "connect"
 msgstr "Connect"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:74
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:83
 msgid "connect-sub"
 msgstr "with us!!"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:75
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
 msgid "participants"
 msgstr "Participants"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:75
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
 msgid "participants-sub"
 msgstr "list of participating teams"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:76
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
 msgid "register"
 msgstr "Register"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:76
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
 msgid "register-sub"
 msgstr "register your team"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:77
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
 msgid "format"
 msgstr "Format"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:77
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
 msgid "format-sub"
 msgstr "tournament format and rules"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:26
+msgid "incorrect_link"
+msgstr "Incorrect link!"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:27
+msgid "check_incorrect_link"
+msgstr ""
+"Check it one more time, or if you think that it is correct, write us an "
+"email at"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:31
+msgid "double_click"
+msgstr "Double click"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:32
+msgid "double_click-sub"
+msgstr "Don't worry, your team is already approved and must be in the"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:32
+msgid "list"
+msgstr "list"

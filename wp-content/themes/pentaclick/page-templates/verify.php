@@ -23,13 +23,13 @@ get_header(); ?>
 <article class="text-content-wrapper">
     <div class="content" id="text-content">
         <? if (mysql_num_rows($q) == 0) { ?>
-            <h1>Incorrect link!</h1>
-            <p>Check it one more time, or if you think that it is correct, write us an email at pentaclickesports@gmail.com</p>
+            <h1><?=_e('incorrect_link', 'pentaclick')?></h1>
+            <p><?=_e('check_incorrect_link', 'pentaclick')?> pentaclickesports@gmail.com</p>
         <? }
         else if ($r->approved == 1) {
             ?>
-            <h1>Double click</h1>
-            <p>Don't worry, your team is already approved and must be in the <a href="<?=get_site_url()?>#participants">list</a>!</p>
+            <h1><?=_e('double_click', 'pentaclick')?></h1>
+            <p><?=_e('double_click-sub', 'pentaclick')?> <a href="<?=get_site_url()?>#participants"><?=_e('list', 'pentaclick')?></a>!</p>
             <?
         }
         else {
