@@ -49,11 +49,13 @@ else if($post['contact']) {
 $players = array();
 $checkForSame = array();
 for($i=1;$i<=7;++$i) {
+    $post['mem'.$i] = trim($post['mem'.$i]);
+    
     if (!$post['mem'.$i] && $i < 6) {
         $err['mem'.$i] = '0;'._p('field_empty', 'pentaclick');    
     }
     else if ($post['mem'.$i]) {
-        $response = runAPI('/euw/v1.3/summoner/by-name/'.rawurlencode(htmlentities($post['mem'.$i])));
+        $response = runAPI('/euw/v1.3/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
         $q = mysql_query(
     		'SELECT * FROM `players` WHERE '.
     		' `tournament_id` = 1 AND '.
