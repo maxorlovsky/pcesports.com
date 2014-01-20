@@ -294,7 +294,8 @@ button:active, input[type='submit']:active, #reg-button:active {
     margin-left: 320px;
 }
 #vk_groups {
-    
+    float: left;
+    margin-left: 20px;
 }
 
 .participants-content-wrapper {

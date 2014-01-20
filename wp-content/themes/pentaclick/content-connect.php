@@ -5,12 +5,7 @@
         
         <a class="twitter-timeline" href="https://twitter.com/pentaclick" data-widget-id="422786485738147841">Tweets by @pentaclick</a>
         
-        <div class="connect-insider">
-            <div class="connect-email">
-                
-            </div>
-            <div id="vk_groups"></div>
-        </div>
+        <div id="vk_groups"></div>
         
         <div class="clear"></div>
     </div>
