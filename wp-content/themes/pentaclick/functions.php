@@ -176,8 +176,17 @@ add_action( 'customize_register', 'pentaclick_customize_register' );
 function pentaclick_admin_menus() {
      add_menu_page('PentaClick settings', 'PC eSports', 'edit_posts', 'options-pentaclick.php', '', '', 50);   
 }
-
 add_action("admin_menu", "pentaclick_admin_menus");
+
+//Fixing qTranslate TinyMCE height
+function content_textarea_height() {
+    echo'
+    <style type="text/css">
+        #qtrans_textarea_content{ height:600px; }
+    </style>
+    ';
+}
+add_action('admin_head', 'content_textarea_height');
 
 function getRewriteRules() {
     global $wp_rewrite; // Global WP_Rewrite class object
