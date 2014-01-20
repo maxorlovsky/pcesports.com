@@ -5,6 +5,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
+$controller = $_POST['control'];
 $post = array();
 $err = array();
 parse_str($_POST['post'], $post);
@@ -12,7 +13,7 @@ foreach($post as $k => $v) {
     $post[$k] = trim($v);
 }
 
-if ($post['control'] == 'registerTeam') {
+if ($controller == 'registerTeam') {
     if (!$post['team']) {
         $err['team'] = '0;'._p('field_empty', 'pentaclick');
     }    
