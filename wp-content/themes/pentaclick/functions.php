@@ -222,6 +222,176 @@ function cOptions($key) {
     return $siteData[$key];
 }
 
+function runAPI($apiAdditionalData) {
+    $startTime = microtime(true);
+    
+    $apiUrl = 'http://prod.api.pvp.net/api/lol';
+    $apiUrl .= $apiAdditionalData;
+    $apiUrl .= '?api_key=84bd1101-4ea8-4814-be9f-ae26467c8275';
+    
+    
+    mysql_query(
+		'INSERT INTO `riot_requests` SET '.
+		' `timestamp` = NOW(), '.
+		' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'", '.
+		' `data` = "'.$apiUrl.'"'
+    );
+    
+    $lastId = sql_last_id();
+    
+	$ch = curl_init();
+    
+    //---
+    curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+    curl_setopt($ch, CURLOPT_FAILONERROR, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+    //curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST fields
+    
+    $response = curl_exec($ch); // run the whole process 
+    
+    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    curl_close($ch);
+    
+    if ($http_status == 400) {
+		//$error = curl_error($ch);
+        $error = 'Bad request';
+	}
+    else if ($http_status == 503) {
+        $error = 'Service unavailable';
+    }
+    else if ($http_status == 500) {
+        $error = 'Internal server error';
+    }
+    else if ($http_status == 401) {
+        $error = 'Unauthorized';
+    }
+    else if ($http_status == 404) {
+        $error = 'Not found';
+    }
+    
+    $endTime = microtime(true);
+    $duration = $endTime - $startTime; //calculates total time taken
+    
+    mysql_query(
+		'UPDATE `riot_requests` SET '.
+			' `response` = "'.($error?$error:mysql_real_escape_string( $response )).'", '.
+            ' `time` = "'.(float)$duration.'" '.
+		' WHERE id='.$lastId
+	);
+	
+	if ( $error )
+	{
+		return false;
+	}
+    
+    $response = (array)json_decode($response);
+    $response = array_values($response);
+    $response = $response[0];
+    
+    return (object)$response;
+}
+
+//Getting last insert ID from mysql query
+function sql_last_id() {
+	$q = mysql_query('SELECT LAST_INSERT_ID()');
+	$id = mysql_result($q, 0, 0);
+	return $id;
+}
+
+function sendMail($email, $subject, $msg) {
+    // SMTP config
+    $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+    $cfg['smtpMailPort'] = '465';
+    $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
+    $cfg['smtpMailPass'] = 'knyaveclickius888';
+    $cfg['smtpMailFrom'] = 'PentaClick eSports';
+
+    $mailData = 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
+    $mailData .= 'Subject: =?UTF-8?B?'.base64_encode($subject). "=?=\r\n";
+    $mailData .= 'Reply-To: '.$cfg['smtpMailName']. "\r\n";
+    $mailData .= 'MIME-Version: 1.0'."\r\n";
+    $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
+    $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n";
+    $mailData .= 'From: "'.$cfg['smtpMailFrom'].'" <'.$cfg['smtpMailName'].'>'."\r\n";
+    $mailData .= 'To: '.$email.' <'.$email.'>'."\r\n";
+    $mailData .= 'X-Priority: 3'."\r\n\r\n";
+    
+    $mailData .= $msg."\r\n";
+    
+    if(!$socket = fsockopen($cfg['smtpMailHost'], $cfg['smtpMailPort'], $errno, $errstr, 30)) {
+        return $errno."&lt;br&gt;".$errstr;
+    }
+    if (!serverParse($socket, '220', __LINE__)) return false;
+    
+    fputs($socket, 'HELO '.$cfg['smtpMailHost']. "\r\n");
+    if (!serverParse($socket, '250', __LINE__)) return false;
+    
+    fputs($socket, 'AUTH LOGIN'."\r\n");
+    if (!serverParse($socket, '334', __LINE__)) return false;
+    
+    fputs($socket, base64_encode($cfg['smtpMailName']) . "\r\n");
+    if (!serverParse($socket, '334', __LINE__)) return false;
+    
+    fputs($socket, base64_encode($cfg['smtpMailPass']) . "\r\n");
+    if (!serverParse($socket, '235', __LINE__)) return false;
+    
+    fputs($socket, 'MAIL FROM: <'.$cfg['smtpMailName'].'>'."\r\n");
+    if (!serverParse($socket, '250', __LINE__)) return false;
+    
+    fputs($socket, 'RCPT TO: <'.$email.'>'."\r\n");
+    if (!serverParse($socket, '250', __LINE__)) return false;
+    
+    fputs($socket, 'DATA'."\r\n");
+    if (!serverParse($socket, '354', __LINE__)) return false;
+    
+    fputs($socket, $mailData."\r\n.\r\n");
+    if (!serverParse($socket, '250', __LINE__)) return false;
+    
+    fputs($socket, 'QUIT'."\r\n");
+    
+    fclose($socket);
+    
+    return true;
+}
+
+function serverParse($socket, $response, $line = __LINE__) {
+    while (substr($server_response, 3, 1) != ' ') {
+        if (!($server_response = fgets($socket, 256))) {
+            echo 'Error: '.$server_response.', '. $line;
+            return false;
+        }
+    }
+    if (!(substr($server_response, 0, 3) == $response)) {
+        echo 'Error: '.$server_response.', '. $line;
+        return false;
+    }
+    return true;
+}
+
+function getMailTemplate($fileName) {
+    $file = get_template_directory().'/mail-templates/'.$fileName.'-'.qtrans_getLanguage().'.html';
+    
+    if (file_exists($file)) {
+        return file_get_contents($file);
+    }
+    else if (file_exists(str_replace(qtrans_getLanguage(), 'en', $file))) { //Checking if EN file exists
+        return file_get_contents(str_replace(qtrans_getLanguage(), 'en', $file));
+    }
+    else {
+        echo 'File <b>'.$fileName.'-'.qtrans_getLanguage().'.html</b> not found under the directory <b>'.$file.'</b><br />';
+        return false;
+    }
+}
+
+function _p($text, $domain) {
+    return __($text, $domain);
+}
+
 function dump($array) {
     echo '<pre>';
     print_r($array);
