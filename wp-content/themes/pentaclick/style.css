@@ -525,7 +525,7 @@ footer .cr {float: right;}
         display: none;
     }
     .content {
-        width: 460px;
+        width: 480px;
     }
     button, input[type='submit'], #reg-button {
         padding: 4px 10px;
@@ -536,7 +536,7 @@ footer .cr {float: right;}
         padding: 3px 9px;
     }
     #home-content .promo {
-        width: 460px;
+        width: 480px;
         margin: 0;
         background-position-y: 0%;
         background-size: contain;
@@ -547,7 +547,7 @@ footer .cr {float: right;}
         margin-top: 100px;
     }
     #participants-content {
-        width: 460px;
+        width: 470px;
         margin: 0 5px;
         padding-bottom: 20px;
     }
@@ -572,7 +572,7 @@ footer .cr {float: right;}
         font-size: 12px;
     }
     #register-content {
-        width: 460px;
+        width: 480px;
         margin: 0;
     }
     #register-content h1 {
@@ -606,7 +606,7 @@ footer .cr {float: right;}
         width: 170px;
     }
     #format-content {
-        width: 460px;
+        width: 470px;
         margin: 0 5px;
         font-size: 15px;
     }
@@ -616,7 +616,7 @@ footer .cr {float: right;}
         font-size: 20px;
     }
     footer {
-        width: 490px;
+        width: 480px;
     }
     footer .holder {
         width: 460px;
