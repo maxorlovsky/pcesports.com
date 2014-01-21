@@ -283,22 +283,19 @@ button:active, input[type='submit']:active, #reg-button:active {
     padding: 30px 0 60px 0;
     height: 570px;
 }
-.fb-like-box, .fb_iframe_widget {
+.fb-like-box {
     float: left;
-    width: 300px;
+    position: absolute !important;
 }
 .twitter-timeline {
     float: right;
     padding-top: 2px;
-    width: 520px;
-    
 }
 .connect-insider {
-    margin-right: 20px;
-    float: right;
+    margin-left: 320px;
 }
 #vk_groups {
-    width: 420px;
+    
 }
 
 .participants-content-wrapper {
@@ -470,7 +467,7 @@ footer .logos img {margin-top:12px;float: left;}
 footer .cr {float: right;}
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 1279px) {
+@media (max-width: 1280px) {
     html, body {
         overflow-y: hidden;
     }
