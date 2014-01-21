@@ -9,7 +9,8 @@
         		'SELECT id, name FROM `teams` WHERE '.
         		' `tournament_id` = 1 AND '.
         		' `game` = "lol" AND '.
-                ' `approved` = 1'
+                ' `approved` = 1 AND '.
+                ' `deleted` = 0'
             );
             if (mysql_num_rows($q) == 0) {
                 ?><p class="empty-list"><?=_e('no_teams_registered', 'pentaclick')?></p><?

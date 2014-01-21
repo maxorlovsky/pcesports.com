@@ -14,7 +14,8 @@ $q = mysql_query(
 	' `tournament_id` = 1 AND '.
 	' `game` = "lol" AND '.
     ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
-    ' `link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'"'
+    ' `link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'" AND '.
+    ' `deleted` = 0'
 );
 $r = mysql_fetch_object($q);
 get_header(); ?>

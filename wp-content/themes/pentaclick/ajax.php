@@ -57,7 +57,8 @@ if ($controller == 'registerTeam') {
         		' `tournament_id` = 1 AND '.
         		' `name` = "'.mysql_real_escape_string($post['mem'.$i]).'" AND '.
         		' `game` = "lol" AND '.
-                ' `approved` = 1'
+                ' `approved` = 1 AND '.
+                ' `deleted` = 0'
             );
             if (!$response) {
                 $err['mem'.$i] = '0;'._p('summoner_not_found_euw', 'pentaclick');
@@ -128,6 +129,7 @@ if ($controller == 'registerTeam') {
         );
         
         sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
+        sendMail('pentaclickesports@gmail.com', 'PentaClick eSports tournament participation', 'Team: '.$post['team']);
     }
 }
 else {

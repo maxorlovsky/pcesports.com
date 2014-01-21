@@ -14,15 +14,20 @@ $q = mysql_query(
 	' `tournament_id` = 1 AND '.
 	' `game` = "lol" AND '.
     ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
-    ' `link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'"'
+    ' `link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'" AND '.
+    ' `deleted` = 0'
 );
 if (mysql_num_rows($q) == 0) {
     wp_redirect( get_site_url() );
     exit;
 }
 else {
-    mysql_query('DELETE FROM `teams` WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
-    mysql_query('DELETE FROM `players` WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
+    $r = mysql_fetch_object($q);
+    
+    mysql_query('UPDATE `teams` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
+    mysql_query('UPDATE `players` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
+    
+    sendMail('pentaclickesports@gmail.com', 'PentaClick eSports team deleted', 'Team: <b>'.$r->name.'</b>');
 }
 
 get_header(); ?>
