@@ -294,8 +294,8 @@ button:active, input[type='submit']:active, #reg-button:active {
     
 }
 .connect-insider {
-    margin-left: 20px;
-    float: left;
+    margin-right: 20px;
+    float: right;
 }
 #vk_groups {
     width: 420px;
@@ -470,7 +470,7 @@ footer .logos img {margin-top:12px;float: left;}
 footer .cr {float: right;}
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 1281px) {
+@media (max-width: 1279px) {
     html, body {
         overflow-y: hidden;
     }
