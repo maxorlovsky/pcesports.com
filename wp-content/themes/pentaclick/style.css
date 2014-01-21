@@ -283,7 +283,7 @@ button:active, input[type='submit']:active, #reg-button:active {
     padding: 30px 0 60px 0;
     height: 570px;
 }
-.fb-like-box {
+.fb-like-box, .fb_iframe_widget {
     float: left;
     width: 300px;
 }
@@ -294,7 +294,8 @@ button:active, input[type='submit']:active, #reg-button:active {
     
 }
 .connect-insider {
-    margin-left: 320px;
+    margin-left: 120px;
+    float: left;
 }
 #vk_groups {
     width: 420px;
