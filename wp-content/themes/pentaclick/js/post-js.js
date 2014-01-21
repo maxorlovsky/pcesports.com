@@ -1,13 +1,13 @@
 $(window).scroll(function() {
     viewport = getViewPort();
     
-    if (viewport.top > 24 && !$('#header').hasClass('move')) {
+    if (viewport.top > 24 && !$('#header').hasClass('move') && $('#header').css('position') == 'fixed') {
         $('.socicons').animate({marginTop: -20});
         $('#navbar').animate({marginTop: 0});
         $('#navbar .logo').animate({marginTop: 0});
         $('#header').animate({height: 115}).addClass('move');
     }
-    else if (viewport.top < 24 && $('#header').hasClass('move')) {
+    else if (viewport.top < 24 && $('#header').hasClass('move') && $('#header').css('position') == 'fixed') {
         $('.socicons').animate({marginTop: 2});
         $('#navbar').animate({marginTop: 24});
         $('#navbar .logo').animate({marginTop: -15});
@@ -51,7 +51,9 @@ $('.scroll').on('click', this, function(event) {
     }
     
     //removing header pixels
-    dest = dest - 70;
+    if ($('#header').css('position') == 'fixed') {
+        dest = dest - 70;
+    }
     
     //go to destination
     $('html,body').animate({scrollTop:dest, queue: false}, 500, 'swing');
