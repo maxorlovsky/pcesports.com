@@ -285,16 +285,19 @@ button:active, input[type='submit']:active, #reg-button:active {
 }
 .fb-like-box {
     float: left;
+    width: 300px;
 }
 .twitter-timeline {
     float: right;
     padding-top: 2px;
+    width: 520px;
+    
 }
 .connect-insider {
     margin-left: 320px;
 }
 #vk_groups {
-    
+    width: 420px;
 }
 
 .participants-content-wrapper {
