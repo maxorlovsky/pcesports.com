@@ -469,7 +469,7 @@ footer .cr {float: right;}
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
     html, body {
-        overflow-y: hidden;
+        /*overflow-y: hidden;*/
     }
     #wrapper {
         width: auto;
