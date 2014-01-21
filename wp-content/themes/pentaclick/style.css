@@ -483,3 +483,141 @@ footer .cr {float: right;}
         padding: 20px 5px 0 5px;
     }
 }
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+    #header {
+        height: 70px;
+    }
+    #header .socicons {
+        margin-right: 3px;
+    }
+    #header .languages {
+        margin-right: 3px;
+    }
+    #navbar {
+        height: 35px;
+    }
+    #navbar .logo, #navbar .logo a img {
+        width: 65px;
+        height: 54px;
+    }
+    #navbar .globalnav a small {
+        display: none;
+    }
+    #navbar .globalnav li a {
+        font-size: 14px;
+        padding: 10px 8px 0 8px;
+        height: 24px;
+    }
+    #navbar .globalnav {
+        min-width: 350px;
+    }
+    #navbar .globalnav ul {
+        height: 35px;
+    }
+    .header-holder {
+        height: 60px;
+    }
+    #connect, .connect-content-wrapper, #connect-url, .twitch {
+        display: none;
+    }
+    .content {
+        width: 480px;
+    }
+    button, input[type='submit'], #reg-button {
+        padding: 4px 10px;
+        font-size: 18px;
+    }
+    button:active, input[type='submit']:active, #reg-button:active {
+        border: 1px solid #fff;
+        padding: 3px 9px;
+    }
+    #home-content .promo {
+        width: 480px;
+        margin: 0;
+        background-position-y: 0%;
+        background-size: contain;
+        height: 225px;
+    }
+    #home-content .promo .reg-but-holder {
+        width: 210px;
+        margin-top: 100px;
+    }
+    #participants-content {
+        width: 480px;
+        margin: 0 5px;
+        padding-bottom: 20px;
+    }
+    #participants-content .block {
+        margin-top: 15px;
+        margin-right: 10px;
+        width: 120px;
+        padding: 10px;
+    }
+    #participants-content .block h3 {
+        font-size: 13px;
+    }
+    #participants-content .block .team-num {
+        font-size: 12px;
+        padding-top: 1px;
+    }
+    #participants-content .block h4 {
+        font-size: 12px;
+        margin: 2px 0 1px 0;
+    }
+    #participants-content .block a {
+        font-size: 12px;
+    }
+    #register-content {
+        width: 480px;
+        margin: 0;
+    }
+    #register-content h1 {
+        padding-top: 20px;
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+    #join-form {
+        margin: 0 5px;
+    } 
+    .register-content-wrapper {
+        padding-bottom: 20px;
+    }
+    #join-tournament {
+        margin-top: 20px;
+    }
+    #register-content input[type='text'], #register-content textarea {
+        height: 30px;
+        width: 46%;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    #register-content textarea {
+        height: 90px;
+    }
+    #join-form .message {
+        height: 21px;
+        padding-top: 4px;
+        background-size: contain;
+        font-size: 13px;
+        width: 170px;
+    }
+    #format-content {
+        width: 480px;
+        margin: 0 5px;
+        font-size: 15px;
+    }
+    #format-content h1 {
+        padding-top: 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    footer {
+        width: 490px;
+    }
+    footer .holder {
+        width: 480px;
+        margin: 0 10px;
+    }
+}
