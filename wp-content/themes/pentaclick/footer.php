@@ -13,7 +13,7 @@
 <script type="text/javascript">
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
-VK.Widgets.Group("vk_groups", {mode: 0, width: "420", height: "570", color1: '333333', color2: '888888', color3: '5B7FA6'}, 64250147);
+VK.Widgets.Group("vk_groups", {mode: 0, width: "400", height: "570", color1: '333333', color2: '888888', color3: '5B7FA6'}, 64250147);
 </script>
 
 <?php wp_footer(); ?>

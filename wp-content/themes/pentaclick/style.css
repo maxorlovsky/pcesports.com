@@ -470,7 +470,7 @@ footer .logos img {margin-top:12px;float: left;}
 footer .cr {float: right;}
 
 /* Landscape phone to portrait tablet */
-@media (max-width: 1280px) {
+@media (max-width: 1281px) {
     html, body {
         overflow-y: hidden;
     }
