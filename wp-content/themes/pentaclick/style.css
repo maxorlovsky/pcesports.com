@@ -476,7 +476,7 @@ footer .cr {float: right;}
     }
 }
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 980px) {
+@media (max-width: 768px) {
     #header .socicons {
         margin-right: 3px;
     }
