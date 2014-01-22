@@ -552,12 +552,14 @@ footer .cr {float: right;}
         width: 1024px;
     }
     #format-content {
-        width: 1004px;
-        margin: 0 10px;
+        width: 984px;
+        margin: 0 20px;
         font-size: 18px;
     }
     #text-content {
-        width: 1004px;
+        width: 984px;
+        margin: 0 20px;
+        font-size: 18px;
     }
     footer {
         width: 1024px;
