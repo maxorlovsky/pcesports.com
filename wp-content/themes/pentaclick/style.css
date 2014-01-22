@@ -551,14 +551,9 @@ footer .cr {float: right;}
     .format-content-wrapper {
         width: 1024px;
     }
-    #format-content {
-        width: 984px;
-        margin: 0 20px;
-        font-size: 18px;
-    }
-    #text-content {
-        width: 984px;
-        margin: 0 20px;
+    #format-content, #text-content {
+        width: 1004px;
+        margin: 0 10px;
         font-size: 18px;
     }
     footer {
