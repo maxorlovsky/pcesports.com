@@ -23,7 +23,7 @@ if ($breakdown[0] == 'dev') {
     define('DB_HOST', 'pcesports.com');
     define('ENV', 'dev');
 }
-else if ($breakdown[0] == 'dev') {
+else if ($breakdown[0] == 'test') {
     define('DB_USER', 'pcusertest');
     define('DB_PASSWORD', 's12WD@#$asdaAD2');
     define('DB_NAME', 'pentaclick_test');
