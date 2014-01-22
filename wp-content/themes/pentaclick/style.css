@@ -476,6 +476,104 @@ footer .cr {float: right;}
         margin: 0;
     }
 }
+
+/* Galaxy tab */
+@media (max-width: 1024px) {
+    #header .socicons {
+        margin-right: 3px;
+    }
+    #header .languages {
+        margin-right: 20px;
+    }
+    #navbar .globalnav {
+        min-width: 750px;
+    }
+    .twitter-timeline {
+        display: none;
+    }
+    .content {
+        width: 1024px;
+    }
+    #home-content .promo {
+        width: 1024px;
+        margin: 0;
+        background-position-y: 0%;
+        background-size: contain;
+        height: 480px;
+    }
+    #home-content .promo .reg-but-holder {
+        width: 400px;
+        margin-top: 230px;
+    }
+    .connect-insider {
+        margin-right: 120px;
+        float: right;
+    }
+    .fb-like-box {
+        margin-left: 100px;
+    }
+    #connect-content {
+        width: 1024px;
+    }
+    .participants-content-wrapper {
+        width: 1024px;
+    }
+    #participants-content {
+        width: 1004px;
+        margin: 0 10px;
+    }
+    #participants-content .block {
+        padding: 15px;
+    }
+    #register-content {
+        width: 1024px;
+        margin: 0;
+    }
+    #register-content h1 {
+        padding-top: 30px;
+    }
+    #join-form {
+        margin: 0 10px;
+    } 
+    .register-content-wrapper {
+        width: 1024px;
+        padding-bottom: 30px;
+    }
+    #join-tournament {
+        margin-top: 30px;
+    }
+    #register-content input[type='text'], #register-content textarea {
+        font-size: 23px;
+    }
+    #register-content textarea {
+        height: 90px;
+    }
+    .format-content-wrapper {
+        width: 1024px;
+    }
+    #format-content {
+        width: 1004px;
+        margin: 0 10px;
+        font-size: 18px;
+    }
+    #text-content {
+        width: 1004px;
+    }
+    footer {
+        width: 1024px;
+    }
+    footer .holder {
+        width: 1004px;
+        margin: 0 10px;
+    }
+    footer .logos img {
+        margin-top: 15px;
+    }
+    footer .cr {
+        font-size: 14px;
+    }
+}
+
 /* Portrait tablet to landscape and desktop */
 @media (max-width: 768px) {
     #header .socicons {
