@@ -19,7 +19,8 @@ $(window).scroll(function() {
     correcTop = viewport.top + 70;
     
     $('.globalnav ul li').each(function(k, v) {
-        var element = $(v).find('a').attr('href');
+        var element = $(v).find('a').attr('href').split('.com');
+        element = element[1];
         if ($(element).length != 0 && correcTop >= $(element).offset().top && !$(element+'-url').hasClass('active')) {
             $('.globalnav ul li').removeClass('active');
             $(element+'-url').addClass('active');

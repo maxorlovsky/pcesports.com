@@ -10,7 +10,7 @@ if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
 }
 
 $q = mysql_query(
-	'SELECT approved FROM `teams` WHERE '.
+	'SELECT `name` FROM `teams` WHERE '.
 	' `tournament_id` = 1 AND '.
 	' `game` = "lol" AND '.
     ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
@@ -27,7 +27,12 @@ else {
     mysql_query('UPDATE `teams` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
     mysql_query('UPDATE `players` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
     
-    sendMail('pentaclickesports@gmail.com', 'PentaClick eSports team deleted', 'Team: <b>'.$r->name.'</b>');
+    sendMail('pentaclickesports@gmail.com',
+    'Deleted team. PentaClick eSports.',
+    'Team was deleted.<br />
+    Date: '.date('d/m/Y H:i:s').'<br />
+    Team: <b>'.$r->name.'</b><br>
+    IP: '.$_SERVER['REMOTE_ADDR']);
 }
 
 get_header(); ?>

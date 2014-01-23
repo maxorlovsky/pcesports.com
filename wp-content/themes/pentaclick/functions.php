@@ -174,7 +174,8 @@ add_action( 'customize_register', 'pentaclick_customize_register' );
  * Admin functions 
 */
 function pentaclick_admin_menus() {
-     add_menu_page('PentaClick settings', 'PC eSports', 'edit_posts', 'options-pentaclick.php', '', '', 50);   
+     add_menu_page('PentaClick settings', 'PC eSports', 'edit_posts', 'options-pentaclick.php', '', '', 50);
+     add_submenu_page('options-pentaclick.php', 'Brackets', 'Brackets', 'manage_options', 'pentaclick-brackets.php');   
 }
 add_action("admin_menu", "pentaclick_admin_menus");
 

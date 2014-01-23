@@ -103,6 +103,7 @@ if ($controller == 'registerTeam') {
             ' `email` = "'.mysql_real_escape_string($post['email']).'", '.
             ' `contact_info` = "'.mysql_real_escape_string($post['contact']).'", '.
             ' `link` = "'.$code.'", '.
+            ' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'", '.
     		' `cpt_player_id` = "'.(int)$players[1]['id'].'"'
         );
         
