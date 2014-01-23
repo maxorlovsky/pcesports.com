@@ -124,8 +124,8 @@ if ($controller == 'registerTeam') {
         $text = getMailTemplate('reg-lol-team');
         
         $text = str_replace(
-            array('%name%', '%team%', '%teamId%', '%code%'),
-            array($players[1]['name'], $post['team'], $teamId, $code),
+            array('%name%', '%team%', '%teamId%', '%code%', '%url%'),
+            array($players[1]['name'], $post['team'], $teamId, $code, get_site_url()),
             $text
         );
         
