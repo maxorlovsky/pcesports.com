@@ -60,6 +60,18 @@ $('.scroll').on('click', this, function(event) {
     $('html,body').animate({scrollTop:dest, queue: false}, 500, 'swing');
 });
 
+if ($('#challonge').length) {
+    $('#challonge').height(challongeHeight);
+    $('#challonge').challonge(challongeLinkName, {
+        subdomain: 'pentaclick',
+        theme: '1',
+        multiplier: '1.0',
+        match_width_multiplier: '0.7',
+        show_final_results: '0',
+        show_standings: '0'
+    });
+}
+
 $('#join-tournament').on('click', function(){
     $(this).slideUp(500, function() {
         $('#join-form').slideDown(1000);

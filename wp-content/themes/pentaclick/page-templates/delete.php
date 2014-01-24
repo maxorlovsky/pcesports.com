@@ -10,7 +10,7 @@ if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
 }
 
 $q = mysql_query(
-	'SELECT `name` FROM `teams` WHERE '.
+	'SELECT `name`, `challonge_id` FROM `teams` WHERE '.
 	' `tournament_id` = 1 AND '.
 	' `game` = "lol" AND '.
     ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
@@ -26,6 +26,13 @@ else {
     
     mysql_query('UPDATE `teams` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
     mysql_query('UPDATE `players` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
+    
+    if (ENV == 'test') {
+        $apiArray = array(
+            '_method' => 'delete',
+        );
+        runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants/'.$r->challonge_id.'.post', $apiArray);
+    }
     
     sendMail('pentaclickesports@gmail.com',
     'Deleted team. PentaClick eSports.',

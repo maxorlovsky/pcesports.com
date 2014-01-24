@@ -273,6 +273,18 @@ button:active, input[type='submit']:active, #reg-button:active {
     color: #fff !important;
 }
 
+.bracket-content-wrapper {
+    background-color: #444;
+}
+#bracket-content {
+    width: 1280px;
+    margin: 0 auto 0 auto;
+    padding: 20px 0;
+}
+#challonge {
+    height: 560px;
+}
+
 .connect-content-wrapper {
     background-color: #000;
 }

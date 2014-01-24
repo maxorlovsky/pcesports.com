@@ -64,6 +64,7 @@ function pentaclick_scripts_styles() {
     
     //Loading JS bottom
     wp_enqueue_script( 'isotope', get_template_directory_uri() . '/js/jquery.isotope.min.js', array(), '1', true);
+    wp_enqueue_script( 'challonge', get_template_directory_uri() . '/js/jquery.challonge.js', array(), '1', true);
     wp_enqueue_script( 'post-js', get_template_directory_uri() . '/js/post-js.js', array(), '1', true);
 
     //Loading Google fonts
@@ -295,6 +296,92 @@ function runAPI($apiAdditionalData) {
     $response = $response[0];
     
     return (object)$response;
+}
+
+function runChallongeAPI($apiAdditionalData, $apiArray = array()) {
+    $startTime = microtime(true);
+    
+    $apiUrl = 'https://api.challonge.com/v1/';
+    $apiUrl .= $apiAdditionalData;
+    $apiUrl .= '?api_key=5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
+    
+    $apiUrlLog = $apiUrl;
+    if ($apiArray) {
+        foreach($apiArray as $k => $v) {
+            $apiUrlLog .= '&'.$k.'='.$v;
+        }
+    }
+
+    mysql_query(
+		'INSERT INTO `challonge_requests` SET '.
+		' `timestamp` = NOW(), '.
+		' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'", '.
+		' `data` = "'.$apiUrlLog.'"'
+    );
+    
+    $lastId = sql_last_id();
+    
+	$ch = curl_init();
+    
+    //---
+    curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+    curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    if ($apiArray) {
+        curl_setopt($ch, CURLOPT_POST, 1); //POST
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST fields
+    }
+    else {
+        curl_setopt($ch, CURLOPT_POST, 0); //GET
+    }
+    
+    $response = curl_exec($ch); // run the whole process 
+    //dump(curl_error($ch));
+    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    curl_close($ch);
+    
+    if ($http_status == 401) {
+        $error = 'Invalid API key';
+	}
+    else if ($http_status == 404 ) {
+        $error = 'Object not found within your account scope';
+    }
+    else if ($http_status == 422) {
+        $error = 'Validation error(s) for create or update method';
+    }
+    
+    $endTime = microtime(true);
+    $duration = $endTime - $startTime; //calculates total time taken
+    
+    if ($apiArray) {
+        $response = 'POST';
+    }
+    
+    mysql_query(
+		'UPDATE `challonge_requests` SET '.
+			' `response` = "'.($error?$error:mysql_real_escape_string( $response )).'", '.
+            ' `time` = "'.(float)$duration.'" '.
+		' WHERE id='.$lastId
+	);
+	
+	if ( $error )
+	{
+		return false;
+	}
+    
+    if ($response == 'POST') {
+        return true;
+    }
+    
+    $response = json_decode($response); //
+    
+    return $response;
 }
 
 //Getting last insert ID from mysql query

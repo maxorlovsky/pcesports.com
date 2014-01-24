@@ -10,7 +10,7 @@ if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
 }
 
 $q = mysql_query(
-	'SELECT approved FROM `teams` WHERE '.
+	'SELECT `name`, `approved` FROM `teams` WHERE '.
 	' `tournament_id` = 1 AND '.
 	' `game` = "lol" AND '.
     ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
@@ -36,6 +36,37 @@ get_header(); ?>
         else {
             mysql_query('UPDATE `teams` SET approved = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
             mysql_query('UPDATE `players` SET approved = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
+            
+            if (ENV == 'prod') {
+                $participant_id = $wp_query->query_vars['team_id'] + 100000;
+            }
+            else if (ENV == 'test') {
+                $participant_id = $wp_query->query_vars['team_id'] + 50000;
+            }
+            /*else {
+                $participant_id = $wp_query->query_vars['team_id'];
+            }*/
+            
+            if (ENV == 'test') {
+                $apiArray = array(
+                    'participant_id' => $participant_id,
+                    'participant[name]' => $r->name,
+                );
+                
+                //Adding team to Challonge bracket
+                runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants.post', $apiArray);
+                
+                //Registering ID, becaus Challonge idiots not giving an answer with ID
+                $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants.json');
+                array_reverse($answer, true);
+                foreach($answer as $f) {
+                    if ($f->participant->name == $r->name) {
+                        mysql_query('UPDATE `teams` SET `challonge_id` = '.(int)$f->participant->id.' WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
+                        break;
+                    }
+                }
+            }
+
             while ( have_posts() ) : the_post();
                 get_template_part( 'content', 'page' );
             endwhile;

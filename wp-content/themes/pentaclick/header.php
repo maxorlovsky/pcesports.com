@@ -17,6 +17,8 @@
     <script>
         var site = 'http://<?=substr(esc_url(home_url()),7)?>';
         var lang = '<?=qtrans_getLanguage()?>';
+        var challongeLinkName = '<?=cOptions('brackets-link')?>';
+        var challongeHeight = <?=cOptions('brackets-height')?>;
     </script>
     
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
