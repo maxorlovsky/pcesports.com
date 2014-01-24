@@ -281,8 +281,8 @@ button:active, input[type='submit']:active, #reg-button:active {
     margin: 0 auto 0 auto;
     padding: 20px 0;
 }
-#challonge {
-    height: 560px;
+#challonge iframe {
+    overflow-y: hidden;
 }
 
 .connect-content-wrapper {
