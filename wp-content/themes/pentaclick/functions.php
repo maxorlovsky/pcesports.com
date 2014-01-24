@@ -298,12 +298,15 @@ function runAPI($apiAdditionalData) {
     return (object)$response;
 }
 
-function runChallongeAPI($apiAdditionalData, $apiArray = array()) {
+function runChallongeAPI($apiAdditionalData, $apiArray = array(), $apiGetUrl = '') {
     $startTime = microtime(true);
     
     $apiUrl = 'https://api.challonge.com/v1/';
     $apiUrl .= $apiAdditionalData;
     $apiUrl .= '?api_key=5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
+    if ($apiGetUrl) {
+        $apiUrl .= '&'.$apiGetUrl;
+    }
     
     $apiUrlLog = $apiUrl;
     if ($apiArray) {
