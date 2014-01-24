@@ -40,14 +40,14 @@ get_header(); ?>
             if (ENV == 'prod') {
                 $participant_id = $wp_query->query_vars['team_id'] + 100000;
             }
-            else if (ENV == 'test') {
+            /*else if (ENV == 'test') {
                 $participant_id = $wp_query->query_vars['team_id'] + 50000;
             }
-            /*else {
+            else {
                 $participant_id = $wp_query->query_vars['team_id'];
             }*/
             
-            if (ENV == 'test') {
+            if (ENV == 'prod') {
                 $apiArray = array(
                     'participant_id' => $participant_id,
                     'participant[name]' => $r->name,

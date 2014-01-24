@@ -27,7 +27,7 @@ else {
     mysql_query('UPDATE `teams` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `id` = '.(int)$wp_query->query_vars['team_id']);
     mysql_query('UPDATE `players` SET `deleted` = 1 WHERE `tournament_id` = 1 AND `game` = "lol" AND `team_id` = '.(int)$wp_query->query_vars['team_id']);
     
-    if (ENV == 'test') {
+    if (ENV == 'prod') {
         $apiArray = array(
             '_method' => 'delete',
         );
