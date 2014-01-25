@@ -67,6 +67,13 @@ get_header(); ?>
                         break;
                     }
                 }
+                
+                sendMail('pentaclickesports@gmail.com',
+                'Team added. PentaClick eSports.',
+                'Team was added!!!<br />
+                Date: '.date('d/m/Y H:i:s').'<br />
+                Team: <b>'.$r->name.'</b><br>
+                IP: '.$_SERVER['REMOTE_ADDR']);
             }
 
             while ( have_posts() ) : the_post();

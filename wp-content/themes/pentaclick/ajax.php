@@ -130,12 +130,6 @@ if ($controller == 'registerTeam') {
         );
         
         sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
-        sendMail('pentaclickesports@gmail.com',
-        'Team added. PentaClick eSports.',
-        'Team was added!!!<br />
-        Date: '.date('d/m/Y H:i:s').'<br />
-        Team: <b>'.$post['team'].'</b><br>
-        IP: '.$_SERVER['REMOTE_ADDR']);
     }
 }
 else {
