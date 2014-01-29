@@ -7,7 +7,7 @@
             <p class="reg-completed"><?=_e('tournament_reg_finished', 'pentaclick')?></p>
         <div class="hidden" id="join-form">
             <h1><?=_e('join_tournament', 'pentaclick')?> #<?=cOptions('tournament-lol-number')?></h1>
-            <form id="da-form" action="" method="post">
+            <form id="da-form" method="post">
                 <input type="text" name="team" placeholder="<?=_e('team_name', 'pentaclick')?>" />
                 <div id="team-msg" class="message hidden"></div>
                 <input type="text" name="email" placeholder="<?=_e('contact_email', 'pentaclick')?>" />
