@@ -105,8 +105,6 @@ button, input[type='submit'], #reg-button {
     background: -o-linear-gradient(top,  #ced0e8 0%,#9299e8 50%,#5c66e9 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(top,  #ced0e8 0%,#9299e8 50%,#5c66e9 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #ced0e8 0%,#9299e8 50%,#5c66e9 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ced0e8', endColorstr='#5c66e9',GradientType=0 ); /* IE6-9 */
-
 }
 button:hover, input[type='submit']:hover, #reg-button:hover {
     border: 0;
