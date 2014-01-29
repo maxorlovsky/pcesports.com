@@ -73,7 +73,7 @@ function pentaclick_scripts_styles() {
 		wp_enqueue_style( 'pentaclick-fonts', esc_url_raw( $font_url ), array(), null );
 
 	//Loading CSS
-    wp_enqueue_style( 'style', get_stylesheet_uri(), 'array', 1 );
+    wp_enqueue_style( 'style', get_stylesheet_uri(), 'array', 2 );
     wp_enqueue_style( 'isotope', get_template_directory_uri() . '/css/isotope.css', 'array', 1 );
     wp_enqueue_style( 'fonts', get_template_directory_uri() . '/css/fonts.css', 'array', 1 );
 	
