@@ -11,6 +11,8 @@
 	<meta name="keywords" content="esports, league of legends tournament, pentaclick" />	
 	<meta name="author" content="MaxOrlovsky.net" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     
     <title><?php wp_title( '|', true, 'right' ); ?></title>
     
