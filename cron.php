@@ -23,6 +23,7 @@ PentaClick eSports.';
 $answer = runChallongeAPI('tournaments/pentaclick-lol1/matches.json', array(), 'state=open');
 $i = 1;
 $players = array();
+$checkPlayers = array();
 foreach($answer as $f) {
     //Team ID #1 - $f->match->player1_id;
     //Team ID #2 - $f->match->player2_id;
@@ -34,15 +35,23 @@ foreach($answer as $f) {
             $players[$i][$j]['id'] = $r2->id;
             $players[$i][$j]['name'] = $r2->name;
             $players[$i][$j]['player_id'] = $r2->player_id;
+            
+            $checkPlayers[$i][] = $r->player_id;
             ++$j;
         }
         ++$i;
     }
-    dump($players);
+    
     //sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
-    exit();
-    echo '<br>---<br>';
-    $emails = '';
+    
+    $answer = runAPI('/euw/v1.3/game/by-summoner/'.$players[1][0]['player_id'].'/recent');
+    
+    dump($answer->games);
+    
     $i = 1;
-    //sleep(2);
+    $players = array();
+    $checkPlayers = array();
+    
+    exit();
+    sleep(5);
 }
