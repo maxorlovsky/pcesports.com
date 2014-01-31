@@ -224,7 +224,7 @@ function cOptions($key) {
     return $siteData[$key];
 }
 
-function runAPI($apiAdditionalData) {
+function runAPI($apiAdditionalData, $fullReturn = false) {
     $startTime = microtime(true);
     
     $apiUrl = 'http://prod.api.pvp.net/api/lol';
@@ -291,9 +291,14 @@ function runAPI($apiAdditionalData) {
 		return false;
 	}
     
-    $response = (array)json_decode($response);
-    $response = array_values($response);
-    $response = $response[0];
+    if ($fullReturn === false) {
+        $response = (array)json_decode($response);
+        $response = array_values($response);
+        $response = $response[0];
+    }
+    else {
+        $response = json_decode($response);
+    }
     
     return (object)$response;
 }
