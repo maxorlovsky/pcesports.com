@@ -42,11 +42,13 @@ foreach($answer as $f) {
         ++$i;
     }
     
-    //sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
-    
     $answer = runAPI('/euw/v1.3/game/by-summoner/'.$players[1][0]['player_id'].'/recent', true);
     
-    dump($answer);
+    foreach($answer->games as $f2) {
+        dump($f2);
+    }
+    
+    //sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
     
     $i = 1;
     $players = array();
