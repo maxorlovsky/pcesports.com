@@ -11,7 +11,7 @@ Email: <b>%email1%</b><br />
 Contact info: <b>%contact-info1%</b><br />
 <br />
 <br />
-Team 1: <b>%team2%</b><br />
+Team 2: <b>%team2%</b><br />
 Email: <b>%email2%</b><br />
 Contact info: <b>%contact-info2%</b>
 <br />
@@ -21,27 +21,28 @@ Use contact info of each other to agree on day and time of your match. Please do
 PentaClick eSports.';
 
 $answer = runChallongeAPI('tournaments/pentaclick-lol1/matches.json', array(), 'state=open');
-$emails = '';
+$emails = array();
 $i = 1;
+
 foreach($answer as $f) {
     //Team ID #1 - $f->match->player1_id;
     //Team ID #2 - $f->match->player2_id;
+    $msg = $text;
     $q = mysql_query('SELECT `id`, `name`, `email`, `cpt_player_id` FROM `teams` WHERE `challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id);
     while($r = mysql_fetch_object($q)) {
         $msg = str_replace(
             array('%team'.$i.'%', '%email'.$i.'%', '%contact-info'.$i.'%'),
             array($r->name, $r->email, nl2br($r->contact_info)),
-            $text
+            $msg
         );
-        $emails .= $r->email.', ';
+        $emails[] = $r->email;
         ++$i;
     }
-    $emails .= 'pentaclickesports@gmail.com';
-    echo $emails;
-    sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
+    $emails[] = 'pentaclickesports@gmail.com';
+    dump($emails);
+    sendMail('max.orlovsky.net', 'PentaClick tournament - Round 1', $msg);
     exit();
-    echo '<br>---<br>';
-    $emails = '';
+    $emails = array();
     $i = 1;
     //sleep(2);
 }
