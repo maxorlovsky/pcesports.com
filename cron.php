@@ -9,9 +9,10 @@ $answer = runChallongeAPI('tournaments/pentaclick-lol1/matches.json', array(), '
 foreach($answer as $f) {
     //Team ID #1 - $f->match->player1_id;
     //Team ID #2 - $f->match->player2_id;
-    $q = mysql_query('SELECT `id`, `name`, `cpt_player_id` FROM `teams` WHERE `challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id);
+    $q = mysql_query('SELECT `id`, `name`, `email`, `cpt_player_id` FROM `teams` WHERE `challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id);
     while($r = mysql_fetch_object($q)) {
         dump($r);
     }
+    echo '<br>---<br>';
     //sleep(2);
 }
