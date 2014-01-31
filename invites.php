@@ -40,7 +40,7 @@ foreach($answer as $f) {
     }
     $emails[] = 'pentaclickesports@gmail.com';
     dump($emails);
-    sendMail('max.orlovsky@gmail.com, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
+    sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Round 1', $msg);
     exit();
     $emails = array();
     $i = 1;
