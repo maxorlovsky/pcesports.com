@@ -38,6 +38,7 @@ foreach($answer as $f) {
         }
         ++$i;
     }
+    dump($players);
     //sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
     exit();
     echo '<br>---<br>';
