@@ -2,21 +2,22 @@
 if ($_GET['invjob'] != 'asdok2910SJDAsld1029') {
     exit();
 }
+set_time_limit(300);
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
 $text = '
 Team 1: <b>%team1%</b><br />
-Email: <b>%email1%</b><br />
-Contact info: <b>%contact-info1%</b><br />
+Email: %email1%<br />
+Contact info: %contact-info1%<br />
 <br />
 <br />
 Team 2: <b>%team2%</b><br />
-Email: <b>%email2%</b><br />
-Contact info: <b>%contact-info2%</b>
+Email: %email2%<br />
+Contact info: %contact-info2%<br />
 <br />
 <br />
-Please remember that Round 1 games must be played in 3 days starting from now on!<br />
+Please remember that Round 1 games must be played in 3 days starting from 1st of February 14:00 CET!<br />
 Use contact info of each other to agree on day and time of your match. Please don\'t forget to add pentaclickesports@gmail.com to CC or add organizers to skype chat.
 <br />
 PentaClick eSports';
@@ -39,11 +40,12 @@ foreach($answer as $f) {
         $emails[] = $r->email;
         ++$i;
     }
-    $emails[] = 'pentaclickesports@gmail.com';
-    dump($emails);
-    sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Round 1', $msg);
-    exit();
+    
+    foreach($emails as $f) {
+        sendMail($f, 'PentaClick tournament - Round 1', $msg);
+    }
     $emails = array();
     $i = 1;
-    //sleep(2);
+    
+    sleep(5);
 }
