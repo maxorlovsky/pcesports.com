@@ -30,7 +30,7 @@ foreach($answer as $f) {
     while($r = mysql_fetch_object($q)) {
         $q2 = mysql_query('SELECT `id`, `name`, `player_id` FROM `players` WHERE `team_id` = '.$r->id.' AND `approved` = 1');
         $j = 0;
-        while($r2 = mysql_fetch_object($q)) {
+        while($r2 = mysql_fetch_object($q2)) {
             $players[$i][$j]['id'] = $r2->id;
             $players[$i][$j]['name'] = $r2->name;
             $players[$i][$j]['player_id'] = $r2->player_id;
