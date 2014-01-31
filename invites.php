@@ -1,4 +1,5 @@
 <?php
+exit('waiting for round 2');
 if ($_GET['invjob'] != 'asdok2910SJDAsld1029') {
     exit();
 }
