@@ -46,7 +46,7 @@ foreach($answer as $f) {
     
     $answer = runAPI('/euw/v1.3/game/by-summoner/'.$players[1][0]['player_id'].'/recent');
     
-    dump($answer->games);
+    dump($answer);
     
     $i = 1;
     $players = array();
