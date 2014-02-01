@@ -2,6 +2,7 @@
 if ($_GET['cronjob'] != 'u9a8sdu1209102129dSAD2u1239') {
     exit();
 }
+set_time_limit(300);
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
@@ -45,7 +46,14 @@ foreach($answer as $f) {
     $answer = runAPI('/euw/v1.3/game/by-summoner/'.$players[1][0]['player_id'].'/recent', true);
     
     foreach($answer->games as $f2) {
-        dump($f2);
+        if ($f2->gameType == 'CUSTOM_GAME') {
+            dump($f2);
+            foreach($f2->fellowPlayers as $f3) {
+                if (!in_array($f3->summonerId, $checkPlayers)) {
+                    
+                }
+            }
+        }
     }
     
     //sendMail('max.orlovsky.net, pentaclickesports@gmail.com', 'PentaClick tournament - Round 1', $msg);
@@ -54,6 +62,6 @@ foreach($answer as $f) {
     $players = array();
     $checkPlayers = array();
     
-    exit();
+    //exit();
     sleep(5);
 }

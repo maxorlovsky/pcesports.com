@@ -1,4 +1,5 @@
 <?php
+exit('waiting for end');
 if ($_GET['mailjob'] != 'runrun') {
     exit('.');
 }
