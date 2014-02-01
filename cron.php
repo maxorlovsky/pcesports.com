@@ -50,7 +50,8 @@ foreach($answer as $f) {
                 if (mysql_num_rows($q3) == 0) {
                     if ($f2->fellowPlayers) {
                         foreach($f2->fellowPlayers as $f3) {
-                            if (!in_array($f3->summonerId, $checkPlayers)) {
+                            //if (!in_array($f3->summonerId, $checkPlayers)) {
+                            if (!in_array($players[2][0]['player_id'], $checkPlayers)) {
                                 if ($f2->stats->win == 1) {
                                     $won = $team[1];
                                 }
