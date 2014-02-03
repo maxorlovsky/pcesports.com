@@ -26,7 +26,7 @@ foreach($answer as $f) {
     $players = array();
     $team = array();
     $checkPlayers = array();
-    $checkPlayers2 = array();
+    $checkInGamePlayers = array();
     $captains = array();
     
     $msg = $text;
@@ -59,16 +59,11 @@ foreach($answer as $f) {
                 //If fight not registered
                 //If fellowPlayers array even exists
                 //If enemy team captain is in the fight
-                echo 'SELECT * FROM fights WHERE game_id = '.$f2->gameId;
-                dump($captains);
-                dump($f2->fellowPlayers);
                 foreach($f2->fellowPlayers as $f3) {
-                    $checkPlayers2[] = $f3->summonerId;
+                    $checkInGamePlayers[] = $f3->summonerId;
                 }
-                dump($checkPlayers2);
                 
-                if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkPlayers2)) {
-                    echo '1 go';
+                if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkInGamePlayers)) {
                     $playersList = array();
                     
                     //Deciding who's won. If 1 then team 1 won of empty then team 2 won
@@ -79,7 +74,7 @@ foreach($answer as $f) {
                         $won = $team[2];
                     }
                     
-                    if ($f2->teamId == 200) {
+                    if ($f2->teamId == 100) {
                         $playersList[1] .= $players[$captains[1]].' ('.$captains[1].')<br />';
                     }
                     else {
