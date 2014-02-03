@@ -10,11 +10,11 @@ $text = '
 Team 1: %team1%<br />
 Players 1:<br />
 %players1%<br />
-<br />
+
 Team 2: %team2%<br />
 Players 2:<br />
 %players2%<br />
-<br />
+
 Team won: <b>%win%</b><br />
 <br />
 PentaClick eSports.';
@@ -55,7 +55,7 @@ foreach($answer as $f) {
         
         foreach($answer->games as $f2) {
             if ($f2->gameType == 'CUSTOM_GAME' && $f2->fellowPlayers) {
-                $q3 = mysql_query('SELECT * FROM fights WHERE game_id = '.$f2->gameId);
+                $q3 = mysql_query('SELECT * FROM `fights` WHERE `game_id` = '.$f2->gameId);
                 //If fight not registered
                 //If fellowPlayers array even exists
                 //If enemy team captain is in the fight
@@ -64,7 +64,7 @@ foreach($answer as $f) {
                 }
                 
                 if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkInGamePlayers)) {
-                    $playersList = array();
+                    $playersList = array(0=>'',1=>'');
                     
                     //Deciding who's won. If 1 then team 1 won of empty then team 2 won
                     if ($f2->stats->win == 1) {
@@ -104,6 +104,7 @@ foreach($answer as $f) {
                     
                     echo $msg;
                     echo '<br><br><br>';
+                    exit();
                     
                     //mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
                     //sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
