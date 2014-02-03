@@ -60,7 +60,7 @@ foreach($answer as $f) {
                 //If fellowPlayers array even exists
                 //If enemy team captain is in the fight
                 echo 'SELECT * FROM fights WHERE game_id = '.$f2->gameId;
-                dump($captains[2]);
+                dump($captains);
                 dump($f2->fellowPlayers);
                 if (mysql_num_rows($q3) == 0 && $f2->fellowPlayers && in_array($captains[2], $f2->fellowPlayers)) {
                     echo '1 go';
