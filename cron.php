@@ -33,7 +33,6 @@ foreach($answer as $f) {
     //Team ID #1 - $f->match->player1_id;
     //Team ID #2 - $f->match->player2_id;   
     $q = mysql_query('SELECT `id`, `name`, `cpt_player_id` FROM `teams` WHERE (`challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id.') AND `approved` = 1 AND `deleted` = 0');
-    echo 'SELECT `id`, `name`, `cpt_player_id` FROM `teams` WHERE (`challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id.') AND `approved` = 1 AND `deleted` = 0';
     if (mysql_num_rows($q) != 0) {
         while($r = mysql_fetch_object($q)) {
             $team[$i] = $r->name;
@@ -45,10 +44,6 @@ foreach($answer as $f) {
                 }
                 $players[$r2->player_id] = $r2->name;
                 $checkPlayers[] = $r2->player_id;
-                if ($captains[2] != $r2->player_id) {
-                    $checkPlayersNoCapt[] = $r2->player_id;
-                }
-                
                 
                 ++$j;
             }
@@ -60,15 +55,12 @@ foreach($answer as $f) {
         
         foreach($answer->games as $f2) {
             if ($f2->gameType == 'CUSTOM_GAME') {
-                dump($f2);
-                echo $captains[2];
-                dump($checkPlayersNoCapt);
-                dump($f2->fellowPlayers);
                 $q3 = mysql_query('SELECT * FROM fights WHERE game_id = '.$f2->gameId);
                 //If fight not registered
-                //If enemy team captain is in the fight
                 //If fellowPlayers array even exists
-                if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkPlayersNoCapt) && $f2->fellowPlayers) {
+                //If enemy team captain is in the fight
+                if (mysql_num_rows($q3) == 0 && $f2->fellowPlayers && in_array($captains[2], $f2->fellowPlayers)) {
+                    echo '1 go';
                     $playersList = array();
                     
                     //Deciding who's won. If 1 then team 1 won of empty then team 2 won
