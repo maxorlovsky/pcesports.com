@@ -8,20 +8,27 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
 $text = '
 Team 1: %team1%<br />
+Players 1:<br />
+%players1%<br />
 <br />
 Team 2: %team2%<br />
+Players 2:<br />
+%players2%<br />
 <br />
-Team won: <b>%win%</b>
+Team won: <b>%win%</b><br />
 <br />
 PentaClick eSports.';
 
 $answer = runChallongeAPI('tournaments/pentaclick-lol1/matches.json', array(), 'state=open');
 
-$i = 1;
-$players = array();
-$team = array();
-$checkPlayers = array();
 foreach($answer as $f) {
+    $i = 1;
+    $players = array();
+    $team = array();
+    $checkPlayers = array();
+    $checkPlayersNoCapt = array();
+    $captains = array();
+    
     $msg = $text;
     //Team ID #1 - $f->match->player1_id;
     //Team ID #2 - $f->match->player2_id;   
@@ -29,56 +36,80 @@ foreach($answer as $f) {
     if (mysql_num_rows($q) != 0) {
         while($r = mysql_fetch_object($q)) {
             $team[$i] = $r->name;
-            $q2 = mysql_query('SELECT `id`, `name`, `player_id` FROM `players` WHERE `team_id` = '.$r->id.' AND `approved` = 1');
+            $q2 = mysql_query('SELECT `id`, `name`, `player_id`, `player_num` FROM `players` WHERE `team_id` = '.$r->id.' AND `approved` = 1');
             $j = 0;
             while($r2 = mysql_fetch_object($q2)) {
-                $players[$i][$j]['id'] = $r2->id;
-                $players[$i][$j]['name'] = $r2->name;
-                $players[$i][$j]['player_id'] = $r2->player_id;
+                if ($r2->player_num == '1') {
+                    $captains[$i] = $r2->player_id;
+                }
+                $players[$r2->player_id] = $r2->name;
+                $checkPlayers[] = $r2->player_id;
+                if ($captains[2] != $r2->player_id) {
+                    $checkPlayersNoCapt[] = $r2->player_id;
+                }
                 
-                $checkPlayers[$i][] = $r2->player_id;
+                
                 ++$j;
             }
             ++$i;
         }
         
-        $answer = runAPI('/euw/v1.3/game/by-summoner/'.$players[1][0]['player_id'].'/recent', true);
+        $answer = runAPI('/euw/v1.3/game/by-summoner/'.$captains[1].'/recent', true);
         $won = '';
+        
         foreach($answer->games as $f2) {
             if ($f2->gameType == 'CUSTOM_GAME') {
                 $q3 = mysql_query('SELECT * FROM fights WHERE game_id = '.$f2->gameId);
-                if (mysql_num_rows($q3) == 0) {
-                    if ($f2->fellowPlayers) {
-                        foreach($f2->fellowPlayers as $f3) {
-                            //if (!in_array($f3->summonerId, $checkPlayers)) {
-                            if (!in_array($players[2][0]['player_id'], $checkPlayers)) {
-                                if ($f2->stats->win == 1) {
-                                    $won = $team[1];
-                                }
-                                else {
-                                    $won = $team[2];
-                                }
-                                
-                                $msg = str_replace(
-                                    array('%team1%', '%team2%', '%win%'),
-                                    array($team[1], $team[2], $won),
-                                    $msg
-                                );
-                                mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
-                                sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
-                                break(2);
-                            }
+                //If fight not registered
+                //If enemy team captain is in the fight
+                //If fellowPlayers array even exists
+                if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkPlayersNoCapt) && $f2->fellowPlayers) {
+                    echo $captains[2];
+                    dump($checkPlayers);
+                    $playersList = array();
+                    
+                    //Deciding who's won. If 1 then team 1 won of empty then team 2 won
+                    if ($f2->stats->win == 1) {
+                        $won = $team[1];
+                    }
+                    else {
+                        $won = $team[2];
+                    }
+                    
+                    if ($f2->teamId == 200) {
+                        $playersList[1] .= $players[$captains[1]].' ('.$captains[1].')<br />';
+                    }
+                    else {
+                        $playersList[0] .= $players[$captains[2]].' ('.$captains[2].')<br />';
+                    }
+                    
+                    foreach($f2->fellowPlayers as $f3) {
+                        if (in_array($f3->summonerId, $checkPlayers) && $f3->teamId == 100) {
+                            $playersList[0] .= $players[$f3->summonerId].' ('.$f3->summonerId.')<br />';
+                        }
+                        else if (in_array($f3->summonerId, $checkPlayers) && $f3->teamId == 200) {
+                            $playersList[1] .= $players[$f3->summonerId].' ('.$f3->summonerId.')<br />';
+                        }
+                        else if ($f3->teamId == 100) {
+                            $playersList[0] .= '<u>'.$f3->summonerId.'</u> - <span style="color:red">player not found</span><br />';
+                        }
+                        else {
+                            $playersList[1] .= '<u>'.$f3->summonerId.'</u> - <span style="color:red">player not found</span><br />';
                         }
                     }
+                    
+                    $msg = str_replace(
+                        array('%team1%', '%team2%', '%players1%', '%players2%', '%win%'),
+                        array($team[1], $team[2], $playersList[0], $playersList[1], $won),
+                        $msg
+                    );
+                    
+                    mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
+                    sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
+                    break(1);
                 }
             }
         }
-    
-    
-    
-        $i = 1;
-        $players = array();
-        $checkPlayers = array();
 
         sleep(3);
     }
