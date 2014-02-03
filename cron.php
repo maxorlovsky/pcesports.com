@@ -104,7 +104,6 @@ foreach($answer as $f) {
                     
                     echo $msg;
                     echo '<br><br><br>';
-                    exit();
                     
                     //mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
                     //sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
