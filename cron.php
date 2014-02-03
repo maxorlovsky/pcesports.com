@@ -64,8 +64,6 @@ foreach($answer as $f) {
                 //If enemy team captain is in the fight
                 //If fellowPlayers array even exists
                 if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkPlayersNoCapt) && $f2->fellowPlayers) {
-                    echo $captains[2];
-                    dump($checkPlayers);
                     $playersList = array();
                     
                     //Deciding who's won. If 1 then team 1 won of empty then team 2 won
