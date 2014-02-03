@@ -74,10 +74,10 @@ foreach($answer as $f) {
                         $won = $team[2];
                     }
                     
-                    if ($f2->teamId == 100) {
+                    if ($f2->teamId == 200) {
                         $playersList[1] .= $players[$captains[1]].' ('.$captains[1].')<br />';
                     }
-                    else {
+                    else if ($f2->teamId == 100) {
                         $playersList[0] .= $players[$captains[2]].' ('.$captains[2].')<br />';
                     }
                     
@@ -102,8 +102,11 @@ foreach($answer as $f) {
                         $msg
                     );
                     
-                    mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
-                    sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
+                    echo $msg;
+                    echo '<br><br><br>';
+                    
+                    //mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
+                    //sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
                     break(1);
                 }
             }
