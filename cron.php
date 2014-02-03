@@ -26,7 +26,7 @@ foreach($answer as $f) {
     $players = array();
     $team = array();
     $checkPlayers = array();
-    $checkPlayersNoCapt = array();
+    $checkPlayers2 = array();
     $captains = array();
     
     $msg = $text;
@@ -54,7 +54,7 @@ foreach($answer as $f) {
         $won = '';
         
         foreach($answer->games as $f2) {
-            if ($f2->gameType == 'CUSTOM_GAME') {
+            if ($f2->gameType == 'CUSTOM_GAME' && $f2->fellowPlayers) {
                 $q3 = mysql_query('SELECT * FROM fights WHERE game_id = '.$f2->gameId);
                 //If fight not registered
                 //If fellowPlayers array even exists
@@ -62,7 +62,12 @@ foreach($answer as $f) {
                 echo 'SELECT * FROM fights WHERE game_id = '.$f2->gameId;
                 dump($captains);
                 dump($f2->fellowPlayers);
-                if (mysql_num_rows($q3) == 0 && $f2->fellowPlayers && in_array($captains[2], $f2->fellowPlayers)) {
+                foreach($f2->fellowPlayers as $f3) {
+                    $checkPlayers2[] = $f3->summonerId;
+                }
+                dump($checkPlayers2);
+                
+                if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkPlayers2)) {
                     echo '1 go';
                     $playersList = array();
                     
