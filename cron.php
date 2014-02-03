@@ -65,7 +65,10 @@ foreach($answer as $f) {
                 
                 if (mysql_num_rows($q3) == 0 && in_array($captains[2], $checkInGamePlayers)) {
                     $playersList = array(0=>'',1=>'');
-                    
+                    dump($players);
+                    dump($captains);
+                    echo $f2->teamId;
+                    echo '<br>---</br>';
                     //Deciding who's won. If 1 then team 1 won of empty then team 2 won
                     if ($f2->stats->win == 1) {
                         $won = $team[1];
