@@ -43,7 +43,7 @@ After all teams have reached quarterfinals, the tournament will briefly stop, an
 <br />
 PentaClick eSports.';*/
 
-$text = 'Dear team <b>%team%</b>,<br />
+/*$text = 'Dear team <b>%team%</b>,<br />
 Congratulations for making it to quarterfinals!<br />
 <br />
 We want to inform you that all games from quarterfinals to finals will be held this sunday, 9 feb.<br />
@@ -68,9 +68,9 @@ In game time pause limit - 15 minutes.<br />
 <br />
 We wish you all good luck in your upcoming games and we hope to see great plays from you.<br />
 <br />
-PentaClick eSports.';
+PentaClick eSports.';*/
 
-/*$text = 'Уважаемая команда <b>%team%</b>,<br />
+$text = 'Уважаемая команда <b>%team%</b>,<br />
 Поздравляем вас. Вы достигли четвертьфинала!<br />
 <br />
 Мы хотим проинформировать вас, что все игры начиная с четвертифинала до финала будут сыграны в эту субботу, 9 фев.<br />
@@ -95,17 +95,17 @@ Violent Gaming EU против Bronzodia! и Æsy против Splendid Gaming<b
 <br />
 Мы желаем вам удачи в предстоящих боях и надеемся увидить от вас отличные игры.<br />
 <br />
-PentaClick eSports.';*/
+PentaClick eSports.';
 
 $q = mysql_query('SELECT name, email FROM teams WHERE approved = 1 AND deleted = 0 AND game = "lol" and tournament_id = 1');
 while ($r = mysql_fetch_object($q)) {
-    if (substr($r->email, -2) != 'ru') {
+    if (substr($r->email, -2) == 'ru') {
         $msg = str_replace(
             array('%team%'),
             array($r->name),
             $text
         );
-        sendMail($r->email, 'PentaClick LoL tournament #1 - quarterfinals to finals', $msg);
+        sendMail($r->email, 'PentaClick LoL tournament #1 - четвертьфиналы и финалы', $msg);
         
         sleep(2);
     }
