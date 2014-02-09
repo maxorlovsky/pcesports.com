@@ -1,5 +1,5 @@
 <div class="header-holder" id="home"></div>
-<article class="content" id="home-content">
+<?/*<article class="content" id="home-content">
     <div class="promo">
         <? if (cOptions('tournament-on') == 1) { ?>
         <div class="reg-but-holder"><a href="#register" id="reg-button" class="scroll" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
@@ -16,4 +16,4 @@
             <div class="clear"></div>
         </div>
     </div>
-</article>
+</article>*/?>

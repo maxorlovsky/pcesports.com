@@ -60,7 +60,7 @@
 
 <header id="header" class="move">
     <article class="socicons">
-        <a href="https://www.facebook.com/pages/Pentaclick-eSports/521490341298749" target="_blank" class="facebook"></a>
+        <a href="https://www.facebook.com/pentaclickesports" target="_blank" class="facebook"></a>
         <a href="https://www.twitter.com/pentaclick" target="_blank" class="twitter"></a>
         <a href="http://www.twitch.tv/pentaclick_tv" target="_blank" class="twitch"></a>
         <a href="https://vk.com/pentaclickesports" target="_blank" class="vk"></a>
@@ -83,7 +83,7 @@
         <article class="logo"><a href="<?=get_site_url()?>#home" title="Home" <?=is_home()?'class="scroll"':null?>><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
         <nav class="globalnav">
             <ul>
-                <li id="home-url"><a href="<?=get_site_url()?>#home" <?=is_home()?'class="scroll"':null?> title="<?=_e('home', 'pentaclick')?>"><?=_e('home', 'pentaclick')?><br /><small><?=_e('home-sub', 'pentaclick')?></small></a></li>
+                <?/*<li id="home-url"><a href="<?=get_site_url()?>#home" <?=is_home()?'class="scroll"':null?> title="<?=_e('home', 'pentaclick')?>"><?=_e('home', 'pentaclick')?><br /><small><?=_e('home-sub', 'pentaclick')?></small></a></li>*/?>
                 <li id="connect-url"><a href="<?=get_site_url()?>#connect" <?=is_home()?'class="scroll"':null?> title="<?=_e('connect', 'pentaclick')?>"><?=_e('connect', 'pentaclick')?><br /><small><?=_e('connect-sub', 'pentaclick')?></small></a></li>
                 <li id="participants-url"><a href="<?=get_site_url()?>#participants" <?=is_home()?'class="scroll"':null?> title="<?=_e('participants', 'pentaclick')?>"><?=_e('participants', 'pentaclick')?><br /><small><?=_e('participants-sub', 'pentaclick')?></small></a></li>
                 <li id="register-url"><a href="<?=get_site_url()?>#register" <?=is_home()?'class="scroll"':null?> title="<?=_e('register', 'pentaclick')?>"><?=_e('register', 'pentaclick')?><br /><small><?=_e('register-sub', 'pentaclick')?></small></a></li>
