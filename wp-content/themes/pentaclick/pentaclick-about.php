@@ -1,5 +1,12 @@
 <?php
-$post = get_page(37); 
+if (ENV == 'dev') {
+    $number = 37;
+}
+elseif (ENV == 'test') {
+    $number = 39;
+}
+
+$post = get_page($number); 
 $content = apply_filters('the_content', $post->post_content); 
 ?>
 
