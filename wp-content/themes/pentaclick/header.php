@@ -19,8 +19,8 @@
     <script>
         var site = 'http://<?=substr(esc_url(home_url()),7)?>';
         var lang = '<?=qtrans_getLanguage()?>';
-        var challongeLinkName = '<?=cOptions('brackets-link')?>';
-        var challongeHeight = <?=cOptions('brackets-height')?>;
+        var challongeLinkName = '<?=cOptions('brackets-link-lol')?>';
+        var challongeHeight = <?=cOptions('brackets-height-lol')?>;
     </script>
     
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
@@ -48,7 +48,6 @@
 
 <div id="fb-root"></div>
 <script>
-
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -79,18 +78,14 @@
             </div>
     	</article>
     </article>
-    <section id="navbar">
-        <article class="logo"><a href="<?=get_site_url()?>#home" title="Home" <?=is_home()?'class="scroll"':null?>><img src="<?php bloginfo('template_directory'); ?>/images//logo.png" alt="Home" /></a></article>
-        <nav class="globalnav">
-            <ul>
-                <?/*<li id="home-url"><a href="<?=get_site_url()?>#home" <?=is_home()?'class="scroll"':null?> title="<?=_e('home', 'pentaclick')?>"><?=_e('home', 'pentaclick')?><br /><small><?=_e('home-sub', 'pentaclick')?></small></a></li>*/?>
-                <li id="connect-url"><a href="<?=get_site_url()?>#connect" <?=is_home()?'class="scroll"':null?> title="<?=_e('connect', 'pentaclick')?>"><?=_e('connect', 'pentaclick')?><br /><small><?=_e('connect-sub', 'pentaclick')?></small></a></li>
-                <li id="participants-url"><a href="<?=get_site_url()?>#participants" <?=is_home()?'class="scroll"':null?> title="<?=_e('participants', 'pentaclick')?>"><?=_e('participants', 'pentaclick')?><br /><small><?=_e('participants-sub', 'pentaclick')?></small></a></li>
-                <li id="register-url"><a href="<?=get_site_url()?>#register" <?=is_home()?'class="scroll"':null?> title="<?=_e('register', 'pentaclick')?>"><?=_e('register', 'pentaclick')?><br /><small><?=_e('register-sub', 'pentaclick')?></small></a></li>
-                <li id="format-url"><a href="<?=get_site_url()?>#format" <?=is_home()?'class="scroll"':null?> title="<?=_e('format', 'pentaclick')?>"><?=_e('format', 'pentaclick')?><br /><small><?=_e('format-sub', 'pentaclick')?></small></a></li>
-            </ul>
-        </nav>
-    </section>
+    <?
+    if (cOptions('game')) {
+        get_template_part( 'nav', cOptions('game') );
+    }
+    else {
+        get_template_part( 'nav', 'original' );
+    }
+    ?>
 </header>
 
 <section id="wrapper" class="clearfix">

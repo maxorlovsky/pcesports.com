@@ -9,7 +9,7 @@ if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
     exit;
 }
 
-if (cOptions('tournament-on') == 1) {
+if (cOptions('tournament-on-lol') == 1) {
     $q = mysql_query(
     	'SELECT `name`, `approved` FROM `teams` WHERE '.
     	' `tournament_id` = 1 AND '.
@@ -25,7 +25,7 @@ get_header(); ?>
 
 <article class="text-content-wrapper">
     <div class="content" id="text-content">
-        <? if (cOptions('tournament-on') == 0) { ?>
+        <? if (cOptions('tournament-on-lol') == 0) { ?>
             <h1><?=_e('tournament_started', 'pentaclick')?></h1>
             <p><?=_e('cant_verify_tournament_started', 'pentaclick')?></p>
         <? } else if (mysql_num_rows($q) == 0) { ?>
@@ -56,10 +56,10 @@ get_header(); ?>
                 );
                 
                 //Adding team to Challonge bracket
-                runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants.post', $apiArray);
+                runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-lol').'/participants.post', $apiArray);
                 
                 //Registering ID, becaus Challonge idiots not giving an answer with ID
-                $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants.json');
+                $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-lol').'/participants.json');
                 array_reverse($answer, true);
                 foreach($answer as $f) {
                     if ($f->participant->name == $r->name) {

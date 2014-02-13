@@ -16,19 +16,23 @@
  
 $breakdown = explode('.', $_SERVER['HTTP_HOST']);
 
-if ($breakdown[0] == 'dev') {
+if ($breakdown[0] == 'dev' || $breakdown[1] == 'dev') {
     define('DB_USER', 'pcuserdev');
     define('DB_PASSWORD', 'd9829*d@)09aSJD22@');
     define('DB_NAME', 'pentaclick_dev');
     define('DB_HOST', 'pcesports.com');
     define('ENV', 'dev');
+    define('HSURL', 'http://hs.dev.pcesports.com');
+    define('LOLURL', 'http://lol.dev.pcesports.com');
 }
-else if ($breakdown[0] == 'test') {
+else if ($breakdown[0] == 'test' || $breakdown[1] == 'test') {
     define('DB_USER', 'pcusertest');
     define('DB_PASSWORD', 's12WD@#$asdaAD2');
     define('DB_NAME', 'pentaclick_test');
     define('DB_HOST', '127.0.0.1');
     define('ENV', 'test');
+    define('HSURL', 'http://hs.test.pcesports.com');
+    define('LOLURL', 'http://lol.test.pcesports.com');
 }
 else {
     define('DB_USER', 'pcuserprod');
@@ -36,6 +40,8 @@ else {
     define('DB_NAME', 'pentaclick_prod');
     define('DB_HOST', '127.0.0.1');
     define('ENV', 'prod');
+    define('HSURL', 'http://hs.pcesports.com');
+    define('LOLURL', 'http://lol.pcesports.com');
 }
 
 /** Database Charset to use in creating database tables. */

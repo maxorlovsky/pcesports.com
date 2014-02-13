@@ -5,17 +5,24 @@
  * @since v1
  */
 
+$availableGames = array('lol', 'hs'); 
+$breakdown = explode('.', $_SERVER['HTTP_HOST']);
+$siteData['game'] = $breakdown[0];
+if (!in_array($siteData['game'], $availableGames)) {
+    $siteData['game'] = '';
+}
+
 get_header();
 
 if (is_home()) {
-    get_template_part( 'content', 'home' );
-    if (cOptions('brackets-on')) {
-        get_template_part( 'content', 'bracket' );
+    get_template_part( 'pentaclick', 'home' );
+    if (cOptions('brackets-on-lol')) {
+        get_template_part( 'pentaclick', 'bracket' );
     }
-    get_template_part( 'content', 'connect' );
-    get_template_part( 'content', 'participants' );
-    get_template_part( 'content', 'register' );
-    get_template_part( 'content', 'format' );
+    //get_template_part( 'pentaclick', 'participants' );
+    //get_template_part( 'pentaclick', 'register' );
+    get_template_part( 'pentaclick', 'about' );
+    get_template_part( 'pentaclick', 'connect' );
 }
 else {
     get_template_part( 'content', 'none' );

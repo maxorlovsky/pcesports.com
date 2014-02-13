@@ -9,7 +9,7 @@ if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
     exit;
 }
 
-if (cOptions('tournament-on') == 1) {
+if (cOptions('tournament-on-lol') == 1) {
     $q = mysql_query(
     	'SELECT `name`, `challonge_id` FROM `teams` WHERE '.
     	' `tournament_id` = 1 AND '.
@@ -32,7 +32,7 @@ if (cOptions('tournament-on') == 1) {
             $apiArray = array(
                 '_method' => 'delete',
             );
-            runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link').'/participants/'.$r->challonge_id.'.post', $apiArray);
+            runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-lol').'/participants/'.$r->challonge_id.'.post', $apiArray);
         }
         
         sendMail('pentaclickesports@gmail.com',
@@ -49,7 +49,7 @@ get_header(); ?>
 
 <article class="text-content-wrapper">
     <div class="content" id="text-content">
-        <? if (cOptions('tournament-on') == 0) { ?>
+        <? if (cOptions('tournament-on-lol') == 0) { ?>
             <h1><?=_e('tournament_started', 'pentaclick')?></h1>
             <p><?=_e('cant_delete_tournament_started', 'pentaclick')?></p>
         <? } else {

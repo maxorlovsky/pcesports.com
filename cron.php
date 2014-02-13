@@ -2,6 +2,7 @@
 if ($_GET['cronjob'] != 'u9a8sdu1209102129dSAD2u1239') {
     exit();
 }
+exit();
 set_time_limit(300);
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';

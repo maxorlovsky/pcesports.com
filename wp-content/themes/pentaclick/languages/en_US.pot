@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-01-24 20:36+0200\n"
-"PO-Revision-Date: 2014-01-24 20:36+0200\n"
+"POT-Creation-Date: 2014-02-13 15:31+0200\n"
+"PO-Revision-Date: 2014-02-13 15:31+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -59,106 +59,130 @@ msgstr "Same Summoner can not be in one team"
 msgid "summoner_already_registered"
 msgstr "Summoner is already registered in the tournament"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-home.php:5
-msgid "register_in_tournament"
-msgstr "Register in tournament"
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:5
+msgid "home"
+msgstr "Home"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-home.php:9
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:5
+msgid "home-sub"
+msgstr "Promo/Twitch player"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
+msgid "participants"
+msgstr "Participants"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
+msgid "participants-sub"
+msgstr "list of participating teams"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
+msgid "register"
+msgstr "Register"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
+msgid "register-sub"
+msgstr "register your team"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
+msgid "format"
+msgstr "Format"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
+msgid "format-sub"
+msgstr "tournament format and rules"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:6
+msgid "about"
+msgstr "About"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:6
+msgid "about-sub"
+msgstr "what is Pentaclick?"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:7
+msgid "connect"
+msgstr "Connect"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:7
+msgid "connect-sub"
+msgstr "with us!!"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:8
+msgid "lol"
+msgstr "League of Legends"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:8
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:9
+msgid "next-tourn-nr"
+msgstr "Следующий турнир"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:9
+msgid "hearthstone"
+msgstr "Hearthstone"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:5
 msgid "watch_twitch"
 msgstr "Watch live video from Pentaclick_tv on"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:13
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:17
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:20
+msgid "register_in_tournament"
+msgstr "Register in tournament"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-participants.php:13
 msgid "no_teams_registered"
 msgstr "No teams registered"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-participants.php:23
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-participants.php:25
 msgid "players"
 msgstr "Players"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:5
 msgid "tournament_reg_closed"
 msgstr "Tournament registration is closed"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:7
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:7
 msgid "tournament_reg_finished"
 msgstr ""
 "Registration is almost complete, in a few moment you will receive an email "
 "with a link. Please use it to verify your participation."
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:27
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:9
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:27
 msgid "join_tournament"
 msgstr "Join tournament"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:11
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:11
 msgid "team_name"
 msgstr "Team name"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:13
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:13
 msgid "contact_email"
 msgstr "Contact email"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:15
 msgid "cpt_nickname"
 msgstr "Captain nickname"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:15
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:18
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:15
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:18
 msgid "member"
 msgstr "Member"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:21
 msgid "contact_info"
 msgstr "Contact information"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:21
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:21
 msgid "contact_info_add"
 msgstr ""
 "(skype, facebook or other social network, phone number or all of the above)"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/content-register.php:25
+#: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-register.php:25
 msgid "join"
 msgstr "Join"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
-msgid "home"
-msgstr "Home"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:84
-msgid "home-sub"
-msgstr "Promo/Twitch player"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
-msgid "connect"
-msgstr "Connect"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:85
-msgid "connect-sub"
-msgstr "with us!!"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
-msgid "participants"
-msgstr "Participants"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:86
-msgid "participants-sub"
-msgstr "list of participating teams"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:87
-msgid "register"
-msgstr "Register"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:87
-msgid "register-sub"
-msgstr "register your team"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:88
-msgid "format"
-msgstr "Format"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:88
-msgid "format-sub"
-msgstr "tournament format and rules"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/delete.php:53
 #: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:29
