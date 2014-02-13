@@ -144,6 +144,58 @@ $('#add-team').on('click', function() {
     ajax(query);
 });
 
+$('#add-player').on('click', function() {
+    if (formInProgress == 1) {
+        return false;
+    }
+    
+    var errRegistered = 0;
+    formInProgress = 1;
+    $('#da-form .message').hide();
+    $('#da-form .message').removeClass('error success');
+    $(this).addClass('alpha');
+    
+    var query = {
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            control: 'registerPlayer',
+            post: $('#da-form').serialize()
+        },
+        success: function(answer) {
+            $('#add-player').removeClass('alpha');
+            formInProgress = 0;
+            
+            if (answer.ok == 1) {
+                $('#register-url a').trigger('click');
+                $('#join-form').slideUp(1000, function() {
+                    $('.reg-completed').slideDown(1000);
+                });
+            }
+            else {
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('#'+k+'-msg').html(answ[1]);
+                    $('#'+k+'-msg').show();
+                    if (answ[0] == 1) {
+                        $('#'+k+'-msg').addClass('success');
+                    }
+                    else {
+                        $('#'+k+'-msg').addClass('error');
+                    }
+                });
+            }
+        },
+        error: function() {
+            $('#add-player').removeClass('alpha');
+            formInProgress = 0;
+            
+            alert('Something\'s got wrong... Contact admin at pentaclickesports@gmail.com');
+        }
+    }
+    ajax(query);
+});
+
 $('.popup-langs').css('min-width', $('.languages').width()+'px');
 
 var langMenuOpened = 0;
@@ -164,7 +216,7 @@ $('.current-lang').on('click', function() {
 
 function ajax(object) {
     if (!object.url) {
-        object.url = site+'/wp-content/themes/pentaclick/ajax.php?lang='+lang;
+        object.url = '/wp-content/themes/pentaclick/ajax.php?lang='+lang;
     }
     if (!object.async) {
         object.async = true;

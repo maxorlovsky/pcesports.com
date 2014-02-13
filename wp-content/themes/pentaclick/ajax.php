@@ -132,6 +132,86 @@ if ($controller == 'registerTeam') {
         sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
     }
 }
+else if ($controller == 'registerPlayer') {
+    $q = mysql_query(
+		'SELECT * FROM `players` WHERE '.
+		' `tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
+		' `name` = "'.mysql_real_escape_string($post['battletag']).'" AND '.
+		' `game` = "hs" AND '.
+        ' `approved` = 1 AND '.
+        ' `deleted` = 0'
+    );
+    
+    $battleTagBreakdown = explode('#', $post['battletag']);
+    
+    if (!$post['battletag']) {
+        $err['battletag'] = '0;'._p('field_empty', 'pentaclick');
+    }
+    else if (mysql_num_rows($q) != 0) {
+        $err['battletag'] = '0;'._p('summoner_already_registered', 'pentaclick');
+    }
+    else if (!$battleTagBreakdown[1] || !is_numeric($battleTagBreakdown[1])) {
+        $err['battletag'] = '0;'._p('battle_tag_incorrect_must_be_like', 'pentaclick').' YourName#1234';
+    }
+    else {
+        $suc['battletag'] = '1;'._p('approved', 'pentaclick');
+    }
+    
+    if (!$post['email']) {
+        $err['email'] = '0;'._p('field_empty', 'pentaclick');
+    }    
+    else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+        $err['email'] = '0;'._p('email_invalid', 'pentaclick');
+    }
+    else {
+        $suc['email'] = '1;'._p('approved', 'pentaclick');
+    }
+    
+    if ($err) {
+        $answer['ok'] = 0;
+        if ($suc) {
+            $err = array_merge($err, $suc);
+        }
+        $answer['err'] = $err;
+    }
+    else {
+        $answer['ok'] = 1;
+        $answer['err'] = $suc;
+        
+        $code = substr(sha1(time().rand(0,9999)), 0, 32);
+        mysql_query(
+    		'INSERT INTO `teams` SET '.
+            ' `game` = "hs", '.
+            ' `tournament_id` = '.(int)cOptions('tournament-hs-number').', '.
+            ' `timestamp` = NOW(), '.
+    		' `name` = "'.mysql_real_escape_string($post['battletag']).'", '.
+            ' `email` = "'.mysql_real_escape_string($post['email']).'", '.
+            ' `link` = "'.$code.'", '.
+            ' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'"'
+        );
+        
+        $teamId = sql_last_id();
+        
+        mysql_query(
+    		'INSERT INTO `players` SET '.
+            ' `game` = "hs", '.
+            ' `tournament_id` = '.(int)cOptions('tournament-hs-number').', '.
+            ' `team_id` = '.(int)$teamId.', '.
+    		' `name` = "'.mysql_real_escape_string($post['battletag']).'", '.
+            ' `player_num` = 1'
+        );
+        
+        $text = getMailTemplate('reg-hs-player');
+        
+        $text = str_replace(
+            array('%name%', '%code%', '%url%'),
+            array($post['battletag'], $code, HSURL),
+            $text
+        );
+        
+        sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
+    }
+} 
 else {
     $answer['ok'] = 0;
     $answer['err'] = 'Control not found';

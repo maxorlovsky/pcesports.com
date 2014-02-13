@@ -489,7 +489,11 @@ body::first-letter { color: #5c66e9; }
 footer {background-color: #000;line-height: 60px;color:#fff;}
 footer .holder {width:1280px;text-align:center;margin:0 auto;}
 footer .logos {}
-footer .logos img {margin-top:12px;float: left;}
+footer .logos img {
+    margin-top:12px;
+    margin-left: 10px;
+    float: left;
+}
 footer .cr {float: right;}
 
 /* Landscape phone to portrait tablet */

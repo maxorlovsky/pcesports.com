@@ -17,12 +17,26 @@ get_header();
 if (is_home()) {
     get_template_part( 'pentaclick', 'home' );
     if (cOptions('brackets-on-lol')) {
-        get_template_part( 'pentaclick', 'bracket' );
+        get_template_part( 'lol', 'bracket' );
     }
-    //get_template_part( 'pentaclick', 'participants' );
-    //get_template_part( 'pentaclick', 'register' );
-    get_template_part( 'pentaclick', 'about' );
-    get_template_part( 'pentaclick', 'connect' );
+    if (cOptions('brackets-on-hs')) {
+        get_template_part( 'hs', 'bracket' );
+    }
+    
+    if (cOptions('game') == 'lol') {
+        get_template_part( 'lol', 'participants' );
+        get_template_part( 'lol', 'register' );
+        get_template_part( 'lol', 'format' );
+    }
+    elseif (cOptions('game') == 'hs') {
+        get_template_part( 'hs', 'participants' );
+        get_template_part( 'hs', 'register' );
+        get_template_part( 'hs', 'format' );
+    }
+    else {
+        get_template_part( 'pentaclick', 'about' );
+        get_template_part( 'pentaclick', 'connect' );
+    }
 }
 else {
     get_template_part( 'content', 'none' );
