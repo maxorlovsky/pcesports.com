@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-02-19 17:17+0200\n"
-"PO-Revision-Date: 2014-02-19 17:18+0200\n"
+"POT-Creation-Date: 2014-02-20 01:28+0200\n"
+"PO-Revision-Date: 2014-02-20 01:29+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -122,11 +122,13 @@ msgid "december"
 msgstr "дек"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/hs-home.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-home.php:5
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:5
 msgid "watch_twitch"
 msgstr "Смотреть видео Pentaclick_tv на"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/hs-home.php:17
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-home.php:17
 msgid "register_in_tournament"
 msgstr "Регистрироватся в турнире"
 
@@ -168,6 +170,12 @@ msgstr "Контактная E-почта"
 msgid "join"
 msgstr "Вступить"
 
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-fame.php:3
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-fame.php:4
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:10
+msgid "hall_of_fame"
+msgstr "Зал Славы"
+
 #: D:\Work\pcesports\wp-content\themes\pentaclick/lol-participants.php:13
 msgid "no_teams_registered"
 msgstr "Не зарегистрирована не одна команда"
@@ -198,22 +206,23 @@ msgid "contact_info_add"
 msgstr "(skype, facebook, вконтакте, номер телефона или все что описано выше)"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
 msgid "back"
 msgstr "Назад"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:6
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:5
 msgid "home"
 msgstr "Главная"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:6
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
 msgid "home-sub"
 msgstr "Промо/Twitch плеер"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:7
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
 msgid "participants"
 msgstr "Участники"
 
@@ -222,7 +231,7 @@ msgid "participant-sub"
 msgstr "список участников"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:8
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
 msgid "register"
 msgstr "Регистрация"
 
@@ -231,22 +240,26 @@ msgid "register2-sub"
 msgstr "хотите поучаствовать?"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:9
 msgid "format"
 msgstr "Формат"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:9
 msgid "format-sub"
 msgstr "правила и формат турнира"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:6
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
 msgid "participants-sub"
 msgstr "список участвующих команд"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:7
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:8
 msgid "register-sub"
 msgstr "зарегистрируйте свою команду"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:10
+msgid "fame-sub"
+msgstr "Предыдущие победители"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-original.php:5
 msgid "home-sub2"

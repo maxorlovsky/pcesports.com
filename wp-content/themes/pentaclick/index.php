@@ -33,6 +33,7 @@ if (is_home()) {
         get_template_part( 'lol', 'participants' );
         get_template_part( 'lol', 'register' );
         get_template_part( 'lol', 'format' );
+        get_template_part( 'lol', 'fame' );
     }
     elseif (cOptions('game') == 'hs') {
         get_template_part( 'hs', 'participants' );
