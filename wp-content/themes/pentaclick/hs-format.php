@@ -3,7 +3,7 @@ if (ENV == 'dev') {
     $number = 39;
 }
 elseif (ENV == 'test') {
-    //$number = 41;
+    $number = 42;
 }
 
 $post = get_page($number); 
