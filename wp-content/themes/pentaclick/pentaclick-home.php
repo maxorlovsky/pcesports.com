@@ -12,12 +12,35 @@
         <div class="clear"></div>
     </div>
     
-    <div class="promo">
-        <? if (cOptions('tournament-on-lol') == 1) { ?>
-        <div class="reg-but-holder"><a href="<?=LOLURL?>/#register" <?=cOptions('game')=='lol'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
-        <? } ?>
-        <? if (cOptions('tournament-on-hs') == 1) { ?>
-        <div class="reg-but-holder"><a href="<?=HSURL?>/#register" <?=cOptions('game')=='hs'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
-        <? } ?>
-    </div>
+    <section class="gamesList" title="League of Legends">
+        <a class="game" href="<?=LOLURL.'/'.qtrans_getLanguage()?>">
+            <h1>League of Legends</h1>
+            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-0.png" alt="League of Legends" title="League of Legends" />
+            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-1.png" alt="League of Legends" title="League of Legends" />
+            <p>
+                <?=_e('next_tournament', 'pentaclick')?> #<?=cOptions('tournament-lol-number')?><br />
+                <span><?=_e('registration_open', 'pentaclick')?></span> 1 <?=getMonth(3)?> 10:00<br />
+                <span><?=_e('tournament_start', 'pentaclick')?></span> 22 <?=getMonth(3)?> 14:00<br />
+                <span><?=_e('official_timezone', 'pentaclick')?></span> CET / GMT+1
+            </p>
+        </a>
+        
+        <a class="game" href="<?=HSURL.'/'.qtrans_getLanguage()?>" title="Hearthstone">
+            <h1>Hearthstone</h1>
+            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-0.png" alt="Hearthstone" title="Hearthstone" />
+            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-1.png" alt="Hearthstone" title="Hearthstone" />
+            <p>
+                <?=_e('next_tournament', 'pentaclick')?> #<?=cOptions('tournament-hs-number')?><br />
+                <span><?=_e('registration_open', 'pentaclick')?></span> 24 <?=getMonth(2)?> 10:00<br />
+                <span><?=_e('tournament_start', 'pentaclick')?></span> 1 <?=getMonth(3)?> 14:00<br />
+                <span><?=_e('official_timezone', 'pentaclick')?></span> CET / GMT+1
+            </p>
+        </a>
+    </section>
+    <? /*if (cOptions('tournament-on-lol') == 1) { ?>
+    <div class="reg-but-holder"><a href="<?=LOLURL?>/#register" <?=cOptions('game')=='lol'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
+    <? } ?>
+    <? if (cOptions('tournament-on-hs') == 1) { ?>
+    <div class="reg-but-holder"><a href="<?=HSURL?>/#register" <?=cOptions('game')=='hs'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
+    <? }*/ ?>
 </article>

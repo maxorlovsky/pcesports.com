@@ -226,18 +226,29 @@ body::first-letter { color: #5c66e9; }
 #navbar .globalnav a:hover small, #navbar .globalnav li:hover a small { color:#fff !important; }
 #navbar .globalnav .active a small { color:#bdbcbc !important; }
 
+.nav-hs {
+    background-image:url('images/design/navbar-bg-hs.png') !important;
+}
 
-#content { padding:50px 0 80px 0; }
+
+#content {
+    padding:50px 0 80px 0;
+}
 
 #home-content {
     
 }
 #home-content .promo {
     position: relative;
-    background: url('images/promo.png') no-repeat 100% 100%;
     width: 1280px;
     height: 600px;
     margin: 0 auto;
+}
+#home-content .promo.hs {
+    background: url('images/promo-hs.png') no-repeat 100% 100%;
+}
+#home-content .promo.lol {
+    background: url('images/promo-lol.png') no-repeat 100% 100%;
 }
 #home-content .promo .reg-but-holder {
     display: block;
@@ -484,6 +495,54 @@ body::first-letter { color: #5c66e9; }
 #textonpage-content h1 {
     padding-top: 30px;
     margin-bottom: 15px;
+}
+
+.gamesList {
+    position: relative;
+    width: 1280px;
+    height: 600px;
+    margin: 50px auto 120px auto;
+    text-align: center;
+}
+.gamesList .game {
+    text-align: left;
+    position: relative;
+    display: inline-block;
+    width: 400px;
+    padding: 0;
+    border: 1px solid #000;
+    border-radius: 15px;
+    margin: 0 15px 0 0;
+    background-color: #111;
+    -webkit-transition: -webkit-box-shadow 0.2s ease-out;
+    -moz-transition: -moz-box-shadow 0.2s ease-out;
+    transition: box-shadow 0.2s ease-out;
+}
+.gamesList .game:hover {
+    box-shadow: 0 0 10px rgba(255,255,255,0.9);
+}
+.gamesList .game img {
+    position: absolute;
+    top: 50px;
+    left: 0;
+}
+.gamesList .game img.gray {
+    opacity: 1;
+}
+.gamesList .game img.colored {
+    opacity: 0;
+}
+.gamesList .game h1 {
+    color: #eee;
+    padding: 0 10px;
+}
+.gamesList .game p {
+    font-size: 18px;
+    margin: 520px 10px 10px 10px;
+}
+.gamesList .game p span {
+    display: inline-block;
+    width: 260px;
 }
 
 footer {background-color: #000;line-height: 60px;color:#fff;}

@@ -148,7 +148,7 @@ else if ($controller == 'registerPlayer') {
         $err['battletag'] = '0;'._p('field_empty', 'pentaclick');
     }
     else if (mysql_num_rows($q) != 0) {
-        $err['battletag'] = '0;'._p('summoner_already_registered', 'pentaclick');
+        $err['battletag'] = '0;'._p('player_already_registered', 'pentaclick');
     }
     else if (!$battleTagBreakdown[1] || !is_numeric($battleTagBreakdown[1])) {
         $err['battletag'] = '0;'._p('battle_tag_incorrect_must_be_like', 'pentaclick').' YourName#1234';

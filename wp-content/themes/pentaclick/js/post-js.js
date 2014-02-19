@@ -29,6 +29,14 @@ $(window).scroll(function() {
     
 });
 
+$('.gamesList .game').on('mouseover', function() {
+    $(this).find('.gray').stop().animate({opacity: 0}, 200);
+    $(this).find('.colored').stop().animate({opacity: 1}, 200);
+}).on('mouseout', function() {
+    $(this).find('.gray').stop().animate({opacity: 1}, 200);
+    $(this).find('.colored').stop().animate({opacity: 0}, 200);
+});
+
 $('.scroll').on('click', this, function(event) {
     event.preventDefault();
     

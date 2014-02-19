@@ -6,7 +6,7 @@
             <a href="http://www.leagueoflegends.com" target="_blank" title="League of Legends"><img src="<?php bloginfo('template_directory'); ?>/images/design/footer-lol-logo.png" title="League of Legends" alt="League of Legends" /></a>
             <a href="http://eu.battle.net/hearthstone/" target="_blank" title="Hearthstone"><img src="<?php bloginfo('template_directory'); ?>/images/design/footer-hs-logo.png" title="Hearthstone" alt="Hearthstone" /></a>
         </div>
-        <div class="cr">© 2014 Pentaclick eSports. All Rights Reserved.</div>
+        <div class="cr">© 2014 Pentaclick eSports. All Rights Reserved. | Made by <a href="http://maxorlovsky.net" target="_blank">Max & Anya Orlovsky</a></div>
         <div class="clear"></div>
     </div>
 </footer>

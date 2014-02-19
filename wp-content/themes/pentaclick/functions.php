@@ -484,6 +484,25 @@ function getMailTemplate($fileName) {
     }
 }
 
+function getMonth($month = 1) {
+    switch($month) {
+        case 1: _e('january', 'pentaclick'); break;
+        case 2: _e('february', 'pentaclick'); break;
+        case 3: _e('march', 'pentaclick'); break;
+        case 4: _e('april', 'pentaclick'); break;
+        case 5: _e('may', 'pentaclick'); break;
+        case 6: _e('june', 'pentaclick'); break;
+        case 7: _e('july', 'pentaclick'); break;
+        case 8: _e('august', 'pentaclick'); break;
+        case 9: _e('september', 'pentaclick'); break;
+        case 10: _e('october', 'pentaclick'); break;
+        case 11: _e('november', 'pentaclick'); break;
+        case 12: _e('december', 'pentaclick'); break;
+    }
+    
+    return;
+}
+
 function _p($text, $domain) {
     return __($text, $domain);
 }

@@ -12,10 +12,16 @@ if (!in_array($siteData['game'], $availableGames)) {
     $siteData['game'] = '';
 }
 
+$category = 'pentaclick';
+if (cOptions('game')) {
+    $category = cOptions('game');
+}
+
 get_header();
 
 if (is_home()) {
-    get_template_part( 'pentaclick', 'home' );
+    get_template_part( $category, 'home' );
+
     if (cOptions('brackets-on-lol')) {
         get_template_part( 'lol', 'bracket' );
     }
