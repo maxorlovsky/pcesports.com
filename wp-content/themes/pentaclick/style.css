@@ -229,6 +229,9 @@ body::first-letter { color: #5c66e9; }
 .nav-hs {
     background-image:url('images/design/navbar-bg-hs.png') !important;
 }
+.nav-lol {
+    background-image:url('images/design/navbar-bg-lol.png') !important;
+}
 
 
 #content {

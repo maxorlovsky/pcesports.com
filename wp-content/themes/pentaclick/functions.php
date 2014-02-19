@@ -229,7 +229,7 @@ function runAPI($apiAdditionalData, $fullReturn = false) {
     
     $apiUrl = 'http://prod.api.pvp.net/api/lol';
     $apiUrl .= $apiAdditionalData;
-    $apiUrl .= '?api_key=84bd1101-4ea8-4814-be9f-ae26467c8275';
+    $apiUrl .= '?api_key=d8339ebc-91ea-49d3-809d-abcb42df872a';
     
     
     mysql_query(

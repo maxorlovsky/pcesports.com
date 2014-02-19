@@ -40,7 +40,7 @@ if (is_home()) {
         get_template_part( 'hs', 'format' );
     }
     else {
-        get_template_part( 'pentaclick', 'about' );
+        //get_template_part( 'pentaclick', 'about' );
         get_template_part( 'pentaclick', 'connect' );
     }
 }
