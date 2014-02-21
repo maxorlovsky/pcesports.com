@@ -5,6 +5,9 @@ if (ENV == 'dev') {
 elseif (ENV == 'test') {
     $number = 19;
 }
+else {
+    $number = 19;
+}
 
 $post = get_page($number); 
 $content = apply_filters('the_content', $post->post_content); 

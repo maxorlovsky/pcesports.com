@@ -31,7 +31,7 @@
             <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-1.png" alt="Hearthstone" title="Hearthstone" />
             <p>
                 <?=_e('next_tournament', 'pentaclick')?> #<?=cOptions('tournament-hs-number')?><br />
-                <span><?=_e('registration_open', 'pentaclick')?></span> 24 <?=getMonth(2)?> 10:00<br />
+                <span><?=_e('registration_open', 'pentaclick')?></span> 25 <?=getMonth(2)?> 10:00<br />
                 <span><?=_e('tournament_start', 'pentaclick')?></span> 1 <?=getMonth(3)?> 14:00<br />
                 <span><?=_e('official_timezone', 'pentaclick')?></span> CET / GMT+1
             </p>
