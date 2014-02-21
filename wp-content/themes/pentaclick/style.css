@@ -211,7 +211,7 @@ body::first-letter { color: #5c66e9; }
 #navbar .white_letter:hover { text-decoration:none; }
 #navbar .website_name { font-size:35px;font-family:'lintelregular';line-height:14px;margin:20px 15px 0 15px;float:left;}
 #navbar .website_name small { font-size:12px;color:#868686;margin-left:20px;}
-#navbar .globalnav {width: 70%; float:left;min-width: 620px;}
+#navbar .globalnav {width: 80%; float:left;min-width: 620px;}
 #navbar .globalnav ul { height:70px; float: right;}
 #navbar .globalnav ul .active { background-color:#2a2a2a; border-bottom: 2px solid #5c66e9;}
 #navbar .globalnav ul li:hover {border-bottom: 2px solid #5c66e9;}

@@ -37,10 +37,4 @@
             </p>
         </a>
     </section>
-    <? /*if (cOptions('tournament-on-lol') == 1) { ?>
-    <div class="reg-but-holder"><a href="<?=LOLURL?>/#register" <?=cOptions('game')=='lol'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
-    <? } ?>
-    <? if (cOptions('tournament-on-hs') == 1) { ?>
-    <div class="reg-but-holder"><a href="<?=HSURL?>/#register" <?=cOptions('game')=='hs'?'class="scroll"':null?> id="reg-button" title="<?=_e('register_in_tournament', 'pentaclick')?>"><?=_e('register_in_tournament', 'pentaclick')?></a></div>
-    <? }*/ ?>
 </article>
