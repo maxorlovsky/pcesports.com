@@ -13,17 +13,14 @@
             ?><p class="empty-list"><?=_e('no_players_registered', 'pentaclick')?></p><?
         }
         else {
-            $i = 1;
             while($r = mysql_fetch_object($q)) { ?>
-                <div class="block" title="<?=$r->name?> #<?=$i?>">
+                <div class="block" title="<?=$r->name?>">
                     <h3 title="<?=$r->name?>">
-                        <?=strlen($r->name) > 14?substr($r->name,0,13).'...':$r->name?>
+                        <?=strlen($r->name) > 17?substr($r->name,0,16).'...':$r->name?>
                     </h3>
-                    <span class="team-num">#<?=$i?></span>
                     <div class="clear"></div>
                 </div>
                 <?
-                ++$i;
             }
         } ?>
         <div class="clear"></div>
