@@ -5,13 +5,6 @@
  * @since v1
  */
 
-$availableGames = array('lol', 'hs'); 
-$breakdown = explode('.', $_SERVER['HTTP_HOST']);
-$siteData['game'] = $breakdown[0];
-if (!in_array($siteData['game'], $availableGames)) {
-    $siteData['game'] = '';
-}
-
 $category = 'pentaclick';
 if (cOptions('game')) {
     $category = cOptions('game');

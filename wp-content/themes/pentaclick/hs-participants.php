@@ -3,7 +3,7 @@
     <div class="content" id="participants-content">
         <?
         $q = mysql_query(
-    		'SELECT id, name FROM `players` WHERE '.
+    		'SELECT id, name FROM `teams` WHERE '.
     		' `tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
     		' `game` = "hs" AND '.
             ' `approved` = 1 AND '.

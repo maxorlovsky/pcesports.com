@@ -4,6 +4,7 @@
 
  * @since v1
  */
+exit('Closed');
 if (!$wp_query->query_vars['team_id'] && !$wp_query->query_vars['code']) {
     wp_redirect( get_site_url() );
     exit;

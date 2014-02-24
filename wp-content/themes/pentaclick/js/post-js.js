@@ -167,7 +167,7 @@ $('#add-player').on('click', function() {
         type: 'POST',
         dataType: 'json',
         data: {
-            control: 'registerPlayer',
+            control: 'registerInHS',
             post: $('#da-form').serialize()
         },
         success: function(answer) {
@@ -288,6 +288,15 @@ function getViewPort() {
     viewport.bottom = viewport.top + win.height();
     
     return viewport;
+}
+
+function _(label) {
+    if (str[label]) {
+        return str[label];
+    }
+    else {
+        return label;
+    }
 }
 
 $('#header').removeClass('move').addClass('force-move');

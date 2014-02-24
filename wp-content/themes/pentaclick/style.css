@@ -561,6 +561,96 @@ body::first-letter { color: #5c66e9; }
     width: 260px;
 }
 
+.padding-up {
+    padding-top: 30px;
+}
+
+.menu {
+    border: 2px solid #333;
+    border-radius: 15px;
+    float: left;
+}
+.menu h4 {
+    background-color: #eee;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 3px 10px;
+    margin-bottom: 0;
+}
+
+.menu.links {
+    width: 250px;
+}
+.menu.links a {
+    display: block;
+    border-top: 1px solid #000;
+    padding: 5px 10px;
+}
+.menu.links a:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.menu.links a:hover {
+    background-color: #eee;
+}
+.menu.links a.disabled {
+    cursor: default;
+    color: #999;
+}
+.menu.links strong {
+    color: #000;
+    font-size: 18px;
+}
+
+.menu.inside-content {
+    width: 450px;
+    margin: 0 75px;
+}
+.menu.inside-content .content-info {
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.menu.chat {
+    float: right;
+    width: 400px;
+}
+.menu.chat .chat-content {
+    padding: 5px 10px;
+    height: 300px;
+    border-bottom: 1px solid #000;
+    background-color: #ddd;
+    font-size: 15px;
+}
+.menu.chat .chat-content #notice {
+    font-size: 13px;
+    color: #999;
+}
+.menu.chat .chat-input {
+    padding: 0 10px;
+}
+.menu.chat .chat-input input[type="text"] {
+    width: 315px;
+    padding: 3px 0;
+    border: 0;
+}
+.menu.chat .attach-file {
+    background-image: url('images/design/attach-file.png');
+    background-repeat: no-repeat;
+    background-color: #ddd;
+    background-position: center center;
+    height: 25px;
+    width: 25px;
+    float: right;
+    margin-top: 1px;
+    border: 1px solid #777;
+    cursor: pointer;
+}
+.menu.chat .attach-file:hover {
+    background-color: #eee;
+}
+
+
 footer {background-color: #000;line-height: 60px;color:#fff;}
 footer .holder {width:1280px;text-align:center;margin:0 auto;}
 footer .logos {}

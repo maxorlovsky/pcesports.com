@@ -21,6 +21,8 @@
         var lang = '<?=qtrans_getLanguage()?>';
         var challongeLinkName = '<?=cOptions('brackets-link-lol')?>';
         var challongeHeight = <?=cOptions('brackets-height-lol')?>;
+        var str = [];
+        str['sure_to_quit'] = '<?=_e('sure_to_quit', 'pentaclick')?>';
     </script>
     
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>

@@ -6,6 +6,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
 $controller = $_POST['control'];
+$action = $_POST['action'];
 $post = array();
 $err = array();
 parse_str($_POST['post'], $post);
@@ -93,7 +94,7 @@ if ($controller == 'registerTeam') {
         $answer['ok'] = 1;
         $answer['err'] = $suc;
         
-        $code = substr(sha1(time().rand(0,9999)), 0, 32);
+        $code = substr(sha1(time().rand(0,9999).$post['team']), 0, 32);
         mysql_query(
     		'INSERT INTO `teams` SET '.
             ' `game` = "lol", '.
@@ -132,7 +133,7 @@ if ($controller == 'registerTeam') {
         sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
     }
 }
-else if ($controller == 'registerPlayer') {
+else if ($controller == 'registerInHS') {
     $q = mysql_query(
 		'SELECT * FROM `players` WHERE '.
 		' `tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
@@ -178,16 +179,17 @@ else if ($controller == 'registerPlayer') {
         $answer['ok'] = 1;
         $answer['err'] = $suc;
         
-        $code = substr(sha1(time().rand(0,9999)), 0, 32);
+        $code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
         mysql_query(
     		'INSERT INTO `teams` SET '.
             ' `game` = "hs", '.
             ' `tournament_id` = '.(int)cOptions('tournament-hs-number').', '.
             ' `timestamp` = NOW(), '.
+            ' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'", '.
     		' `name` = "'.mysql_real_escape_string($post['battletag']).'", '.
             ' `email` = "'.mysql_real_escape_string($post['email']).'", '.
-            ' `link` = "'.$code.'", '.
-            ' `ip` = "'.mysql_real_escape_string($_SERVER['REMOTE_ADDR']).'"'
+            ' `contact_info` = "'.mysql_real_escape_string($battleTagBreakdown[0]).'", '.
+            ' `link` = "'.$code.'"'
         );
         
         $teamId = sql_last_id();
@@ -204,14 +206,61 @@ else if ($controller == 'registerPlayer') {
         $text = getMailTemplate('reg-hs-player');
         
         $text = str_replace(
-            array('%name%', '%code%', '%url%'),
-            array($post['battletag'], $code, HSURL),
+            array('%name%', '%teamId%', '%code%', '%url%'),
+            array($post['battletag'], $teamId, $code, HSURL),
             $text
         );
         
-        sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
+        sendMail($post['email'], 'PentaClick eSports Hearthstone tournament participation', $text);
     }
-} 
+}
+else if ($controller == 'chat') {
+    /*if ($action == 'send') {
+        
+    }*/
+    $answer['ok'] = 1;
+    $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('chat_disabled', 'pentaclick').'</p>';
+}
+else if ($controller == 'leave') {
+    if (!$post['tId'] || !$post['code']) {
+        $answer['ok'] = 0;
+        $answer['message'] = 'Data incorrect';
+    }
+    else {
+        $q = mysql_query(
+        	'SELECT `id`, `name`, `challonge_id`, `game` FROM `teams` WHERE'.
+            ' `id` = '.(int)$post['tId'].' AND'.
+            ' `link` = "'.mysql_real_escape_string($post['code']).'" AND'.
+            ' `approved` = 1 AND'.
+            ' `deleted` = 0'
+        );
+
+        if (mysql_num_rows($q) != 0) {
+            mysql_query('UPDATE `teams` SET `deleted` = 1 WHERE `id` = '.(int)$post['tId']);
+            mysql_query('UPDATE `players` SET `deleted` = 1 WHERE `team_id` = '.(int)$post['tId']);
+            $r = mysql_fetch_object($q);
+            
+            $apiArray = array(
+                '_method' => 'delete',
+            );
+            runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-'.$r->game).'/participants/'.$r->challonge_id.'.post', $apiArray);
+            
+            sendMail('pentaclickesports@gmail.com',
+            ($r->game=='hs'?'Player':'Team').' deleted. PentaClick eSports.',
+            'Participant was deleted!!!<br />
+            Date: '.date('d/m/Y H:i:s').'<br />'.
+            ($r->game=='hs'?'BattleTag':'TeamName').': <b>'.$r->name.'</b><br>
+            IP: '.$_SERVER['REMOTE_ADDR']);
+            
+            $answer['ok'] = 1;
+            $answer['message'] = _p('good_luck', 'pentaclick');
+        }
+        else {
+            $answer['ok'] = 0;
+            $answer['message'] = 'SQL Data incorrect';
+        }
+    }
+}
 else {
     $answer['ok'] = 0;
     $answer['err'] = 'Control not found';

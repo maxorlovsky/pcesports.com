@@ -50,22 +50,19 @@ function pentaclick_get_font_url() {
 
 /**
  * Enqueue scripts and styles for front-end.
- *
- * @since Twenty Twelve 1.0
- *
- * @return void
  */
 function pentaclick_scripts_styles() {
 	global $wp_styles;
     
     //Loading JS top
     wp_enqueue_script( 'pc-jquery', get_template_directory_uri() . '/js/jquery.min.js', array(), '1');
-    wp_enqueue_script( 'pre-js', get_template_directory_uri() . '/js/pre-js.js', array(), '1');
+    wp_enqueue_script( 'pre-js', get_template_directory_uri() . '/js/pre-js.js', array(), '2');
+    wp_enqueue_script( 'profiler', get_template_directory_uri() . '/js/profiler.js', array(), '1');
     
     //Loading JS bottom
     wp_enqueue_script( 'isotope', get_template_directory_uri() . '/js/jquery.isotope.min.js', array(), '1', true);
     wp_enqueue_script( 'challonge', get_template_directory_uri() . '/js/jquery.challonge.js', array(), '1', true);
-    wp_enqueue_script( 'post-js', get_template_directory_uri() . '/js/post-js.js', array(), '1', true);
+    wp_enqueue_script( 'post-js', get_template_directory_uri() . '/js/post-js.js', array(), '2', true);
 
     //Loading Google fonts
 	$font_url = pentaclick_get_font_url();
@@ -73,7 +70,7 @@ function pentaclick_scripts_styles() {
 		wp_enqueue_style( 'pentaclick-fonts', esc_url_raw( $font_url ), array(), null );
 
 	//Loading CSS
-    wp_enqueue_style( 'style', get_stylesheet_uri(), 'array', 2 );
+    wp_enqueue_style( 'style', get_stylesheet_uri(), 'array', 3 );
     wp_enqueue_style( 'isotope', get_template_directory_uri() . '/css/isotope.css', 'array', 1 );
     wp_enqueue_style( 'fonts', get_template_directory_uri() . '/css/fonts.css', 'array', 1 );
 	
@@ -201,6 +198,7 @@ function addPentaClickRewrite() {
     add_rewrite_tag('%code%', '([^/]*)');
     add_rewrite_rule('^verify/([^/]*)/([^/]*)/?','index.php?pagename=verify&team_id=$matches[1]&code=$matches[2]','top');
     add_rewrite_rule('^delete/([^/]*)/([^/]*)/?','index.php?pagename=delete&team_id=$matches[1]&code=$matches[2]','top');
+    add_rewrite_rule('^profile/([^/]*)/([^/]*)/?','index.php?pagename=profile&team_id=$matches[1]&code=$matches[2]','top');
     
     $wp_rewrite->flush_rules(1);
 }
@@ -216,6 +214,13 @@ $q = mysql_query('SELECT * FROM options');
 $siteData = array();
 while ($r = mysql_fetch_object($q)) {
     $siteData[$r->name] = $r->value;
+}
+
+$availableGames = array('lol', 'hs'); 
+$breakdown = explode('.', $_SERVER['HTTP_HOST']);
+$siteData['game'] = $breakdown[0];
+if (!in_array($siteData['game'], $availableGames)) {
+    $siteData['game'] = '';
 }
 
 function cOptions($key) {
@@ -501,6 +506,51 @@ function getMonth($month = 1) {
     }
     
     return;
+}
+
+function approveRegisterTeam($game, $team) {
+    //Generating other IDs for different environment
+    if (ENV == 'prod') {
+        $participant_id = $team->id + 100000;
+    }
+    else if (ENV == 'test') {
+        $participant_id = $team->id + 50000;
+    }
+    else {
+        $participant_id = $team->id;
+    }
+    
+    mysql_query('UPDATE `teams` SET approved = 1 WHERE `tournament_id` = '.(int)cOptions('tournament-'.$game.'-number').' AND `game` = "'.$game.'" AND `id` = '.$team->id);
+    mysql_query('UPDATE `players` SET approved = 1 WHERE `tournament_id` = '.(int)cOptions('tournament-'.$game.'-number').' AND `game` = "'.$game.'" AND `team_id` = '.$team->id);
+    
+    $apiArray = array(
+        'participant_id' => $participant_id,
+        'participant[name]' => $team->name,
+    );
+    
+    //Adding team to Challonge bracket
+    runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-'.$game).'/participants.post', $apiArray);
+    
+    //Registering ID, becaus Challonge idiots not giving an answer with ID
+    $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-'.$game).'/participants.json');
+    array_reverse($answer, true);
+
+    foreach($answer as $f) {
+        if ($f->participant->name == $team->name) {
+            mysql_query('UPDATE `teams` SET `challonge_id` = '.(int)$f->participant->id.' WHERE `tournament_id` = '.(int)cOptions('tournament-'.$game.'-number').' AND `game` = "'.$game.'" AND `id` = '.$team->id);
+            $challonge_id = (int)$f->participant->id;
+            break;
+        }
+    }
+    
+    sendMail('pentaclickesports@gmail.com',
+    ($game=='hs'?'Player':'Team').' added. PentaClick eSports.',
+    'Participant was added!!!<br />
+    Date: '.date('d/m/Y H:i:s').'<br />'.
+    ($game=='hs'?'BattleTag':'TeamName').': <b>'.$team->name.'</b><br>
+    IP: '.$_SERVER['REMOTE_ADDR']);
+    
+    return $challonge_id;
 }
 
 function _p($text, $domain) {
