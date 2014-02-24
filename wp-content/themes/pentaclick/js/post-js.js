@@ -68,9 +68,21 @@ $('.scroll').on('click', this, function(event) {
     $('html,body').animate({scrollTop:dest, queue: false}, 500, 'swing');
 });
 
-if ($('#challonge').length) {
-    $('#challonge').height(challongeHeight);
-    $('#challonge').challonge(challongeLinkName, {
+if ($('#challonge-lol').length) {
+    $('#challonge-lol').height(challongeLoLHeight);
+    $('#challonge-lol').challonge(challongeLoLLinkName, {
+        subdomain: 'pentaclick',
+        theme: '1',
+        multiplier: '1.0',
+        match_width_multiplier: '0.7',
+        show_final_results: '0',
+        show_standings: '0'
+    });
+}
+
+if ($('#challonge-hs').length) {
+    $('#challonge-hs').height(challongeHsHeight);
+    $('#challonge-hs').challonge(challongeHsLinkName, {
         subdomain: 'pentaclick',
         theme: '1',
         multiplier: '1.0',

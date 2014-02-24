@@ -19,8 +19,10 @@
     <script>
         var site = 'http://<?=substr(esc_url(home_url()),7)?>';
         var lang = '<?=qtrans_getLanguage()?>';
-        var challongeLinkName = '<?=cOptions('brackets-link-lol')?>';
-        var challongeHeight = <?=cOptions('brackets-height-lol')?>;
+        var challongeLoLLinkName = '<?=cOptions('brackets-link-lol')?>';
+        var challongeLoLHeight = <?=cOptions('brackets-height-lol')?>;
+        var challongeHsLinkName = '<?=cOptions('brackets-link-hs')?>';
+        var challongeHsHeight = <?=cOptions('brackets-height-hs')?>;
         var str = [];
         str['sure_to_quit'] = '<?=_e('sure_to_quit', 'pentaclick')?>';
     </script>
