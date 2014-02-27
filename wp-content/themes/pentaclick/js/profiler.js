@@ -21,7 +21,7 @@ $('#chat-input').on('keyup', function(e) {
     }
     else*/
     
-    if (e.keyCode == 13) {
+    if (e.keyCode == 13 && $.trim($(this).val())) {
         var text = $(this).val();
         $(this).val('');
         var query = {
@@ -34,7 +34,7 @@ $('#chat-input').on('keyup', function(e) {
             },
             success: function(answer) {
                 $('.chat-content').html(answer.html);
-                $('.chat-content').scrollTop($('.chat-content').height());
+                $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
             }
         }
         ajax(query);
@@ -84,7 +84,7 @@ profiler = {
             success: function(answer) {
                 if (answer.ok != 2) {
                     $('.chat-content').html(answer.html);
-                    $('.chat-content').scrollTop($('.chat-content').height());
+                    $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
                 }
             }
         }
