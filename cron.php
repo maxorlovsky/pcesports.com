@@ -2,12 +2,14 @@
 if ($_GET['cronjob'] != 'u9a8sdu1209102129dSAD2u1239') {
     exit();
 }
-exit();
+
 set_time_limit(300);
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
-$text = '
+
+//LoL things
+/*$text = '
 Team 1: %team1%<br />
 Players 1:<br />
 %players1%<br />
@@ -20,7 +22,7 @@ Team won: <b>%win%</b><br />
 <br />
 PentaClick eSports.';
 
-$answer = runChallongeAPI('tournaments/pentaclick-lol1/matches.json', array(), 'state=open');
+$answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-lol').'/matches.json', array(), 'state=open');
 
 foreach($answer as $f) {
     $i = 1;
@@ -56,7 +58,7 @@ foreach($answer as $f) {
         
         foreach($answer->games as $f2) {
             if ($f2->gameType == 'CUSTOM_GAME' && $f2->fellowPlayers) {
-                $q3 = mysql_query('SELECT * FROM `fights` WHERE `game_id` = '.$f2->gameId);
+                $q3 = mysql_query('SELECT * FROM `lol_fights` WHERE `game_id` = '.$f2->gameId);
                 //If fight not registered
                 //If fellowPlayers array even exists
                 //If enemy team captain is in the fight
@@ -103,7 +105,7 @@ foreach($answer as $f) {
                         $msg
                     );
                     
-                    mysql_query('INSERT INTO fights SET game_id = '.$f2->gameId);
+                    mysql_query('INSERT INTO `lol_fights` SET `game_id` = '.$f2->gameId);
                     sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
                     break(1);
                 }
@@ -111,5 +113,19 @@ foreach($answer as $f) {
         }
 
         sleep(3);
+    }
+}*/
+
+//HS things
+$answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-hs').'/matches.json', array(), 'state=open');
+
+foreach($answer as $f) {
+    $q = mysql_query('SELECT `challonge_tournament_id` FROM `hs_fights`
+    WHERE `challonge_tournament_id` = '.$f->match->id);
+    if (mysql_num_rows($q) == 0) {
+        mysql_query('INSERT INTO `hs_fights` SET
+        `challonge_tournament_id` = '.$f->match->id.', 
+        `player1_id` = '.$f->match->player1_id.',
+        `player2_id` = '.$f->match->player2_id);
     }
 }

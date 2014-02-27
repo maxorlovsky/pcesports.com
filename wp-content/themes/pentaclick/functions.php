@@ -57,7 +57,6 @@ function pentaclick_scripts_styles() {
     //Loading JS top
     wp_enqueue_script( 'pc-jquery', get_template_directory_uri() . '/js/jquery.min.js', array(), '1');
     wp_enqueue_script( 'pre-js', get_template_directory_uri() . '/js/pre-js.js', array(), '2');
-    wp_enqueue_script( 'profiler', get_template_directory_uri() . '/js/profiler.js', array(), '1');
     
     //Loading JS bottom
     wp_enqueue_script( 'isotope', get_template_directory_uri() . '/js/jquery.isotope.min.js', array(), '1', true);
@@ -487,6 +486,14 @@ function getMailTemplate($fileName) {
         echo 'File <b>'.$fileName.'-'.qtrans_getLanguage().'.html</b> not found under the directory <b>'.$file.'</b><br />';
         return false;
     }
+}
+
+function onlineStatus($userTime) {
+    if ($userTime+30 >= time()) {
+        return true;
+    }
+    
+    return false;
 }
 
 function getMonth($month = 1) {

@@ -621,6 +621,7 @@ body::first-letter { color: #5c66e9; }
     border-bottom: 1px solid #000;
     background-color: #ddd;
     font-size: 15px;
+    overflow-y: auto;
 }
 .menu.chat .chat-content #notice {
     font-size: 13px;
@@ -650,6 +651,16 @@ body::first-letter { color: #5c66e9; }
     background-color: #eee;
 }
 
+.online {
+    font-weight: bold;
+    color: #0f750d;
+}
+.offline {
+    color: #5e0909;
+}
+.not-none {
+    font-weight: bold;
+}
 
 footer {background-color: #000;line-height: 60px;color:#fff;}
 footer .holder {width:1280px;text-align:center;margin:0 auto;}

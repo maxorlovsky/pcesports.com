@@ -214,12 +214,88 @@ else if ($controller == 'registerInHS') {
         sendMail($post['email'], 'PentaClick eSports Hearthstone tournament participation', $text);
     }
 }
-else if ($controller == 'chat') {
-    /*if ($action == 'send') {
+else if ($controller == 'statusCheck') {
+    $q = mysql_query('SELECT `t`.`challonge_id`, `hsf`.`player1_id`, `hsf`.`player2_id`, `hsf`.`done`
+    FROM `teams` AS `t`
+    LEFT JOIN `hs_fights` AS `hsf` ON (`t`.`challonge_id` = `hsf`.`player1_id` OR `t`.`challonge_id` = `hsf`.`player2_id`)
+    WHERE
+    `t`.`id` = '.(int)$post['tId'].' AND
+    `t`.`link` = "'.mysql_real_escape_string($post['code']).'" AND
+    `t`.`deleted` = 0
+    ');
+    if (mysql_num_rows($q) == 0) {
+        $answer['ok'] = 0;
+    }
+    else {
+        $r = mysql_fetch_object($q);
         
-    }*/
-    $answer['ok'] = 1;
-    $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('chat_disabled', 'pentaclick').'</p>';
+        mysql_query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$post['tId']);
+        
+        $answer['ok'] = 1;
+        
+        if ((isset($r->player1_id) || isset($r->player2_id)) && $r->done != 1) {
+            $q = mysql_query(
+            	'SELECT `name`, `online` '.
+                'FROM `teams` '.
+                'WHERE '.
+                '`challonge_id` = '.(int)($r->challonge_id==$r->player1_id?$r->player2_id:$r->player1_id).' AND '.
+                '`deleted` = 0'
+            );
+            if (mysql_num_rows($q)) {
+                $enemy = mysql_fetch_object($q);
+            }
+            
+            $answer['opponentName'] = $enemy->name;
+            $answer['opponentStatus'] = onlineStatus($enemy->online);
+        }
+        else {
+            $answer['opponentName'] = 'none';
+            $answer['opponentStatus'] = false;
+        }
+    }
+}
+else if ($controller == 'chat') {
+    $q = mysql_query('SELECT `challonge_id` FROM `teams` WHERE
+    `id` = '.(int)$post['tId'].' AND
+    `link` = "'.mysql_real_escape_string($post['code']).'" AND
+    `deleted` = 0
+    ');
+    if (mysql_num_rows($q) == 0) {
+        $answer['ok'] = 0;
+        $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('chat_disabled', 'pentaclick').'</p>';
+    }
+    else {
+        $r = mysql_fetch_object($q);
+        $q = mysql_query('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`
+        FROM `hs_fights` AS `f`
+        LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id`
+        LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id`
+        WHERE
+        `f`.`player1_id` = '.$r->challonge_id.' OR
+        `f`.`player2_id` = '.$r->challonge_id.' AND
+        `f`.`done` = 0
+        ');
+        if (mysql_num_rows($q)) {
+            $players = mysql_fetch_object($q);
+            
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$players->id1.'_vs_'.$players->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            if ($action == 'send') {
+                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;'.($post['tId']==$players->id1?$players->name1:$players->name2).'&#62; - '.$post['text'].'</p>';
+                fwrite($file, htmlspecialchars($content));
+            }
+            fclose($file);
+            
+            $chat = html_entity_decode(file_get_contents($fileName));
+            
+            $answer['ok'] = 1;
+            $answer['html'] = $chat;
+        }
+        else {
+            $answer['ok'] = 2;
+        }            
+    }
 }
 else if ($controller == 'leave') {
     if (!$post['tId'] || !$post['code']) {

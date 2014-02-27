@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-02-24 16:59+0200\n"
-"PO-Revision-Date: 2014-02-24 17:01+0200\n"
+"POT-Creation-Date: 2014-02-27 23:14+0200\n"
+"PO-Revision-Date: 2014-02-27 23:14+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -73,63 +73,63 @@ msgstr "Игрок уже зарегистрирован в турнире"
 msgid "battle_tag_incorrect_must_be_like"
 msgstr "БатлТаг не верный, должен выглядеть так"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:222
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:265
 msgid "chat_disabled"
 msgstr "Чат отключён"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:256
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:327
 msgid "good_luck"
 msgstr "Удачи"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:494
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:501
 msgid "january"
 msgstr "янв"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:495
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:502
 msgid "february"
 msgstr "фев"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:496
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:503
 msgid "march"
 msgstr "мар"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:497
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:504
 msgid "april"
 msgstr "апр"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:498
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:505
 msgid "may"
 msgstr "май"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:499
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:506
 msgid "june"
 msgstr "июн"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:500
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:507
 msgid "july"
 msgstr "июл"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:501
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:508
 msgid "august"
 msgstr "авг"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:502
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:509
 msgid "september"
 msgstr "сен"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:503
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:510
 msgid "october"
 msgstr "окт"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:504
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:511
 msgid "november"
 msgstr "нов"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:505
+#: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:512
 msgid "december"
 msgstr "дек"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:25
+#: D:\Work\pcesports\wp-content\themes\pentaclick/header.php:27
 msgid "sure_to_quit"
 msgstr "Вы уверены, что хотите отказатся от участия в турнире?"
 
@@ -318,13 +318,13 @@ msgstr "Открытие регистрации"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:23
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:35
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:93
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:99
 msgid "tournament_start"
 msgstr "Начало турнира"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:24
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:36
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:92
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:98
 msgid "official_timezone"
 msgstr "Официальная таймзона"
 
@@ -337,33 +337,53 @@ msgstr "Турнир начался"
 msgid "cant_delete_tournament_started"
 msgstr "Не возможно использовать удаление команды, турнир уже начался."
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:85
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:87
 msgid "edit_team"
 msgstr "Редактировать команду"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:86
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:88
 msgid "leave_tournament"
 msgstr "Покинуть турнир"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:90
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:92
 msgid "information"
 msgstr "Информация"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:94
+msgid "opponent_name"
+msgstr "Имя оппонента"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:96
+msgid "opponent_status"
+msgstr "Статус оппонента"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:100
 msgid "current_participants_count"
 msgstr "Текущее кол-во участников"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:99
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:101
+msgid "brackets_will_be_available"
+msgstr "Сетка турнира станет доступна"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:102
+msgid "link_to_brackets"
+msgstr "Ссылка на турнирную сетку"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:103
+msgid "brackets_reshufled"
+msgstr "Турнирная сетка перед началом будет перемешана"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:108
 msgid "battle_chat"
 msgstr "Батл Чат"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:101
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:110
 msgid "to_start_chat_text"
 msgstr ""
 "Что бы начать чат, напишите что то в текстовом блоке внизу и нажмите клавишу "
 "\"Enter\""
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:106
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:114
 msgid "attach_file"
 msgstr "Прикрепить файл"
 

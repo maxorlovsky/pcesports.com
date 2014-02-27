@@ -35,12 +35,14 @@ if (cOptions('game') == 'lol') {
 }
 else if (cOptions('game') == 'hs') {
     $q = mysql_query(
-    	'SELECT `t`.`id`, `t`.`name`, `t`.`approved`, `t`.`contact_info`, `t`.`challonge_id` FROM `teams` AS `t` WHERE '.
-    	' `tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
-    	' `game` = "hs" AND '.
-        ' `id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
-        ' `link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'" AND '.
-        ' `deleted` = 0'
+    	'SELECT `t`.`id`, `t`.`name`, `t`.`approved`, `t`.`challonge_id` '.
+        'FROM `teams` AS `t` '.
+        'WHERE '.
+    	'`t`.`tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
+    	'`t`.`game` = "hs" AND '.
+        '`t`.`id` = '.(int)$wp_query->query_vars['team_id'].' AND '.
+        '`t`.`link` = "'.mysql_real_escape_string($wp_query->query_vars['code']).'" AND '.
+        '`t`.`deleted` = 0'
     );
     $r = mysql_fetch_object($q);
     
@@ -89,9 +91,16 @@ $partNum = mysql_num_rows($q);
     <div class="menu inside-content">
         <h4><?=_e('information', 'pentaclick')?></h4>
         <div class="content-info">
+            <?=_e('opponent_name', 'pentaclick')?>: <span id="opponentName"></span>
+            <br />
+            <?=_e('opponent_status', 'pentaclick')?>: <span id="opponentStatus"></span> (<span id="opponentSec"></span> sec)
+            <br /><br />
             <p><?=_e('official_timezone', 'pentaclick')?> GMT+1</p>
             <p><?=_e('tournament_start', 'pentaclick')?>: 01.03.2014 14:00</p>
-            <p><?=_e('current_participants_count', 'pentaclick')?>: <?=$partNum?></p> 
+            <p><?=_e('current_participants_count', 'pentaclick')?>: <?=$partNum?></p>
+            <p><?=_e('brackets_will_be_available', 'pentaclick')?>: 28.02.2014 14:00</p>
+            <p><?=_e('link_to_brackets', 'pentaclick')?>: <a href="http://pentaclick.challonge.com/hs1/" target="_blank">http://pentaclick.challonge.com/hs1/</a></p>
+            <p><?=_e('brackets_reshufled', 'pentaclick')?></p>
         </div>
     </div> 
     
@@ -99,7 +108,6 @@ $partNum = mysql_num_rows($q);
         <h4><?=_e('battle_chat', 'pentaclick')?></h4>
         <div class="chat-content">
             <p id="notice"><?=_e('to_start_chat_text', 'pentaclick')?></p>
-            <p></p>
         </div>
         <div class="chat-input">
             <input type="text" id="chat-input" />
@@ -120,4 +128,10 @@ else {
     </div>
 </article>
 
-<?php get_footer(); ?>
+<?php
+
+wp_enqueue_script( 'profiler', get_template_directory_uri() . '/js/profiler.js', array(), '1', true);
+
+get_footer();
+
+?>
