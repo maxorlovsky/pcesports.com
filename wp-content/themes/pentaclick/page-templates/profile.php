@@ -111,7 +111,7 @@ $partNum = mysql_num_rows($q);
         </div>
         <div class="chat-input">
             <input type="text" id="chat-input" />
-            <div class="attach-file" title="<?=_e('attach_file', 'pentaclick')?>"></div>
+            <div id="uploadScreen" class="attach-file" title="<?=_e('attach_file', 'pentaclick')?>"></div>
         </div>
     </div>
     
@@ -130,6 +130,7 @@ else {
 
 <?php
 
+wp_enqueue_script( 'ajaxupload', get_template_directory_uri() . '/js/ajaxupload.js', array(), '1', true);
 wp_enqueue_script( 'profiler', get_template_directory_uri() . '/js/profiler.js', array(), '1', true);
 
 get_footer();

@@ -1,5 +1,5 @@
 <?php
-exit();
+//exit();
 if ($_GET['mailjob'] != 'runrun') {
     exit('.');
 }
@@ -71,7 +71,7 @@ We wish you all good luck in your upcoming games and we hope to see great plays 
 <br />
 PentaClick eSports.';*/
 
-$text = 'Уважаемая команда <b>%team%</b>,<br />
+/*$text = 'Уважаемая команда <b>%team%</b>,<br />
 Поздравляем вас. Вы достигли четвертьфинала!<br />
 <br />
 Мы хотим проинформировать вас, что все игры начиная с четвертифинала до финала будут сыграны в эту субботу, 9 фев.<br />
@@ -96,18 +96,42 @@ Violent Gaming EU против Bronzodia! и Æsy против Splendid Gaming<b
 <br />
 Мы желаем вам удачи в предстоящих боях и надеемся увидить от вас отличные игры.<br />
 <br />
+PentaClick eSports.';*/
+
+$text = 'Dear <b>%team%</b>,<br />
+the day almost come upon us!<br />
+<br />
+Here are some outlines about how our tournament will be held:<br />
+<br />
+Starting from 14:00 (GMT+1/CET) in your profiler (link bellow or in previous email) you will see your opponent status and name. You can add your opponent directly through battle.net invite by battle tag or chat about anything in battle chat. Remember, that Pentaclick eSports can read your Battle chat, so it is counts as official log/chat.<br />
+After inviting each other one of you must challenge other person to a battle.<br />
+Please do not forget that you can use only <b>1 class</b> in each best of three fight. For example if you started to play as Paladin, you must complete those best of three fights as Palading. But you <b>can change your cards</b> in the deck between the fights.<br />
+After each fight, when you have a victory screen you <span style="color: red">MUST TAKE A SCREENSHOT of it, where we can clearly see your nickname, opponent nickname and was you victory or not!</span><br />
+This screenshot must be afterwards uploaded into the battle chat, <u>upload button is located in the right bottom corner of battle chat</u>. Please keep in mind, that uploading unrelated images or spam uploading button will disqualify you from current tournament and maybe even the future ones. Also, there is a limit!<br />
+<br />
+After the games were played and images were uploaded organizators will going to check them and victorious player will be moved further in the bracket.<br />
+Player who was victorious will receive info about new opponent as soon as he will be ready! Opponent name, status and battle chat will be updated automatically.<br />
+<br /> 
+If you will be streaming the games via twitch or youtube, let us know, we will tell everyone about it!<br /> 
+<br />
+Battles for our tournament will only count if played after 1 march. 14:00 CET , when the tournament officially starts.<br />
+<br />
+Your profiler: <a href="%link%" target="_blank">%link%</a>
+<br />
+<br />
+Good luck.<br />
 PentaClick eSports.';
 
-$q = mysql_query('SELECT name, email FROM teams WHERE approved = 1 AND deleted = 0 AND game = "lol" and tournament_id = 1');
+$q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "hs" and tournament_id = 1');
 while ($r = mysql_fetch_object($q)) {
-    if (substr($r->email, -2) == 'ru') {
+    //if (substr($r->email, -2) == 'ru') {
         $msg = str_replace(
-            array('%team%'),
-            array($r->name),
+            array('%team%', '%link%'),
+            array($r->name, HSURL.'/profile/'.$r->id.'/'.$r->link.'/'),
             $text
         );
-        sendMail($r->email, 'PentaClick LoL tournament #1 - четвертьфиналы и финалы', $msg);
+        sendMail($r->email, 'PentaClick HS tournament #1', $msg);
         
         sleep(2);
-    }
+    //}
 }

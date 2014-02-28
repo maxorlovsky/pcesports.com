@@ -16,11 +16,6 @@ $('#chat-input').on('keyup', function(e) {
         e = window.event;
 	}
 
-    /*if (e.keyCode == 13 && e.shiftKey) {
-		return true;
-    }
-    else*/
-    
     if (e.keyCode == 13 && $.trim($(this).val())) {
         var text = $(this).val();
         $(this).val('');
@@ -67,6 +62,27 @@ $('#leave').on('click', function() {
     ajax(query);
 });
 
+new AjaxUpload(
+    $('#uploadScreen'), {
+    	action: '/wp-content/themes/pentaclick/ajax.php?lang='+lang+'&control=uploadScreenshot&tId='+tId+'&code='+code,
+    	//Name of the file input box  
+    	name: 'upload',
+    	onSubmit: function(file, ext){  
+    		if (! (ext && /^(jpg|png|jpeg)$/.test(ext))) {  
+    			alert('Only JPG, PNG files are allowed');  
+    			return false; 
+    		}
+    		//$('#uploadStatus').html('Upload...');  
+    	},  
+    	onComplete: function(file, data) {
+            data = JSON.parse(data);
+            if (data.ok == 0) {
+                alert(data.message);
+            }
+    	}  
+    }
+);
+
 // --------------------------------------------------------------------------------------------------------------------
 
 
@@ -83,8 +99,14 @@ profiler = {
             },
             success: function(answer) {
                 if (answer.ok != 2) {
+                    checkTop = parseInt($('.chat-content').prop('scrollTop')) + parseInt($('.chat-content').height()) + 10;
+                    checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
+                    
                     $('.chat-content').html(answer.html);
-                    $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
+                    
+                    if (checkTop == checkHeight) {
+                        $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
+                    }
                 }
             }
         }

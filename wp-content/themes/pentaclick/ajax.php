@@ -337,6 +337,68 @@ else if ($controller == 'leave') {
         }
     }
 }
+else if ($_GET['control'] == 'uploadScreenshot' && $_FILES['upload']) {
+    $mb = 5;
+    
+    $q = mysql_query('SELECT `challonge_id` FROM `teams` WHERE
+    `id` = '.(int)$_GET['tId'].' AND
+    `link` = "'.mysql_real_escape_string($_GET['code']).'" AND
+    `deleted` = 0
+    ');
+    
+    if (mysql_num_rows($q) == 0) {
+        $answer['ok'] = 0;
+        $answer['message'] = 'Error';
+    }
+    else if ($_FILES['upload']['size'] > 1024*$mb*1024) {
+        $answer['ok'] = 0;
+        $answer['message'] =  _p('file_size_big', 'pentaclick').': '.$mb.' MB';
+    }
+    else {
+        $r = mysql_fetch_object($q);
+        $q = mysql_query('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`
+        FROM `hs_fights` AS `f`
+        LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id`
+        LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id`
+        WHERE
+        `f`.`player1_id` = '.$r->challonge_id.' OR
+        `f`.`player2_id` = '.$r->challonge_id.' AND
+        `f`.`done` = 0
+        ');
+        if (mysql_num_rows($q)) {
+            $players = mysql_fetch_object($q);
+            
+            $name = $_FILES['upload']['name'];
+            $end = end(explode('.', $name));
+            
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/screenshots/'.$players->id1.'_vs_'.$players->id2.'_'.time().'.'.$end;
+            $fileUrl = get_site_url().'/screenshots/'.$players->id1.'_vs_'.$players->id2.'_'.time().'.'.$end;
+
+            if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
+                $answer['ok'] = 0;
+                $answer['message'] = _p('file_not_image', 'pentaclick');
+            }            
+            else if (!move_uploaded_file($_FILES['upload']['tmp_name'], $fileName)) {
+                $answer['ok'] = 0;
+                $answer['message'] = _p('file_cant_be_loaded', 'pentaclick');
+            }
+            else {
+                $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$players->id1.'_vs_'.$players->id2.'.txt';
+            
+                $file = fopen($fileName, 'a');
+                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($post['tId']==$players->id1?$players->name1:$players->name2).' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
+                fwrite($file, htmlspecialchars($content));
+                fclose($file);
+                
+                $answer['ok'] = 1;
+            }
+        }
+        else {
+            $answer['ok'] = 0;
+            $answer['message'] = 'Error';
+        }            
+    }
+}
 else {
     $answer['ok'] = 0;
     $answer['err'] = 'Control not found';

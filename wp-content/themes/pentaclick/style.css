@@ -631,7 +631,7 @@ body::first-letter { color: #5c66e9; }
     padding: 0 10px;
 }
 .menu.chat .chat-input input[type="text"] {
-    width: 315px;
+    width: 345px;
     padding: 3px 0;
     border: 0;
 }
