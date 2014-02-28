@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-02-27 23:14+0200\n"
-"PO-Revision-Date: 2014-02-27 23:14+0200\n"
+"POT-Creation-Date: 2014-02-28 16:32+0200\n"
+"PO-Revision-Date: 2014-02-28 16:33+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -77,9 +77,25 @@ msgstr "БатлТаг не верный, должен выглядеть так
 msgid "chat_disabled"
 msgstr "Чат отключён"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:327
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:332
 msgid "good_luck"
 msgstr "Удачи"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:355
+msgid "file_size_big"
+msgstr "Размер файла слишком большой, допустимый размер:"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:379
+msgid "file_not_image"
+msgstr "Файл не картинка"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:383
+msgid "file_cant_be_loaded"
+msgstr "Файл не возможно загрузить"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:387
+msgid "screenshot_limit"
+msgstr "Достигнут лимит на загрузку файлов, обратитесь по этому вопросу на"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:501
 msgid "january"

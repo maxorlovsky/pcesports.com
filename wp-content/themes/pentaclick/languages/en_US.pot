@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-02-27 23:13+0200\n"
-"PO-Revision-Date: 2014-02-27 23:14+0200\n"
+"POT-Creation-Date: 2014-02-28 16:32+0200\n"
+"PO-Revision-Date: 2014-02-28 16:32+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -76,9 +76,25 @@ msgstr "BattleTag is incorrect it must look like"
 msgid "chat_disabled"
 msgstr "Chat is currently disabled"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:327
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:332
 msgid "good_luck"
 msgstr "Good luck"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:355
+msgid "file_size_big"
+msgstr "File size is too big, allowed:"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:379
+msgid "file_not_image"
+msgstr "File is not image"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:383
+msgid "file_cant_be_loaded"
+msgstr "File can't be loaded"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:387
+msgid "screenshot_limit"
+msgstr "Screenshot limit reached, please contact"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/functions.php:501
 msgid "january"

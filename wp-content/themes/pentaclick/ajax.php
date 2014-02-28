@@ -356,7 +356,7 @@ else if ($_GET['control'] == 'uploadScreenshot' && $_FILES['upload']) {
     }
     else {
         $r = mysql_fetch_object($q);
-        $q = mysql_query('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`
+        $q = mysql_query('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`screenshots`
         FROM `hs_fights` AS `f`
         LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id`
         LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id`
@@ -382,6 +382,10 @@ else if ($_GET['control'] == 'uploadScreenshot' && $_FILES['upload']) {
                 $answer['ok'] = 0;
                 $answer['message'] = _p('file_cant_be_loaded', 'pentaclick');
             }
+            else if ($players->screenshots > 10) {
+                $answer['ok'] = 0;
+                $answer['message'] = _p('screenshot_limit', 'pentaclick').' pentaclickesports@gmail.com';
+            }
             else {
                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$players->id1.'_vs_'.$players->id2.'.txt';
             
@@ -390,6 +394,19 @@ else if ($_GET['control'] == 'uploadScreenshot' && $_FILES['upload']) {
                 fwrite($file, htmlspecialchars($content));
                 fclose($file);
                 
+                mysql_query('UPDATE `hs_fights` SET `screenshots` = `screenshots` + 1
+                WHERE `player1_id` = '.$r->challonge_id.' OR `player2_id` = '.$r->challonge_id);
+                
+                if ($players->screenshots > 1) {
+                    sendMail('pentaclickesports@gmail.com',
+                    'Game check required. PentaClick eSports. '.$players->id1.' vs '.$players->id2,
+                    'Challonge id: '.$r->challonge_id.'<br />
+                    Player 1: '.$players->name1.' ('.$players->player1_id.')<br />
+                    Player 2: '.$players->name2.' ('.$players->player2_id.')<br />
+                    Chat url: <a href="'.get_site_url().'/chats/'.$players->id1.'_vs_'.$players->id2.'.txt" target="_blank">clickz</a><br />
+                    <br>
+                    IP: '.$_SERVER['REMOTE_ADDR']);
+                }
                 $answer['ok'] = 1;
             }
         }
