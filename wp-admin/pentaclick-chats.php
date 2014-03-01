@@ -127,7 +127,7 @@ if (mysql_num_rows($activeGames)) {
             ?>
             </div>
             <div class="chat-input">
-                <input type="text" id="chat-input" attr-id="<?=$r->id1?>_vs_<?=$r->id2?>" />
+                <input type="text" class="chat-submit" id="chat-input" attr-id="<?=$r->id1?>_vs_<?=$r->id2?>" />
             </div>
         </div>
     <?
@@ -137,7 +137,7 @@ if (mysql_num_rows($activeGames)) {
 <script>
 jQuery('.chat-content').scrollTop(jQuery('.chat-content').prop('scrollHeight'));
 
-jQuery('#chat-input').on('keyup', function(e) {
+jQuery('.chat-submit').on('keyup', function(e) {
     if (!e) {
         e = window.event;
 	}
