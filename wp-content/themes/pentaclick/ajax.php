@@ -390,7 +390,7 @@ else if ($_GET['control'] == 'uploadScreenshot' && $_FILES['upload']) {
                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$players->id1.'_vs_'.$players->id2.'.txt';
             
                 $file = fopen($fileName, 'a');
-                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($post['tId']==$players->id1?$players->name1:$players->name2).' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
+                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($_GET['tId']==$players->id1?$players->name1:$players->name2).' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
                 fwrite($file, htmlspecialchars($content));
                 fclose($file);
                 
