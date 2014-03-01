@@ -98,7 +98,7 @@ Violent Gaming EU против Bronzodia! и Æsy против Splendid Gaming<b
 <br />
 PentaClick eSports.';*/
 
-$text = 'Dear <b>%team%</b>,<br />
+/*$text = 'Dear <b>%team%</b>,<br />
 the day almost come upon us!<br />
 <br />
 Here are some outlines about how our tournament will be held:<br />
@@ -120,6 +120,15 @@ Your profiler: <a href="%link%" target="_blank">%link%</a>
 <br />
 <br />
 Good luck.<br />
+PentaClick eSports.';*/
+
+$text = 'Dear <b>%team%</b>,<br />
+Fights are about to start, please enter your profiler!<br />
+<br />
+Your profiler: <a href="%link%" target="_blank">%link%</a>
+<br />
+<br />
+Good luck.<br />
 PentaClick eSports.';
 
 $q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "hs" and tournament_id = 1');
@@ -130,7 +139,7 @@ while ($r = mysql_fetch_object($q)) {
             array($r->name, HSURL.'/profile/'.$r->id.'/'.$r->link.'/'),
             $text
         );
-        sendMail($r->email, 'PentaClick HS tournament #1', $msg);
+        sendMail($r->email, 'PentaClick HS tournament #1, reminder', $msg);
         
         sleep(2);
     //}
