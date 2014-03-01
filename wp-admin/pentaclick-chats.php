@@ -62,6 +62,7 @@ h4:first-letter { color:#5c66e9; }
     width: 400px;
     background-color: #fff;
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 .chat h4 {
     background-color: #eee;
