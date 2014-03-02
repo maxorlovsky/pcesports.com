@@ -4,7 +4,7 @@
         <?
         $q = mysql_query(
     		'SELECT id, name FROM `teams` WHERE '.
-    		' `tournament_id` = 1 AND '.
+    		' `tournament_id` = '.(int)cOptions('tournament-lol-number').' AND '.
     		' `game` = "lol" AND '.
             ' `approved` = 1 AND '.
             ' `deleted` = 0'
