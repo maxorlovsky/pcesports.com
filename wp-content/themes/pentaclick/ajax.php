@@ -38,13 +38,6 @@ if ($controller == 'registerTeam') {
         $suc['email'] = '1;'._p('approved', 'pentaclick');
     }
     
-    if (!$post['contact']) {
-        $err['contact'] = '0;'._p('field_empty', 'pentaclick');
-    }
-    else if($post['contact']) {
-        $suc['contact'] = '1;'._p('approved', 'pentaclick');
-    }
-    
     $players = array();
     $checkForSame = array();
     for($i=1;$i<=7;++$i) {
@@ -55,7 +48,7 @@ if ($controller == 'registerTeam') {
             $response = runAPI('/euw/v1.3/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
             $q = mysql_query(
         		'SELECT * FROM `players` WHERE '.
-        		' `tournament_id` = 1 AND '.
+        		' `tournament_id` = '.(int)cOptions('tournament-lol-number').' AND '.
         		' `name` = "'.mysql_real_escape_string($post['mem'.$i]).'" AND '.
         		' `game` = "lol" AND '.
                 ' `approved` = 1 AND '.
@@ -98,7 +91,7 @@ if ($controller == 'registerTeam') {
         mysql_query(
     		'INSERT INTO `teams` SET '.
             ' `game` = "lol", '.
-            ' `tournament_id` = 1, '.
+            ' `tournament_id` = '.(int)cOptions('tournament-lol-number').', '.
             ' `timestamp` = NOW(), '.
     		' `name` = "'.mysql_real_escape_string($post['team']).'", '.
             ' `email` = "'.mysql_real_escape_string($post['email']).'", '.
@@ -114,7 +107,7 @@ if ($controller == 'registerTeam') {
             mysql_query(
         		'INSERT INTO `players` SET '.
                 ' `game` = "lol", '.
-                ' `tournament_id` = 1, '.
+                ' `tournament_id` = '.(int)cOptions('tournament-lol-number').', '.
                 ' `team_id` = '.(int)$teamId.', '.
         		' `name` = "'.mysql_real_escape_string($v['name']).'", '.
                 ' `player_num` = "'.(int)$k.'", '.
@@ -126,11 +119,11 @@ if ($controller == 'registerTeam') {
         
         $text = str_replace(
             array('%name%', '%team%', '%teamId%', '%code%', '%url%'),
-            array($players[1]['name'], $post['team'], $teamId, $code, get_site_url()),
+            array($players[1]['name'], $post['team'], $teamId, $code, LOLURL),
             $text
         );
         
-        sendMail($post['email'], 'PentaClick eSports tournament participation', $text);
+        sendMail($post['email'], 'PentaClick eSports LoL tournament participation', $text);
     }
 }
 else if ($controller == 'registerInHS') {

@@ -558,7 +558,7 @@ body::first-letter { color: #5c66e9; }
 }
 .gamesList .game p span {
     display: inline-block;
-    width: 260px;
+    width: 230px;
 }
 
 .padding-up {

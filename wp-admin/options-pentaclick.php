@@ -29,7 +29,7 @@ if (isset($_POST) && $_POST['action'] == 'update') {
 include('./admin-header.php');
 
 //Getting options for pentaclick
-$q = mysql_query('SELECT * FROM options');
+$q = mysql_query('SELECT * FROM options ORDER BY `position`');
 $options = array();
 $i = 0;
 while ($r = mysql_fetch_object($q)) {
@@ -37,6 +37,7 @@ while ($r = mysql_fetch_object($q)) {
     $options[$i]['value'] = $r->value;
     $options[$i]['field'] = $r->field;
     $options[$i]['type'] = $r->type;
+    $options[$i]['position'] = $r->position;
     ++$i;
 }
 ?>
@@ -53,7 +54,14 @@ while ($r = mysql_fetch_object($q)) {
 <?php settings_fields('options'); ?>
 
 <table class="form-table">
-<? foreach($options as $f) { ?>
+<?
+$prevPosition = 1;
+foreach($options as $f) {
+    if ($prevPosition != $f['position']) {
+        ?><tr valign="top"><td colspan="2"><hr /></td></tr><?
+        $prevPosition = $f['position'];
+    }
+?>
     <tr valign="top">
         <th scope="row" style="width: 350px"><label for="<?=$f['name']?>"><?=$f['field']?></label></th>
         <td>
@@ -67,7 +75,9 @@ while ($r = mysql_fetch_object($q)) {
             <? } ?>
         </td>
     </tr>
-<? } ?>
+<?
+}
+?>
 
 <?php do_settings_fields('options', 'default'); ?>
 

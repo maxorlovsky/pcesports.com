@@ -18,8 +18,6 @@
                     <input type="text" name="mem<?=$i?>" placeholder="<?=_e('member', 'pentaclick')?> #<?=$i?>" />
                     <div id="mem<?=$i?>-msg" class="message hidden"></div>
                 <? } ?>
-                <textarea name="contact" placeholder="<?=_e('contact_info', 'pentaclick')?> <?=_e('contact_info_add', 'pentaclick')?>"></textarea>
-                <div id="contact-msg" class="message hidden"></div>
             </form>
             <div class="clear"></div>
             <button id="add-team"><?=_e('join', 'pentaclick')?></button>

@@ -7,9 +7,8 @@ set_time_limit(300);
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
 
-
 //LoL things
-/*$text = '
+$text = '
 Team 1: %team1%<br />
 Players 1:<br />
 %players1%<br />
@@ -114,7 +113,7 @@ foreach($answer as $f) {
 
         sleep(3);
     }
-}*/
+}
 
 //HS things
 $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-hs').'/matches.json', array(), 'state=open');
