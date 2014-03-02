@@ -27,7 +27,7 @@
                             <?
                             $q2 = mysql_query(
                         		'SELECT name, player_id FROM `players` WHERE '.
-                        		' `tournament_id` = 1 AND '.
+                        		' `tournament_id` = '.(int)cOptions('tournament-lol-number').' AND '.
                         		' `team_id` = '.$r->id.' '.
                                 ' ORDER BY player_num '
                             );
