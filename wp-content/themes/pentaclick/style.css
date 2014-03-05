@@ -384,7 +384,7 @@ body::first-letter { color: #5c66e9; }
     text-align: center;
     width: 100%;
 }
-#register-content {
+#register-content, #register-content-profile {
     width: 1280px;
     margin: 0 auto 0 auto;
     color: #bbb;
@@ -392,7 +392,7 @@ body::first-letter { color: #5c66e9; }
 #register-content h1 {
     padding-top: 40px;
 }
-#register-content input[type='text'], #register-content textarea {
+#register-content input[type='text'], #register-content textarea, #register-content-profile input[type='text'] {
     width: 60%;
     height: 40px;
     float: left;
@@ -408,7 +408,15 @@ body::first-letter { color: #5c66e9; }
     padding-top: 5px;
     padding-bottom: 5px;
 }
-#join-form .message {
+
+#register-content-profile {
+    width: 480px;
+}
+#register-content-profile input[type='text'] {
+    width: 50%;
+}
+
+.form .message, #join-form .message {
     float: left;
     height: 29px;
     min-width: 29px;
@@ -417,14 +425,26 @@ body::first-letter { color: #5c66e9; }
     margin-left: 10px;
     margin-top: 2px;
 }
-#join-form .error {
+.form .error, #join-form .error {
     background: url('images/design/error.png') no-repeat left center;
     color: #ea6b6b;
 }
-#join-form .success {
+.form .success, #join-form .success {
     background: url('images/design/success.png') no-repeat left center;
     color: #32b229;
 }
+
+#register-content-profile .form .message {
+    padding-top: 0;
+    margin-top: 0;
+    width: 130px;
+    height: 44px;
+    font-size: 12px;
+}
+#register-content-profile .form .success {
+    line-height: 44px;
+}
+
 .reg-completed {
     text-align: center;
     font-size: 32px;
@@ -599,6 +619,9 @@ body::first-letter { color: #5c66e9; }
     cursor: default;
     color: #999;
 }
+.menu.links a.active {
+    background-color: #eee;
+}
 .menu.links strong {
     color: #000;
     font-size: 18px;
@@ -619,11 +642,12 @@ body::first-letter { color: #5c66e9; }
 }
 .menu.chat .chat-content {
     padding: 5px 10px;
-    height: 300px;
+    min-height: 300px;
     border-bottom: 1px solid #000;
     background-color: #ddd;
     font-size: 15px;
     overflow-y: auto;
+    resize: vertical;
 }
 .menu.chat .chat-content #notice {
     font-size: 13px;

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PentaClick eSports\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tags/twentytwelve\n"
-"POT-Creation-Date: 2014-02-28 16:32+0200\n"
-"PO-Revision-Date: 2014-02-28 16:32+0200\n"
+"POT-Creation-Date: 2014-03-05 22:52+0200\n"
+"PO-Revision-Date: 2014-03-05 22:53+0200\n"
 "Last-Translator: LifeStream IT <lifestreamit@gmail.com>\n"
 "Language-Team: PentaClick <max.orlovsky@gmail.com>\n"
 "Language: en_US\n"
@@ -19,10 +19,10 @@ msgstr ""
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:19
 #: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:32
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:42
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:52
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:149
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:162
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:45
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:150
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:270
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:283
 msgid "field_empty"
 msgstr "Field can not be empty"
 
@@ -36,63 +36,66 @@ msgstr "Team name must be less then 60 symbols"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:28
 #: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:38
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:45
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:79
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:158
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:168
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:72
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:177
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:279
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:289
 msgid "approved"
 msgstr "Approved"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:35
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:165
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:286
 msgid "email_invalid"
 msgstr "Email must be valid it will be used in the future"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:65
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:58
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:163
 msgid "summoner_not_found_euw"
 msgstr "Summoner is not found on EUW server"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:68
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:61
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:166
 msgid "summoner_low_lvl"
 msgstr "Summoner level is not 30"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:71
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:64
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:169
 msgid "same_summoner"
 msgstr "Same Summoner can not be in one team"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:74
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:67
 msgid "summoner_already_registered"
 msgstr "Summoner is already registered in the tournament"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:152
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:273
 msgid "player_already_registered"
 msgstr "Player is already registered in the tournament"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:155
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:276
 msgid "battle_tag_incorrect_must_be_like"
 msgstr "BattleTag is incorrect it must look like"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:265
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:386
 msgid "chat_disabled"
 msgstr "Chat is currently disabled"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:332
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:453
 msgid "good_luck"
 msgstr "Good luck"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:355
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:476
 msgid "file_size_big"
 msgstr "File size is too big, allowed:"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:379
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:500
 msgid "file_not_image"
 msgstr "File is not image"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:383
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:504
 msgid "file_cant_be_loaded"
 msgstr "File can't be loaded"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:387
+#: D:\Work\pcesports\wp-content\themes\pentaclick/ajax.php:508
 msgid "screenshot_limit"
 msgstr "Screenshot limit reached, please contact"
 
@@ -178,7 +181,7 @@ msgstr ""
 #: D:\Work\pcesports\wp-content\themes\pentaclick/hs-register.php:9
 #: D:\Work\pcesports\wp-content\themes\pentaclick/hs-register.php:19
 #: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:9
-#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:27
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:25
 msgid "join_tournament"
 msgstr "Join tournament"
 
@@ -192,7 +195,7 @@ msgid "contact_email"
 msgstr "Contact email"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/hs-register.php:17
-#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:25
+#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:23
 msgid "join"
 msgstr "Join"
 
@@ -215,22 +218,16 @@ msgid "team_name"
 msgstr "Team name"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:15
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:128
 msgid "cpt_nickname"
 msgstr "Captain nickname"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:15
 #: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:18
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:128
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:132
 msgid "member"
 msgstr "Member"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:21
-msgid "contact_info"
-msgstr "Contact information"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/lol-register.php:21
-msgid "contact_info_add"
-msgstr ""
-"(skype, facebook or other social network, phone number or all of the above)"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-hs.php:5
 #: D:\Work\pcesports\wp-content\themes\pentaclick/nav-lol.php:5
@@ -333,13 +330,15 @@ msgstr "Register open"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:23
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:35
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:99
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:150
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:198
 msgid "tournament_start"
 msgstr "Tournament start"
 
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:24
 #: D:\Work\pcesports\wp-content\themes\pentaclick/pentaclick-home.php:36
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:98
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:149
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:197
 msgid "official_timezone"
 msgstr "Official timezone"
 
@@ -352,53 +351,89 @@ msgstr "Tournament started"
 msgid "cant_delete_tournament_started"
 msgstr "Can't delete the team, tournament already in process."
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:87
-msgid "edit_team"
-msgstr "Edit team"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:88
-msgid "leave_tournament"
-msgstr "Leave tournament"
-
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:92
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:109
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:143
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:191
 msgid "information"
 msgstr "Information"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:94
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:110
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:117
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:185
+msgid "notifications"
+msgstr "Notifications"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:111
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:125
+msgid "edit_team"
+msgstr "Edit team"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:112
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:186
+msgid "profile_protection"
+msgstr "Profile protection"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:113
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:187
+msgid "leave_tournament"
+msgstr "Leave tournament"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:119
+msgid "receive_hour_notif"
+msgstr "Receive notification 1 hour before tournament starts"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:120
+msgid "receive_day_notif"
+msgstr "Receive notification 1 day before tournament starts"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:138
+msgid "save"
+msgstr "Save"
+
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:145
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:193
 msgid "opponent_name"
 msgstr "Opponent name"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:96
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:147
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:195
 msgid "opponent_status"
 msgstr "Opponent status"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:100
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:151
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:199
 msgid "current_participants_count"
 msgstr "Current participants count"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:101
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:152
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:200
 msgid "brackets_will_be_available"
 msgstr "Brackets will be available"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:102
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:153
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:201
 msgid "link_to_brackets"
 msgstr "Link to brackets"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:103
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:154
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:202
 msgid "brackets_reshufled"
 msgstr "Brackets will be reshufled on tournament start"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:108
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:159
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:207
 msgid "battle_chat"
 msgstr "Battle chat"
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:110
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:161
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:209
 msgid "to_start_chat_text"
 msgstr ""
 "To start chat, write down a text in bottom size of the block and click "
 "\"Enter\""
 
-#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:114
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:165
+#: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/profile.php:213
 msgid "attach_file"
 msgstr "Attach file"
 
@@ -427,3 +462,11 @@ msgstr "Don't worry, your team is already approved and must be in the"
 #: D:\Work\pcesports\wp-content\themes\pentaclick/page-templates/verify.php:38
 msgid "list"
 msgstr "list"
+
+#~ msgid "contact_info"
+#~ msgstr "Contact information"
+
+#~ msgid "contact_info_add"
+#~ msgstr ""
+#~ "(skype, facebook or other social network, phone number or all of the "
+#~ "above)"
