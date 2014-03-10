@@ -93,7 +93,7 @@ while($ro = mysql_fetch_object($q)) {
 }
 
 $q = mysql_query(
-'SELECT `hour`, `day` FROM `notifications` WHERE `team_id` = '.(int)$r->id);
+'SELECT `hour`, `day`, `subscribe` FROM `notifications` WHERE `team_id` = '.(int)$r->id);
 $ro = mysql_fetch_object($q);
 foreach($ro as $k=>$v) {
     $notifications[$k] = $v;
@@ -118,6 +118,7 @@ if (time() - 86400 >= strtotime(cOptions('tourn-start-date-lol'))) {
         <div class="content-info">
             <div><input type="checkbox" id="receive-tournament-hour-notif" <?if ($notifications['hour']==1){?>checked="checked"<?}?> /> <label for="receive-tournament-hour-notif"><?=_e('receive_hour_notif', 'pentaclick')?></label></div>
             <div><input type="checkbox" id="receive-tournament-day-notif" <?if ($notifications['day']==1){?>checked="checked"<?}?> /> <label for="receive-tournament-day-notif"><?=_e('receive_day_notif', 'pentaclick')?></label></div>
+            <div><input type="checkbox" id="subscribe" <?if ($notifications['subscribe']==1){?>checked="checked"<?}?> /> <label for="subscribe"><?=_e('subscribe_to_future_tournaments', 'pentaclick')?></label></div>
         </div>
     </div>
     
@@ -193,6 +194,7 @@ $partNum = mysql_num_rows($q);
         <div class="content-info">
             <div><input type="checkbox" id="receive-tournament-hour-notif" <?if ($notifications['hour']==1){?>checked="checked"<?}?> /> <label for="receive-tournament-hour-notif"><?=_e('receive_hour_notif', 'pentaclick')?></label></div>
             <div><input type="checkbox" id="receive-tournament-day-notif" <?if ($notifications['day']==1){?>checked="checked"<?}?> /> <label for="receive-tournament-day-notif"><?=_e('receive_day_notif', 'pentaclick')?></label></div>
+            <div><input type="checkbox" id="subscribe" <?if ($notifications['subscribe']==1){?>checked="checked"<?}?> /> <label for="subscribe"><?=_e('subscribe_to_future_tournaments', 'pentaclick')?></label></div>
         </div>
     </div>
      

@@ -250,6 +250,14 @@ else if ($controller == 'notifications') {
             '`team_id` = '.(int)$post['tId']
         );
     }
+    else if ($action == 'subscribe') {
+        mysql_query(
+    		'UPDATE `notifications` SET '.
+            '`subscribe` = '.(int)$post['checked'].' '.
+            'WHERE '.
+            '`team_id` = '.(int)$post['tId']
+        );
+    }
     else {
         $answer['ok'] = 0;
     }

@@ -195,6 +195,28 @@ $('#receive-tournament-day-notif').on('click', function() {
     ajax(query);
 });
 
+$('#subscribe').on('click', function() {
+    var checked = 0;
+    if ($(this).is(':checked') === true) {
+        checked = 1;
+    }
+    
+    var query = {
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            control: 'notifications',
+            action: 'subscribe',
+            post: 'tId='+tId+'&code='+code+'&checked='+checked
+        },
+        success: function(answer) {},
+        error: function() {
+            alert('Error');
+        }
+    }
+    ajax(query);
+});
+
 // --------------------------------------------------------------------------------------------------------------------
 
 
