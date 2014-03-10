@@ -3,7 +3,7 @@
     <div class="content" id="participants-content">
         <?
         $q = mysql_query(
-    		'SELECT id, name FROM `teams` WHERE '.
+    		'SELECT id, name, contact_info FROM `teams` WHERE '.
     		' `tournament_id` = '.(int)cOptions('tournament-hs-number').' AND '.
     		' `game` = "hs" AND '.
             ' `approved` = 1 AND '.
@@ -14,9 +14,9 @@
         }
         else {
             while($r = mysql_fetch_object($q)) { ?>
-                <div class="block" title="<?=$r->name?>">
-                    <h3 title="<?=$r->name?>">
-                        <?=strlen($r->name) > 17?substr($r->name,0,16).'...':$r->name?>
+                <div class="block" title="<?=$r->contact_info?>">
+                    <h3 title="<?=$r->contact_info?>">
+                        <?=strlen($r->contact_info) > 17?substr($r->contact_info,0,16).'...':$r->contact_info?>
                     </h3>
                     <div class="clear"></div>
                 </div>

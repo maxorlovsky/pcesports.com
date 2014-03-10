@@ -31,6 +31,7 @@ if (is_home()) {
         get_template_part( 'hs', 'participants' );
         get_template_part( 'hs', 'register' );
         get_template_part( 'hs', 'format' );
+        get_template_part( 'hs', 'fame' );
     }
     else {
         //get_template_part( 'pentaclick', 'about' );

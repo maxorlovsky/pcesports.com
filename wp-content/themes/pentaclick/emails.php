@@ -1,5 +1,5 @@
 <?php
-
+exit('Not required!');
 if ($_GET['mailjob'] != 'runrun') {
     exit('.');
 }

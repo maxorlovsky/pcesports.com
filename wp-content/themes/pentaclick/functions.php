@@ -172,7 +172,8 @@ add_action( 'customize_register', 'pentaclick_customize_register' );
 */
 function pentaclick_admin_menus() {
      add_menu_page('PentaClick settings', 'PC eSports', 'edit_posts', 'options-pentaclick.php', '', '', 50);
-     add_submenu_page('options-pentaclick.php', 'Tournament chats', 'Tournament chats', 'manage_options', 'pentaclick-chats.php');   
+     add_submenu_page('options-pentaclick.php', 'Tournament chats', 'Tournament chats', 'manage_options', 'pentaclick-chats.php');
+     add_submenu_page('options-pentaclick.php', 'Emails sender', 'Emails sender', 'manage_options', 'pentaclick-emails.php');   
 }
 add_action("admin_menu", "pentaclick_admin_menus");
 
