@@ -105,7 +105,7 @@ foreach($answer as $f) {
                     );
                     
                     mysql_query('INSERT INTO `lol_fights` SET `game_id` = '.$f2->gameId);
-                    sendMail('max.orlovsky@gmail.com', 'PentaClick tournament - Result', $msg);
+                    sendMail('max.orlovsky@gmail.com', 'PentaClick LoL Tournament - Result', $msg);
                     break(1);
                 }
             }

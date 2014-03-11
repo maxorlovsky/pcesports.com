@@ -44,14 +44,12 @@ if (isset($_POST) && $_POST['action'] == 'update' && $_POST['secret'] == '123890
             array($v['name'], get_site_url(), LOLURL, HSURL),
             nl2br($_POST['message'])
         );
+        $msg = stripslashes($msg);
         
-        //'PentaClick HS tournament #2 - come join'
-        //sendMail($v['email'], $_POST['email-header'], $msg);
-        dump($v);
-        
+        sendMail($v['email'], $_POST['email-header'], $msg);
         sleep(1);
     }
-    exit();
+
     $done = 1;
 }
 
@@ -86,7 +84,7 @@ include('./admin-header.php');
 <table class="form-table">
     <tr>
         <th scope="row" style="width: 350px"><label for="email-header">Email Header</label></th>
-        <td><input name="email-header" type="text" id="email-header" value="" class="regular-text" /></td>
+        <td><input name="email-header" type="text" id="email-header" value="<?=$_POST['email-header']?>" class="regular-text" /></td>
     </tr>
     <tr>
         <th scope="row" style="width: 350px"><label>Game</label></th>
@@ -107,7 +105,7 @@ include('./admin-header.php');
     <tr>
         <th scope="row" style="width: 350px"><label>Message</label></th>
         <td>
-            <textarea class="regular-textarea" name="message"><?=$emailDefaultText?></textarea>
+            <textarea class="regular-textarea" name="message"><?=($_POST['message']?$_POST['message']:$emailDefaultText)?></textarea>
         </td>
     </tr>
     <tr>
@@ -115,7 +113,9 @@ include('./admin-header.php');
         <td><input name="secret" type="text" id="secret" value="" class="regular-text" /></td>
     </tr>
 </table>
+
 <?php submit_button(); ?>
+
 </form>
 
 </div>
