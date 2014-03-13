@@ -1018,7 +1018,7 @@ footer .cr {float: right;}
     #header {
         height: 64px;
         position:absolute;
-        width: 460px;
+        width: 465px;
     }
     #navbar .logo {
         margin: -4px 0 0 10px;
@@ -1167,7 +1167,7 @@ footer .cr {float: right;}
         font-size: 20px;
     }
     footer {
-        width: 460px;
+        width: 465px;
     }
     footer .holder {
         width: 450px;
