@@ -1042,7 +1042,7 @@ footer .cr {float: right;}
     #header, footer, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
         width: 465px;
     }
-    #participants-content, #format-content {
+    #participants-content {
         width: 460px;
     }
     
@@ -1087,7 +1087,7 @@ footer .cr {float: right;}
         margin: 0;
         background-size: contain;
         height: 225px;
-        margin: -6px 0 0 0;
+        margin: -8px 0 0 0;
     }
     #home-content .promo .reg-but-holder {
         width: 210px;
@@ -1151,8 +1151,9 @@ footer .cr {float: right;}
         width: 170px;
     }
     #format-content {
-        margin: 0 5px;
+        margin: 0 15px;
         font-size: 15px;
+        width: 95%;
     }
     #format-content h1 {
         padding-top: 20px;
