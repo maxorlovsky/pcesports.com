@@ -74,6 +74,8 @@ body {
 #wrapper {
     width:100%;
     margin:0 auto;
+    min-height:100%;
+    position: relative;    
 }
 .header-holder {
     height: 95px;
@@ -688,20 +690,38 @@ body::first-letter { color: #5c66e9; }
     font-weight: bold;
 }
 
-footer {background-color: #000;line-height: 60px;color:#fff;}
-footer .holder {width:1280px;text-align:center;margin:0 auto;}
+footer {
+    background-color: #000;
+    line-height: 60px;
+    color:#fff;
+    margin-top: -5px;
+}
+footer .holder {
+    text-align:center;
+    margin-left: 20px;
+}
 footer .logos {}
 footer .logos img {
     margin-top:12px;
     margin-left: 10px;
     float: left;
 }
-footer .cr {float: right;}
+footer .cr {
+    float: right;
+    margin-right: 20px;
+}
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
     html, body {
         /*overflow-y: hidden;*/
+    }
+    #header, footer, #navbar, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList, #participants-content {
+        width: 1265px;
+    }
+    #format-content {
+        margin: 0 20px;
+        width: 1225px;
     }
     #wrapper {
         width: auto;
@@ -717,8 +737,9 @@ footer .cr {float: right;}
     .connect-insider {
         margin-left: 325px;
     }
-    footer .holder, #connect-content, #home-content .twitch, .gamesList {
-        width: 1260px;
+    footer .holder {
+        width: 1255px;
+        margin-left: 10px;
     }
     footer .cr {
         margin-right: 10px;
@@ -751,7 +772,7 @@ footer .cr {float: right;}
     .move #navbar .globalnav ul .active {
         margin-top: -1px;
     }
-    .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
+    #header, footer, #navbar, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
         width: 1009px;
     }
     #participants-content {
