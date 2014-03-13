@@ -707,12 +707,55 @@ footer .cr {float: right;}
         width: auto;
         margin: 0;
     }
+    .twitter-timeline {
+        width: 490px;
+        margin-right: 10px;
+    }
+    .fb-like-box {
+        margin-left: 10px;
+    }
+    .connect-insider {
+        margin-left: 325px;
+    }
+    footer .holder, #connect-content, #home-content .twitch, .gamesList {
+        width: 1260px;
+    }
+    footer .cr {
+        margin-right: 10px;
+    }
 }
 
 /* Galaxy tab */
 @media (max-width: 1024px) {
     .bracket-content-wrapper {
         display: none;
+    }
+    #header {
+        height: 105px;
+    }
+    #navbar .logo {
+        margin: -7px 0 0 25px;
+    }
+    #navbar .logo a img {
+        width: 170px
+    }
+    #navbar .globalnav {
+        width: 75%;
+    }
+    #navbar .globalnav li a {
+        font-size: 17px;
+    }
+    #navbar .globalnav a small {
+        font-size: 10px;
+    }
+    .move #navbar .globalnav ul .active {
+        margin-top: -1px;
+    }
+    .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
+        width: 1009px;
+    }
+    #participants-content {
+        width: 999px;
     }
     #header .socicons {
         margin-right: 3px;
@@ -726,13 +769,9 @@ footer .cr {float: right;}
     .twitter-timeline {
         display: none;
     }
-    .content {
-        width: 1024px;
-    }
     #home-content .promo {
-        width: 1024px;
-        margin: 0;
-        background-size: contain;
+        margin: -6px 0 0 0;
+        background-size: contain !important;
         height: 480px;
     }
     #home-content .promo .reg-but-holder {
@@ -746,21 +785,13 @@ footer .cr {float: right;}
     .fb-like-box {
         margin-left: 100px;
     }
-    #connect-content {
-        width: 1024px;
-    }
-    .participants-content-wrapper {
-        width: 1024px;
-    }
     #participants-content {
-        width: 1004px;
         margin: 0 10px;
     }
     #participants-content .block {
         padding: 15px;
     }
     #register-content {
-        width: 1024px;
         margin: 0;
     }
     #register-content h1 {
@@ -770,7 +801,6 @@ footer .cr {float: right;}
         margin: 0 10px;
     } 
     .register-content-wrapper {
-        width: 1024px;
         padding-bottom: 30px;
     }
     #join-tournament {
@@ -782,26 +812,35 @@ footer .cr {float: right;}
     #register-content textarea {
         height: 90px;
     }
-    .format-content-wrapper {
-        width: 1024px;
-    }
     #format-content, #text-content {
-        width: 1004px;
+        width: 999px;
         margin: 0 10px;
         font-size: 18px;
     }
-    footer {
-        width: 1024px;
-    }
     footer .holder {
-        width: 1004px;
-        margin: 0 10px;
+        width: 994px;
+        margin-left: 10px;
     }
     footer .logos img {
         margin-top: 15px;
     }
     footer .cr {
         font-size: 14px;
+        margin-right: 10px;
+    }
+    
+    .gamesList {
+        margin-bottom: 25px;
+    }
+    .gamesList .game, .gamesList .game img {
+        width: 350px;
+    }
+    .gamesList .game p {
+        margin: 450px 10px 10px 10px;
+        font-size: 16px;
+    }
+    .gamesList .game p span {
+        width: 200px;
     }
 }
 
@@ -810,6 +849,35 @@ footer .cr {float: right;}
     .bracket-content-wrapper {
         display: none;
     }
+    #header {
+        height: 96px;
+    }
+    #navbar .logo {
+        margin: 0 0 0 10px;
+        height: 72px;
+        width: 145px;
+    }
+    #navbar .logo a img {
+        width: 140px
+    }
+    #navbar .globalnav li a {
+        font-size: 17px;
+    }
+    #navbar .globalnav a small {
+        font-size: 10px;
+    }
+    #navbar .globalnav ul li:first-child {
+        display: none;
+    }
+    .move #navbar .globalnav ul .active {
+        margin-top: -1px;
+    }
+    .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
+        width: 753px;
+    }
+    #participants-content {
+        width: 748px;
+    }
     #header .socicons {
         margin-right: 3px;
     }
@@ -817,13 +885,11 @@ footer .cr {float: right;}
         margin-right: 20px;
     }
     #navbar .globalnav {
-        min-width: 550px;
+        min-width: 595px;
+        width: 595px;
     }
     #connect, .connect-content-wrapper, #connect-url, .twitch {
         display: none;
-    }
-    .content {
-        width: 768px;
     }
     button, input[type='submit'], #reg-button {
         padding: 8px 20px;
@@ -834,7 +900,6 @@ footer .cr {float: right;}
         padding: 7px 19px;
     }
     #home-content .promo {
-        width: 768px;
         margin: 0;
         background-size: contain;
         height: 360px;
@@ -844,7 +909,6 @@ footer .cr {float: right;}
         margin-top: 160px;
     }
     #participants-content {
-        width: 758px;
         margin: 0 5px;
         padding-bottom: 30px;
     }
@@ -869,7 +933,6 @@ footer .cr {float: right;}
         font-size: 14px;
     }
     #register-content {
-        width: 768px;
         margin: 0;
     }
     #register-content h1 {
@@ -902,8 +965,7 @@ footer .cr {float: right;}
         width: 250px;
     }
     #format-content {
-        width: 758px;
-        margin: 0 5px;
+        margin: 0 20px;
         font-size: 18px;
     }
     #format-content h1 {
@@ -912,25 +974,39 @@ footer .cr {float: right;}
         font-size: 26px;
     }
     #text-content {
-        width: 748px;
         margin: 90px 10px 0 10px;
         font-size: 16px;
+    }
+    #format-content, #text-content {
+        width: 733px
     }
     #text-content h1 {
         font-size: 26px;
     }
-    footer {
-        width: 768px;
-    }
     footer .holder {
-        width: 748px;
-        margin: 0 10px;
+        width: 743px;
+        margin-left: 10px;
     }
     footer .logos img {
         margin-top: 15px;
     }
     footer .cr {
-        font-size: 14px;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+    
+    .gamesList {
+        margin-bottom: 25px;
+    }
+    .gamesList .game, .gamesList .game img {
+        width: 350px;
+    }
+    .gamesList .game p {
+        margin: 450px 10px 10px 10px;
+        font-size: 16px;
+    }
+    .gamesList .game p span {
+        width: 200px;
     }
 }
 
