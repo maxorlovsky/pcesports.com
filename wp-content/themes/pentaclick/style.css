@@ -1165,6 +1165,9 @@ footer .cr {float: right;}
     #text-content h1 {
         font-size: 20px;
     }
+    footer {
+        width: 450px;
+    }
     footer .holder {
         width: 450px;
         margin-left: 10px;
