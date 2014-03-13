@@ -872,7 +872,7 @@ footer .cr {float: right;}
     .move #navbar .globalnav ul .active {
         margin-top: -1px;
     }
-    .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
+    #header, footer, #navbar, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
         width: 753px;
     }
     #participants-content {
@@ -903,6 +903,7 @@ footer .cr {float: right;}
         margin: 0;
         background-size: contain;
         height: 360px;
+        margin: -8px 0 0 0;
     }
     #home-content .promo .reg-but-holder {
         width: 310px;
@@ -1039,7 +1040,7 @@ footer .cr {float: right;}
     .move #navbar .globalnav ul .active {
         margin-top: -1px;
     }
-    #header, footer, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
+    #header, footer, #navbar, .content, #home-content .promo, #connect-content, .participants-content-wrapper, #register-content, .register-content-wrapper, .format-content-wrapper, #home-content .twitch, .gamesList {
         width: 465px;
     }
     #participants-content {
