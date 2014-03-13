@@ -384,17 +384,26 @@ else if ($controller == 'statusCheck') {
     }
 }
 else if ($controller == 'chat') {
-    $q = mysql_query('SELECT `challonge_id` FROM `teams` WHERE
+    $q = mysql_query('SELECT `game`, `challonge_id` FROM `teams` WHERE
     `id` = '.(int)$post['tId'].' AND
     `link` = "'.mysql_real_escape_string($post['code']).'" AND
     `deleted` = 0
     ');
+    $r = mysql_fetch_object($q);
+    
     if (mysql_num_rows($q) == 0) {
         $answer['ok'] = 0;
         $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('chat_disabled', 'pentaclick').'</p>';
     }
+    else if (mysql_num_rows($q) != 0 && $action == 'send' &&
+            (($r->game == 'lol' && cOptions('tournament-start-lol') == 0) ||
+            ($r->game == 'hs' && cOptions('tournament-start-hs') == 0))
+            ) {
+        $answer['ok'] = 0;
+        $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('tournament_not_started', 'pentaclick').'</p>';
+    }
     else {
-        $r = mysql_fetch_object($q);
+        //$r = mysql_fetch_object($q);
         $q = mysql_query('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`
         FROM `hs_fights` AS `f`
         LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id`
@@ -421,6 +430,10 @@ else if ($controller == 'chat') {
             $answer['ok'] = 1;
             $answer['html'] = $chat;
         }
+        else if ($action == 'send') {
+            $answer['ok'] = 0;
+            $answer['html'] = '<p id="notice">'.$post['text'].'</p><p>'._p('no_enemy', 'pentaclick').'</p>';
+        }  
         else {
             $answer['ok'] = 2;
         }            
