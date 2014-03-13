@@ -851,6 +851,7 @@ footer .cr {float: right;}
     }
     #header {
         height: 96px;
+        position:absolute;
     }
     #navbar .logo {
         margin: 0 0 0 10px;
