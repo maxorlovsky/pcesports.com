@@ -116,15 +116,17 @@ foreach($answer as $f) {
 }
 
 //HS things
-$answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-hs').'/matches.json', array(), 'state=open');
-
-foreach($answer as $f) {
-    $q = mysql_query('SELECT `challonge_tournament_id` FROM `hs_fights`
-    WHERE `challonge_tournament_id` = '.$f->match->id);
-    if (mysql_num_rows($q) == 0) {
-        mysql_query('INSERT INTO `hs_fights` SET
-        `challonge_tournament_id` = '.$f->match->id.', 
-        `player1_id` = '.$f->match->player1_id.',
-        `player2_id` = '.$f->match->player2_id);
+if (cOptions('tournament-start-hs') == 1) {
+    $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-hs').'/matches.json', array(), 'state=open');
+    
+    foreach($answer as $f) {
+        $q = mysql_query('SELECT `challonge_tournament_id` FROM `hs_fights`
+        WHERE `challonge_tournament_id` = '.$f->match->id);
+        if (mysql_num_rows($q) == 0) {
+            mysql_query('INSERT INTO `hs_fights` SET
+            `challonge_tournament_id` = '.$f->match->id.', 
+            `player1_id` = '.$f->match->player1_id.',
+            `player2_id` = '.$f->match->player2_id);
+        }
     }
 }
