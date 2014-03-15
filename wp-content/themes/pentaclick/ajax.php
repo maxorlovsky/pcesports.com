@@ -383,10 +383,6 @@ else if ($controller == 'statusCheck') {
             $answer['opponentStatus'] = false;
         }
     }
-    else {
-        $answer['opponentName'] = 'none';
-        $answer['opponentStatus'] = false;
-    }
 }
 else if ($controller == 'chat') {
     $q = mysql_query('SELECT `game`, `challonge_id` FROM `teams` WHERE
