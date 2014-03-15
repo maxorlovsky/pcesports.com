@@ -409,8 +409,7 @@ else if ($controller == 'chat') {
         LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id`
         LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id`
         WHERE
-        `f`.`player1_id` = '.$r->challonge_id.' OR
-        `f`.`player2_id` = '.$r->challonge_id.' AND
+        (`f`.`player1_id` = '.$r->challonge_id.' OR `f`.`player2_id` = '.$r->challonge_id.') AND
         `f`.`done` = 0
         ');
         if (mysql_num_rows($q)) {
