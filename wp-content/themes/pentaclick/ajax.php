@@ -355,6 +355,9 @@ else if ($controller == 'statusCheck') {
     ');
     if (mysql_num_rows($q) == 0) {
         $answer['ok'] = 0;
+                
+        $answer['opponentName'] = 'none';
+        $answer['opponentStatus'] = false;
     }
     else {
         $r = mysql_fetch_object($q);
@@ -436,6 +439,7 @@ else if ($controller == 'chat') {
         }  
         else {
             $answer['ok'] = 2;
+            $answer['html'] = '';
         }            
     }
 }
