@@ -29,7 +29,7 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUE
         }
 
         $answer['ok'] = 1;
-        $answer['html'] = html_entity_decode(file_get_contents($fileName));
+        $answer['html'] = stripslashes(html_entity_decode(file_get_contents($fileName)));
     }
     else {
         $answer['ok'] = 0;
@@ -115,16 +115,10 @@ h4:first-letter { color:#5c66e9; }
 <?
 if (mysql_num_rows($activeGames)) {
     while($r = mysql_fetch_object($activeGames)) {
-        //$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$r->id1.'_vs_'.$r->id2.'.txt';
     ?>
         <div class="chat">
             <h4>Chat (<?=$r->name1?> vs <?=$r->name2?>) [<?=$r->screenshots?>] [#<?=$r->id?>]</h4>
             <div class="chat-content" id="<?=$r->id1?>_vs_<?=$r->id2?>">
-            <?
-            //if (file_exists($fileName)) {
-                //echo html_entity_decode(file_get_contents($fileName));
-            //}
-            ?>
             </div>
             <div class="chat-input">
                 <input type="text" class="chat-submit" id="chat-input" attr-id="<?=$r->id1?>_vs_<?=$r->id2?>" />
