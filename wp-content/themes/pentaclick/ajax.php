@@ -424,7 +424,7 @@ else if ($controller == 'chat') {
             }
             fclose($file);
             
-            $chat = html_entity_decode(file_get_contents($fileName));
+            $chat = stripslashes(html_entity_decode(file_get_contents($fileName)));
             
             $answer['ok'] = 1;
             $answer['html'] = $chat;
