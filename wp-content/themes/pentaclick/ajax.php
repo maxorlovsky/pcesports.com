@@ -350,16 +350,9 @@ else if ($controller == 'statusCheck') {
     WHERE
     `t`.`id` = '.(int)$post['tId'].' AND
     `t`.`link` = "'.mysql_real_escape_string($post['code']).'" AND
-    `t`.`deleted` = 0
+    `t`.`deleted` = 0 AND
+    `hsf`.`done` =0
     ');
-    $answer['debug1'] = 'SELECT `t`.`challonge_id`, `hsf`.`player1_id`, `hsf`.`player2_id`, `hsf`.`done`
-    FROM `teams` AS `t`
-    LEFT JOIN `hs_fights` AS `hsf` ON (`t`.`challonge_id` = `hsf`.`player1_id` OR `t`.`challonge_id` = `hsf`.`player2_id`)
-    WHERE
-    `t`.`id` = '.(int)$post['tId'].' AND
-    `t`.`link` = "'.mysql_real_escape_string($post['code']).'" AND
-    `t`.`deleted` = 0
-    ';
     if (mysql_num_rows($q) == 0) {
         $answer['ok'] = 0;
     }
@@ -369,9 +362,7 @@ else if ($controller == 'statusCheck') {
         mysql_query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$post['tId']);
         
         $answer['ok'] = 1;
-        
-        $answer['debug2'] = $r->player1_id.'---'.$r->player2_id.'---'.$r->done;
-        
+
         if ((isset($r->player1_id) || isset($r->player2_id)) && $r->done != 1) {
             $q = mysql_query(
             	'SELECT `name`, `online` '.
