@@ -45,19 +45,10 @@ if (isset($_POST) && $_POST['action'] == 'update' && $_POST['secret'] == '123890
             nl2br($_POST['message'])
         );
         $msg = stripslashes($msg);
-        echo $v['email'];
-        echo '<br>';
-        echo $_POST['email-header'];
-        echo '<br>';
-        echo $msg;
-        echo '<br>';
-        echo '<br>';
-        echo '<br>';
-        echo '<br>';
-        //sendMail($v['email'], $_POST['email-header'], $msg);
-        //sleep(1);
+        
+        sendMail($v['email'], $_POST['email-header'], $msg);
+        sleep(1);
     }
-    exit();
 
     $done = 1;
 }
