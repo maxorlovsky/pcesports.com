@@ -411,7 +411,7 @@ function sendMail($email, $subject, $msg) {
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
-    $cfg['smtpMailFrom'] = 'PentaClick eSports';
+    $cfg['smtpMailFrom'] = 'Pentaclick eSports';
 
     $mailData = 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
     $mailData .= 'Subject: =?UTF-8?B?'.base64_encode($subject). "=?=\r\n";

@@ -131,7 +131,7 @@ if (cOptions('tournament-start-hs') == 1) {
     }
 }
 
-sendMail('max.orlovsky@gmail.com', 'PentaClick LoL Tournament - Result', 'test');
+sendMail('neobahamut@inbox.lv', 'PentaClick LoL Tournament - Result', 'test');
 //Mail subscription things
 /*SELECT `t`.`name` ,  `t`.`email` 
 FROM  `notifications` AS  `n` 
