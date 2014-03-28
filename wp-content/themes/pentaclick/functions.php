@@ -407,6 +407,7 @@ function sql_last_id() {
 function sendMail($email, $subject, $msg) {
     // SMTP config
     $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+    $cfg['smtpVisionaryMail'] = 'info@pcesports.com';
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
@@ -414,11 +415,11 @@ function sendMail($email, $subject, $msg) {
 
     $mailData = 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
     $mailData .= 'Subject: =?UTF-8?B?'.base64_encode($subject). "=?=\r\n";
-    $mailData .= 'Reply-To: '.$cfg['smtpMailName']. "\r\n";
+    $mailData .= 'Reply-To: '.$cfg['smtpVisionaryMail']. "\r\n";
     $mailData .= 'MIME-Version: 1.0'."\r\n";
     $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
     $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n";
-    $mailData .= 'From: "'.$cfg['smtpMailFrom'].'" <'.$cfg['smtpMailName'].'>'."\r\n";
+    $mailData .= 'From: "'.$cfg['smtpMailFrom'].'" <'.$cfg['smtpVisionaryMail'].'>'."\r\n";
     $mailData .= 'To: '.$email.' <'.$email.'>'."\r\n";
     $mailData .= 'X-Priority: 3'."\r\n\r\n";
     
@@ -441,7 +442,7 @@ function sendMail($email, $subject, $msg) {
     fputs($socket, base64_encode($cfg['smtpMailPass']) . "\r\n");
     if (!serverParse($socket, '235', __LINE__)) return false;
     
-    fputs($socket, 'MAIL FROM: <'.$cfg['smtpMailName'].'>'."\r\n");
+    fputs($socket, 'MAIL FROM: <'.$cfg['smtpVisionaryMail'].'>'."\r\n");
     if (!serverParse($socket, '250', __LINE__)) return false;
     
     fputs($socket, 'RCPT TO: <'.$email.'>'."\r\n");

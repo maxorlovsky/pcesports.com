@@ -130,3 +130,12 @@ if (cOptions('tournament-start-hs') == 1) {
         }
     }
 }
+
+sendMail('max.orlovsky@gmail.com', 'PentaClick LoL Tournament - Result', 'test');
+//Mail subscription things
+/*SELECT `t`.`name` ,  `t`.`email` 
+FROM  `notifications` AS  `n` 
+LEFT JOIN  `teams` AS  `t` ON  `n`.`team_id` =  `t`.`id` 
+WHERE  `n`.`day` =1
+AND  `t`.`game` =  "lol"
+AND  `t`.`tournament_id` =2*/
