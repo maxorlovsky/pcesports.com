@@ -1,5 +1,5 @@
 <?php
-exit('Not required!');
+//exit('Not required!');
 if ($_GET['mailjob'] != 'runrun') {
     exit('.');
 }
@@ -122,24 +122,42 @@ Your profiler: <a href="%link%" target="_blank">%link%</a>
 Good luck.<br />
 PentaClick eSports.';*/
 
-$text = 'Dear <b>%team%</b>,<br />
+/*$text = 'Dear <b>%team%</b>,<br />
 Fights are about to start, please enter your profiler!<br />
 <br />
 Your profiler: <a href="%link%" target="_blank">%link%</a>
 <br />
 <br />
 Good luck.<br />
-PentaClick eSports.';
+PentaClick eSports.';*/
 
-$q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "hs" and tournament_id = 1');
+$text = 'Hello <b>%team%</b>.<br />
+<br />
+This is just a friendly reminder. Tournament will start today (in 1 hour) at 13:00 (CET/GMT+1). Don not forget to log in!<br />
+<br />
+Your profiler: <a href="%link%" target="_blank">%link%</a><br />
+<br />
+Best regards,<br />
+PentaClick eSports<br />
+<br />
+<i>web: <span style="color: #3d85c6;">http://www.pceports.com</span><br />
+email: <span style="color: #3d85c6;">info@pcesports.com</span><br />
+phone: +37129788896<br />
+business manager (skype): <span style="color: #3d85c6;">maxorlovsky</span><br />
+community manager (skype): <span style="color: #3d85c6;">mr.aven</span><br />
+community manager (skype): <span style="color: #3d85c6;">magnez-templarpenthouse</span><br />
+<br />
+Have ideas? Want to help? Mail us!</i>';
+
+$q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "lol" and tournament_id = 2');
 while ($r = mysql_fetch_object($q)) {
     //if (substr($r->email, -2) == 'ru') {
         $msg = str_replace(
             array('%team%', '%link%'),
-            array($r->name, HSURL.'/profile/'.$r->id.'/'.$r->link.'/'),
+            array($r->name, LOLURL.'/profile/'.$r->id.'/'.$r->link.'/'),
             $text
         );
-        sendMail($r->email, 'PentaClick HS tournament #1, reminder', $msg);
+        sendMail($r->email, 'PentaClick LoL tournament #1, reminder', $msg);
         
         sleep(2);
     //}
