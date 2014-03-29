@@ -1,5 +1,5 @@
 #php_value max_execution_time 300
-php_flag display_errors 1
+#php_flag display_errors 1
 
 <FilesMatch "\.(js|json)$">
     <IfModule mod_headers.c>
