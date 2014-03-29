@@ -157,7 +157,7 @@ while ($r = mysql_fetch_object($q)) {
             array($r->name, LOLURL.'/profile/'.$r->id.'/'.$r->link.'/'),
             $text
         );
-        sendMail($r->email, 'PentaClick LoL tournament #1, reminder', $msg);
+        sendMail($r->email, 'PentaClick LoL tournament #2, reminder', $msg);
         
         sleep(2);
     //}

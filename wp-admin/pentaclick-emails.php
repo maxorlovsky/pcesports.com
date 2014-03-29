@@ -15,6 +15,7 @@ if ( ! current_user_can( 'edit_posts' ) )
 $title = __('PentaClick Email Sender');
 
 if (isset($_POST) && $_POST['action'] == 'update' && $_POST['secret'] == '123890') {
+    exit('Require rewrite using notification mod!');
     $emails = array();
     $where = '`tournament_id` = 1 AND ';
     if ($_POST['game'] != 'both') {
