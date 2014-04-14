@@ -711,6 +711,12 @@ footer .cr {
     margin-right: 20px;
 }
 
+#giveaway {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
     html, body {
