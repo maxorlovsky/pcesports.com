@@ -20,7 +20,7 @@ if ($breakdown[0] == 'dev' || $breakdown[1] == 'dev') {
     define('DB_USER', 'pcuserdev');
     define('DB_PASSWORD', 'd9829*d@)09aSJD22@');
     define('DB_NAME', 'pentaclick_dev');
-    define('DB_HOST', 'pcesports.com');
+    define('DB_HOST', '77.93.30.172');
     define('ENV', 'dev');
     define('HSURL', 'http://hs.dev.pcesports.com');
     define('LOLURL', 'http://lol.dev.pcesports.com');
