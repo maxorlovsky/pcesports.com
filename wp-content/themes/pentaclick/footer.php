@@ -1,8 +1,6 @@
 </section>
 
-<div id="giveaway">
-	<a href="https://www.facebook.com/photo.php?fbid=561751590605957" target="_blank"></a>
-</div>
+<a id="giveaway" href="https://www.facebook.com/photo.php?fbid=561751590605957" target="_blank"></a>
 
 <footer>
     <div class="holder">
