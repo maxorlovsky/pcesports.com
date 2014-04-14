@@ -720,6 +720,7 @@ footer .cr {
 	background-image: url('images/teemo-giveaway.png');
 	background-position: 0px 0px;
 	cursor: pointer;
+	z-index:10;
 }
 #giveaway:hover {
 	background-position: -203.90px 0px;
