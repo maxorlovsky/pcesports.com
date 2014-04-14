@@ -1,7 +1,7 @@
 </section>
 
 <div id="giveaway">
-	<a href="https://www.facebook.com/photo.php?fbid=561751590605957" target="_blank"><img width="50%" src="<?php bloginfo('template_directory'); ?>/images/teemo-giveaway.png" /></a>
+	<a href="https://www.facebook.com/photo.php?fbid=561751590605957" target="_blank"></a>
 </div>
 
 <footer>

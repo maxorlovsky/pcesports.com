@@ -715,6 +715,14 @@ footer .cr {
 	position: fixed;
 	left: 0;
 	bottom: 0;
+	width: 194px;
+	height: 200px;
+	background-image: url('images/teemo-giveaway.png');
+	background-position: 0px 0px;
+	cursor: pointer;
+}
+#giveaway:hover {
+	background-position: -203.90px 0px;
 }
 
 /* Landscape phone to portrait tablet */
