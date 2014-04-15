@@ -878,6 +878,9 @@ footer .cr {
     .gamesList .game p span {
         width: 200px;
     }
+	#giveaway {
+		display: none;
+	}
 }
 
 /* Portrait tablet to landscape and desktop */
@@ -1046,6 +1049,9 @@ footer .cr {
     .gamesList .game p span {
         width: 200px;
     }
+	#giveaway {
+		display: none;
+	}
 }
 
 /* Landscape phones and down */
@@ -1242,4 +1248,7 @@ footer .cr {
     #fame-content img {
         max-height: 230px;
     }
+	#giveaway {
+		display: none;
+	}
 }
