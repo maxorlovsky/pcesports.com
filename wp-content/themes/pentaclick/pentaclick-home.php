@@ -12,11 +12,11 @@
         <div class="clear"></div>
     </div>
     
-    <section class="gamesList" title="League of Legends">
+    <section class="gamesList">
         <a class="game" href="<?=LOLURL.'/'.qtrans_getLanguage()?>">
             <h1>League of Legends</h1>
-            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-0.png" alt="League of Legends" title="League of Legends" />
-            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-1.png" alt="League of Legends" title="League of Legends" />
+            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-0.png" />
+            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-lol-1.png" />
             <p>
                 <?=_e('next_tournament', 'pentaclick')?> #<?=cOptions('tournament-lol-number')?><br />
                 <span><?=_e('registration_open', 'pentaclick')?></span> <?=cOptions('register-open-lol')?><br />
@@ -25,10 +25,10 @@
             </p>
         </a>
         
-        <a class="game" href="<?=HSURL.'/'.qtrans_getLanguage()?>" title="Hearthstone">
+        <a class="game" href="<?=HSURL.'/'.qtrans_getLanguage()?>">
             <h1>Hearthstone</h1>
-            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-0.png" alt="Hearthstone" title="Hearthstone" />
-            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-1.png" alt="Hearthstone" title="Hearthstone" />
+            <img class="gray" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-0.png" />
+            <img class="colored" src="<?php bloginfo('template_directory'); ?>/images/design/gamelist-picker-hs-1.png" />
             <p>
                 <?=_e('next_tournament', 'pentaclick')?> #<?=cOptions('tournament-hs-number')?><br />
                 <span><?=_e('registration_open', 'pentaclick')?></span> <?=cOptions('register-open-hs')?><br />
