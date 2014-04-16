@@ -1,0 +1,8 @@
+/* Reset like things */
+img,p,td{border: 0;margin: 0;padding: 0;}
+a{text-decoration: none;}
+a:hover{text-decoration: underline;}
+
+body {
+    background-image:url(../images/bg.jpg);
+}

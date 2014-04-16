@@ -15,10 +15,6 @@
             <input type="password" name="password" id="password" placeholder="Password" />
             
             <input type="submit" value="Enter" name="submit_login" onclick="$(this).attr('readonly', 'readonly');" class="enter" />
-            
-			<div id="login_guest_form">
-				<button onclick="$('#login').val('Demo'); $('#password').val('demo'); $('.enter').trigger('click'); return false;">Login as Demo</button>
-			</div>
 		</form>
     </div>
     

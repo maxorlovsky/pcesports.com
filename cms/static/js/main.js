@@ -5,7 +5,9 @@ var menuSubArrow = 0;
 
 //--------------------------------------------------------------------------------------------------------------------
 
-$('#menusub').find('#submenu').offset({ top: $('header').height() + $('.menu').height() + 10, left: $('#site_name_val').position().left-1 });
+if ($('#site_name_val').length > 0) {
+	$('#menusub').find('#submenu').offset({ top: $('header').height() + $('.menu').height() + 10, left: $('#site_name_val').position().left-1 });
+}
 
 //Visual things
 if (logged_in) {

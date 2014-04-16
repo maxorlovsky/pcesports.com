@@ -35,10 +35,7 @@ else if(isset($_POST['control']) && $_POST['control']) {
 }
 //If not admin and not ajax, opening just website
 else {
-    //require_once dirname(__FILE__).'/web/index.php';
-
-    echo 'Direct access registered.<br />';
-    echo '<a href="'._cfg('site').'/admin">Please move to "CMS" directory</a>';
+    require_once dirname(__FILE__).'/web/index.php';
 }
 
 //(c) MaxOrlovsky

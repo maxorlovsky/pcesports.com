@@ -5,7 +5,7 @@
 
 //=====================================================
 // Making some defines for easyer coding (main)
-$cfg['dir'] = $_SERVER['DOCUMENT_ROOT'];
+$cfg['dir'] = $_SERVER['DOCUMENT_ROOT'].'/web';
 $cfg['cmsdir'] = dirname(__DIR__);
 date_default_timezone_set('Europe/Riga');
 //=====================================================
@@ -16,9 +16,9 @@ $breakDown = explode('.', $_SERVER['HTTP_HOST']);
 if ($breakDown[0] == 'dev') { //Development environment
     $cfg['env'] = 'dev';
 }
-/*else if ($explodeHref[1] == 'themages' || $explodeHref[2] == 'themages') { //themages.net domain //Test environment
+else if ($breakDown[1] == 'test' || $explodeHref[1] == 'test') { //Test environment
     $cfg['env'] = 'test';
-}*/
+}
 else {
     //This is where CMS go live
     $cfg['env'] = 'prod';
@@ -37,46 +37,69 @@ switch ( $cfg['env'] )
 //=====================================================
 case 'prod':
     // DB config
-    $cfg['dbHost'] ='localhost';
-    $cfg['dbBase'] ='cms';
-    $cfg['dbUser'] ='cms';
-    $cfg['dbPass'] ='ajsdoi91j209d0jdSADo2j1';
+    $cfg['dbHost'] ='127.0.0.1';
+    $cfg['dbBase'] ='pentaclick_prod';
+    $cfg['dbUser'] ='pcuserprod';
+    $cfg['dbPass'] ='ASDIJ201*S*D912kka';
     $cfg['dbPort'] =3306;
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-    $cfg['site'] = 'http://www.themages.net';
+    $cfg['site'] = 'http://www.pcesports.com';
     
     // SMTP config
-    $cfg['smtpMailName'] = 'max.orlovsky@gmail.com';
+    $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-    $cfg['smtpMailPass'] = 'knyztsei36171889731589';
-    $cfg['smtpMailFrom'] = 'Max Orlovsky (TheMages CMS)';
+    $cfg['smtpMailPass'] = 'knyaveclickius888';
+    $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
 	
 	break;
+//=====================================================
+// Test Env
+//=====================================================
+case 'test':
+	// DB config
+	$cfg['dbHost'] ='127.0.0.1';
+	$cfg['dbBase'] ='pentaclick_test';
+	$cfg['dbUser'] ='pcusertest';
+	$cfg['dbPass'] ='s12WD@#$asdaAD2';
+	$cfg['dbPort'] =3306;
 
+	//Admin email (in case of errors)
+	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
+	$cfg['site'] = 'http://test.pcesports.com';
+
+	// SMTP config
+	$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+	$cfg['smtpMailPort'] = '465';
+	$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
+	$cfg['smtpMailPass'] = 'knyaveclickius888';
+	$cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+
+	break;
+		
 //=====================================================
 // Dev Env
 //=====================================================
 case 'dev':
 	// DB config
     $cfg['dbHost'] ='77.93.30.172';
-    $cfg['dbBase'] ='cms';
-    $cfg['dbUser'] ='cms';
-    $cfg['dbPass'] ='ajsdoi91j209d0jdSADo2j1';
+    $cfg['dbBase'] ='pentaclick_dev';
+    $cfg['dbUser'] ='pcuserdev';
+    $cfg['dbPass'] ='d9829*d@)09aSJD22@';
     $cfg['dbPort'] =3306;
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-    $cfg['site'] = 'http://dev.themages.net';
+    $cfg['site'] = 'http://dev.pcesports.com';
     
     // SMTP config
-    $cfg['smtpMailName'] = 'max.orlovsky@gmail.com';
+    $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-    $cfg['smtpMailPass'] = 'knyztsei36171889731589';
-    $cfg['smtpMailFrom'] = 'Max Orlovsky (TheMages CMS)';
+    $cfg['smtpMailPass'] = 'knyaveclickius888';
+    $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
     
 	break;
 }
