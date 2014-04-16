@@ -1,21 +1,40 @@
 #php_value max_execution_time 300
 php_flag display_errors 1
 
-<FilesMatch "\.(js|json)$">
-    <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin "*"
-    </IfModule>
-</FilesMatch>
+AddDefaultCharset UTF-8
 
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
+Options -Indexes
+Options +FollowSymLinks
+
+<Files ~ "(.tpl)">
+    Order allow,deny
+    Deny from all
+    Require all denied
+</Files>
+
 RewriteEngine On
 RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
 
-# END WordPress
+#RewriteRule ^content - [L]
+#RewriteRule ^content/ - [L]
 
+#RewriteRule ^admin/*/ - [L]
+RewriteRule ^updates/? - [L]
+RewriteRule ^cms/static/? - [L]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+RewriteRule ^admin/updates/CHANGELOG.txt /updates/CHANGELOG.txt [QSA,L]
+
+RewriteRule ^([a-z]+)/?$ /index.php?language=$1 [QSA,L]
+RewriteRule ^([a-z]+)/(.*)/?$ /index.php?language=$1&val1=$2 [QSA,L]
+RewriteRule ^([a-z]+)/(.*)/(.*)/?$ /index.php?language=$1&val1=$2&val2=$3 [QSA,L]
+
+#<FilesMatch "\.(js|json)$">
+#    <IfModule mod_headers.c>
+#        Header set Access-Control-Allow-Origin "*"
+#    </IfModule>
+#</FilesMatch>
+
+#RewriteRule ^p/([^/]*)/([^/]*)/([^/]*)/([^/]*)$ /?p=$1&val1=$2&val2=$3&val3=$4 [QSA,L]

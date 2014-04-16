@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'lintelregular';
+    src: url('../fonts/lintel-regular-webfont.eot');
+    src: url('../fonts/lintel-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/lintel-regular-webfont.woff') format('woff'),
+         url('../fonts/lintel-regular-webfont.ttf') format('truetype'),
+         url('../fonts/lintel-regular-webfont.svg#lintelregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

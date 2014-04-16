@@ -1,0 +1,535 @@
+/* Reset like things */
+img,p,td{border: 0;margin: 0;padding: 0;}
+a{text-decoration: none;}
+a:hover{text-decoration: underline;}
+
+/* Main CSS things */
+html {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-family: Visitor_Rus;
+    background-color: #f1f1f1;
+}
+.relative {
+    position: relative;
+}
+.cursor, .pointer {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+.fleft {
+    float: left !important;
+}
+.fright {
+    float: right !important;
+}
+.clear {
+    clear: both;
+}
+.centered {
+    text-align: center;
+}
+.b {
+	font-weight: bold;
+}
+.red {
+	color: red;
+}
+#hint {
+    border: 2px solid #0a7bb0;
+    font-size: 14px;
+    padding: 2px;
+    display: none;
+    position: absolute;
+    background-color: #eee;
+    top: 0;
+    left: 0;
+    border-radius: 4px;
+    font-family: Open Sans;
+}
+button, input[type="submit"] {
+	width: 100%;
+	font-size: 18px;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+    
+    background: #3d3636;
+    background: -moz-linear-gradient(top,  #3d3636 0%, #000000 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3d3636), color-stop(100%,#000000));
+    background: -webkit-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: -o-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: -ms-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: linear-gradient(to bottom,  #3d3636 0%,#000000 100%);
+}
+
+button:hover, input[type="submit"]:hover {
+	background: #000000;
+    background: -moz-linear-gradient(top,  #000000 0%, #3d3636 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(100%,#3d3636));
+    background: -webkit-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: -o-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: -ms-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: linear-gradient(to bottom,  #000000 0%,#3d3636 100%);
+	cursor: pointer;
+}
+
+button:active, input[type="submit"]:active {
+	background: #0095cc;
+	box-shadow:inset 0 0 6px #00597a;
+	cursor: pointer;
+}
+
+/* Other CSS things */
+h1 {
+    font-size: 20px;
+    margin: 0 0 15px 0;
+}
+small { font-size: 10px; color: #666; }
+
+input {font-family: Visitor_Rus;font-size: 20px;}
+
+/*Login form*/
+.login {
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 8% auto 0 auto;
+    box-shadow: 15px 15px 12px 0px rgba(50, 50, 50, 0.75);
+}
+.login header {
+    background-color: #444;
+    height: 80px;
+    text-align: center;
+    border-radius: 4px 4px 0 0;
+}
+.login header img {
+    padding-top: 25px;
+}
+.login .body {
+    background-color: #fff;
+}
+.login .body form {
+    padding: 25px;
+}
+
+.login .body form input[type="text"], .login .body form input[type="password"] {
+    display: block;
+    width: 330px;
+    font-size: 35px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border: 1px solid #cecece;
+    padding: 5px 8px;
+}
+.login .body form input[type="text"]:hover, .login .body form input[type="password"]:hover {
+	background-color: #eee;
+}
+.login .body form input[type="password"] {
+    font-family: Verdana;
+}
+.login .body form input[type="password"]::-webkit-input-placeholder {
+    font-family: Visitor_Rus;
+}
+.login .body form input[type="password"]::-moz-placeholder {
+    font-family: Visitor_Rus;
+}
+.login .body form input[type="password"]:-ms-input-placeholder {
+    font-family: Visitor_Rus;
+}
+.login .body form input[type="submit"] {
+    font-size: 30px;
+}
+.login footer {
+    background-color: #2d2b25;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 0 0 4px 4px;
+    padding: 0 10px;
+}
+.login footer a {
+    color: #cac6bf;
+}
+.login footer a span {
+    font-family: Verdana;
+    font-size: 10px;
+}
+
+/*Header inside*/
+#main {
+    margin: 0 auto;
+    width: 95%;
+}
+#main header {
+    height: 80px;
+    background-image: url(../images/header-image.png);
+}
+#main header .logo {
+    display: block;
+    padding: 25px 0 25px 30px;
+    float: left;
+}
+#main header p {
+    color: #fff;
+    float: left;
+    padding: 10px 0 0 3px;
+    font-style: italic;
+}
+
+/*Navigation*/
+nav {
+    background-image: url(../images/menu-image.png);
+    background-repeat: repeat-x;
+    background-color: #2a2923;
+    margin: 0;
+    padding: 5px 15px;
+    font-size: 26px;
+}
+nav a {
+	font-variant: small-caps;
+    color: #cac6bf;
+	padding: 0 5px;
+}
+nav a:hover {
+    color: #e79809;
+}
+nav a.active {
+	color: #fff !important;
+}
+nav a.active:hover {
+    text-decoration: none;
+}
+nav #menusub {
+    display: inline-block;
+    padding: 0 5px;
+    width: 115px;
+}
+nav #menusub #submenu {
+    display:none;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 150px;
+}
+nav #menusub #submenu a {
+    display: block;
+    padding: 7px 10px;
+    background-color: #444;
+}
+nav #menusub #submenu a:hover {
+    background-color: #777;
+    color: #e79809;
+}
+nav #menusub #arrows {
+	margin: 15px 0 0 0;
+	float: right;
+	background-image: url(../images/ar_down_off.png);
+	width: 13px;
+	height: 7px;
+}
+nav #menusub #arrows.active {
+    background-image: url(../images/ar_up_off.png);
+}
+nav #menusub:hover #site_name_val {
+    color: #e79809;
+    text-decoration: underline;
+}
+nav #menusub:hover #arrows {
+    background-image: url(../images/ar_down_on.png);
+}
+nav #menusub:hover #arrows.active {
+    background-image: url(../images/ar_up_on.png);
+}
+
+/*Subnavigation*/
+.sublinks_menu { position: absolute; background: url('../images/subl_bg.png'); list-style:none; margin: 0; padding: 0; }
+.sublinks_menu li { border-bottom: 1px solid #fff; margin: 0; padding: 5px 15px; font-size: 14px; font-family: verdana; color: #cac6bf; }
+.sublinks_menu a { color: #cac6bf; text-decoration: none; }
+.sublinks_menu a:hover { color: #e79809; text-decoration: underline; }
+.sublinks_menu a.active { font-weight: bold; }
+
+/*Inside content*/
+.content {
+	background: url(../images/tree.png) no-repeat top left #fff;
+	margin-top: 5px;
+	padding: 17px 27px;
+	position: relative;
+	min-height: 150px;
+	font-size: 16px;
+	font-weight: 400;
+	font-family: 'Open Sans';
+}
+.content h1 {
+    float: left;
+	font-size: 30px;
+}
+.content a {
+    color: #e79809;
+}
+.content a:hover {
+    color: #333;
+}
+
+.dashboard {
+    margin-top: 60px;
+}
+#adminEmail {
+    width: 195px;
+}
+
+#loading {
+	background-color: #000;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.content input[type="text"], .content input[type="password"], .settings_input {
+	border: 1px solid #cecece;
+	border-radius: 4px;
+	padding: 10px;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: Open Sans;
+	width: 97%;
+}
+.settings_input {
+    width: 93% !important;
+}
+.content input[type="text"]:hover, .content input[type="password"]:hover { background-color: #eee; }
+
+.content button, .content input[type="submit"] {
+	font-size: 20px !important;
+    font-family: Open Sans;
+    padding: 5px 0;
+}
+
+.errmsg, #sucmsg {
+    padding: 10px 10px 10px 25px;
+    font-size: 20px;
+}
+.errmsg img, #sucmsg img { float: left; padding: 0 5px; }
+.errmsg {
+    background-color: #ff3a3a;
+    background-image: url('http://dev.themages.net/cms/static/images/err_mark.png');
+    background-repeat: no-repeat;
+    background-position: 5px 12px;
+}
+#sucmsg { background-color: #28A828; }
+.msgs { width: 700px; margin: 20px auto; }
+.msgs_text { padding-left: 5px; }
+.msgs_text img { float: right !important; margin: 5px; cursor: pointer; }
+
+#aerrmsg,#asucmsg,#amsg {
+	z-index: 1000;
+	position: fixed;
+	min-width: 300px;
+    max-width: 500px;
+	top: 120px;
+	left: 0px;
+	display: none;
+	margin-bottom: 5px;
+	padding: 2px;
+	text-align: center;
+	font-family: Open Sans;
+} 
+#aerrmsg { 
+	border: 2px solid #DF0000;
+	background-color: #EB5050;
+	color: #fff;
+}
+#asucmsg {
+	border: 2px solid #28D300;
+	background-color: #75EC59;
+	color: #555;
+}
+#amsg {
+	border: 2px solid #1252aa;
+	background-color: #3d7bd1;
+	color: #fff;
+}
+
+.box {
+	border: 1px solid #ddd;
+	padding: 5px 10px;
+	margin: 10px;
+	background-color: #fff;
+}
+.box h4 {
+	margin: 3px 0;
+}
+
+.menu td,
+.logs_menu td,
+.languages td,
+.accounts td,
+.strings td,
+.links td,
+.settings td,
+.pages td,
+.banners  td,
+.account_settings td,
+.logs td,
+.version table td {
+	border: 1px solid #ddd;
+	padding: 5px 5px 5px 10px;
+    background-color: #fff;
+}
+
+/*Dashboard*/
+.column {
+	float: left;
+	width: 33%;
+}
+.column:last-child {
+	margin-right: 0 !important;
+}
+
+.logs_menu {
+	padding: 0;
+	border: 0;
+	background-color: #fff;
+	display: block;
+}
+.account_settings {
+	width: 100%;
+}
+
+.languages,
+.pages,
+.links,
+.strings,
+.accounts,
+.settings,
+.logs {
+    width: 100%;
+}
+.back {
+    display: block;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    color: #fff !important;
+    padding: 5px 20px;
+    
+    background: #3d3636;
+    background: -moz-linear-gradient(top,  #3d3636 0%, #000000 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3d3636), color-stop(100%,#000000));
+    background: -webkit-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: -o-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: -ms-linear-gradient(top,  #3d3636 0%,#000000 100%);
+    background: linear-gradient(to bottom,  #3d3636 0%,#000000 100%);
+}
+
+.back:hover {
+    background: #000000;
+    background: -moz-linear-gradient(top,  #000000 0%, #3d3636 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#000000), color-stop(100%,#3d3636));
+    background: -webkit-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: -o-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: -ms-linear-gradient(top,  #000000 0%,#3d3636 100%);
+    background: linear-gradient(to bottom,  #000000 0%,#3d3636 100%);
+    cursor: pointer;
+}
+
+.back:active {
+    background: #0095cc;
+    box-shadow:inset 0 0 6px #00597a;
+    cursor: pointer;
+}
+
+.account_info { float: right; margin-bottom: 10px; }
+.verdict { margin-top: 10px; }
+
+.strings .search input[type="text"] {
+    border: 1px solid #cecece;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Open Sans;
+    width: 300px;
+    margin-left: 10px;
+}
+
+.strings .search input[type="submit"] {
+    width: auto;
+    padding: 4px 15px;
+    margin-left: 10px;
+}
+
+.accounts .chosen-container, .settings_div .chosen-container {
+    min-width: 50px;
+}
+.settings_div .recycler {
+    display: block;
+    float: right;
+    margin: 10px 5px 0 0;
+    background-image: url(../images/cancel.png);
+    width: 17px;
+    height: 21px;
+}
+.settings_div .recycler.for_select {
+    margin: 4px 0 0 0;
+}
+
+.links .chosen-container {
+    min-width: 250px;
+}
+
+.dashboard .chosen-container {
+    min-width: 60px;
+}
+
+#buttons a {
+    font-weight: bold;
+    font-size: 19px;
+    margin-left: 5px;
+}
+#buttons .add-image {
+    float: left;
+    width: 14px;
+    height: 14px;
+    background-image: url(../images/add-label.png);
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    margin-top: 6px;
+}
+#buttons:hover .add-image {
+    background-position: 0px -16px;
+}
+
+.copyrights {
+    float: right;
+    margin: 15px 30px 0 0;
+}
+.copyrights a {
+    color: #eee;
+    font-size: 16px;
+    text-decoration: none;
+}
+.copyrights a:hover {
+    color: #E79809;
+}
+.copyrights span {
+    font-size: 13px;
+    font-family: Open Sans;
+}
+
+#login_guest_form {
+    margin-top: 30px;
+}
