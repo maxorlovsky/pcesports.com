@@ -2,7 +2,129 @@
 img,p,td{border: 0;margin: 0;padding: 0;}
 a{text-decoration: none;}
 a:hover{text-decoration: underline;}
+.clear {clear:both;}
 
 body {
-    background-image:url(../images/bg.jpg);
+    background-color: #000;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-family: Open Sans;
+}
+
+body.default {
+    background-image:url(../images/bg-lol.jpg);
+}
+body.league {
+    background-image:url(../images/bg-lol.jpg);
+}
+body.hearthstone {
+    background-image:url(../images/bg-hs.jpg);
+}
+
+.container {
+    width: 1170px;
+    position: relative;
+    margin: 0px auto 0px auto;
+}
+
+header {
+    margin-top: 20px !important;
+    padding: 15px 0;
+    background-color: #242424;
+    min-height: 50px;
+}
+header .logo {
+    margin-left: 20px;
+}
+header .logo img {
+    width: 150px;
+    height: 72px;
+}
+header .social {
+    float: right;
+    margin-right: 20px;
+}
+
+.navbar {
+    background: linear-gradient(to bottom,  rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #43CDEF;
+    
+    height: 67px;
+}
+.navbar .nav {
+    position: relative;
+    left: 0;
+    display: block;
+    float: left;
+    margin: 0 10px 0 0;
+    list-style: none;
+    padding: 0;
+}
+.navbar .nav li {
+    float: left;
+    line-height: 20px;
+}
+.navbar .nav li a {
+    opacity: 0.8;
+    padding: 18px 20px 23px 20px;
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    
+    font-family: Open Sans;
+}
+.navbar .nav li a:hover {
+    transition:.3s;
+    opacity: 1;
+}
+.navbar .nav li.active a {
+    opacity: 1;
+}
+
+.page {
+    width: 1130px;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+.left-containers {
+    width:70%;
+    float: left;
+}
+.right-containers {
+    width: 25%;
+    float: right;
+}
+
+.block {
+    width: 100%;
+    min-height: 40px;
+}
+.block .block-header-wrapper {
+    background-color: #111;
+    min-height: 41px;
+}
+.block .block-header-wrapper h1 {
+    background: linear-gradient(to bottom,  rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,.3), inset 0 1px 1px 1px #43CDEF;
+    margin: 0;
+    padding: 10px;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+}
+.block .block-header-wrapper  h1.bordered {
+    border-radius: 0 20px 0 0/0 40px 0 0;
+    padding: 0px 30px 0px 13px;
+    float: left;
+    line-height: 40px;
+}
+.block .block-content {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
 }

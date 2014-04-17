@@ -19,7 +19,7 @@ RewriteBase /
 #RewriteRule ^content/ - [L]
 
 #RewriteRule ^admin/*/ - [L]
-RewriteRule ^updates/? - [L]
+RewriteRule ^web/static/? - [L]
 RewriteRule ^cms/static/? - [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
