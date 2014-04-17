@@ -16,7 +16,7 @@ $breakDown = explode('.', $_SERVER['HTTP_HOST']);
 if ($breakDown[0] == 'dev') { //Development environment
     $cfg['env'] = 'dev';
 }
-else if ($breakDown[1] == 'test' || $explodeHref[1] == 'test') { //Test environment
+else if ($breakDown[0] == 'test' || $breakDown[1] == 'test') { //Test environment
     $cfg['env'] = 'test';
 }
 else {
