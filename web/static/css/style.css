@@ -72,6 +72,14 @@ header .social a.yt {
     background-position-x: -109px;
     width: 28px;
 }
+header .social a.tv {
+    background-position-x: -177px;
+    width: 28px;
+}
+header .social a.vk {
+    background-position-x: -212px;
+    width: 28px;
+}
 header .social a.sm {
     background-position-x: -143px;
     width: 28px;
