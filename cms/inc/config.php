@@ -53,6 +53,8 @@ case 'prod':
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
     $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+    
+    ini_set('display_errors', 0);
 	
 	break;
 //=====================================================
@@ -76,6 +78,8 @@ case 'test':
 	$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
 	$cfg['smtpMailPass'] = 'knyaveclickius888';
 	$cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+	
+	ini_set('display_errors', 1);
 
 	break;
 		
@@ -100,6 +104,8 @@ case 'dev':
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
     $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+    
+    ini_set('display_errors', 1);
     
 	break;
 }

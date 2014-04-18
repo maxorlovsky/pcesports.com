@@ -35,6 +35,7 @@ header {
 }
 header .logo {
     margin-left: 20px;
+    float: left;
 }
 header .logo img {
     width: 150px;
@@ -42,7 +43,38 @@ header .logo img {
 }
 header .social {
     float: right;
-    margin-right: 20px;
+    margin: 20px 10px 0 0;
+}
+header .social a {
+    background-image: url('../images/icons.png');
+    height: 30px;
+    display: inline-block;
+    background-position-y: 0px;
+    margin-right: 10px;
+}
+header .social a:hover {
+    background-position-y: -36px;
+}
+header .social a.fb {
+    background-position-x: 0px;
+    width: 30px;
+}
+header .social a.tw {
+    background-position-x: -38px;
+    width: 27px;
+    margin-right: 12px;
+}
+header .social a.gp {
+    background-position-x: -74px;
+    width: 29px;
+}
+header .social a.yt {
+    background-position-x: -109px;
+    width: 28px;
+}
+header .social a.sm {
+    background-position-x: -143px;
+    width: 28px;
 }
 
 .navbar {

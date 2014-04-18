@@ -9,6 +9,8 @@
     
     <title><?=$this->data->settings['site_name']?> - page</title>
     
+    <script src="<?=_cfg('static')?>/js/scripts.js"></script>
+    
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/style.css" />
@@ -19,14 +21,18 @@
 <header class="container">
     <a href="<?=_cfg('site')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
     <div class="social">
-        <div class="fb"></div>
-        <div class="tw"></div>
-        <div class="gp"></div>
-        <div class="yt"><i class="ytc"></i></div>
-        <div class="vk"></div>
-        <div class="tw"></div>
-        <div class="sm"></div>
+        <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
+        <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
+        <a class="gp" href="https://plus.google.com/u/0/communities/106917438189046033786" target="_blank"></a>
+        <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
+        <!-- <a class="vk" href="#" target="_blank"></a>
+        <a class="tw" href="#" target="_blank"></a> -->
+        <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
     </div>
+    <script>
+    $('.social a').css('transition', '.2s');
+    </script>
+    <div class="clear"></div>
 </header>
 
 <nav class="navbar container">
