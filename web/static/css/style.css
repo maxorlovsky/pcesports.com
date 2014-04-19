@@ -1,7 +1,8 @@
+//#1697e1
 /* Reset like things */
 img,p,td{border: 0;margin: 0;padding: 0;}
-a{text-decoration: none;}
-a:hover{text-decoration: underline;}
+a{text-decoration: none;color: #1697e1;transition: .5s;}
+a:hover{color: #555; }
 .clear {clear:both;}
 
 body {
@@ -135,7 +136,7 @@ header .social a.sm {
     float: left;
 }
 .right-containers {
-    width: 25%;
+    width: 28%;
     float: right;
 }
 
@@ -167,4 +168,78 @@ header .social a.sm {
     padding: 20px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
     font-size: 13px;
+}
+
+.block .promo {
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 0 60px;
+    zoom: 1;
+}
+
+.news .small-block {
+    float: left;
+    width: 30%;
+    min-height: 150px;
+    margin-right: 5%;
+    margin-bottom: 20px;
+}
+.news .small-block:nth-child(3n) {
+    margin-right: 0;
+}
+.news .small-block .image-holder {
+    background-color: #999;
+    width: 100%;
+    height: 170px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.news .small-block .image-holder p {
+    display: block;
+    padding-top: 75px;
+}
+.news .small-block a.title {
+    display: block;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.news .small-block .info {
+    color: #777;
+    text-transform: uppercase;
+}
+.news .small-block .info .dates {
+    float: left;
+}
+.news .small-block .info .comments {
+    float: right;
+    color: #fff;
+    background-color: #999;
+    border: 1px solid #999;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+    transition: .5s;
+}
+.news .small-block .info .comments:hover {
+    color: #ddd;
+    background-color: #000;
+    border-color: #000;
+}
+
+.next-tournaments h2 {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+.next-tournaments .timer {
+    text-align: center;
+    font-size: 50px;
+    display: block;
+    margin-top: 10px;
 }

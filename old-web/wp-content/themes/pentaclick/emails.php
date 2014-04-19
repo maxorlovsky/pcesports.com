@@ -133,7 +133,7 @@ PentaClick eSports.';*/
 
 $text = 'Hello <b>%team%</b>.<br />
 <br />
-This is just a friendly reminder. Tournament will start today (in 1 hour) at 13:00 (CET/GMT+1). Don not forget to log in!<br />
+This is just a friendly reminder. Tournament will start tomorrow at 13:00 GMT+1. Please keep in mind that there was a summer time change! Don not forget to log in!<br />
 <br />
 Your profiler: <a href="%link%" target="_blank">%link%</a><br />
 <br />
@@ -149,16 +149,14 @@ community manager (skype): <span style="color: #3d85c6;">magnez-templarpenthouse
 <br />
 Have ideas? Want to help? Mail us!</i>';
 
-$q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "lol" and tournament_id = 2');
+$q = mysql_query('SELECT `id`, `name`, `email`, `link` FROM teams WHERE approved = 1 AND deleted = 0 AND game = "hs" and tournament_id = 3');
 while ($r = mysql_fetch_object($q)) {
-    //if (substr($r->email, -2) == 'ru') {
-        $msg = str_replace(
-            array('%team%', '%link%'),
-            array($r->name, LOLURL.'/profile/'.$r->id.'/'.$r->link.'/'),
-            $text
-        );
-        sendMail($r->email, 'PentaClick LoL tournament #2, reminder', $msg);
+	$msg = str_replace(
+    	array('%team%', '%link%'),
+        array($r->name, HSURL.'/profile/'.$r->id.'/'.$r->link.'/'),
+        $text
+    );
+    sendMail($r->email, 'Pentaclick Hearthstone tournament #3, reminder', $msg);
         
-        sleep(2);
-    //}
+    sleep(2);
 }
