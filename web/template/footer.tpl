@@ -4,17 +4,6 @@
     <div class="separator">
         <div class="block">
             <div class="block-header-wrapper">
-                <h1 class="bordered">@Tweet</h1>
-            </div>
-            <div class="block-content twitter">
-                <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick"  data-widget-id="422786485738147841">Tweets by @pentaclick</a>
-            </div>
-        </div>
-    </div>
-    
-    <div class="separator">
-        <div class="block">
-            <div class="block-header-wrapper">
                 <h1 class="">Available leagues</h1>
             </div>
             <div class="block-content games">
@@ -30,8 +19,8 @@
                 <h1 class="bordered">Partners</h1>
             </div>
             <div class="block-content partners">
-                <a href="https://www.facebook.com/uniconlv" target="_blank"><img src="http://unicon.lv/forum/styles/prosilver/imageset/uni_logo.png" /></a>
-                <a href="http://aimskillz.lv/" target="_blank"><img src="http://www.bildites.lv/images/e388f47bhzhv6wv4zmbk.png" /></a>
+                <a href="https://www.facebook.com/uniconlv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
+                <a class="aimskillz" href="http://aimskillz.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>
             </div>
         </div>
     </div>
@@ -45,7 +34,7 @@
     </div>
 </footer>
 
-<div class="hint-helper"><p></p></div>
+<div id="hint-helper"><p></p></div>
 
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 
@@ -53,5 +42,4 @@
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
 </body>
-</html>
-    
+</html>    

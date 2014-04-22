@@ -42,3 +42,22 @@ function updateTimers() {
 }
 
 setInterval(updateTimers, 1000);
+
+$(document).on('mousemove', '.hint', function(event) {
+	$('#hint-helper').offset({ top: event.pageY-30, left: event.pageX+10 });
+	
+	if ($('#hint-helper').is(':visible')) {
+		return false;
+	}
+	
+	msg = $(this).attr("attr-msg");
+	if ($('#hint-helper p').html != msg) {
+		$('#hint-helper p').html(msg);
+	}
+	if ($('#hint-helper').is(':hidden')) {
+		$('#hint-helper').show();
+	}
+}).on('mouseout', '.hint', function(){
+	$('#hint-helper').offset({ top: 0, left: 0 });
+	$('#hint-helper').hide();
+});
