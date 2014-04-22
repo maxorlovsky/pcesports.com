@@ -100,6 +100,33 @@ header .social a.sm {
     width: 28px;
 }
 
+footer {
+    margin: 30px auto !important;
+    background-color: #1f1f1f;
+}
+footer .copyrights {
+    color: #888;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+    margin: 20px 0 0 0;
+    border-top: 1px solid #484848;
+    font-size: 12px;
+    line-height: 20px;
+}
+footer .copyrights .rights {
+    float: left;
+    margin: 3px 0 0 15px;
+}
+footer .copyrights .devs {
+    float: right;
+    color: #888;
+    margin: 3px 15px 0 0;
+}
+footer .copyrights .devs:hover {
+    color: #1697e1;
+}
+
 .navbar {
     background: linear-gradient(to bottom,  rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
     box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #43CDEF;
@@ -162,7 +189,7 @@ header .social a.sm {
     min-height: 40px;
 }
 .block .block-header-wrapper {
-    background-color: #111;
+    background-color: #32333b;
     min-height: 41px;
 }
 .block .block-header-wrapper h1 {
@@ -187,13 +214,12 @@ header .social a.sm {
     font-size: 13px;
 }
 
-.block .promo {
+.promo {
     width: 100%;
-    max-height: 200px;
+    height: 370px;
     overflow: hidden;
     position: relative;
-    margin: 0 0 60px;
-    zoom: 1;
+    margin: 0 0 40px 0;
 }
 
 .news .small-block {
@@ -280,7 +306,21 @@ header .social a.sm {
     text-align: right;
 }
 .incoming-tournament .button {
-    float: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    opacity: 0;
+    transition: .5s !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center;
+    font-size: 30px;
+    line-height: 80px;
+}
+.incoming-tournament:hover .button {
+    opacity: 1;
 }
 .streamers a {
     width: 100%;
@@ -310,4 +350,16 @@ header .social a.sm {
 .facebook-holder {
     padding: 3px !important;
     overflow: hidden;
+}
+
+footer .separator {
+    width: 31%;
+    margin: 20px 1% 0 1%;
+    float: left;
+}
+footer .block .block-content {
+    background-color: inherit;
+}
+footer .partners img, footer .games img {
+    max-width: 315px;
 }

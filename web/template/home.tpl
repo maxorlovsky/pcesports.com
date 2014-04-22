@@ -1,7 +1,7 @@
 <section class="container page home">
 
 <div class="left-containers">
-    <div class="block">
+    <div class="block promo">
         <ul class="bx-wrapper">
             <li><a href="#"><img src="<?=_cfg('img')?>/poster.png" /></a></li>
             <li><a href="#"><img src="<?=_cfg('img')?>/poster-hs.png" /></a></li>
