@@ -8,14 +8,8 @@ class Template extends System
     
     public function parse() {
         $this->getMainTemplate('head');
-        return true;
-        if (!$this->logged_in) {
-            $this->getMainTemplate('login');
-        }
-        else {
-            $this->getMainTemplate('head-block');
-        }
-        
+        $this->getMainTemplate('home');
+        $this->getMainTemplate('sidebar');
         $this->getMainTemplate('footer');
         
         return true;

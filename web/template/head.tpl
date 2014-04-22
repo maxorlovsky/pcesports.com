@@ -15,7 +15,30 @@
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/slider.css" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/style.css" />
+    
+    <? if (_cfg('env') == 'prod') { ?>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-47216717-1', 'pcesports.com');
+      ga('send', 'pageview');
+    </script>
+    <? } ?>
 </head>
+
+<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=410840362357950";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
 
 <body class="default">
 
@@ -48,53 +71,3 @@
         </ul>
     </div>
 </nav>
-
-<section class="container page">
-    
-<div class="left-containers">
-    <div class="block">
-        <ul class="bx-wrapper">
-            <li><a href="#"><img src="<?=_cfg('img')?>/poster.png" /></a></li>
-            <li><a href="#"><img src="<?=_cfg('img')?>/poster-hs.png" /></a></li>
-        </ul>
-    </div>
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="">News</h1>
-        </div>
-        <div class="block-content news">
-            <? for($i=0;$i<=5;++$i) { ?>
-            <div class="small-block">
-                <div class="image-holder"><p>NO IMAGE</p></div>
-                <a href="#" class="title">News title News title Newsz title News titlez</a>
-                <div class="info">
-                    <div class="dates">5 days ago</div>
-                    <a href="#" class="comments"><?=rand(1,99)?></a>
-                    <div class="clear"></div>
-                </div>
-            </div>
-            <? } ?>
-            <div class="clear"></div>
-        </div>
-    </div>
-</div>
-
-<div class="right-containers">
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Next tournaments</h1>
-        </div>
-        <div class="block-content next-tournaments">
-            <h2>League of Legends tournament #3</h2>
-            <div class="timer" attr-start="1398420000" attr-time="<?=time()?>"></div>
-        </div>
-    </div>
-</div>
-
-<div class="clear"></div>
-</section>
-
-<script src="<?=_cfg('static')?>/js/main.js"></script>
-
-</body>
-</html>
