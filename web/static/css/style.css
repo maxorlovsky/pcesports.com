@@ -243,6 +243,7 @@ footer .copyrights .devs:hover {
 .big-block .image-holder p {
     color: #fff;
     line-height: 100px;
+    margin: 0;
 }
 .big-block .title {
     display: block;
