@@ -62,12 +62,17 @@
 <nav class="navbar container">
     <div class="navbar-inner">
         <ul class="nav">
-            <li class="" id="news"><a href="<?=_cfg('href')?>/news">news</a></li>
-            <li class="" id="lol"><a href="<?=_cfg('lolsite')?>">league of legends</a></li>
-            <li class="" id="hs"><a href="<?=_cfg('hssite')?>">hearthstone</a></li>
-            <li class="" id="streams"><a href="<?=_cfg('href')?>/streams">streams</a></li>
-            <!--<li class="" id="shop"><a href="<?=_cfg('href')?>/shop">shop</a></li>-->
-            <li class="" id="contacts"><a href="<?=_cfg('href')?>/contacts">contacts</a></li>
+        	<?
+        	if ($this->data->links) {
+				foreach($this->data->links as $v) {
+			?>
+            <li class="" id="<?=$v->link?>">
+            	<a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
+           	</li>
+            <?
+				}
+            }
+            ?>
         </ul>
     </div>
 </nav>

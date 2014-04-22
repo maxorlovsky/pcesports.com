@@ -5,11 +5,7 @@ class System
     public $data;
     public $user;
     public $logged_in;
-    public $messages;
-    public $page;
-    public $language;
-    public $defaultPage;
-    public $subPageOpen;
+    public $links;
     protected $userClass;
     
     public function __construct() {
@@ -33,7 +29,6 @@ class System
         global $cfg;
         
         //$this->data->settings = array();
-        //$this->data->pages = array();
         
         $data = array_merge($_GET, $_POST, $_SESSION);
          
@@ -51,6 +46,14 @@ class System
         	foreach($rows as $v) {
         		$this->data->settings[$v->setting] = $v->value;
         	}
+        }
+        
+        $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
+        		'ORDER BY `position`'
+        );
+        
+        if ($rows) {
+        	$this->data->links = $rows;
         }
         
         $this->logged_in = 0;
@@ -146,13 +149,15 @@ class System
     
     protected function getStrings() {
         global $str;
-    	
-        if ($this->logged_in) {
-        	require_once(_cfg('cmslocale').'/'.$this->user->language.'.php');
+        
+        $rows = Db::fetchRows('SELECT `key`, `english` AS `value` FROM `tm_strings`');
+        if ($rows) {
+        	foreach($rows as $v) {
+        		$str[$v->key] = $v->value;
+        	}
         }
-        else {
-        	require_once(_cfg('cmslocale').'/'._cfg('defaultLanguage').'.php');
-        }
+        
+        return true;
     }
     
     /*Private functions*/

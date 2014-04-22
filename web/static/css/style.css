@@ -357,9 +357,7 @@ footer .copyrights .devs:hover {
     transition: .5s;
 }
 .news .small-block .info .comments:hover {
-    color: #ddd;
-    background-color: #000;
-    border-color: #000;
+    background-color: #1697e1;
 }
 
 .next-tournaments {
@@ -467,4 +465,5 @@ footer .partners .aimskillz {
 }
 #hint-helper p {
     padding: 10px 15px;
+    font-size: 13px;
 }
