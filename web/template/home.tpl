@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block promo">
         <ul class="bx-wrapper">
-            <li><a href="#"><img src="<?=_cfg('img')?>/poster.png" /></a></li>
+            <li><a href="#"><img src="<?=_cfg('img')?>/poster-lol.jpg" /></a></li>
             <li><a href="#"><img src="<?=_cfg('img')?>/poster-hs.png" /></a></li>
             <li><a href="#"><img src="<?=_cfg('img')?>/poster-teemo-hat.jpg" /></a></li>
         </ul>

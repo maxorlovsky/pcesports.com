@@ -66,7 +66,7 @@
             <li class="" id="lol"><a href="<?=_cfg('lolsite')?>">league of legends</a></li>
             <li class="" id="hs"><a href="<?=_cfg('hssite')?>">hearthstone</a></li>
             <li class="" id="streams"><a href="<?=_cfg('href')?>/streams">streams</a></li>
-            <li class="" id="streams"><a href="<?=_cfg('href')?>/shop">shop</a></li>
+            <!--<li class="" id="shop"><a href="<?=_cfg('href')?>/shop">shop</a></li>-->
             <li class="" id="contacts"><a href="<?=_cfg('href')?>/contacts">contacts</a></li>
         </ul>
     </div>
