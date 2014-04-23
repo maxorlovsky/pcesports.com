@@ -21,43 +21,83 @@ class News
 			go(_cfg('cmssite').'/#strings');
 		}
 		
-		//$this->strings = Db::fetchRows('SELECT `title`, `status`, `english` AS `value` FROM `news`');
+		$this->news = Db::fetchRows('SELECT `id`, `title`, `able`, `extension`, `english` AS `value` FROM `news` '.
+			'ORDER BY `id` DESC'
+		);
+		foreach($this->news as $k => $v) {
+			if ($v->extension && !file_exists(_cfg('uploads').'/news/original-'.$v->id.'.'.$v->extension)) {
+				$this->news->$k->extension = null; 
+			}
+		}
 
 		return $this;
+	}
+	
+	public function uploadImage($data) {
+		require_once _cfg('cmslib').'/phpthumb/start.php';
+		
+		if (!file_exists(_cfg('uploads').'/news')) {
+			mkdir(_cfg('uploads').'/news');
+		}
+		
+		if (substr(sprintf('%o', fileperms(_cfg('uploads').'/news')), -4) != '0777') {
+			chmod(_cfg('uploads').'/news', 0777);
+		}
+		
+		$ext = pathinfo($_FILES['upload']['name']);
+		$file = 'news-'.time().'.'.$ext['extension'].'.tmp';
+		
+		if (move_uploaded_file($_FILES['upload']['tmp_name'], _cfg('uploads').'/news/original-'.$file)) {
+			list($width, $height) = getimagesize(_cfg('uploads').'/news/original-'.$file);
+			
+			//Line
+			$thumb = PhpThumbFactory::create(_cfg('uploads').'/news/original-'.$file);
+			$thumb->adaptiveResize(791, 140);
+			$thumb->save(_cfg('uploads').'/news/big-'.$file);
+			
+			//Square
+			$thumb = PhpThumbFactory::create(_cfg('uploads').'/news/original-'.$file);
+			$thumb->adaptiveResize(225, 170);
+			$thumb->save(_cfg('uploads').'/news/small-'.$file);
+			
+			return '1;'._cfg('imgu').'/news/original-'.$file.';'.$file;
+		}
+		
+		return '0;Error';
 	}
 
 	public function add($form) {
 		if (!$form['title']) {
-			$this->system->log('Adding new string <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
+			$this->system->log('Adding news <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
 			return '0;'.at('title_err');
-		}
-		else if (strpos($form['title'], ' ')) {
-			$this->system->log('Adding new string <b>'.at('title_have_spaces').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
-			return '0;'.at('title_have_spaces');
 		}
 		else {
 			$title = Db::escape($form['title']);
-			$q = Db::query('SELECT * FROM `tm_strings` WHERE `key` = "'.$title.'" LIMIT 1');
-			if ($q->num_rows != 0) {
-				$this->system->log('Adding new string <b>'.at('string_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
-				return '0;'.at('string_exist');
+			
+			$getExt = null;
+			if (isset($form['uploadedFiles']) && $form['uploadedFiles']) {
+				$getExt = substr(str_replace('.tmp', '', $form['uploadedFiles']), -3);
+				rename(_cfg('uploads').'/news/original-'.$form['uploadedFiles'], _cfg('uploads').'/news/original-'.$lastId.'.'.$getExt);
+				rename(_cfg('uploads').'/news/big-'.$form['uploadedFiles'], _cfg('uploads').'/news/big-'.$lastId.'.'.$getExt);
+				rename(_cfg('uploads').'/news/small-'.$form['uploadedFiles'], _cfg('uploads').'/news/small-'.$lastId.'.'.$getExt);
 			}
-			else {
-				Db::query('INSERT INTO `tm_strings` SET `key` = "'.$title.'"');
-				foreach ($form as $k => $v) {
-					$string = explode('_', $k);
-					if ($string[0] == 'string') {
-						Db::query('UPDATE `tm_strings` '.
-							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
-							'WHERE `key` = "'.$title.'"'
-						);
-					}
+			
+			Db::query('INSERT INTO `news` SET `title` = "'.$title.'", `extension` = "'.Db::escape($getExt).'"');
+			$lastId = Db::lastId();
+			foreach ($form as $k => $v) {
+				$string = explode('_', $k);
+				if ($string[0] == 'string') {
+					Db::query('UPDATE `news` '.
+						'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+						'WHERE `id` = '.$lastId
+					);
 				}
-
-				$this->system->log('Adding new string <b>'.at('string_added').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
-
-				return '1;'.at('string_added');
 			}
+			
+			$this->system->log('Adding news <b>Article added</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
+
+			return '1;Article added';
+			
 		}
 
 		return '0;Error, contact admin!';
@@ -125,10 +165,10 @@ class News
 		return Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
 	}
 
-	protected function fetchEditData($key) {
+	protected function fetchEditData($id) {
 		return Db::fetchRow('SELECT * '.
-			'FROM `tm_strings` '.
-			'WHERE `key` = "'.Db::escape($key).'" '.
+			'FROM `news` '.
+			'WHERE `id` = "'.(int)$id.'" '.
 			'LIMIT 1'
 		);
 	}

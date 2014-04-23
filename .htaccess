@@ -21,6 +21,7 @@ RewriteBase /
 #RewriteRule ^admin/*/ - [L]
 RewriteRule ^web/static/? - [L]
 RewriteRule ^cms/static/? - [L]
+RewriteRule ^web/uploads/? - [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d

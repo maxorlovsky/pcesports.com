@@ -7,7 +7,8 @@
         </td>
     </tr>
     <tr>
-        <td width="30%"><b>News title</b></td>
+    	<td width="5%"><b>ID</b></td>
+        <td width="25%"><b>News title</b></td>
         <td width="60%"><b>Image</b></td>
         <td width="10%" class="centered b"><?=at('actions')?></td>
     </tr>
@@ -16,17 +17,20 @@
             foreach($module->news as $v) {
                 ?>
                 <tr>
-                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=$v->key?></a></td>
-                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=substr(t($v->value),0,100)?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#news/edit/'.$v->id?>"><?=$v->id?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#news/edit/'.$v->id?>"><?=$v->title?></a></td>
+                    <td>
+                    	<a href="<?=_cfg('cmssite').'/#news/edit/'.$v->id?>">
+                    		<? if ($v->extension) { ?>
+                    		<img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
+                    		<? } ?>
+                    	</a>
+                    </td>
                     <td class="centered">
-                        <a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a>
-                        <? if ($v->status != 1) { ?> 
-                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#strings/delete/'.$v->key?>'); return false;">
+                        <a href="<?=_cfg('cmssite').'/#news/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
+                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#news/delete/'.$v->id?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
-                        <? } else { ?>
-                            <img src="<?=_cfg('cmsimg')?>/cancel-disabled.png" class="hint" name="Can't delete system link, only can be removed from links" />
-                        <? } ?>
                     </td>
                 </tr>
                 <?

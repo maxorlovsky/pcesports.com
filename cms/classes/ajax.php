@@ -102,6 +102,11 @@ class Ajax extends System
             
             $module = new $className($data);
         }
+        else if (file_exists(_cfg('cmsmodules').'/'.$data['module'].'/source.php')) {
+        	require_once _cfg('cmsmodules').'/'.$data['module'].'/source.php';
+        
+        	$module = new $className($data);
+        }
         else {
             return '0;<p>Source file for module '.$data['module'].'/source.php not found</p>';
         }

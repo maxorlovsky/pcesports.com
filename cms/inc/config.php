@@ -122,6 +122,9 @@ $cfg['cmsstatic'] = $cfg['site'].'/cms/static';
 $cfg['cmsimg'] = $cfg['site'].'/cms/static/images';
 $cfg['cmslocale'] = $cfg['cmsdir'].'/locale';
 $cfg['cmsmodules'] = $cfg['cmsdir'].'/modules';
+$cfg['cmslib'] = $cfg['cmsdir'].'/lib';
+$cfg['uploads'] = $cfg['dir'].'/uploads';
+$cfg['imgu'] = $cfg['site'].'/web/uploads';
 
 $cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
 $cfg['salt'] = 'eethaiASLDK21lae6AASDta9ChoDDCh';
