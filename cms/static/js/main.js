@@ -5,9 +5,6 @@ var menuSubArrow = 0;
 
 //--------------------------------------------------------------------------------------------------------------------
 
-if ($('#site_name_val').length > 0) {
-	$('#menusub').find('#submenu').offset({ top: $('header').height() + $('.menu').height() + 10, left: $('#site_name_val').position().left-1 });
-}
 
 //Visual things
 if (logged_in) {
@@ -107,6 +104,11 @@ $('#menusub').click(function() {
 	}
 	
 	$('#submenu').slideToggle('fast');
+});
+
+$('#submenu').on('click', function() {
+	$('#submenu a').removeClass('active');
+	$(this).addClass('active');
 });
 
 function goDelay(url, delay) {

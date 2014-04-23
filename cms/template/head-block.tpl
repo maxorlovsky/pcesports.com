@@ -25,7 +25,7 @@
                 <div id="arrows"></div>
                 <div id="submenu">
                 <? foreach($this->data->modules as $v) { ?>
-                    <a id="cpage-<?=$v->name?>" class="pointer settings_div" onclick="do_cpinput('cpage-<?=$v->name?>');"><span><?=ucfirst($v->name)?></span></a>
+                    <a id="cpage-<?=$v->name?>" class="pointer settings_div" href="<?=_cfg('site').'/admin/#'.$v->name?>"><span><?=ucfirst($v->name)?></span></a>
                 <? } ?>
                 </div>
             </div>
@@ -34,17 +34,6 @@
 		<a class="fright" href="<?=_cfg('site').'/admin/#exit'?>"><?=at('exit')?></a>
 		<div class="clear"></div>
 	</nav>
-	<? if ($this->data->subpages) { ?>
-	<ul class="sublinks_menu" id="submenu" style="display: none;">
-	<?
-		foreach($this->data->subpages as $v) {
-			if ($this->data->user->level >= $v[3]) {
-				?><li><a class="<?=($page == $v[0] ? 'active' : null)?>" id="link_<?=$v[0]?>" href="<?=_A.'#'.$v[0]?>"><?=$v[1]?></a></li><?
-			}
-		}
-	?>
-	</ul>
-	<?}?>
 	
 	<div class="content">
 	</div>

@@ -213,12 +213,13 @@ nav #menusub {
     display: inline-block;
     padding: 0 5px;
     width: 115px;
+    position: relative;
 }
 nav #menusub #submenu {
     display:none;
     z-index: 100;
     position: absolute;
-    top: 0;
+    top: 36px;
     left: 0;
     min-width: 150px;
 }
@@ -382,7 +383,8 @@ nav #menusub:hover #arrows.active {
 .banners  td,
 .account_settings td,
 .logs td,
-.version table td {
+.version table td,
+.table td {
 	border: 1px solid #ddd;
 	padding: 5px 5px 5px 10px;
     background-color: #fff;
@@ -413,7 +415,8 @@ nav #menusub:hover #arrows.active {
 .strings,
 .accounts,
 .settings,
-.logs {
+.logs,
+.table {
     width: 100%;
 }
 .back {

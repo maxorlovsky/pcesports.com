@@ -95,14 +95,14 @@ class Template extends System
     		$module = new $className($data);
     	}
     	else {
-    		echo '<p>Source file for module '.$data['page'].'/source.php not found</p>';
+    		echo '<p>Source file for custom module '.$data['page'].'/source.php not found</p>';
     	}
-    	
-    	if (file_exists(_cfg('cmstemplate').'/'.$data['page'].'/templates/'.$data['var1'].'.tpl')) {
-    		require_once _cfg('cmstemplate').'/'.$data['page'].'/templates/'.$data['var1'].'.tpl';
+    	;
+    	if (file_exists(_cfg('cmsmodules').'/'.$data['page'].'/templates/'.$data['var1'].'.tpl')) {
+    		require_once _cfg('cmsmodules').'/'.$data['page'].'/templates/'.$data['var1'].'.tpl';
     	}
     	else {
-    		echo '<p>Template file for module '.$data['page'].'/'.$data['var1'].'.tpl not found</p>';
+    		echo '<p>Template file for custom module '.$data['page'].'/'.$data['var1'].'.tpl not found</p>';
     	}
     }
 }
