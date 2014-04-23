@@ -27,7 +27,7 @@
             <div class="clear"></div>
         </div>
     </div>
-    
+    <?/*
     <div class="block streamers">
         <div class="block-header-wrapper">
             <h1 class="bordered">Streamers</h1>
@@ -58,7 +58,7 @@
             <span class="viewers">0 viewers</span>
         </a>
     </div>
-    
+    */?>
     <div class="block fb">
         <div class="block-header-wrapper">
             <h1 class="bordered">Like us!</h1>

@@ -9,6 +9,10 @@ class System
     protected $userClass;
     
     public function __construct() {
+    	if (!$this->data) {
+    		$this->data = new stdClass();
+    	}
+    	
     	$this->loadClasses();
 
         //Making a connection
@@ -28,7 +32,8 @@ class System
     public function fetchParams() {
         global $cfg;
         
-        //$this->data->settings = array();
+        $this->data->settings = array();
+        $this->data->links = new stdClass();
         
         $data = array_merge($_GET, $_POST, $_SESSION);
          
@@ -49,7 +54,8 @@ class System
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
-        		'ORDER BY `position`'
+        		'WHERE `able` = 1 '.
+        		'ORDER BY `position` '
         );
         
         if ($rows) {

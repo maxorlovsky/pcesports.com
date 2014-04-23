@@ -29,6 +29,10 @@
     <? } ?>
 </head>
 
+<section id="full-site-wrapper" class="default">
+
+<div id="head-line"></div>
+
 <div id="fb-root"></div>
 <script>
 (function(d, s, id) {
@@ -39,8 +43,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-
-<body class="default">
 
 <header class="container">
     <a href="<?=_cfg('site')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
