@@ -18,7 +18,7 @@ class News
 		if (isset($params['var1']) && $params['var1'] == 'delete' && isset($params['var2'])) {
 			$this->deleteRow($params['var2']);
 			//redirect
-			go(_cfg('cmssite').'/#strings');
+			go(_cfg('cmssite').'/#news');
 		}
 		
 		$this->news = Db::fetchRows('SELECT `id`, `title`, `able`, `extension`, `english` AS `value` FROM `news` '.
@@ -168,36 +168,17 @@ class News
 	protected function fetchEditData($id) {
 		return Db::fetchRow('SELECT * '.
 			'FROM `news` '.
-			'WHERE `id` = "'.(int)$id.'" '.
+			'WHERE `id` = '.(int)$id.' '.
 			'LIMIT 1'
 		);
 	}
 
-	protected function deleteRow($key) {
-		$row = Db::fetchRow('SELECT `status` FROM `tm_strings` WHERE `key` = "'.Db::escape($key).'" LIMIT 1');
-		if ($row->status == 1) {
-			$this->system->log('Deleting string error, it doesnt exist or unavailable by status <b>('.$key.')</b>', array('module'=>get_class(), 'type'=>'delete'));
-		}
-		else {
-			Db::query('DELETE FROM `tm_strings` WHERE `key` = "'.Db::escape($key).'" AND `status` = 0');
-			$this->system->log('Deleted string <b>'.$row->value.'</b>', array('module'=>get_class(), 'type'=>'delete'));
-		}
+	protected function deleteRow($id) {
+		$row = Db::fetchRow('SELECT `ext` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
+		unlink(_cfg('uploads').'/news/original-'.$id.'.'.$row->ext);
+		unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->ext);
+		unlink(_cfg('uploads').'/news/small-'.$id.'.'.$row->ext);
+		Db::query('DELETE FROM `news` WHERE `id` = '.(int)$id);
+		$this->system->log('Deleted string <b>'.$row->value.'</b>', array('module'=>get_class(), 'type'=>'delete'));
 	}
 }
-
-/*
-if ($_POST['var1'] == 'page' && $_POST['var2']) {
-	$pageNum = (int)$_POST['var2'];
-}
-else {
-	$pageNum = 1;
-}
-
-$pages = pages(20, 3, $pageNum, PREFIX.'strings', '', 'key');
-$pages = explode('!',$pages);
-$npp = $pages[0];
-$strt = $pages[1];
-$fpnd = $pages[2];
-
-$q = mysql_query('SELECT `key`, `status`, `'.$slang.'` FROM `'.PREFIX.'strings` LIMIT '.$strt.', '.$npp.'');
-*/
