@@ -138,7 +138,7 @@ class News
 				}
 								 
 				$this->system->log('Editing string <b>'.at('link_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-								 
+
 				return '1;'.at('string_updated');
 			}
 		}
@@ -174,11 +174,17 @@ class News
 	}
 
 	protected function deleteRow($id) {
-		$row = Db::fetchRow('SELECT `ext` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
-		unlink(_cfg('uploads').'/news/original-'.$id.'.'.$row->ext);
-		unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->ext);
-		unlink(_cfg('uploads').'/news/small-'.$id.'.'.$row->ext);
+		$row = Db::fetchRow('SELECT `title`, `extension` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
+		if (!$row) {
+			return false;
+		}
+		
+		if (file_exists(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension)) {
+			unlink(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension);
+			unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->extension);
+			unlink(_cfg('uploads').'/news/small-'.$id.'.'.$row->extension);
+		}
 		Db::query('DELETE FROM `news` WHERE `id` = '.(int)$id);
-		$this->system->log('Deleted string <b>'.$row->value.'</b>', array('module'=>get_class(), 'type'=>'delete'));
+		$this->system->log('Deleting news <b>'.$row->title.'</b>', array('module'=>get_class(), 'type'=>'delete'));
 	}
 }

@@ -25,7 +25,7 @@
         <?
     }
     ?>
-    <tr><td colspan="2"><button class="submitButton"><?=at('add_new')?> <?=at('string')?></button></td></tr>
+    <tr><td colspan="2"><button class="submitButton"><?=at('add_new')?> article</button></td></tr>
 </table>
 
 <script>

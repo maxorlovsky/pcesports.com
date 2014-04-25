@@ -90,9 +90,12 @@ $(document).on('mousemove', '.hint', function(event) {
 	if ($('#hint').is(':hidden')) {
 		$('#hint').show();
 	}
-});
-$(document).on('mouseout', '.hint', function(){
+}).on('mouseout', '.hint', function(){
 	$('#hint').offset({ top: 0, left: 0 });
+	$('#hint').hide();
+});
+
+$(document).on('click', 'a', function() {
 	$('#hint').hide();
 });
 
