@@ -82,44 +82,61 @@ header .social a {
     background-image: url('../images/icons.png');
     height: 30px;
     display: inline-block;
-    background-position-y: 0px;
     margin-right: 10px;
 }
-header .social a:hover {
-    background-position-y: -36px;
-}
 header .social a.fb {
-    background-position-x: 0px;
+    background-position: 0px 0px;
     width: 30px;
 }
+header .social a.fb:hover {
+	background-position: 0px -36px;
+}
 header .social a.tw {
-    background-position-x: -38px;
+    background-position: -38px 0px;
     width: 27px;
     margin-right: 12px;
 }
+header .social a.tw:hover {
+	background-position: -38px -36px;
+}
 header .social a.gp {
-    background-position-x: -74px;
+    background-position: -74px 0px;
     width: 29px;
 }
+header .social a.gp:hover {
+	background-position: -74px -36px;
+}
 header .social a.yt {
-    background-position-x: -109px;
+    background-position: -109px 0px;
     width: 28px;
+}
+header .social a.yt:hover {
+	background-position: -109px -36px;
 }
 header .social a.tv {
-    background-position-x: -177px;
+    background-position: -177px 0px;
     width: 28px;
+}
+header .social a.tv:hover {
+	background-position: -177px -36px;
 }
 header .social a.vk {
-    background-position-x: -212px;
+    background-position: -212px 0px;
     width: 28px;
 }
+header .social a.vk:hover {
+	background-position: -212px -36px;
+}
 header .social a.sm {
-    background-position-x: -143px;
+    background-position: -143px 0px;
     width: 28px;
+}
+header .social a.sm:hover {
+	background-position: -143px -36px;
 }
 
 footer {
-    margin: 30px auto !important;
+    margin: 30px auto 0 auto !important;
     background-color: #1f1f1f;
 }
 footer .copyrights {
