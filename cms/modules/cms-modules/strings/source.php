@@ -107,7 +107,7 @@ class Strings
 					}
 				}
 								 
-				$this->system->log('Editing string <b>'.at('link_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+				$this->system->log('Editing string <b>'.at('string_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
 								 
 				return '1;'.at('string_updated');
 			}

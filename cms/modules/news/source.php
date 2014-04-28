@@ -24,11 +24,11 @@ class News
 		$this->news = Db::fetchRows('SELECT `id`, `title`, `able`, `extension`, `english` AS `value` FROM `news` '.
 			'ORDER BY `id` DESC'
 		);
-		foreach($this->news as $k => $v) {
+		/*foreach($this->news as $v) {
 			if ($v->extension && !file_exists(_cfg('uploads').'/news/original-'.$v->id.'.'.$v->extension)) {
-				$this->news->$k->extension = null; 
+				$this->news->$v->extension = null; 
 			}
-		}
+		}*/
 
 		return $this;
 	}
@@ -72,18 +72,20 @@ class News
 			return '0;'.at('title_err');
 		}
 		else {
-			$title = Db::escape($form['title']);
-			
 			$getExt = null;
 			if (isset($form['uploadedFiles']) && $form['uploadedFiles']) {
 				$getExt = substr(str_replace('.tmp', '', $form['uploadedFiles']), -3);
+			}
+			
+			Db::query('INSERT INTO `news` SET `title` = "'.Db::escape($form['title']).'", `extension` = "'.Db::escape($getExt).'"');
+			$lastId = Db::lastId();
+			
+			if ($getExt != null) {
 				rename(_cfg('uploads').'/news/original-'.$form['uploadedFiles'], _cfg('uploads').'/news/original-'.$lastId.'.'.$getExt);
 				rename(_cfg('uploads').'/news/big-'.$form['uploadedFiles'], _cfg('uploads').'/news/big-'.$lastId.'.'.$getExt);
 				rename(_cfg('uploads').'/news/small-'.$form['uploadedFiles'], _cfg('uploads').'/news/small-'.$lastId.'.'.$getExt);
 			}
 			
-			Db::query('INSERT INTO `news` SET `title` = "'.$title.'", `extension` = "'.Db::escape($getExt).'"');
-			$lastId = Db::lastId();
 			foreach ($form as $k => $v) {
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
@@ -104,58 +106,54 @@ class News
 	}
 
 	public function edit($form) {
-		$title = Db::escape($form['title']);
-		$oldTitle = Db::escape($form['string_old_key']);
-		 
 		if (!$form['title']) {
-			$this->system->log('Editing string <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+			$this->system->log('Editing news <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
 			return '0;'.at('title_err');
 		}
-		else if (strpos($form['title'], ' ')) {
-			$this->system->log('Editing string <b>'.at('title_have_spaces').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-			return '0;'.at('title_have_spaces');
-		}
-		else if ($oldTitle != $title) {
-			$q = Db::query('SELECT * FROM `tm_strings` WHERE `key` = "'.$title.'" LIMIT 1');
-			if ($q->num_rows != 0) {
-				$this->system->log('Editing string <b>'.at('string_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-				return '0;'.at('string_exist');
-			}
-			else {
-				Db::query('UPDATE `tm_strings` '.
-					'SET `key` = "'.$title.'" '.
-					'WHERE `key` = "'.$oldTitle.'"'
-				);
-				
-				foreach ($form as $k => $v) {
-					$string = explode('_', $k);
-					if ($string[0] == 'string') {
-						Db::query('UPDATE `tm_strings` '.
-							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
-							'WHERE `key` = "'.$title.'"'
-						);
+		else {
+			$id = (int)$form['id'];
+			
+			$getExt = null;
+			$extQuery = '';
+			if (isset($form['uploadedFiles']) && $form['uploadedFiles']) {
+				if ($form['uploadedFiles'] == 'remove') {
+					$extQuery = ', `extension` = NULL';
+					$row = Db::fetchRow('SELECT `extension` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
+					if (file_exists(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension)) {
+						unlink(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension);
+						unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->extension);
+						unlink(_cfg('uploads').'/news/small-'.$id.'.'.$row->extension);
 					}
 				}
-								 
-				$this->system->log('Editing string <b>'.at('link_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-
-				return '1;'.at('string_updated');
+				else if ($form['uploadedFiles'] != 'leave') {
+					$getExt = substr(str_replace('.tmp', '', $form['uploadedFiles']), -3);
+					$extQuery = ', `extension` = "'.Db::escape($getExt).'"';
+					rename(_cfg('uploads').'/news/original-'.$form['uploadedFiles'], _cfg('uploads').'/news/original-'.$id.'.'.$getExt);
+					rename(_cfg('uploads').'/news/big-'.$form['uploadedFiles'], _cfg('uploads').'/news/big-'.$id.'.'.$getExt);
+					rename(_cfg('uploads').'/news/small-'.$form['uploadedFiles'], _cfg('uploads').'/news/small-'.$id.'.'.$getExt);
+				}
 			}
-		}
-		else {
+			
+			Db::query('UPDATE `news` '.
+				'SET `title` = "'.Db::escape($form['title']).'" '. 
+				$extQuery.' '.
+				'WHERE `id` = '.$id
+			);
+			
 			foreach ($form as $k => $v) {
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
-					Db::query('UPDATE `tm_strings` '.
-						'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
-						'WHERE `key` = "'.$title.'"'
+					Db::query('UPDATE `news` '.
+							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+							'WHERE `id` = '.$id
 					);
 				}
 			}
+			
 							 
-			$this->system->log('Editing string <b>'.at('link_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+			$this->system->log('Editing news <b>Article updated</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
 							 
-			return '1;'.at('string_updated');
+			return '1;Article updated';
 		}
 
 		return '0;Error, contact admin!';

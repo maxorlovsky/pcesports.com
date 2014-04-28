@@ -13,7 +13,7 @@ function updateTimers() {
 	
 		if (delta < 1 || !delta) {
 			$(this).html('Live');
-			return false;
+			return;
 		}
 		
 		var days = Math.floor(delta / 86400);

@@ -11,7 +11,7 @@
         <td>
             <button id="upload">Add image</button>
             <div id="uploadStatus"></div>
-            <div id="file"></div>
+            <div id="file" class="hint" name="Click to delete"></div>
             <input type="hidden" id="uploadedFiles" />
         </td>
     </tr>
@@ -29,6 +29,12 @@
 </table>
 
 <script>
+$('#file').on('click', function() {
+	$(this).html('');
+	$('#uploadedFiles').val('');
+	$('#hint').hide();
+});
+
 new AjaxUpload($('#upload'), {  
     action: site,
     data: {

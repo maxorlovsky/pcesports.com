@@ -12,31 +12,52 @@
         <div class="block-header-wrapper">
             <h1 class="">News</h1>
         </div>
+        <? if ($this->data->news->top) { ?>
         <div class="block-content news big-block">
         	<div class="add-box">
-        		<div class="date">Jun<br />17</div>
+        		<div class="date"><?=date('M', strtotime($this->data->news->top->added))?><br /><?=date('d', strtotime($this->data->news->top->added))?></div>
         		<a class="like" href="#">
         			<div class="placeholder">
-        				<div class="like-icon"></div><span>99</span>
+        				<div class="like-icon"></div><span>0</span>
 					</div>
         		</a>
         	</div>
-        	<a href="#" class="image-holder"><p>NO IMAGE</p></a>
-        	<a href="#" class="title">News title News title Newsz title News titlez</a>
-        	<p class="text">orem ipsum dolor sit amet, consectetur adipiscing elit. Nam sodales egestas condimentum. Suspendisse posuere enim accumsan massa vehicula cursus. Vivamus vehicula nec mauris quis varius. Duis scelerisque ornare consectetur. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vitae feugiat nisl, quis pretium velit. Suspendisse pellentesque mi in lacus suscipit, non tempus augue tristique...</p>
+        	<a href="#" class="image-holder">
+                <? if ($this->data->news->top->extension) { ?>
+                    <img src="<?=_cfg('imgu')?>/news/big-<?=$this->data->news->top->id?>.<?=$this->data->news->top->extension?>" />
+                <? } else { ?>
+                    <p>NO IMAGE</p>
+                <? } ?>
+            </a>
+        	<a href="#" class="title"><?=$this->data->news->top->title?></a>
+        	<p class="text"><?=$this->data->news->top->value?></p>
         </div>
+        <? } ?>
+        
         <div class="block-content news">
-            <? for($i=0;$i<=5;++$i) { ?>
+            <?
+            if ($this->data->news->others) {
+                foreach($this->data->news->others as $v) {
+            ?>
             <div class="small-block">
-                <div class="image-holder"><a href="#"><p>NO IMAGE</p></a></div>
-                <a href="#" class="title">News title News title Newsz title News titlez</a>
+                <div class="image-holder">
+                    <? if ($v->extension) { ?>
+                        <a href="#"><img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" /></a>
+                    <? } else { ?>
+                        <a href="#"><p>NO IMAGE</p></a>
+                    <? } ?>
+                </div>
+                <a href="#" class="title"><?=$v->title?></a>
                 <div class="info">
                     <div class="dates">5 days ago</div>
-                    <a href="#" class="comments"><?=rand(1,99)?></a>
+                    <a href="#" class="comments">0</a>
                     <div class="clear"></div>
                 </div>
             </div>
-            <? } ?>
+            <?
+                }
+            }
+            ?>
             <div class="clear"></div>
         </div>
     </div>

@@ -97,6 +97,9 @@ $(document).on('mousemove', '.hint', function(event) {
 
 $(document).on('click', 'a', function() {
 	$('#hint').hide();
+	if ($('#submenu').is(':visible') && $(this).attr('id') != 'site_name_val') {
+		$('#submenu').slideUp('fast');
+	}
 });
 
 $('#menusub').click(function() {

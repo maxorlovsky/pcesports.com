@@ -11,12 +11,12 @@
         <td>
             <button id="upload">Change image</button>
             <div id="uploadStatus"></div>
-            <div id="file">
+            <div id="file" class="hint" name="Click to delete">
             	<? if ($module->editData->extension && file_exists(_cfg('uploads').'/news/original-'.$module->editData->id.'.'.$module->editData->extension)) { ?>
             		<img src="<?=_cfg('imgu').'/news/original-'.$module->editData->id.'.'.$module->editData->extension?>" />
             	<? } ?>
             </div>
-            <input type="hidden" id="uploadedFiles" />
+            <input type="hidden" id="uploadedFiles" value="<?if($module->editData->extension){?>leave<?}?>" />
         </td>
     </tr>
     <?
@@ -30,9 +30,15 @@
     }
     ?>
     <tr><td colspan="2"><button class="submitButton"><?=at('change')?> article</button></td></tr>
+    <input type="hidden" id="id" value="<?=$module->editData->id?>"/>
 </table>
 
 <script>
+$('#file').on('click', function() {
+    $(this).html('');
+    $('#uploadedFiles').val('remove');
+    $('#hint').hide();
+});
 new AjaxUpload($('#upload'), {  
     action: site,
     data: {
