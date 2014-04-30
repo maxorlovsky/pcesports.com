@@ -21,7 +21,7 @@ class News
 			go(_cfg('cmssite').'/#news');
 		}
 		
-		$this->news = Db::fetchRows('SELECT `id`, `title`, `able`, `extension`, `english` AS `value` FROM `news` '.
+		$this->news = Db::fetchRows('SELECT *, `english` AS `value` FROM `news` '.
 			'ORDER BY `id` DESC'
 		);
 		/*foreach($this->news as $v) {

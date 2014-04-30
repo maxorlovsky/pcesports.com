@@ -3,6 +3,7 @@
 class System
 {
     public $data;
+    public $page;
     public $user;
     public $logged_in;
     public $links;
@@ -53,26 +54,6 @@ class System
         	}
         }
         
-        $rows = Db::fetchRows('SELECT `id`, `title`, `extension`, `english` AS `value`, `added` FROM `news` '.
-        	//'WHERE `able` = 1 '.
-			'ORDER BY `id` DESC '.
-        	'LIMIT 5'
-		);
-        $this->data->news = new stdClass();
-        $this->data->news->others = new stdClass();
-        if ($rows) {
-        	$i = 0;
-        	foreach($rows as $k => $v) {
-        		if ($i == 0) {
-        			$this->data->news->top = $v;
-        			$i = 1;
-        		}
-        		else {
-        			$this->data->news->others->$k = $v;
-        		}
-        	}
-        }
-        
         $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
         		'WHERE `able` = 1 '.
         		'ORDER BY `position` '
@@ -80,6 +61,13 @@ class System
         
         if ($rows) {
         	$this->data->links = $rows;
+        }
+        
+      	if ($data['val1']) {
+        	$this->page = $data['val1'];
+        }
+        else {
+        	$this->page = 'home';
         }
         
         $this->logged_in = 0;

@@ -125,6 +125,7 @@ $cfg['cmsmodules'] = $cfg['cmsdir'].'/modules';
 $cfg['cmslib'] = $cfg['cmsdir'].'/lib';
 $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
+$cfg['pages'] = $cfg['dir'].'/pages';
 
 $cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
 $cfg['salt'] = 'eethaiASLDK21lae6AASDta9ChoDDCh';

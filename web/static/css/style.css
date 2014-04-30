@@ -282,7 +282,7 @@ footer .copyrights .devs:hover {
 }
 .big-block .title {
     display: block;
-    margin: 20px 20px 10px 20px;
+    margin: 20px 20px 5px 20px;
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
@@ -412,6 +412,12 @@ footer .copyrights .devs:hover {
     font-size: 18px;
     padding: 10px 20px;
 }
+.big-block.readmore {
+	padding: 20px !important;
+}
+.readmore .button {
+	float: right;
+}
 
 .incoming-tournament {
     position: relative;
@@ -480,9 +486,12 @@ footer .separator {
 footer .block .block-content {
     background-color: inherit;
     box-shadow: none;
+    text-align: center;
 }
-footer .partners a {
+footer .partners .unicon {
     float: left;
+    position: relative;
+    left: 100px;
 }
 footer .partners img, footer .games img {
     max-width: 315px;

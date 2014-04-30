@@ -3,16 +3,10 @@
         <div class="block-header-wrapper">
             <h1 class="bordered">Next tournaments</h1>
         </div>
-        <div class="block-content next-tournaments hint" attr-msg="<?=date('d/m H:i', 1398420000)?>">
-            <h2>League of Legends #3<br />Registration opens</h2>
-            <div class="timer"  attr-time="<?=intval(1398420000 - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="#" class="button">Join</a>
-        </div>
-        <div class="block-content incoming-tournament hint" attr-msg="<?=date('d/m H:i', 1399629600)?>">
-            <div class="tourn-name">Hearthstone #4<br />Registration opens</div>
+        <div class="block-content next-tournaments hint" attr-msg="<?=date('d/m H:i', 1399629600)?>">
+            <h2>Hearthstone #4<br />Registration opens</h2>
             <div class="timer" attr-time="<?=intval(1399629600 - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
             <a href="#" class="button">Join</a>
-            <div class="clear"></div>
         </div>
         <div class="block-content incoming-tournament hint" attr-msg="<?=date('d/m H:i', 1399716000)?>">
             <div class="tourn-name">League of Legends #3<br />Start</div>

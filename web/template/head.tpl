@@ -45,7 +45,7 @@
 </script>
 
 <header class="container">
-    <a href="<?=_cfg('site')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
+    <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
     <div class="social">
         <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
         <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
