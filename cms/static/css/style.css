@@ -542,4 +542,5 @@ nav #menusub:hover #arrows.active {
     max-width: 800px;
 }
 #file img {
+	width: 100%;
 }
