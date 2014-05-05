@@ -21,6 +21,13 @@ class News
 			go(_cfg('cmssite').'/#news');
 		}
 		
+		//Enable/disable
+		if (isset($params['var1']) && $params['var1'] == 'able' && isset($params['var2'])) {
+			$this->able($params['var2']);
+			//redirect
+			go(_cfg('cmssite').'/#news');
+		}
+		
 		$this->news = Db::fetchRows('SELECT *, `english` AS `value` FROM `news` '.
 			'ORDER BY `id` DESC'
 		);
@@ -31,6 +38,26 @@ class News
 		}*/
 
 		return $this;
+	}
+	
+	protected function able($id) {
+		$id = (int)$id;
+		$row = Db::fetchRow('SELECT `id`, `title`, `able` FROM `news` WHERE `id` = '.$id.' LIMIT 1');
+		if ($row->able == 1) {
+			$enable = 0;
+		}
+		else {
+			$enable = 1;
+		}
+		Db::query('UPDATE `news` SET `able` = '.$enable.' WHERE `id` = '.$id);
+	
+		if ($enable == 1) {
+			$this->system->log('Enabling article <b>('.$row->title.' ['.$row->id.'])</b>', array('module'=>get_class(), 'type'=>'enabling'));
+		}
+		else {
+			$this->system->log('Disabling article <b>('.$row->title.' ['.$row->id.'])</b>', array('module'=>get_class(), 'type'=>'disabling'));
+		}
+		 
 	}
 	
 	public function uploadImage($data) {

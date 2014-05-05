@@ -2,7 +2,7 @@
 
 <table class="table">
     <tr>
-        <td colspan="4" id="buttons">
+        <td colspan="5" id="buttons">
             <a href="<?=_cfg('cmssite').'/#news/add'?>"><div class="add-image"></div><?=at('add_new')?> article</a>
         </td>
     </tr>
@@ -10,6 +10,7 @@
     	<td width="5%"><b>ID</b></td>
         <td width="25%"><b>News title</b></td>
         <td width="60%"><b>Image</b></td>
+        <td width="1"><b><?=at('enaldisabl')?></b></td>
         <td width="10%" class="centered b"><?=at('actions')?></td>
     </tr>
     <?
@@ -25,6 +26,12 @@
                     		<img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
                     		<? } ?>
                     	</a>
+                    </td>
+                    <td class="centered">
+                        <a href="<?=_cfg('cmssite').'/#news/able/'.$v->id?>">
+                            <?=($v->able == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Disable"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Enable"/>')?>
+                            
+                        </a>
                     </td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#news/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
