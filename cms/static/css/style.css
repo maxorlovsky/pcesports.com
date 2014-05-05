@@ -539,7 +539,7 @@ nav #menusub:hover #arrows.active {
 
 #file {
     margin-top: 20px;
+    max-width: 800px;
 }
 #file img {
-	max-width: 600px;
 }
