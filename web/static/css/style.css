@@ -294,9 +294,6 @@ footer .copyrights .devs:hover {
     margin: 0;
     padding: 0 20px 20px 20px;
 }
-.big-block p:not(.text) {
-	display: none;
-}
 .article .big-block p.text {
 	margin-top: 20px;
 }
