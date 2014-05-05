@@ -3,9 +3,9 @@
 //Корневая директория сайта
 define('DIR_ROOT',		$_SERVER['DOCUMENT_ROOT']);
 //Директория с изображениями (относительно корневой)
-define('DIR_IMAGES',	'/web/uploads/wysiwyg');
+define('DIR_IMAGES',	'/web/uploads/wysiwyg/images');
 //Директория с файлами (относительно корневой)
-define('DIR_FILES',		'/web/uploads/wysiwyg');
+define('DIR_FILES',		'/web/uploads/wysiwyg/files');
 
 
 //Высота и ширина картинки до которой будет сжато исходное изображение и создана ссылка на полную версию
