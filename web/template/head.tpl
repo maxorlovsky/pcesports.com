@@ -7,7 +7,7 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title><?=$this->data->settings['site_name']?> - page</title>
+    <title><?=$this->title?><?=$this->data->settings['site_name']?></title>
     
     <script src="<?=_cfg('static')?>/js/scripts.js"></script>
     
@@ -27,6 +27,10 @@
       ga('send', 'pageview');
     </script>
     <? } ?>
+    
+    <script>
+    	var site = '<?=_cfg('site')?>';
+    </script>
 </head>
 
 <section id="full-site-wrapper" class="default">

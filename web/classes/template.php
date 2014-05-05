@@ -1,12 +1,15 @@
 <?php
 class Template extends System
 {
+    public $title = '';
     
     public function __construct() {
         parent::__construct();
     }
     
     public function parse() {
+    	$this->getSeo();
+    	
     	$this->getMainTemplate('head');
     	
     	$this->loadPage($this);
@@ -15,6 +18,16 @@ class Template extends System
         $this->getMainTemplate('footer');
         
         return true;
+    }
+    
+    public function getSeo() {
+    	
+    	if ($this->page != 'home') {
+    		$title = str_replace('-', ' ', ucfirst($this->page));
+    		$this->title .= $title;
+    		$this->title .= ' | ';
+    	}
+    	
     }
     
     public function loadPage($data) {
@@ -26,7 +39,6 @@ class Template extends System
     		return at('denied_access_level');
     	}*/
 
-    	$data->system = $this;
    		if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
    			 

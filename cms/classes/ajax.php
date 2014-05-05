@@ -112,6 +112,9 @@ class Ajax extends System
         }
         
         if (method_exists($module, $data['action'])) {
+        	if (!isset($data['form'])) {
+        		$data['form'] = NULL;
+        	}
             return $module->$data['action']($data['form']);
         }
         else {

@@ -16,9 +16,9 @@
         <div class="block-content news big-block">
         	<div class="add-box">
         		<div class="date"><?=date('M', strtotime($news->top->added))?><br /><?=date('d', strtotime($news->top->added))?></div>
-        		<a class="like" href="#">
+        		<a class="like" href="javascript:void(0);" attr-news-id="<?=$news->top->id?>">
         			<div class="placeholder">
-        				<div class="like-icon"></div><span>0</span>
+        				<div class="like-icon <?=($news->top->active?'active':null)?>"></div>
 					</div>
         		</a>
         	</div>
@@ -33,6 +33,11 @@
         	<p class="text"><?=$news->top->value?></p>
         </div>
         <div class="block-content news big-block readmore">
+        	<div class="news-info">
+				by <a href="<?=_cfg('href')?>/team/#<?=$news->top->login?>"><?=$news->top->login?></a>, 
+				<span id="news-like-<?=$news->top->id?>"><?=$news->top->likes?></span> Likes, 
+				<span>0</span> Comments
+			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$news->top->id?>">Read more</a>
         	<div class="clear"></div>
         </div>
