@@ -3,9 +3,9 @@
 //Корневая директория сайта
 define('DIR_ROOT',		$_SERVER['DOCUMENT_ROOT']);
 //Директория с изображениями (относительно корневой)
-define('DIR_IMAGES',	'/img/upload');
+define('DIR_IMAGES',	'/web/uploads/wysiwyg');
 //Директория с файлами (относительно корневой)
-define('DIR_FILES',		'/files/upload');
+define('DIR_FILES',		'/web/uploads/wysiwyg');
 
 
 //Высота и ширина картинки до которой будет сжато исходное изображение и создана ссылка на полную версию
@@ -16,6 +16,6 @@ define('HEIGHT_TO_LINK', 500);
 define('CLASS_LINK', 'lightview');
 define('REL_LINK', 'lightbox');
 
-date_default_timezone_set('Asia/Yekaterinburg');
+date_default_timezone_set('Europe/Riga');
 
 ?>
