@@ -5,10 +5,7 @@
         <div class="block-header-wrapper">
             <h1 class="">Pentaclick eSports Team</h1>
         </div>
-        <?
-        if ($news) {
-            foreach($news as $v) {
-        ?>
+
         <div class="block-content news big-block">
             <div class="add-box">
                 <div class="date"><?=date('M', strtotime($v->added))?><br /><?=date('d', strtotime($v->added))?></div>
@@ -28,6 +25,7 @@
             <a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="title"><?=$v->title?></a>
             <div class="text"><?=$v->value?></div>
         </div>
+        
         <div class="block-content news big-block readmore">
             <div class="news-info">
                 by <a href="<?=_cfg('href')?>/team/#<?=$v->login?>"><?=$v->login?></a>, 
@@ -37,9 +35,5 @@
             <a class="button" href="<?=_cfg('href')?>/news/<?=$v->id?>">Read more</a>
             <div class="clear"></div>
         </div>
-        <?
-            }
-        }
-        ?>
     </div>
 </div>

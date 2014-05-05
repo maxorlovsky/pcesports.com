@@ -477,7 +477,10 @@ tinyMCE.init({
     theme_advanced_resize_horizontal : false,
 	forced_root_block : '',
 	nonbreaking_force_tab : false,
-    resize: true, 
+    resize: true,
+    relative_urls : false,
+    remove_script_host : false,
+    document_base_url : site+"/web/",
 
 	// Drop lists for link/image/media/template dialogs
     content_css : site+"/cms/static/css/tinymce.css",
