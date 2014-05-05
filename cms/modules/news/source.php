@@ -106,7 +106,7 @@ class News
 			
 			Db::query('INSERT INTO `news` SET '.
 				'`title` = "'.Db::escape($form['title']).'", '.
-				'`extension` = "'.Db::escape($getExt).'" '.
+				'`extension` = "'.Db::escape($getExt).'", '.
 				'`admin_id` = '.(int)$this->system->user->id
 			);
 			$lastId = Db::lastId();
