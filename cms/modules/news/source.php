@@ -79,7 +79,7 @@ class News
 			
 			//Line
 			$thumb = PhpThumbFactory::create(_cfg('uploads').'/news/original-'.$file);
-			$thumb->adaptiveResize(791, 280);
+			$thumb->adaptiveResize(790, 280);
 			$thumb->save(_cfg('uploads').'/news/big-'.$file);
 			
 			//Square

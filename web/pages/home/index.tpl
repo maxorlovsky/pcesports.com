@@ -22,13 +22,15 @@
 					</div>
         		</a>
         	</div>
-        	<a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="image-holder">
-                <? if ($news->top->extension) { ?>
+            <? if ($news->top->extension) { ?>
+                <a href="<?=_cfg('href')?>/news/<?=$news->top->id?>">
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$news->top->id?>.<?=$news->top->extension?>" />
-                <? } else { ?>
+                </a>
+            <? } else { ?>
+                <a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="image-holder">
                     <p>NO IMAGE</p>
-                <? } ?>
-            </a>
+                </a>
+            <? } ?>
         	<a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="title"><?=$news->top->title?></a>
         	<div class="text"><?=$news->top->value?></div>
         </div>

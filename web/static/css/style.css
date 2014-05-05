@@ -208,11 +208,11 @@ footer .copyrights .devs:hover {
     padding: 20px;
 }
 .left-containers {
-    width:70%;
+    width: 790px;
     float: left;
 }
 .right-containers {
-    width: 28%;
+    width: 316px;
     float: right;
 }
 .right-containers .block {
