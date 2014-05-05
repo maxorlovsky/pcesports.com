@@ -466,7 +466,7 @@ tinyMCE.init({
 	style_font_size: '16px',
 	
 	// Theme options
-	theme_advanced_buttons1 : "code,preview,images,fullscreen,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontsizeselect",
+	theme_advanced_buttons1 : "code,images,fullscreen,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontsizeselect",
 	theme_advanced_buttons2 : "cut,copy,paste,|,outdent,indent,|,undo,redo,|,forecolor,backcolor,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,|,link,unlink,image,cleanup",
 	theme_advanced_buttons3 : "",
 	theme_advanced_buttons4 : "",

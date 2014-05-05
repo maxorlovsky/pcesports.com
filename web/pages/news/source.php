@@ -20,7 +20,7 @@ class news
 			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
 			'WHERE `able` = 1 '.
 			'ORDER BY `id` DESC '.
-			'LIMIT 10'
+			'LIMIT 5'
 		);
 		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';

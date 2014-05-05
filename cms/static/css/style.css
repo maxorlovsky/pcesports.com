@@ -540,3 +540,6 @@ nav #menusub:hover #arrows.active {
 #file {
     margin-top: 20px;
 }
+#file img {
+	max-width: 600px;
+}

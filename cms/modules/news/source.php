@@ -104,7 +104,11 @@ class News
 				$getExt = substr(str_replace('.tmp', '', $form['uploadedFiles']), -3);
 			}
 			
-			Db::query('INSERT INTO `news` SET `title` = "'.Db::escape($form['title']).'", `extension` = "'.Db::escape($getExt).'"');
+			Db::query('INSERT INTO `news` SET '.
+				'`title` = "'.Db::escape($form['title']).'", '.
+				'`extension` = "'.Db::escape($getExt).'" '.
+				'`admin_id` = '.(int)$this->system->user->id
+			);
 			$lastId = Db::lastId();
 			
 			if ($getExt != null) {
