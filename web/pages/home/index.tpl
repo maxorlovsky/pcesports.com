@@ -30,7 +30,7 @@
                 <? } ?>
             </a>
         	<a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="title"><?=$news->top->title?></a>
-        	<p class="text"><?=$news->top->value?></p>
+        	<div class="text"><?=$news->top->value?></div>
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">

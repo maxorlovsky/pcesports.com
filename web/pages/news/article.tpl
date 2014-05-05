@@ -21,7 +21,7 @@
                     <p>NO IMAGE</p>
                 <? } ?>
             </div>
-        	<p class="text"><?=$row->value?></p>
+        	<div class="text"><?=$row->value?></div>
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">

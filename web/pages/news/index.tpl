@@ -26,7 +26,7 @@
                 <? } ?>
             </a>
         	<a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="title"><?=$v->title?></a>
-        	<p class="text"><?=$v->value?></p>
+        	<div class="text"><?=$v->value?></div>
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
