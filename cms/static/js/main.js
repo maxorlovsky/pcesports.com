@@ -461,13 +461,13 @@ tinyMCE.init({
 	// General options
 	mode : "none",
 	theme : "advanced",
-	plugins : "autolink,lists,layer,save,advimage,advlink,iespell,preview,media,contextmenu,paste,pasteAsPlainText,directionality,fullscreen,noneditable,visualchars,advlist,images",
+	plugins : "autolink,lists,layer,save,advimage,advlink,iespell,preview,media,contextmenu,paste,pasteAsPlainText,directionality,fullscreen,noneditable,visualchars,advlist,images,spellchecker",
 	width: '99%',
 	style_font_size: '16px',
 	
 	// Theme options
 	theme_advanced_buttons1 : "code,images,fullscreen,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,formatselect,fontsizeselect",
-	theme_advanced_buttons2 : "cut,copy,paste,|,outdent,indent,|,undo,redo,|,forecolor,backcolor,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,|,link,unlink,image,cleanup",
+	theme_advanced_buttons2 : "cut,copy,paste,|,outdent,indent,|,undo,redo,|,forecolor,backcolor,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,|,link,unlink,image,cleanup,spellchecker",
 	theme_advanced_buttons3 : "",
 	theme_advanced_buttons4 : "",
 	theme_advanced_toolbar_location : "top",
