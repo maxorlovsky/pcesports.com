@@ -295,16 +295,12 @@ footer .copyrights .devs:hover {
     padding: 0 20px 20px 20px;
 }
 .article .big-block p.text {
-	margin-top: 20px;
-}
-.article .big-block p {
 	display: block;
-    color: #666;
     line-height: 21px;
     font-size: 13px;
-    margin: 0;
+    margin: 20px 0 0 0;
+    color: #666;
     padding: 0 20px 20px 20px;
-    display: block;
 }
 .big-block .add-box {
     position: absolute;
