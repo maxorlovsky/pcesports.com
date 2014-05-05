@@ -21,7 +21,13 @@
     </tr>
     <?
     foreach($module->languages as $v) {
+		$short = 'short_';
+		$short .= $v->title;
         ?>
+        <tr>
+            <td class="b">Short <?=at('text')?> - <img src="<?=_cfg('cmsimg').'/flags/'.$v->flag.'.png'?>"/></td>
+            <td><textarea id="short_<?=$v->title?>" cols="80"><?=$module->editData->$short?></textarea></td>
+        </tr>
         <tr>
             <td class="b"><?=at('text')?> - <img src="<?=_cfg('cmsimg').'/flags/'.$v->flag.'.png'?>"/></td>
             <td><textarea id="string_<?=$v->title?>" cols="80"><?=$module->editData->{$v->title}?></textarea></td>

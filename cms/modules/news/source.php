@@ -125,6 +125,12 @@ class News
 						'WHERE `id` = '.$lastId
 					);
 				}
+				else if ($string[0] == 'short') {
+					Db::query('UPDATE `news` '.
+							'SET `short_'.$string[1].'` = "'.Db::escape($v).'" '.
+							'WHERE `id` = '.$lastId
+					);
+				}
 			}
 			
 			$this->system->log('Adding news <b>Article added</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
@@ -176,6 +182,12 @@ class News
 				if ($string[0] == 'string') {
 					Db::query('UPDATE `news` '.
 							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+							'WHERE `id` = '.$id
+					);
+				}
+				else if ($string[0] == 'short') {
+					Db::query('UPDATE `news` '.
+							'SET `short_'.$string[1].'` = "'.Db::escape($v).'" '.
 							'WHERE `id` = '.$id
 					);
 				}
