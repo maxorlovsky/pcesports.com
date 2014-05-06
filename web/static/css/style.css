@@ -586,7 +586,7 @@ footer .partners .aimskillz {
 	background-color: #ccc;
 	padding: 0;
 	margin: 0;
-	width: 60px;
+	width: 70px;
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
@@ -596,7 +596,7 @@ footer .partners .aimskillz {
 .contacts .contact-form .fields input,
 .contacts .contact-form .fields select,
 .contacts .contact-form .fields textarea {
-	width: 670px;
+	width: 660px;
 	border: 1px solid #999;
 	margin: 0 0 0 -1px;
 	border-radius: 0 4px 4px 0;
@@ -614,7 +614,7 @@ footer .partners .aimskillz {
 	height: 38px;
 }
 .contacts .contact-form .fields select {
-	width: 680px;
+	width: 670px;
 	vertical-align: middle;
 	padding: 11px 5px;
 	display: block;
@@ -622,7 +622,7 @@ footer .partners .aimskillz {
 }
 .contacts .contact-form .fields textarea {
 	padding: 10px;
-	width: 660px;
+	width: 650px;
 	height: 300px;
 }
 .contacts .contact-form .button {
