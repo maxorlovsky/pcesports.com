@@ -41,8 +41,17 @@ class Template extends System
 
    		if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
+   			
+   			$breakDown = explode('-', $data->page);
+   			$so = count($breakDown);
+   			
+   			for($i=1;$i<$so;++$i) {
+   				$breakDown[$i] = ucfirst($breakDown[$i]);
+   			}
+   			
+   			$className = implode($breakDown);
    			 
-   			$page = new $data->page($data);
+   			$page = new $className($data);
    		}
    		else if (file_exists(_cfg('pages').'/404/source.php')) {
    			require_once _cfg('pages').'/404/source.php';
