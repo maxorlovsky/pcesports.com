@@ -549,3 +549,23 @@ footer .partners .aimskillz {
     padding: 10px 15px;
     font-size: 13px;
 }
+
+.team .block {
+	margin-bottom: 40px;
+}
+.team .team-user {
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+.team .team-user .name {
+	padding: 15px 0 0 15px;
+	font-size: 19px;
+	font-weight: bold;
+	color: #777;
+}
+.team .team-user .role {
+	padding: 5px 0 15px 15px;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
