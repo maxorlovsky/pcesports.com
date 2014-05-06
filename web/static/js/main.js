@@ -44,6 +44,48 @@ $('.like').on('click', this, function() {
 	ajax(query);
 });
 
+var formInProgress = 0;
+$('#submitContactForm').on('click', this, function() {
+	if (formInProgress == 1) {
+		return false;
+	}
+	
+	var thisButton = this;
+	formInProgress = 1;
+	$(thisButton).addClass('loading');
+	$('.contact-form #error').hide();
+	
+	var query = {
+        type: 'POST',
+        data: {
+        	ajax: 'submitContactForm',
+        	form: $('.contact-form').serialize()
+		},
+    	success: function(data) {
+    		answer = data.split(';');
+    		
+    		if (answer[0] == 1) {
+    			$('.contact-form').slideUp('fast');
+    			$('.success-sent').slideDown('fast');
+    			$('.success-sent p').html(answer[1]);
+    		}
+    		else {
+    			formInProgress = 0;
+    			$(thisButton).removeClass('loading');
+    			$('.contact-form #error p').html(answer[1]);
+    			$('.contact-form #error').slideDown('fast');
+    		}
+    		
+    		return false;
+    	},
+    	error: function(data) {
+    		formInProgress = 0;
+    		$(thisButton).removeClass('loading');
+    	}
+    };
+	ajax(query);
+});
+
 function updateTimers() {
 	$.each($('.timer'), function(k, v) {
 		delta = parseInt($(this).attr('attr-time'));

@@ -46,6 +46,11 @@ body {
     text-transform: uppercase;
     font-weight: bold;
 }
+.button.loading {
+	background-image:url(../images/loading.gif);
+	background-position: 50%;
+	background-repeat: no-repeat;
+}
 .button:hover {
     color: #fff;
     background-color: #2878d1;
@@ -567,5 +572,81 @@ footer .partners .aimskillz {
 	padding: 5px 0 15px 15px;
 	font-size: 14px;
 	text-transform: uppercase;
+}
+
+.contacts .contact-form .fields {
+	margin-bottom: 15px;
+	white-space: nowrap;
+	clear: both;
+}
+.contacts .contact-form .fields label {
+	display: block;
+	border: 1px solid #999;
+	border-radius: 4px 0 0 4px;
+	background-color: #ccc;
+	padding: 0;
+	margin: 0;
+	width: 60px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	text-transform: uppercase;
+	float: left;
+}
+.contacts .contact-form .fields input,
+.contacts .contact-form .fields select,
+.contacts .contact-form .fields textarea {
+	width: 670px;
+	border: 1px solid #999;
+	margin: 0 0 0 -1px;
+	border-radius: 0 4px 4px 0;
+	padding-left: 10px;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+}
+.contacts .contact-form .fields input:focus,
+.contacts .contact-form .fields select:focus,
+.contacts .contact-form .fields textarea:focus {
+	border-color: #1697e1;
+	transition: linear .3s;
+	outline: 0;
+}
+.contacts .contact-form .fields input {
+	height: 38px;
+}
+.contacts .contact-form .fields select {
+	width: 680px;
+	vertical-align: middle;
+	padding: 11px 5px;
+	display: block;
+	height: 42px;
+}
+.contacts .contact-form .fields textarea {
+	padding: 10px;
+	width: 660px;
+	height: 300px;
+}
+.contacts .contact-form .button {
+	margin-left: 60px;
+}
+
+#error {
+	border: 1px solid #900;
+	background-color: #CE2929;
+	color: #fff;
+	margin-bottom: 20px;
+	display: none;
+}
+.success-sent p, #error p {
+	padding: 10px;
+	margin: 0;
+	font-size: 16px;
+}
+
+.success-sent {
+	display: none;
+	border: 1px solid #090;
+	background-color: #2D6B15 !important;
+	color: #fff;
+	padding: 10px !important;
 }
 

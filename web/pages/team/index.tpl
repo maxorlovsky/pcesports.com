@@ -8,11 +8,11 @@
 
         <div class="block-content about-us">
             <div class="text">
-            	<p>It's hard to tell right now what Pentaclick eSports is. Currently we're a small company of friends and gamers, who are really passionate about games, especially League of Legends and Hearthstone. What more, we like to share our gaming experience, so we're also like to stream things.</p>
-            	<p>But just streaming games, especially alone is hard and sometimes boring, that why we decided that holding events such as video games tournaments with commentary and prizes for the winners are much more fun and intense.</p>
-            	<p>So right now, Pentaclick eSports is a monthly based video games tournaments, held up in Europe with 2 marked games - League of Legends and Hearthstone. And few more on horizon.</p>
-            	<p>Our website is also build up to share different interesting information regarding games that we "support".</p>
-            	<p>What we strive to accomplish is to gather gaming community and best broadcasting experience that can be achieved by non-professional organization.</p>
+            	<p>It's hard to tell right now what Pentaclick eSports is. Currently we're a small company of friends who are really passionate about esports and gaming, especially League of Legends and Hearthstone. What more, we like to share our gaming experience, so we also like to stream.</p>
+            	<p>But just streaming games, especially alone, is hard and sometimes boring, that's why we decided that holding events such as video game tournaments with commentary and prizes for the winners are much more fun and intense.</p>
+            	<p>So right now, Pentaclick eSports is a monthly based video games tournaments, held in Europe with 2 marked games - League of Legends and Hearthstone. And a few more on horizon.</p>
+            	<p>Also our website is designed to share different interesting information regarding games that we "support".</p>
+            	<p>What we strive to accomplish is to gather a gaming community and best broadcasting experience that can be achieved by non-professional organization.</p>
 			</div>
         </div>
     </div>
