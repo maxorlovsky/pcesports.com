@@ -3,10 +3,11 @@
 class home
 {
 	public $news;
+	public $slider;
 	
-	function __construct($params = array()) {
+	public function __construct($params = array()) {
 		
-		$slider = array(
+		$this->slider = array(
 			array('#', _cfg('img').'/poster-lol.jpg'),
 			array('#', _cfg('img').'/poster-hs.png'),
 		);
@@ -20,21 +21,23 @@ class home
 			'LIMIT 7'
 		);
 		
-		$news = new stdClass();
-		$news->others = new stdClass();
+		$this->news = new stdClass();
+		$this->news->others = new stdClass();
 		if ($rows) {
 			$i = 0;
 			foreach($rows as $k => $v) {
 				if ($i == 0) {
-					$news->top = $v;
+					$this->news->top = $v;
 					$i = 1;
 				}
 				else {
-					$news->others->$k = $v;
+					$this->news->others->$k = $v;
 				}
 			}
 		}
-		
+	}
+	
+	public function showTemplate() {
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 }

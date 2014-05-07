@@ -22,8 +22,22 @@ class Template extends System
     
     public function getSeo() {
     	
+    	if (file_exists(_cfg('pages').'/'.$this->page.'/source.php')) {
+    		require_once _cfg('pages').'/'.$this->page.'/source.php';
+
+    		$seoPage = new $this->page();
+    		if (method_exists($seoPage, 'getSeo')) {
+    			$seoPageData = $seoPage::getSeo();
+    		}
+    	}
+    	
     	if ($this->page != 'home') {
-    		$title = str_replace('-', ' ', ucfirst($this->page));
+    		if (isset($seoPageData)) {
+    			$title = str_replace('-', ' ', ucfirst($seoPageData->title));
+    		}
+    		else {
+    			$title = str_replace('-', ' ', ucfirst($this->page));
+    		}
     		$this->title .= $title;
     		$this->title .= ' | ';
     	}
@@ -31,27 +45,15 @@ class Template extends System
     }
     
     public function loadPage($data) {
-    	/*if (!$data['page']) {
-    		$data['page'] = '404';
-    	}
-    
-    	if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']]) {
+    	/*if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']]) {
     		return at('denied_access_level');
     	}*/
 
    		if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
    			
-   			$breakDown = explode('-', $data->page);
-   			$so = count($breakDown);
-   			
-   			for($i=1;$i<$so;++$i) {
-   				$breakDown[$i] = ucfirst($breakDown[$i]);
-   			}
-   			
-   			$className = implode($breakDown);
-   			 
-   			$page = new $className($data);
+   			$page = new $data->page($data);
+   			$page->showTemplate();
    		}
    		else if (file_exists(_cfg('pages').'/404/source.php')) {
    			require_once _cfg('pages').'/404/source.php';

@@ -4,17 +4,12 @@ class news
 {
 	public $news;
 	
-	function __construct($params = array()) {
-		if (isset($_GET['val2'])) {
-			$this->getArticle();
-		}
-		else {
-			$this->getNewsList();
-		}		
+	public function __construct($params = array()) {
+		
 	}
 	
 	public function getNewsList() {
-		$news = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.
+		$this->news = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.
 			'FROM `news` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
 			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
@@ -27,7 +22,7 @@ class news
 	}
 	
 	public function getArticle() {
-		$row = Db::fetchRow('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.
+		$this->news = Db::fetchRow('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.
 			'FROM `news` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
 			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
@@ -37,5 +32,14 @@ class news
 		);
 		
 		include_once _cfg('pages').'/'.get_class().'/article.tpl';
+	}
+	
+	public function showTemplate() {
+		if (isset($_GET['val2'])) {
+			$this->getArticle();
+		}
+		else {
+			$this->getNewsList();
+		}
 	}
 }

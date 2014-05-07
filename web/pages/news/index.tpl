@@ -6,8 +6,8 @@
             <h1 class="">News</h1>
         </div>
         <?
-		if ($news) {
-        	foreach($news as $v) {
+		if ($this->news) {
+        	foreach($this->news as $v) {
         ?>
         <div class="block-content news big-block">
         	<div class="add-box">

@@ -44,7 +44,7 @@
             	<div class="role">Graphic designer</div>
             </div>
             <div class="team-user">
-            	<div class="name">Artem "art3939" Popkov</div>
+            	<div class="name">Artem "art9393" Popkov</div>
             	<div class="role">Social pages manager</div>
             </div>
         </div>

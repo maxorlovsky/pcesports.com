@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block promo">
         <ul class="bx-wrapper">
-        	<? foreach($slider as $v) { ?>
+        	<? foreach($this->slider as $v) { ?>
             <li><a href="<?=$v[0]?>"><img src="<?=$v[1]?>" /></a></li>
             <? } ?>
         </ul>
@@ -12,43 +12,43 @@
         <div class="block-header-wrapper">
             <h1 class="">News</h1>
         </div>
-        <? if ($news->top) { ?>
+        <? if ($this->news->top) { ?>
         <div class="block-content news big-block">
         	<div class="add-box">
-        		<div class="date"><?=date('M', strtotime($news->top->added))?><br /><?=date('d', strtotime($news->top->added))?></div>
-        		<a class="like" href="javascript:void(0);" attr-news-id="<?=$news->top->id?>">
+        		<div class="date"><?=date('M', strtotime($this->news->top->added))?><br /><?=date('d', strtotime($this->news->top->added))?></div>
+        		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->news->top->id?>">
         			<div class="placeholder">
-        				<div class="like-icon <?=($news->top->active?'active':null)?>"></div>
+        				<div class="like-icon <?=($this->news->top->active?'active':null)?>"></div>
 					</div>
         		</a>
         	</div>
-            <? if ($news->top->extension) { ?>
-                <a href="<?=_cfg('href')?>/news/<?=$news->top->id?>">
-                    <img src="<?=_cfg('imgu')?>/news/big-<?=$news->top->id?>.<?=$news->top->extension?>" />
+            <? if ($this->news->top->extension) { ?>
+                <a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">
+                    <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->top->id?>.<?=$this->news->top->extension?>" />
                 </a>
             <? } else { ?>
-                <a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="image-holder">
+                <a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>" class="image-holder">
                     <p>NO IMAGE</p>
                 </a>
             <? } ?>
-        	<a href="<?=_cfg('href')?>/news/<?=$news->top->id?>" class="title"><?=$news->top->title?></a>
-        	<div class="text"><?=$news->top->value?></div>
+        	<a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>" class="title"><?=$this->news->top->title?></a>
+        	<div class="text"><?=$this->news->top->value?></div>
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
-				by <a href="<?=_cfg('href')?>/team/#<?=$news->top->login?>"><?=$news->top->login?></a>, 
-				<span id="news-like-<?=$news->top->id?>"><?=$news->top->likes?></span> Likes, 
+				by <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
+				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> Likes, 
 				<span>0</span> Comments
 			</div>
-        	<a class="button" href="<?=_cfg('href')?>/news/<?=$news->top->id?>">Read more</a>
+        	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">Read more</a>
         	<div class="clear"></div>
         </div>
         <? } ?>
         
         <div class="block-content news">
             <?
-            if ($news->others) {
-                foreach($news->others as $v) {
+            if ($this->news->others) {
+                foreach($this->news->others as $v) {
             ?>
             <div class="small-block">
                 <div class="image-holder">

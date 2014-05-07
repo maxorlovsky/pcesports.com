@@ -248,6 +248,7 @@ footer .copyrights .devs:hover {
     line-height: 40px;
 }
 .block .block-content {
+	display: block;
     background-color: #fff;
     padding: 20px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
@@ -650,3 +651,46 @@ footer .partners .aimskillz {
 	padding: 10px !important;
 }
 
+.tournament-rules {
+	color: #444;
+}
+.tournament-rules p {
+	margin: 0 0 0 30px;
+	padding: 0;
+}
+
+.lol .block {
+	margin-bottom: 40px;
+}
+
+.lol .active-tournament:hover {
+	background-color: #1697E1;
+}
+.lol .ended-tournament:hover {
+	background-color: #bbb;
+}
+.lol .active-tournament:hover {
+	color: #fff;
+}
+.lol .ended-tournament:hover {
+	color: #000;
+} 
+
+.lol .title {
+	float: left;
+}
+.lol .status {
+	float: right;
+	display: block;
+	padding: 10px;
+}
+.lol .active-tournament .status {
+	background-color: #2D6B15;
+}
+.lol .ended-tournament .status {
+	background-color: #444;
+}
+
+.lol .ended-tournament:hover .status {
+	color: #fff;
+}

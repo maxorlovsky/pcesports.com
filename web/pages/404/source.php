@@ -2,7 +2,7 @@
 
 class errorPage
 {
-	function __construct($params = array()) {
+	public function __construct() {
 		include_once _cfg('pages').'/404/error.tpl';
 	}
 }
