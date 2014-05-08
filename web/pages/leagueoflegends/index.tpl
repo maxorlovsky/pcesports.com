@@ -6,21 +6,30 @@
             <h1 class="bordered">League of Legends Tournament list</h1>
         </div>
 
-        <a class="block-content active-tournament" href="<?=_cfg('url')?>">
-            <div class="title">Tournament #3</div>
-            <div class="status">Registration opens</div>
-            <div class="clear"></div>
+        <? for($i=$this->currentTournament;$i>0;--$i) { ?>
+        <a class="block-content <?=($i==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('url')?>">
+            <div class="left-part">
+                <div class="title">Tournament #<?=$i?></div>
+                <div class="participant_count"><?=($this->teamsCount[$i]?$this->teamsCount[$i]:0)?> of 128 participants</div>
+            </div>
+            
+            <div class="right-part">
+                <div class="status"><?=($i==$this->currentTournament?'Active':'Ended')?></div>
+                <div class="event-date">Event date: 25.01.2014</div>
+                <div class="event-date">Prize pool: <?=($i==1?'80€ Cash':'280€ RP+Cash')?></div>
+            </div>
+            
+            <div class="mid-part">
+                <? if ($i != $this->currentTournament) { ?>
+                    1st<br />
+                    2nd<br />
+                    3rd<br />
+                <? } else { ?>
+                    <div class="clear"></div>
+                <? } ?>
+            </div>
         </a>
-        <a class="block-content ended-tournament" href="<?=_cfg('url')?>">
-            <div class="title">Tournament #2</div>
-            <div class="status">Ended</div>
-            <div class="clear"></div>
-        </a>
-        <a class="block-content ended-tournament" href="<?=_cfg('url')?>">
-            <div class="title">Tournament #1</div>
-            <div class="status">Ended</div>
-            <div class="clear"></div>
-        </a>
+        <? } ?>
     </div>
     
     <div class="block">
@@ -32,17 +41,18 @@
             <h1>Format</h1>
 			<ul>
 			<li>EUW server</li>
-			<li>Registration open <strong>25 april 2014</strong>, 10:00 CET/GMT+1</li>
+			<!--
+            <li>Registration open <strong>25 april 2014</strong>, 10:00 CET/GMT+1</li>
 			<li>Games starts <strong>10 may 2014</strong>, 13:00 CET/GMT+1</li>
-			<li>All games will be played in 1 day (maximum 2)</li>
+            <li>Prize (1st place) &#8211; 30€ for team + 20€ RP Triuphant Ryze skin for every member (5 players who participated in the last fight)</li>
+            <li>Prize (2nd place) &#8211; 15€ RP (5 players who participated in the last fight)</li>
+            <li>Prize (3rd place) &#8211; 10€ RP (5 players who participated in the last fight)</li>
+            <li>Prize (4th place) &#8211; 5€ RP (5 players who participated in the last fight)</li>
+            <li>1st place prize of 30€ will be sent via Paypal</li>
+            -->
 			<li>Min teams: 16</li>
 			<li>Anyone can participate if they are allowed by League of Legend rules</li>
 			<li>Single elimination, Best of 1. Finals &#8211; Best of 3</li>
-			<li>Prize (1st place) &#8211; 30€ for team + 20€ RP Triuphant Ryze skin for every member (5 players who participated in the last fight)</li>
-			<li>Prize (2nd place) &#8211; 15€ RP (5 players who participated in the last fight)</li>
-			<li>Prize (3rd place) &#8211; 10€ RP (5 players who participated in the last fight)</li>
-			<li>Prize (4th place) &#8211; 5€ RP (5 players who participated in the last fight)</li>
-			<li>1st place prize of 30€ will be sent via Paypal</li>
 			<li>Semi finals, 3rd place and Finals games will be transmitted on twitch</li>
 			</ul>
 			<h1>Rules</h1>
@@ -91,7 +101,6 @@
 			<ul>
 			<li>Players are required to attend the tournament using summoner names which were registered (and edited) before 24h tournament start.</li>
 			<li>The Manager reserves the right to modify or add other rules.</li>
-			<li>After the Tournament games, captains taking winning positions (1st-4th) are required to contact the managers via Skype or Email.</li>
 			</ul>
         </div>
     </div>

@@ -3,14 +3,18 @@
 class leagueoflegends
 {
 	public $teamsCount;
+	public $currentTournament = 3;
 	
 	public function __construct($params = array()) {
-		$this->teamsCount = Db::fetchRows('SELECT COUNT(`tournament_id`) AS `value`'.
+		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
 			'FROM `teams` AS `n` '.
-			'WHERE `game` = "lol" '.
+			'WHERE `game` = "lol" AND `approved` = 1 '.
 			'GROUP BY `tournament_id` '.
-			'ORDER BY `id`'
+			'ORDER BY `id` DESC'
 		);
+		foreach($rows as $v) {
+			$this->teamsCount[$v->tournament_id] = $v->value;
+		}
 	}
 	
 	public static function getSeo() {

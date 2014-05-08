@@ -1,0 +1,3 @@
+# 08.05.2014
+ALTER TABLE  `teams` ADD  `place` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0';
+ALTER TABLE  `teams` ADD INDEX (  `game` );
