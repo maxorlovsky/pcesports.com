@@ -19,7 +19,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Pentaclick eSports Team</h1>
+            <h1 class="bordered">organization</h1>
         </div>
 
         <div class="block-content team-list">
@@ -32,7 +32,7 @@
             	<div class="role">Co-Founder & Chief Information Officer</div>
             </div>
             <div class="team-user">
-            	<div class="name">Martin "Aven" Petkevich</div>
+            	<div class="name">Martin "Aven" Petkevic</div>
             	<div class="role">Co-Founder & Chief Communication Officer</div>
             </div>
             <div class="team-user">

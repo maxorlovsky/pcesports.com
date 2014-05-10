@@ -3,23 +3,28 @@
         <div class="block-header-wrapper">
             <h1 class="bordered">Next tournaments</h1>
         </div>
-        <div class="block-content next-tournaments hint" attr-msg="<?=date('d/m H:i', 1399629600)?>">
-            <h2>Hearthstone #4<br />Registration opens</h2>
-            <div class="timer" attr-time="<?=intval(1399629600 - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
+        <?
+        $i = 0;
+        foreach($this->serverTimes as $v) {
+        ?>
+        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('d/m H:i', $v['time'])?>">
+            <? if ($i!=0) { ?>
+                <div class="tourn-name"><?=$v['name']?> #<?=$v['id']?><br /><?=$v['status']?></div>
+            <? } else { ?>
+                <h2><?=$v['name']?> #<?=$v['id']?><br /><?=$v['status']?></h2>
+            <? } ?>
+            
+            <div class="timer" attr-time="<?=intval($v['time'] - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
             <a href="#" class="button">Join</a>
+            
+            <? if ($i!=0) { ?>
+                <div class="clear"></div>
+            <? } ?>
         </div>
-        <div class="block-content incoming-tournament hint" attr-msg="<?=date('d/m H:i', 1399716000)?>">
-            <div class="tourn-name">League of Legends #3<br />Start</div>
-            <div class="timer" attr-time="<?=intval(1399716000 - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="#" class="button">Join</a>
-            <div class="clear"></div>
-        </div>
-        <div class="block-content incoming-tournament hint" attr-msg="<?=date('d/m H:i', 1400320800)?>">
-            <div class="tourn-name">Hearthstone #4<br />Start</div>
-            <div class="timer" attr-time="<?=intval(1400320800 - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="#" class="button">Join</a>
-            <div class="clear"></div>
-        </div>
+        <?
+            $i = 1;
+        }
+        ?>
     </div>
     <?/*
     <div class="block streamers">

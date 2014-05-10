@@ -21,9 +21,9 @@
             
             <div class="mid-part">
                 <? if ($i != $this->currentTournament) { ?>
-                    1st<br />
-                    2nd<br />
-                    3rd<br />
+                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=$this->teamsPlaces[$i][1]?></span></div>
+                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=$this->teamsPlaces[$i][2]?></span></div>
+                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=$this->teamsPlaces[$i][3]?></span></div>
                 <? } else { ?>
                     <div class="clear"></div>
                 <? } ?>

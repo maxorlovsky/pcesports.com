@@ -70,6 +70,21 @@ class System
         	$this->page = 'home';
         }
         
+        $this->serverTimes = array(
+            array(
+            	'id'	=> 3,
+            	'name' 	=> 'League of Legends',
+            	'status'=> 'Start',
+            	'time' 	=> '1399716000',
+       		),
+        	array(
+        		'id'	=> 4,
+        		'name' 	=> 'Hearthstone',
+        		'status'=> 'Start',
+        		'time' 	=> '1400320800',
+        	),
+        );
+        
         $this->logged_in = 0;
     }
     

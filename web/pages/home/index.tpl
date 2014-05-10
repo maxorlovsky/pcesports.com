@@ -1,6 +1,7 @@
 <section class="container page home">
 
 <div class="left-containers">
+    <? if ($this->slider) { ?>
     <div class="block promo">
         <ul class="bx-wrapper">
         	<? foreach($this->slider as $v) { ?>
@@ -8,6 +9,7 @@
             <? } ?>
         </ul>
     </div>
+    <? } ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="">News</h1>

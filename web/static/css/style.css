@@ -669,7 +669,7 @@ footer .partners .aimskillz {
 .lol .ended-tournament:hover {
 	background-color: #bbb;
 }
-.lol .active-tournament:hover {
+.lol .active-tournament:hover, .lol .active-tournament:hover .right-part {
 	color: #fff;
 }
 .lol .ended-tournament:hover {
@@ -677,7 +677,8 @@ footer .partners .aimskillz {
 } 
 
 .lol .active-tournament .status {
-	background-color: #2D6B15;
+	background-color: #1697E1;
+	color: #fff;
 }
 .lol .ended-tournament .status {
 	background-color: #444;
@@ -692,11 +693,17 @@ footer .partners .aimskillz {
 }
 .lol .right-part {
     float: right;
-    width: 150px;
+    width: 170px;
+    font-size: 14px;
+}
+.lol  .right-part .status {
+    text-transform: uppercase;
+    font-weight: bold;
 }
 .lol .mid-part {
     width: 280px;
     margin: 0 auto;
+    color: #000;
 }
 .lol .title {
     font-size: 21px;
@@ -708,4 +715,17 @@ footer .partners .aimskillz {
     padding: 5px 8px;
     border-radius: 4px;
     float: right;
+}
+
+.lol .mid-part div {
+    height: 30px;
+}
+.lol .mid-part img {
+    float: left;
+    margin: 4px 10px 0 0;
+}
+.lol .mid-part span {
+    line-height: 30px;
+    display: block;
+    font-size: 18px;
 }
