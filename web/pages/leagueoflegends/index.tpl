@@ -7,7 +7,7 @@
         </div>
 
         <? for($i=$this->currentTournament;$i>0;--$i) { ?>
-        <a class="block-content <?=($i==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('url')?>">
+        <a class="block-content <?=($i==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$i?>">
             <div class="left-part">
                 <div class="title">Tournament #<?=$i?></div>
                 <div class="participant_count"><?=($this->teamsCount[$i]?$this->teamsCount[$i]:0)?> of 128 participants</div>
@@ -41,15 +41,6 @@
             <h1>Format</h1>
 			<ul>
 			<li>EUW server</li>
-			<!--
-            <li>Registration open <strong>25 april 2014</strong>, 10:00 CET/GMT+1</li>
-			<li>Games starts <strong>10 may 2014</strong>, 13:00 CET/GMT+1</li>
-            <li>Prize (1st place) &#8211; 30€ for team + 20€ RP Triuphant Ryze skin for every member (5 players who participated in the last fight)</li>
-            <li>Prize (2nd place) &#8211; 15€ RP (5 players who participated in the last fight)</li>
-            <li>Prize (3rd place) &#8211; 10€ RP (5 players who participated in the last fight)</li>
-            <li>Prize (4th place) &#8211; 5€ RP (5 players who participated in the last fight)</li>
-            <li>1st place prize of 30€ will be sent via Paypal</li>
-            -->
 			<li>Min teams: 16</li>
 			<li>Anyone can participate if they are allowed by League of Legend rules</li>
 			<li>Single elimination, Best of 1. Finals &#8211; Best of 3</li>
