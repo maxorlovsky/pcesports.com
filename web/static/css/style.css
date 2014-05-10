@@ -532,16 +532,23 @@ footer .block .block-content {
     box-shadow: none;
     text-align: center;
 }
+footer .partners img, footer .games img {
+    max-width: 315px;
+}
 footer .partners .unicon {
     float: left;
     position: relative;
     left: 100px;
 }
-footer .partners img, footer .games img {
-    max-width: 315px;
-}
 footer .partners .aimskillz {
-    margin-left: 30px;
+    left: 150px;
+    position: relative;
+    float: left;
+}
+footer .partners .lesf {
+    float: left;
+    position: relative;
+    margin-top: 50px;
 }
 
 #hint-helper {

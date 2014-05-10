@@ -21,6 +21,7 @@
             <div class="block-content partners">
                 <a class="unicon" href="https://www.facebook.com/uniconlv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
                 <a class="aimskillz" href="http://aimskillz.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>
+                <a class="lesf" href="http://lesf.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/lesf.png" /></a>
                 <div class="clear"></div>
             </div>
         </div>
