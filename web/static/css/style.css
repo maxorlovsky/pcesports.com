@@ -736,3 +736,45 @@ footer .partners .lesf {
     display: block;
     font-size: 18px;
 }
+
+.participants .block {
+    padding: 15px;
+    border: 1px solid #fff;
+    background-color: #32333b;
+    width: 170px;
+    margin: 20px 70px 0 0;
+    min-height: 0;
+    cursor: pointer;
+}
+.participants .block:nth-child(3n) {
+    margin-right: 0 !important;
+}
+.participants .block:nth-of-type(-n+3) {
+    margin-top: 0 !important;
+}
+.participants .block .team-name {
+    margin-bottom: 0;
+    float: left;
+    position: relative;
+    color: #eee;
+    font-size: 16px;
+}
+.participants .block ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    word-break: break-all;
+}
+.participants .block .team-num {
+    float: right;
+    font-size: 14px;
+    color: #bbb;
+    margin-top: 3px;
+    font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+}
+.participants .player-list {
+    display: none;
+}
+.participants .player-list a:hover {
+    color: #fff;
+}

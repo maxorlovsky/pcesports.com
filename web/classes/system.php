@@ -69,20 +69,32 @@ class System
         else {
         	$this->page = 'home';
         }
-        
+        //echo strtotime('02.06.2014 10:00:00');
         $this->serverTimes = array(
-            array(
-            	'id'	=> 3,
-            	'name' 	=> 'League of Legends',
-            	'status'=> 'Start',
-            	'time' 	=> '1399716000',
-       		),
+        	array(
+        		'id'	=> 4,
+        		'name' 	=> 'Hearthstone',
+        		'status'=> 'Registration open',
+        		'time' 	=> '1400137200',
+        	),
         	array(
         		'id'	=> 4,
         		'name' 	=> 'Hearthstone',
         		'status'=> 'Start',
-        		'time' 	=> '1400320800',
+        		'time' 	=> '1400914800',
         	),
+        	array(
+        		'id'	=> 4,
+        		'name' 	=> 'League of Legends',
+        		'status'=> 'Registration open',
+        		'time' 	=> '1401692400',
+        	),
+            array(
+            	'id'	=> 4,
+            	'name' 	=> 'League of Legends',
+            	'status'=> 'Start',
+            	'time' 	=> '1402729200',
+       		),
         );
         
         $this->logged_in = 0;

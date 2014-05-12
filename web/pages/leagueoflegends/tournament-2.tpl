@@ -2,7 +2,6 @@
 
 <div class="left-containers">
 
-    <?/*
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered">Broadcast/VOD</h1>
@@ -12,7 +11,6 @@
             <iframe width="750" height="505" src="//www.youtube.com/embed/PCcPBgKQiWs?list=PLhzcprkTx_-Z1QskqIiOsfxZYRs2j2-q9" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
-    */?>
 
     <?/*
     <div class="block">
@@ -32,8 +30,8 @@
         <div class="block-content tournament-rules">
             <ul>
             <li>EUW server</li>
-            <li>Registration open <strong>25 april 2014</strong>, 10:00 GMT-0</li>
-            <li>Games starts <strong>10 may 2014</strong>, 10:00 GMT-0</li>
+            <li>Registration open <strong>2 march 2014</strong>, 13:00 GMT-0</li>
+            <li>Games starts <strong>29 march 2014</strong>, 13:00 GMT-0</li>
             <li>Prize (1st place) &#8211; 30€ for team + 20€ RP Triuphant Ryze skin for every member (5 players who participated in the last fight)</li>
             <li>Prize (2nd place) &#8211; 15€ RP (5 players who participated in the last fight)</li>
             <li>Prize (3rd place) &#8211; 10€ RP (5 players who participated in the last fight)</li>

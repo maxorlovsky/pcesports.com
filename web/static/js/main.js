@@ -6,6 +6,21 @@ $('.bx-wrapper').bxSlider({
 	pause: 8000
 });
 
+if ($('.participants .block').length > 0) {
+	$('.participants').isotope({
+	    itemSelector : '.block',
+	    layoutMode : 'fitRows'
+	});
+}
+
+$('.participants').on('click', '.block', function(e) {
+    if(!$(e.target).is('a')){
+        $(this).find('.player-list').slideToggle(500, function() {
+            $('.participants').isotope( 'reLayout' );
+        });
+    }
+});
+
 var likeInProgress = 0;
 $('.like').on('click', this, function() {
 	if (likeInProgress == 1) {

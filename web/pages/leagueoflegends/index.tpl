@@ -15,7 +15,7 @@
             
             <div class="right-part">
                 <div class="status"><?=($i==$this->currentTournament?'Active':'Ended')?></div>
-                <div class="event-date">Event date: 25.01.2014</div>
+                <div class="event-date">Event date: <?=$this->eventDates[$i]?></div>
                 <div class="event-date">Prize pool: <?=($i==1?'80€ Cash':'280€ RP+Cash')?></div>
             </div>
             
