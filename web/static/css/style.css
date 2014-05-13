@@ -271,7 +271,7 @@ footer .copyrights .devs:hover {
 .big-block .image-holder {
     display: block;
     width: 100%;
-    min-height: 144px;
+    /*min-height: 144px;*/
     max-height: 280px;
     background-color: #999 !important;
     text-align: center;
