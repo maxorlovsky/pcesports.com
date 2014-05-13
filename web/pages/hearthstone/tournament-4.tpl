@@ -14,6 +14,7 @@
             <p>Prize (2nd place) – 10€</p>
             <p>Prize (3rd place) – 5€</p>
             <p>Prize money will be sent via Paypal</p>
+            <a href="<?=_cfg('href')?>/hearthstone">Global tournament format and rules</a>
         </div>
     </div>
     
