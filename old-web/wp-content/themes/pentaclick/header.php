@@ -83,12 +83,13 @@
     	</article>
     </article>
     <?
-    if (cOptions('game')) {
+    /*if (cOptions('game')) {
         get_template_part( 'nav', cOptions('game') );
     }
     else {
         get_template_part( 'nav', 'original' );
-    }
+    }*/
+get_template_part( 'nav', 'lol' );
     ?>
 </header>
 

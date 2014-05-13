@@ -34,6 +34,7 @@ class leagueoflegends
 			$this->participants = $participants;
 			
 			include_once _cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl';
+			include_once _cfg('pages').'/'.get_class().'/footer.tpl';
 		}
 		else {
 			include_once  _cfg('pages').'/404/error.tpl';

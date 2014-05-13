@@ -26,8 +26,6 @@ RewriteRule ^web/uploads/? - [L]
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 
-RewriteRule ^admin/updates/CHANGELOG.txt /updates/CHANGELOG.txt [QSA,L]
-
 RewriteRule ^([a-z]+)/?$ /index.php?language=$1 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/?$ /index.php?language=$1&val1=$2 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3 [QSA,L]

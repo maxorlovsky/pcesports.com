@@ -246,7 +246,7 @@ body::first-letter { color: #5c66e9; }
 #home-content .promo {
     position: relative;
     width: 1280px;
-    height: 600px;
+    height: 0;
     margin: 0 auto;
 }
 #home-content .promo.hs {

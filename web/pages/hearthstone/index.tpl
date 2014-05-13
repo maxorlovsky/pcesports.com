@@ -10,20 +10,20 @@
         <a class="block-content <?=($i==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$i?>">
             <div class="left-part">
                 <div class="title">Tournament #<?=$i?></div>
-                <div class="participant_count"><?=($this->teamsCount[$i]?$this->teamsCount[$i]:0)?> of 512 participants</div>
+                <div class="participant_count"><?=(isset($this->teamsCount[$i])?$this->teamsCount[$i]:0)?> of 512 participants</div>
             </div>
             
             <div class="right-part">
-                <div class="status"><?=($i==$this->currentTournament?'Active':'Ended')?></div>
+                <div class="status"><?=($i==$this->currentTournament?'On Hold':'Ended')?></div>
                 <div class="event-date">Event date: <?=$this->eventDates[$i]?></div>
                 <div class="event-date">Prize pool: 30€</div>
             </div>
             
             <div class="mid-part">
                 <? if ($i != $this->currentTournament) { ?>
-                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=$this->teamsPlaces[$i][1]?></span></div>
-                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=$this->teamsPlaces[$i][2]?></span></div>
-                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=$this->teamsPlaces[$i][3]?></span></div>
+                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=(isset($this->teamsPlaces[$i][1])?$this->teamsPlaces[$i][1]:null)?></span></div>
+                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=(isset($this->teamsPlaces[$i][2])?$this->teamsPlaces[$i][2]:null)?></span></div>
+                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=(isset($this->teamsPlaces[$i][3])?$this->teamsPlaces[$i][3]:null)?></span></div>
                 <? } else { ?>
                     <div class="clear"></div>
                 <? } ?>

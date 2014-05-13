@@ -12,6 +12,7 @@ if (cOptions('game')) {
 
 get_header();
 
+/*
 if (is_home()) {
     get_template_part( $category, 'home' );
 
@@ -40,7 +41,11 @@ if (is_home()) {
 }
 else {
     get_template_part( 'content', 'none' );
-}
+}*/
+get_template_part( 'lol', 'home' );
+get_template_part( 'lol', 'bracket' );
+get_template_part( 'lol', 'participants' );
+get_template_part( 'lol', 'format' );
     
 get_footer();
 ?>
