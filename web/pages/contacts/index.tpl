@@ -35,6 +35,6 @@
         	<a href="javascript:void(0);" class="button" id="submitContactForm">Send form</a>
         </form>
         
-        <div class="block-content success-sent"><p></p></div>
+        <div class="success-sent"><p></p></div>
     </div>
 </div>
