@@ -52,7 +52,7 @@
 <script>
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
-    $('#challonge').challonge('hs<?=$id?>', {
+    $('#challonge').challonge('lol<?=$id?>', {
         subdomain: 'pentaclick',
         theme: '1',
         multiplier: '1.0',

@@ -28,6 +28,7 @@
             <li>Prize (4th place) &#8211; 5€ RP (5 players who participated in the last fight)</li>
             <li>1st place prize of 30€ will be sent via Paypal</li>
             </ul>
+            <a href="<?=_cfg('href')?>/leagueoflegends">Global tournament format and rules</a>
         </div>
     </div>
     

@@ -8,7 +8,7 @@
         </div>
         
         <div class="block-content vods">
-            Not yet available
+            <iframe width="750" height="505" src="//www.youtube.com/embed/PB30RxERi2g?list=PLhzcprkTx_-aCeLB-rTId4MTEy5ksZlTE" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     
@@ -26,6 +26,7 @@
             <li>Prize (3rd place) &#8211; 10€ for team</li>
             <li>Prize money will be sent via Paypal</li>
             </ul>
+            <a href="<?=_cfg('href')?>/leagueoflegends">Global tournament format and rules</a>
         </div>
     </div>
 
