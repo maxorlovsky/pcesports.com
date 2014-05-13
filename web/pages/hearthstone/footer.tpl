@@ -1,4 +1,5 @@
-	<div class="block">
+	<? if ($this->currentTournament != $id) { ?>
+    <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered">Participants</h1>
         </div>
@@ -34,6 +35,7 @@
             <div id="challonge"></div>
         </div>
     </div>
+    <? } ?>
 </div>
 
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
