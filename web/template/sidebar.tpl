@@ -15,7 +15,7 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="#" class="button">Join</a>
+            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>" class="button">Join</a>
             
             <? if ($i!=0) { ?>
                 <div class="clear"></div>
