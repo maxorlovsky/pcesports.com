@@ -52,7 +52,7 @@ case 'prod':
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
-    $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+    $cfg['smtpMailFrom'] = 'info@pcesports.com';
     
     ini_set('display_errors', 0);
 	
@@ -77,7 +77,7 @@ case 'test':
 	$cfg['smtpMailPort'] = '465';
 	$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
 	$cfg['smtpMailPass'] = 'knyaveclickius888';
-	$cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+	$cfg['smtpMailFrom'] = 'info@pcesports.com';
 	
 	ini_set('display_errors', 1);
 
@@ -103,7 +103,7 @@ case 'dev':
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
     $cfg['smtpMailPass'] = 'knyaveclickius888';
-    $cfg['smtpMailFrom'] = 'Pentaclick eSports <info@pcesports.com>';
+    $cfg['smtpMailFrom'] = 'info@pcesports.com';
     
     ini_set('display_errors', 1);
     

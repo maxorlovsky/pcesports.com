@@ -67,6 +67,14 @@ class Template extends System
     	return $page;
     }
     
+    static public function getMailTemplate($page) {
+    	if (file_exists(_cfg('template').'/mails/'.$page.'.html')) {
+    		return file_get_contents(_cfg('template').'/mails/'.$page.'.html');
+    	}
+    	
+    	return false;
+    }
+    
     public function getMainTemplate($page) {
     	if (file_exists(_cfg('template').'/'.$page.'.tpl')) {
         	include _cfg('template').'/'.$page.'.tpl';

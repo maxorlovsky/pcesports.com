@@ -8,8 +8,7 @@ class home
 	public function __construct($params = array()) {
 		
 		$this->slider = array(
-			//array('#', _cfg('img').'/poster-lol.jpg'),
-			//array('#', _cfg('img').'/poster-hs.png'),
+			array(_cfg('href').'/hearthstone/4', _cfg('img').'/posterhs-4.jpg'),
 		);
 		
 		$rows = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.

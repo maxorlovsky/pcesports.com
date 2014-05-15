@@ -8,6 +8,7 @@ class Ajax extends System
     private $allowed_ajax_methods = array(
 		'newsVote',
     	'submitContactForm',
+    	'registerInHS',
 	);
 	
     public function ajaxRun($data) {
@@ -21,6 +22,92 @@ class Ajax extends System
             echo '0;'.at('controller_not_exists');
             return false;
         }
+    }
+    
+    protected function registerInHS($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+    	
+    	$battleTagBreakdown = explode('#', $post['battletag']);
+    	
+    	$row = Db::fetchRow('SELECT * FROM `players` WHERE '.
+    		' `tournament_id` = 4 AND '.
+    		' `name` = "'.Db::escape($post['battletag']).'" AND '.
+    		' `game` = "hs" AND '.
+    		' `approved` = 1 AND '.
+    		' `deleted` = 0'
+    	);
+
+    	if (!$post['battletag']) {
+    		$err['battletag'] = '0;Field is empty';
+    	}
+    	else if ($row) {
+    		$err['battletag'] = '0;Player with this battle tag is already registered';
+    	}
+    	else if (!isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
+    		$err['battletag'] = '0;BattleTag is incorrect it must look like YourName#1234';
+    	}
+    	else {
+    		$suc['battletag'] = '1;Approved';
+    	}
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;Field is empty';
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;Email is invalid';
+    	}
+    	else {
+    		$suc['email'] = '1;Approved';
+    	}
+    	
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+    	
+    		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
+    		Db::query('INSERT INTO `teams` SET '.
+	    		' `game` = "hs", '.
+	    		' `tournament_id` = 4, '.
+	    		' `timestamp` = NOW(), '.
+	    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		' `name` = "'.Db::escape($post['battletag']).'", '.
+	    		' `email` = "'.Db::escape($post['email']).'", '.
+	    		' `contact_info` = "'.Db::escape($battleTagBreakdown[0]).'", '.
+	    		' `link` = "'.$code.'"'
+    		);
+    	
+    		$teamId = Db::lastId();
+    	
+    		Db::query(
+    			'INSERT INTO `players` SET '.
+    			' `game` = "hs", '.
+    			' `tournament_id` = 4, '.
+    			' `team_id` = '.(int)$teamId.', '.
+    			' `name` = "'.Db::escape($post['battletag']).'", '.
+    			' `player_num` = 1'
+    		);
+    		
+    		$text = Template::getMailTemplate('reg-hs-player');
+    	
+    		$text = str_replace(
+    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone', _cfg('url')),
+    			$text
+    		);
+    	
+    		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
     }
     
     protected function submitContactForm($data) {

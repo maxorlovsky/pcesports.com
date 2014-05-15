@@ -104,6 +104,10 @@ $('#submitContactForm').on('click', this, function() {
 function updateTimers() {
 	$.each($('.timer'), function(k, v) {
 		delta = parseInt($(this).attr('attr-time'));
+		nobr = 0;
+		if ($(this).attr('attr-br')) {
+			nobr = 1;
+		}
 		originalTimer = delta;
 	
 		if (delta < 1 || !delta) {
@@ -121,7 +125,10 @@ function updateTimers() {
 		
 		returnString = '';
 		if (days > 0) {
-			returnString += days+' days<br />';
+			returnString += days+' days ';
+			if (nobr != 1) {
+				returnString += '<br />';
+			}
 		}
 		if (hours   < 10) {hours   = '0'+hours;}
 	    if (minutes < 10) {minutes = '0'+minutes;}
