@@ -26,7 +26,8 @@
         <div class="block-content news big-block readmore">
         	<div class="news-info">
 				by <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
-				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> Likes, 
+				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> Likes,
+                <span><?=$this->news->views?></span> Views, 
 				<span>0</span> Comments
 			</div>
         	<div class="clear"></div>

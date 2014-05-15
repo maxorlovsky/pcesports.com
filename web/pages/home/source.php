@@ -11,7 +11,7 @@ class home
 			array(_cfg('href').'/hearthstone/4', _cfg('img').'/posterhs-4.jpg'),
 		);
 		
-		$rows = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `a`.`login`, `nl`.`ip` AS `active` '.
+		$rows = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
 			'FROM `news` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
 			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
