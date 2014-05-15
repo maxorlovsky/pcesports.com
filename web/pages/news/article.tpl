@@ -34,7 +34,8 @@
         <div class="block-divider"></div>
         <div class="comments">
         	<h2>Leave a comment</h2>
-        	<div class="disabled">Disabled</div>
+            <div class="fb-comments" data-href="http://www.pcesports.com/en/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+        	<!-- <div class="disabled">Disabled</div> -->
         </div>
     </div>
 </div>
