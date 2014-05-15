@@ -33,7 +33,7 @@
 				by <a href="<?=_cfg('href')?>/team/#<?=$v->login?>"><?=$v->login?></a>, 
 				<span id="news-like-<?=$v->id?>"><?=$v->likes?></span> Likes, 
                 <span><?=$v->views?></span> Views,
-				<span>0</span> Comments
+				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$v->id?>">0</span> Comments
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$v->id?>">Read more</a>
         	<div class="clear"></div>

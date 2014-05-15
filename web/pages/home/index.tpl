@@ -41,7 +41,7 @@
 				by <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
 				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> Likes,
                 <span><?=$this->news->top->views?></span> Views, 
-				<span>0</span> Comments
+				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$this->news->top->id?>">0</span> Comments
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">Read more</a>
         	<div class="clear"></div>
