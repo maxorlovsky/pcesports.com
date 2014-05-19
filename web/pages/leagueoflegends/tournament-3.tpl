@@ -8,7 +8,7 @@
         </div>
         
         <div class="block-content vods">
-            Not yet available
+            <iframe width="750" height="505" src="//www.youtube.com/embed/Bl4naOh1EFA?list=PLhzcprkTx_-a31q-4y03AqoMegYShMBT1" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     
