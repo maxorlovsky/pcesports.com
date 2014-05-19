@@ -6,6 +6,22 @@ $('.bx-wrapper').bxSlider({
 	pause: 8000
 });
 
+$(document).on('scroll', function() {
+	if (parseInt($(document).scrollTop()) != 0 && $('#toTop').is(':hidden')) {
+		$('#toTop').fadeIn('slow', function() {
+			$('#toTop').css('transition', '.3s');
+		});
+	}
+	else if (parseInt($(document).scrollTop()) == 0) {
+		$('#toTop').css('transition', '0');
+		$('#toTop').fadeOut('fast');
+	}
+});
+
+$('#toTop').on('click', function() {
+	$('body').animate({scrollTop: 0}, 800);
+});
+
 $('.confirm').on('click', function() {
 	if(confirm($(this).attr('attr-msg'))) {
 		location.href = $(this).attr('href');

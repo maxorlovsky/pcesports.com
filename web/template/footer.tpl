@@ -38,6 +38,8 @@
 
 <div id="hint-helper"><p></p></div>
 
+<div id="toTop"></div>
+
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 
 <script type="text/javascript">

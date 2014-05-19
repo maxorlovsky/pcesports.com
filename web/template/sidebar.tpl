@@ -74,6 +74,8 @@
         </a>
     </div>
     */?>
+    
+    <? if (_cfg('env') != 'dev') { ?>
     <div class="block fb">
         <div class="block-header-wrapper">
             <h1 class="bordered">Like us!</h1>
@@ -91,6 +93,7 @@
             <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick"  data-widget-id="422786485738147841">Tweets by @pentaclick</a>
         </div>
     </div>
+    <? } ?>
 </div>
 
 <div class="clear"></div>

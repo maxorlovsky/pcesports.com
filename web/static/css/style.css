@@ -863,3 +863,23 @@ footer .games img {
     color: #eee;
     cursor: default;
 }
+
+#toTop {
+    position: fixed;
+    background: url('../images/to-top.png') no-repeat 50% 50% #222;
+    opacity: 0.7;
+    border-radius: 8px;
+    width: 30px;
+    height: 35px;
+    bottom: 20px;
+    right: 40px;
+    overflow: hidden;
+    border: none;
+    
+    cursor: pointer;
+    display: none;
+}
+#toTop:hover {
+    background-color: #555 !important;
+    opacity: 0.8;
+}

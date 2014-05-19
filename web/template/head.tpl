@@ -37,6 +37,7 @@
 
 <div id="head-line"></div>
 
+<? if (_cfg('env') != 'dev') { ?>
 <div id="fb-root"></div>
 <script>
 (function(d, s, id) {
@@ -47,6 +48,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
+<? } ?>
 
 <header class="container">
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
