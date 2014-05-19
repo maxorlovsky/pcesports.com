@@ -1,4 +1,20 @@
 <div class="right-containers">
+    <? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
+        <div class="block">
+            <div class="block-header-wrapper">
+                <h1 class="bordered">Panel (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
+            </div>
+            
+            <ul class="panel-links">
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/">Information</a></li>
+                <li><a href="javascript:void(0);" class="inactive">Fight status (offline)</a></li>
+                <li><a href="javascript:void(0);" class="inactive">I lost, my opponent won</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?">Leave tournament</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit">Exit panel</a></li>
+            </ul>
+        </div>
+    <? } ?>
+    
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered">Next tournaments</h1>

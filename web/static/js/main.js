@@ -6,6 +6,13 @@ $('.bx-wrapper').bxSlider({
 	pause: 8000
 });
 
+$('.confirm').on('click', function() {
+	if(confirm($(this).attr('attr-msg'))) {
+		location.href = $(this).attr('href');
+	}
+	return false;
+});
+
 if ($('.participants .block').length > 0) {
 	$('.participants').isotope({
 	    itemSelector : '.block',

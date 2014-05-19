@@ -8,21 +8,55 @@ class hearthstone
 	public $participants;
 	
 	public function __construct($params = array()) {
-		
+
 	}
 	
 	public function participantPage() {
 		$verified = 0;
 		$regged = 0;
 		
+		if (isset($_GET['val3']) && $_GET['val3'] == 'exit') {
+			unset($_SESSION['participant']);
+			go(_cfg('href').'/hearthstone');
+		}
+		
+		if (isset($_GET['val3']) && $_GET['val3'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+			Db::query('UPDATE `teams` SET `deleted` = 1 '.
+			'WHERE `game` = "hs" AND '.
+			'`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+			'`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
+			
+			$apiArray = array(
+				'_method' => 'delete',
+			);
+			$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+			
+			unset($_SESSION['participant']);
+			
+			go(_cfg('href').'/hearthstone');
+		}
+		
+		if (!isset($_GET['val4']) && !$_GET['val4'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
+			go(_cfg('href').'/hearthstone');
+		}
+		
+		if (isset($_SESSION['participant'])) {
+			$id = $_SESSION['participant']->id;
+			$code = $_SESSION['participant']->link;
+		}
+		else {
+			$id = (int)$_GET['val3'];
+			$code = $_GET['val4'];
+		}
+		
 		$row = Db::fetchRow(
-			'SELECT `t`.`id`, `t`.`name`, `t`.`approved`, `t`.`challonge_id` '.
+			'SELECT * '.
 			'FROM `teams` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
 			'`t`.`game` = "hs" AND '.
-			'`t`.`id` = '.(int)$_GET['val3'].' AND '.
-			'`t`.`link` = "'.Db::escape($_GET['val4']).'" AND '.
+			'`t`.`id` = '.Db::escape($id).' AND '.
+			'`t`.`link` = "'.Db::escape($code).'" AND '.
 			'`t`.`deleted` = 0 AND '.
 			'`t`.`ended` = 0'
 		);
@@ -31,12 +65,18 @@ class hearthstone
 			$row->challonge_id = $this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;
+			
+			$_SESSION['participant'] = $row;
 		}
 		else if ($row && $row->approved == 1) {
 			$verified = 1;
+			
+			$_SESSION['participant'] = $row;
 		}
 		
 		if ($verified == 1) {
+			$_SESSION['participant'] = $row;
+			
 			include_once _cfg('pages').'/'.get_class().'/participant-page.tpl';
 		}
 		else {
@@ -61,12 +101,6 @@ class hearthstone
 			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 			'AND `game` = "hs" '.
 			'AND `id` = '.$row->id
-		);
-		Db::query('UPDATE `players` '.
-			'SET approved = 1 '.
-			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
-			'AND `game` = "hs" '.
-			'AND `team_id` = '.$row->id
 		);
 		
 		$apiArray = array(
@@ -125,7 +159,7 @@ class hearthstone
 	public function getTournamentList() {
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
 			'FROM `teams` '.
-			'WHERE `game` = "hs" AND `approved` = 1 '.
+			'WHERE `game` = "hs" AND `approved` = 1 AND `deleted` = 0 '.
 			'GROUP BY `tournament_id` '.
 			'ORDER BY `id` DESC'
 		);
@@ -167,7 +201,8 @@ class hearthstone
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val3']) && isset($_GET['val4']) && $_GET['val3'] && $_GET['val4']) {
+		
+		if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
 			$this->participantPage();
 		}
 		else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {

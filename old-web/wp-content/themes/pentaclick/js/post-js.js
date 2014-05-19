@@ -76,7 +76,8 @@ if ($('#challonge-lol').length) {
         multiplier: '1.0',
         match_width_multiplier: '0.7',
         show_final_results: '0',
-        show_standings: '0'
+        show_standings: '0',
+        overflow: '0'
     });
 }
 
@@ -88,7 +89,8 @@ if ($('#challonge-hs').length) {
         multiplier: '1.0',
         match_width_multiplier: '0.7',
         show_final_results: '0',
-        show_standings: '0'
+        show_standings: '0',
+        overflow: '0'
     });
 }
 
