@@ -21,7 +21,7 @@ VK.Widgets.Group("vk_groups", {mode: 0, width: "420", height: "570", color1: '33
 
 <?php wp_footer(); ?>
 
-<div style="width: 100%; position: fixed; bottom: 0; background-color: #700; text-align: center; height: 40px; line-height: 40px;">
+<div style="width: 100%; position: fixed; bottom: 0; background-color: #700; text-align: center; height: 40px; line-height: 40px;z-index:99;">
 	<a style="font-size: 19px; color: #fff; font-weight: bold; text-decoration: underline;" href="http://www.pcesports.com">
 		This is an old website, only needed to confirm results about last League of Legends tournament. If you're just a user, please move on to our new website!
 	</a>
