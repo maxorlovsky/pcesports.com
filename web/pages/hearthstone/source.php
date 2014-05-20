@@ -1,6 +1,6 @@
 <?php
 
-class hearthstone
+class hearthstone extends System
 {
 	public $teamsCount;
 	public $currentTournament = 4;
@@ -8,7 +8,7 @@ class hearthstone
 	public $participants;
 	
 	public function __construct($params = array()) {
-
+		
 	}
 	
 	public function participantPage() {
@@ -30,6 +30,13 @@ class hearthstone
 				'_method' => 'delete',
 			);
 			$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+			
+			$this->sendMail('info@pcesports.com',
+			'Player deleted. PentaClick eSports.',
+			'Participant was deleted!!!<br />
+            Date: '.date('d/m/Y H:i:s').'<br />
+			BattleTag: <b>'.$_SESSION['participant']->name.'</b><br>
+            IP: '.$_SERVER['REMOTE_ADDR']);
 			
 			unset($_SESSION['participant']);
 			
@@ -128,12 +135,12 @@ class hearthstone
 			}
 		}
 		
-		/*sendMail('pentaclickesports@gmail.com',
-		($game=='hs'?'Player':'Team').' added. PentaClick eSports.',
+		$this->sendMail('info@pcesports.com',
+		'Player added. PentaClick eSports.',
 		'Participant was added!!!<br />
-    	Date: '.date('d/m/Y H:i:s').'<br />'.
-		($game=='hs'?'BattleTag':'TeamName').': <b>'.$team->name.'</b><br>
-    	IP: '.$_SERVER['REMOTE_ADDR']);*/
+    	Date: '.date('d/m/Y H:i:s').'<br />
+		BattleTag: <b>'.$row->name.'</b><br>
+    	IP: '.$_SERVER['REMOTE_ADDR']);
 		
 		return $challonge_id;
 	}
@@ -157,6 +164,25 @@ class hearthstone
 	}
 	
 	public function getTournamentList() {
+		$this->tournamentData = array(
+			4 => array(
+				'dates' => '24.05.2014',
+				'prize' => '30€',
+			),
+			3 => array(
+				'dates' => '19.04.2014',
+				'prize' => '30€',
+			),
+			2 => array(
+				'dates' => '15.03.2014',
+				'prize' => '30€',
+			),
+			1 => array(
+				'dates' => '01.03.2014',
+				'prize' => '30€',
+			)
+		);
+		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
 			'FROM `teams` '.
 			'WHERE `game` = "hs" AND `approved` = 1 AND `deleted` = 0 '.
@@ -164,7 +190,7 @@ class hearthstone
 			'ORDER BY `id` DESC'
 		);
 		foreach($rows as $v) {
-			$this->teamsCount[$v->tournament_id] = $v->value;
+			$this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
 		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
@@ -173,22 +199,16 @@ class hearthstone
 			'ORDER BY `tournament_id`, `place`'
 		);
 		
-		$placesArray = array();
 		$previousTournamentId = 0;
 		if ($rows) {
 			foreach($rows as $v) {
 				if ($v->tournament_id != $previousTournamentId) {
-					$placesArray[$v->tournament_id][$v->place] = $v->name;
+					$this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
 				}
 			}
 		}
 		
-		$this->teamsPlaces = $placesArray;
-		
-		$this->eventDates[1] = '01.03.2014';
-		$this->eventDates[2] = '15.03.2014';
-		$this->eventDates[3] = '19.04.2014';
-		$this->eventDates[4] = '24.05.2014';
+		dump($this->tournamentData);
 		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
@@ -211,95 +231,5 @@ class hearthstone
 		else {
 			$this->getTournamentList();
 		}
-	}
-	
-	public function runChallongeAPI($apiAdditionalData, $apiArray = array(), $apiGetUrl = '') {
-		$startTime = microtime(true);
-		$error = '';
-	
-		$apiUrl = 'https://api.challonge.com/v1/';
-		$apiUrl .= $apiAdditionalData;
-		$apiUrl .= '?api_key=5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
-		if ($apiGetUrl) {
-			$apiUrl .= '&'.$apiGetUrl;
-		}
-	
-		$apiUrlLog = $apiUrl;
-		if ($apiArray) {
-			foreach($apiArray as $k => $v) {
-				$apiUrlLog .= '&'.$k.'='.$v;
-			}
-		}
-	
-		Db::query(
-		'INSERT INTO `challonge_requests` SET '.
-		' `timestamp` = NOW(), '.
-		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
-		' `data` = "'.$apiUrlLog.'"'
-				);
-	
-		$lastId = Db::lastId();
-	
-		$ch = curl_init();
-	
-		//---
-		curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
-		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-		if ($apiArray) {
-			curl_setopt($ch, CURLOPT_POST, 1); //POST
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST fields
-		}
-		else {
-			curl_setopt($ch, CURLOPT_POST, 0); //GET
-		}
-	
-		$response = curl_exec($ch); // run the whole process
-		//dump(curl_error($ch));
-		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	
-		curl_close($ch);
-	
-		if ($http_status == 401) {
-			$error = 'Invalid API key';
-		}
-		else if ($http_status == 404 ) {
-			$error = 'Object not found within your account scope';
-		}
-		else if ($http_status == 422) {
-			$error = 'Validation error(s) for create or update method';
-		}
-	
-		$endTime = microtime(true);
-		$duration = $endTime - $startTime; //calculates total time taken
-	
-		if ($apiArray) {
-			$response = 'POST';
-		}
-	
-		Db::query(
-		'UPDATE `challonge_requests` SET '.
-		' `response` = "'.($error?$error:Db::escape($response)).'", '.
-		' `time` = "'.(float)$duration.'" '.
-		' WHERE id='.$lastId
-		);
-	
-		if ( $error )
-		{
-			return false;
-		}
-	
-		if ($response == 'POST') {
-			return true;
-		}
-	
-		$response = json_decode($response); //
-	
-		return $response;
 	}
 }

@@ -733,6 +733,7 @@ footer .partners .lesf {
     font-size: 21px;
     font-weight: bold;
     text-transform: uppercase;
+    max-width: 210px;
 }
 .lol .status {
     display: block;
@@ -743,6 +744,9 @@ footer .partners .lesf {
 
 .lol .mid-part div {
     height: 30px;
+}
+.lol .mid-part div.clear {
+    height: 0;
 }
 .lol .mid-part img {
     float: left;

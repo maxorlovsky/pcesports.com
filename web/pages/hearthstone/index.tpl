@@ -5,25 +5,25 @@
         <div class="block-header-wrapper">
             <h1 class="bordered">Hearthstone Tournament list</h1>
         </div>
-
-        <? for($i=$this->currentTournament;$i>0;--$i) { ?>
-        <a class="block-content <?=($i==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$i?>">
+        
+        <? foreach($this->tournamentData as $k => $v) { ?>
+        <a class="block-content <?=($k==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
             <div class="left-part">
-                <div class="title">Tournament #<?=$i?></div>
-                <div class="participant_count"><?=(isset($this->teamsCount[$i])?$this->teamsCount[$i]:0)?> of 512 participants</div>
+                <div class="title">Tournament #<?=$k?></div>
+                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> of 512 participants</div>
             </div>
             
             <div class="right-part">
-                <div class="status"><?=($i==$this->currentTournament?'Registration':'Ended')?></div>
-                <div class="event-date">Event date: <?=$this->eventDates[$i]?></div>
-                <div class="event-date">Prize pool: 30€</div>
+                <div class="status"><?=($k==$this->currentTournament?'Registration':'Ended')?></div>
+                <div class="event-date">Event date: <?=$v['dates']?></div>
+                <div class="event-date">Prize pool: <?=$v['prize']?></div>
             </div>
             
             <div class="mid-part">
-                <? if ($i != $this->currentTournament) { ?>
-                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=(isset($this->teamsPlaces[$i][1])?$this->teamsPlaces[$i][1]:null)?></span></div>
-                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=(isset($this->teamsPlaces[$i][2])?$this->teamsPlaces[$i][2]:null)?></span></div>
-                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=(isset($this->teamsPlaces[$i][3])?$this->teamsPlaces[$i][3]:null)?></span></div>
+                <? if ($k != $this->currentTournament) { ?>
+                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=(isset($v['places'][1])?$v['places'][1]:null)?></span></div>
+                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=(isset($v['places'][2])?$v['places'][2]:null)?></span></div>
+                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=(isset($v['places'][3])?$v['places'][3]:null)?></span></div>
                 <? } else { ?>
                     <div class="clear"></div>
                 <? } ?>

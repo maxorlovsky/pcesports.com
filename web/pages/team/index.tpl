@@ -25,15 +25,19 @@
         <div class="block-content team-list">
             <div class="team-user">
             	<div class="name">Max "Maxtream" Orlovsky</div>
-            	<div class="role">Founder & Chief Executive Officer</div>
+            	<div class="role">Founder & CEO</div>
             </div>
             <div class="team-user">
             	<div class="name">Rihard "Soldecroix" Nikolaev</div>
-            	<div class="role">Co-Founder & Chief Information Officer</div>
+            	<div class="role">Co-Founder & CFO</div>
             </div>
             <div class="team-user">
             	<div class="name">Martin "Aven" Petkevic</div>
-            	<div class="role">Co-Founder & Chief Communication Officer</div>
+            	<div class="role">Co-Founder & CIO</div>
+            </div>
+            <div class="team-user">
+                <div class="name">Serge "grobovsky" Pavlov</div>
+                <div class="role">Head of Communication</div>
             </div>
             <div class="team-user">
             	<div class="name">Viktor "Angel-ada" Morozov</div>

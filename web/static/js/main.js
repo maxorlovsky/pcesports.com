@@ -19,7 +19,7 @@ $(document).on('scroll', function() {
 });
 
 $('#toTop').on('click', function() {
-	$('html').animate({scrollTop: 0}, 500);
+	$('html, body').animate({scrollTop: 0}, 500);
 });
 
 $('.confirm').on('click', function() {
