@@ -208,8 +208,6 @@ class hearthstone extends System
 			}
 		}
 		
-		dump($this->tournamentData);
-		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
