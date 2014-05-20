@@ -164,24 +164,14 @@ class hearthstone extends System
 	}
 	
 	public function getTournamentList() {
-		$this->tournamentData = array(
-			4 => array(
-				'dates' => '24.05.2014',
-				'prize' => '30€',
-			),
-			3 => array(
-				'dates' => '19.04.2014',
-				'prize' => '30€',
-			),
-			2 => array(
-				'dates' => '15.03.2014',
-				'prize' => '30€',
-			),
-			1 => array(
-				'dates' => '01.03.2014',
-				'prize' => '30€',
-			)
+		$rows = Db::fetchRows('SELECT * '.
+			'FROM `tournaments` '.
+			'WHERE `game` = "hs" '.
+			'ORDER BY `id` DESC'
 		);
+		foreach($rows as $v) {
+			$this->tournamentData[$v->id] = (array)$v;
+		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
 			'FROM `teams` '.
@@ -213,7 +203,7 @@ class hearthstone extends System
 	
 	public static function getSeo() {
 		$seo = new stdClass();
-		$seo->title = 'League of Legends';
+		$seo->title = 'Hearthstone';
 		
 		return $seo;
 	}

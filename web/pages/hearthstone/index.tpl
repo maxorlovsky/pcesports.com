@@ -14,7 +14,7 @@
             </div>
             
             <div class="right-part">
-                <div class="status"><?=($k==$this->currentTournament?'Registration':'Ended')?></div>
+                <div class="status"><?=$v['status']?></div>
                 <div class="event-date">Event date: <?=$v['dates']?></div>
                 <div class="event-date">Prize pool: <?=$v['prize']?></div>
             </div>
