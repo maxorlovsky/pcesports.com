@@ -539,17 +539,24 @@ footer .partners img, footer .games img {
 footer .partners .unicon {
     float: left;
     position: relative;
-    left: 100px;
+    left: 80px;
 }
 footer .partners .aimskillz {
-    left: 150px;
+    margin-top: 20px;
+    left: 85px;
     position: relative;
     float: left;
 }
 footer .partners .lesf {
+    margin-top: 20px;
     float: left;
     position: relative;
-    margin-top: 50px;
+    left: 120px;
+}
+footer .partners .skillz {
+    float: left;
+    position: relative;
+    left: 120px;
 }
 
 #hint-helper {
