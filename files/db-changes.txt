@@ -9,6 +9,7 @@ CREATE TABLE  `subscribe` (
 `unsublink` VARCHAR( 99 ) NOT NULL ,
 INDEX (  `email` )
 ) ENGINE = INNODB;
+ALTER TABLE  `subscribe` CHANGE  `unsublink`  `unsublink` VARCHAR( 200 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
 # 19.05.2014
 ALTER TABLE `players` DROP `approved`;

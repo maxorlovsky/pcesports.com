@@ -301,16 +301,30 @@ class System
         if (isset($_GET['language']) && $_GET['language'] == 'run') { //Special RUN command
             if (isset($_GET['val1'])) {
                 if ($_GET['val1'] === _cfg('cronjob')) {
+                    set_time_limit(60);
                     $cronClass = new Cron();
                     $cronClass->cleanImagesTmp();
                 }
                 else if ($_GET['val1'] == 'emails') {
-                    $rows = Db::fetchRows('SELECT `email` FROM `teams` GROUP BY `email`');
+                    set_time_limit(300);
+                    $rows = Db::fetchRows('SELECT * FROM `subscribe`');
+                    $template = new Template();
+                    $text = $template->getMailTemplate('invite-to-tourn');
+                    $i = 0;
+                    
                     foreach($rows as $v) {
-                        Db::query('INSERT INTO `subscribe` SET '.
-                            '`email` = "'.Db::escape($v->email).'", '.
-                            '`unsublink` = "'.sha1(Db::escape($v->email).rand(0,9999).time()).'" '
+                        $msg = str_replace(
+                            array('%unsublink%'),
+                            array(str_replace('%lang%', 'en', _cfg('href')).'/unsubscribe/'.$v->unsublink),
+                            $text
                         );
+                        $this->sendMail($v->email, 'Pentaclick Hearthstone tournament #4, come join', $msg);
+                        ++$i;
+                        if ($i >= 30) {
+                        echo 'rawr<br />';
+                            sleep(2);
+                            $i = 0;
+                        }
                     }
                 }
                 else {
