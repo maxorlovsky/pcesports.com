@@ -306,7 +306,7 @@ class System
                     $cronClass->cleanImagesTmp();
                 }
                 else if ($_GET['val1'] == 'emails') {
-                    set_time_limit(300);
+                    /*set_time_limit(300);
                     $rows = Db::fetchRows('SELECT * FROM `subscribe`');
                     $template = new Template();
                     $text = $template->getMailTemplate('invite-to-tourn');
@@ -325,7 +325,7 @@ class System
                             sleep(2);
                             $i = 0;
                         }
-                    }
+                    }*/
                 }
                 else {
                     exit('Run command error');
