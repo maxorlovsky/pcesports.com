@@ -260,6 +260,7 @@ class System
     protected function loadClasses() {
     	require_once _cfg('cmsclasses').'/db.php';
     	require_once _cfg('classes').'/ajax.php';
+        require_once _cfg('classes').'/cron.php';
     	require_once _cfg('classes').'/template.php';
     }
     
@@ -298,18 +299,25 @@ class System
         global $cfg;
     
         if (isset($_GET['language']) && $_GET['language'] == 'run') { //Special RUN command
-            if ( isset( $_GET['cronjob'] ) ) {
-                if ( $_GET['cronjob'] !== _cfg('cronjob') ) {
-                    die('Invalid secret');
+            if (isset($_GET['val1'])) {
+                if ($_GET['val1'] === _cfg('cronjob')) {
+                    $cronClass = new Cron();
+                    $cronClass->cleanImagesTmp();
                 }
-    
-                $cronClass = new Cron();
-                /*$cronClass->cleanSessions();*/
+                else if ($_GET['val1'] == 'emails') {
+                    $rows = Db::fetchRows('SELECT `email` FROM `teams` GROUP BY `email`');
+                    foreach($rows as $v) {
+                        Db::query('INSERT INTO `subscribe` SET '.
+                            '`email` = "'.Db::escape($v->email).'", '.
+                            '`unsublink` = "'.sha1(Db::escape($v->email).rand(0,9999).time()).'" '
+                        );
+                    }
+                }
+                else {
+                    exit('Run command error');
+                }
             }
-            else {
-                exit('Run command error');
-            }
-    
+            
             exit();
         }
     

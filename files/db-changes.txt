@@ -1,6 +1,15 @@
 # DROP TABLE `wp_commentmeta`, `wp_comments`, `wp_links`, `wp_options`, `wp_postmeta`, `wp_posts`, `wp_terms`, `wp_term_relationships`, `wp_term_taxonomy`, `wp_usermeta`, `wp_users`;
 # NOT USE UNTIL RIOT APPROVAL!!
 
+# 22.05.2014
+DROP TABLE `notifications`;
+CREATE TABLE  `subscribe` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`email` VARCHAR( 99 ) NOT NULL ,
+`unsublink` VARCHAR( 99 ) NOT NULL ,
+INDEX (  `email` )
+) ENGINE = INNODB;
+
 # 19.05.2014
 ALTER TABLE `players` DROP `approved`;
 ALTER TABLE `players` DROP `deleted`;
