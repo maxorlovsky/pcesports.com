@@ -68,6 +68,10 @@ class hearthstone extends System
 				'AND `f`.`done` = 0 '
 			);
 			
+			if (!$row) {
+				go(_cfg('href').'/hearthstone');
+			}
+			
 			if ($row->player1_id == $_SESSION['participant']->challonge_id) {
 				$winner = $row->player2_id;
 				$scores = '0-1';
@@ -83,8 +87,8 @@ class hearthstone extends System
 				'match[scores_csv]' => $scores,
 				'match[winner_id]' => $winner,
 			);
-			//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
-            $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
+			$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
+            //$this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
 			
 			Db::query('UPDATE `teams` SET `ended` = 1 '.
 				'WHERE `game` = "hs" AND '.
