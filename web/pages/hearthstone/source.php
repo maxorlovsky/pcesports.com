@@ -44,8 +44,8 @@ class hearthstone extends System
 			$apiArray = array(
 				'_method' => 'delete',
 			);
-			//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+			$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+            //$this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
 			
 			$this->sendMail('info@pcesports.com',
 			'Player deleted. PentaClick eSports.',
@@ -138,12 +138,12 @@ class hearthstone extends System
 		);
 		
 		//Adding team to Challonge bracket
-		//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.post', $apiArray);
-        $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+		$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.post', $apiArray);
+        //$this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
 		
 		//Registering ID, becaus Challonge idiots not giving an answer with ID
-		//$answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.json');
-        $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+		$answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.json');
+        //$answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
 		array_reverse($answer, true);
 		
 		foreach($answer as $f) {
