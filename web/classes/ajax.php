@@ -11,6 +11,7 @@ class Ajax extends System
     	'registerInHS',
         'chat',
         'statusCheck',
+        'uploadScreenshot',
 	);
 	
     public function ajaxRun($data) {
@@ -26,9 +27,78 @@ class Ajax extends System
         }
     }
     
+    protected function uploadScreenshot() {
+        $mb = 5;
+        
+        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+            return '0;Error';
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `teams` '.
+            'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0'
+        );
+        if (!$playersRow) {
+            return '0;Error';
+        }
+
+        if ($_FILES['upload']['size'] > 1024*$mb*1024) {
+            return '0;File size is too big, allowed only: '.$mb.' MB';
+        }
+        else {
+            $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`screenshots` '.
+                'FROM `fights` AS `f` '.
+                'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+                'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+                'WHERE (`f`.`player1_id` = '.$playersRow->challonge_id.' OR `f`.`player2_id` = '.$playersRow->challonge_id.') AND '.
+                '`f`.`done` = 0'
+            );
+            
+            if (!$row) {
+                return '0;Error';
+            }
+            else {
+                $players = mysql_fetch_object($q);
+                
+                $name = $_FILES['upload']['name'];
+                $end = end(explode('.', $name));
+                
+                $fileName = $_SERVER['DOCUMENT_ROOT'].'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
+                $fileUrl = _cfg('url').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
+
+                if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
+                    return '0;File is not an image, it is: '.$end;
+                }            
+                else if (!move_uploaded_file($_FILES['upload']['tmp_name'], $fileName)) {
+                    return '0;File can not be loaded, file expired or something goes terribly wrong';
+                }
+                else if ($row->screenshots > 10) {
+                    return '0;Screenshot limit achieved, please wait for admin response or write an email to info@pcesports.com';
+                }
+                else {
+                    $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+                
+                    $file = fopen($fileName, 'a');
+                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($_SESSION['participant']->id==$row->id1?$row->name1:$row->name2).' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
+                    fwrite($file, htmlspecialchars($content));
+                    fclose($file);
+                    
+                    Db::query('UPDATE `fights` '.
+                        'SET `screenshots` = `screenshots` + 1 '.
+                        'WHERE `player1_id` = '.$playersRow->challonge_id.' OR `player2_id` = '.$playersRow->challonge_id
+                    );
+                    
+                    return '1;Ok';
+                }
+            }
+        }
+    }
+    
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             $challonge_id = (int)$_SESSION['participant']->challonge_id;
+            Db::query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$_SESSION['participant']->id);
         }
         else {
             $challonge_id = 0;
@@ -55,8 +125,6 @@ class Ajax extends System
             return '0;none;offline';
         }
         else {
-            Db::query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$_SESSION['participant']->id);
-            
             $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
                 'FROM `teams` '.
                 'WHERE '.

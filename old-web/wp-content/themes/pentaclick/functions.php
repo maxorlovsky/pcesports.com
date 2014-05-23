@@ -492,14 +492,6 @@ function getMailTemplate($fileName) {
     }
 }
 
-function onlineStatus($userTime) {
-    if ($userTime+30 >= time()) {
-        return true;
-    }
-    
-    return false;
-}
-
 function getMonth($month = 1) {
     switch($month) {
         case 1: _e('january', 'pentaclick'); break;

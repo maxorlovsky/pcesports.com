@@ -313,7 +313,7 @@ class System
                 }
                 else if ($_GET['val1'] == 'emails') {
                     /*set_time_limit(60);
-                    $rows = Db::fetchRows('SELECT * FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `ended` = 0 AND `deleted` = 0');
+                    $rows = Db::fetchRows('SELECT * FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `ended` = 0 AND `deleted` = 0 AND `approved` = 1');
                     $template = new Template();
                     $text = $template->getMailTemplate('reminder');
                     $i = 0;

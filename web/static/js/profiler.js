@@ -92,10 +92,11 @@ $('#update-team').on('click', function() {
 var uploadInProgress = 0;
 new AjaxUpload(
     $('#uploadScreen'), {
-    	action: '/wp-content/themes/pentaclick/ajax.php?control=uploadScreenshot',
+    	action: site+'?ajax=uploadScreenshot',
     	//Name of the file input box  
     	name: 'upload',
     	onSubmit: function(file, ext) {
+        alert(site+'?ajax=uploadScreenshot');
             if (uploadInProgress == 1) {
                 alert('Upload in progress, wait!');
             }
@@ -108,10 +109,10 @@ new AjaxUpload(
             $('#uploadScreen').addClass('alpha');
     	},  
     	onComplete: function(file, data) {
-            data = JSON.parse(data);
+            data = data.split(';');
             uploadInProgress = 0;
-            if (data.ok == 0) {
-                alert(data.message);
+            if (data[0] != 1) {
+                alert(data[1]);
             }
             $('#uploadScreen').removeClass('alpha');
     	}  
