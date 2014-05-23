@@ -17,6 +17,7 @@ DELETE FROM `options` WHERE `options`.`id` =14;
 DELETE FROM `options` WHERE `options`.`id` =15;
 DELETE FROM `options` WHERE `options`.`id` =16;
 DELETE FROM `options` WHERE `options`.`id` =17;
+INSERT INTO `tm_modules` (`name` ,`level` ,`added_timestamp`) VALUES ('tournaments',  '1', CURRENT_TIMESTAMP);
 
 # 22.05.2014
 DROP TABLE `notifications`;
