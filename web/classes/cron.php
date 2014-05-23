@@ -32,4 +32,24 @@ class Cron extends System {
         }
         closedir($handler);
     }
+    
+    public function updateChallongeMatches() {
+        $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+
+        foreach($answer as $v) {
+            //Checking if match is already registered
+            $row = Db::fetchRow('SELECT `match_id` '.
+                'FROM `fights` '.
+                'WHERE `match_id` = '.(int)$v->match->id
+            );
+            if (!$row) {
+                //Registering match, if still not yet registered
+                Db::query('INSERT INTO `fights` SET '.
+                    '`match_id` = '.(int)$v->match->id.', '.
+                    '`player1_id` = '.(int)$v->match->player1_id.', '.
+                    '`player2_id` = '.(int)$v->match->player2_id
+                );
+            }
+        }
+    }
 }

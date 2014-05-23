@@ -1,11 +1,5 @@
 <?php
-if ($_GET['cronjob'] != 'u9a8sdu1209102129dSAD2u1239') {
-    exit();
-}
-
-set_time_limit(300);
-
-require_once $_SERVER['DOCUMENT_ROOT'].'/wp-config.php';
+exit();
 
 //LoL things
 if (cOptions('tournament-start-lol') == 1) {
@@ -129,27 +123,3 @@ if (cOptions('tournament-start-lol') == 1) {
         }
     }
 }
-
-//HS things
-if (cOptions('tournament-start-hs') == 1) {
-    $answer = runChallongeAPI('tournaments/pentaclick-'.cOptions('brackets-link-hs').'/matches.json', array(), 'state=open');
-    
-    foreach($answer as $f) {
-        $q = mysql_query('SELECT `challonge_tournament_id` FROM `hs_fights`
-        WHERE `challonge_tournament_id` = '.$f->match->id);
-        if (mysql_num_rows($q) == 0) {
-            mysql_query('INSERT INTO `hs_fights` SET
-            `challonge_tournament_id` = '.$f->match->id.', 
-            `player1_id` = '.$f->match->player1_id.',
-            `player2_id` = '.$f->match->player2_id);
-        }
-    }
-}
-
-//Mail subscription things
-/*SELECT `t`.`name` ,  `t`.`email` 
-FROM  `notifications` AS  `n` 
-LEFT JOIN  `teams` AS  `t` ON  `n`.`team_id` =  `t`.`id` 
-WHERE  `n`.`day` =1
-AND  `t`.`game` =  "lol"
-AND  `t`.`tournament_id` =2*/

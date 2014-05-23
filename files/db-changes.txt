@@ -1,6 +1,23 @@
 # DROP TABLE `wp_commentmeta`, `wp_comments`, `wp_links`, `wp_options`, `wp_postmeta`, `wp_posts`, `wp_terms`, `wp_term_relationships`, `wp_term_taxonomy`, `wp_usermeta`, `wp_users`;
 # NOT USE UNTIL RIOT APPROVAL!!
 
+# 23.05.2014
+RENAME TABLE `hs_fights` TO `fights`;
+RENAME TABLE `lol_fights` TO `lol_games`;
+ALTER TABLE `fights` CHANGE `challonge_tournament_id` `match_id` BIGINT( 20 ) UNSIGNED NOT NULL;
+DELETE FROM `options` WHERE `options`.`id` =1;
+DELETE FROM `options` WHERE `options`.`id` =4;
+DELETE FROM `options` WHERE `options`.`id` =5;
+DELETE FROM `options` WHERE `options`.`id` =6;
+DELETE FROM `options` WHERE `options`.`id` =7;
+DELETE FROM `options` WHERE `options`.`id` =9;
+DELETE FROM `options` WHERE `options`.`id` =10;
+DELETE FROM `options` WHERE `options`.`id` =11;
+DELETE FROM `options` WHERE `options`.`id` =14;
+DELETE FROM `options` WHERE `options`.`id` =15;
+DELETE FROM `options` WHERE `options`.`id` =16;
+DELETE FROM `options` WHERE `options`.`id` =17;
+
 # 22.05.2014
 DROP TABLE `notifications`;
 CREATE TABLE  `subscribe` (

@@ -55,8 +55,8 @@ class System
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
-        		'WHERE `able` = 1 '.
-        		'ORDER BY `position` '
+            'WHERE `able` = 1 '.
+            'ORDER BY `position` '
         );
         
         if ($rows) {
@@ -71,12 +71,6 @@ class System
         }
         //echo strtotime('02.06.2014 10:00:00');
         $this->serverTimes = array(
-        	array(
-        		'id'	=> 4,
-        		'name' 	=> 'Hearthstone',
-        		'status'=> 'Registration open',
-        		'time' 	=> '1400137200',
-        	),
         	array(
         		'id'	=> 4,
         		'name' 	=> 'Hearthstone',
@@ -98,6 +92,17 @@ class System
         );
         
         $this->logged_in = 0;
+        
+        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+            $this->fightStatus = 'offline';
+            $row = Db::fetchRow('SELECT * FROM `fights` '.
+                'WHERE (`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `player2_id` = '.(int)$_SESSION['participant']->challonge_id.') AND '.
+                '`done` = 0'
+            );
+            if ($row) {
+                $this->fightStatus = 'online';
+            }
+        }
     }
     
     public function ajax($data) {
@@ -301,9 +306,10 @@ class System
         if (isset($_GET['language']) && $_GET['language'] == 'run') { //Special RUN command
             if (isset($_GET['val1'])) {
                 if ($_GET['val1'] === _cfg('cronjob')) {
-                    set_time_limit(60);
+                    set_time_limit(300);
                     $cronClass = new Cron();
                     $cronClass->cleanImagesTmp();
+                    $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'emails') {
                     /*set_time_limit(300);

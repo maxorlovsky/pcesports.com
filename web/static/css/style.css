@@ -894,3 +894,78 @@ footer .games img {
     background-color: #555 !important;
     opacity: 0.8;
 }
+
+.notification {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.opponent-info {
+    font-size: 17px !important;
+}
+.opponent-info label {
+    text-transform: uppercase;
+    display: inline-block;
+    width: 110px;
+}
+.opponent-info .online {
+    font-weight: bold;
+    color: #0f750d;
+}
+.opponent-info .offline {
+    color: #5e0909;
+}
+.opponent-info .not-none {
+    font-weight: bold;
+}
+
+.chat {
+    width: 100%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+}
+.chat .chat-content {
+    padding: 5px 10px;
+    font-size: 13px;
+    min-height: 200px;
+    height: 300px;
+    max-height: 500px;
+    border-bottom: 1px solid #000;
+    border-radius: 4px 4px 0 0;
+    background-color: #dedede;
+    font-size: 15px;
+    overflow-y: auto;
+    resize: vertical;
+}
+.chat .chat-content #notice {
+    font-size: 12px;
+    color: #999;
+}
+.chat .chat-input {
+    padding: 0 5px;
+    height: 30px;
+    background-color: #efefef;
+    border-radius: 0 0 4px 4px;
+}
+.chat .chat-input input[type="text"] {
+    width: 93%;
+    padding: 6px 0;
+    border: 0;
+    background: none;
+    outline: none;
+}
+.chat .attach-file {
+    background-image: url('../images/attach-file.png');
+    background-repeat: no-repeat;
+    background-color: #ddd;
+    background-position: center center;
+    height: 25px;
+    width: 25px;
+    float: right;
+    margin-top: 1px;
+    border: 1px solid #777;
+    cursor: pointer;
+}
+.chat .attach-file:hover {
+    background-color: #eee;
+}

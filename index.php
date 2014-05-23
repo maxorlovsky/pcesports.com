@@ -12,6 +12,8 @@ session_start();
 global $cfg;
 global $astr;
 
+date_default_timezone_set('GMT0');
+
 require_once dirname(__FILE__).'/cms/inc/config.php';
 require_once $cfg['cmsinc'].'/functions.php';
 

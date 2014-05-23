@@ -9,6 +9,8 @@ class Ajax extends System
 		'newsVote',
     	'submitContactForm',
     	'registerInHS',
+        'chat',
+        'statusCheck',
 	);
 	
     public function ajaxRun($data) {
@@ -22,6 +24,111 @@ class Ajax extends System
             echo '0;'.at('controller_not_exists');
             return false;
         }
+    }
+    
+    protected function statusCheck($data) {
+        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+            $challonge_id = (int)$_SESSION['participant']->challonge_id;
+        }
+        else {
+            $challonge_id = 0;
+        }
+        
+        $row = Db::fetchRow('SELECT * FROM `fights` '.
+            'WHERE (`player1_id` = '.$challonge_id.' OR `player2_id` = '.$challonge_id.') AND '.
+            '`done` = 0'
+        );
+        
+        if (!$row) {
+            return '0;none;offline';
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+        
+        if (!$playersRow) {
+            return '0;none;offline';
+        }
+        else {
+            Db::query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$_SESSION['participant']->id);
+            
+            $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
+                'FROM `teams` '.
+                'WHERE '.
+                '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
+                '`deleted` = 0 AND '.
+                '`ended` = 0 '
+            );
+            if ($row) {
+                if ($enemyRow->online+30 >= time()) {
+                    $status = 'online';
+                }
+                else {
+                    $status = 'offline';
+                }
+
+                return '1;'.$enemyRow->name.';'.$status;
+            }
+            
+            return '0;none;offline';
+        }
+        
+        return '0;Error';
+    }
+    
+    protected function chat($data) {
+        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+            $challonge_id = (int)$_SESSION['participant']->challonge_id;
+        }
+        else {
+            $challonge_id = 0;
+        }
+        
+        $row = Db::fetchRow('SELECT * FROM `fights` '.
+            'WHERE (`player1_id` = '.$challonge_id.' OR `player2_id` = '.$challonge_id.') AND '.
+            '`done` = 0'
+        );
+        
+        if (!$row) {
+            return '1;<p id="notice">Chat is disabled at the moment, waiting for your opponent to appear</p>';
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+        
+        if ($playersRow) {
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.(int)$playersRow->id1.'_vs_'.(int)$playersRow->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            if ($data['action'] == 'send') {
+                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;'.($_SESSION['participant']->id==$playersRow->id1?$playersRow->name1:$playersRow->name2).'&#62; - '.$data['text'].'</p>';
+                fwrite($file, htmlspecialchars($content));
+            }
+            fclose($file);
+            
+            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><span>'));
+            
+            if (!$chat) {
+                $chat = '<p id="notice">Opponents and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';
+            }
+            
+            return '1;'.$chat;
+        }
+        else {
+            return '0;Error';
+        }
+        
+        return '0;Error';
     }
     
     protected function registerInHS($data) {

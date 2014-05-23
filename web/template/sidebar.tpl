@@ -7,7 +7,7 @@
             
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/">Information</a></li>
-                <li><a href="javascript:void(0);" class="inactive">Fight status (offline)</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight">Fight status (<?=$this->fightStatus?>)</a></li>
                 <li><a href="javascript:void(0);" class="inactive">I lost, my opponent won</a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?">Leave tournament</a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit">Exit panel</a></li>
@@ -30,7 +30,7 @@
                 <h2><?=$v['name']?> #<?=$v['id']?><br /><?=$v['status']?></h2>
             <? } ?>
             
-            <div class="timer" attr-time="<?=intval($v['time'] - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
+            <div class="timer" attr-time="<?=intval($v['time'] - time() + 10800)?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
             <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=$v['id']?>" class="button">Join</a>
             
             <? if ($i!=0) { ?>

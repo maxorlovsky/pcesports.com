@@ -10,6 +10,21 @@ class hearthstone extends System
 	public function __construct($params = array()) {
 		
 	}
+    
+    public function fightPage() {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+			go(_cfg('href').'/hearthstone');
+		}
+        $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
+            '`tournament_id` = '.(int)$this->currentTournament.' AND '.
+            '`game` = "hs" AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+
+        include_once _cfg('pages').'/'.get_class().'/fight.tpl';
+    }
 	
 	public function participantPage() {
 		$verified = 0;
@@ -29,7 +44,8 @@ class hearthstone extends System
 			$apiArray = array(
 				'_method' => 'delete',
 			);
-			$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+			//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
 			
 			$this->sendMail('info@pcesports.com',
 			'Player deleted. PentaClick eSports.',
@@ -122,10 +138,12 @@ class hearthstone extends System
 		);
 		
 		//Adding team to Challonge bracket
-		$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.post', $apiArray);
+		//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.post', $apiArray);
+        $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
 		
 		//Registering ID, becaus Challonge idiots not giving an answer with ID
-		$answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.json');
+		//$answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/participants.json');
+        $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
 		array_reverse($answer, true);
 		
 		foreach($answer as $f) {
@@ -215,11 +233,13 @@ class hearthstone extends System
 	}
 	
 	public function showTemplate() {
-		
-		if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
+        if (isset($_GET['val3']) && $_GET['val3'] == 'fight') {
+			$this->fightPage();
+		}
+		else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
 			$this->participantPage();
 		}
-		else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
+        else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
 			$this->getTournamentData((int)$_GET['val2']);
 		}
 		else {
