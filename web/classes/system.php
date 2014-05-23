@@ -312,26 +312,25 @@ class System
                     $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'emails') {
-                    /*set_time_limit(300);
-                    $rows = Db::fetchRows('SELECT * FROM `subscribe`');
+                    set_time_limit(60);
+                    $rows = Db::fetchRows('SELECT * FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `ended` = 0 AND `deleted` = 0');
                     $template = new Template();
-                    $text = $template->getMailTemplate('invite-to-tourn');
+                    $text = $template->getMailTemplate('reminder');
                     $i = 0;
                     
                     foreach($rows as $v) {
                         $msg = str_replace(
-                            array('%unsublink%'),
-                            array(str_replace('%lang%', 'en', _cfg('href')).'/unsubscribe/'.$v->unsublink),
+                            array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+                            array($v->name, $v->id, $v->link, str_replace('%lang%', 'en', _cfg('href').'/hearthstone'), _cfg('url')),
                             $text
                         );
-                        $this->sendMail($v->email, 'Pentaclick Hearthstone tournament #4, come join', $msg);
+                        $this->sendMail($v->email, 'Pentaclick tournament reminder', $msg);
                         ++$i;
                         if ($i >= 30) {
-                        echo 'rawr<br />';
                             sleep(2);
                             $i = 0;
                         }
-                    }*/
+                    }
                 }
                 else {
                     exit('Run command error');
