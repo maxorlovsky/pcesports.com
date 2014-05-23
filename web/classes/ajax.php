@@ -222,7 +222,7 @@ class Ajax extends System
     	else if ($row) {
     		$err['battletag'] = '0;Player with this battle tag is already registered';
     	}
-    	else if (!isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
+    	else if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
     		$err['battletag'] = '0;BattleTag is incorrect it must look like YourName#1234';
     	}
     	else {
