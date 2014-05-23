@@ -10,7 +10,7 @@ if(isset($_POST['ajax']) && $_POST['ajax']) {
 //For upload
 else if(isset($_GET['ajax']) && $_GET['ajax'] == 'uploadScreenshot') {
 	$system = new System(0);
-	$system->ajax($_POST);
+	$system->ajax($_GET);
 }
 else {
 	//Loading whole system

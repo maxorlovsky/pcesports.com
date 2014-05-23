@@ -969,3 +969,7 @@ footer .games img {
 .chat .attach-file:hover {
     background-color: #eee;
 }
+
+#fightStatus.online {
+	color: #090;
+}

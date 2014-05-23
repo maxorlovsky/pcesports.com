@@ -44,51 +44,6 @@ $('#chat-input').on('keyup', function(e) {
     }
 });
 
-$('#update-team').on('click', function() {
-    if (formInProgress == 1) {
-        return false;
-    }
-    
-    var errRegistered = 0;
-    formInProgress = 1;
-    $('#register-content-profile .form .message').hide();
-    $('#register-content-profile .form .message').removeClass('error success');
-    $(this).addClass('alpha');
-    
-    var query = {
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            control: 'updateTeam',
-            u: 'tId='+tId+'&code='+code,
-            post: $('#register-content-profile .form').serialize()
-        },
-        success: function(answer) {
-            $('#update-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            $.each(answer.message, function(k, v) {
-                answ = v.split(';');
-                $('#'+k+'-msg').html(answ[1]);
-                $('#'+k+'-msg').show();
-                if (answ[0] == 1) {
-                    $('#'+k+'-msg').addClass('success');
-                }
-                else {
-                    $('#'+k+'-msg').addClass('error');
-                }
-            });
-        },
-        error: function() {
-            $('#update-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            alert('Something\'s got wrong... Contact admin at pentaclickesports@gmail.com');
-        }
-    }
-    ajax(query);
-});
-
 var uploadInProgress = 0;
 new AjaxUpload(
     $('#uploadScreen'), {
@@ -96,7 +51,6 @@ new AjaxUpload(
     	//Name of the file input box  
     	name: 'upload',
     	onSubmit: function(file, ext) {
-        alert(site+'?ajax=uploadScreenshot');
             if (uploadInProgress == 1) {
                 alert('Upload in progress, wait!');
             }
@@ -133,7 +87,7 @@ profiler = {
             },
             success: function(answer) {
                 answer = answer.split(';');
-                if (answer[0] != 0) {
+                if (answer[0] == 1) {
                     checkTop = parseInt($('.chat-content').prop('scrollTop')) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     

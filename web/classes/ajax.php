@@ -22,7 +22,7 @@ class Ajax extends System
             return true;
         }
         else {
-            echo '0;'.at('controller_not_exists');
+            echo '0;Controller does not exist';
             return false;
         }
     }
@@ -30,8 +30,8 @@ class Ajax extends System
     protected function uploadScreenshot() {
         $mb = 5;
         
-        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
-            return '0;Error';
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return '0;Not logged in';
         }
         
         $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `teams` '.
@@ -40,7 +40,7 @@ class Ajax extends System
             '`ended` = 0'
         );
         if (!$playersRow) {
-            return '0;Error';
+            return '0;No fight registered';
         }
 
         if ($_FILES['upload']['size'] > 1024*$mb*1024) {
@@ -59,13 +59,12 @@ class Ajax extends System
                 return '0;Error';
             }
             else {
-                $players = mysql_fetch_object($q);
-                
                 $name = $_FILES['upload']['name'];
-                $end = end(explode('.', $name));
+				$breakdown = explode('.', $name);
+                $end = end($breakdown);
                 
                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
-                $fileUrl = _cfg('url').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
+                $fileUrl = _cfg('site').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
 
                 if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
                     return '0;File is not an image, it is: '.$end;
@@ -98,7 +97,9 @@ class Ajax extends System
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             $challonge_id = (int)$_SESSION['participant']->challonge_id;
-            Db::query('UPDATE `teams` SET `online` = '.time().' WHERE `id` = '.(int)$_SESSION['participant']->id);
+            Db::query('UPDATE `teams` SET `online` = '.time().' '.
+				'WHERE `id` = '.(int)$_SESSION['participant']->id
+			);
         }
         else {
             $challonge_id = 0;
@@ -110,7 +111,7 @@ class Ajax extends System
         );
         
         if (!$row) {
-            return '0;none;offline';
+            return '0;none;waiting for opponent';
         }
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
@@ -122,7 +123,7 @@ class Ajax extends System
         );
         
         if (!$playersRow) {
-            return '0;none;offline';
+            return '0;none;no opponent';
         }
         else {
             $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
@@ -132,7 +133,8 @@ class Ajax extends System
                 '`deleted` = 0 AND '.
                 '`ended` = 0 '
             );
-            if ($row) {
+			
+            if ($enemyRow) {
                 if ($enemyRow->online+30 >= time()) {
                     $status = 'online';
                 }
@@ -184,7 +186,7 @@ class Ajax extends System
             }
             fclose($file);
             
-            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><span>'));
+            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><span>'));
             
             if (!$chat) {
                 $chat = '<p id="notice">Opponents and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';

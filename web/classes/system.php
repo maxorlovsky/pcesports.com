@@ -94,14 +94,7 @@ class System
         $this->logged_in = 0;
         
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
-            $this->fightStatus = 'offline';
-            $row = Db::fetchRow('SELECT * FROM `fights` '.
-                'WHERE (`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `player2_id` = '.(int)$_SESSION['participant']->challonge_id.') AND '.
-                '`done` = 0'
-            );
-            if ($row) {
-                $this->fightStatus = 'online';
-            }
+            
         }
     }
     

@@ -7,8 +7,8 @@
             
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/">Information</a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight">Fight status (<?=($this->fightStatus?$this->fightStatus:'offline')?>)</a></li>
-                <li><a href="javascript:void(0);" class="inactive">I lost, my opponent won</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight">Fight status (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="inactive confirm" id="lostBattle" attr-msg="Are you sure? Your opponent will advance and you will not be able to participate further!">I lost, my opponent won</a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?">Leave tournament</a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit">Exit panel</a></li>
             </ul>

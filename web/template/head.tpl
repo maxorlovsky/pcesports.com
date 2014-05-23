@@ -30,6 +30,9 @@
     
     <script>
     	var site = '<?=_cfg('site')?>';
+		<? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
+		var requireStatus = 1;
+		<? } ?>
     </script>
 </head>
 

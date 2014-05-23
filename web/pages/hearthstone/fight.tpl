@@ -19,6 +19,7 @@
         
         <div class="block-content">
             <div class="notification">Please don't forget that official language of the chat is <b>English</b>! Be polite.</div>
+			<div class="notification">If you <b>lost</b>, you can use the link on the right, for your opponent not to wait for admin approval.</div>
             <div class="chat">
                 <div class="chat-content"></div>
                 <div class="chat-input">

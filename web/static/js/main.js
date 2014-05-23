@@ -6,6 +6,30 @@ $('.bx-wrapper').bxSlider({
 	pause: 8000
 });
 
+if (requireStatus == 1) {
+	function statusCheck() {
+		$('#fightStatus').removeClass('online');
+		$('#lostBattle').addClass('inactive');
+		var query = {
+			type: 'POST',
+			data: {
+				ajax: 'statusCheck',
+			},
+			success: function(answer) {
+				answer = answer.split(';');
+				if (answer[2] == 'online') {
+					$('#fightStatus').addClass('online');
+					$('#lostBattle').removeClass('inactive');
+				}
+				$('#fightStatus').html(answer[2]);
+			}
+		}
+		ajax(query);
+	}
+	statusCheck();
+	setInterval(function () { statusCheck(); }, 15000);
+}
+
 $(document).on('scroll', function() {
 	if (parseInt($(document).scrollTop()) != 0 && $('#toTop').is(':hidden')) {
 		$('#toTop').fadeIn('slow', function() {

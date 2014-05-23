@@ -59,6 +59,55 @@ class hearthstone extends System
 			go(_cfg('href').'/hearthstone');
 		}
 		
+		if (isset($_GET['val3']) && $_GET['val3'] == 'surrender' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+			$row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+				'FROM `fights` AS `f` '.
+				'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+				'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+				'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+				'AND `f`.`done` = 0 '
+			);
+			
+			if ($row->player1_id == $_SESSION['participant']->challonge_id) {
+				$winner = $row->player2_id;
+				$scores = '0-1';
+			}
+			else {
+				$winner = $row->player1_id;
+				$scores = '1-0';
+			}
+			
+			$apiArray = array(
+				'_method' => 'put',
+				'match_id' => $row->match_id,
+				'match[scores_csv]' => $scores,
+				'match[winner_id]' => $winner,
+			);
+			//$this->runChallongeAPI('tournaments/pentaclick-hs'.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
+			
+			Db::query('UPDATE `teams` SET `ended` = 1 '.
+				'WHERE `game` = "hs" AND '.
+				'`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+				'`link` = "'.Db::escape($_SESSION['participant']->link).'" '
+			);
+			
+			Db::query('UPDATE `fights` SET `done` = 1 '.
+				'WHERE `match_id` = '.(int)$row->match_id.' '
+			);
+			
+			$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+                
+			$file = fopen($fileName, 'a');
+			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
+			fwrite($file, htmlspecialchars($content));
+			fclose($file);
+			
+			unset($_SESSION['participant']);
+			
+			go(_cfg('href').'/hearthstone');
+		}
+		
 		if (!isset($_GET['val4']) && !$_GET['val4'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
 			go(_cfg('href').'/hearthstone');
 		}
