@@ -34,7 +34,7 @@ class Cron extends System {
     }
     
     public function updateChallongeMatches() {
-        $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+        $answer = $this->runChallongeAPI('tournaments/pentaclick-hs4/matches.json', array(), 'state=open');
 
         foreach($answer as $v) {
             //Checking if match is already registered
