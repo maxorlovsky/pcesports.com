@@ -85,7 +85,7 @@ profiler = {
 					checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
 					
-					if (checkTop == checkHeight) {
+					if (checkTop != checkHeight) {
                         $('#'+k+' .chat-content').scrollTop($('#'+k+' .chat-content').prop('scrollHeight'));
                     }
 				});
