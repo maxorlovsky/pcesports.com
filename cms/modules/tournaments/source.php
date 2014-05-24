@@ -55,17 +55,18 @@ class Tournaments
 		$playersStatus = array();
 		foreach($form as $v) {
 			$breakdown = explode('_vs_', $v);
-			$rows = Db::fetchRows('SELECT `online` FROM `teams` '.
+			$rows = Db::fetchRows('SELECT `id`, `online` FROM `teams` '.
 				'WHERE `id` = '.(int)$breakdown[0].' OR `id` = '.(int)$breakdown[1].' '.
 				'LIMIT 2'
 			);
+			dump($rows);
 			
-			foreach($rows as $k => $v2) {
-				if ($v2->online+30 >= time()) {
-                    $playersStatus[$breakdown[$k]] = 'online';
+			foreach($rows as $v2) {
+				if ($v2->online != 0 && $v2->online+30 >= time()) {
+                    $playersStatus[$breakdown[$v2->id]] = 'online';
                 }
                 else {
-                    $playersStatus[$breakdown[$k]] = 'offline';
+                    $playersStatus[$breakdown[$v2->id]] = 'offline';
                 }
 			}
 		}
