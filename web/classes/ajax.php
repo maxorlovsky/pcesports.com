@@ -69,7 +69,7 @@ class Ajax extends System
                 if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
                     return '0;File is not an image, it is: '.$end;
                 }            
-                else if (!move_uploaded_file($_FILES['upload']['tmp_name'], $fileName)) {
+                else if (!copy($_FILES['upload']['tmp_name'], $fileName)) {
                     return '0;File can not be loaded, file expired or something goes terribly wrong';
                 }
                 else if ($row->screenshots > 10) {
