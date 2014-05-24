@@ -82,7 +82,7 @@ profiler = {
 				$.each($.parseJSON(answer), function(k, v) {
 					$('#'+k+' .chat-content').html(v);
 					
-					checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('.chat-content').height()) + 10;
+					checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
 					
 					if (checkTop == checkHeight) {
