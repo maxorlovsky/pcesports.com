@@ -189,7 +189,7 @@ class Ajax extends System
             $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><span>'));
             
             if (!$chat) {
-                $chat = '<p id="notice">Opponents and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';
+                $chat = '<p id="notice">Battle and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';
             }
             
             return '1;'.$chat;

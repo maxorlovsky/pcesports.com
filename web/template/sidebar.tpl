@@ -1,3 +1,10 @@
+<script>
+	var requireStatus = 0;
+	<? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
+	var requireStatus = 1;
+	<? } ?>
+</script>
+	
 <div class="right-containers">
     <? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
         <div class="block">
