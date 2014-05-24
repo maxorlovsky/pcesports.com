@@ -73,12 +73,6 @@ class System
         $this->serverTimes = array(
         	array(
         		'id'	=> 4,
-        		'name' 	=> 'Hearthstone',
-        		'status'=> 'Start',
-        		'time' 	=> '1400914800',
-        	),
-        	array(
-        		'id'	=> 4,
         		'name' 	=> 'League of Legends',
         		'status'=> 'Registration open',
         		'time' 	=> '1401692400',

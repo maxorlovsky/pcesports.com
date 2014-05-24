@@ -7,7 +7,7 @@
         </div>
         
         <? foreach($this->tournamentData as $k => $v) { ?>
-        <a class="block-content <?=($k==$this->currentTournament?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
+        <a class="block-content <?=(strtolower($v['status'])!='ended'?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
             <div class="left-part">
                 <div class="title">Tournament #<?=$k?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> of 512 participants</div>
@@ -20,7 +20,7 @@
             </div>
             
             <div class="mid-part">
-                <? if ($k != $this->currentTournament) { ?>
+                <? if (strtolower($v['status'])=='ended') { ?>
                     <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=(isset($v['places'][1])?$v['places'][1]:null)?></span></div>
                     <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=(isset($v['places'][2])?$v['places'][2]:null)?></span></div>
                     <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=(isset($v['places'][3])?$v['places'][3]:null)?></span></div>

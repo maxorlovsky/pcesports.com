@@ -1,16 +1,6 @@
 <section class="container page lol">
 
 <div class="left-containers">
-
-	<div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Broadcast/VOD</h1>
-        </div>
-        
-        <div class="block-content vods">
-            Not yet available
-        </div>
-    </div>
     
     <div class="block">
         <div class="block-header-wrapper">
