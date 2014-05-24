@@ -40,7 +40,9 @@
     </div>
     
 <script>
-challongeHeight = 550;
+//550 <24
+//950 >24
+challongeHeight = 950;
 
 $('#add-player').on('click', function() {
     if (formInProgress == 1) {
