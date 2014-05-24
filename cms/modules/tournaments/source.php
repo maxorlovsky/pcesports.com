@@ -21,7 +21,7 @@ class Tournaments
 			$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$v[1].'.txt';
 			$return[$v[0]] = '<p id="notice">Chat is empty</p>';
 			if (file_exists($fileName)) {
-				$return[$v[0]] = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><span>'));
+				$return[$v[0]] = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
 			}
 		}
 		
@@ -43,7 +43,7 @@ class Tournaments
 		}
 		else {
 			$file = fopen($fileName, 'a');
-			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;Pentaclick Admin&#62; - '.$form[0].'</p>';
+			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;<u>Pentaclick Admin</u>&#62; - '.$form[0].'</p>';
 			fwrite($file, htmlspecialchars($content));
 			fclose($file);
 		}

@@ -186,7 +186,7 @@ class Ajax extends System
             }
             fclose($file);
             
-            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><span>'));
+            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
             
             if (!$chat) {
                 $chat = '<p id="notice">Battle and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';
