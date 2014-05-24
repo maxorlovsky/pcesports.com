@@ -62,10 +62,10 @@ class Tournaments
 			
 			foreach($rows as $v2) {
 				if ($v2->online != 0 && $v2->online+30 >= time()) {
-                    $playersStatus[$breakdown[$v2->id]] = 'online';
+                    $playersStatus[$v2->id] = 'online';
                 }
                 else {
-                    $playersStatus[$breakdown[$v2->id]] = 'offline';
+                    $playersStatus[$v2->id] = 'offline';
                 }
 			}
 		}
