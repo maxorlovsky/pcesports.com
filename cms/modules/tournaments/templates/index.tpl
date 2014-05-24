@@ -6,7 +6,7 @@
 		foreach($module->chats as $v) {
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>">
-		<h4><b><?=$v->name1?></b> VS <b><?=$v->name2?></b> [<?=$v->match_id?>]</h4>
+		<h4><b class="player" id="player_<?=$v->id1?>"><?=$v->name1?></b> VS <b class="player" id="player_<?=$v->id2?>"><?=$v->name2?></b> [<?=$v->match_id?>]</h4>
 		<div class="chat-content"></div>
 		<div class="chat-input">
 			<input type="text" class="chat-submit" id="chat-input" attr-id="<?=$v->id1?>_vs_<?=$v->id2?>" />
@@ -94,22 +94,27 @@ profiler = {
         ajax(query);
     },
     statusCheck: function() {
+		var i = 0;
+		var arrayElements = [];
+		$.each($('.chat'), function(k, v) {
+			arrayElements[i] = $(this).closest('.chat').attr('attr-file');;
+			i++;
+		});
+		
+		$('.player').removeClass('online offline');
+		
         var query = {
             type: 'POST',
             data: {
-                ajax: 'statusCheck',
+                control: 'submitForm',
+                module: 'tournaments',
+				action: 'statusCheck',
+				form: arrayElements
             },
             success: function(answer) {
-                answer = answer.split(';');
-                $('#opponentStatus').removeClass('online offline');
-                $('#opponentName').removeClass('not-none');
-                
-                $('#opponentSec').html(checkTimer);
-                
-                $('#opponentName').addClass((answer[1]!='none'?'not-none':''));
-                $('#opponentStatus').addClass(answer[2]);
-                $('#opponentName').html(answer[1]);
-                $('#opponentStatus').html(answer[2]);
+				$.each($.parseJSON(answer), function(k, v) {
+					$('#player_'+k).addClass(v);
+				});
             }
         }
         ajax(query);
@@ -119,8 +124,9 @@ profiler = {
 //Start
 $(document).ready(function() {
     profiler.fetchChat();
+	profiler.statusCheck();
     setInterval(function () { profiler.fetchChat(); }, 5000);
-	//setInterval(function () { profiler.statusCheck(); }, 30000);
+	setInterval(function () { profiler.statusCheck(); }, 30000);
 });
 </script>
 
@@ -165,5 +171,11 @@ $(document).ready(function() {
 }
 .chat .chat-input input[type="text"]:hover {
 	background-color: #fff;
+}
+.player.online {
+	color: #090;
+}
+.player.offline {
+	color: #900;
 }
 </style>

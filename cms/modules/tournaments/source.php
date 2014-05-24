@@ -50,4 +50,26 @@ class Tournaments
 		
 		return '1;1';
 	}
+	
+	public function statusCheck($form) {
+		$playersStatus = array();
+		foreach($form as $v) {
+			$breakdown = explode('_vs_', $v);
+			$rows = Db::fetchRows('SELECT `online` FROM `teams` '.
+				'WHERE `id` = '.(int)$breakdown[0].' OR `id` = '.(int)$breakdown[1].' '.
+				'LIMIT 2'
+			);
+			
+			foreach($rows as $k => $v2) {
+				if ($v2->online+30 >= time()) {
+                    $playersStatus[$breakdown[$k]] = 'online';
+                }
+                else {
+                    $playersStatus[$breakdown[$k]] = 'offline';
+                }
+			}
+		}
+		
+		return json_encode($playersStatus);
+	}
 }
