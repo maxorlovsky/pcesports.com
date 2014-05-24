@@ -8,7 +8,7 @@
         </div>
         
         <div class="block-content">
-	        <p class="reg-completed success-add">Registration is almost complete, in a few moment you will receive an email with a link. Please use it to verify your participation.</p>
+	        /(<p class="reg-completed success-add">Registration is almost complete, in a few moment you will receive an email with a link. Please use it to verify your participation.</p>
 	        <div class="hidden" id="join-form">
 	            <form id="da-form" method="post">
 	                <input type="text" name="battletag" placeholder="Battle Tag" />
@@ -19,7 +19,8 @@
 	            </form>
 	            <div class="clear"></div>
 	            <a href="javascript:void(0);" class="button" id="add-player">Join tournament #<?=$id?></a>
-	        </div>
+	        </div>*/
+			<p>Registration closed</p>
         </div>
     </div>
 
