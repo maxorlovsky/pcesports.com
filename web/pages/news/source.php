@@ -68,7 +68,7 @@ class news
 		preg_match_all('/(src)=("[^"]*")/i',$text, $urls);
 		
 		foreach($matches[0] as $k => $v) {
-			$replace = '<a href='.$urls[2][$k].' onclick="return hs.expand(this)">'.$v.'</a>';
+			$replace = '<a href='.$urls[2][$k].' class="zoom-in" onclick="return hs.expand(this)">'.$v.'<span class="fader"></span></a>';
 			$text = str_replace($v, $replace, $text);
 		}
 		
