@@ -135,8 +135,8 @@ $cfg['allowedLanguages'] = array('en', 'ru');
 $cfg['defaultLanguage'] = 'en';
 
 $cfg['apiUrl'] = 'https://api.themages.net';
-$cfg['apiUsername'] = 'themages';
-$cfg['apiPassword'] = 'simple';
+$cfg['apiUsername'] = 'pcesports';
+$cfg['apiPassword'] = 'diaO2@(ujdp1';
 
 // Needed for Language functionality (to add/delete)
 // Add new language table fields here
