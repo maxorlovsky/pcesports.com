@@ -14,6 +14,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/slider.css" />
+	<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/highslide.css" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/style.css" />
     
     <? if (_cfg('env') == 'prod') { ?>
@@ -30,6 +31,16 @@
     
     <script>
     	var site = '<?=_cfg('site')?>';
+		
+		//Highslide
+		hs.graphicsDir = '<?=_cfg('static')?>/images/graphics/';
+		hs.wrapperClassName = 'hidden';
+		hs.align = 'center';
+		hs.transitions = ['expand'];
+		hs.outlineType = 'rounded-white';
+		hs.fadeInOut = false;
+		hs.dimmingOpacity = 0.8;
+		//Highslide
     </script>
 </head>
 

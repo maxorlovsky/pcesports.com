@@ -18,6 +18,13 @@ class news
 			'LIMIT 5'
 		);
 		
+		$rearangingNews = array();
+		foreach($this->news as $v) {
+			$v->value = $this->addImageResizer($v->value);
+			$rearangingNews[] = $v;
+		}
+		$this->news = (object)$rearangingNews;
+		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
@@ -39,6 +46,8 @@ class news
 			'LIMIT 1'
 		);
 		
+		$this->news->value = $this->addImageResizer($this->news->value);
+		
 		include_once _cfg('pages').'/'.get_class().'/article.tpl';
 	}
 	
@@ -49,5 +58,20 @@ class news
 		else {
 			$this->getNewsList();
 		}
+	}
+	
+	private function addImageResizer($text) {
+		$matches = array();
+		$urls = array();
+		
+		preg_match_all('/(<img[^>]+>)/i', $text, $matches);
+		preg_match_all('/(src)=("[^"]*")/i',$text, $urls);
+		
+		foreach($matches[0] as $k => $v) {
+			$replace = '<a href='.$urls[2][$k].' onclick="return hs.expand(this)">'.$v.'</a>';
+			$text = str_replace($v, $replace, $text);
+		}
+		
+		return $text;
 	}
 }
