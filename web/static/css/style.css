@@ -976,7 +976,7 @@ footer .games img {
 
 .zoom-in {
 	position: relative;
-	display: inline-block;
+	display: table;
 }
 .zoom-in .fader {
 	position: absolute;

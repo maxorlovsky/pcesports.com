@@ -68,7 +68,12 @@ class news
 		preg_match_all('/(src)=("[^"]*")/i',$text, $urls);
 		
 		foreach($matches[0] as $k => $v) {
-			$replace = '<a href='.$urls[2][$k].' class="zoom-in" onclick="return hs.expand(this)">'.$v.'<span class="fader"></span></a>';
+			$style = array();
+			preg_match_all('/(style)=("[^"]*")/i',$v, $style);
+			$style = str_replace('display: block;', '', $style[2]);
+			$style = 'style='.$style[0];
+			
+			$replace = '<a href='.$urls[2][$k].' '.$style.' class="zoom-in" onclick="return hs.expand(this)">'.$v.'<span class="fader"></span></a>';
 			$text = str_replace($v, $replace, $text);
 		}
 		
