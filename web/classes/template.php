@@ -36,7 +36,7 @@ class Template extends System
     			$title = str_replace('-', ' ', ucfirst($seoPageData->title));
     		}
     		else {
-    			$title = str_replace('-', ' ', ucfirst($this->page));
+    			$title = str_replace('-', ' ', t('web-link-'.$this->page));
     		}
     		$this->title .= $title;
     		$this->title .= ' | ';

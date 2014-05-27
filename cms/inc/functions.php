@@ -171,6 +171,8 @@ function _cfg($key = '') {
 //Writting strings
 function t($key) {
 	global $str;
+	
+	$key = strtolower($key);
     
 	if (isset($str[$key])) {
 	   return $str[$key];

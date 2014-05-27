@@ -1,5 +1,5 @@
 <section class="container page error">
 
 <div class="left-containers">
-	Error, page not found
+	<?=t('error_404')?>
 </div>

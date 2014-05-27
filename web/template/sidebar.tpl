@@ -9,15 +9,15 @@
     <? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
         <div class="block">
             <div class="block-header-wrapper">
-                <h1 class="bordered">Panel (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
+                <h1 class="bordered"><?=t('panel')?> (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
             </div>
             
             <ul class="panel-links">
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/">Information</a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight">Fight status (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="inactive confirm" id="lostBattle" attr-msg="Are you sure? Your opponent will advance and you will not be able to participate further!">I lost, my opponent won</a></li>
-                <?/*<li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?">Leave tournament</a></li>*/?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit">Exit panel</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="inactive confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
+                <?/*<li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?"><?=t('leave_tournament')?></a></li>*/?>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
             </ul>
         </div>
     <? } ?>
@@ -32,13 +32,13 @@
         ?>
         <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('d/m H:i', $v['time'])?>">
             <? if ($i!=0) { ?>
-                <div class="tourn-name"><?=$v['name']?> #<?=$v['id']?><br /><?=$v['status']?></div>
+                <div class="tourn-name"><?=$v['name']?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
             <? } else { ?>
-                <h2><?=$v['name']?> #<?=$v['id']?><br /><?=$v['status']?></h2>
+                <h2><?=$v['name']?> #<?=$v['id']?><br /><?=t($v['status'])?></h2>
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + 10800)?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=$v['id']?>" class="button">Join</a>
+            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=$v['id']?>" class="button"><?=t('join')?></a>
             
             <? if ($i!=0) { ?>
                 <div class="clear"></div>

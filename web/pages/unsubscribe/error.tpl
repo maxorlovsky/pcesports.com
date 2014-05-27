@@ -3,12 +3,12 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Unsubscribe</h1>
+            <h1 class="bordered"><?=t('unsubscribe')?></h1>
         </div>
 
         <div class="block-content about-us">
             <div class="text">
-            	<div class="error-add">Error</div>
+            	<div class="error-add"><?=t('error')?></div>
 			</div>
         </div>
     </div>

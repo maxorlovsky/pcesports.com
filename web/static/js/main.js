@@ -173,10 +173,14 @@ function updateTimers() {
 		var minutes = Math.floor(delta / 60) % 60;
 		delta -= minutes * 60;
 		var seconds = delta % 60;
+		dayStr = str['days'];
+		if (days == 1) {
+			dayStr = str['day'];
+		}
 		
 		returnString = '';
 		if (days > 0) {
-			returnString += days+' days ';
+			returnString += days+' '+dayStr;
 			if (nobr != 1) {
 				returnString += '<br />';
 			}

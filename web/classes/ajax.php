@@ -22,7 +22,7 @@ class Ajax extends System
             return true;
         }
         else {
-            echo '0;Controller does not exist';
+            echo '0;'.t('controller_not_exist');
             return false;
         }
     }
@@ -56,7 +56,7 @@ class Ajax extends System
             );
             
             if (!$row) {
-                return '0;Error';
+                return '0;'.t('error');
             }
             else {
                 $name = $_FILES['upload']['name'];
@@ -148,7 +148,7 @@ class Ajax extends System
             return '0;none;offline';
         }
         
-        return '0;Error';
+        return '0;'.t('error');
     }
     
     protected function chat($data) {
@@ -195,10 +195,10 @@ class Ajax extends System
             return '1;'.$chat;
         }
         else {
-            return '0;Error';
+            return '0;'.t('error');
         }
         
-        return '0;Error';
+        return '0;'.t('error');
     }
     
     protected function registerInHS($data) {

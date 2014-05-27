@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class=""><?=$this->news->title?> | News</h1>
+            <h1 class=""><?=$this->news->title?> | <?=t('news')?></h1>
         </div>
         <div class="block-content news big-block">
         	<div class="add-box">
@@ -18,24 +18,24 @@
                 <? if ($this->news->extension) { ?>
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->id?>.<?=$this->news->extension?>" />
                 <? } else { ?>
-                    <p>NO IMAGE</p>
+                    <p><?=t('no_image')?></p>
                 <? } ?>
             </div>
         	<div class="text"><?=$this->news->value?></div>
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
-				by <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
-				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> Likes,
-                <span><?=$this->news->views?></span> Views, 
-				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$this->news->id?>">0</span> Comments
+				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
+				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> <?=t('likes')?>,
+                <span><?=$this->news->views?></span> <?=t('views')?>, 
+				<span class="fb-comments-count" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->id?>">0</span> <?=t('comments')?>
 			</div>
         	<div class="clear"></div>
         </div>
         <div class="block-divider"></div>
         <div class="comments">
-        	<h2>Leave a comment</h2>
-            <div class="fb-comments" data-href="http://www.pcesports.com/en/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+        	<h2><?=t('leave_comment')?></h2>
+            <div class="fb-comments" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
         	<!-- <div class="disabled">Disabled</div> -->
         </div>
     </div>

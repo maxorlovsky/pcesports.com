@@ -86,13 +86,13 @@ class System
         	array(
         		'id'	=> 4,
         		'name' 	=> 'League of Legends',
-        		'status'=> 'Registration open',
+        		'status'=> t('registration_open'),
         		'time' 	=> '1401692400',
         	),
             array(
             	'id'	=> 4,
             	'name' 	=> 'League of Legends',
-            	'status'=> 'Start',
+            	'status'=> t('start'),
             	'time' 	=> '1402729200',
        		),
         );

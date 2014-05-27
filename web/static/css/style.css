@@ -634,7 +634,7 @@ footer .partners .skillz {
 	background-color: #ccc;
 	padding: 0;
 	margin: 0;
-	width: 70px;
+	width: 90px;
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
@@ -644,7 +644,7 @@ footer .partners .skillz {
 .contacts .contact-form .fields input,
 .contacts .contact-form .fields select,
 .contacts .contact-form .fields textarea {
-	width: 660px;
+	width: 645px;
 	border: 1px solid #999;
 	margin: 0 0 0 -1px;
 	border-radius: 0 4px 4px 0;
@@ -662,7 +662,7 @@ footer .partners .skillz {
 	height: 38px;
 }
 .contacts .contact-form .fields select {
-	width: 670px;
+	width: 655px;
 	vertical-align: middle;
 	padding: 11px 5px;
 	display: block;
@@ -670,11 +670,11 @@ footer .partners .skillz {
 }
 .contacts .contact-form .fields textarea {
 	padding: 10px;
-	width: 650px;
+	width: 635px;
 	height: 300px;
 }
 .contacts .contact-form .button {
-	margin-left: 60px;
+	margin-left: 90px;
 }
 
 #error {

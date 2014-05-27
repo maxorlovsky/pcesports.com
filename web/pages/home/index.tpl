@@ -12,7 +12,7 @@
     <? } ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="">News</h1>
+            <h1 class=""><?=t('news')?></h1>
         </div>
         <? if ($this->news->top) { ?>
         <div class="block-content news big-block">
@@ -30,7 +30,7 @@
                 </a>
             <? } else { ?>
                 <a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>" class="image-holder">
-                    <p>NO IMAGE</p>
+                    <p><?=t('no_image')?></p>
                 </a>
             <? } ?>
         	<a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>" class="title"><?=$this->news->top->title?></a>
@@ -38,12 +38,12 @@
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
-				by <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
-				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> Likes,
-                <span><?=$this->news->top->views?></span> Views, 
-				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$this->news->top->id?>">0</span> Comments
+				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
+				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> <?=t('likes')?>,
+                <span><?=$this->news->top->views?></span> <?=t('views')?>, 
+				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$this->news->top->id?>">0</span> <?=t('comments')?>
 			</div>
-        	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">Read more</a>
+        	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>
         </div>
         <? } ?>
@@ -59,7 +59,7 @@
                     <? if ($v->extension) { ?>
                         <img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
                     <? } else { ?>
-                        <p>NO IMAGE</p>
+                        <p><?=t('no_image')?></p>
                     <? } ?>
                     </a>
                 </div>

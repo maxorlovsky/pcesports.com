@@ -4,7 +4,7 @@
     <div class="separator">
         <div class="block">
             <div class="block-header-wrapper">
-                <h1 class="">Available leagues</h1>
+                <h1 class=""><?=t('available_leagues')?></h1>
             </div>
             <div class="block-content games">
                 <a href="http://www.leagueoflegends.com" target="_blank"><img src="<?=_cfg('img')?>/footer-lol-logo.png" /></a>
@@ -16,7 +16,7 @@
     <div class="separator">
         <div class="block">
             <div class="block-header-wrapper">
-                <h1 class="bordered">Partners</h1>
+                <h1 class="bordered"><?=t('partners')?></h1>
             </div>
             <div class="block-content partners">
                 <a class="unicon" href="https://www.facebook.com/uniconlv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
@@ -33,7 +33,7 @@
     
     <div class="copyrights">
         <p class="rights">© <?=date('Y', time())?> Pentaclick eSports. All Rights Reserved.</p>
-        <a href="http://www.maxorlovsky.net" target="_blank" class="devs">Made by Max & Anya Orlovsky</a>
+        <a href="http://www.maxorlovsky.net" target="_blank" class="devs"><?=t('made_by')?> Max & Anya Orlovsky</a>
         <div class="clear"></div>
     </div>
 </footer>

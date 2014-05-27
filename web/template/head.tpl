@@ -31,6 +31,9 @@
     
     <script>
     	var site = '<?=_cfg('site')?>';
+		var str = [];
+		str['days'] = '<?=t('days')?>';
+		str['day'] = '<?=t('day')?>';
 		
 		//Highslide
 		hs.graphicsDir = '<?=_cfg('static')?>/images/graphics/';
