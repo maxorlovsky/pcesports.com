@@ -299,25 +299,13 @@ class System
                     $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'emails') {
-                    /*set_time_limit(60);
-                    $rows = Db::fetchRows('SELECT * FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `ended` = 0 AND `deleted` = 0 AND `approved` = 1');
-                    $template = new Template();
-                    $text = $template->getMailTemplate('reminder');
-                    $i = 0;
-                    
+                    $rows = Db::fetchRows('SELECT `email` FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `approved` = 1');
                     foreach($rows as $v) {
-                        $msg = str_replace(
-                            array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-                            array($v->name, $v->id, $v->link, str_replace('%lang%', 'en', _cfg('href').'/hearthstone'), _cfg('url')),
-                            $text
+                        Db::query('INSERT IGNORE INTO `subscribe` SET '.
+                            '`email` = "'.Db::escape($v->email).'", '.
+                            '`unsublink` = "'.sha1(Db::escape($v->email).rand(0,9999).time()).'"'
                         );
-                        $this->sendMail($v->email, 'Pentaclick tournament reminder', $msg);
-                        ++$i;
-                        if ($i >= 30) {
-                            sleep(2);
-                            $i = 0;
-                        }
-                    }*/
+                    }
                 }
                 else {
                     exit('Run command error');

@@ -179,10 +179,9 @@ class hearthstone extends System
 			'AND `id` = '.$row->id
 		);
         
-        Db::query('INSERT INTO `subscribe` SET '.
+        Db::query('INSERT IGNORE INTO `subscribe` SET '.
             '`email` = "'.Db::escape($row->email).'", '.
-            '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'" '.
-            'WHERE `email` != "'.Db::escape($row->email).'"'
+            '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
         );
 		
 		$apiArray = array(
