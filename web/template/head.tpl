@@ -63,18 +63,37 @@
 
 <header class="container">
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
-    <div class="social">
-        <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
-        <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
-        <a class="gp" href="https://plus.google.com/u/0/communities/106917438189046033786" target="_blank"></a>
-        <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
-        <a class="vk" href="https://vk.com/pentaclickesports" target="_blank"></a>
-        <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
-        <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
+    <div class="fright">
+        <div class="social">
+            <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
+            <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
+            <a class="gp" href="https://plus.google.com/u/0/communities/106917438189046033786" target="_blank"></a>
+            <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
+            <a class="vk" href="https://vk.com/pentaclickesports" target="_blank"></a>
+            <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
+            <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
+        </div>
+        <script>
+        $('.social a').css('transition', '.5s');
+        </script>
+        <div class="languages">
+            <a href="javascript:void(0);">
+                <img src="<?=_cfg('img')?>/flags/<?=$this->data->langugePicker['picked']->flag?>.gif" />
+                <?=ucfirst(t($this->data->langugePicker['picked']->title))?>
+            </a>
+            <div class="language-switcher">
+                <div class="title">Choose language</div>
+                <?
+                unset($this->data->langugePicker['picked']);
+                foreach($this->data->langugePicker as $v) {
+                ?>
+                    <a href="<?=_cfg('site')?>/<?=$v->flag?>/"><img src="<?=_cfg('img')?>/flags/<?=$v->flag?>.gif" /><?=ucfirst(t($v->title))?></a>
+                <?
+                }
+                ?>
+            </div>
+        </div>
     </div>
-    <script>
-    $('.social a').css('transition', '.5s');
-    </script>
     <div class="clear"></div>
 </header>
 

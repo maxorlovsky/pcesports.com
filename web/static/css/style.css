@@ -4,6 +4,7 @@ img,p,td{border: 0;margin: 0;padding: 0;}
 a{text-decoration: none;color: #1697e1;transition: .5s;}
 a:hover{color: #555; }
 .clear {clear:both;}
+.fright {float:right;}
 
 body {
     margin: 0;
@@ -81,8 +82,7 @@ header .logo img {
     height: 72px;
 }
 header .social {
-    float: right;
-    margin: 20px 10px 0 0;
+    margin: 5px 10px 0 0;
 }
 header .social a {
     background-image: url('../images/icons.png');
@@ -139,6 +139,38 @@ header .social a.sm {
 }
 header .social a.sm:hover {
 	background-position: -143px -36px;
+}
+header .languages {
+    float: right;
+    margin: 15px 20px 0 0;
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+}
+header .languages img {
+    float: left;
+    margin: 2px 5px 0 0;
+}
+header .language-switcher {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    padding: 10px;
+    min-width: 120px;
+    border-radius: 8px;
+    z-index: 2;
+    background: #343434;
+    box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #43CDEF;
+}
+header .language-switcher .title {
+    font-weight: bold;
+}
+header .language-switcher a {
+    display: inline-block;
+    margin: 5px 0;
+    white-space: nowrap;
+    width: 100%;
 }
 
 footer {

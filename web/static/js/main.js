@@ -6,6 +6,10 @@ $('.bx-wrapper').bxSlider({
 	pause: 8000
 });
 
+$('.languages a').on('click', function() {
+    $('.languages .language-switcher').stop().slideToggle('fast');
+});
+
 if (requireStatus == 1) {
 	function statusCheck() {
 		$('#fightStatus').removeClass('online');

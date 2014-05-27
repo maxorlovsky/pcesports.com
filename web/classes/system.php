@@ -63,6 +63,18 @@ class System
         	$this->data->links = $rows;
         }
         
+        if (!$this->data->langugePicker && _cfg('language') != 'Config not found') {
+            $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
+            foreach($languageRows as $v) {
+                if ($v->flag != _cfg('language')) {
+                    $this->data->langugePicker[] = $v;
+                }
+                else {
+                    $this->data->langugePicker['picked'] = $v;
+                }
+            }
+        }
+        
       	if ($data['val1']) {
         	$this->page = $data['val1'];
         }
@@ -276,7 +288,7 @@ class System
     protected function getStrings() {
         global $str;
         
-        $rows = Db::fetchRows('SELECT `key`, `english` AS `value` FROM `tm_strings`');
+        $rows = Db::fetchRows('SELECT `key`, `'._cfg('fullLanguage').'` AS `value` FROM `tm_strings`');
         if ($rows) {
         	foreach($rows as $v) {
         		$str[$v->key] = $v->value;
@@ -316,18 +328,27 @@ class System
         }
     
         $availableLanguages = array();
-        $rows = Db::fetchRows('SELECT `flag` FROM `tm_languages`');
-        foreach($rows as $v) {
+        $fetchingFullLanguage = array();
+        $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
+        foreach($languageRows as $v) {
         	$availableLanguages[] = $v->flag;
+            $fetchingFullLanguage[$v->flag] = $v->title;
         }
         
         //Setting - Languages
-        if (!isset($_GET['language']) || !$_GET['language'] || !in_array($_GET['language'], $availableLanguages)) {
-            $cfg['language'] = 'en';
+        if (isset($_GET['language']) && $_GET['language'] && in_array($_GET['language'], $availableLanguages)) {
+            $cfg['language'] = $_GET['language'];
+            setcookie('language', _cfg('language'), time()+7776000, '/', 'pcesports.com');
+        }
+        else if (isset($_COOKIE['language']) && $_COOKIE['language'] && in_array($_COOKIE['language'], $availableLanguages)) {
+            $cfg['language'] = $_COOKIE['language'];
         }
         else {
-        	$cfg['language'] = $_GET['language'];
+        	$cfg['language'] = 'en';
         }
+        
+        $cfg['fullLanguage'] = $fetchingFullLanguage[$cfg['language']];
+        
         $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
         $cfg['hssite'] = $cfg['href'].'/hearthstone';
         $cfg['lolsite'] = $cfg['href'].'/league-of-legends';

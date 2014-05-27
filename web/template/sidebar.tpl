@@ -24,7 +24,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Next tournaments</h1>
+            <h1 class="bordered"><?=t('next_tournament')?></h1>
         </div>
         <?
         $i = 0;
