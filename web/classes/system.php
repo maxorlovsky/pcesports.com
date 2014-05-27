@@ -299,13 +299,13 @@ class System
                     $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'emails') {
-                    $rows = Db::fetchRows('SELECT `email` FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `approved` = 1');
+                    /*$rows = Db::fetchRows('SELECT `email` FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `approved` = 1');
                     foreach($rows as $v) {
                         Db::query('INSERT IGNORE INTO `subscribe` SET '.
                             '`email` = "'.Db::escape($v->email).'", '.
                             '`unsublink` = "'.sha1(Db::escape($v->email).rand(0,9999).time()).'"'
                         );
-                    }
+                    }*/
                 }
                 else {
                     exit('Run command error');
