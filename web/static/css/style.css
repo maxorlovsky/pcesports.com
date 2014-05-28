@@ -1024,3 +1024,7 @@ footer .games img {
 .zoom-in:hover .fader {
 	opacity: 0.4;
 }
+
+.ad-holder {
+	padding: 6px !important
+}

@@ -49,6 +49,27 @@
         }
         ?>
     </div>
+	
+	<div class="block chitika">
+		<div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('advertising')?></h1>
+        </div>
+		
+		<div class="ad-holder block-content">
+			<script type="text/javascript">
+			  ( function() {
+				if (window.CHITIKA === undefined) { window.CHITIKA = { 'units' : [] }; };
+				var unit = {"calltype":"async[2]","publisher":"maxtream","width":300,"height":250,"sid":"Chitika Default","color_site_link":"1697e1","color_button":"1697e1","color_button_text":"ffffff"};
+				var placement_id = window.CHITIKA.units.length;
+				window.CHITIKA.units.push(unit);
+				document.write('<div id="chitikaAdBlock-' + placement_id + '"></div>');
+			}());
+			</script>
+			<script type="text/javascript" src="//cdn.chitika.net/getads.js" async></script>
+		</div>
+    </div>
+	
+	
     <?/*
     <div class="block streamers">
         <div class="block-header-wrapper">
