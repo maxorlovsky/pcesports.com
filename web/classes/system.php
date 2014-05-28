@@ -79,13 +79,25 @@ class System
         else {
         	$this->page = 'home';
         }
-        //echo strtotime('02.06.2014 10:00:00');
+        //echo strtotime('07.06.2014 10:00:00');
         $this->serverTimes = array(
+			array(
+        		'id'	=> 5,
+        		'name' 	=> 'Hearthstone',
+        		'status'=> t('registration_open'),
+        		'time' 	=> '1401433200',
+        	),
         	array(
         		'id'	=> 4,
         		'name' 	=> 'League of Legends',
         		'status'=> t('registration_open'),
         		'time' 	=> '1401692400',
+        	),
+			array(
+        		'id'	=> 5,
+        		'name' 	=> 'Hearthstone',
+        		'status'=> t('start'),
+        		'time' 	=> '1402124400',
         	),
             array(
             	'id'	=> 4,

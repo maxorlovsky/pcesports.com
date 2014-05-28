@@ -4,7 +4,7 @@
     <? if (t('hearthstone_tournament_vod_'.$this->pickedTournament) != 'hearthstone_tournament_vod_'.$this->pickedTournament) { ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('broadcast_vod')?>Broadcast/VOD</h1>
+            <h1 class="bordered"><?=t('broadcast_vod')?></h1>
         </div>
         
         <div class="block-content vods">
@@ -12,8 +12,29 @@
         </div>
     </div>
     <? } ?>
-    <!--2 ql1NdcqTTEk?list=PLhzcprkTx_-ZA0VZ_fqzNFFg4PW3g8JGy-->
 
+	<? if ($this->data->settings['tournament-reg-hs'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
+	<div class="block">
+		<div class="block-header-wrapper">
+			<h1 class="bordered"><?=t('join_tournament')?> #<?=$this->currentTournament?></h1>
+		</div>
+		
+		<div class="block-content">
+			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+			<div class="hidden" id="join-form">
+				<form id="da-form" method="post">
+					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>" />
+					<div id="battletag-msg" class="message hidden"></div>
+					<div class="clear"></div>
+					<input type="text" name="email" placeholder="Email" />
+					<div id="email-msg" class="message hidden"></div>
+				</form>
+				<div class="clear"></div>
+				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
+			</div>
+		</div>
+	</div>
+	<? } ?>
     
     <div class="block">
         <div class="block-header-wrapper">
@@ -22,51 +43,48 @@
         
         <div class="block-content tournament-rules">
             <?=t('hearthstone_tournament_information_'.$this->pickedTournament)?>
-            <p>Games starts <strong>1 march 2014</strong>, 10:00 GMT-0</p>
-            <p>Prize (1st place) – 15€</p>
-            <p>Prize (2nd place) – 10€</p>
-            <p>Prize (3rd place) – 5€</p>
-            <p>Prize money will be sent via Paypal</p>
             <a href="<?=_cfg('href')?>/hearthstone"><?=t('global_tournament_rules')?></a>
         </div>
     </div>
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?>Participants</h1>
+            <h1 class="bordered"><?=t('participants')?></h1>
         </div>
 
         <div class="block-content participants">
             <?
+			$participantsCount = 0;
             if ($this->participants) {
-                $i = 1;
                 foreach($this->participants as $v) {
+				++$participantsCount;
             ?>
-                <div class="block" title="<?=$v->name?> #<?=$i?>">
+                <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
                     <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
-                    <span class="team-num">#<?=$i?></span>
+                    <span class="team-num">#<?=$participantsCount?></span>
                     <div class="clear"></div>
                 </div>
             <?
-                ++$i;
                 }
             }
             else {
-                ?><p class="empty-list"><?=t('no_players_registered')?>No players registered</p><?
+                ?><p class="empty-list"><?=t('no_players_registered')?></p><?
             }
             ?>
         </div>
     </div>
-    
+	
+    <? if ($participantsCount >= 2) { ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('brackets')?>Brackets</h1>
+            <h1 class="bordered"><?=t('brackets')?></h1>
         </div>
 
         <div class="block-content challonge-brackets">
             <div id="challonge"></div>
         </div>
     </div>
+	<? } ?>
 </div>
 
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
@@ -128,7 +146,7 @@ $('#add-player').on('click', function() {
 //550 <24
 //950 >24
 
-var participantsNumber = <?=count($this->participants) - 1?>;
+var participantsNumber = <?=$participantsCount?>;
 
 if (participantsNumber > 24) {
     challongeHeight = 950;

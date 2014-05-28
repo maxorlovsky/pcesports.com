@@ -104,14 +104,26 @@
     */?>
     
     <? if (_cfg('env') != 'dev') { ?>
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Like us!</h1>
-        </div>
-        <div class="facebook-holder block-content">
-            <div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
-        </div>
-    </div>
+	
+	<? if (_cfg('language') == 'ru') { ?>
+		<div class="block vk">
+			<div class="block-header-wrapper">
+				<h1 class="bordered">Мы Вконтакте!</h1>
+			</div>
+			<div class="vk-holder block-content">
+				<div id="vk_groups"></div>
+			</div>
+		</div>
+	<? } else { ?>
+		<div class="block fb">
+			<div class="block-header-wrapper">
+				<h1 class="bordered">Like us!</h1>
+			</div>
+			<div class="facebook-holder block-content">
+				<div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+			</div>
+		</div>
+	<? } ?>
 
     <div class="block fb">
         <div class="block-header-wrapper">

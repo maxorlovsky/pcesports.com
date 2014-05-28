@@ -1,6 +1,6 @@
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?>Participants</h1>
+            <h1 class="bordered"><?=t('participants')?></h1>
         </div>
 
         <div class="block-content participants">
@@ -19,7 +19,7 @@
                 }
             }
             else {
-                ?><p class="empty-list"><?=t('no_players_registered')?>No players registered</p><?
+                ?><p class="empty-list"><?=t('no_players_registered')?></p><?
             }
             ?>
         </div>
@@ -27,7 +27,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('brackets')?>Brackets</h1>
+            <h1 class="bordered"><?=t('brackets')?></h1>
         </div>
 
         <div class="block-content challonge-brackets">
@@ -85,7 +85,7 @@ $('#add-player').on('click', function() {
             $('#add-player').removeClass('alpha');
             formInProgress = 0;
             
-            alert('Something\'s got wrong... Contact admin at pentaclickesports@gmail.com');
+            alert('Something\'s got wrong... Contact admin at info@pcesports.com');
         }
     }
     ajax(query);
