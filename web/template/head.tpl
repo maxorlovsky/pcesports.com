@@ -81,7 +81,7 @@
         </script>
         <div class="languages">
             <a href="javascript:void(0);">
-                <img src="<?=_cfg('img')?>/flags/<?=$this->data->langugePicker['picked']->flag?>.gif" />
+                <img src="<?=_cfg('img')?>/flags/<?=$this->data->langugePicker['picked']->flag?>.png" />
                 <?=ucfirst(t($this->data->langugePicker['picked']->title))?>
             </a>
             <div class="language-switcher">
@@ -90,7 +90,7 @@
                 unset($this->data->langugePicker['picked']);
                 foreach($this->data->langugePicker as $v) {
                 ?>
-                    <a href="<?=_cfg('site')?>/<?=$v->flag?>/"><img src="<?=_cfg('img')?>/flags/<?=$v->flag?>.gif" /><?=ucfirst(t($v->title))?></a>
+                    <a href="<?=_cfg('site')?>/<?=$v->flag?>/"><img src="<?=_cfg('img')?>/flags/<?=$v->flag?>.png" /><?=ucfirst(t($v->title))?></a>
                 <?
                 }
                 ?>
