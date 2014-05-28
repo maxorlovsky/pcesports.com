@@ -14,7 +14,7 @@
             </div>
             
             <div class="right-part">
-                <div class="status"><?=$v['status']?></div>
+                <div class="status"><?=t(str_replace(' ','_',$v['status']))?></div>
                 <div class="event-date"><?=t('event_date')?>: <?=$v['dates']?></div>
                 <div class="event-date"><?=t('prize_pool')?>: <?=$v['prize']?></div>
             </div>
