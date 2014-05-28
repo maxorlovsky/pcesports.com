@@ -551,7 +551,7 @@ footer .copyrights .devs:hover {
     padding: 10px 10px 0 0;
 }
 
-.facebook-holder {
+.facebook-holder, .vk-holder {
     padding: 3px !important;
     overflow: hidden;
 }
