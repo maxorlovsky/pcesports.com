@@ -62,6 +62,7 @@ class System
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tm_settings` '.
+            'WHERE `type` = "level" OR `setting` LIKE "site_%" '.
         	'ORDER BY `setting` = "dashboard" DESC'
         );
         if ($rows) {
@@ -70,8 +71,9 @@ class System
         	}
         	 
         	foreach($this->data->settings as $k => $v) {
-        		if (substr($k,0,4)!='site'&&$k!='load_type')
+        		if (substr($k,0,4)!='site') {
         			$this->data->pages[] = array($k, at($k), $v);
+                }
         	}
         }
         

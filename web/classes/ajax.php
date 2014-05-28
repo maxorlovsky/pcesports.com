@@ -67,13 +67,13 @@ class Ajax extends System
                 $fileUrl = _cfg('site').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
 
                 if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
-                    return '0;File is not an image, it is: '.$end;
+                    return '0;'.t('file_is_not_image').': '.$end;
                 }            
                 else if (!copy($_FILES['upload']['tmp_name'], $fileName)) {
-                    return '0;File can not be loaded, file expired or something goes terribly wrong';
+                    return '0;'.t('move_file_error');
                 }
                 else if ($row->screenshots > 10) {
-                    return '0;Screenshot limit achieved, please wait for admin response or write an email to info@pcesports.com';
+                    return '0;'.t('screenshot_limit_block');
                 }
                 else {
                     $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
@@ -111,7 +111,7 @@ class Ajax extends System
         );
         
         if (!$row) {
-            return '0;none;waiting for opponent';
+            return '0;'.t('none').';'.t('waiting_for_opponent');
         }
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
@@ -123,7 +123,7 @@ class Ajax extends System
         );
         
         if (!$playersRow) {
-            return '0;none;no opponent';
+            return '0;'.t('none').';'.t('no_opponent');
         }
         else {
             $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
@@ -136,16 +136,16 @@ class Ajax extends System
 			
             if ($enemyRow) {
                 if ($enemyRow->online+30 >= time()) {
-                    $status = 'online';
+                    $status = t('online');
                 }
                 else {
-                    $status = 'offline';
+                    $status = t('offline');
                 }
 
                 return '1;'.$enemyRow->name.';'.$status;
             }
             
-            return '0;none;offline';
+            return '0;'.t('none').';'.t('offline');
         }
         
         return '0;'.t('error');
@@ -165,7 +165,7 @@ class Ajax extends System
         );
         
         if (!$row) {
-            return '1;<p id="notice">Chat is disabled at the moment, waiting for your opponent to appear</p>';
+            return '1;<p id="notice">'.t('chat_disabled_no_opp').'</p>';
         }
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
@@ -189,7 +189,7 @@ class Ajax extends System
             $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
             
             if (!$chat) {
-                $chat = '<p id="notice">Battle and admins are online, you can start using chat<br />To start a chat, input text and press "Enter"</p>';
+                $chat = '<p id="notice">'.t('chat_active_can_start').'</p>';
             }
             
             return '1;'.$chat;
@@ -217,26 +217,26 @@ class Ajax extends System
     	);
 
     	if (!$post['battletag']) {
-    		$err['battletag'] = '0;Field is empty';
+    		$err['battletag'] = '0;'.t('field_empty');
     	}
     	else if ($row) {
-    		$err['battletag'] = '0;Player with this battle tag is already registered';
+    		$err['battletag'] = '0;'.t('field_battletag_error');
     	}
     	else if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
-    		$err['battletag'] = '0;BattleTag is incorrect it must look like YourName#1234';
+    		$err['battletag'] = '0;'.t('field_battletag_incorrect');
     	}
     	else {
-    		$suc['battletag'] = '1;Approved';
+    		$suc['battletag'] = '1;'.t('approved');
     	}
     	
     	if (!$post['email']) {
-    		$err['email'] = '0;Field is empty';
+    		$err['email'] = '0;'.t('field_empty');
     	}
     	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-    		$err['email'] = '0;Email is invalid';
+    		$err['email'] = '0;'.t('email_invalid');
     	}
     	else {
-    		$suc['email'] = '1;Approved';
+    		$suc['email'] = '1;'.t('approved');
     	}
     	
     	if ($err) {
@@ -297,14 +297,14 @@ class Ajax extends System
     	);
     	 
     	if ($row) {
-    		$timeLeft = $row->timestamp - time();
-    		return '0;One message was already sent from your IP, you need to wait before you can send another one. Timeout: '.$timeLeft.' seconds';
+            $str = str_replace('%timeleft%', $row->timestamp - time(), t('contact_form_ip_timeout'));
+    		return '0;'.$str;
     	}
     	else if (!trim($form['name'])) {
-    		return '0;Please input name';
+    		return '0;'.t('input_name');
     	}
 		else if (!trim($form['email']) || !filter_var(trim($form['email']), FILTER_VALIDATE_EMAIL)) {
-			return '0;Email is empty or incorrect';
+			return '0;'.t('email_invalid');
     	}
     	
     	$txt = '
@@ -320,10 +320,10 @@ class Ajax extends System
     			'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
     			'`timestamp` = '.(time() + 300)
     		);
-    		return '1;Form successfully sent, we will contact you shortly';
+    		return '1;'.t('form_success_sent');
     	}
     	
-    	return '0;Error sending email';
+    	return '0;'.t('error_sending_form');
     }
     
     protected function newsVote($data) {

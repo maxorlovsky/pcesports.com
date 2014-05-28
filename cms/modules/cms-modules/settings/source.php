@@ -6,26 +6,42 @@ class Settings
 	public $system;
 	public $settings = array();
 	public $siteSettings;
-	public $mainPages;
 	
 	function __construct($params = array()) {
 		$this->system = $params['system'];
 
-		$this->settings = Db::fetchRows('SELECT `value`, `setting` '.
+		$this->settings = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
-			'WHERE setting != "site_prefix" AND setting != "load_type" '.
-			'ORDER BY `setting` = "site_name" DESC, `value` DESC'
+			'ORDER BY `position` ASC, `setting` ASC'
 		);
 		
 		$i = 0;
 		foreach($this->settings as $v) {
-			if (substr($v->setting,0,4) == 'site' && $v->setting != 'site_prefix') {
-				$this->siteSettings[$i]['value'] = at($v->setting);
-				$this->siteSettings[$i]['html'] = '<div id="setting-'.$v->setting.'" class="pointer settings_div hint" name="'.at('hint_'.$v->setting).'" onclick="do_input(\'setting-'.$v->setting.'\', 0);">'.$v->value.'</div>';
+            $this->siteSettings[$i]['type'] = $v->type;
+            
+            if ($v->field) {
+                $this->siteSettings[$i]['value'] = $v->field;
+            }
+            else {
+                $this->siteSettings[$i]['value'] = at($v->setting);
+            }
+        
+            if ($v->type == 'level') {
+                $this->siteSettings[$i]['html'] = '<div id="setting-'.$v->setting.'" class="pointer settings_div" onclick="do_input(\'setting-'.$v->setting.'\', 1);">'.$v->value.'</div>';
+            }
+            else if ($v->type == 'checkbox') {
+				$this->siteSettings[$i]['html'] = '<input type="checkbox" id="'.$v->setting.'" class="save_setting_checkbox" value="'.$v->value.'" '.($v->value==1?'checked="checked"':null).'/>';
+			}
+			else if ($v->type == 'text') {
+                $hint = array(0=>'',1=>'');
+                if (at('hint_'.$v->setting) != 'hint_'.$v->setting) {
+                    $hint[0] = 'hint';
+                    $hint[1] = at('hint_'.$v->setting);
+                }
+				$this->siteSettings[$i]['html'] = '<div id="setting-'.$v->setting.'" class="pointer settings_div '.$hint[0].'" name="'.$hint[1].'" onclick="do_input(\'setting-'.$v->setting.'\', 0);">'.$v->value.'</div>';
 			}
 			else {
-				$this->mainPages[$i]['value'] = at($v->setting);
-				$this->mainPages[$i]['html'] = '<div id="setting-'.$v->setting.'" class="pointer settings_div" onclick="do_input(\'setting-'.$v->setting.'\', 1);">'.$v->value.'</div>';
+				$this->siteSettings[$i]['html'] = 'For config "'.$v->setting.'" type is not set, this is an error!';
 			}
 			++$i;
 		}

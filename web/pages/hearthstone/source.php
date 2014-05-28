@@ -3,12 +3,15 @@
 class hearthstone extends System
 {
 	public $teamsCount;
-	public $currentTournament = 4;
+	public $currentTournament;
 	public $teamsPlaces;
 	public $participants;
+    public $pickedTournament;
 	
 	public function __construct($params = array()) {
-		
+        parent::__construct();
+    
+		$this->currentTournament = $this->data->settings['hs-current-number'];
 	}
     
     public function fightPage() {
@@ -221,18 +224,19 @@ class hearthstone extends System
 		return $challonge_id;
 	}
 	
-	public function getTournamentData($id) {
-		if (file_exists(_cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl')) {
+	public function getTournamentData($number) {
+        $this->pickedTournament = (int)$number;
+        
+		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament) {
 			$rows = Db::fetchRows('SELECT `name` '.
 				'FROM `teams` '.
-				'WHERE `game` = "hs" AND `approved` = 1 AND `tournament_id` = '.(int)$id.' AND `deleted` = 0 '.
+				'WHERE `game` = "hs" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
 				'ORDER BY `id` ASC'
 			);
 
 			$this->participants = $rows;
 			
-			include_once _cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl';
-			include_once _cfg('pages').'/'.get_class().'/footer.tpl';
+			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 		}
 		else {
 			include_once  _cfg('pages').'/404/error.tpl';
@@ -292,7 +296,7 @@ class hearthstone extends System
 			$this->participantPage();
 		}
         else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
-			$this->getTournamentData((int)$_GET['val2']);
+			$this->getTournamentData($_GET['val2']);
 		}
 		else {
 			$this->getTournamentList();

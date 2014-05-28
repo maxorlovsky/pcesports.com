@@ -1,17 +1,18 @@
 <table class="settings">
     <tr><td colspan="2"><center><b><?=at('settings')?></b></center></td></tr>
     <?
-        $i = 0;
-
-        if ($module->siteSettings) {
-	        foreach($module->siteSettings as $v) {
-	            ?><tr>
-	                <td width="30%"><b><?=$v['value']?></b></td>
-	                <td width="70%"><?=$v['html']?></td>
-	              </tr><?
-	            ++$i;
-	        }
+    if ($module->siteSettings) {
+        foreach($module->siteSettings as $v) {
+            if ($v['type'] == 'text' || $v['type'] == 'checkbox') {
+                ?>
+                <tr>
+                    <td width="30%"><b><?=$v['value']?></b></td>
+                    <td width="70%"><?=$v['html']?></td>
+                </tr>
+                <?
+            }
         }
+    }
     ?>
 </table>
 <br /><br />
@@ -28,16 +29,18 @@
         <td class="centered b"><?=at('level_required')?></td>
     </tr>
     <?
-        $i = 0;
-        if ($module->mainPages) {
-	        foreach($module->mainPages as $f) {
-	            ?><tr>
-	                <td><?=$f['value']?></td>
-	                <td class="centered"><?=$f['html']?></td>
-	              </tr><?
-	            ++$i;
-	        }
+    if ($module->siteSettings) {
+        foreach($module->siteSettings as $v) {
+            if ($v['type'] == 'level') {
+            ?>
+            <tr>
+                <td><?=$v['value']?></td>
+                <td class="centered"><?=$v['html']?></td>
+            </tr>
+            <?
+            }
         }
+    }
     ?>
 </table>
 <br />
@@ -67,3 +70,37 @@
         }
     ?>
 </table>
+
+
+<script>
+$('.save_setting_checkbox').on('click', function() {
+    showMsg(2,strings['loading']);
+    
+    var id = $(this).attr('id');
+    var checked = 0;
+    if ($(this).is(':checked') === true) {
+        checked = 1;
+    }
+    
+    var query = {
+        type: 'POST',
+        timeout: 10000,
+        data: {
+            control: 'saveSetting',
+            param: id,
+            value: checked
+        },
+        success: function(data) {
+            answer = data.split(';');
+            cleanMsg();
+            showMsg(answer[0],answer[1]);
+            messageTimer = setTimeout(cleanMsg,3000);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            showMsg(0,'Error timeout');
+            messageTimer = setTimeout(cleanMsg,3000);
+        }
+    };
+    ajax(query);
+});
+</script>

@@ -45,9 +45,7 @@ class System
         	$data['token'] = false;
         }
         
-        $rows = Db::fetchRows('SELECT * FROM `tm_settings` '.
-        	'WHERE `setting` LIKE "site_%"'
-        );
+        $rows = Db::fetchRows('SELECT * FROM `tm_settings`');
         if ($rows) {
         	foreach($rows as $v) {
         		$this->data->settings[$v->setting] = $v->value;

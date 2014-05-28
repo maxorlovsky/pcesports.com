@@ -2,18 +2,19 @@
 
 <div class="left-containers">
 	<? if ($regged == 1) { ?>
-		<p class="success-add">Your participation is now verified. Congratulations!</p>
+		<p class="success-add"><?=t('participation_verified')?>Your participation is now verified. Congratulations!</p>
 	<? } ?>
 	
 	<div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Information</h1>
+            <h1 class="bordered"><?=t('information')?></h1>
         </div>
         
         <div class="block-content vods">
-            <p>Tournament start in: <span class="timer" attr-time="<?=intval(1400914800-time() + 10800)?>" attr-br="0"><img src="<?=_cfg('img')?>/bx_loader.gif" /></span></p>
-            <p>Brackets: <a href="http://pentaclick.challonge.com/hs4/" target="_blank">http://pentaclick.challonge.com/hs4/</a></p>
-            <p>Brackerts will be reshufled after registration for tournament will be closed</p>
+            <p><?=t('tournament_start_in')?>Tournament start in: <span class="timer" attr-time="<?=intval(1400914800-time() + 10800)?>" attr-br="0"><img src="<?=_cfg('img')?>/bx_loader.gif" /></span></p>
+            <p><?=t('brackets')?>: <a href="http://pentaclick.challonge.com/hs4/" target="_blank">http://pentaclick.challonge.com/hs4/</a></p>
+            <?=t('participant_information_txt')?>
+            <p>Brackets will be reshuffled after registration for tournament will be closed</p>
             <p>You will be notified about your participation in the tournament by email, 24h before start</p>
             <p>Current page is work in progress</p>
         </div>

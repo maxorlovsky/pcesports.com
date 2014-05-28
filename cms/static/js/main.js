@@ -221,6 +221,7 @@ function do_input(id, t) {
 		}
 	}
 }
+
 function cancel_output(id, t) {
 	if (t==0) {
 		$('#'+id).html(save_input);

@@ -1,6 +1,11 @@
 # DROP TABLE `wp_commentmeta`, `wp_comments`, `wp_links`, `wp_options`, `wp_postmeta`, `wp_posts`, `wp_terms`, `wp_term_relationships`, `wp_term_taxonomy`, `wp_usermeta`, `wp_users`;
 # NOT USE UNTIL RIOT APPROVAL!!
 
+# 28.05.2014 - cms update
+ALTER TABLE  `tm_settings` ADD  `field` VARCHAR( 99 ) NULL ,
+ADD  `type` ENUM(  'text',  'checkbox', 'level' ) NOT NULL DEFAULT  'text',
+ADD  `position` TINYINT( 3 ) UNSIGNED NOT NULL DEFAULT  '0';
+
 # 23.05.2014
 RENAME TABLE `hs_fights` TO `fights`;
 RENAME TABLE `lol_fights` TO `lol_games`;

@@ -3,20 +3,20 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Hearthstone Tournament list</h1>
+            <h1 class="bordered">Hearthstone <?=t('tournament_list')?>Tournament list</h1>
         </div>
         
         <? foreach($this->tournamentData as $k => $v) { ?>
         <a class="block-content <?=(strtolower($v['status'])!='ended'?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
             <div class="left-part">
-                <div class="title">Tournament #<?=$k?></div>
-                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> of 512 participants</div>
+                <div class="title"><?=t('tournament')?>Tournament #<?=$k?></div>
+                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?>of 512 <?=t('participants')?>participants</div>
             </div>
             
             <div class="right-part">
                 <div class="status"><?=$v['status']?></div>
-                <div class="event-date">Event date: <?=$v['dates']?></div>
-                <div class="event-date">Prize pool: <?=$v['prize']?></div>
+                <div class="event-date"><?=t('event_date')?>Event date: <?=$v['dates']?></div>
+                <div class="event-date"><?=t('prize_pool')?>Prize pool: <?=$v['prize']?></div>
             </div>
             
             <div class="mid-part">
@@ -34,10 +34,11 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Tournament rules</h1>
+            <h1 class="bordered"><?=t('tournament_rules')?>Tournament rules</h1>
         </div>
 
         <div class="block-content tournament-rules">
+            <?=t('hearthstone_tournament_rules')?>
             <h1>Format</h1>
             <p>EU server</p>
             <p>Min players: 16</p>
