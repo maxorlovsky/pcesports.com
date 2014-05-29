@@ -11,8 +11,8 @@ class Template extends System
     	$this->getSeo();
     	
     	$this->getMainTemplate('head');
-    	
-    	$this->loadPage($this);
+		
+		$this->loadPage($this);
     	
         $this->getMainTemplate('sidebar');
         $this->getMainTemplate('footer');
@@ -48,8 +48,13 @@ class Template extends System
     	/*if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']]) {
     		return at('denied_access_level');
     	}*/
-
-   		if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
+		
+		if ($this->data->settings['maintenance'] == 1 && file_exists(_cfg('pages').'/maintenance/source.php')) {
+			require_once _cfg('pages').'/maintenance/source.php';
+   			
+   			$page = new maintenance($data);
+		}
+   		else if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
    			
    			$page = new $data->page($data);

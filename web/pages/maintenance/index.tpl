@@ -2,7 +2,7 @@
 
 <div class="left-containers">
 	<div class="maintenance">
-		<?=t('error_404')?>
+		<?=t('maintenance_txt')?>
 		<img src="<?=_cfg('img')?>/maintenance.png" />
 	</div>
 </div>
