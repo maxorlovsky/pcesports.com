@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">League of Legends Tournament list</h1>
+            <h1 class="bordered">League of Legends <?=t('tournament_list')?></h1>
         </div>
 
         <? for($i=$this->currentTournament;$i>0;--$i) { ?>

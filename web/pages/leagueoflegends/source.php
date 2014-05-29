@@ -1,18 +1,54 @@
 <?php
 
-class leagueoflegends
+class leagueoflegends extends System
 {
 	public $teamsCount;
-	public $currentTournament = 4;
+	public $currentTournament;
 	public $teamsPlaces;
 	public $participants;
+    public $pickedTournament;
 	
 	public function __construct($params = array()) {
-		
+		parent::__construct();
+    
+		$this->currentTournament = $this->data->settings['lol-current-number'];
 	}
+    
+    public function fightPage() {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+			go(_cfg('href').'/leagueoflegends');
+		}
+        $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
+            '`tournament_id` = '.(int)$this->currentTournament.' AND '.
+            '`game` = "lol" AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+
+        include_once _cfg('pages').'/'.get_class().'/fight.tpl';
+    }
 	
-	public function getTournamentData($id) {
-		if (file_exists(_cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl')) {
+	public function getTournamentData($number) {
+        $this->pickedTournament = (int)$number;
+        
+		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament) {
+			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
+                'FROM `teams` AS `t` '.
+				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.
+				'WHERE `t`.`game` = "lol" AND `t`.`approved` = 1 AND `t`.`tournament_id` = '.(int)$this->pickedTournament.' AND `t`.`deleted` = 0 '.
+				'ORDER BY `t`.`id` ASC, `p`.`player_num` ASC'
+			);
+
+			$this->participants = $rows;
+			
+			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
+		}
+		else {
+			include_once  _cfg('pages').'/404/error.tpl';
+		}
+        
+		/*if (file_exists(_cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl')) {
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
 				'FROM `teams` AS `t` '.
 				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.
@@ -38,18 +74,28 @@ class leagueoflegends
 		}
 		else {
 			include_once  _cfg('pages').'/404/error.tpl';
-		}
+		}*/
 	}
 	
 	public function getTournamentList() {
+		$rows = Db::fetchRows('SELECT * '.
+			'FROM `tournaments` '.
+			'WHERE `game` = "lol" '.
+            'AND `status` != "Registration" '.
+			'ORDER BY `id` DESC'
+		);
+		foreach($rows as $v) {
+			$this->tournamentData[$v->id] = (array)$v;
+		}
+		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
 			'FROM `teams` '.
-			'WHERE `game` = "lol" AND `approved` = 1 '.
+			'WHERE `game` = "lol" AND `approved` = 1 AND `deleted` = 0 '.
 			'GROUP BY `tournament_id` '.
 			'ORDER BY `id` DESC'
 		);
 		foreach($rows as $v) {
-			$this->teamsCount[$v->tournament_id] = $v->value;
+			$this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
 		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
@@ -58,20 +104,14 @@ class leagueoflegends
 			'ORDER BY `tournament_id`, `place`'
 		);
 		
-		$placesArray = array();
 		$previousTournamentId = 0;
-		foreach($rows as $v) {
-			if ($v->tournament_id != $previousTournamentId) {
-				$placesArray[$v->tournament_id][$v->place] = $v->name;
+		if ($rows) {
+			foreach($rows as $v) {
+				if ($v->tournament_id != $previousTournamentId) {
+					$this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
+				}
 			}
 		}
-		
-		$this->teamsPlaces = $placesArray;
-		
-		$this->eventDates[1] = '01.02.2014';
-		$this->eventDates[2] = '29.03.2014';
-		$this->eventDates[3] = '10.05.2014';
-		$this->eventDates[4] = '14.06.2014';
 		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
@@ -84,8 +124,14 @@ class leagueoflegends
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val2'])) {
-			$this->getTournamentData((int)$_GET['val2']);
+		if (isset($_GET['val3']) && $_GET['val3'] == 'fight') {
+			$this->fightPage();
+		}
+		else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
+			$this->participantPage();
+		}
+        else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
+			$this->getTournamentData($_GET['val2']);
 		}
 		else {
 			$this->getTournamentList();
