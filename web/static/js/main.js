@@ -3,7 +3,7 @@ $('.bx-wrapper').bxSlider({
 	autoHover: true,
 	mode: 'fade',
 	speed: 2000,
-	pause: 8000
+	pause: 4000
 });
 
 $('.languages a').on('click', function() {
