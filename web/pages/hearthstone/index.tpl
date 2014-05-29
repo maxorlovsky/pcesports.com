@@ -6,10 +6,10 @@
             <h1 class="bordered">Hearthstone <?=t('tournament_list')?></h1>
         </div>
         
-        <? foreach($this->tournamentData as $k => $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
+        <? foreach($this->tournamentData as $v) { ?>
+        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$v['name']?>">
             <div class="left-part">
-                <div class="title"><?=t('tournament')?> #<?=$k?></div>
+                <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 512 <?=t('participants')?></div>
             </div>
             

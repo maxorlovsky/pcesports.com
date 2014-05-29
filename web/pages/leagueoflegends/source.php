@@ -39,22 +39,6 @@ class leagueoflegends extends System
 				'WHERE `t`.`game` = "lol" AND `t`.`approved` = 1 AND `t`.`tournament_id` = '.(int)$this->pickedTournament.' AND `t`.`deleted` = 0 '.
 				'ORDER BY `t`.`id` ASC, `p`.`player_num` ASC'
 			);
-
-			$this->participants = $rows;
-			
-			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
-		}
-		else {
-			include_once  _cfg('pages').'/404/error.tpl';
-		}
-        
-		/*if (file_exists(_cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl')) {
-			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
-				'FROM `teams` AS `t` '.
-				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.
-				'WHERE `t`.`game` = "lol" AND `t`.`approved` = 1 AND `t`.`tournament_id` = '.(int)$id.' AND `t`.`deleted` = 0 '.
-				'ORDER BY `t`.`id` ASC, `p`.`player_num` ASC'
-			);
 			
 			$participants = array();
 			$i = 0 ;
@@ -69,12 +53,11 @@ class leagueoflegends extends System
 
 			$this->participants = $participants;
 			
-			include_once _cfg('pages').'/'.get_class().'/tournament-'.$id.'.tpl';
-			include_once _cfg('pages').'/'.get_class().'/footer.tpl';
+			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 		}
 		else {
 			include_once  _cfg('pages').'/404/error.tpl';
-		}*/
+		}
 	}
 	
 	public function getTournamentList() {
@@ -85,7 +68,7 @@ class leagueoflegends extends System
 			'ORDER BY `id` DESC'
 		);
 		foreach($rows as $v) {
-			$this->tournamentData[$v->id] = (array)$v;
+			$this->tournamentData[$v->name] = (array)$v;
 		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.

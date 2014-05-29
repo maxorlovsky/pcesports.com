@@ -1,6 +1,6 @@
 $('.bx-wrapper').bxSlider({
 	auto: true,
-	autoDelay: 8000,
+	autoHover: true,
 	mode: 'fade',
 	speed: 2000,
 	pause: 8000

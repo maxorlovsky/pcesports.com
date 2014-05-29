@@ -251,7 +251,7 @@ class hearthstone extends System
 			'ORDER BY `id` DESC'
 		);
 		foreach($rows as $v) {
-			$this->tournamentData[$v->id] = (array)$v;
+			$this->tournamentData[$v->name] = (array)$v;
 		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
