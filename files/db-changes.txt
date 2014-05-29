@@ -1,6 +1,10 @@
 # DROP TABLE `wp_commentmeta`, `wp_comments`, `wp_links`, `wp_options`, `wp_postmeta`, `wp_posts`, `wp_terms`, `wp_term_relationships`, `wp_term_taxonomy`, `wp_usermeta`, `wp_users`;
 # NOT USE UNTIL RIOT APPROVAL!!
 
+# 29.05.2014
+ALTER TABLE  `tournaments` ADD  `time` VARCHAR( 20 ) NULL AFTER  `dates`;
+ALTER TABLE  `tournaments` CHANGE  `status`  `status` ENUM(  'Ended',  'Registration',  'Live',  'On hold', 'Start' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
 # 28.05.2014 - cms update
 ALTER TABLE  `tm_settings` ADD  `field` VARCHAR( 99 ) NULL ,
 ADD  `type` ENUM(  'text',  'checkbox', 'level' ) NOT NULL DEFAULT  'text',

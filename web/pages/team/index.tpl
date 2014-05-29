@@ -42,16 +42,16 @@
             	<div class="role">Co-Founder & Shoutcasters chief</div>
             </div>
             <div class="team-user">
-                <div class="name">Serge "grobovsky" Pavlov</div>
-                <div class="role">Communications manager</div>
-            </div>
-            <div class="team-user">
-            	<div class="name">Viktor "Angel-ada" Morozov</div>
+            	<div class="name">Victor "Angel-ada" Morozov</div>
             	<div class="role">Master adviser</div>
             </div>
             <div class="team-user">
             	<div class="name">Anya "AnyaTheEagle" Orlovsky</div>
             	<div class="role">Graphic designer & Master-flomaster</div>
+            </div>
+            <div class="team-user">
+                <div class="name">Serge "grobovsky" Pavlov</div>
+                <div class="role">Communications manager</div>
             </div>
             <div class="team-user">
             	<div class="name">art9393</div>

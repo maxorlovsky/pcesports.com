@@ -209,11 +209,11 @@ class Ajax extends System
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
     	$row = Db::fetchRow('SELECT * FROM `players` WHERE '.
-    		' `tournament_id` = 4 AND '.
-    		' `name` = "'.Db::escape($post['battletag']).'" AND '.
-    		' `game` = "hs" AND '.
-    		' `approved` = 1 AND '.
-    		' `deleted` = 0'
+    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
+    		'`name` = "'.Db::escape($post['battletag']).'" AND '.
+    		'`game` = "hs" AND '.
+    		'`approved` = 1 AND '.
+    		'`deleted` = 0'
     	);
 
     	if (!$post['battletag']) {
@@ -253,7 +253,7 @@ class Ajax extends System
     		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
     		Db::query('INSERT INTO `teams` SET '.
 	    		' `game` = "hs", '.
-	    		' `tournament_id` = 4, '.
+	    		' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
 	    		' `timestamp` = NOW(), '.
 	    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
 	    		' `name` = "'.Db::escape($post['battletag']).'", '.
@@ -267,7 +267,7 @@ class Ajax extends System
     		Db::query(
     			'INSERT INTO `players` SET '.
     			' `game` = "hs", '.
-    			' `tournament_id` = 4, '.
+    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
     			' `team_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'

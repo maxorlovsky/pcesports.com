@@ -7,6 +7,7 @@ class System
     public $user;
     public $logged_in;
     public $links;
+    public $serverTimes = array();
     protected $userClass;
     
     public function __construct() {
@@ -79,34 +80,25 @@ class System
         else {
         	$this->page = 'home';
         }
-        //echo strtotime('07.06.2014 10:00:00');
-        $this->serverTimes = array(
-			array(
-        		'id'	=> 5,
-        		'name' 	=> 'Hearthstone',
-        		'status'=> t('registration_open'),
-        		'time' 	=> '1401433200',
-        	),
-        	array(
-        		'id'	=> 4,
-        		'name' 	=> 'League of Legends',
-        		'status'=> t('registration_open'),
-        		'time' 	=> '1401692400',
-        	),
-			array(
-        		'id'	=> 5,
-        		'name' 	=> 'Hearthstone',
-        		'status'=> t('start'),
-        		'time' 	=> '1402124400',
-        	),
-            array(
-            	'id'	=> 4,
-            	'name' 	=> 'League of Legends',
-            	'status'=> t('start'),
-            	'time' 	=> '1402729200',
-       		),
-        );
         
+        $rows = Db::fetchRows('SELECT * FROM `tournaments` '.
+            'ORDER BY `id` DESC'
+        );
+        foreach($rows as $v) {
+            $time = strtotime($v->dates.' '.$v->time);
+            
+            if ($time > (time() - 86400)) {
+                $statusString = str_replace(' ', '_', strtolower($v->status));
+                $this->serverTimes[$time] = array(
+                    'id'	=> $v->name,
+                    'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone'),
+                    'status'=> $statusString,
+                    'time' 	=> $time,
+                );
+            }
+        }
+        ksort($this->serverTimes);
+
         $this->logged_in = 0;
         
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {

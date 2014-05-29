@@ -7,14 +7,14 @@
         </div>
         
         <? foreach($this->tournamentData as $k => $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])!='ended'?'active-tournament':'ended-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
+        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$k?>">
             <div class="left-part">
                 <div class="title"><?=t('tournament')?> #<?=$k?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 512 <?=t('participants')?></div>
             </div>
             
             <div class="right-part">
-                <div class="status"><?=t(str_replace(' ','_',$v['status']))?></div>
+                <div class="status"><?=(strtolower($v['status'])=='ended'?t('ended'):t('active'))?></div>
                 <div class="event-date"><?=t('event_date')?>: <?=$v['dates']?></div>
                 <div class="event-date"><?=t('prize_pool')?>: <?=$v['prize']?></div>
             </div>

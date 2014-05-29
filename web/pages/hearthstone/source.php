@@ -247,6 +247,7 @@ class hearthstone extends System
 		$rows = Db::fetchRows('SELECT * '.
 			'FROM `tournaments` '.
 			'WHERE `game` = "hs" '.
+            'AND `status` != "Registration" '.
 			'ORDER BY `id` DESC'
 		);
 		foreach($rows as $v) {
