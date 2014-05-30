@@ -42,6 +42,7 @@
         </div>
         
         <div class="block-content tournament-rules">
+			<h1><?=t('specific_tournament_rules')?></h1>
             <?=t('hearthstone_tournament_information_'.$this->pickedTournament)?>
             <a href="<?=_cfg('href')?>/hearthstone"><?=t('global_tournament_rules')?></a>
         </div>
