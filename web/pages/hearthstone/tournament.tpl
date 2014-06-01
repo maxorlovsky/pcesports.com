@@ -21,7 +21,7 @@
 		
 		<div class="block-content">
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
-			<div class="hidden" id="join-form">
+			<div id="join-form">
 				<form id="da-form" method="post">
 					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>" />
 					<div id="battletag-msg" class="message hidden"></div>

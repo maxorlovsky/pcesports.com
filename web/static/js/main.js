@@ -180,7 +180,7 @@ function updateTimers() {
 		
 		returnString = '';
 		if (days > 0) {
-			returnString += days+' '+dayStr;
+			returnString += days+' '+dayStr+' ';
 			if (nobr != 1) {
 				returnString += '<br />';
 			}

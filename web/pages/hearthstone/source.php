@@ -139,18 +139,15 @@ class hearthstone extends System
 			'`t`.`deleted` = 0 AND '.
 			'`t`.`ended` = 0'
 		);
+		
 		if ($row && $row->approved == 0) {
 			//Not approved, registration open, approving and adding to brackets
 			$row->challonge_id = $this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;
-			
-			$_SESSION['participant'] = $row;
 		}
 		else if ($row && $row->approved == 1) {
 			$verified = 1;
-			
-			$_SESSION['participant'] = $row;
 		}
 		
 		if ($verified == 1) {

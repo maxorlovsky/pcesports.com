@@ -21,17 +21,26 @@
 		
 		<div class="block-content">
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
-			<!--<div class="hidden" id="join-form">
+			<div id="join-form">
 				<form id="da-form" method="post">
-					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>" />
-					<div id="battletag-msg" class="message hidden"></div>
+					<input type="text" name="team" placeholder="<?=t('team_name')?>" />
+					<div id="team-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<input type="text" name="email" placeholder="Email" />
 					<div id="email-msg" class="message hidden"></div>
+					<div class="clear"></div>
+					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)" />
+					<div id="mem1-msg" class="message hidden"></div>
+					<div class="clear"></div>
+					<? for($i=2;$i<=7;++$i) { ?>
+						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?>" />
+						<div id="mem<?=$i?>-msg" class="message hidden"></div>
+						<div class="clear"></div>
+					<? } ?>
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
-			</div>-->
+				<a href="javascript:void(0);" class="button" id="add-team"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
+			</div>
 		</div>
 	</div>
 	<? } ?>
@@ -111,6 +120,58 @@
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 
 <script>
+$('#add-team').on('click', function() {
+    if (formInProgress == 1) {
+        return false;
+    }
+    
+    var errRegistered = 0;
+    formInProgress = 1;
+    $('#da-form .message').hide();
+    $('#da-form .message').removeClass('error success');
+    $(this).addClass('alpha');
+    
+    var query = {
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            ajax: 'registerInLOL',
+            form: $('#da-form').serialize()
+        },
+        success: function(answer) {
+            $('#add-team').removeClass('alpha');
+            formInProgress = 0;
+            
+            if (answer.ok == 1) {
+                $('#register-url a').trigger('click');
+                $('#join-form').slideUp(1000, function() {
+                    $('.reg-completed').slideDown(1000);
+                });
+            }
+            else {
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('#'+k+'-msg').html(answ[1]);
+                    $('#'+k+'-msg').show();
+                    if (answ[0] == 1) {
+                        $('#'+k+'-msg').addClass('success');
+                    }
+                    else {
+                        $('#'+k+'-msg').addClass('error');
+                    }
+                });
+            }
+        },
+        error: function() {
+            $('#add-team').removeClass('alpha');
+            formInProgress = 0;
+            
+            alert('Something went wrong... Contact admin at info@pcesports.com');
+        }
+    }
+    ajax(query);
+});
+
 //challongeHeight
 //550 <24
 //950 >24

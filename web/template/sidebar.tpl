@@ -12,13 +12,30 @@
                 <h1 class="bordered"><?=t('panel')?> (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
             </div>
             
+			<? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
-                <?/*<li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="inactive confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>*/?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="Are you sure you want to leave the tournament?"><?=t('leave_tournament')?></a></li>
+				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
+				<? } else { ?>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+				<? } ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
             </ul>
+			<? } else { ?>
+			<ul class="panel-links">
+                <li><a href="<?=_cfg('href')?>/leagueoflegends/participant/"><?=t('information')?></a></li>
+				<li><a href="<?=_cfg('href')?>/leagueoflegends/participant/team" class="inactive"><?=t('edit_team')?></a></li>
+                <li><a href="<?=_cfg('href')?>/leagueoflegends/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+				<? if ($this->data->settings['tournament-start-lol'] == 1) {?>
+                <li><a href="<?=_cfg('href')?>/leagueoflegends/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
+				<? } else { ?>
+                <li><a href="<?=_cfg('href')?>/leagueoflegends/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+				<? } ?>
+                <li><a href="<?=_cfg('href')?>/leagueoflegends/participant/exit"><?=t('exit_panel')?></a></li>
+            </ul>
+			<? } ?>
         </div>
     <? } ?>
     

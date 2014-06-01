@@ -9,6 +9,7 @@ class Ajax extends System
 		'newsVote',
     	'submitContactForm',
     	'registerInHS',
+		'registerInLOL',
         'chat',
         'statusCheck',
         'uploadScreenshot',
@@ -282,6 +283,134 @@ class Ajax extends System
     		);
     	
     		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
+    }
+	
+	protected function registerInLOL($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+    	
+    	$battleTagBreakdown = explode('#', $post['battletag']);
+    	
+    	$row = Db::fetchRow('SELECT * FROM `players` WHERE '.
+    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
+    		'`name` = "'.Db::escape($post['battletag']).'" AND '.
+    		'`game` = "hs" AND '.
+    		'`approved` = 1 AND '.
+    		'`deleted` = 0'
+    	);
+
+    	if (!$post['team']) {
+    		$err['team'] = '0;'.t('field_empty');
+    	}
+		else if (strlen($post['team']) < 4) {
+			$err['team'] = '0;'.t('team_name_small');
+		}
+		else if (strlen($post['team']) > 60) {
+			$err['team'] = '0;'.t('team_name_big');
+		}
+		else {
+			$suc['team'] = '1;'.t('approved');
+		}
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;'.t('field_empty');
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;'.t('email_invalid');
+    	}
+    	else {
+    		$suc['email'] = '1;'.t('approved');
+    	}
+		
+		$players = array();
+		$checkForSame = array();
+		for($i=1;$i<=7;++$i) {
+			if (!$post['mem'.$i] && $i < 6) {
+				$err['mem'.$i] = '0;'.t('field_empty');    
+			}
+			else if ($post['mem'.$i]) {
+				$response = $this->runAPI('/euw/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
+				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
+					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
+					'WHERE '.
+					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
+					'`p`.`game` = "lol" AND '.
+					'`t`.`approved` = 1 AND '.
+					'`t`.`deleted` = 0'
+				);
+				if (!$response) {
+					$err['mem'.$i] = '0;'.t('summoner_not_found_euw');
+				}
+				else if ($response && $response->summonerLevel != 30) {
+					$err['mem'.$i] = '0;'.t('summoner_low_lvl');
+				}
+				else if (in_array($post['mem'.$i], $checkForSame)) {
+					$err['mem'.$i] = '0;'.t('same_summoner');
+				}
+				else if ($row) {
+					$err['mem'.$i] = '0;'.t('summoner_already_registered');
+				}
+				else {
+					$players[$i]['id'] = $response->id;
+					$players[$i]['name'] = $response->name;
+					$suc['mem'.$i] = '1;'.t('approved');
+				}
+				
+				$checkForSame[] = $post['mem'.$i];
+			}
+		}
+    	
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+    	
+    		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
+    		Db::query('INSERT INTO `teams` SET '.
+	    		'`game` = "lol", '.
+	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+	    		'`timestamp` = NOW(), '.
+	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`name` = "'.Db::escape($post['team']).'", '.
+	    		'`email` = "'.Db::escape($post['email']).'", '.
+	    		'`contact_info` = "'.Db::escape($team).'", '.
+	    		'`link` = "'.$code.'"'
+    		);
+    	
+    		$teamId = Db::lastId();
+			
+			foreach($players as $k => $v) {
+				Db::query(
+					'INSERT INTO `players` SET '.
+					' `game` = "lol", '.
+					' `tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+					' `team_id` = '.(int)$teamId.', '.
+					' `name` = "'.Db::escape($v['name']).'", '.
+					' `player_num` = "'.(int)$k.'", '.
+					' `player_id` = "'.(int)$v['id'].'"'
+				);
+			}
+    		
+    		$text = Template::getMailTemplate('reg-lol-team');
+    	
+    		$text = str_replace(
+    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends', _cfg('url')),
+    			$text
+    		);
+    	
+    		$this->sendMail($post['email'], 'Pentaclick League of Legends tournament participation', $text);
     	}
     	 
     	return json_encode($answer);
