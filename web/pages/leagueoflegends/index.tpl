@@ -10,7 +10,7 @@
         <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$v['name']?>">
             <div class="left-part">
                 <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
-                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 512 <?=t('participants')?></div>
+                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 128 <?=t('participants')?></div>
             </div>
             
             <div class="right-part">
