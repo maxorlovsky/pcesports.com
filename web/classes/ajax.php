@@ -293,12 +293,10 @@ class Ajax extends System
     	$suc = array();
     	parse_str($data['form'], $post);
     	
-    	$battleTagBreakdown = explode('#', $post['battletag']);
-    	
-    	$row = Db::fetchRow('SELECT * FROM `players` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
-    		'`name` = "'.Db::escape($post['battletag']).'" AND '.
-    		'`game` = "hs" AND '.
+    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
+    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+    		'`name` = "'.Db::escape($post['team']).'" AND '.
+    		'`game` = "lol" AND '.
     		'`approved` = 1 AND '.
     		'`deleted` = 0'
     	);
@@ -312,6 +310,9 @@ class Ajax extends System
 		else if (strlen($post['team']) > 60) {
 			$err['team'] = '0;'.t('team_name_big');
 		}
+        else if ($row) {
+            $err['team'] = '0;'.t('team_name_taken');
+        }
 		else {
 			$suc['team'] = '1;'.t('approved');
 		}

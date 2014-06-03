@@ -150,9 +150,18 @@ class leagueoflegends extends System
 				break;
 			}
 		}
+        
+        //Cleaning up duplicates
+        Db::query('UPDATE `teams` '.
+            'SET `deleted` = 1 '.
+            'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
+            'AND `game` = "lol" '.
+            'AND `id` != '.$row->id.' '.
+            'AND `name` = "'.Db::escape($row->name).'" '
+        );
 		
 		$this->sendMail('info@pcesports.com',
-		'Tean added. Pentaclick eSports.',
+		'Team added. Pentaclick eSports.',
 		'Team was added!!!<br />
     	Date: '.date('d/m/Y H:i:s').'<br />
 		Team: <b>'.$row->name.'</b><br>
