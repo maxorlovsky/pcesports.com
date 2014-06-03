@@ -63,7 +63,7 @@ case 'prod':
 case 'test':
 	// DB config
 	$cfg['dbHost'] ='127.0.0.1';
-	$cfg['dbBase'] ='pentaclick_test';
+	$cfg['dbBase'] ='pentaclick_dev';
 	$cfg['dbUser'] ='pcusertest';
 	$cfg['dbPass'] ='s12WD@#$asdaAD2';
 	$cfg['dbPort'] =3306;
@@ -90,8 +90,8 @@ case 'dev':
 	// DB config
     $cfg['dbHost'] ='77.93.30.172';
     $cfg['dbBase'] ='pentaclick_dev';
-    $cfg['dbUser'] ='pcuserdev';
-    $cfg['dbPass'] ='d9829*d@)09aSJD22@';
+    $cfg['dbUser'] ='pcusertest';
+    $cfg['dbPass'] ='s12WD@#$asdaAD2';
     $cfg['dbPort'] =3306;
     
     //Admin email (in case of errors)
