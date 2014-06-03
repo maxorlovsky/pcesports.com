@@ -387,6 +387,7 @@ class System
                     $cronClass = new Cron();
                     $cronClass->cleanImagesTmp();
                     $cronClass->updateChallongeMatches();
+                    $cronClass->sendNotifications();
                 }
                 else if ($_GET['val1'] == 'emails') {
                     /*$rows = Db::fetchRows('SELECT `email` FROM `teams` WHERE `game` = "hs" AND `tournament_id` = 4 AND `approved` = 1');

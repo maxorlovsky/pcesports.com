@@ -1,6 +1,16 @@
 # DROP TABLE `wp_commentmeta`, `wp_comments`, `wp_links`, `wp_options`, `wp_postmeta`, `wp_posts`, `wp_terms`, `wp_term_relationships`, `wp_term_taxonomy`, `wp_usermeta`, `wp_users`;
 # NOT USE UNTIL RIOT APPROVAL!!
 
+# 03.06.2014
+CREATE TABLE `notifications` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`game` ENUM('lol', 'hs') NOT NULL ,
+`tournament_id` INT UNSIGNED NOT NULL ,
+`delivered` TINYINT( 1 ) UNSIGNED NOT NULL ,
+INDEX (  `game` ,  `tournament_id` )
+) ENGINE = INNODB;
+ALTER TABLE  `notifications` CHANGE  `tournament_id`  `tournament_name` VARCHAR( 50 ) NOT NULL;
+
 # 29.05.2014
 ALTER TABLE  `tournaments` ADD  `time` VARCHAR( 20 ) NULL AFTER  `dates`;
 ALTER TABLE  `tournaments` CHANGE  `status`  `status` ENUM(  'Ended',  'Registration',  'Live',  'On hold', 'Start' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
