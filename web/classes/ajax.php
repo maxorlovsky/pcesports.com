@@ -209,7 +209,7 @@ class Ajax extends System
     	
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
-    	$row = Db::fetchRow('SELECT * FROM `players` WHERE '.
+    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
     		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.

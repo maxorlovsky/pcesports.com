@@ -140,13 +140,13 @@ class hearthstone extends System
 			'`t`.`ended` = 0'
 		);
 		
-		if ($row && $row->approved == 0) {
+		if ($row && $row->approved == 0 && $row->deleted == 0) {
 			//Not approved, registration open, approving and adding to brackets
 			$row->challonge_id = $this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;
 		}
-		else if ($row && $row->approved == 1) {
+		else if ($row && $row->approved == 1 && $row->deleted == 0) {
 			$verified = 1;
 		}
 		
