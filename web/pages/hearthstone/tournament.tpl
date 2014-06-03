@@ -143,13 +143,9 @@ $('#add-player').on('click', function() {
     ajax(query);
 });
 
-//challongeHeight
-//550 <24
-//950 >24
-
 var participantsNumber = <?=$participantsCount?>;
 
-if (participantsNumber > 24) {
+if (participantsNumber > 28) {
     challongeHeight = 950;
 }
 else {

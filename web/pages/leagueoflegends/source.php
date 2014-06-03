@@ -39,80 +39,11 @@ class leagueoflegends extends System
 		}
 		
 		if (isset($_GET['val3']) && $_GET['val3'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
-			Db::query('UPDATE `teams` SET `deleted` = 1 '.
-			'WHERE `game` = "lol" AND '.
-			'`id` = '.(int)$_SESSION['participant']->id.' AND '. 
-			'`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
-			
-			$apiArray = array(
-				'_method' => 'delete',
-			);
-			$this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-            //$this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-			
-			$this->sendMail('info@pcesports.com',
-			'Tean deleted. Pentaclick eSports.',
-			'Team was deleted!!!<br />
-            Date: '.date('d/m/Y H:i:s').'<br />
-			Team: <b>'.$_SESSION['participant']->name.'</b><br>
-            IP: '.$_SERVER['REMOTE_ADDR']);
-			
-			unset($_SESSION['participant']);
-			
-			go(_cfg('href').'/leagueoflegends');
+            $this->leave();
 		}
 		
 		if (isset($_GET['val3']) && $_GET['val3'] == 'surrender' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
-			$row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
-				'FROM `fights` AS `f` '.
-				'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-				'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-				'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
-				'AND `f`.`done` = 0 '
-			);
-			
-			if (!$row) {
-				go(_cfg('href').'/leagueoflegends');
-			}
-			
-			if ($row->player1_id == $_SESSION['participant']->challonge_id) {
-				$winner = $row->player2_id;
-				$scores = '0-1';
-			}
-			else {
-				$winner = $row->player1_id;
-				$scores = '1-0';
-			}
-			
-			$apiArray = array(
-				'_method' => 'put',
-				'match_id' => $row->match_id,
-				'match[scores_csv]' => $scores,
-				'match[winner_id]' => $winner,
-			);
-			$this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
-            //$this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
-			
-			Db::query('UPDATE `teams` SET `ended` = 1 '.
-				'WHERE `game` = "lol" AND '.
-				'`id` = '.(int)$_SESSION['participant']->id.' AND '. 
-				'`link` = "'.Db::escape($_SESSION['participant']->link).'" '
-			);
-			
-			Db::query('UPDATE `fights` SET `done` = 1 '.
-				'WHERE `match_id` = '.(int)$row->match_id.' '
-			);
-			
-			$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
-                
-			$file = fopen($fileName, 'a');
-			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
-			fwrite($file, htmlspecialchars($content));
-			fclose($file);
-			
-			unset($_SESSION['participant']);
-			
-			go(_cfg('href').'/leagueoflegends');
+            $this->surrender();
 		}
 		
 		if (!isset($_GET['val4']) && !$_GET['val4'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
@@ -190,12 +121,21 @@ class leagueoflegends extends System
 		);
 		
 		//Adding team to Challonge bracket
-		$this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants.post', $apiArray);
-        //$this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        }
 		
 		//Registering ID, becaus Challonge idiots not giving an answer with ID
-		$answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants.json');
-        //$answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        if (_cfg('env') == 'prod') {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants.json');
+        }
+        else {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        }
+        
 		array_reverse($answer, true);
 		
 		foreach($answer as $f) {
@@ -312,4 +252,89 @@ class leagueoflegends extends System
 			$this->getTournamentList();
 		}
 	}
+    
+    protected function surrender() {
+        $row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND `f`.`done` = 0 '
+        );
+        
+        if (!$row) {
+            go(_cfg('href').'/leagueoflegends');
+        }
+        
+        if ($row->player1_id == $_SESSION['participant']->challonge_id) {
+            $winner = $row->player2_id;
+            $scores = '0-1';
+        }
+        else {
+            $winner = $row->player1_id;
+            $scores = '1-0';
+        }
+        
+        $apiArray = array(
+            '_method' => 'put',
+            'match_id' => $row->match_id,
+            'match[scores_csv]' => $scores,
+            'match[winner_id]' => $winner,
+        );
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
+        }
+        
+        Db::query('UPDATE `teams` SET `ended` = 1 '.
+            'WHERE `game` = "lol" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
+        );
+        
+        Db::query('UPDATE `fights` SET `done` = 1 '.
+            'WHERE `match_id` = '.(int)$row->match_id.' '
+        );
+        
+        $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+        $file = fopen($fileName, 'a');
+        $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
+        fwrite($file, htmlspecialchars($content));
+        fclose($file);
+        
+        unset($_SESSION['participant']);
+        
+        go(_cfg('href').'/leagueoflegends');
+    }
+    
+    protected function leave() {
+        Db::query('UPDATE `teams` SET `deleted` = 1 '.
+        'WHERE `game` = "lol" AND '.
+        '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+        '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
+        
+        $apiArray = array(
+            '_method' => 'delete',
+        );
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+        }
+        
+        $this->sendMail('info@pcesports.com',
+        'Tean deleted. Pentaclick eSports.',
+        'Team was deleted!!!<br />
+        Date: '.date('d/m/Y H:i:s').'<br />
+        Team: <b>'.$_SESSION['participant']->name.'</b><br>
+        IP: '.$_SERVER['REMOTE_ADDR']);
+        
+        unset($_SESSION['participant']);
+        
+        go(_cfg('href').'/leagueoflegends');
+    }
 }
