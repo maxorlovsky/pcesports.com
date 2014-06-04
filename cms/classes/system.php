@@ -158,11 +158,11 @@ class System
     	
         $mailData = 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
         $mailData .= 'Subject: =?UTF-8?B?'.base64_encode($subject). "=?=\r\n";
-        $mailData .= 'Reply-To: '._cfg('smtpMailName'). "\r\n";
+        $mailData .= 'Reply-To: '._cfg('smtpMailFrom'). "\r\n";
         $mailData .= 'MIME-Version: 1.0'."\r\n";
         $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
         $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n";
-        $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailName').'>'."\r\n";
+        $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailFrom').'>'."\r\n";
         $mailData .= 'To: '.$email.' <'.$email.'>'."\r\n";
         $mailData .= 'X-Priority: 3'."\r\n\r\n";
         
