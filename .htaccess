@@ -22,7 +22,6 @@ RewriteBase /
 RewriteRule ^web/static/? - [L]
 RewriteRule ^cms/static/? - [L]
 RewriteRule ^web/uploads/? - [L]
-RewriteRule ^old-web/? - [L]
 RewriteRule ^screenshots/? - [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
