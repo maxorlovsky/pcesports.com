@@ -172,13 +172,12 @@ $('#add-team').on('click', function() {
     ajax(query);
 });
 
-//challongeHeight
-//550 <28
-//950 <*
-
 var participantsNumber = <?=$participantsCount?>;
 
-if (participantsNumber > 28) {
+if (participantsNumber > 50) {
+    challongeHeight = 1750;
+}
+else if (participantsNumber > 25) {
     challongeHeight = 950;
 }
 else {
