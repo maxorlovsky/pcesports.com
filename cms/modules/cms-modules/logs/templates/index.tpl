@@ -11,8 +11,8 @@
     <tr>
         <td width="10%"><b><?=at('module')?></b></td>
         <td width="10%"><b><?=at('type')?></b></td>
-        <td width="10%"><b><?=at('user')?></b></td>
-        <td width="20%"><b><?=at('date')?></b></td>
+        <td width="15%"><b><?=at('user')?></b></td>
+        <td width="15%"><b><?=at('date')?></b></td>
         <td width="10%"><b><?=at('ip')?></b></td>
         <td width="40%"><b><?=at('info')?></b></td>
     </tr>

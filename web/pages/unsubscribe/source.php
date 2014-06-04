@@ -25,4 +25,11 @@ class unsubscribe
         
         return false;
     }
+    
+    public static function getSeo() {
+		$seo = new stdClass();
+		$seo->title = 'Unsubscribe';
+		
+		return $seo;
+	}
 }

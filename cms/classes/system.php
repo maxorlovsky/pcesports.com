@@ -305,8 +305,7 @@ class System
         if (!file_exists($directory) && !is_dir($directory)) {
             exit('Directory does not exists');
         }
-    
-        $fileList = array();
+
         $handler = opendir($directory);
         $ignoreFiles = array('system.php', '.svn');
         while($file = readdir($handler)) {

@@ -335,7 +335,7 @@ function showPage(page) {
 			$('.sublinks_menu').find('a').removeClass('active');
 			$('#link_'+activeLink).addClass('active');
 			$('.content').html(data);
-			$('.content textarea').each(function(){
+			$('.content textarea:not(.noEditor)').each(function(){
 				tinyMCE.execCommand('mceAddControl', false, $(this).attr('id'));
 			});
 			
@@ -482,6 +482,7 @@ tinyMCE.init({
     relative_urls : false,
     remove_script_host : false,
     document_base_url : site+"/web/",
+    editor_deselector : "noEditor",
 
 	// Drop lists for link/image/media/template dialogs
     content_css : site+"/cms/static/css/tinymce.css",

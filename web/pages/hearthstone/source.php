@@ -159,12 +159,12 @@ class hearthstone extends System
             'AND `name` = "'.Db::escape($row->name).'" '
         );
 		
-		$this->sendMail('info@pcesports.com',
+		/*$this->sendMail('info@pcesports.com',
 		'Player added. PentaClick eSports.',
 		'Participant was added!!!<br />
     	Date: '.date('d/m/Y H:i:s').'<br />
 		BattleTag: <b>'.$row->name.'</b><br>
-    	IP: '.$_SERVER['REMOTE_ADDR']);
+    	IP: '.$_SERVER['REMOTE_ADDR']);*/
 		
 		return $challonge_id;
 	}
