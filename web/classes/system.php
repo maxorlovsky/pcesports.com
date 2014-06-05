@@ -397,6 +397,89 @@ class System
 					$fopen = fopen($file, 'w');
 					fwrite($fopen, $data);
 					fclose($fopen);
+					
+					//generate new code:
+					/*$array = array(
+						'name' => 'Pentaclick tournament',
+						'extra' => 2342,
+						'password' => md5('randomblaberish'),
+						'report' => "http://test.pcesports.com/run/riotcode/",
+					);
+					$code = 'pvpnet://lol/customgame/joinorcreate/map1/pick6/team5/specALL/';
+					$code .= base64_encode(json_encode($array));
+					echo $code;*/
+					
+					//answer:
+					/*{
+						"version":1,
+						"tournamentMetaData": {
+							"passbackDataPacket":"2342",
+							"passbackUrl":"http://test.pcesports.com/run/riotcode/"
+						},
+						"gameId":854921529,
+						"gameLength":993,
+						"gameType":"CUSTOM_GAME",
+						"ranked":false,
+						"invalid":false,
+						"gameMode":"CLASSIC",
+						"teamPlayerParticipantsSummaries": [{
+								"level":30,
+								"teamId":100,
+								"isWinningTeam":true,
+								"leaver":false,
+								"summonerName":"Maxtream",
+								"skinName":"Lucian",
+								"profileIconId":10,
+								"botPlayer":false,
+								"spell1Id":4,
+								"spell2Id":21,
+								"statistics":[
+								{"value":1001,"statTypeName":"ITEM4","m_nDataVersion":0},
+								{"value":0,"statTypeName":"TRUE_DAMAGE_TAKEN","m_nDataVersion":0},
+								{"value":13727,"statTypeName":"TOTAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},
+								{"value":3072,"statTypeName":"ITEM5","m_nDataVersion":0},
+								{"value":2003,"statTypeName":"ITEM0","m_nDataVersion":0},
+								{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE","m_nDataVersion":0},
+								{"value":1055,"statTypeName":"ITEM2","m_nDataVersion":0},
+								{"value":355,"statTypeName":"MAGIC_DAMAGE_TAKEN","m_nDataVersion":0},
+								{"value":1,"statTypeName":"WIN","m_nDataVersion":0},
+								{"value":9961,"statTypeName":"MAGIC_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},
+								{"value":3340,"statTypeName":"ITEM6","m_nDataVersion":0},
+								{"value":0,"statTypeName":"NEUTRAL_MINIONS_KILLED_YOUR_JUNGLE","m_nDataVersion":0},
+								{"value":87106,"statTypeName":"PHYSICAL_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},
+								{"value":135,"statTypeName":"MINIONS_KILLED","m_nDataVersion":0},
+								{"value":0,"statTypeName":"ASSISTS","m_nDataVersion":0},
+								{"value":97068,"statTypeName":"TOTAL_DAMAGE_DEALT","m_nDataVersion":0},
+								{"value":1042,"statTypeName":"ITEM1","m_nDataVersion":0},
+								{"value":0,"statTypeName":"TRUE_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},
+								{"value":7657,"statTypeName":"TOTAL_DAMAGE_TAKEN","m_nDataVersion":0},
+								{"value":0,"statTypeName":"TOTAL_TIME_CROWD_CONTROL_DEALT","m_nDataVersion":0},
+								{"value":12721,"statTypeName":"PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},
+								{"value":0,"statTypeName":"LARGEST_CRITICAL_STRIKE","m_nDataVersion":0},
+								{"value":1,"statTypeName":"WARD_PLACED","m_nDataVersion":0},
+								{"value":0,"statTypeName":"SIGHT_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},
+								{"value":0,"statTypeName":"WARD_KILLED","m_nDataVersion":0},
+								{"value":1,"statTypeName":"LARGEST_MULTI_KILL","m_nDataVersion":0},
+								{"value":0,"statTypeName":"TOTAL_TIME_SPENT_DEAD","m_nDataVersion":0},
+								{"value":1495,"statTypeName":"TOTAL_HEAL","m_nDataVersion":0},
+								{"value":1,"statTypeName":"BARRACKS_KILLED","m_nDataVersion":0},
+								{"value":1055,"statTypeName":"ITEM3","m_nDataVersion":0},
+								{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED","m_nDataVersion":0},
+								{"value":7302,"statTypeName":"PHYSICAL_DAMAGE_TAKEN","m_nDataVersion":0},
+								{"value":0,"statTypeName":"TRUE_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},
+								{"value":14,"statTypeName":"LEVEL","m_nDataVersion":0},
+								{"value":7790,"statTypeName":"GOLD_EARNED","m_nDataVersion":0},
+								{"value":7,"statTypeName":"LARGEST_KILLING_SPREE","m_nDataVersion":0},
+								{"value":0,"statTypeName":"VISION_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},
+								{"value":1006,"statTypeName":"MAGIC_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},
+								{"value":5,"statTypeName":"TURRETS_KILLED","m_nDataVersion":0},
+								{"value":7,"statTypeName":"CHAMPIONS_KILLED","m_nDataVersion":0},
+								{"value":0,"statTypeName":"NUM_DEATHS","m_nDataVersion":0}
+							]
+						}],
+						"otherTeamPlayerParticipantsSummaries":[]
+
+						}*/
                 }
                 else {
                     exit('Run command error');
