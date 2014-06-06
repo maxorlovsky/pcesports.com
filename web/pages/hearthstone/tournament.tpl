@@ -146,7 +146,7 @@ $('#add-player').on('click', function() {
 var participantsNumber = <?=$participantsCount?>;
 
 if (participantsNumber > 50) {
-    challongeHeight = 1750;
+    challongeHeight = 1800;
 }
 else if (participantsNumber > 25) {
     challongeHeight = 950;
