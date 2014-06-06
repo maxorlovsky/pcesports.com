@@ -51,16 +51,18 @@ class Emails extends System
                 ),
     			array(
                     _cfg('href').'unsubscribe/'.$v->unsublink,
-                    _cfg('url'),
-                    _cfg('url').'/en/hearthstone',
-                    _cfg('url').'/en/leagueoflegends',
+                    _cfg('site'),
+                    _cfg('site').'/en/hearthstone',
+                    _cfg('site').'/en/leagueoflegends',
                     $v->code,
                     $v->teamId,
                     $v->name,
                 ),
     			$form['text']
     		);
-            $this->sendMail($v->email, $form['title'], $text);
+            
+            $this->sendMail('max.orlovsky@gmail.com', $form['title'], $text);
+            //$this->sendMail($v->email, $form['title'], $text);
             
             ++$i;
             if ($i >= 3) {
