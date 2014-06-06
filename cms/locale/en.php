@@ -19,7 +19,7 @@ $astr['settings']='Settings';
 $astr['accounts']='Accounts';
 $astr['denied_access_level']='Access denied. Your level is not allowing you to edit data.';
 $astr['page_not_found']='Page not found, please contact your administrator.';
-$astr['session_timeout']='Session time out, please relogin.';
+$astr['session_timeout']='Session time out, please re-login.';
 $astr['login_pass_incorrect']='Login/password is incorrect.';
 $astr['page_loading_success']='Page loading type updated';
 $astr['site_name']='Site name';
@@ -34,16 +34,16 @@ $astr['edit']='Edit';
 //--------------------------------------------------//
 
 //Source language strings
-$astr['setting_update_success']='Setting updated succesfully';
+$astr['setting_update_success']='Setting updated successfully';
 $astr['admin_was_deleted']='Admin was deleted.';
 $astr['cannot_delete_admin']='You cannot delete Main Admin. Please contact developer of this CMS.';
 $astr['info_updated']='Information updated';
 $astr['new_admin_added']='New admin added';
 $astr['banner_suc_deleted']='Banner deleted';
-$astr['banner_suc_updated']='Banner updated succesfully';
-$astr['banner_suc_added']='Banner added succesfully';
+$astr['banner_suc_updated']='Banner updated successfully';
+$astr['banner_suc_added']='Banner added successfully';
 $astr['load_bannerimg_err']='Please load image for banner';
-$astr['keyw_suc_added']='Keywords/Description page addded';
+$astr['keyw_suc_added']='Keywords/Description page added';
 $astr['key_suc_updated']='Keywords/Description page updated';
 $astr['language_suc_deleted']='Language deleted';
 $astr['cannot_delete_main_lang']='You can not delete this language, it is the main language of the website. To be able/delete main language please contact CMS developer.';
@@ -133,7 +133,7 @@ $astr['installed_modules']='Installed Modules';
 $astr['level_required']='Access level required';
 $astr['actions']='Actions';
 $astr['module_name']='Module name';
-$astr['controller_not_exists']='Controler does not exist';
+$astr['controller_not_exists']='Controller does not exist';
 $astr['dashboard'] = 'Dashboard';
 
 $astr['cms_up_to_date'] = 'Your CMS version is up to date';
@@ -150,6 +150,22 @@ $astr['date'] = 'Date';
 $astr['ip'] = 'IP';
 $astr['info'] = 'Info';
 $astr['account'] = 'Account';
+
+$astr['cms_outdated'] = 'Your CMS version is outdated';
+$astr['cms_information'] = 'CMS Information';
+$astr['cms_latest_changes'] = 'CMS latest changes';
+$astr['view_full'] = 'View full';
+$astr['logged_in_as'] = 'Logged in as';
+$astr['admin_email'] = 'Admin Email';
+$astr['you_ver_of_cms'] = 'Your version of CMS';
+$astr['latest_ver_cms'] = 'Latest version of CMS';
+$astr['update'] = 'Update';
+$astr['cms_detailed_info'] = 'TheMages CMS created by Max &amp; Anya Orlovsky<br />If you\'re interested in additional development or modules, feel free to contact us.';
+$astr[''] = '';
+$astr[''] = '';
+$astr[''] = '';
+$astr[''] = '';
+
 //--------------------------------------------------//
 
 //Other language strings
@@ -160,8 +176,8 @@ $astr['disabled_demo']='Disabled in demo';
 
 //Hint language strings
 $astr['hint_site_name']='By clicking this field you can edit site name.';
-$astr['hint_site_description']='By clicking this field you could edit/add website description,<br />this option helps to improve website advertisment.';
-$astr['hint_site_keywords']='By clicking this field you could edit/add website keywords,<br />this option helps to improve website advertisment.';
+$astr['hint_site_description']='By clicking this field you could edit/add website description,<br />this option helps to improve website advertisement.';
+$astr['hint_site_keywords']='By clicking this field you could edit/add website keywords,<br />this option helps to improve website advertisement.';
 $astr['hint_page_loading_type']='Normal=Basic page loading, with refresh of all page.<br />AJAX=Advanced page loading, without refresh of all page.';
 $astr['hint_admin_language']='You can set language for admin panel for your account';
 $astr['hint_site_prefix']='Do not change this field value if you do not understand what is it for. You can "brake" whole site.';

@@ -185,12 +185,12 @@ function t($key) {
 function at($key = '') {
 	global $astr;
     
-    if (!$key) {
-        return $astr;
-    }
-	else if ($astr[$key]) {
+    if (isset($astr[$key]) && $astr[$key]) {
 	   return $astr[$key];
 	}
+    else {
+        return $key;
+    }
     
     return $key;
 }

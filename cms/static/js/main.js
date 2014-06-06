@@ -81,22 +81,25 @@ $(document).on('click', '.submitButton', function(){
 	ajax(query);
 });
 
+var blockHint = 0;
 $(document).on('mousemove', '.hint', function(event) {
-	msg = $(this).attr("name");
-	$('#hint').offset({ top: event.pageY-30, left: event.pageX+10 });
-	if ($('#hint').html != msg) {
-		$('#hint').html(msg);
-	}
-	if ($('#hint').is(':hidden')) {
-		$('#hint').show();
-	}
+    msg = $(this).attr("name");
+    $('#hint').offset({ top: event.pageY-30, left: event.pageX+10 });
+    if ($('#hint').html != msg) {
+        $('#hint').html(msg);
+    }
+    if (blockHint != 1 && $('#hint').is(':hidden')) {
+        $('#hint').show();
+    }
 }).on('mouseout', '.hint', function(){
 	$('#hint').offset({ top: 0, left: 0 });
 	$('#hint').hide();
 });
 
+
 $(document).on('click', 'a', function() {
-	$('#hint').hide();
+    blockHint = 1;
+    $('.hint').trigger('mouseout');
 	if ($('#submenu').is(':visible') && $(this).attr('id') != 'site_name_val') {
 		$('#submenu').slideUp('fast');
 	}
@@ -300,7 +303,7 @@ if ($('.content').length > 0) {
 
 function showPage(page) {
 	loadImg();
-	
+    
 	if (window.location.hash != page) {
 		window.location.hash = page;
 		return false;
@@ -330,6 +333,7 @@ function showPage(page) {
     		if (param[0] == '#aexit') {
 				go(_SITE+'/admin');
 			}
+            blockHint = 0;
 			$('#loading').fadeOut('fast');
 			$('nav').find('a').removeClass('active');
 			$('.sublinks_menu').find('a').removeClass('active');

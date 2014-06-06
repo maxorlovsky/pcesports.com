@@ -14,7 +14,7 @@ $astr['links']='Ссылки';
 $astr['mlinks']='Ссылки';
 $astr['strings']='Строки';
 $astr['settings']='Настройки';
-$astr['accounts']='Учётные записи';
+$astr['accounts']='Аккаунты';
 $astr['denied_access_level']='Доступ закрыт. Ваш уровень не позволяет редактировать данные на этой странице.';
 $astr['page_not_found']='Страница не найдена. Пожалуйста, свяжитесь с администратором.';
 $astr['session_timeout']='Сессия завершена, пожалуйста, зайдите в систему заново.';
@@ -129,6 +129,32 @@ $astr['actions']='Действия';
 $astr['module_name']='Название модуля';
 $astr['controller_not_exists']='Контролер не существует';
 $astr['dashboard'] = 'Консоль';
+
+$astr['cms_up_to_date'] = 'Ваша версия CMS обновлена до последней версии';
+$astr['email_empty'] = 'Поле Email пустое';
+$astr['email_incorrect'] = 'Email написан не верно';
+$astr['admin_email_success'] = 'Email обновлён';
+$astr['back'] = 'Назад';
+$astr['meta'] = 'Мета';
+$astr['email'] = 'Email';
+$astr['module'] = 'Модуль';
+$astr['type'] = 'Тип';
+$astr['user'] = 'Пользователь';
+$astr['date'] = 'Дата';
+$astr['ip'] = 'IP';
+$astr['info'] = 'Инфо';
+$astr['account'] = 'Аккаунт';
+
+$astr['cms_outdated'] = 'Ваша версия CMS устарела';
+$astr['cms_information'] = 'Информация CMS';
+$astr['cms_latest_changes'] = 'Последние обновления CMS';
+$astr['view_full'] = 'посмотреть полный';
+$astr['logged_in_as'] = 'Пользователь';
+$astr['admin_email'] = 'Email админа';
+$astr['you_ver_of_cms'] = 'Ваша версия CMS';
+$astr['latest_ver_cms'] = 'Последняя версия CMS';
+$astr['update'] = 'Обновить';
+$astr['cms_detailed_info'] = 'TheMages CMS создана Максом &amp; Аней Орловскими<br />Если вас интересует дополнительная разработка или модули, можете свободно связатся с нами.';
 //--------------------------------------------------//
 
 //Other language strings
