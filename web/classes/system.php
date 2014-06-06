@@ -513,7 +513,7 @@ class System
         
         $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
         $cfg['hssite'] = $cfg['href'].'/hearthstone';
-        $cfg['lolsite'] = $cfg['href'].'/league-of-legends';
+        $cfg['lolsite'] = $cfg['href'].'/leagueoflegends';
 
         return true;
     }

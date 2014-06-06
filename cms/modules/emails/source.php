@@ -40,8 +40,24 @@ class Emails extends System
         $i = 0;
         foreach($rows as $v) {
             $text = str_replace(
-    			array('%unsublink%', '%url%'),
-    			array(_cfg('href').'unsubscribe/'.$v->unsublink, _cfg('url')),
+    			array(
+                    '%unsublink%',
+                    '%url%',
+                    '%hsurl%',
+                    '%lolurl%',
+                    '%code%',
+                    '%teamId%',
+                    '%name%',
+                ),
+    			array(
+                    _cfg('href').'unsubscribe/'.$v->unsublink,
+                    _cfg('url'),
+                    _cfg('url').'/en/hearthstone',
+                    _cfg('url').'/en/leagueoflegends',
+                    $v->code,
+                    $v->teamId,
+                    $v->name,
+                ),
     			$form['text']
     		);
             $this->sendMail($v->email, $form['title'], $text);
