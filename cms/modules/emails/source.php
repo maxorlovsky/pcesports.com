@@ -61,8 +61,7 @@ class Emails extends System
     			$form['text']
     		);
             
-            $this->sendMail('max.orlovsky@gmail.com', $form['title'], $text);
-            //$this->sendMail($v->email, $form['title'], $text);
+            $this->sendMail($v->email, $form['title'], $text);
             
             ++$i;
             if ($i >= 3) {
