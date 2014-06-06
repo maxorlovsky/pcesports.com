@@ -1,5 +1,5 @@
 <?php
-//CMS TheMages v3
+//CMS TheMages v3.1
 //Credits (dev): MaxOrlovsky
 //Credits (design): MaxOrlovsky, AnyaOrlovsky
 

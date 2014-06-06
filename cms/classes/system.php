@@ -16,7 +16,7 @@ class System
     	$this->loadClasses();
     	
     	if ($status != 1) {
-    		return false;
+    		//return false;
     	}
 
         //Making a connection
@@ -120,6 +120,9 @@ class System
         	$this->data->modules = Db::fetchRows('SELECT * FROM `tm_modules`');
         	
         	$this->language = $this->user->language;
+        }
+        else {
+            $this->language = 'en';
         }
     }
     
@@ -338,9 +341,9 @@ class System
     
     protected function getStrings() {
         global $astr;
-    	
-        if ($this->logged_in) {
-        	require_once(_cfg('cmslocale').'/'.$this->user->language.'.php');
+        
+        if ($this->language) {
+        	require_once(_cfg('cmslocale').'/'.$this->language.'.php');
         }
         else {
         	require_once(_cfg('cmslocale').'/'._cfg('defaultLanguage').'.php');
