@@ -41,7 +41,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
 				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->top->views?></span> <?=t('views')?>, 
-				<span class="fb-comments-count" data-href="http://www.pcesports.com/en/news/<?=$this->news->top->id?>">0</span> <?=t('comments')?>
+				<span class="fb-comments-count" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->top->id?>">0</span> <?=t('comments')?>
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>
