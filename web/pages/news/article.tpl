@@ -28,6 +28,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
 				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->views?></span> <?=t('views')?>, 
+                <fb:comments-count href=<?=_cfg('site')?>/en/news/<?=$this->news->id?>>88</fb:comments-count>
 				<div class="fb-comments-count" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->id?>">0</div> <?=t('comments')?>
 			</div>
         	<div class="clear"></div>
