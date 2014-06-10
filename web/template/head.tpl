@@ -55,14 +55,6 @@
 <? if (_cfg('env') != 'dev') { ?>
 <div id="fb-root"></div>
 <script>
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '766575306708443',
-        xfbml      : true,
-        version    : 'v2.0'
-    });
-};
-
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
