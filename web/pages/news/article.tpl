@@ -28,15 +28,15 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
 				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->views?></span> <?=t('views')?>, 
-                <fb:comments-count href=<?=_cfg('site')?>/en/news/<?=$this->news->id?>>0</fb:comments-count>
-				<div class="fb-comments-count" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->id?>">0</div> <?=t('comments')?>
+                <fb:comments-count href=pcesports.com/en/news/<?=$this->news->id?>>0</fb:comments-count>
+				<div class="fb-comments-count" data-href="pcesports.com/en/news/<?=$this->news->id?>">0</div> <?=t('comments')?>
 			</div>
         	<div class="clear"></div>
         </div>
         <div class="block-divider"></div>
         <div class="comments">
         	<h2><?=t('leave_comment')?></h2>
-            <div class="fb-comments" data-href="<?=_cfg('site')?>/en/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+            <div class="fb-comments" data-href="pcesports.com/en/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
         	<!-- <div class="disabled">Disabled</div> -->
         </div>
     </div>
