@@ -172,7 +172,7 @@ class hearthstone extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament) {
+		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
 			$rows = Db::fetchRows('SELECT `name` '.
 				'FROM `teams` '.
 				'WHERE `game` = "hs" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.

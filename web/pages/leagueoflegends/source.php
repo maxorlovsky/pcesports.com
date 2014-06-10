@@ -173,7 +173,7 @@ class leagueoflegends extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament) {
+		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
                 'FROM `teams` AS `t` '.
 				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.

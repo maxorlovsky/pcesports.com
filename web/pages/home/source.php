@@ -8,7 +8,6 @@ class home
 	public function __construct($params = array()) {
 		
 		$this->slider = array(
-			array(_cfg('href').'/hearthstone/5', _cfg('img').'/poster-hs-5.jpg'),
 			array(_cfg('href').'/leagueoflegends/4', _cfg('img').'/poster-lol-4.jpg'),
 		);
 		
