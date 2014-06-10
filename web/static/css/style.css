@@ -424,6 +424,8 @@ footer .copyrights .devs:hover {
     font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
+    max-height: 48px;
+    overflow: hidden;
 }
 .news .small-block .info {
     color: #777;
