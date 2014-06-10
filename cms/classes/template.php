@@ -83,6 +83,12 @@ class Template extends System
     }
     
     private function loadCustomModule($data) {
+        foreach($this->data->modules as $v) {
+            if ($v->name == $data['page'] && $this->user->level < $v->level) {
+                return at('denied_access_level');
+            }
+        }
+        
     	$className = ucfirst($data['page']);
     	
     	if (!isset($data['var1']) || !$data['var1']) {

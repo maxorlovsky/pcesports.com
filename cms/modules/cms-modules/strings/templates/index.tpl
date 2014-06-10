@@ -24,7 +24,7 @@
                 ?>
                 <tr>
                     <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=$v->key?></a></td>
-                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=substr(t($v->value),0,100)?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=substr(strip_tags(t($v->value)),0,100)?></a></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a>
                         <? if ($v->status != 1) { ?> 

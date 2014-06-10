@@ -25,7 +25,9 @@
                 <div id="arrows"></div>
                 <div id="submenu">
                 <? foreach($this->data->modules as $v) { ?>
+                    <? if ($v->level <= $this->user->level) { ?>
                     <a id="cpage-<?=$v->name?>" class="pointer settings_div" href="<?=_cfg('site').'/admin/#'.$v->name?>"><span><?=ucfirst($v->name)?></span></a>
+                    <? } ?>
                 <? } ?>
                 </div>
             </div>
