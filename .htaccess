@@ -33,10 +33,10 @@ RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3 
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4&val4=$5 [QSA,L]
 
-<FilesMatch "\.(js|json)$">
-    <IfModule mod_headers.c>
-        Header set Access-Control-Allow-Origin "*"
-    </IfModule>
-</FilesMatch>
+#<FilesMatch "\.(js|json)$">
+#    <IfModule mod_headers.c>
+#        Header set Access-Control-Allow-Origin "*"
+#    </IfModule>
+#</FilesMatch>
 
 #RewriteRule ^p/([^/]*)/([^/]*)/([^/]*)/([^/]*)$ /?p=$1&val1=$2&val2=$3&val3=$4 [QSA,L]

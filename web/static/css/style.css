@@ -1049,3 +1049,6 @@ footer .games img {
 	display: block;
 	margin: 20px auto 0 auto;
 }
+.fb-comments-count {
+    display: inline;
+}
