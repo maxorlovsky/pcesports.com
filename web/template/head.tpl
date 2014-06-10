@@ -6,6 +6,7 @@
     <meta name="keywords" content="<?=$this->data->settings['site_keywords']?>" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="fb:app_id" content="766575306708443"/>
     
     <title><?=$this->title?><?=$this->data->settings['site_name']?></title>
     
