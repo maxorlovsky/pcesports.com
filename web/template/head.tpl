@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:fb="http://ogp.me/ns/fb#" lang="<?=_cfg('language')?>">
+<html lang="<?=_cfg('language')?>">
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="<?=$this->data->settings['site_description']?>" />
@@ -63,8 +63,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-
-<fb:comments-count href=http://www.pcesports.com/en/news/7></fb:comments-count>
 <? } ?>
 
 <header class="container">
