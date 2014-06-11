@@ -14,6 +14,27 @@ class leagueoflegends extends System
 		$this->currentTournament = $this->data->settings['lol-current-number'];
 	}
     
+    public function teamEditPage() {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+			go(_cfg('href').'/leagueoflegends');
+		}
+        $rows = Db::fetchRows('SELECT * '.
+            'FROM `players` '.
+            'WHERE '.
+            '`tournament_id` = '.(int)$this->currentTournament.' AND '.
+            '`game` = "lol" AND '.
+            '`team_id` = '.(int)$_SESSION['participant']->id.' '.
+            'ORDER BY `player_num` '
+        );
+        
+        $players = array();
+        foreach($rows as $v) {
+            $players[$v->player_num] = $v->name;
+        }
+
+        include_once _cfg('pages').'/'.get_class().'/team.tpl';
+    }
+    
     public function fightPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
 			go(_cfg('href').'/leagueoflegends');
@@ -250,6 +271,9 @@ class leagueoflegends extends System
 	public function showTemplate() {
 		if (isset($_GET['val3']) && $_GET['val3'] == 'fight') {
 			$this->fightPage();
+		}
+        else if (isset($_GET['val3']) && $_GET['val3'] == 'team') {
+			$this->teamEditPage();
 		}
 		else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
 			$this->participantPage();

@@ -10,6 +10,7 @@ class Ajax extends System
     	'submitContactForm',
     	'registerInHS',
 		'registerInLOL',
+        'editInLOL',
         'chat',
         'statusCheck',
         'uploadScreenshot',
@@ -412,6 +413,93 @@ class Ajax extends System
     		);
     	
     		$this->sendMail($post['email'], 'Pentaclick League of Legends tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
+    }
+    
+    protected function editInLOL($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+		
+		$players = array();
+		$checkForSame = array();
+		for($i=1;$i<=7;++$i) {
+            if ($this->data->settings['tournament-start-lol'] == 1) {
+                $err['mem'.$i] = '0;'.t('tournament_in_progress');
+            }
+			else if (!$post['mem'.$i] && $i < 6) {
+				$err['mem'.$i] = '0;'.t('field_empty');
+			}
+			else if ($post['mem'.$i]) {
+				$response = $this->runAPI('/euw/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
+				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
+					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
+					'WHERE '.
+					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
+					'`p`.`game` = "lol" AND '.
+					'`t`.`approved` = 1 AND '.
+					'`t`.`deleted` = 0'
+				);
+				if (!$response) {
+					$err['mem'.$i] = '0;'.t('summoner_not_found_euw');
+				}
+				else if ($response && $response->summonerLevel != 30) {
+					$err['mem'.$i] = '0;'.t('summoner_low_lvl');
+				}
+				else if (in_array($post['mem'.$i], $checkForSame)) {
+					$err['mem'.$i] = '0;'.t('same_summoner');
+				}
+				else if ($row && $row->name != $post['mem'.$i]) {
+					$err['mem'.$i] = '0;'.t('summoner_already_registered');
+				}
+				else {
+					$players[$i]['id'] = $response->id;
+					$players[$i]['name'] = $response->name;
+					$suc['mem'.$i] = '1;'.t('approved');
+				}
+				
+				$checkForSame[] = $post['mem'.$i];
+			}
+		}
+    	
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+    	
+    		Db::query('UPDATE `teams` SET '.
+                '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
+                'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                '`game` = "lol" AND '.
+                '`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' '
+            );
+            
+            Db::query('DELETE FROM `players` '.
+                'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                '`game` = "lol" AND '.
+                '`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' '
+            );
+            
+            foreach($players as $k => $v) {
+				Db::query(
+					'INSERT INTO `players` SET '.
+					' `game` = "lol", '.
+					' `tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+					' `team_id` = '.(int)$_SESSION['participant']->id.', '.
+					' `name` = "'.Db::escape($v['name']).'", '.
+					' `player_num` = "'.(int)$k.'", '.
+					' `player_id` = "'.(int)$v['id'].'"'
+				);
+			}
     	}
     	 
     	return json_encode($answer);
