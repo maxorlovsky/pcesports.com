@@ -95,9 +95,6 @@ class hearthstone extends System
 		if (_cfg('env') == 'prod') {
 			$participant_id = $row->id + 100000;
 		}
-		else if (_cfg('env') == 'test') {
-			$participant_id = $row->id + 50000;
-		}
 		else {
 			$participant_id = $row->id;
 		}
