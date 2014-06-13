@@ -214,7 +214,7 @@ class System
 	public function runAPI($apiAdditionalData, $fullReturn = false) {
 		$startTime = microtime(true);
 		
-		$apiUrl = 'http://prod.api.pvp.net/api/lol';
+		$apiUrl = 'http://euw.api.pvp.net/api/lol';
 		$apiUrl .= $apiAdditionalData;
 		$apiUrl .= '?api_key=d8339ebc-91ea-49d3-809d-abcb42df872a';
 		
@@ -480,6 +480,15 @@ class System
 						"otherTeamPlayerParticipantsSummaries":[]
 
 						}*/
+                }
+                else if ($_GET['val1'] == 'generate') {
+					$rows = Db::fetchRows('SELECT * FROM `tm_strings`');
+                    $txt = '';
+                    foreach($rows as $v) {
+                        $txt .= '!'.$v->key.' = '.$v->english;
+                        $txt .= "\n\n";
+                    }
+                    echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';
                 }
                 else {
                     exit('Run command error');
