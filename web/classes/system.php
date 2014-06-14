@@ -395,6 +395,7 @@ class System
                     $callback = file_get_contents("php://input");
                     
                     if (!is_object(json_decode($callback))) {
+                        $this->sendMail('max.orlovsky@gmail.com', 'Riot callback', 'Incorrect');
                         exit('Callback incorrect');
                     }
                     
