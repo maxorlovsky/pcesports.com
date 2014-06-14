@@ -68,15 +68,11 @@ class Emails extends System
                 sleep(1);
                 $i = 0;
             }
-            
-            $this->system->log('Sending email <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
-            
-            return '1;Emails sent';
         }
 
-		$this->system->log('Sending email <b>Error</b>', array('module'=>get_class(), 'type'=>'send'));
+		$this->system->log('Sending email <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
 							 
-        return '0;Emails not sent';
+        return '1;Emails sent';
 	}
 
 	protected function fetchEmailTemplates() {
