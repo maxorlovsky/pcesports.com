@@ -1054,3 +1054,8 @@ footer .games img {
 .fb-comments-count {
     display: inline;
 }
+#tournamentCode {
+    width: 625px;
+    height: 70px;
+    float: right;
+}

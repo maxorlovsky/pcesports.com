@@ -7,6 +7,10 @@ var checkTimer = 15;
 
 //Visual things
 
+$('#tournamentCode').on('click', function() {
+    $(this).select();
+});
+
 $('.chat-input').on('click', function() {
    $('#chat-input').focus();
 });
@@ -118,6 +122,10 @@ profiler = {
                 $('#opponentStatus').addClass(answer[2]);
                 $('#opponentName').html(answer[1]);
                 $('#opponentStatus').html(answer[2]);
+                
+                if ($('#tournamentCode').length > 0) {
+                    $('#tournamentCode').focus().val(answer[3]);
+                }
             }
         }
         ajax(query);

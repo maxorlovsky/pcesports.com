@@ -113,10 +113,10 @@ class Ajax extends System
         );
         
         if (!$row) {
-            return '0;'.t('none').';'.t('waiting_for_opponent');
+            return '0;'.t('none').';'.t('waiting_for_opponent').';'.t('none');
         }
         
-        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
             'FROM `fights` AS `f` '.
             'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
             'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
@@ -124,10 +124,7 @@ class Ajax extends System
             'AND`f`.`done` = 0'
         );
         
-        if (!$playersRow) {
-            return '0;'.t('none').';'.t('no_opponent');
-        }
-        else {
+        if ($playersRow) {
             $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
                 'FROM `teams` '.
                 'WHERE '.
@@ -143,14 +140,26 @@ class Ajax extends System
                 else {
                     $status = t('offline');
                 }
+                
+                $code = '';
+                if ($_SESSION['participant']->game == 'lol') {
+                    $array = array(
+						'name' => 'Pentaclick#'.(int)$this->data->settings['lol-current-number'].' - '.$playersRow->name1.' vs '.$playersRow->name2,
+						'extra' => $playersRow->match_id,
+						'password' => md5($playersRow->match_id),
+						'report' => 'http://www.pcesports.com/run/riotcode/',
+					);
+					$code = 'pvpnet://lol/customgame/joinorcreate/map1/pick6/team5/specALL/';
+					$code .= base64_encode(json_encode($array));
+                }
 
-                return '1;'.$enemyRow->name.';'.$status;
+                return '1;'.$enemyRow->name.';'.$status.';'.$code;
             }
             
-            return '0;'.t('none').';'.t('offline');
+            return '0;'.t('none').';'.t('offline').';'.t('none');
         }
         
-        return '0;'.t('error');
+        return '0;'.t('none').';'.t('no_opponent').';'.t('none');
     }
     
     protected function chat($data) {
@@ -279,7 +288,7 @@ class Ajax extends System
     	
     		$text = str_replace(
     			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone', _cfg('url')),
+    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone', _cfg('site')),
     			$text
     		);
     	
@@ -345,7 +354,8 @@ class Ajax extends System
 					'`t`.`approved` = 1 AND '.
 					'`t`.`deleted` = 0'
 				);
-				if (!$response) {
+                
+				if ($response == 404) {
 					$err['mem'.$i] = '0;'.t('summoner_not_found_euw');
 				}
 				else if ($response && $response->summonerLevel != 30) {
@@ -408,7 +418,7 @@ class Ajax extends System
     	
     		$text = str_replace(
     			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends', _cfg('url')),
+    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends', _cfg('site')),
     			$text
     		);
     	

@@ -9,7 +9,8 @@
         <div class="block-content opponent-info">
             <label><?=t('opponent')?></label>: <span id="opponentName"></span><br />
             <label><?=t('status')?></label>: <span id="opponentStatus"></span> (<span id="opponentSec"></span> sec)<br />
-            <label><?=t('code')?></label>: <span id="tournamentCode">none</span>
+            <label><?=t('code')?></label>: <textarea readonly="readonly" id="tournamentCode">none</textarea>
+            <div class="clear"></div>
         </div>
     </div>
     

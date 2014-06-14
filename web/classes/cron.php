@@ -55,7 +55,12 @@ class Cron extends System {
         }
         
         if ($this->data->settings['tournament-start-lol'] == 1) {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->data->settings['lol-current-number'].'/matches.json', array(), 'state=open');
+            if (_cfg('env') == 'prod') {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->data->settings['lol-current-number'].'/matches.json', array(), 'state=open');
+            }
+            else {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+            }
 
             foreach($answer as $v) {
                 //Checking if match is already registered

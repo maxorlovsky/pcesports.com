@@ -357,7 +357,7 @@ class leagueoflegends extends System
         }
         
         $this->sendMail('info@pcesports.com',
-        'Tean deleted. Pentaclick eSports.',
+        'Team deleted. Pentaclick eSports.',
         'Team was deleted!!!<br />
         Date: '.date('d/m/Y H:i:s').'<br />
         Team: <b>'.$_SESSION['participant']->name.'</b><br>

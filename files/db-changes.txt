@@ -1,3 +1,12 @@
+# 14.06.2014
+CREATE TABLE `riot_callback` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`callback` TEXT NOT NULL ,
+`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = INNODB;
+ALTER TABLE  `riot_callback` ADD  `game_id` BIGINT UNSIGNED NOT NULL AFTER  `id`;
+ALTER TABLE  `riot_callback` ADD  `status` ENUM(  'received',  'processed' ) NOT NULL DEFAULT  'received';
+
 # 10.06.2014 - cms update
 ALTER TABLE  `tm_admins` CHANGE  `language`  `language` CHAR( 2 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  'en'
 
