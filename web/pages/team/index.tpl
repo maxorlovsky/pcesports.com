@@ -54,10 +54,6 @@
                 <div class="role">Communications manager</div>
             </div>
             <div class="team-user">
-            	<div class="name">art9393</div>
-            	<div class="role">Social pages manager... kind of...</div>
-            </div>
-            <div class="team-user">
             	<div class="name">Alex "Acolent" Kelly</div>
             	<div class="role">Shoutcaster</div>
             </div>
