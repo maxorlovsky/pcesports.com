@@ -23,11 +23,15 @@
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
-					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>" />
+					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" />
 					<div id="battletag-msg" class="message hidden"></div>
 					<div class="clear"></div>
-					<input type="text" name="email" placeholder="Email" />
+					<input type="text" name="email" placeholder="Email*" />
 					<div id="email-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <input type="text" name="twitch" placeholder="Twitch channel (example: pentaclick_tv)" />
+					<div id="twitch-msg" class="message hidden"></div>
+                    
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
