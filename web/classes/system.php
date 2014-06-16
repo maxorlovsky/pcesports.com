@@ -214,7 +214,7 @@ class System
 	public function runAPI($apiAdditionalData, $fullReturn = false) {
 		$startTime = microtime(true);
 		
-		$apiUrl = 'http://euw.api.pvp.net/api/lol';
+		$apiUrl = 'https://euw.api.pvp.net/api/lol';
 		$apiUrl .= $apiAdditionalData;
 		$apiUrl .= '?api_key=d8339ebc-91ea-49d3-809d-abcb42df872a';
 		
