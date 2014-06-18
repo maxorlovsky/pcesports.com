@@ -227,6 +227,7 @@ nav #menusub #submenu a {
     display: block;
     padding: 7px 10px;
     background-color: #444;
+    white-space: nowrap;
 }
 nav #menusub #submenu a:hover {
     background-color: #777;

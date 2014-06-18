@@ -61,7 +61,7 @@
         if ($this->data->modules) {
 	        foreach($this->data->modules as $v) {
 	            ?><tr>
-	                <td><?=$v->name?></td>
+	                <td><?=$v->displayName?></td>
 	                <td align="center"><?=$v->level?></td>
 	                <td align="center"><a href="#<?=$v->name?>">Edit</a> / <a href="#">Uninstall</a></td>
 	              </tr><?

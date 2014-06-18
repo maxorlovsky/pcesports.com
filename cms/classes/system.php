@@ -117,7 +117,13 @@ class System
         		$this->page = 'dashboard';
         	}*/
         	
-        	$this->data->modules = Db::fetchRows('SELECT * FROM `tm_modules`');
+        	$row = Db::fetchRows('SELECT * FROM `tm_modules`');
+            $updatedModulesList = new stdClass();
+            foreach($row as $k => $v) {
+                $v->displayName = preg_replace('/(?<!\ )[A-Z]/', ' $0', ucfirst($v->name));
+                $updatedModulesList->$k = $v;
+            }
+            $this->data->modules = $updatedModulesList;
         	
         	$this->language = $this->user->language;
         }
