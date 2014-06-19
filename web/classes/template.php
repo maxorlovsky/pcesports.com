@@ -35,25 +35,41 @@ class Template extends System
     		if (isset($seoPageData)) {
     			$title = str_replace('-', ' ', ucfirst($seoPageData->title));
     		}
-    		else {
-    			$title = str_replace('-', ' ', t('web-link-'.$this->page));
+    		else if (t('web-page-'.$this->page) != 'web-page-'.$this->page) {
+    			$title = str_replace('-', ' ', t('web-page-'.$this->page));
     		}
+            else {
+                $title = str_replace('-', ' ', t('web-link-'.$this->page));
+            }
     		$this->title .= $title;
     		$this->title .= ' | ';
     	}
     	
     }
     
+    public function getTxtPages() {
+        $rows = Db::fetchRows('SELECT `link` FROM `tm_pages`');
+        $pagesList = array();
+        foreach($rows as $v) {
+            $pagesList[] = $v->link;
+        }
+
+        return $pagesList;
+    }
+    
     public function loadPage($data) {
-    	/*if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']]) {
-    		return at('denied_access_level');
-    	}*/
+        $pagesList = $this->getTxtPages();
 		
 		if ($this->data->settings['maintenance'] == 1 && file_exists(_cfg('pages').'/maintenance/source.php')) {
 			require_once _cfg('pages').'/maintenance/source.php';
    			
    			$page = new maintenance($data);
 		}
+        else if (in_array($data->page, $pagesList)) {
+            echo $this->getTxtPage($data->page);
+            
+            $page = new stdClass();
+        }
    		else if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
    			
@@ -67,9 +83,22 @@ class Template extends System
    		}
    		else {
    			echo '<p>Source file for page '.$data->page.'/source.php not found</p>';
+            echo '<p>Text page "'.$data->page.'" not found</p>';
    		}
    		
     	return $page;
+    }
+    
+    public function getTxtPage() {
+        $row = Db::fetchRow('SELECT `logged_in`, `value`, `text_'.Db::escape(_cfg('fullLanguage')).'` AS `text` FROM `tm_pages`');
+        if ($row->logged_in == 1 && $this->logged_in || $row->logged_in == 0) {
+            $html = file_get_contents(_cfg('template').'/page.tpl');
+            $html = str_replace(array('%title%', '%text%'), array(t($row->value), $row->text), $html);
+            return $html;
+        }
+        
+        require_once _cfg('pages').'/404/source.php';
+        return new errorPage($data);
     }
     
     static public function getMailTemplate($page) {

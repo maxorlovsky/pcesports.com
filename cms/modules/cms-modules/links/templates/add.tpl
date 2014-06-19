@@ -38,6 +38,10 @@
         </td>
     </tr>
     <? } ?>
+    <tr>
+        <td width="300" class="b"><label for="logged_in"><?=at('only_for_logged_in')?></label></td>
+        <td><input type="checkbox" id="logged_in" value="0" /></td>
+    </tr>
     <?
     foreach($module->languages as $v) {
         ?>
@@ -50,3 +54,14 @@
     ?>
     <tr><td colspan="2"><button class="submitButton"><?=at('add_new')?> <?=at('link')?></button></td></tr>
 </table>
+
+<script>
+$('#logged_in').on('click', function() {
+    if ($(this).is(':checked') === false) {
+        $(this).attr('value', 0);
+    }
+    else {
+        $(this).attr('value', 1);
+    }
+});
+</script>

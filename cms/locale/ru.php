@@ -129,7 +129,6 @@ $astr['actions']='Действия';
 $astr['module_name']='Название модуля';
 $astr['controller_not_exists']='Контролер не существует';
 $astr['dashboard'] = 'Консоль';
-
 $astr['cms_up_to_date'] = 'Ваша версия CMS обновлена до последней версии';
 $astr['email_empty'] = 'Поле Email пустое';
 $astr['email_incorrect'] = 'Email написан не верно';
@@ -144,7 +143,6 @@ $astr['date'] = 'Дата';
 $astr['ip'] = 'IP';
 $astr['info'] = 'Инфо';
 $astr['account'] = 'Аккаунт';
-
 $astr['cms_outdated'] = 'Ваша версия CMS устарела';
 $astr['cms_information'] = 'Информация CMS';
 $astr['cms_latest_changes'] = 'Последние обновления CMS';
@@ -155,6 +153,7 @@ $astr['you_ver_of_cms'] = 'Ваша версия CMS';
 $astr['latest_ver_cms'] = 'Последняя версия CMS';
 $astr['update'] = 'Обновить';
 $astr['cms_detailed_info'] = 'TheMages CMS создана Максом &amp; Аней Орловскими<br />Если вас интересует дополнительная разработка или модули, можете свободно связатся с нами.';
+$astr['only_for_logged_in'] = 'Только для залогиненых пользователей';
 //--------------------------------------------------//
 
 //Other language strings
@@ -169,7 +168,8 @@ $astr['hint_site_description']='Кликнув на это поле, Вы мож
 $astr['hint_site_keywords']='Кликнув на это поле, Вы можете изменить/добавить ключевые слова,<br />эта опция позволяет оптимизировать рекламу сайта.';
 $astr['hint_page_loading_type']='Нормальная=Основн загрузка страницыNormal=Basic page loading, with refresh of all page.<br />AJAX=Advanced page loading, without refresh of all page.';
 $astr['hint_admin_language']='Вы можете установить язык панели администрации на вашу учётную запись';
-$astr['hint_site_prefix']='Не изменяйте это поле если вы не понимаете для чего оно, это может "сломать" весь сайт.';
+$astr['hint_admin_email']='Что бы изменить Email, введите значение в поле и нажмите клавишу &quot;Enter&quot;';
+$astr['hint_maintenance']='Ввести мод технического обслуживания на сайт';
 //--------------------------------------------------//
 
 $astr['']='';

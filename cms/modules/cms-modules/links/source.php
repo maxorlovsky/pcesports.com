@@ -42,13 +42,13 @@ class Links
         	go(_cfg('cmssite').'/#links');
         }
         
-        $this->links = Db::fetchRows('SELECT `l`.`id`, `l`.`link`, `l`.`position`, `l`.`able`, `l`.`value`, `l`.`block` '.
+        $this->links = Db::fetchRows('SELECT `l`.`id`, `l`.`link`, `l`.`position`, `l`.`able`, `l`.`value`, `l`.`block`, `l`.`logged_in` '.
 		'FROM `tm_links` AS `l` '.
         'LEFT JOIN `tm_strings` AS `s` ON `l`.`value` = `s`.`key` '.
         'WHERE `l`.`main_link` = 0 '.
 		'ORDER BY `l`.`position`, `l`.`block`, `l`.`id`');
         
-        $this->sublinks = Db::fetchRows('SELECT `l`.`id`, `l`.`link`, `l`.`main_link`, `l`.`position`, `l`.`able`, `l`.`value`, `l`.`block` '.
+        $this->sublinks = Db::fetchRows('SELECT `l`.`id`, `l`.`link`, `l`.`main_link`, `l`.`position`, `l`.`able`, `l`.`value`, `l`.`block`, `l`.`logged_in` '.
         'FROM `tm_links` AS `l` '.
         'LEFT JOIN `tm_strings`  AS `s` ON `l`.`value` = `s`.`key` '.
         'WHERE `l`.`main_link` != "0" '.
@@ -82,6 +82,7 @@ class Links
 					'`main_link` = "'.intval($form['main_link']).'", '.
 					'`position` = '.$position.', '.
 					'`block` = "'.Db::escape($form['link_block']).'", '.
+                    '`logged_in` = '.(int)$form['logged_in'].', '.
 					'`link` = "'.Db::escape($form['href']).'" '
 				);
 				Db::query('INSERT INTO `tm_strings` SET `key` = "web-link-'.$title.'", `status` = 1');
@@ -108,7 +109,7 @@ class Links
     	$title = Db::escape($form['title']);
     	$linkId = (int)$form['link_id'];
     	$oldValue = Db::escape($form['link_value']);
-    	
+        
     	if (!$form['title']) {
     		$this->system->log('Editing link <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
     		return '0;'.at('title_err');
@@ -124,10 +125,11 @@ class Links
     			return '0;'.at('link_exist');
     		}
     		else {
-    			Db::query('UPDATE `tm_links` '.
+                Db::query('UPDATE `tm_links` '.
 	    			'SET `value` = "web-link-'.$title.'", '.
 	    			'`main_link` = "'.(int)$form['main_link'].'", '.
 	    			'`block` = "'.$form['link_block'].'", '.
+                    '`logged_in` = '.(int)$form['logged_in'].', '.
 	    			'`link` = "'.Db::escape($form['href']).'" '.
 	    			'WHERE `id` = "'.$linkId.'"'
     			);
@@ -153,6 +155,7 @@ class Links
     			'SET `value` = "web-link-'.$title.'", '.
     			'`main_link` = "'.(int)$form['main_link'].'", '.
     			'`block` = "'.$form['link_block'].'", '.
+                '`logged_in` = '.(int)$form['logged_in'].', '.
     			'`link` = "'.Db::escape($form['href']).'" '.
     			'WHERE `id` = "'.$linkId.'"'
     		);

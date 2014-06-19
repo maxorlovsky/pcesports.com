@@ -107,11 +107,13 @@
         	<?
         	if ($this->data->links) {
 				foreach($this->data->links as $v) {
-			?>
-            <li class="" id="<?=$v->link?>">
-            	<a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
-           	</li>
-            <?
+                    if ($v->logged_in == 1 && $this->logged_in || $v->logged_in == 0) {
+                    ?>
+                    <li class="" id="<?=$v->link?>">
+                        <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
+                    </li>
+                    <?
+                    }
 				}
             }
             ?>

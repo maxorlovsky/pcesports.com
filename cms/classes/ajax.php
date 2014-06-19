@@ -41,19 +41,36 @@ class Ajax extends System
     }
     
     protected function saveSetting($data) {
-    	$data['param'] = str_replace('setting-','',$data['param']);
-    	$q = Db::query('SELECT * FROM `tm_settings` WHERE `setting` = "'.Db::escape($data['param']).'" LIMIT 1');
-    	if ($q->num_rows == 0) {
-    		return '0;Setting not found';
-    	}
-    	
-    	Db::query('UPDATE `tm_settings` '.
-    		'SET `value` = "'.Db::escape($data['value']).'" '.
-    		'WHERE `setting` = "'.Db::escape($data['param']).'" '.
-    		'LIMIT 1'
-    	);
-    	
-    	return '1;Setting updated successfully';
+        if (substr($data['param'],0,6) == 'module') {
+            $data['param'] = str_replace('module-','',$data['param']);
+            $q = Db::query('SELECT * FROM `tm_modules` WHERE `name` = "'.Db::escape($data['param']).'" LIMIT 1');
+            if ($q->num_rows == 0) {
+                return '0;Module setting not found';
+            }
+            
+            Db::query('UPDATE `tm_modules` '.
+                'SET `level` = "'.Db::escape($data['value']).'" '.
+                'WHERE `name` = "'.Db::escape($data['param']).'" '.
+                'LIMIT 1'
+            );
+            
+            return '1;Module setting updated successfully';
+        }
+        else {
+            $data['param'] = str_replace('setting-','',$data['param']);
+            $q = Db::query('SELECT * FROM `tm_settings` WHERE `setting` = "'.Db::escape($data['param']).'" LIMIT 1');
+            if ($q->num_rows == 0) {
+                return '0;Setting not found';
+            }
+            
+            Db::query('UPDATE `tm_settings` '.
+                'SET `value` = "'.Db::escape($data['value']).'" '.
+                'WHERE `setting` = "'.Db::escape($data['param']).'" '.
+                'LIMIT 1'
+            );
+            
+            return '1;Setting updated successfully';
+        }
     }
     
     protected function setEmail($data) {

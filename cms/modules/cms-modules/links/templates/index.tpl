@@ -1,14 +1,15 @@
 <h1><?=at('links')?></h1>
 
 <table class="links">
-    <td colspan="5" id="buttons" class="hint" name="Add">
+    <td colspan="6" id="buttons" class="hint" name="Add">
         <a href="<?=_cfg('cmssite').'/#links/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=strtolower(at('link'))?></a>
     </td>
 	<tr>
-        <td width="40%"><b><?=at('link')?></b></td>
-        <td width="50%"><b><?=at('sublink')?></b></td>
-        <td width="1"><b><?=at('updown')?></b></td>
-        <td width="1"><b><?=at('enaldisabl')?></b></td>
+        <td width="40%" class="b"><?=at('link')?></td>
+        <td width="40%" class="b"><?=at('sublink')?></td>
+        <td width="10%" class="centered b"><?=at('only_for_logged_in')?></td>
+        <td width="1" class="b"><?=at('updown')?></td>
+        <td width="1" class="b"><?=at('enaldisabl')?></td>
         <td width="10%" class="centered b"><?=at('actions')?></td>
     </tr>
 	<?
@@ -24,6 +25,9 @@
                 <tr>
 					<td><a href="<?=_cfg('cmssite').'/#links/edit/'.$v->id?>"><?=str_replace('web-link-','',$v->value)?></a></td>
 					<td></td>
+                    <td class="centered">
+                        <?=($v->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
+                    </td>
                     <td class="centered">
                         <span class="big">
                             <a href="<?=_cfg('cmssite').'/#links/moveup/'.$v->id?>" class="hint" name="Move UP"><img src="<?=_cfg('cmsimg')?>/arrow_up.png" /></a>
@@ -53,6 +57,9 @@
                         <tr>
 							<td class="centered"><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>">=></a></td>
 							<td><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>"><?=str_replace('web-link-','',$vs->value)?></a></td>
+                            <td class="centered">
+                                <?=($vs->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
+                            </td>
 		                    <td class="centered">
 		                        <span class="big">
 		                            <a href="<?=_cfg('cmssite').'/#links/moveup/'.$vs->id?>">

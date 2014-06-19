@@ -135,7 +135,6 @@ $astr['actions']='Actions';
 $astr['module_name']='Module name';
 $astr['controller_not_exists']='Controller does not exist';
 $astr['dashboard'] = 'Dashboard';
-
 $astr['cms_up_to_date'] = 'Your CMS version is up to date';
 $astr['email_empty'] = 'Email field is empty';
 $astr['email_incorrect'] = 'Email is written incorrectly';
@@ -150,7 +149,6 @@ $astr['date'] = 'Date';
 $astr['ip'] = 'IP';
 $astr['info'] = 'Info';
 $astr['account'] = 'Account';
-
 $astr['cms_outdated'] = 'Your CMS version is outdated';
 $astr['cms_information'] = 'CMS Information';
 $astr['cms_latest_changes'] = 'CMS latest changes';
@@ -161,11 +159,7 @@ $astr['you_ver_of_cms'] = 'Your version of CMS';
 $astr['latest_ver_cms'] = 'Latest version of CMS';
 $astr['update'] = 'Update';
 $astr['cms_detailed_info'] = 'TheMages CMS created by Max &amp; Anya Orlovsky<br />If you\'re interested in additional development or modules, feel free to contact us.';
-$astr[''] = '';
-$astr[''] = '';
-$astr[''] = '';
-$astr[''] = '';
-
+$astr['only_for_logged_in'] = 'Only for logged in';
 //--------------------------------------------------//
 
 //Other language strings
@@ -180,8 +174,8 @@ $astr['hint_site_description']='By clicking this field you could edit/add websit
 $astr['hint_site_keywords']='By clicking this field you could edit/add website keywords,<br />this option helps to improve website advertisement.';
 $astr['hint_page_loading_type']='Normal=Basic page loading, with refresh of all page.<br />AJAX=Advanced page loading, without refresh of all page.';
 $astr['hint_admin_language']='You can set language for admin panel for your account';
-$astr['hint_site_prefix']='Do not change this field value if you do not understand what is it for. You can "brake" whole site.';
-$astr['hint_admin_email']='To change email, input it in the field and press &quot;Enter&quot;';
+$astr['hint_admin_email']='To change email, input value in to the field and press &quot;Enter&quot;';
+$astr['hint_maintenance']='Enable maintenance mode for website';
 //--------------------------------------------------//
 
 //$astr['']='';

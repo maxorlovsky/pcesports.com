@@ -18,9 +18,10 @@ class Pages
             go(_cfg('cmssite').'/#pages');
         }
         
-        $this->pages = Db::fetchRows('SELECT `id`, `link`, `value`
-		FROM `tm_pages`
-		ORDER BY `id` ASC');
+        $this->pages = Db::fetchRows('SELECT `id`, `link`, `value`, `logged_in` '.
+            'FROM `tm_pages` '.
+            'ORDER BY `id` ASC '
+        );
 
 		return $this;
 	}
@@ -30,6 +31,10 @@ class Pages
         	$this->system->log('Adding new page <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
 			return '0;'.at('title_err');
 		}
+        else if (strpos($form['title'], ' ')) {
+    		$this->system->log('Adding new page <b>'.at('title_have_spaces').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
+    		return '0;'.at('title_have_spaces');
+    	}
 		else {
             $title = Db::escape($form['title']);
 			$q = Db::query('SELECT * FROM `tm_pages` WHERE `link` = "'.$title.'"');
@@ -38,14 +43,29 @@ class Pages
                 return '0;'.at('page_exist');
 			}
 			else {
-				Db::query('INSERT INTO `tm_pages` '.
-                'SET `link` = "'.$title.'", `value` = "'.Db::escape($form['strings']).'"');
+				Db::query('INSERT INTO `tm_pages` SET '.
+                    '`link` = "'.$title.'", '.
+                    '`value` = "web-page-'.$title.'", '.
+                    '`logged_in` = '.(int)$form['logged_in'].' '
+                );
+                
+				foreach ($form as $k => $v) {
+					$string = explode('_', $k);
+					if ($string[0] == 'text') {
+						Db::query('UPDATE `tm_pages` '.
+                        'SET `text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'WHERE `link` = "'.$title.'"');
+					}
+				}
+                
+                Db::query('INSERT INTO `tm_strings` SET `key` = "web-page-'.$title.'", `status` = 1');
+				
 				foreach ($form as $k => $v) {
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
-						Db::query('UPDATE `tm_pages` '.
+						Db::query('UPDATE `tm_strings` '.
                         'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
-                        'WHERE `link` = "'.$title.'"');
+                        'WHERE `key` = "web-page-'.$title.'"');
 					}
 				}
 				
@@ -59,32 +79,85 @@ class Pages
 	}
     
     public function edit($form) {
+        $title = Db::escape($form['title']);
+    	$pageId = (int)$form['page_id'];
+    	$oldValue = Db::escape($form['page_link']);
+        
         if (!$form['title']) {
         	$this->system->log('Editing page <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
 			return '0;'.at('title_err');
 		}
-		else {
-			$title = Db::escape($form['title']);
-            
-            $q = Db::query('SELECT * FROM `tm_pages` WHERE `link` = "'.$title.'" AND `id` != '.(int)$form['page_id']);
-			if ($q->num_rows != 0) {
-				$this->system->log('Editing page <b>'.at('page_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-                return '0;'.at('page_exist');
-			}
+        else if (strpos($form['title'], ' ')) {
+    		$this->system->log('Editing page <b>'.at('title_have_spaces').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    		return '0;'.at('title_have_spaces');
+    	}
+        else if ($oldValue != $title) {
+    		$q = Db::query('SELECT * FROM `tm_pages` WHERE `link` = "'.$title.'" LIMIT 1');
+    		if ($q->num_rows != 0) {
+    			$this->system->log('Editing page <b>'.at('page_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    			return '0;'.at('page_exist');
+    		}
+    		else {
+                Db::query('UPDATE `tm_pages` SET '.
+	    			'`link` = "'.$title.'", '.
+                    '`value` = "web-page-'.$title.'", '.
+                    '`logged_in` = '.(int)$form['logged_in'].' '.
+	    			'WHERE `id` = '.$pageId
+    			);
                 
-			Db::query('UPDATE `tm_pages` '.
-            'SET `link` = "'.$title.'", `value` = "'.Db::escape($form['strings']).'"'.
-            'WHERE `id` = '.(int)$form['page_id']);
-			foreach ($form as $k => $v) {
-				$string = explode('_', $k);
-				if ($string[0] == 'string') {
-					Db::query('UPDATE `tm_pages` '.
-                    'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
-                    'WHERE `link` = "'.$title.'"');
+                foreach ($form as $k => $v) {
+                    $string = explode('_', $k);
+                    if ($string[0] == 'text') {
+                        Db::query('UPDATE `tm_pages` SET '.
+                            '`text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                            'WHERE `id` = '.$pageId
+                        );
+                    }
+                }
+                
+    			Db::query('INSERT INTO `tm_strings` SET `key` = "web-page-'.$title.'", `status` = 1');
+    			Db::query('DELETE FROM `tm_strings` WHERE `key` = "web-page-'.$oldValue.'"');
+    			foreach ($form as $k => $v) {
+					$string = explode('_', $k);
+					if ($string[0] == 'string') {
+						Db::query('UPDATE `tm_strings` '.
+                        	'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        	'WHERE `key` = "web-page-'.$title.'"'
+    					);
+					}
 				}
-			}
-			
-			$this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    			
+    			$this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    			
+    			return '1;'.at('page_updated');
+    		}
+    	}
+		else {
+            Db::query('UPDATE `tm_pages` SET '.
+                '`logged_in` = '.(int)$form['logged_in'].' '.
+                'WHERE `id` = '.$pageId
+            );
+            
+            foreach ($form as $k => $v) {
+                $string = explode('_', $k);
+                if ($string[0] == 'text') {
+                    Db::query('UPDATE `tm_pages` SET '.
+                        '`text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'WHERE `id` = '.$pageId
+                    );
+                }
+            }
+            foreach ($form as $k => $v) {
+                $string = explode('_', $k);
+                if ($string[0] == 'string') {
+                    Db::query('UPDATE `tm_strings` '.
+                        'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'WHERE `key` = "web-page-'.$title.'"'
+                    );
+                }
+            }
+            
+            $this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
             
             return '1;'.at('page_updated');
 		}
@@ -97,10 +170,14 @@ class Pages
     }
     
     protected function fetchEditData($id) {
-        return Db::fetchRow('SELECT * '.
-        'FROM `tm_pages` '.
+        $row = Db::fetchRow('SELECT * '.
+        'FROM `tm_pages` AS `p` '.
+        'LEFT JOIN `tm_strings`  AS `s` ON `p`.`value` = `s`.`key` '.
         'WHERE `id` = '.(int)$id.'
         LIMIT 1');
+        $row->value = str_replace('web-page-', '', $row->value);
+        
+        return $row;
     }
     
     protected function deleteRow($id) {

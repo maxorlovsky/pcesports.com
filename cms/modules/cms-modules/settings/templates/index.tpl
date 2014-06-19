@@ -46,15 +46,13 @@
 <br />
 <table class="settings">
     <colgroup>
-        <col width="35%"></col>
-        <col width="35%"></col>
+        <col width="70%"></col>
         <col width="30%"></col>
     </colgroup>
-    <tr><td colspan="3" class="centered b"><?=at('installed_modules')?></td></tr>
+    <tr><td colspan="2" class="centered b"><?=at('installed_modules')?></td></tr>
     <tr>
         <td class="centered b"><?=at('module_name')?></td>
         <td class="centered b"><?=at('level_required')?></td>
-        <td class="centered b"><?=at('actions')?></td>
     </tr>
     <?
         $i = 0;
@@ -62,8 +60,7 @@
 	        foreach($this->data->modules as $v) {
 	            ?><tr>
 	                <td><?=$v->displayName?></td>
-	                <td align="center"><?=$v->level?></td>
-	                <td align="center"><a href="#<?=$v->name?>">Edit</a> / <a href="#">Uninstall</a></td>
+	                <td align="center"><div id="module-<?=$v->name?>" class="pointer settings_div" onclick="do_input('module-<?=$v->name?>', 1);"><?=$v->level?></div></td>
 	              </tr><?
 	            ++$i;
 	        }
