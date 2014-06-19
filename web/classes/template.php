@@ -89,16 +89,21 @@ class Template extends System
     	return $page;
     }
     
-    public function getTxtPage() {
-        $row = Db::fetchRow('SELECT `logged_in`, `value`, `text_'.Db::escape(_cfg('fullLanguage')).'` AS `text` FROM `tm_pages`');
+    public function getTxtPage($page) {
+        $row = Db::fetchRow('SELECT `logged_in`, `value`, `text_'.Db::escape(_cfg('fullLanguage')).'` AS `text` '.
+            'FROM `tm_pages` '.
+            'WHERE `link` = "'.Db::escape($page).'" '.
+            'LIMIT 1 '
+        );
         if ($row->logged_in == 1 && $this->logged_in || $row->logged_in == 0) {
             $html = file_get_contents(_cfg('template').'/page.tpl');
             $html = str_replace(array('%title%', '%text%'), array(t($row->value), $row->text), $html);
             return $html;
         }
         
-        require_once _cfg('pages').'/404/source.php';
-        return new errorPage($data);
+        $html = file_get_contents(_cfg('template').'/page.tpl');
+        $html = str_replace(array('%title%', '%text%'), array('Registration required', 'Oops, not logged in'), $html);
+        return $html;
     }
     
     static public function getMailTemplate($page) {
