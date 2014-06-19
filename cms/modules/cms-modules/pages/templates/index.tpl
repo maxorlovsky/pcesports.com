@@ -14,7 +14,7 @@
 		if ($module->pages) {
 			foreach($module->pages as $v) {
 				?><tr>
-					<td><a href="<?=_cfg('cmssite').'/#pages/edit/'.$v->id?>"><?=t($v->value)?></a></td>
+					<td><a href="<?=_cfg('cmssite').'/#pages/edit/'.$v->id?>"><?=$v->link?></a></td>
 					<td><a href="<?=_cfg('site').'/en/'.$v->link?>" target="_blank"><?=_cfg('site')?>/{lang}/<?=$v->link?></a></td>
                     <td class="centered">
                         <?=($v->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
