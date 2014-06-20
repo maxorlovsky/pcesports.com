@@ -8,7 +8,7 @@ $('#fader, #close-popup').on('click', function() {
 
 $('.socialLogin').on('click', function() {
     var id = $(this).attr('id');
-    return social.id;
+    social[id]();
 });
 
 $('.bx-wrapper').bxSlider({
@@ -195,7 +195,7 @@ function openPopup(name) {
 }
 function closePopup() {
     $('html, body').css('overflow', '');
-    $('#'+name+', #fader').fadeOut('fast');
+    $('.popup, #fader').fadeOut('fast');
 }
 
 function updateTimers() {
@@ -339,8 +339,9 @@ social = {
     },
     auth_redirect: function(answ) {
         data = answ.split(';');
+        
         if(data[0] != '0') {
-            window.location.href = data[1];
+            window.location.href = answ;
         }
         else {
             alert(data[1]);
