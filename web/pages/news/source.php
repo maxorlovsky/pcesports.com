@@ -3,26 +3,38 @@
 class news
 {
 	public $news;
+    public $pages;
 	
 	public function __construct($params = array()) {
 		
 	}
 	
 	public function getNewsList() {
+        $pagesData = array(
+            'countPerPage'  => 5,
+            'maxNumShow'    => 3,
+            'tableName'     => 'news',
+            'pageNum'       => $_GET['val3'],
+        );
+        
+        $this->pages = pages($pagesData);
+        
 		$this->news = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
 			'FROM `news` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
 			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
 			'WHERE `able` = 1 '.
 			'ORDER BY `id` DESC '.
-			'LIMIT 5'
+			'LIMIT '.(int)$this->pages->start.', '.(int)$this->pages->countPerPage
 		);
 		
 		$rearangingNews = array();
-		foreach($this->news as $v) {
-			$v->value = $this->addImageResizer($v->value);
-			$rearangingNews[] = $v;
-		}
+        if ($this->news) {
+            foreach($this->news as $v) {
+                $v->value = $this->addImageResizer($v->value);
+                $rearangingNews[] = $v;
+            }
+        }
 		$this->news = (object)$rearangingNews;
 		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
@@ -52,7 +64,7 @@ class news
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val2'])) {
+		if (isset($_GET['val1']) && $_GET['val1'] == 'news' && isset($_GET['val2']) && $_GET['val2'] != 'page') {
 			$this->getArticle();
 		}
 		else {

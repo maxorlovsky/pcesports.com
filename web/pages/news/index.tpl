@@ -42,5 +42,7 @@
         	}
         }
         ?>
+        
+        <?=$this->pages->html?>
     </div>
 </div>
