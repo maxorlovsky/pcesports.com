@@ -1108,26 +1108,27 @@ footer .games img {
 .login {
     float: right;
     cursor: pointer;
-    
+    line-height: 65px;
+    margin-right: 20px;
+    text-transform: uppercase;
+    font-family: Open Sans;
+    font-weight: bold;
+    transition: .5s;
 }
 .login .usericon {
-    display: block;
-    width: 38px;
-    height: 43px;
+    float: right;
+    margin-left: 10px;
 }
 .login .usericon:before {
     display:block;
-    width:38px;
-    height:43px;
-    line-height:43px;
     content:'+';
     color:#111;
     font-family:'entyporegular';
-    font-size:45px;
+    font-size:80px;
     transition: .5s;
 }
-.login .usericon:hover:before {
-    color: #fff;
+.login:hover, .login:hover .usericon:before {
+    color: #eee;
 }
 
 #fader {
