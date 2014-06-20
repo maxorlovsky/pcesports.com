@@ -1,5 +1,4 @@
 //Globals
-var sixtySecondsQuery;
 var formInProgress = 0;
 var checkTimer = 15;
 
