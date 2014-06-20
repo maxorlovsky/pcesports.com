@@ -118,6 +118,6 @@
             }
             ?>
         </ul>
-        <div class="login">LOGIN!</div>
+        <div class="login"><div class="usericon"></div></div>
     </div>
 </nav>

@@ -39,7 +39,9 @@
 </footer>
 
 <div class="hidden popup" id="login-window">
-    <a href="javascript:void(0);" class="socialLogin" id="fb">fb</a>
+    <div class="login-inside">
+        <a href="javascript:void(0);" class="socialLogin" id="fb"><img src="<?=_cfg('img')?>/facebook-icon.png" /></a>
+    </div>
 </div>
 
 <div id="hint-helper"><p></p></div>

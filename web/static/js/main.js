@@ -187,15 +187,21 @@ $(document).on('mousemove', '.hint', function(event) {
 // Functions
 function openPopup(name) {
     $('html, body').css('overflow', 'hidden');
-    $('#'+name+', #fader').fadeIn('fast');
+    $('#fader').fadeIn('fast');
+    $('#'+name).css('top', -$('#'+name).height());
+    
     getLeft = ($(window).width()/2) - ($('#'+name).width()/2);
     getTop = ($(window).height()/2) - ($('#'+name).height()/2);
-    $('#'+name).css({left: getLeft, top: getTop});
+    $('#'+name).css({left: getLeft});
     $('#'+name).show();
+    $('#'+name).stop().animate({top: getTop+20}, 500, function() {
+        $(this).stop().animate({top: getTop});
+    });
 }
 function closePopup() {
     $('html, body').css('overflow', '');
-    $('.popup, #fader').fadeOut('fast');
+    $('#fader').fadeOut('fast');
+    $('.popup:visible').stop().animate({top: -$('.popup:visible').height()});
 }
 
 function updateTimers() {
