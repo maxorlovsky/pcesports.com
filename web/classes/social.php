@@ -7,13 +7,14 @@ class Social
 		$this->config = _cfg('social'); 
 	}
 	
-	public function Verify($provider='') {
-		if($provider=='') {
-			$provider = explode('/',Router::getRoute());
-			$provider = array_pop($provider);
+	public function Verify($provider) {
+		if(!$provider) {
+			return false;
 		}
 		
-		if(!isset($this->config[$provider])) die('no social config: '.$provider);
+		if(!isset($this->config[$provider])) {
+            die('No social config: '.$provider);
+        }
 		$this->config = $this->config[$provider];
 			
 		if(isset($_SESSION['social'][$provider])) {
@@ -21,6 +22,8 @@ class Social
 		} else if(method_exists($this, $provider.'Verify')) {
 			return $this->{$provider.'Verify'}();
 		}
+        
+        return false;
 	}
 	
 	public function getToken($provider) {
@@ -117,13 +120,14 @@ class Social
 	}
 	
 	private function fbComplete($data = array()) {
-	
 		$user = $_POST;
 		$user['password'] = 'social_fb';
 		$user['social'] = 'fb';
 	
 		if(empty($data)) {
-			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) return array('error'=>'auth error ('.__LINE__.')');
+			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) {
+                return '0;Auth error ('.__LINE__.')';
+            }
 			$data = $_SESSION['social']['fb'];
 		}
 	
@@ -135,59 +139,75 @@ class Social
 		}
 		$user['social_uid'] = $data['id'];
 	
-		$user =  User::socialLogin($user);
+		$user = User::socialLogin($user);
 	
 		if($user!==1) {
-			if(!is_array($user)) $user = json_decode($user,1);
+			if(!is_array($user)) {
+                $user = json_decode($user,1);
+            }
 			
-			if(isset($user['error']['email'])) return array('error'=>$user['error']['email']);
-			else return array('error'=>'Auth error '.__LINE__);
+			if(isset($user['error']['email'])) {
+                return '0;'.$user['error']['email'];
+            }
+			else {
+                return '0;Auth error '.__LINE__;
+            }
 		}
 		
 		header('Location: '._cfg('site').'/'._cfg('language'));
 		die();
-	
 	}
 	
 	private function fbVerify() {
 		if(!isset($_GET['code']) || empty($_GET['code'])) {
-			if(isset($_GET['error']) && !empty($_GET['error'])) $err = $_GET['error'];
-			else $err = 'Auth error';
-				
-			return array('error'=>$err);
+			if(isset($_GET['error']) && !empty($_GET['error'])) {
+                $err = $_GET['error'];
+            }
+			else {
+                $err = 'Auth error';
+            }
+			return '0;'.$err;
 		}
 	
 		$cfg = array(
-				'url'=>'https://graph.facebook.com/oauth/access_token',
-				'get'=>array(
-					'code'=>$_GET['code'],
-					'redirect_uri'=>_cfg('site').'/'._cfg('language').'/social/login/fb',
-					'client_id'=>$this->config['id'],
-					'client_secret'=>$this->config['private'],
-					//'grant_type'=>'client_credentials'
-				),
+            'url'=>'https://graph.facebook.com/oauth/access_token',
+            'get'=>array(
+                'code'=>$_GET['code'],
+                'redirect_uri'=>_cfg('site').'/run/social/fb',
+                'client_id'=>$this->config['id'],
+                'client_secret'=>$this->config['private'],
+                //'grant_type'=>'client_credentials'
+            ),
 		);
 	
 		$f = $this->oAuthRequest($cfg);
-		if($f === false ) return array('error'=>'auth error ('.__LINE__.')');
+		if($f === false ) {
+            return '0;Auth error ('.__LINE__.')';
+        }
 	
 		parse_str($f,$f);
 		 
-		if(!isset($f['access_token'])) return array('error'=>'auth error ('.__LINE__.')');
+		if(!isset($f['access_token'])) {
+            return '0;Auth error ('.__LINE__.')';
+        }
 	
 		$cfg = array(
-				'url'=>'https://graph.facebook.com/me',
-				'get'=>array(
-					'access_token'=>$f['access_token'],
-				),
+            'url'=>'https://graph.facebook.com/me',
+            'get'=>array(
+                'access_token'=>$f['access_token'],
+            ),
 		);
 	
 		$f = $this->oAuthRequest($cfg);
-		if($f === false ) return array('error'=>'auth error ('.__LINE__.')');
+		if($f === false ) {
+            return '0;Auth error ('.__LINE__.')';
+        }
 	
 		$f = json_decode($f,1);
 		
-		if(!isset($f['id'])) return array('error'=>'auth error ('.__LINE__.')');
+		if(!isset($f['id'])) {
+            return '0;Auth error ('.__LINE__.')';
+        }
 	
 		$_SESSION['social']['fb'] = $f;
 	
@@ -201,7 +221,7 @@ class Social
 	
 		$url = 'https://www.facebook.com/dialog/oauth'
 				.'?client_id='.$this->config['id']
-				.'&redirect_uri='._cfg('site').'/'._cfg('language').'/run/social/fb'
+				.'&redirect_uri='._cfg('site').'/run/social/fb'
 				.'&scope=public_profile,email'
 				.'&response_type=code';
 	
@@ -481,13 +501,13 @@ class Social
 		} 
 	
 		$curlOptions = array (
-				CURLOPT_URL => $cfg['url'],
-				CURLOPT_HEADER => 0,
-				CURLOPT_HTTPHEADER => isset($cfg['headers']) ? $cfg['headers'] : array(),
-				CURLOPT_VERBOSE => 1,
-				CURLOPT_SSL_VERIFYPEER => 0,
-				CURLOPT_SSL_VERIFYHOST => FALSE,
-				CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_URL => $cfg['url'],
+            CURLOPT_HEADER => 0,
+            CURLOPT_HTTPHEADER => isset($cfg['headers']) ? $cfg['headers'] : array(),
+            CURLOPT_VERBOSE => 1,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_RETURNTRANSFER => TRUE,
 		);
 		
 		if(isset($cfg['post'])) {
@@ -503,9 +523,11 @@ class Social
 	
 		if($status['http_code']!=200) {
 			if(_cfg('env')=='dev') {
+                echo '<pre>';
 				print_r($cfg);
 				echo $response;
 				print_r($status);
+                echo '</pre>';
 			}
 			return false;
 		}

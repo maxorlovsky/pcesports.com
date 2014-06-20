@@ -345,6 +345,7 @@ class System
         require_once _cfg('classes').'/cron.php';
     	require_once _cfg('classes').'/template.php';
         require_once _cfg('classes').'/social.php';
+        require_once _cfg('classes').'/user.php';
     }
     
     protected function serverParse($socket, $response, $line = __LINE__) {
@@ -506,13 +507,18 @@ class System
                     fclose($file);*/
                 }
                 else if ($_GET['val1'] == 'generate') {
-					$rows = Db::fetchRows('SELECT * FROM `tm_strings`');
+					/*$rows = Db::fetchRows('SELECT * FROM `tm_strings`');
                     $txt = '';
                     foreach($rows as $v) {
                         $txt .= '!'.$v->key.' = '.$v->english;
                         $txt .= "\n\n";
                     }
-                    echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';
+                    echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';*/
+                }
+                else if ($_GET['val1'] == 'social' && isset($_GET['code']) && strlen($_GET['val2']) == 2) {
+                    $social = new Social();
+                    $answer = $social->Verify($_GET['val2']);
+                    exit($answer);
                 }
                 else {
                     exit('Run command error');
