@@ -14,6 +14,7 @@ class Ajax extends System
         'chat',
         'statusCheck',
         'uploadScreenshot',
+        'socialLogin',
 	);
 	
     public function ajaxRun($data) {
@@ -27,6 +28,11 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function socialLogin($data) {
+        $social = new Social();
+        return $social->getToken($data['provider']);
     }
     
     protected function uploadScreenshot() {

@@ -1,9 +1,22 @@
+$('.login').on('click', function() {
+    openPopup('login-window');
+});
+
+$('#fader, #close-popup').on('click', function() {
+    closePopup();
+});
+
+$('.socialLogin').on('click', function() {
+    var id = $(this).attr('id');
+    return social.id;
+});
+
 $('.bx-wrapper').bxSlider({
-	auto: true,
-	autoHover: true,
-	mode: 'fade',
-	speed: 2000,
-	pause: 4000
+    auto: true,
+    autoHover: true,
+    mode: 'fade',
+    speed: 2000,
+    pause: 4000
 });
 
 $('.languages a').on('click', function() {
@@ -152,6 +165,39 @@ $('#submitContactForm').on('click', this, function() {
 	ajax(query);
 });
 
+$(document).on('mousemove', '.hint', function(event) {
+	$('#hint-helper').offset({ top: event.pageY-30, left: event.pageX+10 });
+	
+	if ($('#hint-helper').is(':visible')) {
+		return false;
+	}
+	
+	msg = $(this).attr("attr-msg");
+	if ($('#hint-helper p').html != msg) {
+		$('#hint-helper p').html(msg);
+	}
+	if ($('#hint-helper').is(':hidden')) {
+		$('#hint-helper').show();
+	}
+}).on('mouseout', '.hint', function(){
+	$('#hint-helper').offset({ top: 0, left: 0 });
+	$('#hint-helper').hide();
+});
+
+// Functions
+function openPopup(name) {
+    $('html, body').css('overflow', 'hidden');
+    $('#'+name+', #fader').fadeIn('fast');
+    getLeft = ($(window).width()/2) - ($('#'+name).width()/2);
+    getTop = ($(window).height()/2) - ($('#'+name).height()/2);
+    $('#'+name).css({left: getLeft, top: getTop});
+    $('#'+name).show();
+}
+function closePopup() {
+    $('html, body').css('overflow', '');
+    $('#'+name+', #fader').fadeOut('fast');
+}
+
 function updateTimers() {
 	$.each($('.timer'), function(k, v) {
 		delta = parseInt($(this).attr('attr-time'));
@@ -197,27 +243,7 @@ function updateTimers() {
 		$(this).html(returnString);
 	});
 }
-
 setInterval(updateTimers, 1000);
-
-$(document).on('mousemove', '.hint', function(event) {
-	$('#hint-helper').offset({ top: event.pageY-30, left: event.pageX+10 });
-	
-	if ($('#hint-helper').is(':visible')) {
-		return false;
-	}
-	
-	msg = $(this).attr("attr-msg");
-	if ($('#hint-helper p').html != msg) {
-		$('#hint-helper p').html(msg);
-	}
-	if ($('#hint-helper').is(':hidden')) {
-		$('#hint-helper').show();
-	}
-}).on('mouseout', '.hint', function(){
-	$('#hint-helper').offset({ top: 0, left: 0 });
-	$('#hint-helper').hide();
-});
 
 function ajax(object) {
     if (!object.url) {
@@ -275,4 +301,49 @@ function ajax(object) {
     	success: object.success,
         error: object.error
     });
+}
+
+//social
+social = {
+    vk: function() {
+        this.get_token('vk');
+        return false;
+    },
+    tw: function() {
+        this.get_token('tw');
+        
+        return false;
+    }, 
+    gp: function() {
+        this.get_token('gp');
+        
+        return false;
+    }, 
+    fb: function() {
+        this.get_token('fb');
+        
+        return false;
+    }, 
+    get_token: function(provider) {
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'socialLogin',
+                provider: provider
+            },
+            success: function(data) {
+                social.auth_redirect(data);
+            }
+        };
+        ajax(query);
+    },
+    auth_redirect: function(answ) {
+        data = answ.split(';');
+        if(data[0] != '0') {
+            window.location.href = data[1];
+        }
+        else {
+            alert(data[1]);
+        }
+    }
 }

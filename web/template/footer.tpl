@@ -38,9 +38,13 @@
     </div>
 </footer>
 
-<div id="hint-helper"><p></p></div>
+<div class="hidden popup" id="login-window">
+    <a href="javascript:void(0);" class="socialLogin" id="fb">fb</a>
+</div>
 
+<div id="hint-helper"><p></p></div>
 <div id="toTop"></div>
+<div id="fader"></div>
 
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 <? if (_cfg('language') == 'ru') { ?>

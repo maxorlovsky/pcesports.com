@@ -344,6 +344,7 @@ class System
     	require_once _cfg('classes').'/ajax.php';
         require_once _cfg('classes').'/cron.php';
     	require_once _cfg('classes').'/template.php';
+        require_once _cfg('classes').'/social.php';
     }
     
     protected function serverParse($socket, $response, $line = __LINE__) {
