@@ -48,7 +48,7 @@
     </script>
 </head>
 
-<section id="full-site-wrapper" class="default">
+<section id="full-site-wrapper">
 
 <div id="head-line"></div>
 
