@@ -32,7 +32,7 @@
         		</a>
         	</div>
             <? if ($this->news->top->extension) { ?>
-                <a href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">
+                <a class="image-holder" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->top->id?>.<?=$this->news->top->extension?>" />
                 </a>
             <? } else { ?>
