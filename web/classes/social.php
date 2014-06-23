@@ -121,7 +121,7 @@ class Social
 	
 	private function fbComplete($data = array()) {
 		$user = $_POST;
-		$user['password'] = 'social_fb';
+		$user['password'] = 'social';
 		$user['social'] = 'fb';
 	
 		if(empty($data)) {
@@ -135,7 +135,6 @@ class Social
 		$user['lastName'] = !empty($data['last_name']) ? $data['last_name'] : 'None';
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
-			$user['i_agree'] = 1;
 		}
 		$user['social_uid'] = $data['id'];
 	

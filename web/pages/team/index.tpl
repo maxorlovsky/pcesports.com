@@ -22,7 +22,7 @@
 			<div class="game-logo"><img src="<?=_cfg('img')?>/footer-hs-logo.png" /></div>
             <div class="team-user">
             	<div class="name">Soldecroix</div>
-            	<div class="role">Competitive Player & Hearthstone tournament manager</div>
+            	<div class="role">Player</div>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ class Db
     
     public static function query($query) {
         $result = self::$connection->query($query);
-        if (!$result) {
+        if (!$result && _cfg('env') != 'prod') {
             return "Mysql response: ".mysqli_connect_error()." (".self::$connection->connect_errno.") - (".self::$connection->connect_error.")";
         }
         

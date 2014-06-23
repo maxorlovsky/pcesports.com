@@ -28,9 +28,9 @@
 					<div class="clear"></div>
 					<input type="text" name="email" placeholder="Email*" />
 					<div id="email-msg" class="message hidden"></div>
-                    <div class="clear"></div>
-                    <input type="text" name="twitch" placeholder="Twitch channel (example: pentaclick_tv)" />
-					<div id="twitch-msg" class="message hidden"></div>
+                    <!--<div class="clear"></div>
+                    <input type="text" name="twitch" placeholder="Stream channel (full link)" />
+					<div id="twitch-msg" class="message hidden"></div>-->
                     
 				</form>
 				<div class="clear"></div>
