@@ -31,10 +31,13 @@
     <? } ?>
     
     <script>
-    	var site = '<?=_cfg('site')?>';
-		var str = [];
-		str['days'] = '<?=t('days')?>';
-		str['day'] = '<?=t('day')?>';
+        var g = {
+            site: '<?=_cfg('site')?>',
+            str: {
+                days: '<?=t('days')?>',
+                day: '<?=t('day')?>'
+            }
+        };
 		
 		//Highslide
 		hs.graphicsDir = '<?=_cfg('static')?>/images/graphics/';
@@ -118,6 +121,6 @@
             }
             ?>
         </ul>
-        <?/*<div class="login">Login<div class="usericon"></div></div>*/?>
+        <div class="login">Login<div class="usericon"></div></div>
     </div>
 </nav>

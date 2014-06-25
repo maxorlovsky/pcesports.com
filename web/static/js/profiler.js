@@ -1,9 +1,3 @@
-//Globals
-var formInProgress = 0;
-var checkTimer = 15;
-
-// --------------------------------------------------------------------------------------------------------------------
-
 //Visual things
 
 $('#tournamentCode').on('click', function() {
@@ -50,7 +44,7 @@ $('#chat-input').on('keyup', function(e) {
 var uploadInProgress = 0;
 new AjaxUpload(
     $('#uploadScreen'), {
-    	action: site+'?ajax=uploadScreenshot',
+    	action: PC.site+'?ajax=uploadScreenshot',
     	//Name of the file input box  
     	name: 'upload',
     	onSubmit: function(file, ext) {
@@ -80,7 +74,8 @@ new AjaxUpload(
 
 
 //Main things
-profiler = {
+var profiler = {
+    checkTimer: 15,
     fetchChat: function() {
         var query = {
             type: 'POST',
@@ -115,7 +110,7 @@ profiler = {
                 $('#opponentStatus').removeClass('online offline');
                 $('#opponentName').removeClass('not-none');
                 
-                $('#opponentSec').html(checkTimer);
+                $('#opponentSec').html(profiler.checkTimer);
                 
                 $('#opponentName').addClass((answer[1]!='none'?'not-none':''));
                 $('#opponentStatus').addClass(answer[2]);
@@ -143,5 +138,5 @@ $(document).ready(function() {
     profiler.statusCheck();
     setInterval(function () { profiler.fetchChat(); }, 5000);
     setInterval(function () { profiler.statusCheckTimer(); }, 1000);
-    setInterval(function () { profiler.statusCheck(); }, checkTimer*1000);
+    setInterval(function () { profiler.statusCheck(); }, profiler.checkTimer*1000);
 });
