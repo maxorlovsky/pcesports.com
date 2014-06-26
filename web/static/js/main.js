@@ -223,7 +223,7 @@ var PC = {
                     $('.success-sent p').html(answer[1]);
                 }
                 else {
-                    this.formInProgress = 0;
+                    PC.formInProgress = 0;
                     $(element).removeClass('loading');
                     $('.contact-form #error p').html(answer[1]);
                     $('.contact-form #error').slideDown('fast');
@@ -232,7 +232,7 @@ var PC = {
                 return false;
             },
             error: function(data) {
-                this.formInProgress = 0;
+                PC.formInProgress = 0;
                 $(element).removeClass('loading');
             }
         };
@@ -320,7 +320,7 @@ var PC = {
             },
             success: function(answer) {
                 $('#add-team').removeClass('alpha');
-                this.formInProgress = 0;
+                PC.formInProgress = 0;
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
@@ -344,7 +344,7 @@ var PC = {
             },
             error: function() {
                 $('#add-team').removeClass('alpha');
-                this.formInProgress = 0;
+                PC.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
@@ -370,7 +370,7 @@ var PC = {
             },
             success: function(answer) {
                 $('#add-player').removeClass('alpha');
-                this.formInProgress = 0;
+                PC.formInProgress = 0;
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
@@ -394,11 +394,11 @@ var PC = {
             },
             error: function() {
                 $('#add-player').removeClass('alpha');
-                this.formInProgress = 0;
+                PC.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
-        }
+        };
         this.ajax(query);
     },
     ajax: function(object) {
