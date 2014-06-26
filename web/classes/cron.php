@@ -54,9 +54,34 @@ class Cron extends System {
             }
         }
         
-        if ($this->data->settings['tournament-start-lol'] == 1) {
+        if ($this->data->settings['tournament-start-lol-euw'] == 1) {
             if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->data->settings['lol-current-number'].'/matches.json', array(), 'state=open');
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-loleuw'.$this->data->settings['lol-current-number-euw'].'/matches.json', array(), 'state=open');
+            }
+            else {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+            }
+
+            foreach($answer as $v) {
+                //Checking if match is already registered
+                $row = Db::fetchRow('SELECT `match_id` '.
+                    'FROM `fights` '.
+                    'WHERE `match_id` = '.(int)$v->match->id
+                );
+                if (!$row) {
+                    //Registering match, if still not yet registered
+                    Db::query('INSERT INTO `fights` SET '.
+                        '`match_id` = '.(int)$v->match->id.', '.
+                        '`player1_id` = '.(int)$v->match->player1_id.', '.
+                        '`player2_id` = '.(int)$v->match->player2_id
+                    );
+                }
+            }
+        }
+        
+        if ($this->data->settings['tournament-start-lol-eune'] == 1) {
+            if (_cfg('env') == 'prod') {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-loleune'.$this->data->settings['lol-current-number-eune'].'/matches.json', array(), 'state=open');
             }
             else {
                 $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
@@ -81,38 +106,106 @@ class Cron extends System {
     }
     
     public function sendNotifications() {
-        $rows = Db::fetchRows('SELECT `game`, `name`, `dates`, `time` '.
+        $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates`, `time` '.
             'FROM `tournaments` '.
-            'WHERE `status` = "Start" '.
-            'AND ((`game` = "hs" AND `name` = '.$this->data->settings['hs-current-number'].') '.
-            'OR (`game` = "lol" AND `name` = '.$this->data->settings['lol-current-number'].')) '
+            'WHERE `status` = "Start" '
+            //'AND ((`game` = "hs" AND `name` = '.$this->data->settings['hs-current-number'].') '.
+            //'OR (`game` = "lol" AND `name` = '.$this->data->settings['lol-current-number'].')) '
         );
         
-        foreach($rows as $v) {
-            $row = Db::fetchRow('SELECT * '.
-                'FROM `notifications` '.
-                'WHERE `game` = "'.Db::escape($v->game).'" '.
-                'AND `tournament_name` = "'.Db::escape($v->name).'" '.
-                'AND `delivered` = 0 '
-            );
-            $v->dates = '04.06.2014';
-            $time = strtotime($v->dates.' '.$v->time) - 86400;
-            if (!$row && $time <= time()) {
-                $this->sendReminders($v);
+        if ($rows) {
+            foreach($rows as $v) {
+                $row = Db::fetchRow('SELECT * '.
+                    'FROM `notifications` '.
+                    'WHERE `game` = "'.Db::escape($v->game).'" '.
+                    'AND `tournament_name` = "'.Db::escape($v->name).'" '
+                    //'AND `delivered` != 1 '
+                );
+                
+                $time = array();
+                $time['24'] = strtotime($v->dates.' '.$v->time) - 86400;
+                $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
+                if (!$row && $time['24'] <= time()) {
+                    $v->template = 0;
+                    $this->sendReminders($v);
+                }
+                else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
+                    $v->template = 1;
+                    $v->data = $row;
+                    $this->sendReminders($v);
+                }
             }
         }
     }
     
     protected function sendReminders($tournament) {
-        $rows = Db::fetchRows('SELECT * '.
+        set_time_limit(600);
+        
+        $rows = Db::fetchRows('SELECT `name`, `server`, `email`, `id`, `link`, `server`, `game` '.
             'FROM `teams` '.
-            'WHERE `game` = "'.Db::escape($tournament->game).'" '.
-            'AND `tournament_id` = '.(int)$tournament->name.' '
+            'WHERE `game` = "'.Db::escape($tournament->game).'" AND '.
+            ($tournament->server?'`server` = "'.Db::escape($tournament->server).'" AND ':null).
+            '`tournament_id` = '.(int)$tournament->name.' AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0'
         );
         
+        if ($tournament->template == 1) {
+            $text = Template::getMailTemplate('reminder-1');
+        }
+        else {
+            $text = Template::getMailTemplate('reminder-24');
+        }
+        
         if ($rows) {
+            $i = 0;
             foreach($rows as $v) {
-                //dump($v);
+                if ($v->game == 'lol') {
+                    $url = _cfg('site').'/en/leagueoflegends/'.$v->server;
+                }
+                else {
+                    $url = _cfg('site').'/en/hearthstone';
+                }
+                
+                $message = str_replace(
+                    array(
+                        '%url%',
+                        '%code%',
+                        '%teamId%',
+                        '%name%',
+                    ),
+                    array(
+                        $url,
+                        $v->link,
+                        $v->id,
+                        $v->name,
+                    ),
+                    $text
+                );
+                dump($v);
+                echo $message;
+                //$this->sendMail($v->email, $form['title'], $message);
+                
+                ++$i;
+                if ($i >= 3) {
+                    sleep(1);
+                    $i = 0;
+                }
+            }
+            
+            if ($tournament->template == 1 && $tournament->data) {
+                Db::query('UPDATE `notifications` SET '.
+                    '`delivered` = 1 '.
+                    'WHERE `id` = '.(int)$tournament->data->id
+                );
+            }
+            else {
+                Db::query('INSERT INTO `notifications` SET '.
+                    '`game` = "'.Db::escape($tournament->game).'", '.
+                    '`tournament_name` = "'.Db::escape($tournament->name).'", '.
+                    '`delivered` = 24'
+                );
             }
         }
     }

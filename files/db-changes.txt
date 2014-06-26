@@ -12,6 +12,7 @@ UPDATE `tm_settings` SET  `field` =  'Регистрация на турнир (
 UPDATE `tm_settings` SET  `field` =  'Старт турнира (League of Legends - EUW)' WHERE  `tm_settings`.`setting` =  'tournament-start-lol-euw';
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('lol-current-number-eune', '1', 'Номер турнира (League of Legends - EUNE)', 'text', '3'), ('tournament-reg-lol-eune', '0', 'Регистрация на турнир (LoL - EUNE)', 'checkbox', '3');
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-start-lol-eune', '0', 'Старт турнира (League of Legends - EUNE)', 'checkbox', '3');
+ALTER TABLE  `notifications` CHANGE  `delivered`  `delivered` TINYINT( 2 ) UNSIGNED NOT NULL;
 
 # 14.06.2014
 CREATE TABLE `riot_callback` (

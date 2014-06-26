@@ -31,7 +31,6 @@ class leagueoflegends extends System
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "lol" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND ' .
             '`team_id` = '.(int)$_SESSION['participant']->id.' '.
             'ORDER BY `player_num` '
         );
@@ -51,7 +50,6 @@ class leagueoflegends extends System
         $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "lol" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND ' .
             '`approved` = 1 AND '.
             '`deleted` = 0 AND '.
             '`ended` = 0 '
