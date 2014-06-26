@@ -96,59 +96,10 @@
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
 $('#add-player').on('click', function() {
-    if (formInProgress == 1) {
-        return false;
-    }
-    
-    var errRegistered = 0;
-    formInProgress = 1;
-    $('#da-form .message').hide();
-    $('#da-form .message').removeClass('error success');
-    $(this).addClass('alpha');
-    
-    var query = {
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            ajax: 'registerInHS',
-            form: $('#da-form').serialize()
-        },
-        success: function(answer) {
-            $('#add-player').removeClass('alpha');
-            formInProgress = 0;
-            
-            if (answer.ok == 1) {
-                $('#register-url a').trigger('click');
-                $('#join-form').slideUp(1000, function() {
-                    $('.reg-completed').slideDown(1000);
-                });
-            }
-            else {
-                $.each(answer.err, function(k, v) {
-                    answ = v.split(';');
-                    $('#'+k+'-msg').html(answ[1]);
-                    $('#'+k+'-msg').show();
-                    if (answ[0] == 1) {
-                        $('#'+k+'-msg').addClass('success');
-                    }
-                    else {
-                        $('#'+k+'-msg').addClass('error');
-                    }
-                });
-            }
-        },
-        error: function() {
-            $('#add-player').removeClass('alpha');
-            formInProgress = 0;
-            
-            alert('Something went wrong... Contact admin at info@pcesports.com');
-        }
-    }
-    ajax(query);
+    PC.addPlayer();
 });
 
-var participantsNumber = <?=$participantsCount?>;
-
+participantsNumber = <?=$participantsCount?>;
 if (participantsNumber > 100) {
     challongeHeight = 3500;
 }
