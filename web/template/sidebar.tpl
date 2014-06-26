@@ -51,9 +51,9 @@
         ?>
         <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('d/m H:i', $v['time'])?>">
             <? if ($i!=0) { ?>
-                <div class="tourn-name"><?=$v['name']?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
+                <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
             <? } else { ?>
-                <h2><?=$v['name']?> #<?=$v['id']?><br /><?=t($v['status'])?></h2>
+                <h2><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></h2>
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + 10800)?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
