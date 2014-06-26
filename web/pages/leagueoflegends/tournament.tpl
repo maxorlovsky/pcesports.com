@@ -1,19 +1,19 @@
-<section class="container page lol">
+<section class="container page lol <?=$this->server?>">
 
 <div class="left-containers">
-	<? if (t('lol_tournament_vod_'.$this->pickedTournament) != 'lol_tournament_vod_'.$this->pickedTournament) { ?>
+	<? if (t('lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) != 'lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('broadcast_vod')?></h1>
         </div>
         
         <div class="block-content vods">
-            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('lol_tournament_vod_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
+            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     <? } ?>
 	
-	<? if ($this->data->settings['tournament-reg-lol'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
+	<? if ($this->data->settings['tournament-reg-lol-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
 			<h1 class="bordered"><?=t('join_tournament')?> #<?=$this->currentTournament?></h1>
@@ -37,6 +37,7 @@
 						<div id="mem<?=$i?>-msg" class="message hidden"></div>
 						<div class="clear"></div>
 					<? } ?>
+                    <input type="hidden" name="server" value="<?=$this->server?>" />
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="add-team"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
@@ -52,8 +53,8 @@
         
         <div class="block-content tournament-rules">
 			<h1><?=t('specific_tournament_rules')?></h1>
-			<?=t('lol_tournament_information_'.$this->pickedTournament)?>
-            <a href="<?=_cfg('href')?>/leagueoflegends"><?=t('global_tournament_rules')?></a>
+			<?=t('lol_'.$this->server.'_tournament_information_'.$this->pickedTournament)?>
+            <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>"><?=t('global_tournament_rules')?></a>
         </div>
     </div>
 	
@@ -82,7 +83,7 @@
                                 if (is_int($k2)) {
                                 ?>
 								<li>
-									<a href="http://www.lolking.net/summoner/euw/<?=$v2['player_id']?>" target="_blank">
+									<a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
 										<?=$v2['player']?>
 									</a>
 								</li><?
@@ -121,59 +122,10 @@
 
 <script>
 $('#add-team').on('click', function() {
-    if (formInProgress == 1) {
-        return false;
-    }
-    
-    var errRegistered = 0;
-    formInProgress = 1;
-    $('#da-form .message').hide();
-    $('#da-form .message').removeClass('error success');
-    $(this).addClass('alpha');
-    
-    var query = {
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            ajax: 'registerInLOL',
-            form: $('#da-form').serialize()
-        },
-        success: function(answer) {
-            $('#add-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            if (answer.ok == 1) {
-                $('#register-url a').trigger('click');
-                $('#join-form').slideUp(1000, function() {
-                    $('.reg-completed').slideDown(1000);
-                });
-            }
-            else {
-                $.each(answer.err, function(k, v) {
-                    answ = v.split(';');
-                    $('#'+k+'-msg').html(answ[1]);
-                    $('#'+k+'-msg').show();
-                    if (answ[0] == 1) {
-                        $('#'+k+'-msg').addClass('success');
-                    }
-                    else {
-                        $('#'+k+'-msg').addClass('error');
-                    }
-                });
-            }
-        },
-        error: function() {
-            $('#add-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            alert('Something went wrong... Contact admin at info@pcesports.com');
-        }
-    }
-    ajax(query);
+    PC.addTeam();
 });
 
-var participantsNumber = <?=$participantsCount?>;
-
+participantsNumber = <?=$participantsCount?>;
 if (participantsNumber > 100) {
     challongeHeight = 3500;
 }
@@ -189,7 +141,7 @@ else {
 
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
-    $('#challonge').challonge('lol<?=$this->pickedTournament?>', {
+    $('#challonge').challonge('lol<?=$this->server?><?=$this->pickedTournament?>', {
         subdomain: 'pentaclick',
         theme: '1',
         multiplier: '1.0',

@@ -12,6 +12,16 @@
         </td>
     </tr>
     <tr>
+        <td width="20%"><b>Server<br /><small>Only for LoL</small></td>
+        <td>
+            <select id="server">
+                <option value="">none</option>
+                <option value="euw" <?=($module->editData->server=='euw'?'selected="selected"':null)?>>EUW</option>
+                <option value="eune" <?=($module->editData->server=='eune'?'selected="selected"':null)?>>EUNE</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td width="20%"><b>Name <span class="red">*</span></b></td>
         <td><input type="text" id="name" size="50" value="<?=$module->editData->name?>" /></td>
     </tr>

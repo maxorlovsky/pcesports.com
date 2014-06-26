@@ -36,6 +36,7 @@ class System
         
         $this->data->settings = array();
         $this->data->links = new stdClass();
+        $this->data->sublinks = new stdClass();
         
         $data = array_merge($_GET, $_POST, $_SESSION);
          
@@ -59,6 +60,22 @@ class System
         );
         
         if ($rows) {
+            foreach($rows as $k => $v) {
+                if ($v->main_link == 0) {
+                    $id = $v->id;
+                    $this->data->links->$id = $v;
+                    $this->data->links->$id->sublinks = new stdClass();
+                }
+            }
+            
+            foreach($rows as $k => $v) {
+                if ($v->main_link != 0) {
+                    $mainId = $v->main_link;
+                    $id = $v->id;
+                    $this->data->links->$mainId->sublinks->$id = $v;
+                }
+            }
+            
         	$this->data->links = $rows;
         }
         

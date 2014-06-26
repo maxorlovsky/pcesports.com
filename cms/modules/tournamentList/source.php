@@ -47,6 +47,7 @@ class TournamentList
 		else {
 			Db::query('INSERT INTO `tournaments` SET '.
 				'`game` = "'.Db::escape($form['game']).'", '. 
+                '`server` = "'.Db::escape($form['server']).'", '. 
                 '`name` = "'.Db::escape($form['name']).'", '.
                 '`dates` = "'.Db::escape($form['dates']).'", '.
                 '`time` = "'.Db::escape($form['time']).'", '.
@@ -90,6 +91,7 @@ class TournamentList
 			
 			Db::query('UPDATE `tournaments` '.
 				'SET `game` = "'.Db::escape($form['game']).'", '. 
+                '`server` = "'.Db::escape($form['server']).'", '. 
                 '`name` = "'.Db::escape($form['name']).'", '.
                 '`dates` = "'.Db::escape($form['dates']).'", '.
                 '`time` = "'.Db::escape($form['time']).'", '.

@@ -301,6 +301,56 @@ var PC = {
             }
         }
     },
+    addTeam: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#da-form .message').hide();
+        $('#da-form .message').removeClass('error success');
+        $('#add-team').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ajax: 'registerInLOL',
+                form: $('#da-form').serialize()
+            },
+            success: function(answer) {
+                $('#add-team').removeClass('alpha');
+                this.formInProgress = 0;
+                
+                if (answer.ok == 1) {
+                    $('#register-url a').trigger('click');
+                    $('#join-form').slideUp(1000, function() {
+                        $('.reg-completed').slideDown(1000);
+                    });
+                }
+                else {
+                    $.each(answer.err, function(k, v) {
+                        answ = v.split(';');
+                        $('#'+k+'-msg').html(answ[1]);
+                        $('#'+k+'-msg').show();
+                        if (answ[0] == 1) {
+                            $('#'+k+'-msg').addClass('success');
+                        }
+                        else {
+                            $('#'+k+'-msg').addClass('error');
+                        }
+                    });
+                }
+            },
+            error: function() {
+                $('#add-team').removeClass('alpha');
+                this.formInProgress = 0;
+                
+                alert('Something went wrong... Contact admin at info@pcesports.com');
+            }
+        }
+        this.ajax(query);
+    },
     ajax: function(object) {
         if (!object.url) {
             object.url = this.site;

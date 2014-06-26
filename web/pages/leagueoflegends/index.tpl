@@ -3,11 +3,12 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">League of Legends <?=t('tournament_list')?></h1>
+            <h1 class="bordered">League of Legends <?=$this->server?> <?=t('tournament_list')?></h1>
         </div>
 		
-		<? foreach($this->tournamentData as $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$v['name']?>">
+		<? if ($this->tournamentData) {
+            foreach($this->tournamentData as $v) { ?>
+        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
                 <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 128 <?=t('participants')?></div>
@@ -29,7 +30,16 @@
                 <? } ?>
             </div>
         </a>
-        <? } ?>
+        <?
+            }
+        }
+        else {
+            ?>
+            <div class="block-content">
+                <?=t('no_tournaments_registered')?>
+            </div><?
+        }
+        ?>
     </div>
     
     <div class="block">

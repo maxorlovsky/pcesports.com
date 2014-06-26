@@ -110,10 +110,25 @@
         	<?
         	if ($this->data->links) {
 				foreach($this->data->links as $v) {
-                    if ($v->logged_in == 1 && $this->logged_in || $v->logged_in == 0) {
+                    if (($v->logged_in == 1 && $this->logged_in) || $v->logged_in == 0 && $v->main_link == 0) {
                     ?>
-                    <li class="" id="<?=$v->link?>">
+                    <li class="nav-link" id="<?=$v->link?>">
                         <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
+                        <?
+                        if ($v->sublinks) {
+                            ?><ul class="nav-sub"><?
+                            foreach($v->sublinks as $v2) {
+                                if ($v2->logged_in == 1 && $this->logged_in || $v2->logged_in == 0) {
+                                ?>
+                                <li class="nav-sublink" id="<?=$v2->link?>">
+                                    <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
+                                </li>
+                                <?
+                                }
+                            }
+                            ?></ul><?
+                        }
+                        ?>
                     </li>
                     <?
                     }
@@ -122,5 +137,6 @@
             ?>
         </ul>
         <div class="login">Login<div class="usericon"></div></div>
+        <div class="clear"></div>
     </div>
 </nav>

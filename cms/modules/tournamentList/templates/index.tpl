@@ -2,15 +2,16 @@
 
 <table class="table">
     <tr>
-        <td colspan="7" id="buttons">
+        <td colspan="8" id="buttons">
             <a href="<?=_cfg('cmssite').'/#tournamentList/add'?>"><div class="add-image"></div><?=at('add_new')?> tournament</a>
         </td>
     </tr>
     <tr>
     	<td width="5%"><b>ID</b></td>
         <td width="10%"><b>Game</b></td>
+        <td width="10%"><b>Server</b></td>
         <td width="10%"><b>Name</b></td>
-        <td width="30%"><b>Dates + Time</b></td>
+        <td width="20%"><b>Dates + Time</b></td>
         <td width="15%"><b>Prize</b></td>
         <td width="15%"><b>Status</b></td>
         <td width="15%" class="centered b"><?=at('actions')?></td>
@@ -22,6 +23,7 @@
                 <tr>
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->id?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->game?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->server?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->name?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->dates?> <?=($v->time?'- '.$v->time:null)?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->prize?></a></td>

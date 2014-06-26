@@ -32,6 +32,7 @@ RewriteRule ^([a-z]+)/([^/]*)/?$ /index.php?language=$1&val1=$2 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4&val4=$5 [QSA,L]
+RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4&val4=$5&val5=$6 [QSA,L]
 
 #<FilesMatch "\.(js|json)$">
 #    <IfModule mod_headers.c>

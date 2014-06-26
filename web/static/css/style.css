@@ -219,11 +219,12 @@ footer .copyrights .devs:hover {
     list-style: none;
     padding: 0;
 }
-.navbar .nav li {
+.navbar .nav .nav-link {
     float: left;
     line-height: 20px;
+    position: relative;
 }
-.navbar .nav li a {
+.navbar .nav .nav-link a {
     opacity: 0.8;
     padding: 18px 20px 23px 20px;
     display: block;
@@ -233,15 +234,40 @@ footer .copyrights .devs:hover {
     font-weight: bold;
     text-decoration: none;
     color: #fff;
-    
     font-family: Open Sans;
 }
-.navbar .nav li a:hover {
+.navbar .nav .nav-link a:hover {
     transition:.3s;
     opacity: 1;
 }
-.navbar .nav li.active a {
+.navbar .nav .nav-link.active a {
     opacity: 1;
+}
+
+.navbar .nav .nav-link:hover .nav-sub {
+    display: block;
+}
+.navbar .nav-sub {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 67px;
+    z-index: 10;
+    background-color: #000;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    
+}
+.navbar .nav-sub .nav-sublink {
+    border-bottom: 1px solid #32333b;
+}
+.navbar .nav-sub .nav-sublink a {
+    font-size: 11px;
+    white-space: nowrap;
+    margin: 0;
+    padding: 15px;
+    text-transform: none;
 }
 
 .page {

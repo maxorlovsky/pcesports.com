@@ -12,6 +12,16 @@
         </td>
     </tr>
     <tr>
+        <td width="20%"><b>Server<br /><small>Only for LoL</small></td>
+        <td>
+            <select id="server">
+                <option value="">none</option>
+                <option value="euw">EUW</option>
+                <option value="eune">EUNE</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td width="20%"><b>Name <span class="red">*</span></b></td>
         <td><input type="text" id="name" size="50" value="" /></td>
     </tr>

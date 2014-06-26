@@ -1,3 +1,18 @@
+# 26.06.2014
+ALTER TABLE  `teams` ADD  `server` ENUM(  'euw',  'eune',  '' ) NULL AFTER  `game` , ADD INDEX (  `server` );
+UPDATE `teams` SET `server` = "euw" WHERE `game` = "lol";
+ALTER TABLE  `tournaments` ADD  `server` ENUM(  'euw',  'eune',  '' ) NULL AFTER  `game` , ADD INDEX (  `server` );
+UPDATE `tournaments` SET `server` = "euw" WHERE `game` = "lol";
+
+UPDATE `tm_settings` SET  `setting` =  'lol-current-number-euw' WHERE  `tm_settings`.`setting` =  'lol-current-number';
+UPDATE `tm_settings` SET  `setting` =  'tournament-reg-lol-euw' WHERE  `tm_settings`.`setting` =  'tournament-reg-lol';
+UPDATE `tm_settings` SET  `setting` =  'tournament-start-lol-euw' WHERE  `tm_settings`.`setting` =  'tournament-start-lol';
+UPDATE `tm_settings` SET  `field` =  'Номер турнира (League of Legends - EUW)' WHERE  `tm_settings`.`setting` =  'lol-current-number-euw';
+UPDATE `tm_settings` SET  `field` =  'Регистрация на турнир (LoL - EUW)' WHERE  `tm_settings`.`setting` =  'tournament-reg-lol-euw';
+UPDATE `tm_settings` SET  `field` =  'Старт турнира (League of Legends - EUW)' WHERE  `tm_settings`.`setting` =  'tournament-start-lol-euw';
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('lol-current-number-eune', '1', 'Номер турнира (League of Legends - EUNE)', 'text', '3'), ('tournament-reg-lol-eune', 'Регистрация на турнир (LoL - EUNE)', '0', 'checkbox', '3');
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-start-lol-eune', 'Старт турнира (League of Legends - EUNE)', '0', 'checkbox', '3');
+
 # 14.06.2014
 CREATE TABLE `riot_callback` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
