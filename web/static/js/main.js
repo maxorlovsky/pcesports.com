@@ -23,11 +23,6 @@ $('.languages a').on('click', function() {
     $('.languages .language-switcher').stop().slideToggle('fast');
 });
 
-if (requireStatus == 1) {
-	PC.statusCheck();
-	setInterval(function () { PC.statusCheck(); }, 15000);
-}
-
 $(document).on('scroll', function() {
 	if (parseInt($(document).scrollTop()) != 0 && $('#toTop').is(':hidden')) {
 		$('#toTop').fadeIn('slow', function() {
@@ -460,4 +455,8 @@ var PC = {
     }
 };
 
+if (requireStatus == 1) {
+	PC.statusCheck();
+	setInterval(function () { PC.statusCheck(); }, 15000);
+}
 setInterval(PC.updateTimers, 1000);

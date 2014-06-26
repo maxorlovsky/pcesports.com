@@ -37,14 +37,14 @@ $('#chat-input').on('keyup', function(e) {
                 }
             }
         }
-        ajax(query);
+        PC.ajax(query);
     }
 });
 
 var uploadInProgress = 0;
 new AjaxUpload(
     $('#uploadScreen'), {
-    	action: PC.site+'?ajax=uploadScreenshot',
+    	action: g.site+'?ajax=uploadScreenshot',
     	//Name of the file input box  
     	name: 'upload',
     	onSubmit: function(file, ext) {
@@ -97,7 +97,7 @@ var profiler = {
                 }
             }
         }
-        ajax(query);
+        PC.ajax(query);
     },
     statusCheck: function() {
         var query = {
@@ -122,7 +122,7 @@ var profiler = {
                 }
             }
         }
-        ajax(query);
+        PC.ajax(query);
     },
     statusCheckTimer: function() {
         var sec = parseInt($('#opponentSec').html()) - 1;
