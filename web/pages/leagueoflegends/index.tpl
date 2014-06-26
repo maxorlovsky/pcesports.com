@@ -5,12 +5,12 @@
         <div class="block-header-wrapper">
             <h1 class="bordered">League of Legends <?=$this->server?> <?=t('tournament_list')?></h1>
         </div>
-		
+        
 		<? if ($this->tournamentData) {
             foreach($this->tournamentData as $v) { ?>
         <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
-                <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
+                <div class="title"><img src="<?=_cfg('img')?>/lol-logo-small.png" /><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> 128 <?=t('participants')?></div>
             </div>
             

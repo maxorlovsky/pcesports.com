@@ -131,7 +131,7 @@ class Ajax extends System
         );
         
         if ($playersRow) {
-            $enemyRow = Db::fetchRow('SELECT `name`, `online` '.
+            $enemyRow = Db::fetchRow('SELECT `name`, `online`, `server` '.
                 'FROM `teams` '.
                 'WHERE '.
                 '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
@@ -150,7 +150,7 @@ class Ajax extends System
                 $code = '';
                 if ($_SESSION['participant']->game == 'lol') {
                     $array = array(
-						'name' => 'Pentaclick#'.(int)$this->data->settings['lol-current-number'].' - '.$playersRow->name1.' vs '.$playersRow->name2,
+						'name' => 'Pentaclick#'.(int)$this->data->settings['lol-current-number-'.$enemyRow->server].' - '.$playersRow->name1.' vs '.$playersRow->name2,
 						'extra' => $playersRow->match_id,
 						'password' => md5($playersRow->match_id),
 						'report' => 'http://www.pcesports.com/run/riotcode/',
@@ -308,10 +308,22 @@ class Ajax extends System
     	$err = array();
     	$suc = array();
     	parse_str($data['form'], $post);
+        
+        if (in_array($post['server'], array('eune', 'euw'))) {
+            $server = $post['server'];
+        }
+        else {
+            $server = 'euw';
+        }
+        
+        if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
+            return '0;Server error!';
+        }
     	
     	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
     		'`name` = "'.Db::escape($post['team']).'" AND '.
+            '`server` = "'.Db::escape($server).'" AND '.
     		'`game` = "lol" AND '.
     		'`approved` = 1 AND '.
     		'`deleted` = 0'
@@ -350,19 +362,20 @@ class Ajax extends System
 				$err['mem'.$i] = '0;'.t('field_empty');    
 			}
 			else if ($post['mem'.$i]) {
-				$response = $this->runAPI('/euw/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
+				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
 					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
 					'WHERE '.
-					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
 					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
 					'`p`.`game` = "lol" AND '.
 					'`t`.`approved` = 1 AND '.
+                    '`t`.`server` = "'.$server.'" AND '.
 					'`t`.`deleted` = 0'
 				);
                 
 				if ($response == 404) {
-					$err['mem'.$i] = '0;'.t('summoner_not_found_euw');
+					$err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
 				}
 				else if ($response && $response->summonerLevel != 30) {
 					$err['mem'.$i] = '0;'.t('summoner_low_lvl');
@@ -397,7 +410,8 @@ class Ajax extends System
     		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
     		Db::query('INSERT INTO `teams` SET '.
 	    		'`game` = "lol", '.
-	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+                '`server` = "'.$server.'", '.
+	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['team']).'", '.
@@ -412,7 +426,7 @@ class Ajax extends System
 				Db::query(
 					'INSERT INTO `players` SET '.
 					' `game` = "lol", '.
-					' `tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
 					' `team_id` = '.(int)$teamId.', '.
 					' `name` = "'.Db::escape($v['name']).'", '.
 					' `player_num` = "'.(int)$k.'", '.
@@ -424,7 +438,7 @@ class Ajax extends System
     	
     		$text = str_replace(
     			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends', _cfg('site')),
+    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends/'.$server, _cfg('site')),
     			$text
     		);
     	
@@ -438,6 +452,17 @@ class Ajax extends System
     	$err = array();
     	$suc = array();
     	parse_str($data['form'], $post);
+        
+        if (in_array($post['server'], array('eune', 'euw'))) {
+            $server = $post['server'];
+        }
+        else {
+            $server = 'euw';
+        }
+        
+        if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
+            return '0;Server error!';
+        }
 		
 		$players = array();
 		$checkForSame = array();
@@ -453,7 +478,7 @@ class Ajax extends System
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
 					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
 					'WHERE '.
-					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' AND '.
+					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
 					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
 					'`p`.`game` = "lol" AND '.
 					'`t`.`approved` = 1 AND '.
@@ -496,20 +521,20 @@ class Ajax extends System
                 '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
                 'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "lol" AND '.
-                '`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' '
+                '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
             );
             
             Db::query('DELETE FROM `players` '.
                 'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "lol" AND '.
-                '`tournament_id` = '.(int)$this->data->settings['lol-current-number'].' '
+                '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
             );
             
             foreach($players as $k => $v) {
 				Db::query(
 					'INSERT INTO `players` SET '.
 					' `game` = "lol", '.
-					' `tournament_id` = '.(int)$this->data->settings['lol-current-number'].', '.
+					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
 					' `team_id` = '.(int)$_SESSION['participant']->id.', '.
 					' `name` = "'.Db::escape($v['name']).'", '.
 					' `player_num` = "'.(int)$k.'", '.
