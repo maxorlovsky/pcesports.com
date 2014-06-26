@@ -136,7 +136,7 @@
             }
             ?>
         </ul>
-        <div class="login">Login<div class="usericon"></div></div>
+        <?/*<div class="login">Login<div class="usericon"></div></div>*/?>
         <div class="clear"></div>
     </div>
 </nav>

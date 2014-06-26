@@ -242,7 +242,8 @@ class leagueoflegends extends System
 			'WHERE `game` = "lol" AND '.
             '`server` = "'.Db::escape($this->server).'" AND' .
             '`status` != "Registration" '.
-			'ORDER BY `id` DESC'
+			'ORDER BY `id` DESC '.
+            'LIMIT 5'
 		);
         if ($rows) {
             foreach($rows as $v) {
@@ -262,7 +263,9 @@ class leagueoflegends extends System
             );
             if ($rows) {
                 foreach($rows as $v) {
-                    $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
+                    if ($this->tournamentData[$v->tournament_id]) {
+                        $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
+                    }
                 }
             }
         
@@ -277,7 +280,7 @@ class leagueoflegends extends System
             $previousTournamentId = 0;
             if ($rows) {
                 foreach($rows as $v) {
-                    if ($v->tournament_id != $previousTournamentId) {
+                    if ($v->tournament_id != $previousTournamentId && $this->tournamentData[$v->tournament_id]) {
                         $this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
                     }
                 }

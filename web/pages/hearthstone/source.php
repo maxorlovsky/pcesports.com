@@ -190,7 +190,8 @@ class hearthstone extends System
 			'FROM `tournaments` '.
 			'WHERE `game` = "hs" '.
             'AND `status` != "Registration" '.
-			'ORDER BY `id` DESC'
+			'ORDER BY `id` DESC '.
+            'LIMIT 5'
 		);
 		foreach($rows as $v) {
 			$this->tournamentData[$v->name] = (array)$v;
@@ -202,9 +203,13 @@ class hearthstone extends System
 			'GROUP BY `tournament_id` '.
 			'ORDER BY `id` DESC'
 		);
-		foreach($rows as $v) {
-			$this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
-		}
+        if ($rows) {
+            foreach($rows as $v) {
+                if ($this->tournamentData[$v->tournament_id]) {
+                    $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
+                }
+            }
+        }
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
 			'FROM `teams` '.
@@ -215,7 +220,7 @@ class hearthstone extends System
 		$previousTournamentId = 0;
 		if ($rows) {
 			foreach($rows as $v) {
-				if ($v->tournament_id != $previousTournamentId) {
+				if ($v->tournament_id != $previousTournamentId && $this->tournamentData[$v->tournament_id]) {
 					$this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
 				}
 			}
