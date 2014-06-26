@@ -269,6 +269,13 @@ footer .copyrights .devs:hover {
     padding: 15px;
     text-transform: none;
 }
+.nav-user {
+    float: right !important;
+}
+.nav-user .nav-sub {
+    right: 0;
+    left: 0;
+}
 
 .page {
     width: 1130px;

@@ -35,7 +35,7 @@ class Db
     
     public static function query($query) {
         $result = self::$connection->query($query);
-        if (!$result && _cfg('env') != 'prod') {
+        if (!$result) {
             return "Mysql response: ".mysqli_connect_error()." (".self::$connection->connect_errno.") - (".self::$connection->connect_error.")";
         }
         
@@ -85,6 +85,14 @@ class Db
     
     public static function lastId() {
         return self::$connection->insert_id;
+    }
+    
+    public static function error() {
+    	if(self::$connection->errno) {
+    		return self::$connection->errno.': '.self::$connection->error;
+        }
+        
+    	return false;
     }
     
     public static function escape($variable) {

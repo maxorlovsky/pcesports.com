@@ -36,7 +36,6 @@ class System
         
         $this->data->settings = array();
         $this->data->links = new stdClass();
-        $this->data->sublinks = new stdClass();
         
         $data = array_merge($_GET, $_POST, $_SESSION);
          
@@ -117,7 +116,15 @@ class System
         }
         ksort($this->serverTimes);
 
-        $this->logged_in = 0;
+        $checkUser = User::checkUser($_SESSION['user']);
+        if ($checkUser) {
+            $this->logged_in = 1;
+            $this->data->user = $checkUser;
+        }
+        else {
+            $this->logged_in = 0;
+            $this->data->user = new stdClass();
+        }
         
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             
@@ -399,6 +406,32 @@ class System
     /*Private functions*/
     private function checkGetData() {
         global $cfg;
+        
+        $availableLanguages = array();
+        $fetchingFullLanguage = array();
+        $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
+        foreach($languageRows as $v) {
+        	$availableLanguages[] = $v->flag;
+            $fetchingFullLanguage[$v->flag] = $v->title;
+        }
+        
+        //Setting - Languages
+        if (isset($_GET['language']) && $_GET['language'] && in_array($_GET['language'], $availableLanguages)) {
+            $cfg['language'] = $_GET['language'];
+            setcookie('language', _cfg('language'), time()+7776000, '/', 'pcesports.com');
+        }
+        else if (isset($_COOKIE['language']) && $_COOKIE['language'] && in_array($_COOKIE['language'], $availableLanguages)) {
+            $cfg['language'] = $_COOKIE['language'];
+        }
+        else {
+        	$cfg['language'] = 'en';
+        }
+        
+        $cfg['fullLanguage'] = $fetchingFullLanguage[$cfg['language']];
+        
+        $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
+        $cfg['hssite'] = $cfg['href'].'/hearthstone';
+        $cfg['lolsite'] = $cfg['href'].'/leagueoflegends';
     
         if (isset($_GET['language']) && $_GET['language'] == 'run') { //Special RUN command
             if (isset($_GET['val1'])) {
@@ -534,9 +567,20 @@ class System
                     echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';*/
                 }
                 else if ($_GET['val1'] == 'social' && isset($_GET['code']) && strlen($_GET['val2']) == 2) {
+                    unset($_SESSION['errors']);
+                    
                     $social = new Social();
                     $answer = $social->Verify($_GET['val2']);
-                    exit($answer);
+                    if ($answer === false) {
+                        header('Location: '._cfg('href').'/profile/error');
+                        exit();
+                    }
+                    
+                    header('Location: '._cfg('href').'/profile');
+                }
+                else if ($_GET['val1'] == 'logout') {
+                    User::logout();
+                    header('Location: '._cfg('site'));
                 }
                 else {
                     exit('Run command error');
@@ -545,32 +589,6 @@ class System
             
             exit();
         }
-    
-        $availableLanguages = array();
-        $fetchingFullLanguage = array();
-        $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
-        foreach($languageRows as $v) {
-        	$availableLanguages[] = $v->flag;
-            $fetchingFullLanguage[$v->flag] = $v->title;
-        }
-        
-        //Setting - Languages
-        if (isset($_GET['language']) && $_GET['language'] && in_array($_GET['language'], $availableLanguages)) {
-            $cfg['language'] = $_GET['language'];
-            setcookie('language', _cfg('language'), time()+7776000, '/', 'pcesports.com');
-        }
-        else if (isset($_COOKIE['language']) && $_COOKIE['language'] && in_array($_COOKIE['language'], $availableLanguages)) {
-            $cfg['language'] = $_COOKIE['language'];
-        }
-        else {
-        	$cfg['language'] = 'en';
-        }
-        
-        $cfg['fullLanguage'] = $fetchingFullLanguage[$cfg['language']];
-        
-        $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
-        $cfg['hssite'] = $cfg['href'].'/hearthstone';
-        $cfg['lolsite'] = $cfg['href'].'/leagueoflegends';
 
         return true;
     }

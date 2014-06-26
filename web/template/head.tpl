@@ -110,7 +110,7 @@
         	<?
         	if ($this->data->links) {
 				foreach($this->data->links as $v) {
-                    if (($v->logged_in == 1 && $this->logged_in) || $v->logged_in == 0 && $v->main_link == 0) {
+                    if ((($v->logged_in == 1 && $this->logged_in) || $v->logged_in == 0) && $v->main_link == 0 && $v->block != 1) {
                     ?>
                     <li class="nav-link" id="<?=$v->link?>">
                         <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
@@ -136,7 +136,43 @@
             }
             ?>
         </ul>
-        <?/*<div class="login">Login<div class="usericon"></div></div>*/?>
+        <? if (_cfg('env') != 'prod') { ?>
+            <? if ($this->logged_in == 1) { ?>
+                <ul class="nav nav-user">
+                    <?
+                    if ($this->data->links) {
+                        foreach($this->data->links as $v) {
+                            if ($v->logged_in == 1 && $v->main_link == 0 && $v->block == 1) {
+                            ?>
+                            <li class="nav-link" id="<?=$v->link?>">
+                                <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
+                                <ul class="nav-sub">
+                                <?
+                                if ($v->sublinks) {
+                                    foreach($v->sublinks as $v2) {
+                                        ?>
+                                        <li class="nav-sublink" id="<?=$v2->link?>">
+                                            <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
+                                        </li>
+                                        <?
+                                    }
+                                }
+                                ?>
+                                    <li class="nav-sublink" id="logout">
+                                        <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?
+                            }
+                        }
+                    }
+                    ?>
+                </ul>
+            <? } else { ?>
+                <div class="login">Login<div class="usericon"></div></div>
+            <? } ?>
+        <? } ?>
         <div class="clear"></div>
     </div>
 </nav>

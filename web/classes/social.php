@@ -8,18 +8,23 @@ class Social
 	}
 	
 	public function Verify($provider) {
+        $_SESSION['errors'] = array();
 		if(!$provider) {
+            $_SESSION['errors'][] = 'Provider error';
 			return false;
 		}
 		
 		if(!isset($this->config[$provider])) {
-            die('No social config: '.$provider);
+            $_SESSION['errors'][] = 'No social config: '.$provider;
+            return false;
         }
+        
 		$this->config = $this->config[$provider];
 			
 		if(isset($_SESSION['social'][$provider])) {
 			return $this->{$provider.'Complete'}();
-		} else if(method_exists($this, $provider.'Verify')) {
+		}
+        else if(method_exists($this, $provider.'Verify')) {
 			return $this->{$provider.'Verify'}();
 		}
         
@@ -121,51 +126,52 @@ class Social
 	
 	private function fbComplete($data = array()) {
 		$user = $_POST;
-		$user['password'] = 'social';
+		$user['password'] = 'social_fb';
 		$user['social'] = 'fb';
 	
 		if(empty($data)) {
 			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) {
-                return '0;Auth error ('.__LINE__.')';
+                $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
+                return false;
             }
 			$data = $_SESSION['social']['fb'];
 		}
 	
-		$user['firstName'] = !empty($data['first_name']) ? $data['first_name'] : 'None';
-		$user['lastName'] = !empty($data['last_name']) ? $data['last_name'] : 'None';
+		$user['name'] = !empty($data['first_name']) ? $data['first_name'] : 'Anonymous';
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
 		}
 		$user['social_uid'] = $data['id'];
-	
+
 		$user = User::socialLogin($user);
-	
-		if($user!==1) {
+		if($user!==true) {
 			if(!is_array($user)) {
                 $user = json_decode($user,1);
             }
 			
 			if(isset($user['error']['email'])) {
-                return '0;'.$user['error']['email'];
+                $_SESSION['errors'][] = 'Error '.$user['error']['email'].' ('.__LINE__.')';
+                return false;
             }
 			else {
-                return '0;Auth error '.__LINE__;
+                $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+                return false;
             }
 		}
 		
-		header('Location: '._cfg('site').'/'._cfg('language'));
-		die();
+		return true;
 	}
 	
 	private function fbVerify() {
 		if(!isset($_GET['code']) || empty($_GET['code'])) {
 			if(isset($_GET['error']) && !empty($_GET['error'])) {
-                $err = $_GET['error'];
+                $_SESSION['errors'][] = $_GET['error'];
             }
 			else {
-                $err = 'Auth error';
+                $_SESSION['errors'][] = 'Authorization error';
             }
-			return '0;'.$err;
+            
+            return false;
 		}
 	
 		$cfg = array(
@@ -181,13 +187,15 @@ class Social
 	
 		$f = $this->oAuthRequest($cfg);
 		if($f === false ) {
-            return '0;Auth error ('.__LINE__.')';
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
         }
 	
 		parse_str($f,$f);
 		 
 		if(!isset($f['access_token'])) {
-            return '0;Auth error ('.__LINE__.')';
+            $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
+            return false;
         }
 	
 		$cfg = array(
@@ -199,13 +207,15 @@ class Social
 	
 		$f = $this->oAuthRequest($cfg);
 		if($f === false ) {
-            return '0;Auth error ('.__LINE__.')';
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
         }
 	
 		$f = json_decode($f,1);
 		
 		if(!isset($f['id'])) {
-            return '0;Auth error ('.__LINE__.')';
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
         }
 	
 		$_SESSION['social']['fb'] = $f;
@@ -521,6 +531,7 @@ class Social
 	
 	
 		if($status['http_code']!=200) {
+            $_SESSION['errors'][] = $response.' ('.__LINE__.')';
 			if(_cfg('env')=='dev') {
                 echo '<pre>';
 				print_r($cfg);
