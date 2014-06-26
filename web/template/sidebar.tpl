@@ -57,7 +57,7 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + 10800)?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=$v['id']?>" class="button"><?=t('join')?></a>
+            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button"><?=t('join')?></a>
             
             <? if ($i!=0) { ?>
                 <div class="clear"></div>
