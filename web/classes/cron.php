@@ -189,7 +189,7 @@ class Cron extends System {
                     echo $message;
                 }
                 else {
-                    $this->sendMail($v->email, $form['title'], $message);
+                    $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
                 }
                 
                 ++$i;
