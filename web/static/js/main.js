@@ -1,3 +1,7 @@
+if ($('.ad-holder').height() == 0) {
+    $('.ad-blocked').show();
+}
+
 $('.login').on('click', function() {
     PC.openPopup('login-window');
 });

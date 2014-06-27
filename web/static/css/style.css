@@ -1085,6 +1085,11 @@ footer .games img {
 .ad-holder {
 	padding: 6px !important
 }
+.block .ad-blocked {
+    display: none;
+    background-color: #a00;
+    color: #fff;
+}
 
 .maintenance {
 	font-size: 25px;
