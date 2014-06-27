@@ -183,9 +183,14 @@ class Cron extends System {
                     ),
                     $text
                 );
-                dump($v);
-                echo $message;
-                //$this->sendMail($v->email, $form['title'], $message);
+                
+                if ($tournament->template == 1) {
+                    dump($v);
+                    echo $message;
+                }
+                else {
+                    $this->sendMail($v->email, $form['title'], $message);
+                }
                 
                 ++$i;
                 if ($i >= 3) {
