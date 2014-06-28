@@ -184,13 +184,7 @@ class Cron extends System {
                     $text
                 );
                 
-                if ($tournament->template == 1) {
-                    dump($v);
-                    echo $message;
-                }
-                else {
-                    $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
-                }
+                $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
                 
                 ++$i;
                 if ($i >= 3) {
@@ -204,6 +198,7 @@ class Cron extends System {
                     '`delivered` = 1 '.
                     'WHERE `id` = '.(int)$tournament->data->id
                 );
+                $this->closeTournamentReg($tournament);
             }
             else {
                 Db::query('INSERT INTO `notifications` SET '.
@@ -213,5 +208,34 @@ class Cron extends System {
                 );
             }
         }
+    }
+    
+    private function closeTournamentReg($tournament) {
+        Db::query('UPDATE `tm_settings` SET '.
+            '`value` = 0 '.
+            'WHERE '.
+            '`setting` = "tournament-reg-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+        );
+            
+        $challongeTournament = $tournament->game;
+        if ($tournament->game == 'hs') {
+            $challongeTournament = $this->data->settings['hs-current-number'];
+        }
+        else {
+            $challongeTournament = $tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
+        }
+        
+        $apiArray = array(
+            'participant_id' => 0, //reshuffle all
+        );
+        
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-'.$challongeTournament.'/participants/randomize.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/randomize.post', $apiArray);
+        }
+        
+        return true;
     }
 }
