@@ -149,11 +149,18 @@ class Ajax extends System
                 
                 $code = '';
                 if ($_SESSION['participant']->game == 'lol') {
+                    if (_cfg('env') == 'prod') {
+                        $reportTo = 'http://www.pcesports.com/run/riotcode/';
+                    }
+                    else {
+                        $reportTo = 'http://test.pcesports.com/run/riotcode/';
+                    }
+                    
                     $array = array(
-						'name' => 'Pentaclick#'.(int)$this->data->settings['lol-current-number-'.$enemyRow->server].' - '.$playersRow->name1.' vs '.$playersRow->name2,
-						'extra' => $playersRow->match_id,
-						'password' => md5($playersRow->match_id),
-						'report' => 'http://www.pcesports.com/run/riotcode/',
+						'name'      => 'Pentaclick#'.(int)$this->data->settings['lol-current-number-'.$enemyRow->server].' - '.$playersRow->name1.' vs '.$playersRow->name2,
+						'extra'     => $playersRow->match_id,
+						'password'  => md5($playersRow->match_id),
+						'report'    => $reportTo,
 					);
 					$code = 'pvpnet://lol/customgame/joinorcreate/map1/pick6/team5/specALL/';
 					$code .= base64_encode(json_encode($array));
