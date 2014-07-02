@@ -447,11 +447,12 @@ class System
                     
                     $callback = file_get_contents("php://input");
                     $this->sendMail('max.orlovsky@gmail.com', 'Riot callback(FORCE)', 'Incorrect: '.$callback);
+                    $this->sendMail('max.orlovsky@gmail.com', 'Riot callback(FORCE)', 'Incorrect: '.base64_decode($callback));
                     
                     //Only for force check!
-                    $data = json_decode($callback);
+                    $data = json_encode(base64_decode($callback));
                     Db::query('INSERT INTO `riot_callback` SET '.
-                        '`game_id` = '.(int)$data->gameId.', '.
+                        '`game_id` = '.(int)$data->extra.', '.
                         '`callback` = "'.Db::escape($callback).'"'
                     );
                     
@@ -462,7 +463,7 @@ class System
                     
                     $data = json_decode($callback);
                     Db::query('INSERT INTO `riot_callback` SET '.
-                        '`game_id` = '.(int)$data->gameId.', '.
+                        '`game_id` = '.(int)$data->extra.', '.
                         '`callback` = "'.Db::escape($callback).'"'
                     );
 
