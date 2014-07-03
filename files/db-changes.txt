@@ -1,3 +1,15 @@
+# 03.07.2014
+DROP TABLE `lol_games`;
+CREATE TABLE  `pentaclick_dev`.`lol_games` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`match_id` BIGINT UNSIGNED NOT NULL ,
+`game_id` BIGINT UNSIGNED NULL DEFAULT NULL ,
+`teamId1` INT UNSIGNED NULL ,
+`teamId2` INT UNSIGNED NULL ,
+`message` TEXT NULL
+) ENGINE = INNODB;
+ALTER TABLE `lol_games` ADD `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 # 26.06.2014
 ALTER TABLE  `teams` ADD  `server` ENUM(  'euw',  'eune',  '' ) NULL AFTER  `game` , ADD INDEX (  `server` );
 UPDATE `teams` SET `server` = "euw" WHERE `game` = "lol";

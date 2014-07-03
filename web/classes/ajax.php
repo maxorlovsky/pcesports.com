@@ -51,7 +51,7 @@ class Ajax extends System
             return '0;No fight registered';
         }
 
-        if ($_FILES['upload']['size'] > 1024*$mb*1024) {
+        if ($_FILES['upload']['size'] > ($mb * 1048576)) { //1024*1024
             return '0;File size is too big, allowed only: '.$mb.' MB';
         }
         else {
@@ -157,13 +157,12 @@ class Ajax extends System
                     }
                     
                     $array = array(
-						//'name'      => 'Pentaclick#'.(int)$this->data->settings['lol-current-number-'.$enemyRow->server].' - '.$playersRow->name1.' vs '.$playersRow->name2,
-                        'name'      => 'Pentaclick test',
-						'extra'     => 2342,
-						'password'  => md5('randomblaberish'),
-						'report'    => "http://test.pcesports.com/run/riotcode/",
+						'name'      => 'Pentaclick#'.(int)$this->data->settings['lol-current-number-'.$enemyRow->server].' - '.$playersRow->name1.' vs '.$playersRow->name2,
+						'extra'     => $playersRow->match_id,
+						'password'  => md5($playersRow->match_id),
+						'report'    => $reportTo,
 					);
-					$code = 'pvpnet://lol/customgame/joinorcreate/map1/pick6/team1/specALL/';
+					$code = 'pvpnet://lol/customgame/joinorcreate/map1/pick6/team5/specALL/';
 					$code .= base64_encode(json_encode($array));
                 }
 
@@ -370,7 +369,7 @@ class Ajax extends System
 				$err['mem'.$i] = '0;'.t('field_empty');    
 			}
 			else if ($post['mem'.$i]) {
-				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
+				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
 					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
 					'WHERE '.
@@ -482,7 +481,7 @@ class Ajax extends System
 				$err['mem'.$i] = '0;'.t('field_empty');
 			}
 			else if ($post['mem'.$i]) {
-				$response = $this->runAPI('/euw/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])));
+				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
 					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
 					'WHERE '.

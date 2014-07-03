@@ -236,10 +236,21 @@ class System
     	return $response;
     }
 	
-	public function runAPI($apiAdditionalData, $fullReturn = false) {
+	public function runAPI($apiAdditionalData, $server) {
+        if (!$apiAdditionalData || !in_array($server, array('eune', 'euw'))) {
+            return false;
+        }
+        
 		$startTime = microtime(true);
 		
-		$apiUrl = 'https://euw.api.pvp.net/api/lol';
+        if (_cfg('env') == 'dev') {
+            $apiUrl = 'http://';
+        }
+        else {
+            $apiUrl = 'https://';
+        }
+        
+		$apiUrl .= $server.'.api.pvp.net/api/lol';
 		$apiUrl .= $apiAdditionalData;
 		$apiUrl .= '?api_key=d8339ebc-91ea-49d3-809d-abcb42df872a';
 		
@@ -441,8 +452,12 @@ class System
                     $cronClass->cleanImagesTmp();
                     $cronClass->updateChallongeMatches();
                     $cronClass->sendNotifications();
+                    //$cronClass->checkLolGames();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
+                    $cronClass = new Cron();
+                    $cronClass->checkLolGames();
+                    exit();
                     $file = _cfg('uploads').'/riotcode.txt';
 
 					$data = file_get_contents("php://input");
