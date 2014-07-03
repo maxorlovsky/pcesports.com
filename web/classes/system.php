@@ -311,14 +311,14 @@ class System
 			return false;
 		}
 		
-		if ($fullReturn === false) {
+		//if ($fullReturn === false) {
 			$response = (array)json_decode($response);
 			$response = array_values($response);
 			$response = $response[0];
-		}
+		/*}
 		else {
 			$response = json_decode($response);
-		}
+		}*/
 		
 		return (object)$response;
 	}
