@@ -236,7 +236,7 @@ class System
     	return $response;
     }
 	
-	public function runAPI($apiAdditionalData, $server) {
+	public function runAPI($apiAdditionalData, $server, $fullReturn = false) {
         if (!$apiAdditionalData || !in_array($server, array('eune', 'euw'))) {
             return false;
         }
@@ -311,14 +311,14 @@ class System
 			return false;
 		}
 		
-		//if ($fullReturn === false) {
+		if ($fullReturn === false) {
 			$response = (array)json_decode($response);
 			$response = array_values($response);
 			$response = $response[0];
-		/*}
+		}
 		else {
 			$response = json_decode($response);
-		}*/
+		}
 		
 		return (object)$response;
 	}
