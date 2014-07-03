@@ -455,8 +455,8 @@ class System
                     //$cronClass->checkLolGames();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
-                    $cronClass = new Cron();
-                    $cronClass->checkLolGames();
+                    //$cronClass = new Cron();
+                    //$cronClass->checkLolGames();
                     exit();
                     $file = _cfg('uploads').'/riotcode.txt';
 

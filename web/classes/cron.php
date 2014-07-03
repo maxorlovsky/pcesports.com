@@ -146,8 +146,8 @@ class Cron extends System {
                     }
                     
                     //Getting team captain#1 recent games
-                    $answer = $this->runAPI('/euw/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', 'euw');
-                    $game = $answer->games[3]; //We're interested only in last game
+                    $answer = $this->runAPI('/euw/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', 'euw', true);
+                    $game = $answer->games[0]; //We're interested only in last game
                     
                     Db::query('INSERT INTO `lol_games` SET '.
                         '`match_id` = '.(int)$v->match_id.', '.
@@ -160,6 +160,7 @@ class Cron extends System {
                     //Do not check ranked and solo games
                     if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 1 && $game->fellowPlayers) {
                         $getPlayers = array();
+                        $getPlayers[] = $team[$v->team1]['captain'];
                         foreach($game->fellowPlayers as $fellowPlayers) {
                             $getPlayers[] = $fellowPlayers->summonerId;
                         }
@@ -182,7 +183,7 @@ class Cron extends System {
                             $playersList = array(0=>'',1=>'');
                             //Looping team 1
                             foreach($team[$v->team1]['players'] as $players) {
-                                if (in_array($players->id, $getPlayers)) {
+                                if (in_array($players['id'], $getPlayers)) {
                                     $playersList[0] .= $players['name'].' - found ('.$players['id'].')<br />';
                                 }
                                 else {
@@ -192,7 +193,7 @@ class Cron extends System {
                             
                             //Looping team 2
                             foreach($team[$v->team2]['players'] as $players) {
-                                if (in_array($players->id, $getPlayers)) {
+                                if (in_array($players['id'], $getPlayers)) {
                                     $playersList[1] .= $players['name'].' - found ('.$players['id'].')<br />';
                                 }
                                 else {
@@ -202,8 +203,12 @@ class Cron extends System {
                             
                             $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0], $playersList[1]), $emailText);
                             
-                            echo $emailText;
-                            echo '<br />';
+                            $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
+                            
+                            Db::query('UPDATE `lol_games` SET '.
+                                '`message` = "'.$emailText.'" '.
+                                'WHERE `id` = '.(int)$gameDbId
+                            );
                         }
                         else {
                             Db::query('UPDATE `lol_games` SET '.
