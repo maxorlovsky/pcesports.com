@@ -1,6 +1,6 @@
 # 03.07.2014
 DROP TABLE `lol_games`;
-CREATE TABLE  `pentaclick_dev`.`lol_games` (
+CREATE TABLE `lol_games` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `match_id` BIGINT UNSIGNED NOT NULL ,
 `game_id` BIGINT UNSIGNED NULL DEFAULT NULL ,
