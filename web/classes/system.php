@@ -598,7 +598,7 @@ class System
                     }
                     echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';*/
                 }
-                else if ($_GET['val1'] == 'social' && isset($_GET['code']) && strlen($_GET['val2']) == 2) {
+                else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
                     
                     $social = new Social();

@@ -1,3 +1,6 @@
+# 04.07.2014
+ALTER TABLE  `users` ADD  `registration_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 # 03.07.2014
 DROP TABLE `lol_games`;
 CREATE TABLE `lol_games` (

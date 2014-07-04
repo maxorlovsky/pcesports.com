@@ -356,15 +356,14 @@ class Social
 	
 	function twVerify() {
 		$params = array(
-				'url'	=> 'https://api.twitter.com/oauth/access_token',
-				'callback' => urlencode(_cfg('site').'/'._cfg('language').'/social/login/twitter'),
-				'id'    => $this->config['id'],
-				'secret'=> $this->config['private'],
-				'token'=> $_GET['oauth_token'],
-				'verifier'=>$_GET['oauth_verifier'],
-				'nonce' =>	md5(uniqid(rand(), true)),
-				'time'  => time(),
-	
+            'url'	=> 'https://api.twitter.com/oauth/access_token',
+            'callback' => urlencode(_cfg('site').'/'._cfg('language').'/social/login/twitter'),
+            'id'    => $this->config['id'],
+            'secret'=> $this->config['private'],
+            'token'=> $_GET['oauth_token'],
+            'verifier'=>$_GET['oauth_verifier'],
+            'nonce' =>	md5(uniqid(rand(), true)),
+            'time'  => time(),
 		);
 	
 		// oauth_token_secret получаем из сессии, которую зарегистрировали
@@ -427,14 +426,14 @@ class Social
 		$cfg = array(
 		    'url'=>'https://api.twitter.com/1.1/users/show.json',
 			'get'=>array(
-					'oauth_consumer_key'=>$params['id'],
-					'oauth_nonce'=>$oauth_nonce,
-					'oauth_signature'=>$signature,
-					'oauth_signature_method'=>'HMAC-SHA1',
-					'oauth_timestamp'=>$oauth_timestamp,
-					'oauth_token'=>$oauth_token,
-					'oauth_version'=>'1.0',
-					'screen_name'=>$screen_name
+                'oauth_consumer_key'=>$params['id'],
+                'oauth_nonce'=>$oauth_nonce,
+                'oauth_signature'=>$signature,
+                'oauth_signature_method'=>'HMAC-SHA1',
+                'oauth_timestamp'=>$oauth_timestamp,
+                'oauth_token'=>$oauth_token,
+                'oauth_version'=>'1.0',
+                'screen_name'=>$screen_name
 			)
 		);
 
@@ -446,7 +445,6 @@ class Social
 		$_SESSION['social']['tw'] = $f;
 		
 		return $this->twComplete($f);
-		
 	}
 	
 	private function tw() {
@@ -454,12 +452,11 @@ class Social
 		
 		$params = array(
 			'url'	=> 'https://api.twitter.com/oauth/request_token',
-			'callback' => urlencode(_cfg('site').'/'._cfg('language').'/social/login/tw'),		
+			'callback' => urlencode(_cfg('site').'/run/social/tw'),		
 			'id'    => $this->config['id'],
 			'secret'=> $this->config['private'],
 			'nonce' =>	md5(uniqid(rand(), true)),
 			'time'  => time(),
-				
 		);
 		
 		// ПОРЯДОК ПАРАМЕТРОВ ДОЛЖЕН БЫТЬ ИМЕННО ТАКОЙ!
@@ -495,6 +492,7 @@ class Social
 		parse_str($response,$response);
 		
 		$_SESSION['social']['twitter']['oauth_token_secret'] = $response['oauth_token_secret'];
+        
 		return 'https://api.twitter.com/oauth/authorize?oauth_token='.$response['oauth_token'];
 	}
 	

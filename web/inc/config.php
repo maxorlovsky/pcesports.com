@@ -16,9 +16,7 @@ $cfg['imgu'] = $cfg['site'].'/web/uploads';
 $cfg['social'] = array(
 	//client_id, client_secure
     'fb'    => array('id' => '766575306708443', 'private' => '1cbf6970d0073b4490d97653afcb5ffc'), //facebook
-	//'vk'    => array('id' => '4361686', 'private' => 'I59CQ2WhHwsgivEfDmWL'), //vk
-	//twitter	
-	//'tw'=>array('id'=>'Gd5C6WtuFW4dAjaChJ2uZgLfd','private'=>'ZrSuYvD1yPLMBQCHKfIwflSqquknSdymLHNrCU5QKUevHxSjpZ'),
-	//google plus	
+    'tw'    => array('id' => 'eOgJnO2SkfjkBFwLZ9lrWSyrL', 'private' => 'dxgLUmgeoBb6AfBaaADLHykhQOb71sdyZcHoJLRZkuupWfzT2B'), //twitter
+	'vk'    => array('id' => '4445595', 'private' => 'QctUnxnf6QqfcMbuTWas'), //vkontakte
 	//'gp'=>array('id'=>'623374796586-hhhvc219af45rhh9k99bf3gllluv1qs1.apps.googleusercontent.com','private'=>'1TG-YtZ19eMKQT97PozQVA1g'),
 );

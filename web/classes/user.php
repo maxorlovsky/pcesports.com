@@ -58,8 +58,14 @@ class User extends System
             `social_uid` = "'.Db::escape($data['social_uid']).'",
             `user_id` = '.$user->id
         );
+        
+        $row = Db::fetchRow('SELECT `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
+            'FROM `users_social` AS `s` '.
+            'LEFT JOIN `users` AS `u` ON `s`.`user_id` = `u`.`id` '.
+            'WHERE `u`.`id` = '.(int)$user->id.' '
+        );
     	
-    	$_SESSION['user'] = (array)$user;
+    	$_SESSION['user'] = (array)$row;
         
     	return true;
     }
