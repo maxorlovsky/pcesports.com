@@ -117,6 +117,7 @@ class System
         ksort($this->serverTimes);
 
         $checkUser = User::checkUser($_SESSION['user']);
+        
         if ($checkUser) {
             $this->logged_in = 1;
             $this->data->user = $checkUser;

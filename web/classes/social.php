@@ -60,7 +60,7 @@ class Social
 		$user['lastName'] = !empty($data['last_name']) ? $data['last_name'] : 'None';
 		$user['social_uid'] = $data['uid'];
 		
-		$user =  User::socialLogin($user);
+		$user = User::socialLogin($user);
 		
 		if($user===false) return array('error'=>'auth error ('.__LINE__.')');
 		
@@ -137,7 +137,7 @@ class Social
 			$data = $_SESSION['social']['fb'];
 		}
 	
-		$user['name'] = !empty($data['first_name']) ? $data['first_name'] : 'Anonymous';
+		$user['name'] = 'Anonymous';
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
 		}

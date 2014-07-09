@@ -109,7 +109,7 @@ class User extends System
     }
     
     public static function checkUser($user) {
-        $row = Db::fetchRow('SELECT `id`, `email`, `name` FROM `users` '.
+        $row = Db::fetchRow('SELECT * FROM `users` '.
             'WHERE `id` = '.(int)$user['sid'].' AND '.
             '`email` = "'.Db::escape($user['email']).'" AND '.
             '`password` = "'.Db::escape($user['password']).'" '
