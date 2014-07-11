@@ -12,6 +12,8 @@ $cfg['img'] = $cfg['static'].'/images';
 $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
 
+$cfg['timeDifference'] = + 10800; //in minutes (+3h)
+
 /** social logins */
 $cfg['social'] = array(
 	//client_id, client_secure

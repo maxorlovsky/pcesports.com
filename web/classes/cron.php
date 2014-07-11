@@ -246,13 +246,15 @@ class Cron extends System {
                 );
                 
                 $time = array();
-                $time['24'] = strtotime($v->dates.' '.$v->time) - 79200;
-                $time['1'] = strtotime($v->dates.' '.$v->time) + 3600;
-                if (!$row && $time['24'] <= time()) {
+                $time['24'] = strtotime($v->dates.' '.$v->time) - 86400;
+                $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
+                $currentTime = time() + _cfg('timeDifference');
+                
+                if (!$row && $time['24'] <= $currentTime) {
                     $v->template = 0;
                     $this->sendReminders($v);
                 }
-                else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
+                else if ($row && $row->delivered == 24 && $time['1'] <= $currentTime) {
                     $v->template = 1;
                     $v->data = $row;
                     $this->sendReminders($v);

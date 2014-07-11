@@ -56,7 +56,7 @@
                 <h2><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></h2>
             <? } ?>
             
-            <div class="timer" attr-time="<?=intval($v['time'] - time() + 10800)?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
+            <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
             <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button"><?=t('join')?></a>
             
             <? if ($i!=0) { ?>
