@@ -117,50 +117,55 @@ var PC = {
         $('#fader').fadeOut('fast');
         $('.popup:visible').stop().animate({top: -$('.popup:visible').height()});
     },
-    updateTimers: function() {
+    timers: [],
+    runTimers: function() {
         $.each($('.timer'), function(k, v) {
-            delta = parseInt($(this).attr('attr-time'));
-            nobr = 0;
-            if ($(this).attr('attr-br')) {
-                nobr = 1;
-            }
-            originalTimer = delta;
-        
-            if (delta < 1 || !delta) {
-                $(this).html('Live');
-                return;
-            }
-            
-            var days = Math.floor(delta / 86400);
-            delta -= days * 86400;
-            var hours = Math.floor(delta / 3600) % 24;
-            delta -= hours * 3600;
-            var minutes = Math.floor(delta / 60) % 60;
-            delta -= minutes * 60;
-            var seconds = delta % 60;
-            dayStr = g.str.days;
-            if (days == 1) {
-                dayStr = g.str.day;
-            }
-            
-            var returnString = '';
-            if (days > 0) {
-                returnString += days+' '+dayStr+' ';
-                if (nobr != 1) {
-                    returnString += '<br />';
-                }
-            }
-            if (hours   < 10) {hours   = '0'+hours;}
-            if (minutes < 10) {minutes = '0'+minutes;}
-            if (seconds < 10) {seconds = '0'+seconds;}
-            
-            returnString += hours+':'+minutes+':'+seconds;
-            
-            originalTimer--;
-            
-            $(this).attr('attr-time', originalTimer);
-            $(this).html(returnString);
+            PC.timers[k] = setInterval(function(){PC.updateTimer(v);}, 1000);
         });
+    },
+    updateTimer: function(element) {
+        element = $(element);
+        delta = parseInt(element.attr('attr-time'));
+        nobr = 0;
+        if (element.attr('attr-br')) {
+            nobr = 1;
+        }
+        originalTimer = delta;
+    
+        if (delta < 1 || !delta) {
+            element.html('Live');
+            return;
+        }
+        
+        var days = Math.floor(delta / 86400);
+        delta -= days * 86400;
+        var hours = Math.floor(delta / 3600) % 24;
+        delta -= hours * 3600;
+        var minutes = Math.floor(delta / 60) % 60;
+        delta -= minutes * 60;
+        var seconds = delta % 60;
+        dayStr = g.str.days;
+        if (days == 1) {
+            dayStr = g.str.day;
+        }
+        
+        var returnString = '';
+        if (days > 0) {
+            returnString += days+' '+dayStr+' ';
+            if (nobr != 1) {
+                returnString += '<br />';
+            }
+        }
+        if (hours   < 10) {hours   = '0'+hours;}
+        if (minutes < 10) {minutes = '0'+minutes;}
+        if (seconds < 10) {seconds = '0'+seconds;}
+        
+        returnString += hours+':'+minutes+':'+seconds;
+        
+        originalTimer--;
+        
+        element.attr('attr-time', originalTimer);
+        element.html(returnString);
     },
     likeInProgress: 0, //local var for bottom function
     like: function(element) {
@@ -510,4 +515,5 @@ if (requireStatus == 1) {
 	PC.statusCheck();
 	setInterval(function () { PC.statusCheck(); }, 15000);
 }
-setInterval(PC.updateTimers, 1000);
+
+PC.runTimers();
