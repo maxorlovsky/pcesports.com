@@ -248,12 +248,14 @@ class Cron extends System {
                 $time = array();
                 $time['24'] = strtotime($v->dates.' '.$v->time) - 86400;
                 $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
-                $currentTime = time() + _cfg('timeDifference');
+                $currentTime = time();// + _cfg('timeDifference');
                 
                 dump($row);
-                echo $time['1'].'<='.$currentTime;
-                echo '<br>';
-                echo date('d/m/Y H:i:s', $time['1']).' <= '.date('d/m/Y H:i:s', $currentTime);
+                if ($row) {
+                    echo $time['1'].'<='.$currentTime;
+                    echo '<br>';
+                    echo date('d/m/Y H:i:s', $time['1']).' <= '.date('d/m/Y H:i:s', $currentTime);
+                }
                 
                 if (!$row && $time['24'] <= $currentTime) {
                     $v->template = 0;
