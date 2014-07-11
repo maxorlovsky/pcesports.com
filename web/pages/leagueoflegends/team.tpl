@@ -7,7 +7,7 @@
 		</div>
 		
 		<div class="block-content">
-			<p class="reg-completed success-add"><?=t('team_edited')?></p>
+			<p class="team-edit-completed success-add"><?=t('team_edited')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
                     <? for($i=1;$i<=7;++$i) { ?>
