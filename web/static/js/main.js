@@ -395,7 +395,7 @@ var PC = {
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         }
-        ajax(query);
+        this.ajax(query);
     },
     addPlayer: function() {
         if (this.formInProgress == 1) {
