@@ -250,19 +250,11 @@ class Cron extends System {
                 $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
                 $currentTime = time() - _cfg('timeDifference');
                 
-                dump($row);
-                if ($row) {
-                    echo $time['1'].'<='.$currentTime;
-                    echo '<br>';
-                    echo date('d/m/Y H:i:s', $time['1']).' <= '.date('d/m/Y H:i:s', $currentTime);
-                }
-                
                 if (!$row && $time['24'] <= $currentTime) {
                     $v->template = 0;
                     $this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 24 && $time['1'] <= $currentTime) {
-                exit('run-1');
                     $v->template = 1;
                     $v->data = $row;
                     $this->sendReminders($v);
@@ -317,13 +309,7 @@ class Cron extends System {
                     $text
                 );
                 
-                if ($tournament->template == 1) { //required for test!
-                    echo 'To '.$v->email;
-                    dump($message);
-                }
-                else {
-                    $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
-                }
+                $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
                 
                 ++$i;
                 if ($i >= 3) {
@@ -333,10 +319,10 @@ class Cron extends System {
             }
             
             if ($tournament->template == 1 && $tournament->data) {
-                /*Db::query('UPDATE `notifications` SET '.
+                Db::query('UPDATE `notifications` SET '.
                     '`delivered` = 1 '.
                     'WHERE `id` = '.(int)$tournament->data->id
-                );*/
+                );
                 $this->closeTournamentReg($tournament);
             }
             else {
