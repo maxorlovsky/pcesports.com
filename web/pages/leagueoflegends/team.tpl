@@ -25,50 +25,6 @@
 
 <script>
 $('#edit-team').on('click', function() {
-    if (formInProgress == 1) {
-        return false;
-    }
-    
-    formInProgress = 1;
-    $('#da-form .message').hide();
-    $('#da-form .message').removeClass('error success');
-    $('.reg-completed').hide();
-    $(this).addClass('alpha');
-    
-    var query = {
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            ajax: 'editInLOL',
-            form: $('#da-form').serialize()
-        },
-        success: function(answer) {
-            $('#edit-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            $.each(answer.err, function(k, v) {
-                answ = v.split(';');
-                $('#'+k+'-msg').html(answ[1]);
-                $('#'+k+'-msg').show();
-                if (answ[0] == 1) {
-                    $('#'+k+'-msg').addClass('success');
-                }
-                else {
-                    $('#'+k+'-msg').addClass('error');
-                }
-            });
-            
-            if (answer.ok == 1) {
-                $('.reg-completed').slideDown(1000);
-            }
-        },
-        error: function() {
-            $('#edit-team').removeClass('alpha');
-            formInProgress = 0;
-            
-            alert('Something went wrong... Contact admin at info@pcesports.com');
-        }
-    }
-    ajax(query);
+    PC.editTeam($(this));
 });
 </script>
