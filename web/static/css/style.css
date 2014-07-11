@@ -902,6 +902,11 @@ footer .partners .skillz {
 	font-size: 18px;
 	margin: 0;
 }
+.team-edit-completed {
+	display: none;
+	font-size: 18px;
+	margin: 0 0 10px 0;
+}
 .alpha {
 	opacity: 0.5;
 }
