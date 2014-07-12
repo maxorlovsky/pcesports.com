@@ -144,7 +144,7 @@ class Cron extends System {
                     foreach($insideRows as $v2) {
                         $team[$v2->team_id]['players'][$v2->player_num] = array('id' => $v2->player_id, 'name' => $v2->name);
                     }
-                    
+                    ddump($team);
                     //Getting team captain#1 recent games
                     $answer = $this->runAPI('/euw/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', 'euw', true);
                     $game = $answer->games[0]; //We're interested only in last game
@@ -164,7 +164,7 @@ class Cron extends System {
                         foreach($game->fellowPlayers as $fellowPlayers) {
                             $getPlayers[] = $fellowPlayers->summonerId;
                         }
-                        dump($getPlayers);
+                        
                         //If enemy team captain not found, we don't interested in this match
                         if (in_array($team[$v->team2]['captain'], $getPlayers)) {
                             //Deciding who's won. If 1 then team 1 won of empty then team 2 won
