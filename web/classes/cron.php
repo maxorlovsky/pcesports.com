@@ -125,12 +125,7 @@ class Cron extends System {
                 'LEFT JOIN `teams` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
                 'WHERE `f`.`done` = 0 '
             );
-            echo 'SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2` '.
-                'FROM `fights` AS `f` '.
-                'LEFT JOIN `teams` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
-                'LEFT JOIN `teams` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
-                'WHERE `f`.`done` = 0 ';
-ddump($rows);
+            
             if ($rows)
             {
                 foreach($rows as $v) {
