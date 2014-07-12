@@ -164,7 +164,7 @@ class Cron extends System {
                         foreach($game->fellowPlayers as $fellowPlayers) {
                             $getPlayers[] = $fellowPlayers->summonerId;
                         }
-                        
+                        dump($getPlayers);
                         //If enemy team captain not found, we don't interested in this match
                         if (in_array($team[$v->team2]['captain'], $getPlayers)) {
                             //Deciding who's won. If 1 then team 1 won of empty then team 2 won
@@ -248,13 +248,11 @@ class Cron extends System {
                 $time = array();
                 $time['24'] = strtotime($v->dates.' '.$v->time) - 86400;
                 $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
-                $currentTime = time() - _cfg('timeDifference');
-                
-                if (!$row && $time['24'] <= $currentTime) {
+                if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
                     $this->sendReminders($v);
                 }
-                else if ($row && $row->delivered == 24 && $time['1'] <= $currentTime) {
+                else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
                     $v->template = 1;
                     $v->data = $row;
                     $this->sendReminders($v);
