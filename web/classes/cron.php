@@ -125,7 +125,12 @@ class Cron extends System {
                 'LEFT JOIN `teams` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
                 'WHERE `f`.`done` = 0 '
             );
-
+            echo 'SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2` '.
+                'FROM `fights` AS `f` '.
+                'LEFT JOIN `teams` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
+                'LEFT JOIN `teams` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
+                'WHERE `f`.`done` = 0 ';
+ddump($rows);
             if ($rows)
             {
                 foreach($rows as $v) {
@@ -144,7 +149,7 @@ class Cron extends System {
                     foreach($insideRows as $v2) {
                         $team[$v2->team_id]['players'][$v2->player_num] = array('id' => $v2->player_id, 'name' => $v2->name);
                     }
-                    ddump($team);
+                    
                     //Getting team captain#1 recent games
                     $answer = $this->runAPI('/euw/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', 'euw', true);
                     $game = $answer->games[0]; //We're interested only in last game
