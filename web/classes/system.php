@@ -453,7 +453,7 @@ class System
                     $cronClass->cleanImagesTmp();
                     $cronClass->updateChallongeMatches();
                     $cronClass->sendNotifications();
-                    //$cronClass->checkLolGames();
+                    $cronClass->checkLolGames();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
                     //$cronClass = new Cron();
