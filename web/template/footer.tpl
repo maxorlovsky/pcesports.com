@@ -46,6 +46,7 @@
         <a href="javascript:void(0);" class="socialLogin" id="fb"><img src="<?=_cfg('img')?>/fb-login.png" /></a>
         <a href="javascript:void(0);" class="socialLogin" id="gp"><img src="<?=_cfg('img')?>/gp-login.png" /></a>
         <a href="javascript:void(0);" class="socialLogin" id="vk"><img src="<?=_cfg('img')?>/vk-login.png" /></a>
+        <a href="javascript:void(0);" class="socialLogin" id="tc"><img src="<?=_cfg('img')?>/tc-login.png" /></a>
         <div class="information">Pentaclick will never use your social data to "stalk" you or sell it to 3rd parties. Social login/registration required to save you, from your account being stolen and to approve that you're not a robot.</div>
     </div>
 </div>

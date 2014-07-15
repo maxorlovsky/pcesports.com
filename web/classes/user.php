@@ -10,7 +10,7 @@ class User extends System
             return false;
         }
         
-    	$row = Db::fetchRow('SELECT `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
+    	$row = Db::fetchRow('SELECT `u`.`id` AS `id`, `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
             'FROM `users_social` AS `s` '.
             'LEFT JOIN `users` AS `u` ON `s`.`user_id` = `u`.`id` '.
             'WHERE `s`.`social` = "'.Db::escape($user['social']).'" AND '.
@@ -24,8 +24,14 @@ class User extends System
         
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
-            $u = new self;
-            return $u->socialRegister($user);
+            if ($_SESSION['user'] && $row->id) {
+                $u = new self;
+                return $u->socialConnect($user);
+            }
+            else {
+                $u = new self;
+                return $u->socialRegister($user);
+            }
         }
         else {
         	$_SESSION['user'] = (array)$row;
@@ -37,31 +43,35 @@ class User extends System
     private function socialRegister($data) {
     	$social = $data['social'];
     	unset($data['social']);
+        
+        if (trim($data['email'])) {
+            $row = Db::fetchRow(
+                'SELECT * FROM `users` '.
+                'WHERE `email` = "'.Db::escape($data['email']).'"'
+            );
+            
+            if($row!==false || !empty($row)) {
+                $_SESSION['errors'][] = 'Email provided from this social network is already taken. Please contact us if this shouldn\'t happen or don\'t provide email';
+                return false;
+            }
+        }
     	
     	$user = $this->register($data);
     	if($user===false) {
     		return false;
     	}
 
-    	$row = Db::fetchRow('SELECT * FROM `users` '.
-            'WHERE `email` = "'.Db::escape($data['email']).'" AND '.
-            '`password` = "'.Db::escape('social_'.$social).'" '
-        );
-    	
-    	if($row==false || empty($row)) {
-            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
-            return false;
-        }
-    	
-    	Db::query('INSERT INTO `users_social` SET
+    	Db::query(
+            'INSERT INTO `users_social` SET
             `social` = "'.Db::escape($social).'",
             `social_uid` = "'.Db::escape($data['social_uid']).'",
             `user_id` = '.$user->id
         );
         
-        $row = Db::fetchRow('SELECT `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
-            'FROM `users_social` AS `s` '.
-            'LEFT JOIN `users` AS `u` ON `s`.`user_id` = `u`.`id` '.
+        //Getting fresh registered data
+        $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
+            'FROM `users` AS `u` '.
+            'LEFT JOIN `users_social` AS `s` ON `s`.`user_id` = `u`.`id` '.
             'WHERE `u`.`id` = '.(int)$user->id.' '
         );
     	
@@ -81,16 +91,17 @@ class User extends System
     		return $s->Verify($data['social']);
     	}
         
-        $row = Db::fetchRow('SELECT * FROM `users` WHERE `email` = "'.Db::escape($data['email']).'"');
+        //Email not required!
+        /*$row = Db::fetchRow('SELECT * FROM `users` WHERE `email` = "'.Db::escape($data['email']).'"');
         if ($row) {
             $_SESSION['errors'][] = 'Email already registered! If you used different social network, just connect it.';
             return false;
-        }
+        }*/
 
         Db::query('INSERT INTO `users` SET '.
-            '`name`="'.Db::escape($data['name']).'", '.
-            '`email`="'.Db::escape($data['email']).'", '.
-            '`password`="'.Db::escape($data['password']).'" '
+            '`name` = "'.Db::escape($data['name']).'", '.
+            '`email` = "'.Db::escape($data['email']).'", '.
+            '`password` = "social" '
         );
         $uid = Db::lastId();
         
@@ -98,7 +109,7 @@ class User extends System
     }
     
     public function getUser($id) {
-    	$row = Db::fetchRow('SELECT `id`, `email`, `name` FROM `users` WHERE `id` = '.(int)$id);
+    	$row = Db::fetchRow('SELECT * FROM `users` WHERE `id` = '.(int)$id);
         if ($row) {
             return $row;
         }
@@ -110,9 +121,8 @@ class User extends System
     
     public static function checkUser($user) {
         $row = Db::fetchRow('SELECT * FROM `users` '.
-            'WHERE `id` = '.(int)$user['sid'].' AND '.
-            '`email` = "'.Db::escape($user['email']).'" AND '.
-            '`password` = "'.Db::escape($user['password']).'" '
+            'WHERE `id` = '.(int)$user['id'].' AND '.
+            '`email` = "'.Db::escape($user['email']).'" '
         );
         
         if (!$row) {
@@ -124,7 +134,71 @@ class User extends System
     
     public static function logOut() {
         unset($_SESSION['user']);
+        session_destroy();
         
         return true;
     }
+    
+    /*private function socialConnect($data) {
+        Db::query(
+            'INSERT INTO `social` SET '.
+            '`social` = "'.Db::escape($data['social']).'", '.
+            '`social_uid` = "'.Db::escape($data['social_uid']).'", '.
+            '`user_id` = '.(int)$_SESSION['user']['id']
+        );
+        Db::query(
+            'UPDATE `users_data` SET '.
+            '`social_'.Db::escape($data['social']).'` = 1 WHERE'.
+            '`user_id` = '.(int)$_SESSION['user']['id']
+        );
+        
+        exit('<script>window.opener.location.reload(false); window.close()</script>');
+        
+        return true;
+    }
+    
+    public static function socialDisconnect($data) {
+        $u = new self;
+        $user = $u->checkUser();
+        
+        if (!$user->id) {
+            return _('not_logged_in');
+        }
+        
+        $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `social` WHERE `user_id` = '.(int)$user->id);
+        
+        if ($row->count <= 1) {
+        $err = 0;
+            //User trying to delete last socials, checking if mail/pass is set
+            $msg = _('trying_delete_last_social');
+            
+            $row = Db::fetchRow('SELECT `password`, `email` FROM `users` WHERE `id` = '.(int)$user->id);
+            if (!trim($row->email)) { //if email is not set, it must, because it's a login itself
+                $err = 1;
+                $msg .= '<br />'._('please_set_email');
+            }
+            
+            if (substr($row->password,0,6) == 'social') { //if password is not set, it must, because it's required to login
+                $err = 1;
+                $msg .= '<br />'._('please_set_password');
+            }
+            
+            if ($err == 1) {
+                return $msg;
+            }
+        }
+        
+        Db::query(
+            'DELETE FROM `social` WHERE '.
+            '`social` = "'.Db::escape($data['provider']).'" AND '.
+            '`user_id` = '.(int)$user->id
+        );
+        Db::query(
+            'UPDATE `users_data` SET '.
+            '`social_'.Db::escape($data['provider']).'` = 0 WHERE'.
+            '`user_id` = '.(int)$user->id
+        );
+        
+        return true;
+    }*/
 }

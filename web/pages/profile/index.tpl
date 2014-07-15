@@ -10,21 +10,19 @@
             
             <? if (!$this->data->user->name) { ?>
                 <p class="error-add">Your name is not set, please add it!</p>
-            <? } else { ?>
-                <div class="fields">
-                    <label for="name"><?=t('name')?></label>
-                    <input name="name" id="name" type="text" value="<?=$this->data->user->name?>" placeholder="<?=t('name')?>*" />
-                </div>
             <? } ?>
+            <div class="fields">
+                <label for="name"><?=t('name')?></label>
+                <input name="name" id="name" type="text" value="<?=$this->data->user->name?>" placeholder="<?=t('name')?>*" />
+            </div>
             
             <? if (!$this->data->user->email) { ?>
                 <p class="error-add">Your email is not set, please add it!</p>
-            <? } else { ?>
-                <div class="fields">
-                    <label for="email">Email</label>
-                    <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
-                </div>
             <? } ?>
+            <div class="fields">
+                <label for="email">Email</label>
+                <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
+            </div>
             
             <a href="javascript:void(0);" class="button" id="updateProfile">Update profile</a>
             

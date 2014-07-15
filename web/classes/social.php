@@ -4,18 +4,20 @@ class Social
     private $config;
     
     function __construct($social = '') {
-		$this->config = _cfg('social'); 
+		$this->config = _cfg('social');
+        $this->allowedProviders = array('fb', 'vk', 'gp', 'tw', 'sm', 'tc');
 	}
 	
 	public function Verify($provider) {
         $_SESSION['errors'] = array();
-		if(!$provider) {
-            $_SESSION['errors'][] = 'Provider error';
+        
+		if(!$provider || !in_array($provider, $this->allowedProviders)) {
+            $_SESSION['errors'][] = 'Provider error, not set or incorrect';
 			return false;
 		}
 		
 		if(!isset($this->config[$provider])) {
-            $_SESSION['errors'][] = 'No social config: '.$provider;
+            $_SESSION['errors'][] = 'No social config set for '.$provider.', please contact us about this bug';
             return false;
         }
         
@@ -44,11 +46,118 @@ class Social
 		
 		return $this->$provider();
 	}
+    
+    private function tcComplete($data = array()) {
+		$user = $_POST;
+		$user['social'] = 'tc';
+	
+		if(empty($data)) {
+			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) {
+                $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
+                return false;
+            }
+			$data = $_SESSION['social']['fb'];
+		}
+	
+		$user['name'] = $data['display_name'] ? $data['display_name'] : 'Anonymous';
+		if(isset($data['email'])) {
+			$user['email'] = $data['email'];
+		}
+		$user['social_uid'] = $data['_id'];
+
+		$user = User::socialLogin($user);
+		if($user !== true) {
+			$_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            
+            return false;
+        }
+		
+		return true;
+	}
+	
+	private function tcVerify() {
+		if(!isset($_GET['code']) || empty($_GET['code'])) {
+			if(isset($_GET['error']) && !empty($_GET['error'])) {
+                $_SESSION['errors'][] = $_GET['error_description'];
+            }
+			else {
+                $_SESSION['errors'][] = 'Twitch authorization error (empty error, something went wrong)';
+            }
+            
+            return false;
+		}
+	
+		$cfg = array(
+            'url'=>'https://api.twitch.tv/kraken/oauth2/token',
+            'post'=>array(
+                'client_id'=>$this->config['id'],
+                'client_secret'=>$this->config['private'],
+                'grant_type'=>'authorization_code',
+                'redirect_uri'=>_cfg('site').'/run/social/tc',
+                'code'=>$_GET['code'],
+            ),
+		);
+        
+		$f = $this->oAuthRequest($cfg);
+        
+		if($f === false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
+
+		$f = (array)json_decode($f);
+        
+		if(!isset($f['access_token'])) {
+            $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
+            return false;
+        }
+        
+		$cfg = array(
+            'url'=>'https://api.twitch.tv/kraken/user',
+            'headers' => array(
+                'Authorization: OAuth '.$f['access_token'],
+            ),
+            'get'=>array(
+                'scope'=>$f['scope'][0],
+            ),
+		);
+	
+		$f = $this->oAuthRequest($cfg);
+        
+		if($f === false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
+	
+		$f = json_decode($f,1);
+		
+		if(!isset($f['_id'])) {
+            $_SESSION['errors'][] = 'Authorization error, no public user ID ('.__LINE__.')';
+            return false;
+        }
+	
+		$_SESSION['social']['tc'] = $f;
+	
+		return $this->tcComplete($f);
+	}
+	
+	private function tc() {
+		if (isset($_SESSION['social']['tc'])) {
+            unset($_SESSION['social']['tc']);
+        }
+        
+		$url = 'https://api.twitch.tv/kraken/oauth2/authorize'
+				.'?client_id='.$this->config['id']
+				.'&redirect_uri='._cfg('site').'/run/social/tc'
+				.'&scope=user_read'
+				.'&response_type=code';
+
+		return $url;
+	}
 	
 	private function vkComplete($data = array()) {
 		
 		$user = $_POST;
-		$user['password'] = 'social_vk';
 		$user['social'] = 'vk';
 		
 		if(empty($data)) {
@@ -56,13 +165,14 @@ class Social
 			$data = $_SESSION['social']['vk'];
 		}
 		
-		$user['firstName'] = !empty($data['first_name']) ? $data['first_name'] : 'None';
-		$user['lastName'] = !empty($data['last_name']) ? $data['last_name'] : 'None';
+		$user['name'] = $data['first_name'] ? $data['first_name'] : 'Anonymous';
 		$user['social_uid'] = $data['uid'];
 		
 		$user = User::socialLogin($user);
-		
-		if($user===false) return array('error'=>'auth error ('.__LINE__.')');
+		if($user !== true) {
+			$_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 		
 		return $user;
 		
@@ -71,25 +181,35 @@ class Social
 	private function vkVerify() {
 		
 		if(!isset($_GET['code']) || empty($_GET['code'])) {
-			if(isset($_GET['error']) && !empty($_GET['error'])) $err = $_GET['error'];
-			else $err = 'Auth error';
+			if(isset($_GET['error']) && !empty($_GET['error'])) {
+                $_SESSION['errors'][] = $_GET['error'];
+            }
+			else {
+                $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            }
 		}
 		
 		$cfg = array(
 		    'url'=>'https://oauth.vk.com/access_token',
 			'get'=>array(
-					'client_id'=>$this->config['id'],
-					'client_secret'=>$this->config['private'],
-					'code'=>$_GET['code'],
-					'redirect_uri'=>_cfg('site').'/'._cfg('language').'/social/login/vk'
-					),
+                'client_id'     => $this->config['id'],
+                'client_secret' => $this->config['private'],
+                'code'          => $_GET['code'],
+                'redirect_uri'  => _cfg('site').'/run/social/vk',
+            ),
 		);
 		
 		$f = $this->oAuthRequest($cfg);
-		if($f === false ) return array('error'=>'auth error ('.__LINE__.')');
+		if($f === false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 		
 		$f = json_decode($f,1);
-		if(!isset($f['user_id']) || !isset($f['access_token'])) return array('error'=>'auth error ('.__LINE__.')');
+		if(!isset($f['user_id']) || !isset($f['access_token'])) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 		 
 		$cfg = array(
 			'url'=>'https://api.vk.com/method/getProfiles',
@@ -100,17 +220,21 @@ class Social
 		);
 		
 		$f = $this->oAuthRequest($cfg);
-		if($f === false ) return array('error'=>'auth error ('.__LINE__.')');
+		if($f === false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 		
 		$f = json_decode($f,1);
-		if(!isset($f['response']) || !isset($f['response'][0]) || !isset($f['response'][0]['uid'])) return array('error'=>'auth error ('.__LINE__.')');
+		if(!isset($f['response']) || !isset($f['response'][0]) || !isset($f['response'][0]['uid'])) {
+            $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
+        }
 		
 		$f = $f['response'][0];
 		
 		$_SESSION['social']['vk'] = $f;
 		
 		return $this->vkComplete($f);
-		
 	}
 	
 	private function vk() {
@@ -118,7 +242,7 @@ class Social
 		
 		$url = 'http://oauth.vk.com/authorize'
 			  .'?client_id='.$this->config['id']
-			  .'&redirect_uri='._cfg('site').'/'._cfg('language').'/social/login/vk'
+			  .'&redirect_uri='._cfg('site').'/run/social/vk'
 			  .'&response_type=code';
 		
 		return $url;
@@ -126,7 +250,6 @@ class Social
 	
 	private function fbComplete($data = array()) {
 		$user = $_POST;
-		$user['password'] = 'social_fb';
 		$user['social'] = 'fb';
 	
 		if(empty($data)) {
@@ -137,27 +260,18 @@ class Social
 			$data = $_SESSION['social']['fb'];
 		}
 	
-		$user['name'] = 'Anonymous';
+		$user['name'] = $data['first_name'] ? $data['first_name'] : 'Anonymous';
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
 		}
 		$user['social_uid'] = $data['id'];
-
+        
 		$user = User::socialLogin($user);
-		if($user!==true) {
-			if(!is_array($user)) {
-                $user = json_decode($user,1);
-            }
-			
-			if(isset($user['error']['email'])) {
-                $_SESSION['errors'][] = 'Error '.$user['error']['email'].' ('.__LINE__.')';
-                return false;
-            }
-			else {
-                $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
-                return false;
-            }
-		}
+		if($user !== true) {
+			$_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            
+            return false;
+        }
 		
 		return true;
 	}
@@ -168,7 +282,7 @@ class Social
                 $_SESSION['errors'][] = $_GET['error'];
             }
 			else {
-                $_SESSION['errors'][] = 'Authorization error';
+                $_SESSION['errors'][] = 'Facebook authorization error (empty error, something went wrong)';
             }
             
             return false;
@@ -186,7 +300,7 @@ class Social
 		);
 	
 		$f = $this->oAuthRequest($cfg);
-		if($f === false ) {
+		if($f === false) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
             return false;
         }
@@ -227,13 +341,13 @@ class Social
 		if (isset($_SESSION['social']['fb'])) {
             unset($_SESSION['social']['fb']);
         }
-	
+        
 		$url = 'https://www.facebook.com/dialog/oauth'
 				.'?client_id='.$this->config['id']
 				.'&redirect_uri='._cfg('site').'/run/social/fb'
 				.'&scope=public_profile,email'
 				.'&response_type=code';
-	
+
 		return $url;
 	}
 	
@@ -248,8 +362,7 @@ class Social
 			$data = $_SESSION['social']['gp'];
 		}
 	
-		$user['firstName'] = !empty($data['given_name']) ? $data['given_name'] : 'None';
-		$user['lastName'] = !empty($data['family_name']) ? $data['family_name'] : 'None';
+		$user['firstName'] = $data['given_name'] ? $data['given_name'] : 'Anonymous';
 		$user['social_uid'] = $data['id'];
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
@@ -333,7 +446,6 @@ class Social
 	private function twComplete($data = array()) {
 	
 		$user = $_POST;
-		$user['password'] = 'social_tw';
 		$user['social'] = 'tw';
 	
 		if(empty($data)) {
@@ -341,23 +453,22 @@ class Social
 			$data = $_SESSION['social']['tw'];
 		}
 	
-		$user['firstName'] = !empty($data['screen_name']) ? $data['screen_name'] : 'None';
-		$user['lastName'] = !empty($data['name']) ? $data['name'] : 'None';
+		$user['name'] = $data['screen_name'] ? $data['screen_name'] : 'Anonymous';
 		$user['social_uid'] = $data['id'];
 	
 		$user = User::socialLogin($user);
-	
-		if($user===false) return array('error'=>'auth error ('.__LINE__.')');
+        if($user===false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 	
 		return $user;
-	
-	
 	}
 	
 	function twVerify() {
 		$params = array(
             'url'	=> 'https://api.twitter.com/oauth/access_token',
-            'callback' => urlencode(_cfg('site').'/'._cfg('language').'/social/login/twitter'),
+            'callback' => urlencode(_cfg('site').'/run/social/tw'),
             'id'    => $this->config['id'],
             'secret'=> $this->config['private'],
             'token'=> $_GET['oauth_token'],
@@ -440,7 +551,10 @@ class Social
 		$f = $this->oAuthRequest($cfg);
 	
 		$f = json_decode($f,1);
-		if(!isset($f['id'])) return array('error'=>'auth error ('.__LINE__.')');
+        if(!isset($f['id'])) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
 		
 		$_SESSION['social']['tw'] = $f;
 		
@@ -537,6 +651,7 @@ class Social
 				print_r($status);
                 echo '</pre>';
 			}
+            
 			return false;
 		}
 	

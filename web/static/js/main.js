@@ -280,7 +280,12 @@ var PC = {
             this.get_token('fb');
             
             return false;
-        }, 
+        },
+        tc: function() {
+            this.get_token('tc');
+            
+            return false;
+        },
         get_token: function(provider) {
             var query = {
                 type: 'POST',
