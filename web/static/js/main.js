@@ -173,7 +173,7 @@ var PC = {
             return false;
         }
 
-        var newsId = parseInt($(this).attr('attr-news-id'));
+        var newsId = parseInt($(element).attr('attr-news-id'));
         this.likeInProgress = 1;
 	
         var query = {
@@ -181,10 +181,10 @@ var PC = {
             timeout: 10000,
             data: {
                 ajax: 'newsVote',
-                id: parseInt($(this).attr('attr-news-id'))
+                id: parseInt($(element).attr('attr-news-id'))
             },
             success: function(data) {
-                likeInProgress = 0;
+                PC.likeInProgress = 0;
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
