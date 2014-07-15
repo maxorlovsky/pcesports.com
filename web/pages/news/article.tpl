@@ -30,6 +30,9 @@
                 <span><?=$this->news->views?></span> <?=t('views')?>, 
 				<div class="fb-comments-count" data-href="<?=_cfg('href')?>/news/<?=$this->news->id?>">0</div> <?=t('comments')?>
 			</div>
+            <div class="news-share">
+                <div class="addthis_sharing_toolbox"></div>
+            </div>
         	<div class="clear"></div>
         </div>
         <div class="block-divider"></div>
@@ -40,3 +43,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4dfdc8015d8f785b"></script>

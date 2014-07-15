@@ -513,6 +513,10 @@ footer .copyrights .devs:hover {
 	line-height: 38px;
 	font-weight: bold;
 }
+.readmore .news-share {
+	float: right;
+    margin-top: 1px;
+}
 .readmore .button {
 	float: right;
 }
