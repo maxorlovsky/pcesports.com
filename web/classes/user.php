@@ -120,16 +120,22 @@ class User extends System
     }
     
     public static function checkUser($user) {
-        $row = Db::fetchRow('SELECT * FROM `users` '.
+        $userRow = Db::fetchRow(
+            'SELECT * FROM `users` '.
             'WHERE `id` = '.(int)$user['id'].' AND '.
             '`email` = "'.Db::escape($user['email']).'" '
         );
         
-        if (!$row) {
+        if (!$userRow) {
             return false;
         }
         
-        return $row;
+        $userRow->socials = Db::fetchRows(
+            'SELECT * FROM `users_social` '.
+            'WHERE `user_id` = '.$userRow->id
+        );
+        
+        return $userRow;
     }
     
     public static function logOut() {

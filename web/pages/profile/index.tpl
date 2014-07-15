@@ -36,4 +36,17 @@
             </div>
         </form>
     </div>
+    
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Connections</h1>
+        </div>
+        <div class="block-content">
+            <? foreach($this->data->user->socials as $v) { ?>
+                <div class="">
+                    <a href="javascript:void(0);" class="socialLogin" id="<?=$v->social?>"><img src="<?=_cfg('img')?>/<?=$v->social?>-login.png" /></a>
+                </div>
+            <? } ?>
+        </div>
+    </div>
 </div>
