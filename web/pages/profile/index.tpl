@@ -24,6 +24,11 @@
                 <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
             </div>
             
+            <div class="fields">
+                <label for="avatar">Avatar</label>
+                <input name="avatar" id="avatar" type="text" />
+            </div>
+            
             <a href="javascript:void(0);" class="button" id="updateProfile">Update profile</a>
             
             <div class="fields">
@@ -37,14 +42,34 @@
         </form>
     </div>
     
-    <div class="block">
+    <div class="block connections">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Connections</h1>
+            <h1 class="bordered"><?=t('connections')?></h1>
         </div>
         <div class="block-content">
-            <? foreach($this->data->user->socials as $v) { ?>
-                <div class="">
-                    <a href="javascript:void(0);" class="socialLogin" id="<?=$v->social?>"><img src="<?=_cfg('img')?>/<?=$v->social?>-login.png" /></a>
+            <? foreach(_cfg('social') as $k => $v) { ?>
+                <div class="status-holder">
+                    <img src="<?=_cfg('img')?>/<?=$k?>-login.png" />
+                    <?
+                    foreach($this->data->user->socials as $s) {
+                        if ($s->social == $k) {
+                    ?>
+                        <div class="connect-line"></div>
+                        <div class="status">
+                            <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>">Connected</a>
+                        </div>
+                    <?
+                        }
+                        else {
+                    ?>
+                        <div class="connect-line dashed"></div>
+                        <div class="status">
+                            <a href="javascript:void(0);" class="disconnected socialLogin" id="<?=$k?>">Disconnected</a>
+                        </div>
+                    <?
+                        }
+                    }
+                    ?>
                 </div>
             <? } ?>
         </div>
