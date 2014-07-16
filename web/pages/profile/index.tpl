@@ -51,26 +51,17 @@
             <? foreach(_cfg('social') as $k => $v) { ?>
                 <div class="status-holder">
                     <img src="<?=_cfg('img')?>/<?=$k?>-login.png" />
-                    <?
-                    foreach($this->data->user->socials as $s) {
-                        if ($s->social == $k) {
-                    ?>
+                    <? if (in_array($k, $this->data->user->socials->connected)) { ?>
                         <div class="connect-line"></div>
                         <div class="status">
                             <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>"><?=t('connected')?></a>
                         </div>
-                    <?
-                        }
-                        else {
-                    ?>
+                    <? } else {?>
                         <div class="connect-line dashed"></div>
                         <div class="status">
                             <a href="javascript:void(0);" class="disconnected socialConnect" id="<?=$k?>"><?=t('disconnected')?></a>
                         </div>
-                    <?
-                        }
-                    }
-                    ?>
+                    <? } ?>
                 </div>
             <? } ?>
         </div>

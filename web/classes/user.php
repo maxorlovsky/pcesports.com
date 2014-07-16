@@ -146,6 +146,12 @@ class User extends System
             'SELECT * FROM `users_social` '.
             'WHERE `user_id` = '.$userRow->id
         );
+        $userRow->socials->connected = array();
+        foreach($userRow->socials as $v) {
+            if ($v->social) {
+                $userRow->socials->connected[] = $v->social;
+            }
+        }
         
         return $userRow;
     }

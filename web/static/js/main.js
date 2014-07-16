@@ -18,6 +18,10 @@ $('.socialConnect').on('click', function() {
     var id = $(this).attr('id');
     PC.social.connect(id);
 });
+$('.socialDisconnect').on('click', function() {
+    var id = $(this).attr('id');
+    PC.social.disconnect(id);
+});
 
 $('.connected').on('mouseover', function() {
     $(this).text(g.str.disconnect);
@@ -345,6 +349,20 @@ var PC = {
                     }
                     
                     PC.social.windowSocial.location = data[0];
+                }
+            };
+            PC.ajax(query);
+        },
+        disconnect: function(network) {
+            var query = {
+                type: 'POST',
+                data: {
+                    ajax: 'socialDisconnect',
+                    provider: network
+                },
+                success: function(answer) {
+                    data = answer.split(';');
+                    alert(data[0]);
                 }
             };
             PC.ajax(query);
