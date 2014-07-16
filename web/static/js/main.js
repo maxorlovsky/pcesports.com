@@ -14,6 +14,22 @@ $('.socialLogin').on('click', function() {
     var id = $(this).attr('id');
     PC.social[id]();
 });
+$('.socialConnect').on('click', function() {
+    var id = $(this).attr('id');
+    PC.social.connect(id);
+});
+
+$('.connected').on('mouseover', function() {
+    $(this).text(g.str.disconnect);
+}).on('mouseout', function() {
+    $(this).text(g.str.connected);
+});
+
+$('.disconnected').on('mouseover', function() {
+    $(this).text(g.str.connect);
+}).on('mouseout', function() {
+    $(this).text(g.str.disconnected);
+});
 
 $('.bx-wrapper').bxSlider({
     auto: true,
@@ -308,7 +324,31 @@ var PC = {
             else {
                 alert(data[1]);
             }
-        }
+        },
+        windowSocial: '',
+        connect: function(network) {
+            PC.social.windowSocial = window.open('', "connectSocial", "width=800, height=600, scrollbars=no");
+            
+            var query = {
+                type: 'POST',
+                data: {
+                    ajax: 'socialLogin',
+                    provider: network
+                },
+                success: function(answer) {
+                    data = answer.split(';');
+                    
+                    if (data[0] == 0) {
+                        alert(data[1]);
+                        PC.social.windowSocial.close();
+                        return false;
+                    }
+                    
+                    PC.social.windowSocial.location = data[0];
+                }
+            };
+            PC.ajax(query);
+        },
     },
     addTeam: function() {
         if (this.formInProgress == 1) {

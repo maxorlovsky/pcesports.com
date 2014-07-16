@@ -35,7 +35,11 @@
             site: '<?=_cfg('site')?>',
             str: {
                 days: '<?=t('days')?>',
-                day: '<?=t('day')?>'
+                day: '<?=t('day')?>',
+                connect: '<?=t('connect')?>',
+                disconnect: '<?=t('disconnect')?>',
+                connected: '<?=t('connected')?>',
+                disconnected: '<?=t('disconnected')?>',
             }
         };
 		

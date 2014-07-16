@@ -24,7 +24,7 @@ class User extends System
         
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
-            if ($_SESSION['user'] && $row->id) {
+            if ($_SESSION['user'] && $_SESSION['user']['id']) {
                 $u = new self;
                 return $u->socialConnect($user);
             }
@@ -91,13 +91,12 @@ class User extends System
     		return $s->Verify($data['social']);
     	}
         
-        //Email not required!
-        /*$row = Db::fetchRow('SELECT * FROM `users` WHERE `email` = "'.Db::escape($data['email']).'"');
-        if ($row) {
-            $_SESSION['errors'][] = 'Email already registered! If you used different social network, just connect it.';
-            return false;
-        }*/
-
+        $regName = array(
+            'name'          => $data['name'],
+            'originalName'  => $data['name'],
+        );
+        $data['name'] = $this->checkRegName($regName);
+        
         Db::query('INSERT INTO `users` SET '.
             '`name` = "'.Db::escape($data['name']).'", '.
             '`email` = "'.Db::escape($data['email']).'", '.
@@ -106,6 +105,19 @@ class User extends System
         $uid = Db::lastId();
         
         return $this->getUser($uid);
+    }
+    
+    private function checkRegName($regName, $i = 2) {
+        $row = Db::fetchRow('SELECT * FROM `users` WHERE `name` = "'.Db::escape($regName['name']).'"');
+        if ($row) {
+            $regName['name'] = $regName['originalName'].$i;
+            $returnName = $this->checkRegName($regName, $i+1);
+        }
+        else {
+            $returnName = $regName['name'];
+        }
+        
+        return $returnName;
     }
     
     public function getUser($id) {
@@ -145,17 +157,12 @@ class User extends System
         return true;
     }
     
-    /*private function socialConnect($data) {
+    private function socialConnect($data) {
         Db::query(
-            'INSERT INTO `social` SET '.
-            '`social` = "'.Db::escape($data['social']).'", '.
-            '`social_uid` = "'.Db::escape($data['social_uid']).'", '.
-            '`user_id` = '.(int)$_SESSION['user']['id']
-        );
-        Db::query(
-            'UPDATE `users_data` SET '.
-            '`social_'.Db::escape($data['social']).'` = 1 WHERE'.
-            '`user_id` = '.(int)$_SESSION['user']['id']
+            'INSERT INTO `users_social` SET
+            `social` = "'.Db::escape($data['social']).'",
+            `social_uid` = "'.Db::escape($data['social_uid']).'",
+            `user_id` = '.(int)$_SESSION['user']['id']
         );
         
         exit('<script>window.opener.location.reload(false); window.close()</script>');
@@ -163,7 +170,7 @@ class User extends System
         return true;
     }
     
-    public static function socialDisconnect($data) {
+    /*public static function socialDisconnect($data) {
         $u = new self;
         $user = $u->checkUser();
         

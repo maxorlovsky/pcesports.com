@@ -722,6 +722,14 @@ footer .partners .skillz {
 	width: 635px;
 	height: 300px;
 }
+.fields .holder {
+    width: 605px;
+    min-height: 40px;
+	border: 1px solid #999;
+	margin: 0 0 0 141px;
+	border-radius: 0 4px 4px 3px;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+}
 .contacts .contact-form .button {
 	margin-left: 90px;
 }

@@ -25,19 +25,20 @@
             </div>
             
             <div class="fields">
-                <label for="avatar">Avatar</label>
-                <input name="avatar" id="avatar" type="text" />
+                <label for="avatar"><?=t('avatar')?></label>
+                <div class="holder">Pick image</div>
+                <input name="avatar" id="avatar" type="hidden" />
             </div>
             
-            <a href="javascript:void(0);" class="button" id="updateProfile">Update profile</a>
+            <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>
             
             <div class="fields">
-                <label>Registration date</label>
+                <label><?=t('registration_date')?></label>
                 <p><?=date('d.m.Y H:i', strtotime($this->data->user->registration_date))?></p>
             </div>
             <div class="fields">
-                <label>Team name</label>
-                <p><i>None</i></p>
+                <label><?=t('team_name')?></label>
+                <p><i><?=t('none')?></i></p>
             </div>
         </form>
     </div>
@@ -56,7 +57,7 @@
                     ?>
                         <div class="connect-line"></div>
                         <div class="status">
-                            <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>">Connected</a>
+                            <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>"><?=t('connected')?></a>
                         </div>
                     <?
                         }
@@ -64,7 +65,7 @@
                     ?>
                         <div class="connect-line dashed"></div>
                         <div class="status">
-                            <a href="javascript:void(0);" class="disconnected socialLogin" id="<?=$k?>">Disconnected</a>
+                            <a href="javascript:void(0);" class="disconnected socialConnect" id="<?=$k?>"><?=t('disconnected')?></a>
                         </div>
                     <?
                         }
