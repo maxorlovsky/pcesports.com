@@ -29,7 +29,6 @@ class User extends System
                 return $u->socialConnect($user);
             }
             else {
-                $u = self;
                 return $u->socialRegister($user);
             }
         }
