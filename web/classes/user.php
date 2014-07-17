@@ -24,11 +24,13 @@ class User extends System
         
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
+            $u = new self;
             if ($_SESSION['user'] && $_SESSION['user']['id']) {
-                return self::socialConnect($user);
+                return $u->socialConnect($user);
             }
             else {
-                return self::socialRegister($user);
+                $u = self;
+                return $u->socialRegister($user);
             }
         }
         else {
