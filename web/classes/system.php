@@ -25,7 +25,6 @@ class System
     
     public function run() {
         $this->checkGetData();
-        $this->getStrings();
         
         $template = new Template();
         $template->parse();
@@ -125,6 +124,9 @@ class System
         else {
             $this->logged_in = 0;
             $this->data->user = new stdClass();
+            if ($_SESSION['user']) {
+                User::logOut();
+            }
         }
         
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
@@ -134,7 +136,6 @@ class System
     
     public function ajax($data) {
     	$this->checkGetData();
-    	$this->getStrings();
     	
         $ajax = new Ajax();
         $ajax->ajaxRun($data);
@@ -440,6 +441,8 @@ class System
         }
         
         $cfg['fullLanguage'] = $fetchingFullLanguage[$cfg['language']];
+        
+        $this->getStrings();
         
         $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
         $cfg['hssite'] = $cfg['href'].'/hearthstone';

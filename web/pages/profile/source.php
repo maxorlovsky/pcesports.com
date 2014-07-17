@@ -17,7 +17,11 @@ class profile extends System
 	}
     
 	public function getProfilePage() {
-		
+		if ($_SESSION['registration'] == 1) {
+            unset($_SESSION['registration']);
+            $regComplete = 1;
+        }
+        
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	

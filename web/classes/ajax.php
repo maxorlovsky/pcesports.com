@@ -15,6 +15,8 @@ class Ajax extends System
         'statusCheck',
         'uploadScreenshot',
         'socialLogin',
+        'socialDisconnect',
+        'updateProfile',
 	);
 	
     public function ajaxRun($data) {
@@ -30,6 +32,24 @@ class Ajax extends System
         }
     }
     
+    protected function updateProfile($data) {
+        parse_str($data['form'], $post);
+        return User::updateProfile($post);
+    }
+    
+    protected function socialDisconnect($data) {
+        $answer = User::socialDisconnect($data);
+        
+        if ($answer !== true) {
+            $answer = '0;'.$answer;
+        }
+        else {
+            $answer = '1;1';
+        }
+        
+        return $answer;
+    }
+    
     protected function socialLogin($data) {
         $social = new Social();
         return $social->getToken($data['provider']);
@@ -39,7 +59,7 @@ class Ajax extends System
         $mb = 5;
         
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-            return '0;Not logged in';
+            return '0;'.t('not_logged_in');
         }
         
         $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `teams` '.

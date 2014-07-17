@@ -3,13 +3,18 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Profile</h1>
+            <h1 class="bordered"><?=t('profile')?></h1>
         </div>
         <form class="block-content contact-form profile">
+            <? if ($regComplete == 1) { ?>
+                <div class="success-add registration-complete"><?=t('registration_success')?></div>
+            <? } ?>
+            
+            <div id="success"><p></p></div>
             <div id="error"><p></p></div>
             
             <? if (!$this->data->user->name) { ?>
-                <p class="error-add">Your name is not set, please add it!</p>
+                <p class="error-add"><?=t('name_not_set_add')?><!--Your name is not set, please add it!--></p>
             <? } ?>
             <div class="fields">
                 <label for="name"><?=t('name')?></label>
@@ -17,7 +22,7 @@
             </div>
             
             <? if (!$this->data->user->email) { ?>
-                <p class="error-add">Your email is not set, please add it!</p>
+                <p class="error-add"><?=t('email_not_set_add')?><!--Your email is not set, please add it!--></p>
             <? } ?>
             <div class="fields">
                 <label for="email">Email</label>
@@ -26,8 +31,8 @@
             
             <div class="fields">
                 <label for="avatar"><?=t('avatar')?></label>
-                <div class="holder">Pick image</div>
-                <input name="avatar" id="avatar" type="hidden" />
+                <div class="holder">Pick image (not yet working)</div>
+                <input name="avatar" id="avatar" type="hidden" value="<?=$this->data->user->avatar?>" />
             </div>
             
             <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>

@@ -25,16 +25,23 @@ class User extends System
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
             if ($_SESSION['user'] && $_SESSION['user']['id']) {
-                $u = new self;
-                return $u->socialConnect($user);
+                return self::socialConnect($user);
             }
             else {
-                $u = new self;
-                return $u->socialRegister($user);
+                return self::socialRegister($user);
             }
         }
         else {
-        	$_SESSION['user'] = (array)$row;
+            if ($_SESSION['user'] && $_SESSION['user']['id']) {
+                exit(
+                    '<script>'.
+                    'alert(\''.str_replace('%social%', $user['social'], t('social_network_already_connected')).'\');'.
+                    'window.close();'.
+                    '</script>');
+            }
+            else {
+                $_SESSION['user'] = (array)$row;
+            }
         }
         
         return true;
@@ -51,7 +58,7 @@ class User extends System
             );
             
             if($row!==false || !empty($row)) {
-                $_SESSION['errors'][] = 'Email provided from this social network is already taken. Please contact us if this shouldn\'t happen or don\'t provide email';
+                $_SESSION['errors'][] = t('email_soc_already_taken');
                 return false;
             }
         }
@@ -75,6 +82,7 @@ class User extends System
             'WHERE `u`.`id` = '.(int)$user->id.' '
         );
     	
+        $_SESSION['registration'] = 1;
     	$_SESSION['user'] = (array)$row;
         
     	return true;
@@ -83,7 +91,7 @@ class User extends System
     private function register($data) {
     	if(isset($data['social']) && $data['social']!='') {
     		if(!isset($_SESSION['social']) || !isset($_SESSION['social'][$data['social']])) {
-                $_SESSION['errors'][] = 'Session expired! Retry!';
+                $_SESSION['errors'][] = t('session_expired');
     			return false;
     		}
     		
@@ -126,9 +134,9 @@ class User extends System
             return $row;
         }
         
-        $_SESSION['errors'][] = 'User not exist  ('.__LINE__.')';
+        $_SESSION['errors'][] = t('user_not_exist').' ('.__LINE__.')';
         
-        return '0;User not exist';
+        return '0;'.t('user_not_exist');
     }
     
     public static function checkUser($user) {
@@ -176,48 +184,71 @@ class User extends System
         return true;
     }
     
-    /*public static function socialDisconnect($data) {
-        $u = new self;
-        $user = $u->checkUser();
+    public static function socialDisconnect($data) {
+        $user = self::checkUser($_SESSION['user']);
         
         if (!$user->id) {
-            return _('not_logged_in');
+            return t('not_logged_in');
         }
         
-        $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `social` WHERE `user_id` = '.(int)$user->id);
+        $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `users_social` WHERE `user_id` = '.(int)$user->id);
         
         if ($row->count <= 1) {
-        $err = 0;
-            //User trying to delete last socials, checking if mail/pass is set
-            $msg = _('trying_delete_last_social');
-            
-            $row = Db::fetchRow('SELECT `password`, `email` FROM `users` WHERE `id` = '.(int)$user->id);
-            if (!trim($row->email)) { //if email is not set, it must, because it's a login itself
-                $err = 1;
-                $msg .= '<br />'._('please_set_email');
-            }
-            
-            if (substr($row->password,0,6) == 'social') { //if password is not set, it must, because it's required to login
-                $err = 1;
-                $msg .= '<br />'._('please_set_password');
-            }
-            
-            if ($err == 1) {
-                return $msg;
-            }
+            return t('trying_to_delete_last_social');
         }
         
         Db::query(
-            'DELETE FROM `social` WHERE '.
+            'DELETE FROM `users_social` WHERE '.
             '`social` = "'.Db::escape($data['provider']).'" AND '.
-            '`user_id` = '.(int)$user->id
-        );
-        Db::query(
-            'UPDATE `users_data` SET '.
-            '`social_'.Db::escape($data['provider']).'` = 0 WHERE'.
             '`user_id` = '.(int)$user->id
         );
         
         return true;
-    }*/
+    }
+    
+    public static function updateProfile($form) {
+        $user = self::checkUser($_SESSION['user']);
+        
+        if (!$user->id) {
+            return t('not_logged_in');
+        }
+        
+        if (!trim($form['name'])) {
+            return '0;'.t('name_empty');
+        }
+        
+        $row = Db::fetchRow('SELECT `name` FROM `users` WHERE `name` = "'.Db::escape($form['name']).'" LIMIT 1');
+        if ($row && $row->name != $user->name) {
+            return '0;'.t('name_taken');
+        }
+        else if (strlen(trim($form['name'])) > 20) {
+            return '0;'.t('name_too_long');
+        }
+        
+        $row = Db::fetchRow('SELECT `email` FROM `users` WHERE `email` = "'.Db::escape($form['email']).'" LIMIT 1');
+        if ($row && $row->email != $user->email) {
+            return '0;'.t('email_taken');
+        }
+        else if(!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+            return '0;'.t('email_invalid');
+        }
+        
+        Db::query(
+            'UPDATE `users` SET '.
+            '`name` = "'.Db::escape($form['name']).'", '.
+            '`email` = "'.Db::escape($form['email']).'" '.
+            'WHERE `id` = '.(int)$user->id
+        );
+        
+        //Getting fresh updated data
+        $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
+            'FROM `users` AS `u` '.
+            'LEFT JOIN `users_social` AS `s` ON `s`.`user_id` = `u`.`id` '.
+            'WHERE `u`.`id` = '.(int)$user->id.' '
+        );
+    	
+    	$_SESSION['user'] = (array)$row;
+        
+        return '1;'.t('success_profile_update');
+    }
 }

@@ -23,6 +23,10 @@ $('.socialDisconnect').on('click', function() {
     PC.social.disconnect(id);
 });
 
+$('#updateProfile').on('click', function() {
+    PC.updateProfile();
+});
+
 $('.connected').on('mouseover', function() {
     $(this).text(g.str.disconnect);
 }).on('mouseout', function() {
@@ -362,7 +366,13 @@ var PC = {
                 },
                 success: function(answer) {
                     data = answer.split(';');
-                    alert(data[0]);
+
+                    if (data[0] != 1) {
+                        alert(data[1]);
+                        return false;
+                    }
+                    
+                    location.reload();
                 }
             };
             PC.ajax(query);
@@ -510,6 +520,42 @@ var PC = {
                 $('#add-player').removeClass('alpha');
                 PC.formInProgress = 0;
                 
+                alert('Something went wrong... Contact admin at info@pcesports.com');
+            }
+        };
+        this.ajax(query);
+    },
+    updateProfile: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('.profile #error').hide();
+        $('.profile #success').hide();
+        $('#updateProfile').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'updateProfile',
+                form: $('.profile').serialize()
+            },
+            success: function(answer) {
+                $('#updateProfile').removeClass('alpha');
+                PC.formInProgress = 0;
+                data = answer.split(';');
+                
+                if (data[0] != 1) {
+                    $('.profile #error p').text(data[1]);
+                    $('.profile #error').slideDown(1000);
+                }
+                else {
+                    $('.profile #success p').text(data[1]);
+                    $('.profile #success').slideDown(1000);
+                }
+            },
+            error: function() {
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         };
