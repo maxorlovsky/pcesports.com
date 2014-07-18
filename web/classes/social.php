@@ -398,7 +398,7 @@ class Social
 				'url'=>'https://accounts.google.com/o/oauth2/token',
 				'post'=>array(
 						'code'=>$_GET['code'],
-						'redirect_uri'=>_cfg('site').'/'._cfg('language').'/social/login/gp',
+						'redirect_uri'=>_cfg('site').'/'._cfg('language').'/social/gp',
 						'grant_type'=>'authorization_code',
 						'client_id'=>$this->config['id'],
 						'client_secret'=>$this->config['private'],
@@ -435,7 +435,7 @@ class Social
 		if(isset($_SESSION['social']['gp'])) unset($_SESSION['social']['gp']);
 	
 		$url = 'https://accounts.google.com/o/oauth2/auth'
-				.'?redirect_uri='._cfg('site').'/'._cfg('language').'/social/login/gp'
+				.'?redirect_uri='._cfg('site').'/'._cfg('language').'/social/gp'
 				.'&client_id='.$this->config['id']
 				.'&scope=https://www.googleapis.com/auth/userinfo.email'
 				.'&response_type=code';
