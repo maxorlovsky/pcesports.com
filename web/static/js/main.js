@@ -553,6 +553,13 @@ var PC = {
                 else {
                     $('.profile #success p').text(data[1]);
                     $('.profile #success').slideDown(1000);
+                    
+                    if ($('.profile #name').val()) {
+                        $('#name_not_set').slideUp('fast');
+                    }
+                    if ($('.profile #email').val()) {
+                        $('#email_not_set').slideUp('fast');
+                    }
                 }
             },
             error: function() {

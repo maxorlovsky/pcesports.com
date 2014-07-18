@@ -14,7 +14,7 @@
             <div id="error"><p></p></div>
             
             <? if (!$this->data->user->name) { ?>
-                <p class="error-add"><?=t('name_not_set_add')?></p>
+                <p class="error-add" id="name_not_set"><?=t('name_not_set_add')?></p>
             <? } ?>
             <div class="fields">
                 <label for="name"><?=t('name')?></label>
@@ -22,7 +22,7 @@
             </div>
             
             <? if (!$this->data->user->email) { ?>
-                <p class="error-add"><?=t('email_not_set_add')?></p>
+                <p class="error-add" id="email_not_set"><?=t('email_not_set_add')?></p>
             <? } ?>
             <div class="fields">
                 <label for="email">Email</label>
