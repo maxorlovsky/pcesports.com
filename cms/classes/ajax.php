@@ -26,6 +26,7 @@ class Ajax extends System
         
         //If exit, exit!
         if (isset($data['page']) && $data['page'] == '#exit') {
+            $this->log('Exit', array('module'=>'logout'));
         	$this->cleanData();
         	return true;
         }

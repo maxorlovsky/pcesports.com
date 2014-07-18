@@ -141,7 +141,6 @@ class System
     }
     
     public function cleanData() {
-    	$this->log('Exit', array('module'=>'logout'));
     	unset($_SESSION['token']);
     	$this->logged_in = 0;
     	$this->user = array();
