@@ -157,5 +157,5 @@ $cfg['ud_alter'] = array(
 // _SALT
 //==================================================
 // $newPass = '';
-// mysql_query('UPDATE `tm_admin` SET `pass` = "'.sha1($newPass.$cfg['salt']).'" WHERE `login` = "dev"');
+// exit('UPDATE `tm_admins` SET `password` = "'.sha1($newPass.$cfg['salt']).'" WHERE `login` = "dev"');
 //==================================================
