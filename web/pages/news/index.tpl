@@ -11,7 +11,7 @@
         ?>
         <div class="block-content news big-block">
         	<div class="add-box">
-        		<div class="date"><?=date('M', strtotime($v->added))?><br /><?=date('d', strtotime($v->added))?></div>
+        		<div class="date"><?=date('M', strtotime($v->added)+$this->data->user->timezone)?><br /><?=date('d', strtotime($v->added)+$this->data->user->timezone)?></div>
         		<a class="like" href="javascript:void(0);" attr-news-id="<?=$v->id?>">
         			<div class="placeholder">
         				<div class="like-icon <?=($v->active?'active':null)?>"></div>

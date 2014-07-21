@@ -1245,6 +1245,9 @@ footer .games img {
 .profile .fields input, .profile .fields p {
     width: 595px !important;
 }
+.profile .fields select {
+    width: 605px !important;
+}
 .profile .fields p {
     display: inline-block;
 	border: 1px solid #999;

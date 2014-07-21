@@ -162,6 +162,8 @@ class User extends System
             }
         }
         
+        $userRow->timezone = $userRow->timezone * 60;
+        
         return $userRow;
     }
     
@@ -234,10 +236,18 @@ class User extends System
             return '0;'.t('email_invalid');
         }
         
+        if ($form['timezone'] <= 720 && $form['timezone'] >= -720) {
+            $timezone = $form['timezone'];
+        }
+        else {
+            $timezone = 0;
+        }
+        
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
-            '`email` = "'.Db::escape($form['email']).'" '.
+            '`email` = "'.Db::escape($form['email']).'", '.
+            '`timezone` = "'.Db::escape($timezone).'" '.
             'WHERE `id` = '.(int)$user->id
         );
         

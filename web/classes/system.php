@@ -45,6 +45,20 @@ class System
         	$data['token'] = false;
         }
         
+        $checkUser = User::checkUser($_SESSION['user']);
+        
+        if ($checkUser) {
+            $this->logged_in = 1;
+            $this->data->user = $checkUser;
+        }
+        else {
+            $this->logged_in = 0;
+            $this->data->user = new stdClass();
+            if ($_SESSION['user']) {
+                User::logOut();
+            }
+        }
+        
         $rows = Db::fetchRows('SELECT * FROM `tm_settings`');
         if ($rows) {
         	foreach($rows as $v) {
@@ -109,26 +123,12 @@ class System
                     'server'	=> $v->server,
                     'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone'),
                     'status'=> $statusString,
-                    'time' 	=> $time,
+                    'time' 	=> $time + $this->data->user->timezone,
                 );
             }
         }
         ksort($this->serverTimes);
 
-        $checkUser = User::checkUser($_SESSION['user']);
-        
-        if ($checkUser) {
-            $this->logged_in = 1;
-            $this->data->user = $checkUser;
-        }
-        else {
-            $this->logged_in = 0;
-            $this->data->user = new stdClass();
-            if ($_SESSION['user']) {
-                User::logOut();
-            }
-        }
-        
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             
         }

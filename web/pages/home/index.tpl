@@ -24,7 +24,7 @@
         <? if ($this->news->top) { ?>
         <div class="block-content news big-block">
         	<div class="add-box">
-        		<div class="date"><?=date('M', strtotime($this->news->top->added))?><br /><?=date('d', strtotime($this->news->top->added))?></div>
+        		<div class="date"><?=date('M', strtotime($this->news->top->added) + $this->data->user->timezone)?><br /><?=date('d', strtotime($this->news->top->added)+$this->data->user->timezone)?></div>
         		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->news->top->id?>">
         			<div class="placeholder">
         				<div class="like-icon <?=($this->news->top->active?'active':null)?>"></div>
@@ -72,7 +72,7 @@
                 </div>
                 <a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="title"><?=$v->title?></a>
                 <div class="info">
-                    <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
+                    <div class="dates"><?=date('d M Y', strtotime($v->added)+$this->data->user->timezone)?></div>
                     <!-- <a href="<?=_cfg('href')?>/news/<?=$v->id?>#comments" class="comments"><?=$v->comments?></a>-->
                     <div class="clear"></div>
                 </div>

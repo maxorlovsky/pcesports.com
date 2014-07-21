@@ -7,7 +7,7 @@
         </div>
         <div class="block-content news big-block">
         	<div class="add-box">
-        		<div class="date"><?=date('M', strtotime($this->news->added))?><br /><?=date('d', strtotime($this->news->added))?></div>
+        		<div class="date"><?=date('M', strtotime($this->news->added)+$this->data->user->timezone)?><br /><?=date('d', strtotime($this->news->added)+$this->data->user->timezone)?></div>
         		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->news->id?>">
         			<div class="placeholder">
         				<div class="like-icon <?=($this->news->active?'active':null)?>"></div>

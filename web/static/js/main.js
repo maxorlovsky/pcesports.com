@@ -144,10 +144,12 @@ var PC = {
     timers: [],
     runTimers: function() {
         $.each($('.timer'), function(k, v) {
-            PC.timers[k] = setInterval(function(){PC.updateTimer(v);}, 1000);
+            PC.timers[k] = setTimeout(function(){PC.updateTimer(k, v);}, 1000);
         });
     },
-    updateTimer: function(element) {
+    updateTimer: function(key, element) {
+        clearTimeout(PC.timers[key]);
+        
         element = $(element);
         delta = parseInt(element.attr('attr-time'));
         nobr = 0;
@@ -190,6 +192,8 @@ var PC = {
         
         element.attr('attr-time', originalTimer);
         element.html(returnString);
+        
+        PC.timers[key] = setTimeout(function(){PC.updateTimer(key, element);}, 1000);
     },
     likeInProgress: 0, //local var for bottom function
     like: function(element) {
