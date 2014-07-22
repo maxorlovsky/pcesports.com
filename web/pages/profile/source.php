@@ -22,8 +22,9 @@ class profile extends System
             $regComplete = 1;
         }
         
-        if ($this->data->user->timezone && $this->data->user->timezone <= 720 && $this->data->user->timezone >= -720) {
-            $pickedTimezone = $this->data->user->timezone;
+        $userTimeZone = $this->data->user->timezone / 60;
+        if ($this->data->user->timezone && $userTimeZone <= 720 && $userTimeZone >= -720) {
+            $pickedTimezone = $userTimeZone;
         }
         else {
             $pickedTimezone = 0;
