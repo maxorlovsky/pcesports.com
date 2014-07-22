@@ -142,26 +142,32 @@ var PC = {
         $('.popup:visible').stop().animate({top: -$('.popup:visible').height()});
     },
     timers: [],
+    secs: 0,
     runTimers: function() {
+        console.log(PC.secs);
+        PC.secs++;
+        console.log(new Date().getTime()/1000);
+        clearTimeout(PC.timers[0]);
+        PC.timers[0] = setTimeout(function(){PC.runTimers();}, 1000);
         $.each($('.timer'), function(k, v) {
-            PC.timers[k] = setTimeout(function(){PC.updateTimer(k, v);}, 1000);
+            //PC.timers[k] = setTimeout(function(){PC.updateTimer(k, v);}, 1000);
+            PC.updateTimer(k, v);
         });
     },
     updateTimer: function(key, element) {
-        clearTimeout(PC.timers[key]);
-        
         element = $(element);
         delta = parseInt(element.attr('attr-time'));
         nobr = 0;
         if (element.attr('attr-br')) {
             nobr = 1;
         }
-        originalTimer = delta;
-    
+        
         if (delta < 1 || !delta) {
             element.html('Live');
             return;
         }
+        
+        element.attr('attr-time', delta-1);
         
         var days = Math.floor(delta / 86400);
         delta -= days * 86400;
@@ -188,12 +194,9 @@ var PC = {
         
         returnString += hours+':'+minutes+':'+seconds;
         
-        originalTimer--;
-        
-        element.attr('attr-time', originalTimer);
         element.html(returnString);
         
-        PC.timers[key] = setTimeout(function(){PC.updateTimer(key, element);}, 1000);
+        //PC.timers[key] = setTimeout(function(){PC.updateTimer(key, element);}, 1000);
     },
     likeInProgress: 0, //local var for bottom function
     like: function(element) {
