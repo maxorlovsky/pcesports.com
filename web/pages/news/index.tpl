@@ -33,7 +33,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$v->login?>"><?=$v->login?></a>, 
 				<span id="news-like-<?=$v->id?>"><?=$v->likes?></span> <?=t('likes')?>, 
                 <span><?=$v->views?></span> <?=t('views')?>,
-				<div class="fb-comments-count" data-href="<?=_cfg('href')?>/news/<?=$v->id?>">0</div> <?=t('comments')?>
+                <span><?=$v->comments?></span> <?=t('comments')?>
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$v->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>

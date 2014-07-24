@@ -476,7 +476,7 @@ footer .copyrights .devs:hover {
     background-color: #999;
     border: 1px solid #999;
     border-radius: 10px;
-    min-width: 20px;
+    padding: 0 5px;
     text-align: center;
     transition: .5s;
 }

@@ -168,6 +168,9 @@ var PC = {
                 if (answer[0] == 1) {
                     $('.leave-comment #msg').val('');
                     PC.getNewsComments($('.leave-comment #id').val());
+                    if ($('#comments-count').length > 0) {
+                        $('#comments-count').html(parseInt($('#comments-count').html()) + 1);
+                    }
                 }
                 else {
                     $('.leave-comment #error').html('<p>'+answer[1]+'</p>').slideDown('fast');

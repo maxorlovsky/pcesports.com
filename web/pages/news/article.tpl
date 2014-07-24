@@ -28,7 +28,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->login?>"><?=$this->news->login?></a>, 
 				<span id="news-like-<?=$this->news->id?>"><?=$this->news->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->views?></span> <?=t('views')?>, 
-				<div class="fb-comments-count" data-href="<?=_cfg('href')?>/news/<?=$this->news->id?>">0</div> <?=t('comments')?>
+                <span id="comments-count"><?=$this->news->comments?></span> <?=t('comments')?>
 			</div>
             <div class="news-share">
                 <div class="addthis_sharing_toolbox"></div>

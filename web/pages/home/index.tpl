@@ -48,7 +48,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
 				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->top->views?></span> <?=t('views')?>, 
-				<div class="fb-comments-count" data-href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">0</div> <?=t('comments')?>
+				<span><?=$this->news->top->comments?></span> <?=t('comments')?>
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>
@@ -73,7 +73,7 @@
                 <a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="title"><?=$v->title?></a>
                 <div class="info">
                     <div class="dates"><?=date('d M Y', strtotime($v->added)+$this->data->user->timezone)?></div>
-                    <!-- <a href="<?=_cfg('href')?>/news/<?=$v->id?>#comments" class="comments"><?=$v->comments?></a>-->
+                    <a href="<?=_cfg('href')?>/news/<?=$v->id?>#comments" class="comments"><?=$v->comments?></a>
                     <div class="clear"></div>
                 </div>
             </div>

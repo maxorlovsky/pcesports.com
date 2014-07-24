@@ -45,16 +45,18 @@ class Ajax extends System
         
         $html = '';
         $currDate = new DateTime();
-        foreach($rows as $v) {
-            $dbDate = new DateTime($v->added);
-            $interval = $this->getAboutTime($currDate->diff($dbDate));
-            
-            $text = $this->parseText($v->text);
-            
-            $html .= '<div class="master">'.
-                '<p>'.$text.'</p>'.
-                '<span class="comment-user">'.$v->name.'</span> <span class="comment-time">- '.$interval.'</span>'.
-                '</div>';
+        if ($rows) {
+            foreach($rows as $v) {
+                $dbDate = new DateTime($v->added);
+                $interval = $this->getAboutTime($currDate->diff($dbDate));
+                
+                $text = $this->parseText($v->text);
+                
+                $html .= '<div class="master">'.
+                    '<p>'.$text.'</p>'.
+                    '<span class="comment-user">'.$v->name.'</span> <span class="comment-time">- '.$interval.'</span>'.
+                    '</div>';
+            }
         }
         
         return $html;
