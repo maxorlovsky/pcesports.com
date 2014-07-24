@@ -1311,3 +1311,76 @@ footer .games img {
 .registration-complete {
     margin-bottom: 20px;
 }
+
+.leave-comment.fields {
+	margin-bottom: 15px;
+	white-space: nowrap;
+	clear: both;
+}
+.leave-comment .fields label {
+	display: block;
+	border: 1px solid #999;
+	border-radius: 4px 0 0 4px;
+	background-color: #ccc;
+	padding: 0;
+	margin: 0;
+	width: 90px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	text-transform: uppercase;
+	float: left;
+}
+.leave-comment .fields textarea {
+	width: 770px;
+    padding: 10px;
+	border: 1px solid #999;
+	margin: 0 0 0 -1px;
+	border-radius: 0 0 4px 4px;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.15);
+    resize: vertical;
+    min-height: 80px;
+}
+.leave-comment .fields textarea:focus {
+	border-color: #1697e1;
+	transition: linear .3s;
+	outline: 0;
+}
+.leave-comment .button {
+    margin-top: 10px;
+}
+
+.leave-comment .formatting {
+    width: 790px;
+    background: linear-gradient(to bottom,  rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #43CDEF;
+}
+.leave-comment .formatting .formbut {
+    padding: 0 5px;
+    width: 27px;
+    height: 30px;
+    float: left;
+    border-right: 1px solid #eee;
+    cursor: pointer;
+    background-image: url(../images/lol_icon_sprite.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.leave-comment .formatting .b {
+    background-position: 11px;
+}
+.leave-comment .formatting .i {
+    background-position: -16px;
+}
+.leave-comment .formatting .s {
+    background-position: -41px;
+}
+.leave-comment .formatting .link {
+    background-position: -69px;
+}
+.leave-comment .formatting .q {
+    background-position: -101px;
+}
+.leave-comment .formatting .list {
+    background-position: -131px;
+}

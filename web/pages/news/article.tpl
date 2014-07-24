@@ -38,8 +38,29 @@
         <div class="block-divider"></div>
         <div class="comments">
         	<h2><?=t('leave_comment')?></h2>
-            <div class="fb-comments" data-href="<?=_cfg('href')?>/news/<?=$this->news->id?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
         	<!-- <div class="disabled">Disabled</div> -->
+            
+            <form class="leave-comment" >
+                <div id="error"><p></p></div>
+                
+                <div class="formatting">
+                    <div class="formbut b" title="Bold"></div>
+                    <div class="formbut i" title="Italic"></div>
+                    <div class="formbut s" title="Line through"></div>
+                    <div class="formbut link" title="Link"></div>
+                    <div class="formbut q" title="Quote"></div>
+                    <div class="formbut list" title="List"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="fields">
+                    <textarea name="msg" id="msg" placeholder="Leave a comment"></textarea>
+                </div>
+                
+                <a href="javascript:void(0);" class="button" id="submitComment"><?=t('post')?></a>
+                
+                <input type="hidden" name="module" value="news" />
+                <input type="hidden" name="id" value="<?=$this->news->id?>" />
+            </form>
         </div>
     </div>
 </div>

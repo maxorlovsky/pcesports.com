@@ -40,6 +40,7 @@
                 disconnect: '<?=t('disconnect')?>',
                 connected: '<?=t('connected')?>',
                 disconnected: '<?=t('disconnected')?>',
+                enter_url: '<?=t('enter_url')?>',
             }
         };
 		

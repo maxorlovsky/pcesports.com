@@ -1,3 +1,14 @@
+$('.formbut').on('click', function() {
+    allowedFormat = ['b','i','s','link','q','list'];
+    element = $(this);
+    
+    $.each(allowedFormat, function(k, v) {
+        if (element.hasClass(v)) {
+            PC.format[v]();
+        }
+    });
+});
+
 if ($('.ad-holder').height() == 0) {
     $('.ad-blocked').show();
 }
@@ -123,6 +134,149 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    format: {
+        b: function() {
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd;
+            
+            if (end != start) {
+                text.splice(end, 0, '**');
+                text.splice(start, 0, '**');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start;
+                $('#msg')[0].selectionEnd = end + 4;
+            }
+            else {
+                text.splice(start, 0, '****');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + 2;
+                $('#msg')[0].selectionEnd = start + 2;
+            }
+        },
+        i: function() {
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd;
+            
+            if (end != start) {
+                text.splice(end, 0, '*');
+                text.splice(start, 0, '*');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start;
+                $('#msg')[0].selectionEnd = end + 2;
+            }
+            else {
+                text.splice(start, 0, '**');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + 1;
+                $('#msg')[0].selectionEnd = start + 1;
+            }
+        },
+        s: function() {
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd;
+            
+            if (end != start) {
+                text.splice(end, 0, '~~');
+                text.splice(start, 0, '~~');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start;
+                $('#msg')[0].selectionEnd = end + 4;
+            }
+            else {
+                text.splice(start, 0, '~~~~');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + 2;
+                $('#msg')[0].selectionEnd = start + 2;
+            }
+        },
+        link: function() {
+            var link = prompt(g.str.enter_url);
+            if (!link) {
+                return false;
+            }
+            if (link.substring(0,7) != 'http://') {
+                link = 'http://'+link;
+            }
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd + 1;
+            
+            if (end != start) {
+                text.splice(start, 0, '[');
+                text.splice(end, 0, ']('+link+')');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = end + 3 + link.length;
+                $('#msg')[0].selectionEnd = end + 3 + link.length;
+            }
+            else {
+                text.splice($('#msg')[0].selectionStart, 0, '[]('+link+')');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + 1;
+                $('#msg')[0].selectionEnd = start + 1;
+            }
+        },
+        q: function() {
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd;
+            
+            if (end != start) {
+                text.splice(end, 0, '[/q]');
+                text.splice(start, 0, '[q]');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start;
+                $('#msg')[0].selectionEnd = end + 7;
+            }
+            else {
+                addBreak = '';
+                plusNum = 3;
+                console.log(end);
+                console.log(text.length);
+                if (end == text.length && end != 0) {
+                    addBreak = '\r';
+                    plusNum = 4;
+                }
+                text.splice(start, 0, addBreak+'[q][/q]');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + plusNum;
+                $('#msg')[0].selectionEnd = start + plusNum;
+            }
+        },
+        list: function() {
+            var text = $('#msg').val().split('');
+            var start = $('#msg')[0].selectionStart;
+            var end = $('#msg')[0].selectionEnd;
+            
+            if (end != start) {
+                text.splice(end, 0, '[/l]');
+                text.splice(start, 0, '[l]');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start;
+                $('#msg')[0].selectionEnd = end + 4;
+            }
+            else {
+                text.splice(start, 0, '\r[l][/l]');
+                returnText = text.join('');
+                $('#msg').val(returnText).focus();
+                $('#msg')[0].selectionStart = start + 4;
+                $('#msg')[0].selectionEnd = start + 4;
+            }
+        },
+    },
     openPopup: function(name) {
         $('html, body').css('overflow', 'hidden');
         $('#fader').fadeIn('fast');
@@ -144,9 +298,7 @@ var PC = {
     timers: [],
     secs: 0,
     runTimers: function() {
-        console.log(PC.secs);
         PC.secs++;
-        console.log(new Date().getTime()/1000);
         clearTimeout(PC.timers[0]);
         PC.timers[0] = setTimeout(function(){PC.runTimers();}, 1000);
         $.each($('.timer'), function(k, v) {
