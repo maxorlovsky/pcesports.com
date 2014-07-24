@@ -74,6 +74,10 @@
 <script>
 $(document).ready(function(){
     PC.getNewsComments(<?=$this->news->id?>);
+    
+    if (window.location.hash == '#comments') {
+        $('html, body').animate({scrollTop: $('.comments').offset().top}, 1000);
+    }
 });
 </script>
 
