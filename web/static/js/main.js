@@ -1,3 +1,7 @@
+$('#submitComment').on('click', function() {
+    PC.comment();
+});
+
 $('.formbut').on('click', function() {
     allowedFormat = ['b','i','s','link','q','list'];
     element = $(this);
@@ -134,6 +138,46 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    getNewsComments: function(id) {
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'getNewsComments',
+                id: parseInt(id)
+            },
+            success: function(data) {
+                $('.user-comments').html(data);
+            }
+        };
+        this.ajax(query);
+    },
+    comment: function() {
+        $('.leave-comment #error').hide();
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'comment',
+                module: $('.leave-comment #module').val(),
+                id: parseInt($('.leave-comment #id').val()),
+                text: $('.leave-comment #msg').val()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.leave-comment #msg').val('');
+                    PC.getNewsComments($('.leave-comment #id').val());
+                }
+                else {
+                    $('.leave-comment #error').html('<p>'+answer[1]+'</p>').slideDown('fast');
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     format: {
         b: function() {
             var text = $('#msg').val().split('');

@@ -37,10 +37,11 @@
         </div>
         <div class="block-divider"></div>
         <div class="comments">
-        	<h2><?=t('leave_comment')?></h2>
+        	<h2><?=t('leave_comments')?></h2>
         	<!-- <div class="disabled">Disabled</div> -->
             
             <form class="leave-comment" >
+                <? if ($this->logged_in) { ?>
                 <div id="error"><p></p></div>
                 
                 <div class="formatting">
@@ -58,11 +59,22 @@
                 
                 <a href="javascript:void(0);" class="button" id="submitComment"><?=t('post')?></a>
                 
-                <input type="hidden" name="module" value="news" />
-                <input type="hidden" name="id" value="<?=$this->news->id?>" />
+                <input type="hidden" id="module" name="module" value="news" />
+                <input type="hidden" id="id" name="id" value="<?=$this->news->id?>" />
+                <? } else { ?>
+                    <?=t('login_to_leave_comment')?>
+                <? } ?>
             </form>
+            
+            <div class="user-comments"></div>
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function(){
+    PC.getNewsComments(<?=$this->news->id?>);
+});
+</script>
 
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4dfdc8015d8f785b"></script>

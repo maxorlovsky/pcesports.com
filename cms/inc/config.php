@@ -7,7 +7,7 @@
 // Making some defines for easyer coding (main)
 $cfg['dir'] = $_SERVER['DOCUMENT_ROOT'].'/web';
 $cfg['cmsdir'] = dirname(__DIR__);
-date_default_timezone_set('Europe/Riga');
+date_default_timezone_set('GMT0');
 //=====================================================
 
 //=====================================================

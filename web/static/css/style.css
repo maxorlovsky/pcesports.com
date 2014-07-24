@@ -1384,3 +1384,35 @@ footer .games img {
 .leave-comment .formatting .list {
     background-position: -131px;
 }
+
+.user-comments {
+    width: 100%;
+    display: block;
+    margin-top: 20px;
+}
+.user-comments .master {
+    border-top: 2px solid #c1c1c1;
+    margin-bottom: 20px;
+    background-color: #e8e8e8;
+    padding: 10px;
+    color: #555;
+    font-size: 14px;
+}
+.user-comments .master p {
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+.user-comments .comment-user {
+    color: #111;
+}
+.user-comments .comment-time {
+    color: #717171;
+    font-size: 12px;
+    font-weight: 400px;
+    font-style: italic;
+}
+.user-comments blockquote {
+    border-left: 2px solid #000;
+    padding: 5px;
+    margin: 0;
+}

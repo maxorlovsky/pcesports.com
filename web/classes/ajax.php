@@ -17,6 +17,8 @@ class Ajax extends System
         'socialLogin',
         'socialDisconnect',
         'updateProfile',
+        'comment',
+        'getNewsComments',
 	);
 	
     public function ajaxRun($data) {
@@ -30,6 +32,87 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function getNewsComments($data) {
+        $rows = Db::fetchRows(
+            'SELECT `nc`.`text`, `nc`.`added`, `u`.`name` '.
+            'FROM `news_comments` AS `nc` '.
+            'LEFT JOIN `users` AS `u` ON `nc`.`user_id` = `u`.`id` '.
+            'WHERE `nc`.`news_id` = '.(int)$data['id'].' '.
+            'ORDER BY `nc`.`id` DESC '
+        );
+        
+        $html = '';
+        $currDate = new DateTime();
+        foreach($rows as $v) {
+            $dbDate = new DateTime($v->added);
+            $interval = $this->getAboutTime($currDate->diff($dbDate));
+            
+            $text = $this->parseText($v->text);
+            
+            $html .= '<div class="master">'.
+                '<p>'.$text.'</p>'.
+                '<span class="comment-user">'.$v->name.'</span> <span class="comment-time">- '.$interval.'</span>'.
+                '</div>';
+        }
+        
+        return $html;
+    }
+    
+    private function parseText($text) {
+        $text = strip_tags($text); //just in case, never know how those fuckers can hack you
+
+        $text = str_replace(
+            array("\n", "\r"),
+            array('<br />', '<br />'),
+            $text
+        );
+        $text = preg_replace(
+            array('/\*\*(.*?)\*\*/i', '/\*(.*?)\*/i', '/\~~(.*?)\~~/i', '/\[q](.*?)\[\/q]/i', '/\[(.*?)\]\((.*?)\)/i'),
+            array('<b>$1</b>', '<i>$1</i>', '<s>$1</s>', '<blockquote>$1</blockquote>','<a href="$2" target="_blank">$1</a>' ),
+            $text
+        );
+        
+        return $text;
+    }
+    
+    private function getAboutTime($interval) {
+        if ($interval->y) return $interval->y.' year ago';
+        else if ($interval->m) return $interval->m.' months ago';
+        else if ($interval->d) return $interval->d.' days ago';
+        else if ($interval->h) return $interval->h.' hours ago';
+        else if ($interval->i) return $interval->i.' minutes ago';
+        else return $interval->s.' seconds ago';
+    }
+    
+    protected function comment($data) {
+        if ($data['module'] == 'news') {
+            if (!trim($data['text'])) {
+                return '0;'.t('comment_is_empty');
+            }
+            if ($this->logged_in != 1 || $this->data->user->id == 0) {
+                return '0;'.t('not_logged_in');
+            }
+            
+            $text = Db::escape(strip_tags($data['text']));
+            Db::query(
+                'INSERT INTO `news_comments` SET '.
+                '`news_id` = '.(int)$data['id'].', '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`text` = "'.$text.'", '.
+                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
+            );
+            
+            Db::query(
+                'UPDATE `news` SET `comments` = `comments` + 1 '.
+                'WHERE `id` = '.(int)$data['id'].' '
+            );
+            
+            return '1;1';
+        }
+        
+        return '0;'.t('module_not_exist');
     }
     
     protected function updateProfile($data) {

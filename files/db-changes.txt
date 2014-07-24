@@ -1,5 +1,33 @@
+# 24.07.2014
+CREATE TABLE `news_comments` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`news_id` INT UNSIGNED NOT NULL ,
+`user_id` INT UNSIGNED NOT NULL ,
+`answer_to_id` INT UNSIGNED NOT NULL DEFAULT  '0',
+`text` TEXT NOT NULL ,
+`ip` VARCHAR( 20 ) NOT NULL ,
+`added` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+INDEX (`news_id`, `user_id`)
+) ENGINE = INNODB;
+
 # 04.07.2014
-ALTER TABLE  `users` ADD  `registration_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(250) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timezone` varchar(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `users_social` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `social` char(2) NOT NULL,
+  `social_uid` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 # 03.07.2014
 DROP TABLE `lol_games`;

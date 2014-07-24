@@ -1,12 +1,12 @@
 <?php
 
-class news
+class news extends System
 {
 	public $news;
     public $pages;
 	
 	public function __construct($params = array()) {
-		
+		parent::__construct();
 	}
 	
 	public function getNewsList() {
