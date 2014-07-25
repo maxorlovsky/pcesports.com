@@ -29,11 +29,11 @@
                 <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
             </div>
             
-            <div class="fields">
+            <!--<div class="fields">
                 <label for="avatar"><?=t('avatar')?></label>
                 <div class="holder">Pick image (not yet working)</div>
                 <input name="avatar" id="avatar" type="hidden" value="<?=$this->data->user->avatar?>" />
-            </div>
+            </div>-->
             
             <div class="fields">
                 <label for="timezone"><?=t('timezone')?></label>
@@ -50,10 +50,10 @@
                 <label><?=t('registration_date')?></label>
                 <p><?=date('d.m.Y H:i', strtotime($this->data->user->registration_date) + $this->data->user->timezone)?></p>
             </div>
-            <div class="fields">
+            <!--<div class="fields">
                 <label><?=t('team_name')?></label>
                 <p><i><?=t('none')?></i></p>
-            </div>
+            </div>-->
         </form>
     </div>
     

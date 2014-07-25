@@ -68,9 +68,23 @@
         }
         ?>
     </div>
-	
-    <? if (_cfg('env') == 'prod') { ?>
     
+    <? if (_cfg('language') == 'en') { ?>
+    <div class="block donate">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Help Pentaclick Project</h1>
+        </div>
+		<div class="block-content">
+            <p>If you like what we do</p>
+            <p>If you want to help us grow even further and provide better quality content</p>
+            <p>If you like us</p>
+            <p>Maybe you could donate? Of course it's not mandatory, but it would help!</p>
+			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" class="button"><?=t('donate')?></a>
+		</div>
+    </div>
+	<? } ?>
+    
+    <? if (_cfg('env') == 'prod') { ?>
 	<div class="block adsense">
 		<div class="block-header-wrapper">
             <h1 class="bordered"><?=t('advertising')?></h1>
