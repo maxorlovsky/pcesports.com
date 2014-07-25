@@ -77,7 +77,7 @@
 		<div class="block-content">
             <p>If you like what we do</p>
             <p>If you want to help us grow even further and provide better quality content</p>
-            <p>Then please donate</p>
+            <p>Then you are welcome to donate</p>
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
 		</div>
     </div>
