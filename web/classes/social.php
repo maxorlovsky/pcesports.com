@@ -182,7 +182,8 @@ class Social
 		
 		if(!isset($_GET['code']) || empty($_GET['code'])) {
 			if(isset($_GET['error']) && !empty($_GET['error'])) {
-                $_SESSION['errors'][] = $_GET['error'];
+                $_SESSION['errors'][] = t($_GET['error']);
+                return false;
             }
 			else {
                 $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
