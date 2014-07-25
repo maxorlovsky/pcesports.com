@@ -12,7 +12,12 @@ class profile extends System
 	}
     
     public function errorPage() {
-		$messages = $_SESSION['errors'];
+        if (!isset($_SESSION['errors']) || !$_SESSION['errors']) {
+            go(_cfg('site'));
+            exit();
+        }
+        $messages = $_SESSION['errors'];
+        unset($_SESSION['errors']);
 		include_once _cfg('pages').'/'.get_class().'/error.tpl';
 	}
     

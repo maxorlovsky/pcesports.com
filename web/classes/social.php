@@ -279,7 +279,7 @@ class Social
 	private function fbVerify() {
 		if(!isset($_GET['code']) || empty($_GET['code'])) {
 			if(isset($_GET['error']) && !empty($_GET['error'])) {
-                $_SESSION['errors'][] = $_GET['error'];
+                $_SESSION['errors'][] = t($_GET['error']);
             }
 			else {
                 $_SESSION['errors'][] = 'Facebook authorization error (empty error, something went wrong)';
@@ -466,6 +466,10 @@ class Social
 	}
 	
 	function twVerify() {
+        if (isset($_GET['denied'])) {
+            $_SESSION['errors'][] = t('access_denied');
+            return false;
+        }
 		$params = array(
             'url'	=> 'https://api.twitter.com/oauth/access_token',
             'callback' => urlencode(_cfg('site').'/run/social/tw'),
@@ -644,13 +648,13 @@ class Social
 	
 		if($status['http_code']!=200) {
             $_SESSION['errors'][] = $response.' ('.__LINE__.')';
-			if(_cfg('env')=='dev') {
+			/*if(_cfg('env')=='dev') {
                 echo '<pre>';
 				print_r($cfg);
 				echo $response;
 				print_r($status);
                 echo '</pre>';
-			}
+			}*/
             
 			return false;
 		}
