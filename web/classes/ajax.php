@@ -579,7 +579,7 @@ class Ajax extends System
 		$players = array();
 		$checkForSame = array();
 		for($i=1;$i<=7;++$i) {
-            if ($this->data->settings['tournament-start-lol'] == 1) {
+            if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
                 $err['mem'.$i] = '0;'.t('tournament_in_progress');
             }
 			else if (!$post['mem'.$i] && $i < 6) {
