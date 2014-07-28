@@ -19,7 +19,7 @@
                 <h1 class="bordered"><?=t('partners')?></h1>
             </div>
             <div class="block-content partners">
-                <a class="unicon" href="https://www.unicon.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
+                <a class="unicon" href="http://www.unicon.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
                 <a class="skillz" href="http://www.skillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/skillz.png" /></a>
                 <div class="clear"></div>
                 <a class="aimskillz" href="http://aimskillz.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>
