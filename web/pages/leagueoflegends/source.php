@@ -202,7 +202,25 @@ class leagueoflegends extends System
         $this->pickedTournament = (int)$number;
         
 		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
-        
+            $tournamentRows = Db::fetchRows('SELECT `dates`, `time` '.
+                'FROM `tournaments` '.
+                'WHERE `game` = "lol" AND '.
+                '`server` = "'.Db::escape($this->server).'" AND '.
+                '`name` = '.(int)$this->pickedTournament.' AND '.
+                '(`status` = "Registration" OR `status` = "Start") '
+            );
+            if ($tournamentRows) {
+                foreach($tournamentRows as $v) {
+                    $combineTime = strtotime($v->dates.' '.$v->time) + $this->data->user->timezone;
+                    if ($v->status == "Start") {
+                        $tournamentTime['start'] = date('d M Y, h:i', $combineTime);
+                    }
+                    else {
+                        $tournamentTime['registration'] = date('d M Y, h:i', $combineTime);
+                    }
+                }
+            }
+            
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
                 'FROM `teams` AS `t` '.
 				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.
