@@ -202,7 +202,7 @@ class leagueoflegends extends System
         $this->pickedTournament = (int)$number;
         
 		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
-            $tournamentRows = Db::fetchRows('SELECT `dates`, `time` '.
+            $tournamentRows = Db::fetchRows('SELECT `dates`, `time`, `status` '.
                 'FROM `tournaments` '.
                 'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
