@@ -15,6 +15,7 @@
 					<div id="mem<?=$i?>-msg" class="message hidden"></div>
 					<div class="clear"></div>
                     <? } ?>
+                    <input type="hidden" name="server" value="<?=$this->server?>" />
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="edit-team"><?=t('edit_team')?></a>

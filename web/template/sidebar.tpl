@@ -26,7 +26,7 @@
 			<? } else { ?>
 			<ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-                <? if ($this->data->settings['tournament-start-lol'] != 1) {?>
+                <? if ($this->data->settings['tournament-start-lol-euw'] != 1 && $this->data->settings['tournament-start-lol-eune'] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
                 <? } ?>
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
