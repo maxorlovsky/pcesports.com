@@ -213,10 +213,10 @@ class leagueoflegends extends System
                 foreach($tournamentRows as $v) {
                     $combineTime = strtotime($v->dates.' '.$v->time) + $this->data->user->timezone;
                     if ($v->status == "Start") {
-                        $tournamentTime['start'] = date('d M Y, h:i', $combineTime);
+                        $tournamentTime['start'] = date('d M Y, H:i', $combineTime);
                     }
                     else {
-                        $tournamentTime['registration'] = date('d M Y, h:i', $combineTime);
+                        $tournamentTime['registration'] = date('d M Y, H:i', $combineTime);
                     }
                 }
             }
