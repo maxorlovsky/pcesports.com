@@ -103,7 +103,6 @@ header .social a.fb:hover {
 header .social a.tw {
     background-position: -38px 0px;
     width: 27px;
-    margin-right: 12px;
 }
 header .social a.tw:hover {
 	background-position: -38px -36px;
@@ -1427,4 +1426,189 @@ footer .games img {
     width: 245px;
     text-align: center;
     font-size: 20px;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 1280px) {
+}
+
+/* Galaxy tab */
+@media (max-width: 1024px) {
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 768px) {
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+}
+
+/* Smallest phones */
+@media (max-width: 320px) {
+    body {
+        background: none;
+    }
+    #head-line  {
+        min-height: 0;
+    }
+    .container {
+        width: 320px;
+    }
+    .page {
+        padding: 10px 0;
+    }
+    
+    header {
+        padding: 5px 0;
+        min-height: 0;
+    }
+    header .logo {
+        margin-left: 10px;
+    }
+    header .logo img {
+        width: 100px;
+        height: auto;
+    }
+    header .social {
+        margin: 5px 5px 0 0;
+    }
+    header .social a {
+        margin-right: 2px;
+        transition: 0 !important;
+    }
+    header .languages {
+        margin: 10px 5px 0 0;
+    }
+    header .language-switcher {
+        top: 35px;
+    }
+    .navbar {
+        height: auto;
+    }
+    .navbar .nav .nav-link {
+        float: none;
+    }
+    .navbar .nav .nav-link a {
+        padding: 5px 0 10px 10px
+    }
+    .left-containers, .right-containers {
+        float: none;
+        width: auto;
+    }
+    .right-containers {
+        margin-top: 10px;
+    }
+    .promo {
+        display: none;
+    }
+    .block .block-header-wrapper {
+        min-height: 30px;
+    }
+    .block .block-header-wrapper h1 {
+        padding: 5px;
+    }
+    .big-block .image-holder {
+        max-width: 320px;
+        max-height: 140px;
+    }
+    .big-block .image-holder img {
+        max-width: 320px;
+    }
+    .big-block .add-box {
+        display: none;
+    }
+    .big-block.readmore {
+        padding: 2px !important;
+    }
+    .readmore .news-info {
+        float: none;
+        text-align: center;
+    }
+    .readmore .button {
+        float: none;
+        margin: 0 0 10px 100px;
+    }
+    .news .small-block {
+        float: none;
+        width: auto;
+        margin-right: 0;
+    }
+    .news .small-block .image-holder {
+        width: 225px;
+        margin: 0 auto;
+    }
+    #toTop, #hint-helper {
+        display: none !important;
+    }
+    .block .block-header-wrapper h1.bordered {
+        line-height: 29px;
+        float: none;
+    }
+    .right-containers .block {
+        margin-bottom: 10px;
+    }
+    footer .separator {
+        width: 100%;
+        margin: 0 0 10px 0;
+        float: none;
+    }
+    footer .partners a {
+        position: initial !important;
+        left: initial !important;
+    }
+    footer .copyrights {
+        margin: 0;
+        padding: 0;
+    }
+    footer .copyrights .rights, footer .copyrights .devs {
+        margin: 3px 0 0 5px;
+        float: none;
+    }
+    #login-window {
+        width: 300px;
+    }
+    .contacts .contact-form .fields input {
+        width: 165px;
+    }
+    .contacts .contact-form .fields select {
+        width: 175px;
+    }
+    .contacts .contact-form .fields textarea {
+        width: 155px;
+        height: 150px;
+    }
+    .lol .title {
+        width: auto;
+        white-space: initial;
+    }
+    .lol .title img {
+        display: none;
+    }
+    .lol .right-part, .lol .left-part, .lol .mid-part {
+        float: none;
+        font-size: 15px;
+    }
+    .lol .mid-part {
+        display: none;
+    }
+    .ended-tournament, .active-tournament {
+        position: relative;
+        padding: 5px !important;
+    }
+    .lol .right-part .status {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+    .navbar .nav-sub {
+        display: block !important;
+        position: initial;
+        left: initial;
+        top: initial;
+        background: 0;
+    }
+    .navbar .nav-sub .nav-sublink {
+        border-bottom: 0;
+    }
 }
