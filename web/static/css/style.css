@@ -1611,4 +1611,35 @@ footer .games img {
     .navbar .nav-sub .nav-sublink {
         border-bottom: 0;
     }
+    .comments {
+        margin: 0 10px;
+    }
+    .profile .fields label {
+        width: 100px !important;
+    }
+    .profile .fields input, .profile .fields p {
+        width: 165px !important;
+    }
+    .profile .fields select {
+        width: 175px !important;
+    }
+    .profile .button {
+        margin-left: 90px !important;
+    }
+    .connections .status-holder {
+        width: 275px;
+    }
+    .connections .connect-line {
+        width: 30px;
+    }
+    .readmore .news-share {
+        float: none;
+        margin-left: 5px;
+    }
+    .leave-comment .formatting {
+        width: 300px;
+    }
+    .leave-comment .fields textarea {
+        width: 280px;
+    }
 }
