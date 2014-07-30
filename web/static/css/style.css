@@ -1442,10 +1442,6 @@ footer .games img {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-}
-
-/* Smallest phones */
-@media (max-width: 320px) {
     body {
         background: none;
     }
@@ -1453,10 +1449,14 @@ footer .games img {
         min-height: 0;
     }
     .container {
-        width: 320px;
+        width: 480px;
     }
-    .page {
-        padding: 10px 0;
+}
+
+/* Smallest phones */
+@media (max-width: 320px) {
+    .container {
+        width: 320px;
     }
     
     header {
