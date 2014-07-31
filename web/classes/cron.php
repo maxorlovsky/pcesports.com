@@ -117,9 +117,20 @@ class Cron extends System {
         
         Team won: <b>%win%</b>';
     
-        if ($this->data->settings['tournament-start-lol-euw'] == 1) {
+        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+            if ($this->data->settings['tournament-start-lol-euw'] == 1) {
+                $server = 'euw';
+            }
+            else if ($this->data->settings['tournament-start-lol-eune'] == 1) {
+                $server = 'eune';
+            }
+            else {
+                //Can not go!
+                return false;
+            }
+            
             //Getting all fights with status "done" = 0
-            $rows = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2` '.
+            $rows = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2`, `t1`.`challonge_id` AS `challongeId1`, `t2`.`challonge_id` AS `challongeId2` '.
                 'FROM `fights` AS `f` '.
                 'LEFT JOIN `teams` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
                 'LEFT JOIN `teams` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
@@ -131,8 +142,8 @@ class Cron extends System {
                 foreach($rows as $v) {
                     //Gathering team data
                     $team = array(
-                        $v->team1 => array('captain' => $v->captain1, 'name' => $v->teamName1),
-                        $v->team2 => array('captain' => $v->captain2, 'name' => $v->teamName2),
+                        $v->team1 => array('captain' => $v->captain1, 'name' => $v->teamName1, 'challonge_id' => $v->challongeId1),
+                        $v->team2 => array('captain' => $v->captain2, 'name' => $v->teamName2, 'challonge_id' => $v->challongeId2),
                     );
                     
                     //Gathering players
@@ -146,7 +157,7 @@ class Cron extends System {
                     }
                     
                     //Getting team captain#1 recent games
-                    $answer = $this->runAPI('/euw/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', 'euw', true);
+                    $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$team[$v->team1]['captain'].'/recent', $server, true);
                     $game = $answer->games[0]; //We're interested only in last game
                     
                     Db::query('INSERT INTO `lol_games` SET '.
@@ -171,10 +182,16 @@ class Cron extends System {
                             if ($game->stats->win == 1) {
                                 $whoWon = $v->team1; //Won team 1
                                 $emailText = str_replace('%win%', $team[$v->team1]['name'], $text);
+                                $winner = $team[$v->team1]['challonge_id'];
+                                $scores = '1-0';
+                                $loserId = $v->team2;
                             }
                             else {
                                 $whoWon = $v->team2; //Won team 2
                                 $emailText = str_replace('%win%', $team[$v->team2]['name'], $text);
+                                $winner = $team[$v->team2]['challonge_id'];
+                                $scores = '0-1';
+                                $loserId = $v->team1;
                             }
                             
                             //Adding teams names to email text
@@ -201,14 +218,46 @@ class Cron extends System {
                                 }
                             }
                             
+                            //Sending email
                             $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0], $playersList[1]), $emailText);
-                            
                             $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
                             
+                            //Registering email
                             Db::query('UPDATE `lol_games` SET '.
-                                '`message` = "'.$emailText.'" '.
+                                '`message` = "'.Db::escape($emailText).'" '.
                                 'WHERE `id` = '.(int)$gameDbId
                             );
+                            
+                            //Updating brackets
+                            $apiArray = array(
+                                '_method' => 'put',
+                                'match_id' => $v->match_id,
+                                'match[scores_csv]' => $scores,
+                                'match[winner_id]' => $winner,
+                            );
+                            if (_cfg('env') == 'prod') {
+                                $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$this->data->settings['lol-current-number-'.$server].'/matches/'.$v->match_id.'.put', $apiArray);
+                            }
+                            else {
+                                $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
+                            }
+                            
+                            Db::query('UPDATE `teams` SET `ended` = 1 '.
+                                'WHERE `game` = "lol" AND '.
+                                '`server` = "'.$server.'" AND '.
+                                '`id` = '.(int)$loserId.' '
+                            );
+                            
+                            Db::query('UPDATE `fights` SET `done` = 1 '.
+                                'WHERE `match_id` = '.(int)$v->match_id.' '
+                            );
+                            
+                            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
+                                
+                            $file = fopen($fileName, 'a');
+                            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Automatic message. Team '.$team[$whoWon]['name'].' won</b></p>';
+                            fwrite($file, htmlspecialchars($content));
+                            fclose($file);
                         }
                         else {
                             Db::query('UPDATE `lol_games` SET '.
@@ -226,8 +275,6 @@ class Cron extends System {
                 }
             }
         }
-        
-        
     }
     
     public function sendNotifications() {
