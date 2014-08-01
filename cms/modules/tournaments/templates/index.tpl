@@ -178,4 +178,10 @@ $(document).ready(function() {
 .player.offline {
 	color: #900;
 }
+/* Smallest phones */
+@media (max-width: 320px) {
+    .chat {
+        width: 280px;
+    }
+}
 </style>

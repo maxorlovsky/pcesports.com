@@ -5,6 +5,7 @@
     <meta name="description" content="<?=$this->data->settings['site_description']?>" />
     <meta name="keywords" content="<?=$this->data->settings['site_keywords']?>" />
     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?=$this->data->settings['site_name']?> - CMS</title>
     
     <script src="<?=_cfg('cmsstatic')?>/js/scripts.js"></script>
