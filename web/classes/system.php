@@ -123,7 +123,7 @@ class System
                     'server'	=> $v->server,
                     'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone'),
                     'status'=> $statusString,
-                    'time' 	=> $time + $this->data->user->timezone,
+                    'time' 	=> $time,
                 );
             }
         }

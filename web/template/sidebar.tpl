@@ -49,7 +49,7 @@
         $i = 0;
         foreach($this->serverTimes as $v) {
         ?>
-        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('d/m H:i', $v['time'])?>">
+        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('d/m H:i', $v['time'] + $this->data->user->timezone)?>">
             <? if ($i!=0) { ?>
                 <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
             <? } else { ?>
