@@ -22,7 +22,7 @@ class Strings
 		}
 		
 		if (isset($params['var1']) && $params['var1'] == 'index' && isset($params['var2'])) {
-			$this->searchString = $params['var2'];
+			$this->searchString = urldecode($params['var2']);
 			$this->strings = Db::fetchRows('SELECT `key`, `status`, `english` AS `value` '.
 				'FROM `tm_strings` '.
 				'WHERE `key` LIKE "%'.Db::escape($this->searchString).'%" OR '.
