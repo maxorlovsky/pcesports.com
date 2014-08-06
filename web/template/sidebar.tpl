@@ -108,12 +108,31 @@
     <? } ?>
 	
 	
-    <?/*
     <div class="block streamers">
         <div class="block-header-wrapper">
             <h1 class="bordered">Streamers</h1>
         </div>
-        <a href="http://www.twitch.tv/pentaclick_tv" class="block-content streamer featured">
+        <?
+        if ($this->streams) {
+            foreach($this->streams as $k => $v) {
+        ?>
+            <a href="http://www.twitch.tv/pentaclick_tv" class="block-content streamer <?=($v->featured==1?'featured':null)?>">
+                <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
+                <label class="streamer-name"><?=$v->name?></label>
+                <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
+            </a>
+        <?
+            }
+        }
+        else {
+        ?>
+            <div class="block-content">
+                No streams online
+            </div>
+        <?
+        }
+        ?>
+        <?/*<a href="http://www.twitch.tv/pentaclick_tv" class="block-content streamer featured">
             <img class="game-logo" src="http://clgaming.net/interface/img/game/lol.png" />
             <label class="streamer-name">Pentaclick TV</label>
             <span class="viewers">200 viewers</span>
@@ -137,9 +156,8 @@
             <img class="game-logo" src="http://clgaming.net/interface/img/game/sc2.png" />
             <label class="streamer-name">Demo</label>
             <span class="viewers">0 viewers</span>
-        </a>
+        </a>*/?>
     </div>
-    */?>
     
     <? if (_cfg('env') != 'dev') { ?>
 	

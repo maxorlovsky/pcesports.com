@@ -33,6 +33,56 @@ class Cron extends System {
         closedir($handler);
     }
     
+    public function updateStreamers() {
+        $rows = Db::fetchRows('SELECT * FROM `streams`');
+        
+        foreach($rows as $v) {
+            $apiUrl = 'https://api.twitch.tv/kraken/streams/'.strtolower(htmlspecialchars($v->name, ENT_QUOTES)).'?client_id='._cfg('social')['tc']['id'];
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+            curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+            curl_setopt($ch, CURLOPT_TIMEOUT, 3); // times out after 2s
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+            $response = curl_exec($ch); // run the whole process 
+            $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            
+            $json_array = json_decode($response, true);
+            
+            //$onlineStreams = array();
+            if ($json_array['stream'] != NULL) {
+                //$onlineStreams[] = (int)$v->id;
+                
+                Db::query(
+                    'UPDATE `streams` '.
+                    'SET `online` = '.time().', '.
+                    '`viewers` = '.(int)$json_array['stream']['viewers'].', '.
+                    '`display_name` = "'.Db::escape($json_array['stream']['channel']['display_name']).'" '.
+                    'WHERE `id` = '.(int)$v->id
+                );
+                //$channelTitle = $json_array['stream']['channel']['display_name'];
+                //$streamTitle = $json_array['stream']['channel']['status'];
+                //$currentGame = $json_array['stream']['channel']['game'];
+            }
+        }
+        
+        /*if ($onlineStreams) {
+            $ids = '`id` = ';
+            $ids .= implode(' OR `id` = ', $onlineStreams);
+            Db::query(
+                'UPDATE `streams` '.
+                'SET `online` = '.time().' '.
+                'WHERE '.$ids
+            );
+        }*/
+    }
+    
     public function updateChallongeMatches() {
         if ($this->data->settings['tournament-start-hs'] == 1) {
             $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->data->settings['hs-current-number'].'/matches.json', array(), 'state=open');

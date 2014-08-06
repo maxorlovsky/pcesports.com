@@ -8,6 +8,7 @@ class System
     public $logged_in;
     public $links;
     public $serverTimes = array();
+    public $streams = array();
     protected $userClass;
     
     public function __construct() {
@@ -128,7 +129,27 @@ class System
             }
         }
         ksort($this->serverTimes);
-
+        
+        if (_cfg('language') != 'Config not found') {
+            $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
+                'WHERE `online` >= '.(time() - 360).' AND '.
+                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                'ORDER BY `featured` DESC, `viewers` DESC '.
+                'LIMIT 5'
+            );
+            if ($rows) {
+                foreach($rows as $v) {
+                    $this->streams[$v->id] = (object)array(
+                        'name' => $v->display_name,
+                        'featured' => $v->featured,
+                        'game' => $v->game,
+                        'viewers' => $v->viewers,
+                        'link' => $v->name,
+                    );
+                }
+            }
+        }
+        
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             
         }
@@ -457,6 +478,7 @@ class System
                     $cronClass->updateChallongeMatches();
                     $cronClass->sendNotifications();
                     $cronClass->checkLolGames();
+                    $cronClass->updateStreamers();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
                     $cronClass = new Cron();

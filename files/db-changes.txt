@@ -1,3 +1,17 @@
+# 06.08.2014
+CREATE TABLE `streams` (
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`user_id` INT UNSIGNED NOT NULL ,
+`name` VARCHAR( 200 ) NOT NULL ,
+`featured` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0',
+`online` INT UNSIGNED NOT NULL DEFAULT  '0',
+INDEX (  `user_id` )
+) ENGINE = INNODB;
+ALTER TABLE  `streams` ADD  `game` ENUM(  'lol',  'hs' ) NOT NULL ,
+ADD  `languages` ENUM(  'ru',  'en',  'both' ) NOT NULL;
+ALTER TABLE  `streams` ADD  `viewers` INT UNSIGNED NOT NULL DEFAULT  '0';
+ALTER TABLE  `streams` ADD  `display_name` VARCHAR( 200 ) NULL AFTER  `name`;
+
 # 24.07.2014
 CREATE TABLE `news_comments` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
