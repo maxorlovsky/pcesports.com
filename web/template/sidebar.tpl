@@ -69,45 +69,6 @@
         ?>
     </div>
     
-    <? if (_cfg('language') == 'en') { ?>
-    <div class="block donate">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Help Pentaclick Project</h1>
-        </div>
-		<div class="block-content">
-            <p>If you like what we do</p>
-            <p>If you want to help us grow even further and provide better quality content</p>
-            <p>Then you are welcome to donate</p>
-			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
-		</div>
-    </div>
-	<? } ?>
-    
-    <? if (_cfg('env') == 'prod') { ?>
-	<div class="block adsense">
-		<div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('advertising')?></h1>
-        </div>
-		
-		<div class="ad-holder block-content">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Right block -->
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:300px;height:250px"
-                 data-ad-client="ca-pub-5398156195893681"
-                 data-ad-slot="6366917450"></ins>
-            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-		</div>
-        <div class="ad-blocked block-content">
-            Help our survivability!<br />
-			Don't block our ads, we love you ;(
-		</div>
-    </div>
-    <? } ?>
-	
-	
     <div class="block streamers">
         <div class="block-header-wrapper">
             <h1 class="bordered">Streamers</h1>
@@ -159,7 +120,45 @@
         </a>*/?>
     </div>
     
-    <? if (_cfg('env') != 'dev') { ?>
+    <? if (_cfg('language') == 'en') { ?>
+    <div class="block donate">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Help Pentaclick Project</h1>
+        </div>
+		<div class="block-content">
+            <p>If you like what we do</p>
+            <p>If you want to help us grow even further and provide better quality content</p>
+            <p>Then you are welcome to donate</p>
+			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
+		</div>
+    </div>
+	<? } ?>
+    
+    <? if (_cfg('env') == 'prod') { ?>
+	<div class="block adsense">
+		<div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('advertising')?></h1>
+        </div>
+		
+		<div class="ad-holder block-content">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Right block -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-5398156195893681"
+                 data-ad-slot="6366917450"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+		</div>
+        <div class="ad-blocked block-content">
+            Help our survivability!<br />
+			Don't block our ads, we love you ;(
+		</div>
+    </div>
+    <? } ?>
+	
+	<? if (_cfg('env') != 'dev') { ?>
 	
 	<? if (_cfg('language') == 'ru') { ?>
 		<div class="block vk">
