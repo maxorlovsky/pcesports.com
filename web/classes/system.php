@@ -140,7 +140,8 @@ class System
             if ($rows) {
                 foreach($rows as $v) {
                     $this->streams[$v->id] = (object)array(
-                        'name' => $v->display_name,
+                        'name' => $v->name,
+                        'display_name' => $v->display_name,
                         'featured' => $v->featured,
                         'game' => $v->game,
                         'viewers' => $v->viewers,
