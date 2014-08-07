@@ -116,7 +116,7 @@
         if ($this->streams) {
             foreach($this->streams as $k => $v) {
         ?>
-            <a href="http://www.twitch.tv/pentaclick_tv" class="block-content streamer <?=($v->featured==1?'featured':null)?>">
+            <a href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>" target="_blank">
                 <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <label class="streamer-name"><?=$v->name?></label>
                 <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>

@@ -10,13 +10,14 @@ class streams extends System
 	}
 	
 	public function getStreamList() {
-        $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
-            'WHERE `online` >= '.(time() - 360).' AND '.
+        $this->streams = Db::fetchRows(
+            'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+            'FROM `streams` '.
+            'WHERE `online` != 0 AND '.
             '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-            'ORDER BY `featured` DESC, `viewers` DESC '
+            'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
-		$this->streams = (object)$rearangingNews;
-		
+        
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
