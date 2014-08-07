@@ -127,7 +127,7 @@
         else {
         ?>
             <div class="block-content">
-                No streams online
+                <?=t('no_streams_online')?>
             </div>
         <?
         }
