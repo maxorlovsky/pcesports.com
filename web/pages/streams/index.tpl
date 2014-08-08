@@ -27,7 +27,7 @@
     
     <div class="block add-streamer">
         <div class="block-header-wrapper">
-            <h1 class=""><?=t('add-streamer')?></h1>
+            <h1 class=""><?=t('add_streamer')?></h1>
         </div>
         
         <div class="block-content">
@@ -37,7 +37,7 @@
         	
                     <div class="fields">
                         <label for="name"><?=t('name')?></label>
-                        <input name="name" id="name" type="text" placeholder="<?=t('name')?>*" />
+                        <input name="name" id="name" type="text" placeholder="<?=t('name')?> Twitch.tv*" />
                     </div>
                     <div class="fields">
                         <label for="game"><?=t('game')?></label>

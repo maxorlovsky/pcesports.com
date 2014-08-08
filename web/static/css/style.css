@@ -1443,6 +1443,7 @@ footer .games img {
 }
 .streamers .featured {
     background-color: #1697e1;
+    color: #000;
 }
 .streamers .featured:hover {
     background-color: #2878d1;
