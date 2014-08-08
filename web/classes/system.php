@@ -151,8 +151,22 @@ class System
             }
         }
         
-        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+        if ($this->logged_in == 1 && !isset($_SESSION['participant'])) {
+            //Check if user is participant
+            $row = Db::fetchRow(
+                'SELECT * '.
+                'FROM `teams` '.
+                'WHERE '.
+                '`user_id` = '.(int)$this->data->user->id.' AND '.
+                '`approved` = 1 AND '.
+                '`ended` = 0 AND ' .
+                '`deleted` = 0 '.
+                'LIMIT 1 '
+            );
             
+            if ($row) {
+                $_SESSION['participant'] = $row;
+            }
         }
     }
     
@@ -168,6 +182,53 @@ class System
     	$this->logged_in = 0;
     	$this->user = array();
     	go(_cfg('site'));
+    }
+    
+    public function runTwitchAPI($channelName) {
+    	$startTime = microtime(true);
+    	$error = '';
+        $channelName = strtolower(htmlspecialchars($channelName, ENT_QUOTES));
+        
+        $apiUrl = 'https://api.twitch.tv/kraken/streams/';
+        $apiUrl .= $channelName;
+        $apiUrl .= '?client_id='._cfg('social')['tc']['id'];
+        
+        Db::query(
+    		'INSERT INTO `twitch_requests` SET '.
+    		' `timestamp` = NOW(), '.
+    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+    		' `data` = "'.Db::escape($apiUrl).'" '
+		);
+        
+        $lastId = Db::lastId();
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3); // times out after 2s
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+        $response = curl_exec($ch); // run the whole process 
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+    	$endTime = microtime(true);
+    	$duration = $endTime - $startTime; //calculates total time taken
+    
+    	Db::query(
+	    	'UPDATE `twitch_requests` SET '.
+	    	' `response` = "'.Db::escape($response).'", '.
+	    	' `time` = "'.(float)$duration.'" '.
+	    	' WHERE id='.$lastId
+    	);
+    
+    	$response = json_decode($response, true);
+    
+    	return $response;
     }
     
     public function runChallongeAPI($apiAdditionalData, $apiArray = array(), $apiGetUrl = '') {
@@ -484,146 +545,6 @@ class System
                 else if ($_GET['val1'] == 'riotcode') {
                     $cronClass = new Cron();
                     $cronClass->checkLolGames();
-                    exit();
-                    $file = _cfg('uploads').'/riotcode.txt';
-
-					$data = file_get_contents("php://input");
-					
-					$fopen = fopen($file, 'w');
-					fwrite($fopen, $data);
-					fclose($fopen);
-                    /*$callback = '{"version":1,"tournamentMetaData":{"passbackDataPacket":"22325692","passbackUrl":"http://test.pcesports.com/run/riotcode/"},"gameId":856927295,"gameLength":1616,"gameType":"CUSTOM_GAME","ranked":false,"invalid":false,"gameMode":"CLASSIC","teamPlayerParticipantsSummaries":[{"level":30,"teamId":100,"isWinningTeam":true,"leaver":false,"summonerName":"Soldecroix","skinName":"Quinn","profileIconId":583,"botPlayer":false,"spell1Id":21,"spell2Id":4,"statistics":[{"value":411,"statTypeName":"TOTAL_TIME_CROWD_CONTROL_DEALT","m_nDataVersion":0},{"value":24380,"statTypeName":"PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":0,"statTypeName":"TRUE_DAMAGE_TAKEN","m_nDataVersion":0},{"value":25117,"statTypeName":"TOTAL_DAMAGE_TAKEN","m_nDataVersion":0},{"value":0,"statTypeName":"NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE","m_nDataVersion":0},{"value":152,"statTypeName":"MINIONS_KILLED","m_nDataVersion":0},{"value":10139,"statTypeName":"GOLD_EARNED","m_nDataVersion":0},{"value":123122,"statTypeName":"PHYSICAL_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":1,"statTypeName":"WIN","m_nDataVersion":0},{"value":3340,"statTypeName":"ITEM6","m_nDataVersion":0},{"value":1055,"statTypeName":"ITEM0","m_nDataVersion":0},{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED_YOUR_JUNGLE","m_nDataVersion":0},{"value":702,"statTypeName":"TRUE_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":0,"statTypeName":"MAGIC_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":157,"statTypeName":"TOTAL_TIME_SPENT_DEAD","m_nDataVersion":0},{"value":0,"statTypeName":"ASSISTS","m_nDataVersion":0},{"value":0,"statTypeName":"MAGIC_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":1055,"statTypeName":"ITEM5","m_nDataVersion":0},{"value":3072,"statTypeName":"ITEM2","m_nDataVersion":0},{"value":0,"statTypeName":"LARGEST_CRITICAL_STRIKE","m_nDataVersion":0},{"value":12874,"statTypeName":"PHYSICAL_DAMAGE_TAKEN","m_nDataVersion":0},{"value":0,"statTypeName":"SIGHT_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},{"value":0,"statTypeName":"WARD_KILLED","m_nDataVersion":0},{"value":0,"statTypeName":"WARD_PLACED","m_nDataVersion":0},{"value":1,"statTypeName":"LARGEST_MULTI_KILL","m_nDataVersion":0},{"value":3,"statTypeName":"LARGEST_KILLING_SPREE","m_nDataVersion":0},{"value":16,"statTypeName":"LEVEL","m_nDataVersion":0},{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED","m_nDataVersion":0},{"value":1055,"statTypeName":"ITEM1","m_nDataVersion":0},{"value":123824,"statTypeName":"TOTAL_DAMAGE_DEALT","m_nDataVersion":0},{"value":498,"statTypeName":"TRUE_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":3572,"statTypeName":"TOTAL_HEAL","m_nDataVersion":0},{"value":3022,"statTypeName":"ITEM3","m_nDataVersion":0},{"value":2,"statTypeName":"BARRACKS_KILLED","m_nDataVersion":0},{"value":0,"statTypeName":"VISION_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},{"value":5,"statTypeName":"NUM_DEATHS","m_nDataVersion":0},{"value":3252,"statTypeName":"ITEM4","m_nDataVersion":0},{"value":24878,"statTypeName":"TOTAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":4,"statTypeName":"TURRETS_KILLED","m_nDataVersion":0},{"value":8,"statTypeName":"CHAMPIONS_KILLED","m_nDataVersion":0},{"value":12242,"statTypeName":"MAGIC_DAMAGE_TAKEN","m_nDataVersion":0}]}],"otherTeamPlayerParticipantsSummaries":[{"level":30,"teamId":200,"isWinningTeam":false,"leaver":false,"summonerName":"Maxtream","skinName":"Nidalee","profileIconId":10,"botPlayer":false,"spell1Id":4,"spell2Id":21,"statistics":[{"value":0,"statTypeName":"NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE","m_nDataVersion":0},{"value":1026,"statTypeName":"ITEM5","m_nDataVersion":0},{"value":1056,"statTypeName":"ITEM0","m_nDataVersion":0},{"value":2412,"statTypeName":"PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":27710,"statTypeName":"PHYSICAL_DAMAGE_TAKEN","m_nDataVersion":0},{"value":3340,"statTypeName":"ITEM6","m_nDataVersion":0},{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED_YOUR_JUNGLE","m_nDataVersion":0},{"value":3020,"statTypeName":"ITEM2","m_nDataVersion":0},{"value":20089,"statTypeName":"PHYSICAL_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":0,"statTypeName":"ASSISTS","m_nDataVersion":0},{"value":0,"statTypeName":"TRUE_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":0,"statTypeName":"TOTAL_TIME_CROWD_CONTROL_DEALT","m_nDataVersion":0},{"value":0,"statTypeName":"MAGIC_DAMAGE_TAKEN","m_nDataVersion":0},{"value":0,"statTypeName":"LARGEST_CRITICAL_STRIKE","m_nDataVersion":0},{"value":2,"statTypeName":"WARD_PLACED","m_nDataVersion":0},{"value":0,"statTypeName":"SIGHT_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},{"value":0,"statTypeName":"WARD_KILLED","m_nDataVersion":0},{"value":8,"statTypeName":"NUM_DEATHS","m_nDataVersion":0},{"value":1,"statTypeName":"LARGEST_MULTI_KILL","m_nDataVersion":0},{"value":0,"statTypeName":"BARRACKS_KILLED","m_nDataVersion":0},{"value":3070,"statTypeName":"ITEM4","m_nDataVersion":0},{"value":15,"statTypeName":"LEVEL","m_nDataVersion":0},{"value":3089,"statTypeName":"ITEM3","m_nDataVersion":0},{"value":1,"statTypeName":"LOSE","m_nDataVersion":0},{"value":3,"statTypeName":"NEUTRAL_MINIONS_KILLED","m_nDataVersion":0},{"value":1056,"statTypeName":"ITEM1","m_nDataVersion":0},{"value":0,"statTypeName":"TRUE_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":250,"statTypeName":"TOTAL_TIME_SPENT_DEAD","m_nDataVersion":0},{"value":115,"statTypeName":"MINIONS_KILLED","m_nDataVersion":0},{"value":0,"statTypeName":"LARGEST_KILLING_SPREE","m_nDataVersion":0},{"value":12242,"statTypeName":"MAGIC_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0},{"value":81796,"statTypeName":"TOTAL_DAMAGE_DEALT","m_nDataVersion":0},{"value":61706,"statTypeName":"MAGIC_DAMAGE_DEALT_PLAYER","m_nDataVersion":0},{"value":498,"statTypeName":"TRUE_DAMAGE_TAKEN","m_nDataVersion":0},{"value":7927,"statTypeName":"GOLD_EARNED","m_nDataVersion":0},{"value":1,"statTypeName":"TURRETS_KILLED","m_nDataVersion":0},{"value":28208,"statTypeName":"TOTAL_DAMAGE_TAKEN","m_nDataVersion":0},{"value":4,"statTypeName":"CHAMPIONS_KILLED","m_nDataVersion":0},{"value":0,"statTypeName":"VISION_WARDS_BOUGHT_IN_GAME","m_nDataVersion":0},{"value":5475,"statTypeName":"TOTAL_HEAL","m_nDataVersion":0},{"value":14654,"statTypeName":"TOTAL_DAMAGE_DEALT_TO_CHAMPIONS","m_nDataVersion":0}]}]}';*/
-                    
-                    $callback = file_get_contents("php://input");
-                    
-                    $this->sendMail('max.orlovsky@gmail.com', 'Riot callback(FORCE)', 'Incorrect: '.$callback);
-                    $this->sendMail('max.orlovsky@gmail.com', 'Riot callback(FORCE)', 'Incorrect: '.json_decode(base64_decode($callback)));
-                    
-                    //Only for force check!
-                    $data = json_decode(base64_decode($callback));
-                    Db::query('INSERT INTO `riot_callback` SET '.
-                        '`game_id` = '.(int)$data->extra.', '.
-                        '`callback` = "'.Db::escape($callback).'"'
-                    );
-                    
-                    if (!is_object(json_decode($callback))) {
-                        $this->sendMail('max.orlovsky@gmail.com', 'Riot callback', 'Incorrect: '.$callback);
-                        exit('Callback incorrect');
-                    }
-                    
-                    $data = json_decode($callback);
-                    Db::query('INSERT INTO `riot_callback` SET '.
-                        '`game_id` = '.(int)$data->extra.', '.
-                        '`callback` = "'.Db::escape($callback).'"'
-                    );
-
-                    $team = array();
-                    $matchId = $data->tournamentMetaData->passbackDataPacket;
-                    $matchRow = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, '.
-                        '`t1`.`id` AS `t1id`, '.
-                        '`t2`.`id` AS `t2id` '.
-                        'FROM `fights` AS `f` '.
-                        'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-                        'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-                        'WHERE `f`.`match_id` = '.(int)$matchId.' AND '.
-                        '`f`.`done` = 0 AND '.
-                        '`t1`.`approved` = 1 AND '.
-                        '`t2`.`approved` = 1 AND '.
-                        '`t1`.`deleted` = 0 AND '.
-                        '`t2`.`deleted` = 0 AND '.
-                        '`t1`.`ended` = 0 AND '.
-                        '`t2`.`ended` = 0 '
-                    );
-                    
-                    if (!$matchRow) {
-                        $txt = 'ERROR!<br />Match ID:'.$matchId;
-                        $this->sendMail('max.orlovsky@gmail.com', 'Error processing Riot match', $txt);
-                        exit();
-                    }
-                    
-                    //Gathering teams in 1 array
-                    $teamsRow = Db::fetchRows('SELECT `t`.`challonge_id`, `p`.`team_id`, `p`.`name`, `p`.`player_num` '.
-                        'FROM `players` AS `p` '.
-                        'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
-                        'WHERE `p`.`team_id` = '.(int)$matchRow->t1id.' OR `p`.`team_id` = '.(int)$matchRow->t2id.' '
-                    );
-                    $teams = array();
-                    foreach($teamsRow as $v) {
-                        $teams[$v->challonge_id][$v->player_num] = $v->name;
-                    }
-                    
-                    //Getting winning team(rTeam) + gathering into small array player names
-                    $winningTeam = 0;
-                    $persons = array(0,0);
-                    foreach($data->teamPlayerParticipantsSummaries as $k => $v) {
-                        if ($v->isWinningTeam == 1) {
-                            $winningTeam = $v->teamId;
-                        }
-                        $rTeam[$v->teamId][$k] = $v->summonerName;
-                        ++$persons[0];
-                    }
-                    
-                    foreach($data->otherTeamPlayerParticipantsSummaries as $k => $v) {
-                        if ($v->isWinningTeam == 1) {
-                            $winningTeam = $v->teamId;
-                        }
-                        $rTeam[$v->teamId][$k] = $v->summonerName;
-                        ++$persons[1];
-                    }
-                    
-                    if ($persons[0] != 5 || $persons[1] != 5) {
-                        $txt = 'ERROR <b>Persons count</b>!<br />Match ID:'.$matchId;
-                        //$this->sendMail('max.orlovsky@gmail.com', 'Error processing Riot match', $txt);
-                    }
-                    
-                    foreach($teams as $k => $v) {
-                        foreach($v as $k2 => $v2) {
-                            if (in_array($v2, $rTeam[$winningTeam])) {
-                                $winner = $k;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    $apiArray = array(
-                        '_method' => 'put',
-                        'match_id' => $matchId,
-                        'match[scores_csv]' => '0-0',
-                        'match[winner_id]' => $winner,
-                    );
-                    
-                    if (_cfg('env') == 'prod') {
-                        $this->runChallongeAPI('tournaments/pentaclick-lol'.(int)$this->data->settings['lol-current-number'].'/matches/'.$matchId.'.put', $apiArray);
-                    }
-                    else {
-                        $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$matchId.'.put', $apiArray);
-                    }
-                    
-                    $this->sendMail('max.orlovsky@gmail.com', 'CHECK GAME!!!', $matchId);
-                    /*Db::query('UPDATE `teams` SET `ended` = 1 '.
-                        'WHERE `game` = "lol" AND '.
-                        '`id` = '.(int)$_SESSION['participant']->id.' '
-                    );
-                    
-                    /*Db::query('UPDATE `fights` SET `done` = 1 '.
-                        'WHERE `match_id` = '.(int)$matchId.' '
-                    );
-                    
-                    $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
-                        
-                    $file = fopen($fileName, 'a');
-                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
-                    fwrite($file, htmlspecialchars($content));
-                    fclose($file);*/
-                }
-                else if ($_GET['val1'] == 'generate') {
-					/*$rows = Db::fetchRows('SELECT * FROM `tm_strings`');
-                    $txt = '';
-                    foreach($rows as $v) {
-                        $txt .= '!'.$v->key.' = '.$v->english;
-                        $txt .= "\n\n";
-                    }
-                    echo '<textarea cols="80" rows="50">'.$txt.'</textarea>';*/
                 }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);

@@ -168,7 +168,7 @@ class User extends System
     }
     
     public static function logOut() {
-        unset($_SESSION['user']);
+        unset($_SESSION['user'], $_SESSION['participant']);
         session_destroy();
         
         return true;

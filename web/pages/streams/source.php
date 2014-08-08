@@ -4,6 +4,7 @@ class streams extends System
 {
 	public $streams;
     public $stream;
+    public $pickedStream = 0;
 	
 	public function __construct($params = array()) {
 		parent::__construct();
@@ -18,6 +19,10 @@ class streams extends System
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
         
+        if (isset($_GET['val2']) && $_GET['val2']) {
+            $this->pickedStream = (int)$_GET['val2'];
+        }
+        
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
@@ -31,11 +36,11 @@ class streams extends System
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val1']) && $_GET['val1'] == 'stream') {
+		/*if (isset($_GET['val1']) && $_GET['val1'] == 'stream') {
 			$this->getStream();
 		}
-		else {
+		else {*/
 			$this->getStreamList();
-		}
+		//}
 	}
 }

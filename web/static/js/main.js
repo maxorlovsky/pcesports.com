@@ -1,3 +1,16 @@
+$('#submitStreamer').on('click', function() {
+    PC.submitStreamer();
+});
+
+$('#connectTeamToAccount').on('click', function() {
+    PC.connectTeamToAccount();
+});
+
+$('div.streamer').on('click', function() {
+    var id = $(this).attr('attr-id');
+    $('#stream_'+id).stop().slideToggle('slow');
+});
+
 $('#submitComment').on('click', function() {
     PC.comment();
 });
@@ -138,6 +151,56 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    submitStreamer: function() {
+        $('.streamer-form #error').hide();
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'submitStreamer',
+                form: $('.streamer-form').serialize()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.streamer-form').slideUp('fast');
+                    $('.success-sent').slideDown('fast');
+                    $('.success-sent p').html(answer[1]);
+                }
+                else {
+                    $('.streamer-form #error').html('<p>'+answer[1]+'</p>').slideDown('fast');
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
+    connectTeamToAccount: function() {
+        PC.formInProgress = 1;
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'connectTeamToAccount'
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.error-add').fadeOut();
+                    $('.connect-team').fadeOut();
+                }
+                else {
+                    alert(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     getNewsComments: function(id) {
         var query = {
             type: 'POST',

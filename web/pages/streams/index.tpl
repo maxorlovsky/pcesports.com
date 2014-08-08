@@ -9,14 +9,70 @@
 		if ($this->streams) {
         	foreach($this->streams as $v) {
         ?>
-            <a href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank">
+            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank" attr-id="<?=$v->id?>">
                 <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
                 <span class="viewers"><?=($v->onlineStatus==0?0:$v->viewers)?> <?=t('viewers')?></span>
-            </a>
+            </div>
+            <div class="block twitch <?=($this->pickedStream!=$v->id?'hidden_info':null)?>" id="stream_<?=$v->id?>">
+                <div class="player">
+                    <object type="application/x-shockwave-flash" height="600" width="790" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=true&amp;start_volume=25" /></object>
+                </div>
+            </div>
         <?
         	}
         }
         ?>
     </div>
+    
+    <div class="block add-streamer">
+        <div class="block-header-wrapper">
+            <h1 class=""><?=t('add-streamer')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <? if ($this->logged_in) { ?>
+                <form class="streamer-form contact-form">
+                    <div id="error"><p></p></div>
+        	
+                    <div class="fields">
+                        <label for="name"><?=t('name')?></label>
+                        <input name="name" id="name" type="text" placeholder="<?=t('name')?>*" />
+                    </div>
+                    <div class="fields">
+                        <label for="game"><?=t('game')?></label>
+                        <select name="game" id="game">
+                            <option value="lol">League of Legends</option>
+                            <option value="hs">Hearthstone</option>
+                        </select>
+                    </div>
+                    <div class="fields">
+                        <label for="languages"><?=t('languages')?></label>
+                        <select name="languages" id="languages">
+                            <option value="en">English</option>
+                            <option value="ru">Russian</option>
+                            <option value="both"><?=t('both')?></option>
+                        </select>
+                    </div>
+                    
+                    <a href="javascript:void(0);" class="button" id="submitStreamer"><?=t('send_form')?></a>
+                </form>
+                
+                <div class="success-sent"><p></p></div>
+            <? } else { ?>
+                <?=t('login_to_add_streamer')?>
+            <? } ?>
+        </div>
+    </div>
+    
+    <div class="block add-streamer">
+        <div class="block-header-wrapper">
+            <h1 class=""><?=t('how_to_be_featured')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <?=t('become_featured_streamer')?>
+        </div>
+    </div>
+    
 </div>

@@ -567,30 +567,6 @@ footer .copyrights .devs:hover {
 .incoming-tournament:hover .button {
     opacity: 1;
 }
-.streamers a {
-    width: 100%;
-    display: block;
-    padding: 0 !important;
-}
-.streamers a:hover {
-    background-color: #eee;
-}
-.streamers a .game-logo {
-    float: left;
-    height: 30px;
-    padding: 4px 0 0 5px;
-}
-.streamers a .streamer-name {
-    display: inline-block;
-    height: 30px;
-    margin: 10px 0 0 10px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.streamers a .viewers {
-    float: right;
-    padding: 10px 10px 0 0;
-}
 
 .facebook-holder, .vk-holder {
     padding: 3px !important;
@@ -671,12 +647,12 @@ footer .partners .skillz {
 	text-transform: uppercase;
 }
 
-.contacts .contact-form .fields {
+.contact-form .fields {
 	margin-bottom: 15px;
 	white-space: nowrap;
 	clear: both;
 }
-.contacts .contact-form .fields label {
+.contact-form .fields label {
 	display: block;
 	border: 1px solid #999;
 	border-radius: 4px 0 0 4px;
@@ -690,9 +666,9 @@ footer .partners .skillz {
 	text-transform: uppercase;
 	float: left;
 }
-.contacts .contact-form .fields input,
-.contacts .contact-form .fields select,
-.contacts .contact-form .fields textarea {
+.contact-form .fields input,
+.contact-form .fields select,
+.contact-form .fields textarea {
 	width: 645px;
 	border: 1px solid #999;
 	margin: 0 0 0 -1px;
@@ -700,24 +676,24 @@ footer .partners .skillz {
 	padding-left: 10px;
 	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
 }
-.contacts .contact-form .fields input:focus,
-.contacts .contact-form .fields select:focus,
-.contacts .contact-form .fields textarea:focus {
+.contact-form .fields input:focus,
+.contact-form .fields select:focus,
+.contact-form .fields textarea:focus {
 	border-color: #1697e1;
 	transition: linear .3s;
 	outline: 0;
 }
-.contacts .contact-form .fields input {
+.contact-form .fields input {
 	height: 38px;
 }
-.contacts .contact-form .fields select {
+.contact-form .fields select {
 	width: 655px;
 	vertical-align: middle;
 	padding: 11px 5px;
 	display: block;
 	height: 42px;
 }
-.contacts .contact-form .fields textarea {
+.contact-form .fields textarea {
 	padding: 10px;
 	width: 635px;
 	height: 300px;
@@ -730,7 +706,7 @@ footer .partners .skillz {
 	border-radius: 0 4px 4px 3px;
 	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
 }
-.contacts .contact-form .button {
+.contact-form .button {
 	margin-left: 90px;
 }
 
@@ -871,6 +847,13 @@ footer .partners .skillz {
     line-height: 30px;
     display: block;
     font-size: 16px;
+}
+.lol .success-add, .lol .error-add {
+    margin-top: 0;
+}
+.lol .connect-team {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .participants .block {
@@ -1428,6 +1411,48 @@ footer .games img {
     font-size: 20px;
 }
 
+/* Not in mobile */
+.streamers .streamer {
+    width: 100%;
+    display: block;
+    padding: 0 !important;
+    cursor: pointer;
+}
+.streamers .streamer:hover {
+    background-color: #eee;
+    transition: .3s;
+}
+.streamers .streamer .game-logo {
+    float: left;
+    height: 30px;
+    padding: 4px 0 0 5px;
+}
+.streamers .streamer .streamer-name {
+    display: inline-block;
+    height: 30px;
+    margin: 10px 0 0 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.streamers .streamer .viewers {
+    float: right;
+    padding: 10px 10px 0 0;
+}
+.streamers .hidden_info {
+    display: none;
+}
+.streamers .featured {
+    background-color: #1697e1;
+}
+.streamers .featured:hover {
+    background-color: #2878d1;
+    transition: .3s;
+}
+
+.add-streamer {
+    margin-top: 40px;
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
 }
@@ -1568,13 +1593,13 @@ footer .games img {
     #login-window {
         width: 300px;
     }
-    .contacts .contact-form .fields input {
+    .contact-form .fields input {
         width: 165px;
     }
-    .contacts .contact-form .fields select {
+    .contact-form .fields select {
         width: 175px;
     }
-    .contacts .contact-form .fields textarea {
+    .contact-form .fields textarea {
         width: 155px;
         height: 150px;
     }

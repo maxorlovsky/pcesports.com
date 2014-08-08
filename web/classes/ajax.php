@@ -19,6 +19,8 @@ class Ajax extends System
         'updateProfile',
         'comment',
         'getNewsComments',
+        'connectTeamToAccount',
+        'submitStreamer',
 	);
 	
     public function ajaxRun($data) {
@@ -32,6 +34,58 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function submitStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        parse_str($data['form'], $post);
+        
+        if (!isset($post['name']) || !$post['name']) {
+            return '0;'.t('input_name');
+        }
+        else if (!$post['game'] || !$post['languages']) {
+            return '0;Error';
+        }
+        
+        $twitch = $this->runTwitchAPI($post['name']);
+        
+        if (!$twitch) {
+            return '0;'.t('channel_not_found');
+        }
+        
+        Db::query(
+            'INSERT INTO `streams` SET '.
+            '`user_id`  = '.(int)$this->data->user->id.', '.
+            '`name` = "'.Db::escape($post['name']).'", '.
+            '`game` = "'.Db::escape($post['game']).'", '.
+            '`languages` = "'.Db::escape($post['languages']).'" '
+        );
+        
+        $this->sendMail('info@pcesports.com',
+		'Streamer added. Pentaclick eSports.',
+		'Streamer was added!!!<br />
+    	Date: '.date('d/m/Y H:i:s').'<br />
+		Streamer name: <b>'.$post['name'].'</b><br>
+    	IP: '.$_SERVER['REMOTE_ADDR']);
+        
+        return '1;'.t('streamer_added_to_check');
+    }
+    
+    protected function connectTeamToAccount() {
+        if (!$this->logged_in || !$_SESSION['participant']) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        Db::query(
+            'UPDATE `teams` SET '.
+            '`user_id` = '.(int)$this->data->user->id.' '.
+            'WHERE `id` = '.(int)$_SESSION['participant']->id
+        );
+        
+        return '1;1';
     }
     
     protected function getNewsComments($data) {
@@ -522,6 +576,7 @@ class Ajax extends System
     		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
     		Db::query('INSERT INTO `teams` SET '.
 	    		'`game` = "lol", '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
                 '`server` = "'.$server.'", '.
 	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
 	    		'`timestamp` = NOW(), '.
@@ -529,6 +584,7 @@ class Ajax extends System
 	    		'`name` = "'.Db::escape($post['team']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($team).'", '.
+                '`cpt_player_id` = '.(int)$players[1]['id'].', '.
 	    		'`link` = "'.$code.'"'
     		);
     	

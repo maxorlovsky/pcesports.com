@@ -40,7 +40,7 @@
         	<h2><?=t('leave_comments')?></h2>
         	<!-- <div class="disabled">Disabled</div> -->
             
-            <form class="leave-comment" >
+            <form class="leave-comment">
                 <? if ($this->logged_in) { ?>
                 <div id="error"><p></p></div>
                 

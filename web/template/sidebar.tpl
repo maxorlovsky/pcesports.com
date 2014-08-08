@@ -21,7 +21,9 @@
 				<? } else { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
 				<? } ?>
+                <? if (!$this->logged_in) { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
+                <? } ?>
             </ul>
 			<? } else { ?>
 			<ul class="panel-links">
@@ -35,7 +37,9 @@
 				<? } else { ?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
 				<? } ?>
+                <? if (!$this->logged_in) { ?>
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
+                <? } ?>
             </ul>
 			<? } ?>
         </div>
@@ -77,7 +81,7 @@
         if ($this->streams) {
             foreach($this->streams as $k => $v) {
         ?>
-            <a href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>" target="_blank">
+            <a href="http://dev.pcesports.com/en/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>" target="_blank">
                 <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <label class="streamer-name"><?=$v->display_name?></label>
                 <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
@@ -102,16 +106,6 @@
             <img class="game-logo" src="http://clgaming.net/interface/img/game/d3.png" />
             <label class="streamer-name">Aven</label>
             <span class="viewers">9 viewers</span>
-        </a>
-        <a href="#" class="block-content streamer">
-            <img class="game-logo" src="http://clgaming.net/interface/img/game/hs.png" />
-            <label class="streamer-name">Soldecroix</label>
-            <span class="viewers">3 viewers</span>
-        </a>
-        <a href="#" class="block-content streamer">
-            <img class="game-logo" src="http://clgaming.net/interface/img/game/wow.png" />
-            <label class="streamer-name">Maxtream</label>
-            <span class="viewers">2 viewers</span>
         </a>
         <a href="#" class="block-content streamer">
             <img class="game-logo" src="http://clgaming.net/interface/img/game/sc2.png" />
