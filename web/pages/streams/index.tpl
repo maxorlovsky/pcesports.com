@@ -65,6 +65,7 @@
         </div>
     </div>
     
+    <? if ($this->logged_in) { ?>
     <div class="block add-streamer">
         <div class="block-header-wrapper">
             <h1 class=""><?=t('how_to_be_featured')?></h1>
@@ -74,5 +75,6 @@
             <?=t('become_featured_streamer')?>
         </div>
     </div>
+    <? } ?>
     
 </div>

@@ -1484,6 +1484,9 @@ footer .games img {
     .container {
         width: 320px;
     }
+    .page {
+        padding: 20px 0;
+    }
     
     header {
         padding: 5px 0;
