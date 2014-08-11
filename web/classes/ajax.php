@@ -524,6 +524,8 @@ class Ajax extends System
 		$players = array();
 		$checkForSame = array();
 		for($i=1;$i<=7;++$i) {
+            $post['mem'.$i] = trim($post['mem'.$i]);
+            
 			if (!$post['mem'.$i] && $i < 6) {
 				$err['mem'.$i] = '0;'.t('field_empty');    
 			}
@@ -540,7 +542,7 @@ class Ajax extends System
 					'`t`.`deleted` = 0'
 				);
                 
-				if ($response == 404) {
+				if ($response == 404 || !$response) {
 					$err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
 				}
 				else if ($response && $response->summonerLevel != 30) {
