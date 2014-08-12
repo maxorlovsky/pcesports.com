@@ -7,6 +7,9 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="fb:app_id" content="766575306708443"/>
+    <meta property="og:title" content="<?=$this->title?><?=$this->data->settings['site_name']?>" />
+    <meta property="og:image" content="<?=$this->seoData->ogImg?>" />
+    <meta property="og:url" content="" />
     
     <title><?=$this->title?><?=$this->data->settings['site_name']?></title>
     

@@ -2,6 +2,7 @@
 class Template extends System
 {
     public $title = '';
+    public $seoData;
     
     public function __construct() {
         parent::__construct();
@@ -21,8 +22,9 @@ class Template extends System
     }
     
     public function getSeo() {
-    	
-    	if (file_exists(_cfg('pages').'/'.$this->page.'/source.php')) {
+        $this->seoData = array();
+        
+        if (file_exists(_cfg('pages').'/'.$this->page.'/source.php')) {
     		require_once _cfg('pages').'/'.$this->page.'/source.php';
 
     		$seoPage = new $this->page();
@@ -43,8 +45,9 @@ class Template extends System
             }
     		$this->title .= $title;
     		$this->title .= ' | ';
+            
+            $this->seoData = $seoPageData;
     	}
-    	
     }
     
     public function getTxtPages() {
