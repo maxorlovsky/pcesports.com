@@ -41,6 +41,11 @@ class news extends System
 	}
 	
 	public function getArticle() {
+        $row = Db::fetchRow('SELECT `id` FROM `news` WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' LIMIT 1');
+        if (!$row) {
+            go(_cfg('href').'/news');
+        }
+        
 		if ($_SESSION['news_views'][$_GET['val2']] != 1) {
 			Db::query('UPDATE `news` SET '.
 				'`views` = `views` + 1 '.
