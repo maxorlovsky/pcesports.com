@@ -86,7 +86,7 @@ class news extends System
 		);
         
         $seo = array(
-            'title' => $news->title.' | News',
+            'title' => ($news->title?$news->title.' | ':null).'News',
             'ogImg' => ($news->extension?_cfg('imgu').'/news/small-'.$news->id.'.'.$news->extension:null),
         );
         
