@@ -911,7 +911,7 @@ footer .partners .skillz {
 .alpha {
 	opacity: 0.5;
 }
-#join-form input[type='text'], #join-form textarea, #join-form input[type='text'] {
+#join-form input[type='text'], #join-form textarea, #join-form input[type='text'], #join-form select {
     width: 40%;
     float: left;
     margin-bottom: 10px;
@@ -1452,6 +1452,54 @@ footer .games img {
 
 .add-streamer {
     margin-top: 40px;
+}
+
+.heroes-images {
+    margin: 10px 0 30px 0;
+}
+.heroes-images h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+.heroes-images div {
+    float: left;
+    min-height: 200px;
+}
+.hsicons {
+    background-image: url('../images/hs_icons_by_mgbeach.png');
+    background-repeat: no-repeat;
+}
+.hsicons.active {
+    width: 200px;
+    height: 185px;
+}
+.hsicons.druid {
+    background-position: 0 0;
+}
+.hsicons.hunter {
+    background-position: -200px 0;
+}
+.hsicons.mage {
+    background-position: -400px 0;
+}
+.hsicons.paladin {
+    background-position: -600px 0;
+}
+.hsicons.priest {
+    background-position: -800px 0;
+}
+.hsicons.rogue {
+    background-position: 0 -188px;
+}
+.hsicons.shaman {
+    background-position: -200px -188px;
+}
+.hsicons.warlock {
+    background-position: -400px -188px;
+}
+.hsicons.warrior {
+    background-position: -600px -188px;
 }
 
 /* Landscape phone to portrait tablet */

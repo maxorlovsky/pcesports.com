@@ -13,10 +13,10 @@
     </div>
     <? } ?>
 
-	<? if ($this->data->settings['tournament-reg-hs'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
+	<? if ($this->data->settings['tournament-reg-hslan'] == 1 /*&& $this->pickedTournament == $this->currentTournament*/) { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
-			<h1 class="bordered"><?=t('join_tournament')?> #<?=$this->currentTournament?></h1>
+			<h1 class="bordered"><?=t('join_tournament')?></h1>
 		</div>
 		
 		<div class="block-content">
@@ -28,13 +28,34 @@
 					<div class="clear"></div>
 					<input type="text" name="email" placeholder="Email*" />
 					<div id="email-msg" class="message hidden"></div>
-                    <!--<div class="clear"></div>
-                    <input type="text" name="twitch" placeholder="Stream channel (full link)" />
-					<div id="twitch-msg" class="message hidden"></div>-->
-                    
+                    <div class="clear"></div>
+                    <input type="text" name="phone" placeholder="Phone number" />
+					<div id="phone-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <select class="hero1">
+                        <option value="0">Pick hero</option>
+                        <? foreach($this->heroes as $k => $v) { ?>
+                            <option value="<?=$k?>"><?=ucfirst($v)?></option>
+                        <? } ?>
+                    </select>
+                    <div id="hero1-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <select class="hero2">
+                        <option value="0">Pick hero</option>
+                        <? foreach($this->heroes as $k => $v) { ?>
+                            <option value="<?=$k?>"><?=ucfirst($v)?></option>
+                        <? } ?>
+                    </select>
+                    <div id="hero2-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <div class="heroes-images">
+                        <h6>Your classes</h6>
+                        <div id="hero1img" class="hsicons" attr-picked=""></div>
+                        <div id="hero2img" class="hsicons" attr-picked=""></div>
+                    </div>
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
+				<a href="javascript:void(0);" class="button" id="add-player-lan"><?=t('join_tournament')?></a>
 			</div>
 		</div>
 	</div>
@@ -42,13 +63,11 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('information')?></h1>
+            <h1 class="bordered"><?=t('tournament_rules')?></h1>
         </div>
         
         <div class="block-content tournament-rules">
-			<h1><?=t('specific_tournament_rules')?></h1>
-            <?=t('hearthstone_tournament_information_'.$this->pickedTournament)?>
-            <a href="<?=_cfg('href')?>/hearthstone"><?=t('global_tournament_rules')?></a>
+            <?=t('hearthstone_lan_tournament_information')?>
         </div>
     </div>
     
@@ -95,6 +114,39 @@
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
+$('.hero1, .hero2').on('change keyup', function() {
+    var getClass = $(this).attr('class');
+    var name = $(this).find(':selected').text();
+    var id = $(this).find(':selected').val();
+    
+    if (getClass == 'hero1') {
+        var picked = $('#hero1img').attr('attr-picked');
+        $('#hero1img').removeClass(picked);
+        
+        if (id == 0) {
+            $('#hero1img').removeClass('active');
+        }
+        else {
+            $('#hero1img').addClass(name.toLowerCase());
+            $('#hero1img').addClass('active');
+            $('#hero1img').attr('attr-picked', name.toLowerCase());
+        }
+    }
+    else {
+        var picked = $('#hero2img').attr('attr-picked');
+        $('#hero2img').removeClass(picked);
+        
+        if (id == 0) {
+            $('#hero2img').removeClass('active');
+        }
+        else {
+            $('#hero2img').addClass(name.toLowerCase());
+            $('#hero2img').addClass('active');
+            $('#hero2img').attr('attr-picked', name.toLowerCase());
+        }
+    }
+});
+
 $('#add-player').on('click', function() {
     PC.addPlayer();
 });
