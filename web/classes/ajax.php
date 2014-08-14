@@ -9,8 +9,10 @@ class Ajax extends System
 		'newsVote',
     	'submitContactForm',
     	'registerInHS',
+        'registerInLanHS',
 		'registerInLOL',
         'editInLOL',
+        'editInLanHS',
         'chat',
         'statusCheck',
         'uploadScreenshot',
@@ -467,6 +469,149 @@ class Ajax extends System
     		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
     	}
     	 
+    	return json_encode($answer);
+    }
+    
+    protected function registerInLanHS($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+    	
+    	$battleTagBreakdown = explode('#', $post['battletag']);
+    	
+    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
+    		'`tournament_id` = 0 AND '.
+    		'`name` = "'.Db::escape($post['battletag']).'" AND '.
+    		'`game` = "hslan" AND '.
+    		'`approved` = 1 AND '.
+    		'`deleted` = 0 '
+    	);
+
+    	if (!$post['battletag']) {
+    		$err['battletag'] = '0;'.t('field_empty');
+    	}
+    	else if ($row) {
+    		$err['battletag'] = '0;'.t('field_battletag_error');
+    	}
+    	else if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
+    		$err['battletag'] = '0;'.t('field_battletag_incorrect');
+    	}
+    	else {
+    		$suc['battletag'] = '1;'.t('approved');
+    	}
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;'.t('field_empty');
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;'.t('email_invalid');
+    	}
+    	else {
+    		$suc['email'] = '1;'.t('approved');
+    	}
+        
+        for($i=1;$i<=2;++$i) {
+            if (!$post['hero'.$i]) {
+                $err['hero'.$i] = '0;'.t('pick_hero');
+            }
+        }
+        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
+            $err['hero2'] = '0;'.t('same_hero_picked');
+        }
+    	
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+            
+            $contact_info = json_encode(array(
+                'hero1' => $post['hero1'],
+                'hero2' => $post['hero2'],
+                'phone' => $post['phone'],
+            ));
+    	
+    		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
+    		Db::query('INSERT INTO `teams` SET '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+	    		'`game` = "hslan", '.
+	    		'`tournament_id` = 0, '.
+	    		'`timestamp` = NOW(), '.
+	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`name` = "'.Db::escape($post['battletag']).'", '.
+	    		'`email` = "'.Db::escape($post['email']).'", '.
+	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
+	    		'`link` = "'.$code.'"'
+    		);
+            
+    		$teamId = Db::lastId();
+    	
+    		Db::query(
+    			'INSERT INTO `players` SET '.
+    			' `game` = "hslan", '.
+    			' `tournament_id` = 0, '.
+    			' `team_id` = '.(int)$teamId.', '.
+    			' `name` = "'.Db::escape($post['battletag']).'", '.
+    			' `player_num` = 1'
+    		);
+    		
+    		$text = Template::getMailTemplate('reg-hs-lan-player');
+    	
+    		$text = str_replace(
+    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstonelan', _cfg('site')),
+    			$text
+    		);
+    	
+    		$this->sendMail($post['email'], 'Pentaclick Hearthstone LAN tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
+    }
+    
+    protected function editInLanHS($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+        
+        for($i=1;$i<=2;++$i) {
+            if (!$post['hero'.$i]) {
+                $err['hero'.$i] = '0;'.t('pick_hero');
+            }
+        }
+        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
+            $err['hero2'] = '0;'.t('same_hero_picked');
+        }
+		
+        if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+            
+            $contact_info = json_encode(array(
+                'hero1' => $post['hero1'],
+                'hero2' => $post['hero2'],
+                'phone' => $post['phone'],
+            ));
+            
+    		Db::query('UPDATE `teams` SET '.
+	    		'`contact_info` = "'.Db::escape($contact_info).'" '.
+	    		'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
+                '`game` = "hslan" '
+    		);
+    	}
+        
     	return json_encode($answer);
     }
 	

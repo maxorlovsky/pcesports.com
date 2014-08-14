@@ -6,9 +6,9 @@
 	<? } ?>
     
     <? if (!$this->logged_in) { ?>
-        <p class="error-add"><?=t('participant_not_user')?></p>
+        <p class="info-add"><?=t('participant_not_user')?></p>
     <? } else if ($_SESSION['participant']->user_id == 0) { ?>
-        <p class="error-add"><?=t('participant_user_not_connected')?></p>
+        <p class="info-add"><?=t('participant_user_not_connected')?></p>
         <div class="connect-team">
             <div class="button" id="connectTeamToAccount"><?=t('connect_team_to_account')?><!--Connect team page to account--></div>
         </div>

@@ -189,7 +189,7 @@ var PC = {
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
-                    $('.error-add').fadeOut();
+                    $('.info-add').fadeOut();
                     $('.connect-team').fadeOut();
                 }
                 else {
@@ -697,6 +697,53 @@ var PC = {
         }
         this.ajax(query);
     },
+    editPlayerLan: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('.team-edit-completed').hide();
+        $('#da-form .message').hide();
+        $('#da-form .message').removeClass('error success');
+        element.addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ajax: 'editInLanHS',
+                form: $('#da-form').serialize()
+            },
+            success: function(answer) {
+                $('#edit-player-lan').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('#'+k+'-msg').html(answ[1]);
+                    $('#'+k+'-msg').show();
+                    if (answ[0] == 1) {
+                        $('#'+k+'-msg').addClass('success');
+                    }
+                    else {
+                        $('#'+k+'-msg').addClass('error');
+                    }
+                });
+                
+                if (answer.ok == 1) {
+                    $('.team-edit-completed').slideDown(1000);
+                }
+            },
+            error: function() {
+                $('#edit-player-lan').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                alert('Something went wrong... Contact admin at info@pcesports.com');
+            }
+        }
+        this.ajax(query);
+    },
     editTeam: function(element) {
         if (this.formInProgress == 1) {
             return false;
@@ -742,6 +789,56 @@ var PC = {
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         }
+        this.ajax(query);
+    },
+    addLanPlayer: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#da-form .message').hide();
+        $('#da-form .message').removeClass('error success');
+        $('#add-player-lan').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ajax: 'registerInLanHS',
+                form: $('#da-form').serialize()
+            },
+            success: function(answer) {
+                $('#add-player-lan').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                if (answer.ok == 1) {
+                    $('#register-url a').trigger('click');
+                    $('#join-form').slideUp(1000, function() {
+                        $('.reg-completed').slideDown(1000);
+                    });
+                }
+                else {
+                    $.each(answer.err, function(k, v) {
+                        answ = v.split(';');
+                        $('#'+k+'-msg').html(answ[1]);
+                        $('#'+k+'-msg').show();
+                        if (answ[0] == 1) {
+                            $('#'+k+'-msg').addClass('success');
+                        }
+                        else {
+                            $('#'+k+'-msg').addClass('error');
+                        }
+                    });
+                }
+            },
+            error: function() {
+                $('#add-player-lan').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                alert('Something went wrong... Contact admin at info@pcesports.com');
+            }
+        };
         this.ajax(query);
     },
     addPlayer: function() {

@@ -12,7 +12,17 @@
                 <h1 class="bordered"><?=t('panel')?> (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
             </div>
             
-			<? if ($_SESSION['participant']->game == 'hs') { ?>
+            <? if ($_SESSION['participant']->game == 'hslan') { ?>
+            <ul class="panel-links">
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/"><?=t('tournament_information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/"><?=t('information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/edit"><?=t('edit_information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+                <? if ($_SESSION['participant']->user_id == 0) { ?>
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/exit"><?=t('exit_panel')?></a></li>
+                <? } ?>
+            </ul>
+			<? } else if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
@@ -81,7 +91,7 @@
         if ($this->streams) {
             foreach($this->streams as $k => $v) {
         ?>
-            <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>" target="_blank">
+            <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>">
                 <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <label class="streamer-name"><?=$v->display_name?></label>
                 <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>

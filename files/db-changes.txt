@@ -1,3 +1,8 @@
+# 10.08.2014
+ALTER TABLE  `teams` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'hslan' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE  `players` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'hslan' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE  `tournaments` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'hslan' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
 # 09.08.2014
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-reg-hslan', '0', 'Регистрация на турнир (Hearthstone LAN)', 'checkbox', '4'), ('hslan-current-number', '0', 'Номер турнира (Hearthstone LAN)', 'text', '4');
 UPDATE `tm_settings` SET  `field` =  'Название/номер турнира (Hearthstone LAN)' WHERE  `tm_settings`.`setting` =  'hslan-current-number';

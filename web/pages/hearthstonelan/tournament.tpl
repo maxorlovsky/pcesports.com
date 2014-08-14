@@ -13,7 +13,7 @@
     </div>
     <? } ?>
 
-	<? if ($this->data->settings['tournament-reg-hslan'] == 1 /*&& $this->pickedTournament == $this->currentTournament*/) { ?>
+	<? if ($this->data->settings['tournament-reg-hslan'] == 1 && !isset($_SESSION['participant']) && $_SESSION['participant']->game != 'hslan') { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
 			<h1 class="bordered"><?=t('join_tournament')?></h1>
@@ -32,16 +32,16 @@
                     <input type="text" name="phone" placeholder="Phone number" />
 					<div id="phone-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <select class="hero1">
-                        <option value="0">Pick hero</option>
+                    <select class="hero1" name="hero1">
+                        <option value="0"><?=t('pick_hero')?></option>
                         <? foreach($this->heroes as $k => $v) { ?>
                             <option value="<?=$k?>"><?=ucfirst($v)?></option>
                         <? } ?>
                     </select>
                     <div id="hero1-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <select class="hero2">
-                        <option value="0">Pick hero</option>
+                    <select class="hero2" name="hero2">
+                        <option value="0"><?=t('pick_hero')?></option>
                         <? foreach($this->heroes as $k => $v) { ?>
                             <option value="<?=$k?>"><?=ucfirst($v)?></option>
                         <? } ?>
@@ -49,7 +49,7 @@
                     <div id="hero2-msg" class="message hidden"></div>
                     <div class="clear"></div>
                     <div class="heroes-images">
-                        <h6>Your classes</h6>
+                        <h6><?=t('your_classes')?></h6>
                         <div id="hero1img" class="hsicons" attr-picked=""></div>
                         <div id="hero2img" class="hsicons" attr-picked=""></div>
                     </div>
@@ -68,6 +68,16 @@
         
         <div class="block-content tournament-rules">
             <?=t('hearthstone_lan_tournament_information')?>
+        </div>
+    </div>
+    
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('schedule')?></h1>
+        </div>
+        
+        <div class="block-content tournament-rules">
+            <?=t('hearthstone_lan_schedule_information')?>
         </div>
     </div>
     
@@ -147,8 +157,8 @@ $('.hero1, .hero2').on('change keyup', function() {
     }
 });
 
-$('#add-player').on('click', function() {
-    PC.addPlayer();
+$('#add-player-lan').on('click', function() {
+    PC.addLanPlayer();
 });
 
 participantsNumber = <?=$participantsCount?>;
