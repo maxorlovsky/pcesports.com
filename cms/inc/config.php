@@ -76,7 +76,7 @@ case 'test':
 	$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
 	$cfg['smtpMailPort'] = '465';
 	$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-	$cfg['smtpMailPass'] = 'knyaveclickius888';
+	$cfg['smtpMailPass'] = 'aveclickius777';
 	$cfg['smtpMailFrom'] = 'info@pcesports.com';
 	
 	ini_set('display_errors', 1);
@@ -102,7 +102,7 @@ case 'dev':
     $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
     $cfg['smtpMailPort'] = '465';
     $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-    $cfg['smtpMailPass'] = 'knyaveclickius888';
+    $cfg['smtpMailPass'] = 'aveclickius777';
     $cfg['smtpMailFrom'] = 'info@pcesports.com';
     
     ini_set('display_errors', 1);
