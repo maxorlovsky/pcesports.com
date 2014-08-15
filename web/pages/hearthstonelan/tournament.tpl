@@ -20,7 +20,7 @@
 		</div>
 		
 		<div class="block-content">
-            <p class="info-add"><?=t('participant_not_user')?></p>
+            <p class="info-add"><?=t('this_is_lan_event')?></p>
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
