@@ -71,7 +71,15 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button"><?=t('join')?></a>
+            <? if ($v['id'] == 'DreamForge') { ?>
+                <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>lan" class="button">
+                    <?=t('join')?>
+                </a>
+            <? } else { ?>
+            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button">
+                <?=t('join')?>
+            </a>
+            <? } ?>
             
             <? if ($i!=0) { ?>
                 <div class="clear"></div>
