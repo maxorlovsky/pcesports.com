@@ -103,7 +103,7 @@
                 unset($this->data->langugePicker['picked']);
                 foreach($this->data->langugePicker as $v) {
                 ?>
-                    <a href="<?=_cfg('site')?><?=str_replace($currentLanguage, $v->flag, $_SERVER['REQUEST_URI'])?>"><img src="<?=_cfg('img')?>/flags/<?=$v->flag?>.png" /><?=ucfirst(t($v->title))?></a>
+                    <a href="<?=_cfg('site')?><?=($_SERVER['REQUEST_URI']!='/'?str_replace($currentLanguage, $v->flag, $_SERVER['REQUEST_URI']):'/'.$v->flag)?>"><img src="<?=_cfg('img')?>/flags/<?=$v->flag?>.png" /><?=ucfirst(t($v->title))?></a>
                 <?
                 }
                 ?>
