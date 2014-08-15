@@ -25,4 +25,44 @@
             <?=t('lan_participant_information_txt')?>
         </div>
     </div>
+    
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('brackets')?></h1>
+        </div>
+
+        <div class="block-content challonge-brackets">
+            <div id="challonge"></div>
+        </div>
+    </div>
 </div>
+
+<script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
+<script>
+participantsNumber = <?=$participantsCount?>;
+if (participantsNumber > 100) {
+    challongeHeight = 3500;
+}
+else if (participantsNumber > 50) {
+    challongeHeight = 1800;
+}
+else if (participantsNumber > 25) {
+    challongeHeight = 950;
+}
+else {
+    challongeHeight = 550;
+}
+
+if ($('#challonge').length) {
+    $('#challonge').height(challongeHeight);
+    $('#challonge').challonge('dreamforge', {
+        subdomain: 'pentaclick',
+        theme: '1',
+        multiplier: '1.0',
+        match_width_multiplier: '0.7',
+        show_final_results: '0',
+        show_standings: '0',
+        overflow: '0'
+    });
+}
+</script>

@@ -177,7 +177,7 @@ else {
 
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
-    $('#challonge').challonge('hs<?=$this->pickedTournament?>', {
+    $('#challonge').challonge('dreamforge', {
         subdomain: 'pentaclick',
         theme: '1',
         multiplier: '1.0',

@@ -89,6 +89,18 @@ class hearthstonelan extends System
 		else if ($row && $row->approved == 1 && $row->deleted == 0) {
 			$verified = 1;
 		}
+        
+        $participantsCountRow = Db::fetchRow(
+            'SELECT COUNT(`id`) AS `count` '.
+            'FROM `teams` '.
+            'WHERE `tournament_id` = 0 AND '.
+            '`game` = "hslan" AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 AND '.
+			'`ended` = 0 '
+        );
+        $participantsCount = $participantsCountRow->count;
+        
 		
 		if ($verified == 1) {
 			$_SESSION['participant'] = $row;
