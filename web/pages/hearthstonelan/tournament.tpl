@@ -29,7 +29,7 @@
 					<input type="text" name="email" placeholder="Email*" />
 					<div id="email-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <input type="text" name="phone" placeholder="Phone number" />
+                    <input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
 					<div id="phone-msg" class="message hidden"></div>
                     <div class="clear"></div>
                     <select class="hero1" name="hero1">
@@ -66,7 +66,7 @@
             <h1 class="bordered"><?=t('tournament_rules')?></h1>
         </div>
         
-        <div class="block-content tournament-rules">
+        <div class="block-content">
             <?=t('hearthstone_lan_tournament_information')?>
         </div>
     </div>
