@@ -47,13 +47,6 @@ case 'prod':
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
     $cfg['site'] = 'http://www.pcesports.com';
     
-    // SMTP config
-    $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
-    $cfg['smtpMailPort'] = '465';
-    $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-    $cfg['smtpMailPass'] = 'aveclickius777';
-    $cfg['smtpMailFrom'] = 'info@pcesports.com';
-    
     ini_set('display_errors', 0);
 	
 	break;
@@ -71,13 +64,6 @@ case 'test':
 	//Admin email (in case of errors)
 	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
 	$cfg['site'] = 'http://test.pcesports.com';
-
-	// SMTP config
-	$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
-	$cfg['smtpMailPort'] = '465';
-	$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-	$cfg['smtpMailPass'] = 'aveclickius777';
-	$cfg['smtpMailFrom'] = 'info@pcesports.com';
 	
 	ini_set('display_errors', 1);
 
@@ -98,18 +84,18 @@ case 'dev':
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
     $cfg['site'] = 'http://dev.pcesports.com';
     
-    // SMTP config
-    $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
-    $cfg['smtpMailPort'] = '465';
-    $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-    $cfg['smtpMailPass'] = 'aveclickius777';
-    $cfg['smtpMailFrom'] = 'info@pcesports.com';
-    
     ini_set('display_errors', 1);
     
 	break;
 }
 //=====================================================
+
+// SMTP config
+$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+$cfg['smtpMailPort'] = '465';
+$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
+$cfg['smtpMailPass'] = 'aveclickius777';
+$cfg['smtpMailFrom'] = 'info@pcesports.com';
 
 //=====================================================
 // Making some defines for easyer coding (directories)
