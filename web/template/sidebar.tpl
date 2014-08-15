@@ -17,7 +17,7 @@
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/"><?=t('tournament_information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/edit"><?=t('edit_information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
                 <? if ($_SESSION['participant']->user_id == 0) { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
@@ -29,7 +29,7 @@
 				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
 				<? } ?>
                 <? if (!$this->logged_in) { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
@@ -45,7 +45,7 @@
 				<? if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
-                    <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_surrender')?>"><?=t('leave_tournament')?></a></li>
+                    <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
 				<? } ?>
                 <? if (!$this->logged_in) { ?>
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
