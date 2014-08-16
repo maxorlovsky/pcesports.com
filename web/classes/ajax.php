@@ -775,7 +775,7 @@ class Ajax extends System
             $server = 'euw';
         }
         
-        if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
+        if ($this->data->settings['tournament-start-lol-'.$server] != 1) {
             return '0;Server error!';
         }
 		
