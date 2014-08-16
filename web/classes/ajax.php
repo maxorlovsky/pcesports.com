@@ -776,7 +776,7 @@ class Ajax extends System
         }
         
         if ($this->data->settings['tournament-start-lol-'.$server] != 1) {
-            return '0;Server error!';
+            $err['mem1'] = '0;'.t('tournament_already_started');
         }
 		
 		$players = array();
