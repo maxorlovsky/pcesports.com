@@ -775,9 +775,9 @@ class Ajax extends System
             $server = 'euw';
         }
         
-        if ($this->data->settings['tournament-start-lol-'.$server] != 1) {
-            $err['mem1'] = '0;'.t('tournament_already_started');
-        }
+        /*if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
+            return '0;Server error!';
+        }*/
 		
 		$players = array();
 		$checkForSame = array();
