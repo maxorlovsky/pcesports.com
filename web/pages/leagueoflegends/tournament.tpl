@@ -76,7 +76,7 @@
             ?>
                 <div class="block" title="<?=$v['name']?> #<?=$participantsCount?>">
                     <div class="team-name" title="<?=$v['name']?>">
-						<?=strlen($v['name']) > 14?substr($v['name'],0,13).'...':$v['name']?>
+						<?=$v['name']?>
 					</div>
                     <span class="team-num">#<?=$participantsCount?></span>
                     <div class="clear"></div>
