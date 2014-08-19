@@ -311,8 +311,9 @@ class Cron extends System {
                 );
                 
                 $time = array();
-                $time['24'] = strtotime($v->dates.' '.$v->time) - 86400;
-                $time['1'] = strtotime($v->dates.' '.$v->time) - 3600;
+                $time['0'] = strtotime($v->dates.' '.$v->time);
+                $time['24'] = $time['0'] - 86400;
+                $time['1'] = $time['0'] - 3600;
                 if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
                     $this->sendReminders($v);
@@ -321,6 +322,10 @@ class Cron extends System {
                     $v->template = 1;
                     $v->data = $row;
                     $this->sendReminders($v);
+                }
+                else if ($row && $row->delivered == 1 && $time['0'] <= time()) {
+                    $v->data = $row;
+                    $this->startUpTournament($v);
                 }
             }
         }
@@ -386,7 +391,6 @@ class Cron extends System {
                     '`delivered` = 1 '.
                     'WHERE `id` = '.(int)$tournament->data->id
                 );
-                $this->closeTournamentReg($tournament);
             }
             else {
                 Db::query('INSERT INTO `notifications` SET '.
@@ -398,13 +402,14 @@ class Cron extends System {
         }
     }
     
-    private function closeTournamentReg($tournament) {
+    private function startUpTournament($tournament) {
+        //Closing up registration!
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 0 '.
             'WHERE '.
             '`setting` = "tournament-reg-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
         );
-            
+        
         $challongeTournament = $tournament->game;
         if ($tournament->game == 'hs') {
             $challongeTournament = $this->data->settings['hs-current-number'];
@@ -413,16 +418,44 @@ class Cron extends System {
             $challongeTournament = $tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
         }
         
-        $apiArray = array(
-            'participant_id' => 0, //reshuffle all
-        );
-        
+        //Reshuffle tournament
         if (_cfg('env') == 'prod') {
+            $apiArray = array(
+                'participant_id' => 0, //reshuffle all
+                'tournament'     => 'pentaclick-'.$challongeTournament,
+            );
+        
             $this->runChallongeAPI('tournaments/pentaclick-'.$challongeTournament.'/participants/randomize.post', $apiArray);
         }
         else {
+            $apiArray = array(
+                'participant_id' => 0, //reshuffle all
+                'tournament'     => 'pentaclick-test1',
+            );
+            
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants/randomize.post', $apiArray);
         }
+        
+        //Starting up tournament on challonge.com
+        if (_cfg('env') == 'prod') {
+            $apiArray = array(
+                'tournament'     => 'pentaclick-'.$challongeTournament,
+            );
+            
+            $this->runChallongeAPI('tournaments/pentaclick-'.$challongeTournament.'/start.post', $apiArray);
+        }
+        else {
+            $apiArray = array(
+                'tournament'     => 'pentaclick-test1',
+            );
+            
+            $this->runChallongeAPI('tournaments/pentaclick-test1/start.post', $apiArray);
+        }
+        
+        Db::query('UPDATE `notifications` SET '.
+            '`delivered` = 0 '.
+            'WHERE `id` = '.(int)$tournament->data->id
+        );
         
         return true;
     }

@@ -248,6 +248,7 @@ class System
     		foreach($apiArray as $k => $v) {
     			$apiUrlLog .= '&'.$k.'='.$v;
     		}
+            $apiArray['api_key'] = '5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
     	}
     
     	Db::query(
