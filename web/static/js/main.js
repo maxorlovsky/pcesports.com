@@ -537,7 +537,6 @@ var PC = {
     },
     statusCheck: function() {
 		$('#fightStatus').removeClass('online');
-		$('#lostBattle').addClass('inactive');
 		var query = {
 			type: 'POST',
 			data: {
@@ -547,7 +546,6 @@ var PC = {
 				answer = answer.split(';');
 				if (answer[2] == 'online') {
 					$('#fightStatus').addClass('online');
-					$('#lostBattle').removeClass('inactive');
 				}
 				$('#fightStatus').html(answer[2]);
 			}

@@ -25,8 +25,8 @@
             <div class="chat">
                 <div class="chat-content"></div>
                 <div class="chat-input">
-                    <input type="text" id="chat-input" />
-                    <div id="uploadScreen" class="attach-file" title="<?=t('attach_file')?>"></div>
+                    <input type="text" id="chat-input" placeholder="<?=t('enter_text')?>" />
+                    <div id="uploadScreen" class="attach-file" attr-msg="<?=t('attach_file')?>"></div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/edit"><?=t('edit_information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
-                <? if ($_SESSION['participant']->user_id == 0) { ?>
+                <? if (!$this->logged_in) { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
