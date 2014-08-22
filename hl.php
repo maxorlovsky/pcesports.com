@@ -24,7 +24,8 @@ $heroes = array(
 $q = mysql_query('SELECT `name`, `contact_info` '.
     'FROM `teams` '.
     'WHERE `game` = "hslan" AND `approved` = 1 AND `deleted` = 0 '.
-    'ORDER BY `id` ASC'
+    'ORDER BY `id` ASC '.
+    'LIMIT 32'
 );
 
 while($r = mysql_fetch_object($q)) {
