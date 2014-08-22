@@ -29,8 +29,7 @@ $q = mysql_query('SELECT `name`, `contact_info` '.
 
 while($r = mysql_fetch_object($q)) {
     $info = json_decode($r->contact_info);
-    echo '<b>BattleTag:</b> '.$r->name.', <b>Heroes:</b> '.ucfirst($heroes[$info->hero1]).' / '.ucfirst($heroes[$info->hero2]).'';
-    echo '<br /><br />';
+    echo '<b>'.$r->name.'</b> - '.ucfirst($heroes[$info->hero1]).' / '.ucfirst($heroes[$info->hero2]).'<br />';
 }
 
 ?>
