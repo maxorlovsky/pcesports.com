@@ -5,7 +5,7 @@ class Social
     
     function __construct($social = '') {
 		$this->config = _cfg('social');
-        $this->allowedProviders = array('fb', 'vk', 'gp', 'tw', 'sm', 'tc');
+        $this->allowedProviders = array('fb', 'vk', 'gp', 'tw', 'sm', 'tc', 'bn');
 	}
 	
 	public function Verify($provider) {
@@ -45,6 +45,113 @@ class Social
 		$this->config = $this->config[$provider];
 		
 		return $this->$provider();
+	}
+    
+    private function bnComplete($data = array()) {
+        exit('rawr');
+		/*$user = $_POST;
+		$user['social'] = 'fb';
+	
+		if(empty($data)) {
+			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) {
+                $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
+                return false;
+            }
+			$data = $_SESSION['social']['fb'];
+		}
+	
+		$user['name'] = $data['first_name'] ? $data['first_name'] : 'Anonymous';
+		if(isset($data['email'])) {
+			$user['email'] = $data['email'];
+		}
+		$user['social_uid'] = $data['id'];
+        
+		$user = User::socialLogin($user);
+		if($user !== true) {
+			$_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            
+            return false;
+        }
+		
+		return true;*/
+	}
+	
+	private function bnVerify() {
+        if(!isset($_GET['code']) || empty($_GET['code'])) {
+			if(isset($_GET['error']) && !empty($_GET['error'])) {
+                $_SESSION['errors'][] = t($_GET['error']);
+                if (isset($_GET['error_description'])) {
+                    $_SESSION['errors'][] = $_GET['error_description'];
+                }
+            }
+			else {
+                $_SESSION['errors'][] = 'Battle.net authorization error (empty error, something went wrong)';
+            }
+            
+            return false;
+		}
+        ddump($_GET);
+		/*$cfg = array(
+            'url'=>'https://graph.facebook.com/oauth/access_token',
+            'get'=>array(
+                'code'=>$_GET['code'],
+                'redirect_uri'=>_cfg('site').'/run/social/fb',
+                'client_id'=>$this->config['id'],
+                'client_secret'=>$this->config['private'],
+                //'grant_type'=>'client_credentials'
+            ),
+		);
+	
+		$f = $this->oAuthRequest($cfg);
+		if($f === false) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
+	
+		parse_str($f,$f);
+		 
+		if(!isset($f['access_token'])) {
+            $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
+            return false;
+        }
+	
+		$cfg = array(
+            'url'=>'https://graph.facebook.com/me',
+            'get'=>array(
+                'access_token'=>$f['access_token'],
+            ),
+		);
+	
+		$f = $this->oAuthRequest($cfg);
+		if($f === false ) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
+	
+		$f = json_decode($f,1);
+		
+		if(!isset($f['id'])) {
+            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            return false;
+        }
+	
+		$_SESSION['social']['fb'] = $f;
+	
+		return $this->bnComplete($f);*/
+	}
+	
+	private function bn() {
+		if (isset($_SESSION['social']['bn'])) {
+            unset($_SESSION['social']['bn']);
+        }
+
+		$url = 'https://eu.battle.net/oauth/authorize'
+				.'?client_id='.$this->config['id']
+				.'&redirect_uri='._cfg('site').'/run/social/bn'
+				.'&scope=wow.profile+sc2.profile'
+				.'&response_type=code';
+
+		return $url;
 	}
     
     private function tcComplete($data = array()) {

@@ -21,6 +21,6 @@ $cfg['social'] = array(
     'tw'    => array('id' => 'eOgJnO2SkfjkBFwLZ9lrWSyrL', 'private' => 'dxgLUmgeoBb6AfBaaADLHykhQOb71sdyZcHoJLRZkuupWfzT2B'), //twitter
 	'vk'    => array('id' => '4445595', 'private' => 'QctUnxnf6QqfcMbuTWas'), //vkontakte
 	'gp'    => array('id' => '974420857967-p2jrt83osg4op0u3k9k22um06omqafpa.apps.googleusercontent.com', 'private'=>'bnBaBT6zB1CobY4MGXpwfOin'),
-    //'sm'    => array('id' => '', 'private'=>'B562BDCF6768E330A9B01B1A016E82E0'),
     'tc'    => array('id' => 'ew4ocriuxjr7b9c7najq3588f30gd63', 'private'=>'94nsyz930bomq4nf8f8a6ppvrpz8n2h'),
+    'bn'    => array('id' => 'qcxqt9gpkn7m3gudjz3m4c4x726zabj7', 'private'=>'vgJpPHyvjdtK4akc56pXewGtQm8AP9dP'),
 );

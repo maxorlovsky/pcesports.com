@@ -577,6 +577,11 @@ var PC = {
             
             return false;
         },
+        bn: function() {
+            this.get_token('bn');
+            
+            return false;
+        },
         get_token: function(provider) {
             var query = {
                 type: 'POST',
