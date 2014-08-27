@@ -22,7 +22,7 @@
                 <a class="unicon" href="http://www.unicon.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
                 <a class="skillz" href="http://www.skillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/skillz.png" /></a>
                 <div class="clear"></div>
-                <a class="aimskillz" href="http://aimskillz.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>
+                <a class="dreamforge" href="https://www.facebook.com/DreamforgeLatvia" target="_blank"><img src="<?=_cfg('img')?>/partners/dreamforge.png" /></a>
                 <a class="lesf" href="http://lesf.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/lesf.png" /></a>
                 <div class="clear"></div>
             </div>

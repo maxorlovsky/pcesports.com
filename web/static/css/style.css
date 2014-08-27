@@ -591,23 +591,29 @@ footer .partners .unicon {
     position: relative;
     left: 120px;
 }
-footer .partners .aimskillz {
+/*footer .partners .aimskillz {
     margin-top: 20px;
     left: 85px;
     position: relative;
     float: left;
+}*/
+footer .partners .dreamforge {
+    margin-top: 20px;
+    left: 115px;
+    position: relative;
+    float: left;
 }
 footer .partners .lesf {
-    margin-top: 20px;
+    margin-top: 25px;
     float: left;
     position: relative;
-    left: 120px;
+    left: 170px;
 }
 footer .partners .skillz {
     float: left;
     position: relative;
     left: 170px;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 
 #hint-helper {
