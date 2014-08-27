@@ -22,5 +22,5 @@ $cfg['social'] = array(
 	'vk'    => array('id' => '4445595', 'private' => 'QctUnxnf6QqfcMbuTWas'), //vkontakte
 	'gp'    => array('id' => '974420857967-p2jrt83osg4op0u3k9k22um06omqafpa.apps.googleusercontent.com', 'private'=>'bnBaBT6zB1CobY4MGXpwfOin'),
     'tc'    => array('id' => 'ew4ocriuxjr7b9c7najq3588f30gd63', 'private'=>'94nsyz930bomq4nf8f8a6ppvrpz8n2h'),
-    'bn'    => array('id' => 'qcxqt9gpkn7m3gudjz3m4c4x726zabj7', 'private'=>'vgJpPHyvjdtK4akc56pXewGtQm8AP9dP'),
+    //'bn'    => array('id' => 'qcxqt9gpkn7m3gudjz3m4c4x726zabj7', 'private'=>'vgJpPHyvjdtK4akc56pXewGtQm8AP9dP'),
 );
