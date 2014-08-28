@@ -84,6 +84,7 @@ var profiler = {
                 ajax: 'chat',
                 action: 'fetch',
             },
+            timeout: 5000,
             success: function(answer) {
                 answer = answer.split(';');
                 if (answer[0] == 1) {

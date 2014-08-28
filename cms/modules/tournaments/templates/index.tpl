@@ -78,6 +78,7 @@ profiler = {
 				action: 'fetchChat',
 				form: arrayElements
             },
+            timeout: 5000,
             success: function(answer) {
 				$.each($.parseJSON(answer), function(k, v) {
 					$('#'+k+' .chat-content').html(v);
