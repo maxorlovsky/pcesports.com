@@ -1,7 +1,7 @@
 <h1><?=at('links')?></h1>
 
 <a class="back" href="<?=_cfg('cmssite')?>/#links">Back</a>
-<table class="links" id="edit" name="links">
+<table class="table links" id="edit" name="links">
     <tr>
         <td width="20%"><b><?=at('name')?> <span class="red">*</span></b></td>
         <td><input type="text" id="title" size="50" value="<?=$module->editData->value?>" /></td>

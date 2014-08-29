@@ -1,6 +1,6 @@
 <h1><?=at('links')?></h1>
 
-<table class="links">
+<table class="table links">
     <td colspan="6" id="buttons" class="hint" name="Add">
         <a href="<?=_cfg('cmssite').'/#links/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=strtolower(at('link'))?></a>
     </td>

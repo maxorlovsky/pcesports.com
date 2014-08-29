@@ -374,17 +374,6 @@ nav #menusub:hover #arrows.active {
 	margin: 3px 0;
 }
 
-.menu td,
-.logs_menu td,
-.languages td,
-.accounts td,
-.strings td,
-.links td,
-.settings td,
-.pages td,
-.banners  td,
-.account_settings td,
-.logs td,
 .version table td,
 .table td {
 	border: 1px solid #ddd;
@@ -401,26 +390,10 @@ nav #menusub:hover #arrows.active {
 	margin-right: 0 !important;
 }
 
-.logs_menu {
-	padding: 0;
-	border: 0;
-	background-color: #fff;
-	display: block;
-}
-.account_settings {
-	width: 100%;
-}
-
-.languages,
-.pages,
-.links,
-.strings,
-.accounts,
-.settings,
-.logs,
 .table {
     width: 100%;
 }
+
 .back {
     display: block;
     float: right;
@@ -548,8 +521,8 @@ nav #menusub:hover #arrows.active {
 }
 
 .pages {
-    display: block;
     margin: 10px 0;
+    width: 100%;
 }
 .pages b, .pages a {
     padding: 0 5px;
@@ -671,7 +644,7 @@ nav #menusub:hover #arrows.active {
     #adminEmail {
         width: 150px;
     }
-    .menu td, .logs_menu td, .languages td, .accounts td, .strings td, .links td, .settings td, .pages td, .banners td, .account_settings td, .logs td, .version table td, .table td {
+    .version table td, .table td {
         padding: 2px;
     }
 }

@@ -18,7 +18,7 @@
 		<div class="account_info"><?=at('logged_in_as')?> <span class="b"><?=$this->user->login?></span></div>
 		<div class="clear"></div>
         <div class="centered b"><?=at('admin_pers_settings')?></div>
-		<table class="account_settings">
+		<table class="table account_settings">
 			<tr>
 				<td width="50%" class="b"><?=at('language')?></td>
 				<td width="50%">

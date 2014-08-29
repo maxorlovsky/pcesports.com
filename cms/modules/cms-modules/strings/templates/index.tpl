@@ -1,6 +1,6 @@
 <h1><?=at('strings')?></h1>
 
-<table class="strings">
+<table class="table strings">
     <tr>
         <td colspan="4" id="buttons" class="hint" name="Add">
             <a href="<?=_cfg('cmssite').'/#strings/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=at('string')?></a>

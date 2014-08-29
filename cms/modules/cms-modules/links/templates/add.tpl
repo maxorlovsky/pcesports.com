@@ -1,7 +1,7 @@
 <h1><?=at('links')?></h1>
 
 <a class="back" href="<?=_cfg('cmssite')?>/#links">Back</a>
-<table class="links" id="add" name="links">
+<table class="table links" id="add" name="links">
     <tr>
         <td width="20%"><b><?=at('name')?> <span class="red">*</span></b></td>
         <td><input type="text" id="title" size="50"/></td>

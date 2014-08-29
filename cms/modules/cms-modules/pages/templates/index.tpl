@@ -1,6 +1,6 @@
 <h1><?=at('pages')?></h1>
 
-<table class="pages">
+<table class="table">
     <td colspan="4" id="buttons" class="hint" name="Add">
             <a href="<?=_cfg('cmssite').'/#pages/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=at('text_page')?></a>
         </td>

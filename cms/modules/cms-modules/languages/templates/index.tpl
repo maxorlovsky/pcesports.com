@@ -1,6 +1,6 @@
 <h1><?=at('languages')?></h1>
 
-<table class="languages">
+<table class="table">
     <td colspan="4" id="buttons" class="hint" name="Add">
         <a href="<?=_cfg('cmssite').'/#languages/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=at('languages_language')?></a>
     </td>

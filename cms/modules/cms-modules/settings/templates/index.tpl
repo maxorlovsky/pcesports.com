@@ -1,4 +1,4 @@
-<table class="settings">
+<table class="table">
     <tr><td colspan="2"><center><b><?=at('settings')?></b></center></td></tr>
     <?
     if ($module->siteSettings) {
@@ -16,7 +16,7 @@
     ?>
 </table>
 <br /><br />
-<table class="settings">
+<table class="table">
     <colgroup>
         <col width="70%"></col>
         <col width="30%"></col>

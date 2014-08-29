@@ -23,6 +23,7 @@ class Strings
 		
 		if (isset($params['var1']) && $params['var1'] == 'index' && isset($params['var2'])) {
 			$this->searchString = urldecode($params['var2']);
+            $_SESSION['searchString'] = $this->searchString;
 			$this->strings = Db::fetchRows('SELECT `key`, `status`, `english` AS `value` '.
 				'FROM `tm_strings` '.
 				'WHERE `key` LIKE "%'.Db::escape($this->searchString).'%" OR '.
@@ -32,6 +33,10 @@ class Strings
 		else {
 			$this->strings = Db::fetchRows('SELECT `key`, `status`, `english` AS `value` FROM `tm_strings`');
 		}
+        
+        if (isset($_SESSION['searchString']) && $_SESSION['searchString'] && !$this->searchString) {
+            $this->searchString = $_SESSION['searchString'];
+        }
 
 		return $this;
 	}

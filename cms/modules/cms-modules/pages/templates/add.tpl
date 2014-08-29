@@ -1,7 +1,7 @@
 <h1><?=at('pages')?></h1>
 
 <a class="back" href="<?=_cfg('cmssite')?>/#pages">Back</a>
-<table class="pages" id="add" name="pages">
+<table class="table" id="add" name="pages">
 	<tr>
         <td width="20%" class="b">
             Title <span class="red">*</span><br />

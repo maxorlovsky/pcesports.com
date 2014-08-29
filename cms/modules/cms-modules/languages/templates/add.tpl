@@ -1,7 +1,7 @@
 <h1><?=at('languages')?></h1>
 
 <a class="back" href="<?=_cfg('cmssite')?>/#languages">Back</a>
-<table class="languages" id="add" name="languages">
+<table class="table" id="add" name="languages">
 	<tr>
         <td width="30%"><?=at('name')?> <span class="red">*</span></td>
         <td><input type="text" id="title" /></td>

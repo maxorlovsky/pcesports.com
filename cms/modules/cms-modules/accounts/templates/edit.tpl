@@ -1,7 +1,7 @@
 <h1><?=at('accounts')?></h1>
 
 <a class="back" href="<?=_cfg('cmssite')?>/#accounts">Back</a>
-<table class="accounts" id="edit" name="accounts">
+<table class="table accounts" id="edit" name="accounts">
     <tr>
         <td width="20%"><b><?=at('login')?> <span class="red">*</span></b></td>
         <td><input type="text" id="login" size="50" value="<?=$module->editData->login?>" readonly="readonly" /></td>
