@@ -11,15 +11,15 @@ function is_image($f, $mb = 2) {
 }
 
 //$data[] = array
-//Count per page
+//countPerPage - Count per page
 //maxNumShow - Maximum number to show before ...
 //pageNum - current page number
 //tableName - for sql query
 //where - for sql query WHERE column
 //field to count - (WARNING: MUST NOT USE `*` IN THIS FUNCTION) default: id
+//cms - if 1, adding html for cms pages
 function pages($data) {
-    $link = _cfg('href');
-	$data['pageNum'] = abs((int)$data['pageNum']);
+    $data['pageNum'] = abs((int)$data['pageNum']);
     $return = new stdClass();
     
     if (!isset($data['tableName']) && !$data['tableName']) {
@@ -41,6 +41,19 @@ function pages($data) {
     if (!isset($data['count']) && !$data['count']) {
 		$data['count'] = 'id';
     }
+    if (!isset($data['cms']) && !$data['cms']) {
+		$data['cms'] = 0;
+    }
+    if (!isset($data['additionalLink']) && !$data['additionalLink']) {
+        $data['additionalLink'] = '';
+    }
+    
+    if ($data['cms'] == 1) {
+        $link = _cfg('cmssite');
+    }
+    else {
+        $link = _cfg('href');
+    }
 
 	$strt = $data['pageNum'].'0'; //must fix this value if you want to make some different value then *0 for example 4 or 8
 	$strt *= ($data['countPerPage']/10);
@@ -48,6 +61,9 @@ function pages($data) {
     
     if ($_GET['val1']) {
         $link .= '/'.$_GET['val1'];
+    }
+    else if ($data['cms'] == 1) {
+        $link .= '/'.$_POST['page'].$data['additionalLink'];
     }
     
     $return->countPerPage = $data['countPerPage'];
@@ -92,8 +108,8 @@ function pages($data) {
 					break;
 				}
 			}
-			
-			if ($data['pageNum'] < $lastp - $lt && $i == $lastp) {
+            
+			if ($data['pageNum'] <= ($lastp - $lt) && $i == $lastp) {
 				$html .= ' ... <a href="'.$link.''.$_GET['p'].'/page/'.$lastp.'" class="inpage">'.$lastp.'</a>';
 			}
 			

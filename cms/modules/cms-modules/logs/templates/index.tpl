@@ -1,13 +1,6 @@
 <h1><?=at('logs')?></h1>
 
 <table class="logs">
-    <!-- <tr>
-        <td colspan="6" class="search">
-            <?=at('find_string')?>: 
-            <input id="search-text" type="text" value="<?=$module->searchString;?>" /> 
-            <input type="submit" id="search" value="<?=at('search');?>" />
-        </td>
-    </tr> -->
     <tr>
         <td width="10%"><b><?=at('module')?></b></td>
         <td width="10%"><b><?=at('type')?></b></td>
@@ -33,3 +26,5 @@
         }
     ?>
 </table>
+
+<?=$module->pages->html?>
