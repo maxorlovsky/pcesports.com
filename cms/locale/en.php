@@ -72,7 +72,6 @@ $astr['vote_deleted']='Vote deleted';
 $astr['vote_priority']='Priority of vote is stands at Russian language. Please create at least text on russian language.';
 $astr['vote_updated']='Vote updated';
 $astr['vote_added']='Vote added';
-$astr['admin_language_success']='Your language was changed, wait for reload.';
 $astr['login']='Login';
 $astr['password']='Password';
 $astr['access_level']='Access Level';
@@ -91,7 +90,6 @@ $astr['settings']='Settings';
 $astr['cms_version']='CMS Version';
 $astr['changelog']='Changelog';
 $astr['admin_pers_settings']='Admin Personal Settings';
-$astr['admin_pan_lang']='Admin panel Language';
 $astr['admin_activity']='Admin activity';
 $astr['last_entrance']='Last entrance';
 $astr['status']='Status';
@@ -154,12 +152,19 @@ $astr['cms_information'] = 'CMS Information';
 $astr['cms_latest_changes'] = 'CMS latest changes';
 $astr['view_full'] = 'View full';
 $astr['logged_in_as'] = 'Logged in as';
-$astr['admin_email'] = 'Admin Email';
 $astr['you_ver_of_cms'] = 'Your version of CMS';
 $astr['latest_ver_cms'] = 'Latest version of CMS';
 $astr['update'] = 'Update';
 $astr['cms_detailed_info'] = 'TheMages CMS created by Max &amp; Anya Orlovsky<br />If you\'re interested in additional development or modules, feel free to contact us.';
 $astr['only_for_logged_in'] = 'Only for logged in';
+$astr['password_empty'] = 'Password field is empty';
+$astr['password_incorrect'] = 'Password is written incorrectly, required from 6 to 30 symbols';
+$astr['password_not_match'] = 'Old password and new password does not match';
+$astr['current_password_incorrect'] = 'Current password is incorrect';
+$astr['current_password_empty'] = 'Please input current password';
+$astr['admin_profile_update_success'] = 'Profile was updated successfully';
+$astr['new_password'] = 'New password';
+$astr['update_profile'] = 'Update profile';
 //--------------------------------------------------//
 
 //Other language strings
@@ -176,6 +181,7 @@ $astr['hint_page_loading_type']='Normal=Basic page loading, with refresh of all 
 $astr['hint_admin_language']='You can set language for admin panel for your account';
 $astr['hint_admin_email']='To change email, input value in to the field and press &quot;Enter&quot;';
 $astr['hint_maintenance']='Enable maintenance mode for website';
+$astr['hint_admin_password']='To change password, input value in to the field and press &quot;Enter&quot;';
 //--------------------------------------------------//
 
 //$astr['']='';

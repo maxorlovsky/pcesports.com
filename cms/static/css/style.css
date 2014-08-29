@@ -286,7 +286,7 @@ nav #menusub:hover #arrows.active {
 .dashboard {
     margin-top: 60px;
 }
-#adminEmail {
+.logged_in_menu .account_settings input[type="text"], .logged_in_menu .account_settings input[type="password"] {
     width: 195px;
 }
 

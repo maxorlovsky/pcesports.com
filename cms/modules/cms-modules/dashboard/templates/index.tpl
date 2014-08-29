@@ -17,26 +17,39 @@
 	<div class="logged_in_menu box">
 		<div class="account_info"><?=at('logged_in_as')?> <span class="b"><?=$this->user->login?></span></div>
 		<div class="clear"></div>
+        <div class="centered b"><?=at('admin_pers_settings')?></div>
 		<table class="account_settings">
-			<tr><td colspan="2" class="centered b"><?=at('admin_pers_settings')?></td></tr>
 			<tr>
-				<td width="50%" class="b"><?=at('admin_pan_lang')?></td>
+				<td width="50%" class="b"><?=at('language')?></td>
 				<td width="50%">
-					<select id="change_language" class="hint chosen" name="<?=at('hint_admin_language')?>">
+					<select id="change_language" class="hint chosen" name="<?=at('hint_admin_language')?>" style="min-width: 100px">
 						<? foreach(_cfg('allowedLanguages') as $v) { ?>
 							<option value="<?=$v?>" <?=($v==$this->user->language?'selected="selected"':null)?> >
-                                <?=strtoupper($v)?>
+                                <?=at($v)?>
                             </option>
 						<?}?>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td width="50%" class="b"><?=at('admin_email')?></td>
+				<td width="50%" class="b"><?=at('email')?></td>
 				<td width="50%">
-					<input type="text" id="adminEmail" class="hint" name="<?=at('hint_admin_email')?>" value="<?=$this->user->email?>"/>
+					<input type="text" id="adminEmail" value="<?=$this->user->email?>"/>
 				</td>
 			</tr>
+            <tr>
+				<td width="50%" class="b"><?=at('new_password')?></td>
+				<td width="50%">
+					<input type="password" id="adminPassword" value=""/>
+				</td>
+			</tr>
+            <tr>
+				<td width="50%" class="b"><?=at('password')?></td>
+				<td width="50%">
+					<input type="password" id="currentPassword" value=""/>
+				</td>
+			</tr>
+            <tr><td colspan="2"><button class="updateProfile"><?=at('update_profile')?></button></td></tr>
 		</table>
 	</div>
 	
@@ -92,48 +105,39 @@
 
 <script>
 
-$('#change_language').on('change', function(){
+$('.updateProfile').on('click', function(){
 	showMsg(2,strings['loading']);
 	
 	var query = {
         type: 'POST',
         data: {
-        	control: 'setLanguage',
-    		lang: $(this).val()
+        	control: 'updateProfile',
+    		lang: $('#change_language').val(),
+            email: $('#adminEmail').val(),
+            password: $('#adminPassword').val(),
+            currentPassword: $('#currentPassword').val()
 		},
     	success: function(data) {
     		answer = data.split(';');
     		cleanMsg();
-			showMsg(answer[0],answer[1]);
+            msgAnswer = answer[0];
+            if (msgAnswer > 0) {
+                msgAnswer = 1;
+            }
+			showMsg(msgAnswer,answer[1]);
 			messageTimer = setTimeout(cleanMsg, 3000);
-			
-			if (answer[0] != 0) {
+            
+            if (answer[0] >= 1) {
+                $('#adminPassword').val('');
+                $('#currentPassword').val('');
+            }
+            
+            if (answer[0] == 2) {
 				goDelay('', 3000);
 			}
     	}
     }
 	ajax(query);
 });
-
-$('#adminEmail').on('keyup', function(event) {
-	if (event.which == 13) {
-		showMsg(2,strings['loading']);
-		var query = {
-	        type: 'POST',
-	        data: {
-	        	control: 'setEmail',
-	    		mail: $(this).val()
-			},
-	    	success: function(data) {
-	    		answer = data.split(';');
-	    		cleanMsg();
-				showMsg(answer[0],answer[1]);
-				messageTimer = setTimeout(cleanMsg, 3000);
-	    	}
-	    }
-		ajax(query);
-	}
-});
-
 
 </script>

@@ -9,10 +9,9 @@ class Ajax extends System
 		'showPage',
     	'exit',
     	'cleanData',
-    	'setLanguage',
-		'setEmail',
-        'submitForm',
+    	'submitForm',
     	'saveSetting',
+        'updateProfile',
 	);
 	
     public function ajaxRun($data) {
@@ -74,42 +73,6 @@ class Ajax extends System
         }
     }
     
-    protected function setEmail($data) {
-    	$email = trim($data['mail']);
-    	if (!$email) {
-    		$this->log('Email change incorrect <b>'.at('email_empty').'</b>', array('module'=>'dashboard', 'type'=>'email'));
-    		return '0;'.at('email_empty');
-    	}
-    	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    		$this->log('Email change incorrect <b>'.at('email_incorrect').'</b>', array('module'=>'dashboard', 'type'=>'email'));
-    		return '0;'.at('email_incorrect');
-    	}
-    	 
-    	Db::query('UPDATE `tm_admins`'.
-    	'SET `email` = "'.Db::escape($email).'"'.
-    	'WHERE `id` = "'.$this->user->id.'"'.
-    	'LIMIT 1');
-    	
-    	$this->log('Changes email to <b>'.$email.'</b>', array('module'=>'dashboard', 'type'=>'email'));
-    	 
-    	return '1;'.at('admin_email_success');
-    }
-    
-    protected function setLanguage($data) {
-    	if (trim($data['lang'])=='') {
-    		$data['lang']='en';
-    	}
-    	
-    	Db::query('UPDATE `tm_admins`'.
-    	'SET `language` = "'.Db::escape($data['lang']).'"'.
-    	'WHERE `id` = "'.$this->user->id.'"'.
-    	'LIMIT 1');
-    	
-    	$this->log('Changes language to <b>'.$data['lang'].'</b>', array('module'=>'dashboard', 'type'=>'language'));
-    	
-    	return '1;'.at('admin_language_success');
-    }
-    
     protected function submitForm($data) {
         $className = ucfirst($data['module']);
         
@@ -138,6 +101,88 @@ class Ajax extends System
         else {
             return '0;Method <u>'.$data['action'].'</u> in class <u>'.$className.'</u> does not exist';
         }
+    }
+    
+    protected function setEmail($data) {
+    	$email = trim($data['mail']);
+    	if (!$email) {
+    		$this->log('Email change incorrect <b>'.at('email_empty').'</b>', array('module'=>'dashboard', 'type'=>'email'));
+    		return '0;'.at('email_empty');
+    	}
+    	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    		$this->log('Email change incorrect <b>'.at('email_incorrect').'</b>', array('module'=>'dashboard', 'type'=>'email'));
+    		return '0;'.at('email_incorrect');
+    	}
+    	 
+    	Db::query('UPDATE `tm_admins` '.
+    	'SET `email` = "'.Db::escape($email).'" '.
+    	'WHERE `id` = '.intval($this->user->id).' '.
+    	'LIMIT 1');
+    	
+    	$this->log('Changes email to <b>'.$email.'</b>', array('module'=>'dashboard', 'type'=>'email'));
+    	 
+    	return '1;'.at('admin_email_success');
+    }
+    
+    protected function updateProfile($data) {
+    	$newPassword = trim($data['password']);
+        $oldPassword = trim($data['currentPassword']);
+        $newPassLen = strlen($newPassword);
+        $email = trim($data['email']);
+        $passwordChange = '';
+        if (trim($data['lang'])=='') {
+    		$data['lang']='en';
+    	}
+        
+        $row = Db::fetchRow('SELECT `language` FROM `tm_admins` '.
+            'WHERE `id` = '.intval($this->user->id).' AND '.
+            '`password` = "'.sha1(Db::escape($oldPassword)._cfg('salt')).'" '.
+            'LIMIT 1'
+        );
+        
+        if (!$oldPassword) {
+            $this->log('Admin profile update <b>'.at('current_password_empty').'</b>', array('module'=>'dashboard', 'type'=>'error'));
+    		return '0;'.at('current_password_empty');
+        }
+        else if (!$row) {
+            $this->log('Admin profile update <b>'.at('current_password_incorrect').'</b>', array('module'=>'dashboard', 'type'=>'error'));
+    		return '0;'.at('current_password_incorrect');
+        }
+        else if (!$email) {
+    		$this->log('Admin profile update <b>'.at('email_empty').'</b>', array('module'=>'dashboard', 'type'=>'error'));
+    		return '0;'.at('email_empty');
+    	}
+    	else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    		$this->log('Admin profile update <b>'.at('email_incorrect').'</b> ('.$email.')', array('module'=>'dashboard', 'type'=>'error'));
+    		return '0;'.at('email_incorrect');
+    	}
+        
+        //Only checking if user trying to change password
+        if ($newPassword) {
+            if ($newPassLen < 6 || $newPassLen > 30) {
+                $this->log('Admin profile update <b>'.at('password_incorrect').'</b>', array('module'=>'dashboard', 'type'=>'error'));
+                return '0;'.at('password_incorrect');
+            }
+            $passwordChange = ', `password` = "'.sha1($newPassword._cfg('salt')).'" ';
+        }
+    	 
+    	Db::query('UPDATE `tm_admins` SET '.
+        '`language` = "'.Db::escape($data['lang']).'", '.
+        '`email` = "'.Db::escape($email).'" '.
+    	$passwordChange.
+    	'WHERE `id` = '.intval($this->user->id).' '.
+    	'LIMIT 1');
+    	
+    	$this->log('Admin profile update', array('module'=>'dashboard', 'type'=>'success'));
+        
+        if ($row->language != $data['lang']) {
+            $answer = '2';
+        }
+        else {
+            $answer = '1';
+        }
+
+    	return $answer.';'.at('admin_profile_update_success');
     }
     
     private function showPage($data) {
