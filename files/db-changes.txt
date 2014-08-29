@@ -1,3 +1,6 @@
+# 29.08.2014
+INSERT INTO `tm_modules` (`name` ,`level` ,`added_timestamp`) VALUES ('streamers', '2', CURRENT_TIMESTAMP);
+
 # 10.08.2014
 ALTER TABLE  `teams` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'hslan' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 ALTER TABLE  `players` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'hslan' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
