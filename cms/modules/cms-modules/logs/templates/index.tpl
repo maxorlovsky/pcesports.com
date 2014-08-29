@@ -1,5 +1,9 @@
 <h1><?=at('logs')?></h1>
 
+<div class="clear"></div>
+
+<?=$module->pages->html?>
+
 <table class="logs">
     <tr>
         <td width="10%"><b><?=at('module')?></b></td>

@@ -275,6 +275,7 @@ nav #menusub:hover #arrows.active {
 .content h1 {
     float: left;
 	font-size: 30px;
+    margin: 0;
 }
 .content a {
     color: #e79809;
@@ -544,6 +545,24 @@ nav #menusub:hover #arrows.active {
 }
 #file img {
 	width: 100%;
+}
+
+.pages {
+    display: block;
+    margin: 10px 0;
+}
+.pages b, .pages a {
+    padding: 0 5px;
+    display: inline-block;
+    border: 1px solid #eee;
+    margin: 0 5px;
+    background-color: #fff;
+}
+.pages a:hover {
+    background-color: #999;
+    transition: .5s;
+    text-decoration: none;
+    color: #fff;
 }
 
 /* Smallest phones */
