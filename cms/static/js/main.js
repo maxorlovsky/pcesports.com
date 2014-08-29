@@ -327,7 +327,8 @@ function showPage(page) {
         	control: 'showPage',
     		page: param[0],
     		var1: param[1],
-    		var2: param[2]
+    		var2: param[2],
+            var3: param[3]
 		},
     	success: function(data) {
     		if (param[0] == '#aexit') {
