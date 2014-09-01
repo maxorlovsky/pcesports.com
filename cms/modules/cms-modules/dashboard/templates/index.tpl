@@ -23,7 +23,7 @@
 				<td width="50%" class="b"><?=at('language')?></td>
 				<td width="50%">
 					<select id="change_language" class="hint chosen" name="<?=at('hint_admin_language')?>" style="min-width: 100px">
-						<? foreach(_cfg('allowedLanguages') as $v) { ?>
+						<? foreach(array('en','ru') as $v) { ?>
 							<option value="<?=$v?>" <?=($v==$this->user->language?'selected="selected"':null)?> >
                                 <?=at($v)?>
                             </option>
