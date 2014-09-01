@@ -44,7 +44,7 @@
 				</td>
 			</tr>
             <tr>
-				<td width="50%" class="b"><?=at('password')?></td>
+				<td width="50%" class="b"><?=at('current_password')?></td>
 				<td width="50%">
 					<input type="password" id="currentPassword" value=""/>
 				</td>

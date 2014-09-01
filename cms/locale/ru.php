@@ -72,6 +72,7 @@ $astr['vote_updated']='Голосование изменено';
 $astr['vote_added']='Голосование добавлено';
 $astr['login']='Логин';
 $astr['password']='Пароль';
+$astr['current_password']='Текущий пароль';
 $astr['access_level']='Уровень доступа';
 $astr['last_ent_overall_ent']='Последний вход / Всего входов в систему';
 $astr['admin']='админ';

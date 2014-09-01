@@ -74,6 +74,7 @@ $astr['vote_updated']='Vote updated';
 $astr['vote_added']='Vote added';
 $astr['login']='Login';
 $astr['password']='Password';
+$astr['current_password']='Current password';
 $astr['access_level']='Access Level';
 $astr['last_ent_overall_ent']='Last entrance / Overall entrance in the system';
 $astr['admin']='admin';
