@@ -44,7 +44,7 @@
     ?>
 </table>
 <br />
-<table class="settings">
+<table class="table settings">
     <colgroup>
         <col width="70%"></col>
         <col width="30%"></col>
