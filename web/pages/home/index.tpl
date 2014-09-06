@@ -2,11 +2,30 @@
 
 <div class="left-containers">
 
-    <?/*<div class="block twitch">
-        <div id="player">
-            <object type="application/x-shockwave-flash" height="600" width="790" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=pentaclick_tv"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&amp;channel=pentaclick_tv&amp;auto_play=true&amp;start_volume=25" /></object>
-        </div>
-    </div>*/?>
+    <?
+    if ($this->streams) {
+        foreach($this->streams as $v) {
+            if ($v->onlineStatus == 1) {
+    ?>
+            <div class="block twitch">
+                <div class="block-header-wrapper">
+                    <h1 class="">Stream <?=$v->display_name?></h1>
+                </div>
+                <div id="player">
+                    <object type="application/x-shockwave-flash" height="600" width="790" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>">
+                        <param name="allowFullScreen" value="true" />
+                        <param name="allowScriptAccess" value="always" />
+                        <param name="allowNetworking" value="all" />
+                        <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+                        <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=true&amp;start_volume=25" />
+                    </object>
+                </div>
+            </div>
+    <?
+            }
+        }
+    }
+    ?>
     
     <? if ($this->slider) { ?>
     <div class="block promo">

@@ -4,11 +4,21 @@ class home
 {
 	public $news;
 	public $slider;
+    public $streams;
 	
 	public function __construct($params = array()) {
 		
 		$this->slider = array(
 			//array(_cfg('href').'/leagueoflegends/eune/1', _cfg('img').'/poster-lol-5.jpg'),
+		);
+        
+        $this->streams = Db::fetchRows(
+            'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+            'FROM `streams` '.
+            'WHERE `online` != 0 AND '.
+            '`approved` = 1 AND '.
+            '(`id` = 1 OR `id` = 2) '.
+            'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
 		
 		$rows = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`comments`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
