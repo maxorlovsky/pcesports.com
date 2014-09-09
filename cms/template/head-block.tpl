@@ -11,7 +11,8 @@
 	<nav class="menu">
 		<?
 		foreach($this->data->pages as $v) {
-			if ($this->user->level >= $v[2]) {
+			if ($this->user->level >= $v[2] ||
+               ($this->user->level == 0 && ($this->user->custom_access->setting->$v[0] == 1 || $this->user->custom_access->module->$v[0] == 1))) {
 				?>
 					<a class="<?=($this->page==$v[0]?'active':null)?>" id="link_<?=$v[0]?>" href="<?=_cfg('site').'/admin/#'.$v[0]?>"><?=$v[1]?></a>
 				<?
@@ -24,8 +25,13 @@
                 <a id="site_name_val" href="javascript:void(0);"><?=at('modules')?></a> 
                 <div id="arrows"></div>
                 <div id="submenu">
-                <? foreach($this->data->modules as $v) { ?>
-                    <? if ($v->level <= $this->user->level) { ?>
+                <?
+                foreach($this->data->modules as $v) {
+                    $var = $v->name;
+                ?>
+                    <? if ($this->user->level >= $v->level ||
+                          ($this->user->level == 0 && ($this->user->custom_access->setting->$var == 1 || $this->user->custom_access->module->$var == 1))) {
+                    ?>
                     <a id="cpage-<?=$v->name?>" class="pointer settings_div" href="<?=_cfg('site').'/admin/#'.$v->name?>"><span><?=$v->displayName?></span></a>
                     <? } ?>
                 <? } ?>

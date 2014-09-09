@@ -538,6 +538,15 @@ nav #menusub:hover #arrows.active {
     color: #fff;
 }
 
+.siteSetting {
+    float: left;
+    margin-right: 15px;
+    cursor: pointer;
+}
+.siteSetting * {
+    cursor: pointer;
+}
+
 /* Smallest phones */
 @media (max-width: 320px) {
     .login {

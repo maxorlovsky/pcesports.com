@@ -22,17 +22,18 @@ class User extends System
             else {
                 $_SESSION['token'] = sha1(rand(0,9999).time());
                 Db::query('DELETE FROM `tm_user_auth` WHERE `user_id` = "'.(int)$row->id.'" LIMIT 1');
-                Db::query('INSERT INTO `tm_user_auth` '.
+                Db::query('INSERT IGNORE INTO `tm_user_auth` '.
                 	'SET '.
                 	'`user_id` = '.(int)$row->id.', '.
                 	'`token` = "'.$_SESSION['token'].'", '.
                 	'`timestamp` = '.time()
 				);
+                
                 Db::query('UPDATE `tm_admins` '.
 	                'SET '.
 	                '`last_login` = NOW(), '.
-	                '`login_count` = `login_count` + 1 '.
-	                '`login_ip` = "'.$_SERVER['REMOTE_ADDR'].'" '.
+	                '`login_count` = `login_count` + 1, '.
+	                '`last_ip` = "'.$_SERVER['REMOTE_ADDR'].'" '.
 					'WHERE `id` = '.(int)$row->id
 				);
                 
@@ -44,12 +45,13 @@ class User extends System
     }
     
     public function fetchUserByToken($token) {
-        $row = Db::fetchRow('SELECT `a`.`id`, `a`.`login`, `a`.`email`, `a`.`level`, `a`.`language` '.
+        $row = Db::fetchRow('SELECT `a`.`id`, `a`.`login`, `a`.`email`, `a`.`level`, `a`.`language`, `a`.`custom_access` '.
         'FROM `tm_user_auth` AS `ua` '.
         'LEFT JOIN `tm_admins` AS `a` ON `ua`.`user_id` = `a`.`id` '.
         'WHERE `ua`.`token` = "'.Db::escape($token).'" '.
         'LIMIT 1');
         if ($row !== false) {
+            $row->custom_access = json_decode($row->custom_access);
             return $row;
         }
         else {

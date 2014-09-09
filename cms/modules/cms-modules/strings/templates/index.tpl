@@ -44,7 +44,7 @@
 
 <script>
 $('.search #search').on('click', function() {
-	go(site+'/admin/#strings/index/'+encodeURIComponent($('.search #search-text').val()));
+	TM.go(site+'/admin/#strings/index/'+encodeURIComponent($('.search #search-text').val()));
 });
 $('.search #search-text').on('keypress', function(event) {
 	if (event.which == 13) {

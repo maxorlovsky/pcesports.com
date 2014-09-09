@@ -110,13 +110,6 @@ class System
         }
         
         if (isset($this->logged_in) && $this->logged_in) {
-        	/*if ($data['val1']) {
-        		$this->page = $data['val1'];
-        	}
-        	else {
-        		$this->page = 'dashboard';
-        	}*/
-        	
         	$row = Db::fetchRows('SELECT * FROM `tm_modules`');
             $updatedModulesList = new stdClass();
             foreach($row as $k => $v) {

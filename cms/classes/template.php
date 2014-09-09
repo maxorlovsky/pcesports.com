@@ -42,8 +42,13 @@ class Template extends System
     		go(_cfg('cmssite').'/#'.$this->defaultPage);
     	}
         
-        if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']]) {
+        if (isset($this->data->settings[$data['page']]) && $this->user->level < $this->data->settings[$data['page']] && $this->user->level != 0) {
             return at('denied_access_level');
+        }
+        else if ($this->user->level == 0 && 
+                $this->user->custom_access->setting->$data['page'] != 1 &&
+                $this->user->custom_access->module->$data['page'] != 1) {
+                return at('denied_access_level');
         }
         
         $data['system'] = $this;
@@ -84,7 +89,12 @@ class Template extends System
     
     private function loadCustomModule($data) {
         foreach($this->data->modules as $v) {
-            if ($v->name == $data['page'] && $this->user->level < $v->level) {
+            if ($v->name == $data['page'] && $this->user->level < $v->level && $this->user->level != 0) {
+                return at('denied_access_level');
+            }
+            else if ($this->user->level == 0 && 
+                $this->user->custom_access->setting->$data['page'] != 1 &&
+                $this->user->custom_access->module->$data['page'] != 1) {
                 return at('denied_access_level');
             }
         }

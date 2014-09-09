@@ -166,6 +166,7 @@ $astr['current_password_empty'] = 'Please input current password';
 $astr['admin_profile_update_success'] = 'Profile was updated successfully';
 $astr['new_password'] = 'New password';
 $astr['update_profile'] = 'Update profile';
+$astr['custom'] = 'Custom';
 //--------------------------------------------------//
 
 //Other language strings

@@ -4,6 +4,7 @@ class Accounts
 {
 	public $system;
 	public $accounts = array();
+    public $siteSettings;
 
 	function __construct($params = array()) {
 		$this->system = $params['system'];
@@ -19,6 +20,12 @@ class Accounts
 		}
 		
 		$this->accounts = Db::fetchRows('SELECT * FROM `tm_admins`');
+        
+        $this->siteSettings = Db::fetchRows('SELECT * '.
+			'FROM `tm_settings` '.
+            'WHERE `type` = "level" '.
+			'ORDER BY `setting` = "dashboard" DESC, `position` ASC, `setting` ASC'
+		);
 
 		return $this;
 	}
@@ -50,6 +57,25 @@ class Accounts
 					'`email` = "'.Db::escape($form['email']).'", '.
 					'`level` = '.(int)$form['level']
 				);
+                $lastId = Db::lastId();
+                
+                if ($form['level'] == 0) { //custom access
+                    $accessLevel = array();
+                    foreach ($form as $k => $v) {
+                        $string = explode('-', $k);
+                        if ($string[0] == 'setting') {
+                            $accessLevel['setting'][$string[1]] = $v;
+                        }
+                        if ($string[0] == 'module') {
+                            $accessLevel['module'][$string[1]] = $v;
+                        }
+                    }
+                    
+                    Db::query('UPDATE `tm_admins` SET '.
+                        '`custom_access` = "'.Db::escape(json_encode($accessLevel)).'" '.
+                        'WHERE `id` = '.$lastId
+                    );
+                }
 				
 				$this->system->log('Adding new admin <b>'.at('new_admin_added').'</b> ('.$form['login'].')', array('module'=>get_class(), 'type'=>'add'));
 
@@ -68,14 +94,27 @@ class Accounts
 		else {
 			$query = 'UPDATE `tm_admins` ';
 			$query .= 'SET `email` = "'.Db::escape($form['email']).'"';
-			if ($form['level'] <= $this->system->user->level) {
+			if ($form['level'] <= $this->system->user->level) { //if level allow to change
 				$query .= ', `level` = '.(int)$form['level'].' ';
 			}
-			if ($form['password']) {
+			if ($form['password']) { //if changing password required
 				$query .= ', `password` = "'.sha1($form['password']._cfg('salt')).'" ';
 			}
+            if ($form['level'] == 0) { //custom access
+                $accessLevel = array();
+                foreach ($form as $k => $v) {
+					$string = explode('-', $k);
+					if ($string[0] == 'setting') {
+						$accessLevel['setting'][$string[1]] = $v;
+					}
+                    if ($string[0] == 'module') {
+						$accessLevel['module'][$string[1]] = $v;
+					}
+				}
+                $query .= ', `custom_access` = "'.Db::escape(json_encode($accessLevel)).'"' ;
+            }
 			$query .= ' WHERE `id` = '.$form['admin_id'];
-			
+            
 			Db::query($query);
 							 
 			$this->system->log('Editing admin <b>'.at('info_updated').'</b> ('.$form['login'].')', array('module'=>get_class(), 'type'=>'edit'));
@@ -87,11 +126,15 @@ class Accounts
 	}
 	
 	protected function fetchEditData($id) {
-		return Db::fetchRow('SELECT * '.
+		$row = Db::fetchRow('SELECT * '.
 			'FROM `tm_admins` '.
 			'WHERE `id` = "'.intval($id).'" '.
 			'LIMIT 1'
 		);
+        
+        $row->custom_access = json_decode($row->custom_access);
+        
+        return $row;
 	}
 
 	protected function deleteRow($id) {

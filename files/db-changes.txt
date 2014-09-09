@@ -1,3 +1,6 @@
+# 09.09.2014
+ALTER TABLE  `tm_admins` ADD  `custom_access` TEXT NULL AFTER  `level`
+
 # 29.08.2014
 INSERT INTO `tm_modules` (`name` ,`level` ,`added_timestamp`) VALUES ('streamers', '2', CURRENT_TIMESTAMP);
 

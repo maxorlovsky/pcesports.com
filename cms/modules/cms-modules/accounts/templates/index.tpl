@@ -20,7 +20,7 @@
                 <tr>
                     <td><a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>"><?=$v->login?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>"><?=$v->email?></a></td>
-                    <td><a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>"><?=$v->level?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>"><?=($v->level!=0?$v->level:at('custom'))?></a></td>
                     <td><a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>"><?=$v->last_login?> :: <?=$v->login_count?></a></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a>

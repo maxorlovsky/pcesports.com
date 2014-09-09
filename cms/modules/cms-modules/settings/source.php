@@ -12,6 +12,7 @@ class Settings
 
 		$this->settings = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
+            'WHERE `setting` != "dashboard" '.
 			'ORDER BY `position` ASC, `setting` ASC'
 		);
 		
