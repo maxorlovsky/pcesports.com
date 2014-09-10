@@ -44,13 +44,14 @@
                         <select name="game" id="game">
                             <option value="lol">League of Legends</option>
                             <option value="hs">Hearthstone</option>
+                            <option value="other"><?=t('random')?></option>
                         </select>
                     </div>
                     <div class="fields">
                         <label for="languages"><?=t('languages')?></label>
                         <select name="languages" id="languages">
                             <option value="en">English</option>
-                            <option value="ru">Russian</option>
+                            <option value="ru">Русский</option>
                             <option value="both"><?=t('both')?></option>
                         </select>
                     </div>

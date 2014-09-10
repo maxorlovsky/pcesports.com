@@ -100,7 +100,9 @@
             foreach($this->streams as $k => $v) {
         ?>
             <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?>">
-                <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
+                <? if ($v->game != 'other') { ?>
+                    <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
+                <? } ?>
                 <label class="streamer-name"><?=$v->display_name?></label>
                 <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
             </a>

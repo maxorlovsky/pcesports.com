@@ -1,3 +1,6 @@
+# 10.09.2014
+ALTER TABLE  `streams` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'other' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+
 # 09.09.2014
 ALTER TABLE  `tm_admins` ADD  `custom_access` TEXT NULL AFTER  `level`
 
