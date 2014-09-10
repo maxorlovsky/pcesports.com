@@ -59,6 +59,11 @@ class Ajax extends System
             return '0;'.t('channel_not_found');
         }
         
+        $row = Db::fetchRow('SELECT * FROM `streams` WHERE `name` = "'.Db::escape($post['name']).'" LIMIT 1');
+        if ($row) {
+            return '0;'.t('stream_already_registered');
+        }
+        
         Db::query(
             'INSERT INTO `streams` SET '.
             '`user_id`  = '.(int)$this->data->user->id.', '.
