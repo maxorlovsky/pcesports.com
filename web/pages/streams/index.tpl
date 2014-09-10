@@ -37,7 +37,7 @@
         	
                     <div class="fields">
                         <label for="name"><?=t('name')?></label>
-                        <input name="name" id="name" type="text" placeholder="<?=t('name')?> Twitch.tv*" />
+                        <input name="name" id="name" type="text" placeholder="<?=t('name_or_link_on')?> Twitch.tv*" />
                     </div>
                     <div class="fields">
                         <label for="game"><?=t('game')?></label>
