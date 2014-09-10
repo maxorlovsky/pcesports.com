@@ -51,6 +51,7 @@ class Ajax extends System
         else if (!$post['game'] || !$post['languages']) {
             return '0;Error';
         }
+        $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
         
         $twitch = $this->runTwitchAPI($post['name']);
         
