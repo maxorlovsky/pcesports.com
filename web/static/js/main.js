@@ -436,8 +436,8 @@ var PC = {
         var hours = Math.floor(delta / 3600) % 24;
         delta -= hours * 3600;
         var minutes = Math.floor(delta / 60) % 60;
-        delta -= minutes * 60;
-        var seconds = delta % 60;
+        //delta -= minutes * 60;
+        //var seconds = delta % 60;
         dayStr = g.str.days;
         if (days == 1) {
             dayStr = g.str.day;
@@ -452,9 +452,9 @@ var PC = {
         }
         if (hours   < 10) {hours   = '0'+hours;}
         if (minutes < 10) {minutes = '0'+minutes;}
-        if (seconds < 10) {seconds = '0'+seconds;}
+        //if (seconds < 10) {seconds = '0'+seconds;}
         
-        returnString += hours+':'+minutes+':'+seconds;
+        returnString += hours+':'+minutes;//+':'+seconds;
         
         element.html(returnString);
         
