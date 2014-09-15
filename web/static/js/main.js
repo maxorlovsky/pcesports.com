@@ -445,9 +445,12 @@ var PC = {
         
         var returnString = '';
         if (days > 0) {
-            returnString += days+' '+dayStr+' ';
+            returnString += days+' '+dayStr;
             if (nobr != 1) {
                 returnString += '<br />';
+            }
+            else {
+                returnString += ' ';
             }
         }
         if (hours   < 10) {hours   = '0'+hours;}
