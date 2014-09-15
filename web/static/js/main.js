@@ -459,7 +459,9 @@ var PC = {
         
         returnString += hours+':'+minutes;//+':'+seconds;
         
-        element.html(returnString);
+        if (element.html() != returnString) {
+            element.html(returnString);
+        }
         
         //PC.timers[key] = setTimeout(function(){PC.updateTimer(key, element);}, 1000);
     },
