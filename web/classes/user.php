@@ -121,7 +121,7 @@ class User extends System
         if (!$subscribeRow && $data['email']) {
             Db::query('INSERT INTO `subscribe` SET '.
                 '`email` = "'.Db::escape($data['email']).'", '.
-                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+                '`unsublink` = "'.sha1(Db::escape($data['email']).rand(0,9999).time()).'"'
             );
         }
         
@@ -263,7 +263,18 @@ class User extends System
             'WHERE `id` = '.(int)$user->id
         );
         
-        if (!isset($form['subscribe']) || $form['subscribe'] == 'none' || !$form['subscribe']) {
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($form['email']).'" '
+        );
+        
+        if (!$subscribeRow && $form['email']) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($form['email']).'", '.
+                '`unsublink` = "'.sha1(Db::escape($form['email']).rand(0,9999).time()).'"'
+            );
+        }
+        else if ($form['email'] && !isset($form['subscribe']) || $form['subscribe'] == 'none' || !$form['subscribe']) {
             Db::query(
                 'UPDATE `subscribe` SET '.
                 '`removed` = 1 '.
@@ -271,7 +282,7 @@ class User extends System
                 'LIMIT 1'
             );
         }
-        else {
+        else if ($form['email']) {
             Db::query(
                 'UPDATE `subscribe` SET '.
                 '`removed` = 0, '.
