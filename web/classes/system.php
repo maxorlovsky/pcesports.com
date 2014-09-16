@@ -46,7 +46,12 @@ class System
         	$data['token'] = false;
         }
         
-        $checkUser = User::checkUser($_SESSION['user']);
+        if (isset($_SESSION['user'])) {
+            $checkUser = User::checkUser($_SESSION['user']);
+        }
+        else {
+            $checkUser = false;
+        }
         
         if ($checkUser) {
             $this->logged_in = 1;
@@ -55,7 +60,7 @@ class System
         else {
             $this->logged_in = 0;
             $this->data->user = new stdClass();
-            if ($_SESSION['user']) {
+            if (isset($_SESSION['user']) && $_SESSION['user']) {
                 User::logOut();
             }
         }
@@ -91,6 +96,11 @@ class System
             
         	$this->data->links = $rows;
         }
+        
+        if (!isset($this->data->langugePicker)) {
+            $this->data->langugePicker = array();
+        }
+        
         
         if (!$this->data->langugePicker && _cfg('language') != 'Config not found') {
             $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');

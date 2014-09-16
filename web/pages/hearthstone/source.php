@@ -190,6 +190,7 @@ class hearthstone extends System
 			'FROM `tournaments` '.
 			'WHERE `game` = "hs" '.
             'AND `status` != "Registration" '.
+            'AND `name` != "DreamForge" '.
 			'ORDER BY `id` DESC '.
             'LIMIT 5'
 		);
