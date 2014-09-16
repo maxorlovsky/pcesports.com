@@ -44,6 +44,16 @@
                 </select>
             </div>
             
+            <div class="fields">
+                <label for="subscribe"><?=t('receive_emails')?></label>
+                <select name="subscribe" id="subscribe">
+                    <option value="all"><?=t('all')?></option>
+                    <option value="lol"><?=t('only_about_lol')?></option>
+                    <option value="hs"><?=t('only_about_hs')?></option>
+                    <option value="none"><?=t('turn_off')?></option>
+                </select>
+            </div>
+            
             <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>
             
             <div class="fields">

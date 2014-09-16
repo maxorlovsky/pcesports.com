@@ -128,10 +128,17 @@ class hearthstonelan extends System
 			'AND `id` = '.$row->id
 		);
         
-        Db::query('INSERT IGNORE INTO `subscribe` SET '.
-            '`email` = "'.Db::escape($row->email).'", '.
-            '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($row->email).'" '
         );
+        
+        if (!$subscribeRow) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($row->email).'", '.
+                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+            );
+        }
 		
 		$apiArray = array(
 			'participant_id' => $participant_id,

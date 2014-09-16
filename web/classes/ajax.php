@@ -23,6 +23,8 @@ class Ajax extends System
         'getNewsComments',
         'connectTeamToAccount',
         'submitStreamer',
+        'removeStreamer',
+        'editStreamer',
 	);
 	
     public function ajaxRun($data) {
@@ -36,6 +38,62 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function editStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $id = (int)$data['id'];
+        $game = Db::escape($data['game']);
+        $language = Db::escape($data['language']);
+        
+        $row = Db::fetchRow(
+            'SELECT * FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'AND `user_id` = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        if (!$row) {
+            return '0;'.t('error');
+        }
+        
+        Db::query(
+            'UPDATE `streams` SET '.
+            '`game` = "'.$game.'", '.
+            '`languages` = "'.$language.'" '.
+            'WHERE `id` = '.$id.' '.
+            'LIMIT 1 '
+        );
+        
+        return '1;1';
+    }
+    
+    protected function removeStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $id = (int)$data['id'];
+        
+        $row = Db::fetchRow(
+            'SELECT * FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'AND `user_id` = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        if (!$row) {
+            return '0;'.t('error');
+        }
+        
+        Db::query(
+            'DELETE FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'LIMIT 1 '
+        );
+        
+        return '1;1';
     }
     
     protected function submitStreamer($data) {

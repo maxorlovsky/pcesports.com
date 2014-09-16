@@ -17,9 +17,9 @@ class unsubscribe
 	}
     
     private function unsubscribe() {
-        $row = Db::fetchRow('SELECT * FROM `subscribe` WHERE `unsublink` = "'.Db::escape($_GET['val2']).'"');
+        $row = Db::fetchRow('SELECT * FROM `subscribe` WHERE `unsublink` = "'.Db::escape($_GET['val2']).'" AND `removed` = 0 LIMIT 1');
         if ($row) {
-            Db::query('DELETE FROM `subscribe` WHERE `id` = '.(int)$row->id);
+            Db::query('UPDATE `subscribe` SET `removed` = 1 WHERE `id` = '.(int)$row->id);
             return true;
         }
         

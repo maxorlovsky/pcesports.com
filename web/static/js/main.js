@@ -1,3 +1,9 @@
+$('.editStreamerAction .change_game, .editStreamerAction .change_languages').on('change', function() {
+    PC.editStreamer(this);
+});
+$('.editStreamerAction #removeStreamer').on('click', function() {
+    PC.removeStreamer(this);
+});
 $('#submitStreamer').on('click', function() {
     PC.submitStreamer();
 });
@@ -151,7 +157,82 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    editStreamer: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        streamerId = $(element).closest('.streamer').attr('attr-id');
+        valueGame = $(element).closest('.editStreamerAction').find('.change_game').val();
+        valueLanguage = $(element).closest('.editStreamerAction').find('.change_languages').val();
+        this.formInProgress = 1;
+        $(element).closest('.streamer').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'editStreamer',
+                id: streamerId,
+                game: valueGame,
+                language: valueLanguage
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $(element).closest('.streamer').removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    //$(element).closest('.streamer').find('.game-logo').attr('src', '');
+                }
+                else {
+                    alert(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
+    removeStreamer: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        streamerId = $(element).closest('.streamer').attr('attr-id');
+        this.formInProgress = 1;
+        $(element).closest('.streamer').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'removeStreamer',
+                id: streamerId
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $(element).closest('.streamer').removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $(element).closest('.streamer').remove();
+                }
+                else {
+                    alert(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     submitStreamer: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#submitStreamer').addClass('alpha');
+        
         $('.streamer-form #error').hide();
         var query = {
             type: 'POST',
@@ -161,6 +242,7 @@ var PC = {
             },
             success: function(data) {
                 PC.formInProgress = 0;
+                $('#submitStreamer').removeClass('alpha');
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
@@ -178,7 +260,12 @@ var PC = {
         this.ajax(query);
     },
     connectTeamToAccount: function() {
-        PC.formInProgress = 1;
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        
         var query = {
             type: 'POST',
             data: {
@@ -215,6 +302,12 @@ var PC = {
         this.ajax(query);
     },
     comment: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#submitComment').addClass('alpha');
         $('.leave-comment #error').hide();
         var query = {
             type: 'POST',
@@ -226,6 +319,7 @@ var PC = {
             },
             success: function(data) {
                 PC.formInProgress = 0;
+                $('#submitComment').removeClass('alpha');
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {

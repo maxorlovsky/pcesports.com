@@ -2,6 +2,8 @@
 
 class profile extends System
 {
+    public $additional;
+    
 	public function __construct($params = array()) {
 		parent::__construct();
         
@@ -20,6 +22,20 @@ class profile extends System
         unset($_SESSION['errors']);
 		include_once _cfg('pages').'/'.get_class().'/error.tpl';
 	}
+    
+    public function getProfileAdditionalPage($page) {
+        if (!file_exists(_cfg('pages').'/'.get_class().'/'.$page.'.tpl')) {
+            return false;
+        }
+        
+        if ($page == 'streamers-list') {
+            $this->additional = $this->streamersList();
+        }
+        
+        include_once _cfg('pages').'/'.get_class().'/'.$page.'.tpl';
+        
+        return true;
+    }
     
 	public function getProfilePage() {
 		if ($_SESSION['registration'] == 1) {
@@ -78,7 +94,24 @@ class profile extends System
 			$this->errorPage();
 		}
 		else {
-			$this->getProfilePage();
+            if (isset($_GET['val2']) && $_GET['val2'] != 'profile') {
+                if ($this->getProfileAdditionalPage($_GET['val2']) === true) {
+                    return true;
+                }
+            }
+            
+            $this->getProfilePage();
 		}
 	}
+    
+    protected function streamersList() {
+        $return = new stdClass();
+        
+        $return->streams = Db::fetchRows(
+            'SELECT * FROM `streams` '.
+            'WHERE `user_id` = '.(int)$this->data->user->id
+        );
+        
+        return $return;
+    }
 }

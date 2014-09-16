@@ -1,3 +1,7 @@
+# 16.09.2014
+ALTER TABLE  `subscribe` ADD  `removed` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0';
+ALTER TABLE  `subscribe` ADD  `theme` ENUM('all',  'lol',  'hs') NOT NULL DEFAULT  'all';
+
 # 10.09.2014
 ALTER TABLE  `streams` CHANGE  `game`  `game` ENUM(  'lol',  'hs',  'other' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 

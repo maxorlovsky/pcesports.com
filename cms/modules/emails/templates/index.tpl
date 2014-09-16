@@ -19,11 +19,23 @@
         <td class="b">Query</td>
         <td>
             <textarea id="query" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"><?=$module->query?></textarea>
+            <br />
+            Themes = "all", "lol, "hs"
         </td>
     </tr>
     <tr>
         <td class="b">Email <?=at('text')?></td>
-        <td><textarea id="text" class="noEditor" style="width: 98%; resize: vertical; height: 250px;"></textarea></td>
+        <td>
+            <textarea id="text" class="noEditor" style="width: 98%; resize: vertical; height: 250px;"></textarea>
+            <br />
+            %unsublink% = _cfg('href').'unsubscribe/'.$v->unsublink<br />
+            %url% = _cfg('site')<br />
+            %hsurl% = _cfg('site').'/en/hearthstone'<br />
+            %lolurl% = _cfg('site').'/en/leagueoflegends<br />
+            %code% = $v->code (`link` in team table)<br />
+            %teamId% = $v->teamId<br />
+            %name% = $v->name
+        </td>
     </tr>
     <tr><td colspan="2"><button class="submitButton">Send</button></td></tr>
 </table>

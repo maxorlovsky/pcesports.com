@@ -44,17 +44,17 @@
                     <div class="fields">
                         <label for="game"><?=t('game')?></label>
                         <select name="game" id="game">
-                            <option value="lol">League of Legends</option>
-                            <option value="hs">Hearthstone</option>
-                            <option value="other"><?=t('random')?></option>
+                            <? foreach(_cfg('streamGames') as $k => $v) { ?>
+                            <option value="<?=$k?>"><?=t($v)?></option>
+                            <? } ?>
                         </select>
                     </div>
                     <div class="fields">
                         <label for="languages"><?=t('languages')?></label>
                         <select name="languages" id="languages">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                            <option value="both"><?=t('both')?></option>
+                            <? foreach(_cfg('streamLanguages') as $k => $v) { ?>
+                            <option value="<?=$k?>"><?=ucfirst(t($v))?></option>
+                            <? } ?>
                         </select>
                     </div>
                     

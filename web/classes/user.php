@@ -251,10 +251,28 @@ class User extends System
             'WHERE `id` = '.(int)$user->id
         );
         
+        if (!isset($form['subscribe']) || $form['subscribe'] == 'none' || !$form['subscribe']) {
+            Db::query(
+                'UPDATE `subscribe` SET '.
+                '`removed` = 1 '.
+                'WHERE `email` = "'.Db::escape($form['email']).'" '.
+                'LIMIT 1'
+            );
+        }
+        else {
+            Db::query(
+                'UPDATE `subscribe` SET '.
+                '`removed` = 0, '.
+                '`theme` = "'.Db::escape($form['subscribe']).'" '.
+                'WHERE `email` = "'.Db::escape($form['email']).'" '.
+                'LIMIT 1'
+            );
+        }
+        
         //Getting fresh updated data
-        $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `s`.`id` AS `sid`, `s`.`social_uid` AS `uid`, `u`.* '.
+        $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
             'FROM `users` AS `u` '.
-            'LEFT JOIN `users_social` AS `s` ON `s`.`user_id` = `u`.`id` '.
+            'LEFT JOIN `users_social` AS `us` ON `us`.`user_id` = `u`.`id` '.
             'WHERE `u`.`id` = '.(int)$user->id.' '
         );
     	
