@@ -113,6 +113,18 @@ class User extends System
         );
         $uid = Db::lastId();
         
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($data['email']).'" '
+        );
+        
+        if (!$subscribeRow && $data['email']) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($data['email']).'", '.
+                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+            );
+        }
+        
         return $this->getUser($uid);
     }
     
