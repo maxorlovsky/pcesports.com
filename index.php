@@ -12,6 +12,10 @@ session_start();
 global $cfg;
 global $astr;
 
+if (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && $_SERVER['HTTP_CF_CONNECTING_IP']) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+}
+
 require_once dirname(__FILE__).'/cms/inc/config.php';
 require_once $cfg['cmsinc'].'/functions.php';
 

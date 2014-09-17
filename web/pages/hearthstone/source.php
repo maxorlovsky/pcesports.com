@@ -60,7 +60,7 @@ class hearthstone extends System
 		}
 		
 		$row = Db::fetchRow('SELECT * '.
-			'FROM `teams` AS `t` '.
+			'FROM `participants` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
 			'`t`.`game` = "hs" AND '.
@@ -99,7 +99,7 @@ class hearthstone extends System
 			$participant_id = $row->id;
 		}
 		
-		Db::query('UPDATE `teams` '.
+		Db::query('UPDATE `participants` '.
 			'SET `approved` = 1 '.
 			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 			'AND `game` = "hs" '.
@@ -143,7 +143,7 @@ class hearthstone extends System
 		
 		foreach($answer as $f) {
 			if ($f->participant->name == $row->name) {
-				Db::query('UPDATE `teams` '.
+				Db::query('UPDATE `participants` '.
 					'SET `challonge_id` = '.(int)$f->participant->id.' '.
 					'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 					'AND `game` = "hs" '.
@@ -155,7 +155,7 @@ class hearthstone extends System
 		}
         
         //Cleaning up duplicates
-        Db::query('UPDATE `teams` '.
+        Db::query('UPDATE `participants` '.
             'SET `deleted` = 1 '.
             'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
             'AND `game` = "hs" '.
@@ -178,7 +178,7 @@ class hearthstone extends System
         
 		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
 			$rows = Db::fetchRows('SELECT `name` '.
-				'FROM `teams` '.
+				'FROM `participants` '.
 				'WHERE `game` = "hs" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
 				'ORDER BY `id` ASC'
 			);
@@ -206,7 +206,7 @@ class hearthstone extends System
 		}
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
-			'FROM `teams` '.
+			'FROM `participants` '.
 			'WHERE `game` = "hs" AND `approved` = 1 AND `deleted` = 0 '.
 			'GROUP BY `tournament_id` '.
 			'ORDER BY `id` DESC'
@@ -220,7 +220,7 @@ class hearthstone extends System
         }
 		
 		$rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
-			'FROM `teams` '.
+			'FROM `participants` '.
 			'WHERE `game` = "hs" AND `place` != 0 '.
 			'ORDER BY `tournament_id`, `place`'
 		);
@@ -262,8 +262,8 @@ class hearthstone extends System
     protected function surrender() {
         $row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
             'FROM `fights` AS `f` '.
-            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
             'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
             'AND `f`.`done` = 0 '
         );
@@ -295,7 +295,7 @@ class hearthstone extends System
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
         }
         
-        Db::query('UPDATE `teams` SET `ended` = 1 '.
+        Db::query('UPDATE `participants` SET `ended` = 1 '.
             'WHERE `game` = "hs" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
@@ -318,7 +318,7 @@ class hearthstone extends System
     }
     
     protected function leave() {
-        Db::query('UPDATE `teams` SET `deleted` = 1 '.
+        Db::query('UPDATE `participants` SET `deleted` = 1 '.
         'WHERE `game` = "hs" AND '.
         '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
         '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');

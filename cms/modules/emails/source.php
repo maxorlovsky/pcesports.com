@@ -13,7 +13,7 @@ class Emails extends System
         $this->emails = array();
         $this->templates = $this->fetchEmailTemplates();
         
-        $this->query = 'SELECT * FROM `subscribe` WHERE `theme` = "all" AND `removed ` = 0;';
+        $this->query = 'SELECT * FROM `subscribe` WHERE `theme` = "all" AND `removed` = 0;';
         
         return $this;
 	}

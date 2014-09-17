@@ -49,7 +49,7 @@
             </div>
             <div class="team-user">
             	<div class="name">Victor "Angel-ada" Morozov</div>
-            	<div class="role">Graphic designer / Community manager</div>
+            	<div class="role">Community manager</div>
                 <div class="email">&nbsp;</div>
             </div>
             <div class="team-user">

@@ -31,7 +31,7 @@ class leagueoflegends extends System
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "lol" AND '.
-            '`team_id` = '.(int)$_SESSION['participant']->id.' '.
+            '`participant_id` = '.(int)$_SESSION['participant']->id.' '.
             'ORDER BY `player_num` '
         );
         
@@ -90,7 +90,7 @@ class leagueoflegends extends System
 		
 		$row = Db::fetchRow(
 			'SELECT * '.
-			'FROM `teams` AS `t` '.
+			'FROM `participants` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
 			'`t`.`game` = "lol" AND '.
@@ -130,7 +130,7 @@ class leagueoflegends extends System
 			$participant_id = $row->id;
 		}
 		
-		Db::query('UPDATE `teams` '.
+		Db::query('UPDATE `participants` '.
 			'SET `approved` = 1 '.
 			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 			'AND `game` = "lol" '.
@@ -174,7 +174,7 @@ class leagueoflegends extends System
 		
 		foreach($answer as $f) {
 			if ($f->participant->name == $row->name) {
-				Db::query('UPDATE `teams` '.
+				Db::query('UPDATE `participants` '.
 					'SET `challonge_id` = '.(int)$f->participant->id.' '.
 					'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 					'AND `game` = "lol" '.
@@ -186,7 +186,7 @@ class leagueoflegends extends System
 		}
         
         //Cleaning up duplicates
-        Db::query('UPDATE `teams` '.
+        Db::query('UPDATE `participants` '.
             'SET `deleted` = 1 '.
             'WHERE `tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "lol" AND '.
@@ -214,12 +214,12 @@ class leagueoflegends extends System
                 'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
                 '`name` = '.(int)$this->pickedTournament.' AND '.
-                '(`status` = "Registration" OR `status` = "Start") '
+                '(`status` = "Registration" OR `status` = "Start" OR `status` = "Ended") '
             );
             if ($tournamentRows) {
                 foreach($tournamentRows as $v) {
                     $combineTime = strtotime($v->dates.' '.$v->time) + $this->data->user->timezone;
-                    if ($v->status == "Start") {
+                    if ($v->status == "Start" || $v->status == "Ended") {
                         $tournamentTime['start'] = date('d M Y, H:i', $combineTime);
                     }
                     else {
@@ -229,8 +229,8 @@ class leagueoflegends extends System
             }
             
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
-                'FROM `teams` AS `t` '.
-				'JOIN  `players` AS  `p` ON  `p`.`team_id` =  `t`.`id` '.
+                'FROM `participants` AS `t` '.
+				'JOIN  `players` AS  `p` ON  `p`.`participant_id` =  `t`.`id` '.
 				'WHERE `t`.`game` = "lol" AND '.
                 '`t`.`server` = "'.Db::escape($this->server).'" AND' .
                 '`t`.`approved` = 1 AND '.
@@ -276,7 +276,7 @@ class leagueoflegends extends System
 		
         if ($this->tournamentData) {
             $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
-                'FROM `teams` '.
+                'FROM `participants` '.
                 'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND ' .
                 '`approved` = 1 AND '.
@@ -293,7 +293,7 @@ class leagueoflegends extends System
             }
         
             $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
-                'FROM `teams` '.
+                'FROM `participants` '.
                 'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
                 '`place` != 0 '.
@@ -341,8 +341,8 @@ class leagueoflegends extends System
     protected function surrender() {
         $row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
             'FROM `fights` AS `f` '.
-            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
             'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
             'AND `f`.`done` = 0 '
         );
@@ -373,7 +373,7 @@ class leagueoflegends extends System
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
         }
         
-        Db::query('UPDATE `teams` SET `ended` = 1 '.
+        Db::query('UPDATE `participants` SET `ended` = 1 '.
             'WHERE `game` = "lol" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
@@ -396,7 +396,7 @@ class leagueoflegends extends System
     }
     
     protected function leave() {
-        Db::query('UPDATE `teams` SET `deleted` = 1 '.
+        Db::query('UPDATE `participants` SET `deleted` = 1 '.
         'WHERE `game` = "lol" AND '.
         '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
         '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');

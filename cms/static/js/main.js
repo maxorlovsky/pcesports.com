@@ -447,10 +447,10 @@ var TM = {
     },
     go: function(url) {
         if (url) {
-            location.reload(true);
+            document.location=url;
         }
         else {
-            document.location=url;
+            location.reload(true);
         }
     },
     fadeScr: function() {

@@ -10,6 +10,17 @@ class Strings
 	function __construct($params = array()) {
 		$this->system = $params['system'];
 		$this->languages = $this->fetchAvailableLanguages();
+        
+        $language = '';
+        foreach($this->languages as $v) {
+            if ($v->flag == _cfg('defaultLanguage')) {
+                $language = $v->title;
+            }
+        }
+        
+        if (!$language) {
+            exit('Default language error');
+        }
 
 		if (isset($params['var1']) && $params['var1'] == 'edit' && isset($params['var2'])) {
 			$this->editData = $this->fetchEditData($params['var2']);
@@ -24,14 +35,14 @@ class Strings
 		if (isset($params['var1']) && $params['var1'] == 'index' && isset($params['var2'])) {
 			$this->searchString = urldecode($params['var2']);
             $_SESSION['searchString'] = $this->searchString;
-			$this->strings = Db::fetchRows('SELECT `key`, `status`, `english` AS `value` '.
+			$this->strings = Db::fetchRows('SELECT `key`, `status`, `'.$language.'` AS `value` '.
 				'FROM `tm_strings` '.
 				'WHERE `key` LIKE "%'.Db::escape($this->searchString).'%" OR '.
-				'`english` LIKE "%'.Db::escape($this->searchString).'%"'
+				'`'.$language.'` LIKE "%'.Db::escape($this->searchString).'%"'
 			);
 		}
 		else {
-			$this->strings = Db::fetchRows('SELECT `key`, `status`, `english` AS `value` FROM `tm_strings`');
+			$this->strings = Db::fetchRows('SELECT `key`, `status`, `'.$language.'` AS `value` FROM `tm_strings`');
 		}
         
         if (isset($_SESSION['searchString']) && $_SESSION['searchString'] && !$this->searchString) {

@@ -146,7 +146,7 @@ class Ajax extends System
         }
         
         Db::query(
-            'UPDATE `teams` SET '.
+            'UPDATE `participants` SET '.
             '`user_id` = '.(int)$this->data->user->id.' '.
             'WHERE `id` = '.(int)$_SESSION['participant']->id
         );
@@ -267,7 +267,7 @@ class Ajax extends System
             return '0;'.t('not_logged_in');
         }
         
-        $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `teams` '.
+        $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `participants` '.
             'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
             '`deleted` = 0 AND '.
             '`ended` = 0'
@@ -282,8 +282,8 @@ class Ajax extends System
         else {
             $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`screenshots` '.
                 'FROM `fights` AS `f` '.
-                'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-                'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+                'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+                'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
                 'WHERE (`f`.`player1_id` = '.$playersRow->challonge_id.' OR `f`.`player2_id` = '.$playersRow->challonge_id.') AND '.
                 '`f`.`done` = 0'
             );
@@ -330,7 +330,7 @@ class Ajax extends System
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             $challonge_id = (int)$_SESSION['participant']->challonge_id;
-            Db::query('UPDATE `teams` SET `online` = '.time().' '.
+            Db::query('UPDATE `participants` SET `online` = '.time().' '.
 				'WHERE `id` = '.(int)$_SESSION['participant']->id
 			);
         }
@@ -349,15 +349,15 @@ class Ajax extends System
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
             'FROM `fights` AS `f` '.
-            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
             'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
             'AND`f`.`done` = 0'
         );
         
         if ($playersRow) {
             $enemyRow = Db::fetchRow('SELECT `name`, `online`, `server` '.
-                'FROM `teams` '.
+                'FROM `participants` '.
                 'WHERE '.
                 '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
                 '`deleted` = 0 AND '.
@@ -419,8 +419,8 @@ class Ajax extends System
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
             'FROM `fights` AS `f` '.
-            'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-            'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
             'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
             'AND`f`.`done` = 0'
         );
@@ -457,7 +457,7 @@ class Ajax extends System
     	
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
-    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
+    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
     		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.
@@ -500,7 +500,7 @@ class Ajax extends System
     		$answer['err'] = $suc;
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
-    		Db::query('INSERT INTO `teams` SET '.
+    		Db::query('INSERT INTO `participants` SET '.
 	    		' `game` = "hs", '.
 	    		' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
 	    		' `timestamp` = NOW(), '.
@@ -517,7 +517,7 @@ class Ajax extends System
     			'INSERT INTO `players` SET '.
     			' `game` = "hs", '.
     			' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
-    			' `team_id` = '.(int)$teamId.', '.
+    			' `participant_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
     		);
@@ -543,7 +543,7 @@ class Ajax extends System
     	
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
-    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
+    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
     		'`tournament_id` = 0 AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hslan" AND '.
@@ -601,7 +601,7 @@ class Ajax extends System
             ));
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
-    		Db::query('INSERT INTO `teams` SET '.
+    		Db::query('INSERT INTO `participants` SET '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
 	    		'`game` = "hslan", '.
 	    		'`tournament_id` = 0, '.
@@ -619,7 +619,7 @@ class Ajax extends System
     			'INSERT INTO `players` SET '.
     			' `game` = "hslan", '.
     			' `tournament_id` = 0, '.
-    			' `team_id` = '.(int)$teamId.', '.
+    			' `participant_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
     		);
@@ -669,7 +669,7 @@ class Ajax extends System
                 'phone' => $post['phone'],
             ));
             
-    		Db::query('UPDATE `teams` SET '.
+    		Db::query('UPDATE `participants` SET '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'" '.
 	    		'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "hslan" '
@@ -695,7 +695,7 @@ class Ajax extends System
             return '0;Server error!';
         }
     	
-    	$row = Db::fetchRow('SELECT * FROM `teams` WHERE '.
+    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
     		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
     		'`name` = "'.Db::escape($post['team']).'" AND '.
             '`server` = "'.Db::escape($server).'" AND '.
@@ -741,7 +741,7 @@ class Ajax extends System
 			else if ($post['mem'.$i]) {
 				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
-					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
+					'LEFT JOIN `participants` AS `t` ON `p`.`participant_id` = `t`.`id` '.
 					'WHERE '.
 					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
 					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
@@ -785,7 +785,7 @@ class Ajax extends System
     		$answer['err'] = $suc;
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
-    		Db::query('INSERT INTO `teams` SET '.
+    		Db::query('INSERT INTO `participants` SET '.
 	    		'`game` = "lol", '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
                 '`server` = "'.$server.'", '.
@@ -806,7 +806,7 @@ class Ajax extends System
 					'INSERT INTO `players` SET '.
 					' `game` = "lol", '.
 					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-					' `team_id` = '.(int)$teamId.', '.
+					' `participant_id` = '.(int)$teamId.', '.
 					' `name` = "'.Db::escape($v['name']).'", '.
 					' `player_num` = "'.(int)$k.'", '.
 					' `player_id` = "'.(int)$v['id'].'"'
@@ -855,7 +855,7 @@ class Ajax extends System
 			else if ($post['mem'.$i]) {
 				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
 				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
-					'LEFT JOIN `teams` AS `t` ON `p`.`team_id` = `t`.`id` '.
+					'LEFT JOIN `participants` AS `t` ON `p`.`participant_id` = `t`.`id` '.
 					'WHERE '.
 					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
 					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
@@ -896,15 +896,15 @@ class Ajax extends System
     		$answer['ok'] = 1;
     		$answer['err'] = $suc;
     	
-    		Db::query('UPDATE `teams` SET '.
+    		Db::query('UPDATE `participants` SET '.
                 '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
-                'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                'WHERE `participant_id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "lol" AND '.
                 '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
             );
             
             Db::query('DELETE FROM `players` '.
-                'WHERE `team_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                'WHERE `participant_id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "lol" AND '.
                 '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
             );
@@ -914,7 +914,7 @@ class Ajax extends System
 					'INSERT INTO `players` SET '.
 					' `game` = "lol", '.
 					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-					' `team_id` = '.(int)$_SESSION['participant']->id.', '.
+					' `participant_id` = '.(int)$_SESSION['participant']->id.', '.
 					' `name` = "'.Db::escape($v['name']).'", '.
 					' `player_num` = "'.(int)$k.'", '.
 					' `player_id` = "'.(int)$v['id'].'"'

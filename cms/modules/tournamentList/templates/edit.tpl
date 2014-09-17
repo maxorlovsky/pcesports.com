@@ -46,8 +46,6 @@
             <select id="status">
                 <option>Ended</option>
                 <option <?=($module->editData->status=='Registration'?'selected="selected"':null)?>>Registration</option>
-                <option <?=($module->editData->status=='Live'?'selected="selected"':null)?>>Live</option>
-                <option <?=($module->editData->status=='On hold'?'selected="selected"':null)?>>On hold</option>
                 <option <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start</option>
             </select>
         </td>

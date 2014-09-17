@@ -31,7 +31,7 @@ class hearthstonelan extends System
 			go(_cfg('href').'/hearthstonelan');
 		}
         $row = Db::fetchRow('SELECT `contact_info` '.
-            'FROM `teams` '.
+            'FROM `participants` '.
             'WHERE '.
             '`tournament_id` = 0 AND '.
             '`game` = "hslan" AND '.
@@ -70,7 +70,7 @@ class hearthstonelan extends System
 		}
 		
 		$row = Db::fetchRow('SELECT * '.
-			'FROM `teams` AS `t` '.
+			'FROM `participants` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
 			'`t`.`game` = "hslan" AND '.
@@ -92,7 +92,7 @@ class hearthstonelan extends System
         
         $participantsCountRow = Db::fetchRow(
             'SELECT COUNT(`id`) AS `count` '.
-            'FROM `teams` '.
+            'FROM `participants` '.
             'WHERE `tournament_id` = 0 AND '.
             '`game` = "hslan" AND '.
             '`approved` = 1 AND '.
@@ -121,7 +121,7 @@ class hearthstonelan extends System
 			$participant_id = $row->id;
 		}
 		
-		Db::query('UPDATE `teams` '.
+		Db::query('UPDATE `participants` '.
 			'SET `approved` = 1 '.
 			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 			'AND `game` = "hslan" '.
@@ -165,7 +165,7 @@ class hearthstonelan extends System
 		
 		foreach($answer as $f) {
 			if ($f->participant->name == $row->name) {
-				Db::query('UPDATE `teams` '.
+				Db::query('UPDATE `participants` '.
 					'SET `challonge_id` = '.(int)$f->participant->id.' '.
 					'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
 					'AND `game` = "hslan" '.
@@ -177,7 +177,7 @@ class hearthstonelan extends System
 		}
         
         //Cleaning up duplicates
-        Db::query('UPDATE `teams` '.
+        Db::query('UPDATE `participants` '.
             'SET `deleted` = 1 '.
             'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
             'AND `game` = "hslan" '.
@@ -199,7 +199,7 @@ class hearthstonelan extends System
         $this->pickedTournament = (int)$number;
         
         $rows = Db::fetchRows('SELECT `name` '.
-            'FROM `teams` '.
+            'FROM `participants` '.
             'WHERE `game` = "hslan" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
@@ -230,7 +230,7 @@ class hearthstonelan extends System
 	}
     
     protected function leave() {
-        Db::query('UPDATE `teams` SET `deleted` = 1 '.
+        Db::query('UPDATE `participants` SET `deleted` = 1 '.
         'WHERE `game` = "hslan" AND '.
         '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
         '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');

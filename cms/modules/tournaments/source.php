@@ -8,8 +8,8 @@ class Tournaments
 		
 		$this->chats = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
 			'FROM `fights` AS `f` '.
-			'LEFT JOIN `teams` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-			'LEFT JOIN `teams` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+			'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
 			'WHERE `f`.`done` = 0 '
 		);
 
@@ -55,7 +55,7 @@ class Tournaments
 		$playersStatus = array();
 		foreach($form as $v) {
 			$breakdown = explode('_vs_', $v);
-			$rows = Db::fetchRows('SELECT `id`, `online` FROM `teams` '.
+			$rows = Db::fetchRows('SELECT `id`, `online` FROM `participants` '.
 				'WHERE `id` = '.(int)$breakdown[0].' OR `id` = '.(int)$breakdown[1].' '.
 				'LIMIT 2'
 			);

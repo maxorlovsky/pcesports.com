@@ -1,3 +1,14 @@
+# 17.09.2014
+ALTER TABLE  `teams` ADD  `team_id` INT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `user_id` ,
+ADD INDEX (  `team_id` );
+ALTER TABLE  `teams` ADD  `seed_number` SMALLINT( 4 ) UNSIGNED NOT NULL DEFAULT  '0' AFTER  `place`;
+ALTER TABLE  `tournaments` CHANGE  `status`  `status` ENUM(  'Ended',  'Registration',  'Start' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE  `players` CHANGE  `team_id`  `participant_id` INT( 10 ) UNSIGNED NOT NULL DEFAULT  '0';
+ALTER TABLE  `lol_games` CHANGE  `teamId1`  `participant_id1` INT( 10 ) UNSIGNED NULL DEFAULT NULL ,
+CHANGE  `teamId2`  `participant_id2` INT( 10 ) UNSIGNED NULL DEFAULT NULL;
+
+RENAME TABLE `teams` TO `participants`;
+
 # 16.09.2014
 ALTER TABLE  `subscribe` ADD  `removed` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0';
 ALTER TABLE  `subscribe` ADD  `theme` ENUM('all',  'lol',  'hs') NOT NULL DEFAULT  'all';

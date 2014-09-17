@@ -27,11 +27,11 @@ if (cOptions('tournament-start-lol') == 1) {
         $msg = $text;
         //Team ID #1 - $f->match->player1_id;
         //Team ID #2 - $f->match->player2_id;   
-        $q = mysql_query('SELECT `id`, `name`, `cpt_player_id` FROM `teams` WHERE (`challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id.') AND `approved` = 1 AND `deleted` = 0');
+        $q = mysql_query('SELECT `id`, `name`, `cpt_player_id` FROM `participants` WHERE (`challonge_id` = '.(int)$f->match->player1_id.' OR `challonge_id` = '.(int)$f->match->player2_id.') AND `approved` = 1 AND `deleted` = 0');
         if (mysql_num_rows($q) != 0) {
             while($r = mysql_fetch_object($q)) {
                 $team[$i] = $r->name;
-                $q2 = mysql_query('SELECT `id`, `name`, `player_id`, `player_num` FROM `players` WHERE `team_id` = '.$r->id.' AND `approved` = 1');
+                $q2 = mysql_query('SELECT `id`, `name`, `player_id`, `player_num` FROM `players` WHERE `participant_id` = '.$r->id.' AND `approved` = 1');
                 $j = 0;
                 while($r2 = mysql_fetch_object($q2)) {
                     if ($r2->player_num == '1') {

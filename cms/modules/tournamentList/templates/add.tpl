@@ -46,8 +46,6 @@
             <select id="status">
                 <option>Ended</option>
                 <option>Registration</option>
-                <option>Live</option>
-                <option>On hold</option>
                 <option>Start</option>
             </select>
         </td>

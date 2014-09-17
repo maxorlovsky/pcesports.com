@@ -22,7 +22,7 @@ $heroes = array(
 );
         
 $q = mysql_query('SELECT `name`, `contact_info` '.
-    'FROM `teams` '.
+    'FROM `participants` '.
     'WHERE `game` = "hslan" AND `approved` = 1 AND `deleted` = 0 '.
     'ORDER BY `id` ASC '.
     'LIMIT 32'

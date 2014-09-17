@@ -166,7 +166,7 @@ class System
             //Check if user is participant
             $row = Db::fetchRow(
                 'SELECT * '.
-                'FROM `teams` '.
+                'FROM `participants` '.
                 'WHERE '.
                 '`user_id` = '.(int)$this->data->user->id.' AND '.
                 '`approved` = 1 AND '.
@@ -420,20 +420,45 @@ class System
 		return (object)$response;
 	}
     
-    public function sendMail($email, $subject, $msg) {
-    	if(!_cfg('smtpMailName') || !_cfg('smtpMailPass')) return false;
-    	
-        $mailData = 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
-        $mailData .= 'Subject: =?UTF-8?B?'.base64_encode($subject). "=?=\r\n";
-        $mailData .= 'Reply-To: '._cfg('smtpMailFrom'). "\r\n";
-        $mailData .= 'MIME-Version: 1.0'."\r\n";
-        $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
-        $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n";
-        $mailData .= 'From: "Pentaclick eSports" <'._cfg('smtpMailFrom').'>'."\r\n";
-        $mailData .= 'To: '.$email.' <'.$email.'>'."\r\n";
-        $mailData .= 'X-Priority: 3'."\r\n\r\n";
+    //@email - Send TO
+    //@subject - Subject of email
+    //@msg - Body of message (can be html)
+    //@file - array, optional, attachment to email, required full link, data in array
+    //@file['name'] - name of the file with extension
+    //@file['content'] - plain text or plain html, it will be converted into attachment
+    public function sendMail($email, $subject, $msg, $files = array()) {
+    	if(!_cfg('smtpMailName') || !_cfg('smtpMailPass')) {
+            return false;
+        }
         
-        $mailData .= $msg."\r\n";
+        $mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
+
+        $mailData = 'MIME-Version: 1.0'."\r\n";
+        $mailData .= 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
+        $mailData .= 'Subject: '.$subject. "\r\n";
+        $mailData .= 'Reply-To: '._cfg('smtpMailFrom'). "\r\n";
+        $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailFrom').'> '."\r\n";
+        $mailData .= 'To: '.$email.''."\r\n";
+        $mailData .= 'X-Priority: 3'."\r\n";
+        $mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
+        $mailData .= '--'.$mime_boundary."\r\n";  //
+        
+        if ($files) {
+            foreach($files as $k => $v) {
+                if ($v['content']) {
+                    $mailData .= 'Content-Type: application/octet-stream; name='.$v['name'].''."\r\n";
+                    $mailData .= 'Content-Transfer-Encoding: base64 '."\r\n";
+                    $mailData .= 'Content-Disposition: attachment; filename="'.$v['name'].'" '."\r\n";
+                    $mailData .= "\r\n".base64_encode($v['content'])."\r\n\r\n";
+                    
+                    $mailData .= '--'.$mime_boundary."\r\n";
+                }
+            }
+        }
+        
+        $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
+        $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n\r\n";
+        $mailData .= $msg;
         
         if(!$socket = fsockopen(_cfg('smtpMailHost'), _cfg('smtpMailPort'), $errno, $errstr, 30)) {
             return $errno."&lt;br&gt;".$errstr;
@@ -555,6 +580,7 @@ class System
                     $cronClass->updateStreamers();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
+                    set_time_limit(300);
                     $cronClass = new Cron();
                     $cronClass->checkLolGames();
                 }
