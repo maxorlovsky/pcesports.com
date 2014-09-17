@@ -267,6 +267,7 @@ footer .copyrights .devs:hover {
     margin: 0;
     padding: 15px;
     text-transform: none;
+    font-weight: normal;
 }
 .nav-user {
     float: right !important;
@@ -638,19 +639,36 @@ footer .partners .skillz {
 	margin-bottom: 20px;
 }
 .team .team-user {
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.35);
     margin-bottom: 20px;
+    width: 365px;
+    margin-right: 20px;
+    float: left;
+}
+.team .team-user:nth-child(even) {
+    margin-right: 0;
+}
+.team .team-user .icon {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
 }
 .team .team-user .name {
 	padding: 15px 0 0 15px;
-	font-size: 19px;
+	font-size: 17px;
 	font-weight: bold;
 	color: #777;
 }
 .team .team-user .role {
-	padding: 5px 0 15px 15px;
+	padding: 5px 0 0 15px;
 	font-size: 14px;
 	text-transform: uppercase;
+}
+.team .team-user .email {
+    padding: 5px 0 10px 15px;
+	font-size: 13px;
+    font-style: italic;
 }
 
 .contact-form .fields {
