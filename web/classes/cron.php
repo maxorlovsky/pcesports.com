@@ -183,18 +183,12 @@ class Cron extends System {
                     '`participant_id2` = '.(int)$v->team2
                 );
                 $gameDbId = Db::lastId();
-                
+
                 $i = 0;
                 foreach($insideRows as $vPlayer) {
                     //Getting player recent games
                     $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
                     $game = $answer->games[0]; //We're interested only in last game
-                    
-                    if ($game->gameId == 1568668272 || $game->gameId == 1685639634) {
-                        $game->gameType = 'CUSTOM_GAME';
-                        $game->gameMode = 'CLASSIC';
-                        $game->mapId = 1;
-                    }
                     
                     //Do not check ranked and solo games
                     if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 1 && $game->fellowPlayers) {
@@ -203,7 +197,6 @@ class Cron extends System {
                         foreach($game->fellowPlayers as $fellowPlayers) {
                             $getPlayers[] = $fellowPlayers->summonerId;
                         }
-                        
                         
                         //If player not found in the list, we aren't interested in this match
                         if (in_array($vPlayer->player_id, $getPlayers)) {
@@ -231,27 +224,32 @@ class Cron extends System {
                                 $playersList[$j]['list'] .= '<b>Found:</b> '.$found.'<br />';
                                 $playersList[$j]['count'] = $found;
                             }
-
-                            if ($playersList[0]['count'] >= 3 && $playersList[1]['count'] >= 3) {
+                            
+                            if ($playersList[0]['count'] >= 1 && $playersList[1]['count'] >= 1) {
                                 //Deciding who's won. If 1 then team 1 won of empty then team 2 won
                                 if ($game->stats->win == 1 && $game->stats->team == $playerTeam['riotNum']) {
                                     $whoWon = $playerTeam['id'];
                                     $emailText = str_replace('%win%', $team[$playerTeam['id']]['name'], $text);
                                     $winner = $team[$playerTeam['id']]['challonge_id'];
                                     $loserId = $playerTeam['vsTeamId'];
+                                    if ($playerTeam['num'] == 0) {
+                                        $scores = '1-0';
+                                    }
+                                    else {
+                                        $scores = '0-1';
+                                    }
                                 }
                                 else {
                                     $whoWon = $playerTeam['vsTeamId'];
                                     $emailText = str_replace('%win%', $team[$playerTeam['vsTeamId']]['name'], $text);
                                     $winner = $team[$playerTeam['vsTeamId']]['challonge_id'];
                                     $loserId = $playerTeam['id'];
-                                }
-                                
-                                if ($playerTeam['num'] == 0) {
-                                    $scores = '1-0';
-                                }
-                                else {
-                                    $scores = '0-1';
+                                    if ($playerTeam['num'] == 0) {
+                                        $scores = '0-1';
+                                    }
+                                    else {
+                                        $scores = '1-0';
+                                    }
                                 }
                         
                                 //Adding teams names to email text
@@ -262,14 +260,14 @@ class Cron extends System {
                                 $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
                                 
                                 //Registering email
-                                Db::query('UPDATE `lol_games` SET '.
+                                /*Db::query('UPDATE `lol_games` SET '.
                                     '`message` = "'.Db::escape($emailText).'", '.
                                     '`game_id` = '.(int)$game->gameId.' '.
                                     'WHERE `id` = '.(int)$gameDbId
                                 );
                                 
                                 //Updating brackets
-                                /*$apiArray = array(
+                                $apiArray = array(
                                     '_method' => 'put',
                                     'match_id' => $v->match_id,
                                     'match[scores_csv]' => $scores,
@@ -280,15 +278,15 @@ class Cron extends System {
                                 }
                                 else {
                                     $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
-                                }*/
+                                }
                                 
-                                /*Db::query('UPDATE `participants` SET `ended` = 1 '.
+                                Db::query('UPDATE `participants` SET `ended` = 1 '.
                                     'WHERE `game` = "lol" AND '.
                                     '`server` = "'.$server.'" AND '.
                                     '`id` = '.(int)$loserId.' '
-                                );*/
+                                );
                                 
-                                /*Db::query('UPDATE `fights` SET `done` = 1 '.
+                                Db::query('UPDATE `fights` SET `done` = 1 '.
                                     'WHERE `match_id` = '.(int)$v->match_id.' '
                                 );*/
                                 
@@ -305,10 +303,8 @@ class Cron extends System {
                     if ($i >= 5) {
                         break(1);
                     }
-                    
                     ++$i;
                 }
-                echo 1;
             }
         }
     }
