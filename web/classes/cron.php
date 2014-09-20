@@ -260,7 +260,7 @@ class Cron extends System {
                                 $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
                                 
                                 //Registering email
-                                /*Db::query('UPDATE `lol_games` SET '.
+                                Db::query('UPDATE `lol_games` SET '.
                                     '`message` = "'.Db::escape($emailText).'", '.
                                     '`game_id` = '.(int)$game->gameId.' '.
                                     'WHERE `id` = '.(int)$gameDbId
@@ -288,7 +288,7 @@ class Cron extends System {
                                 
                                 Db::query('UPDATE `fights` SET `done` = 1 '.
                                     'WHERE `match_id` = '.(int)$v->match_id.' '
-                                );*/
+                                );
                                 
                                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
                                     
@@ -422,6 +422,13 @@ class Cron extends System {
             '`value` = 0 '.
             'WHERE '.
             '`setting` = "tournament-reg-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+        );
+        
+        //Starting up tournament
+        Db::query('UPDATE `tm_settings` SET '.
+            '`value` = 1 '.
+            'WHERE '.
+            '`setting` = "tournament-start-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
         );
         
         $challongeTournament = $tournament->game;
