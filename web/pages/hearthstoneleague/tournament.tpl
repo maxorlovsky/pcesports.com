@@ -1,22 +1,10 @@
 <section class="container page lol">
 
 <div class="left-containers">
-    <? if (t('hearthstone_tournament_vod_'.$this->pickedTournament) != 'hearthstone_tournament_vod_'.$this->pickedTournament) { ?>
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('broadcast_vod')?></h1>
-        </div>
-        
-        <div class="block-content vods">
-            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('hearthstone_tournament_vod_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-    <? } ?>
-
 	<? if ($this->data->settings['tournament-reg-hslan'] == 1 && !isset($_SESSION['participant']) && $_SESSION['participant']->game != 'hslan') { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
-			<h1 class="bordered"><?=t('join_tournament')?></h1>
+			<h1 class="bordered"><?=t('signin_league')?></h1>
 		</div>
 		
 		<div class="block-content">
@@ -33,7 +21,10 @@
                     <input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
 					<div id="phone-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <select class="hero1" name="hero1">
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hslan')?></label>
+					<div id="agree-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <?/*<select class="hero1" name="hero1">
                         <option value="0"><?=t('pick_hero')?></option>
                         <? foreach($this->heroes as $k => $v) { ?>
                             <option value="<?=$k?>"><?=ucfirst($v)?></option>
@@ -53,7 +44,7 @@
                         <h6><?=t('your_classes')?></h6>
                         <div id="hero1img" class="hsicons" attr-picked=""></div>
                         <div id="hero2img" class="hsicons" attr-picked=""></div>
-                    </div>
+                    </div>*/?>
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="add-player-lan"><?=t('join_tournament')?></a>
@@ -87,43 +78,52 @@
             <h1 class="bordered"><?=t('participants')?></h1>
         </div>
 
-        <div class="block-content participants">
+        <div class="block-content groups">
             <?
-			$participantsCount = 0;
-            if ($this->participants) {
-                foreach($this->participants as $v) {
-				++$participantsCount;
+            foreach($this->groups as $k => $v) {
             ?>
-                <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
-                    <div class="team-name" title="<?=$v->name?>"><?=$v->name?></div>
-                    <span class="team-num">#<?=$participantsCount?></span>
-                    <div class="clear"></div>
+                <div class="group">
+                    <div class="header">
+                        <h3><?=t('group')?> <?=$v?></h3>
+                        <span class="place"><?=t('score')?></span>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="group-list">
+                        <?
+                        if ($this->participants) {
+                            $i = 1;
+                            foreach($this->participants as $p) {
+                                if ($p->seed_number == $k) {
+                                ?>
+                                <div class="holder">
+                                    <span class="player-num"><?=$i?></span>
+                                    <span class="player-name"><?=$p->name?></span>
+                                    <span class="player-score"><?=(isset($p->contact_info->place)&&$p->contact_info->place?$p->contact_info->place:0)?></span>
+                                    <div class="clear"></div>
+                                </div>
+                                <?
+                                ++$i;
+                                }
+                            }
+                            
+                            if ($i == 1) {
+                                ?><div class="holder empty"><?=t('group_empty')?></div><?
+                            }
+                        }
+                        else {
+                            ?><div class="holder empty"><?=t('group_empty')?></div><?
+                        }
+                        ?>
+                    </div>
                 </div>
             <?
-                }
-            }
-            else {
-                ?><p class="empty-list"><?=t('no_players_registered')?></p><?
             }
             ?>
+			<div class="clear"></div>
         </div>
     </div>
-	
-    <? if ($participantsCount >= 2) { ?>
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('brackets')?></h1>
-        </div>
-
-        <div class="block-content challonge-brackets">
-            <div id="challonge"></div>
-        </div>
-    </div>
-	<? } ?>
 </div>
 
-<script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
-<script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
 $('.hero1, .hero2').on('change keyup', function() {
     var getClass = $(this).attr('class');
@@ -161,31 +161,4 @@ $('.hero1, .hero2').on('change keyup', function() {
 $('#add-player-lan').on('click', function() {
     PC.addLanPlayer();
 });
-
-participantsNumber = <?=$participantsCount?>;
-if (participantsNumber > 100) {
-    challongeHeight = 3500;
-}
-else if (participantsNumber > 50) {
-    challongeHeight = 1800;
-}
-else if (participantsNumber > 25) {
-    challongeHeight = 950;
-}
-else {
-    challongeHeight = 550;
-}
-
-if ($('#challonge').length) {
-    $('#challonge').height(challongeHeight);
-    $('#challonge').challonge('dreamforge', {
-        subdomain: 'pentaclick',
-        theme: '1',
-        multiplier: '1.0',
-        match_width_multiplier: '0.7',
-        show_final_results: '0',
-        show_standings: '0',
-        overflow: '0'
-    });
-}
 </script>

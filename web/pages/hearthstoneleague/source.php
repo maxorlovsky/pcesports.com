@@ -1,12 +1,13 @@
 <?php
 
-class hearthstonelan extends System
+class hearthstoneleague extends System
 {
 	public $teamsCount;
 	public $currentTournament;
 	public $teamsPlaces;
 	public $participants;
     public $pickedTournament;
+    public $groups;
 	
 	public function __construct($params = array()) {
         parent::__construct();
@@ -22,8 +23,19 @@ class hearthstonelan extends System
             8 => 'paladin',
             9 => 'priest',
         );
+        
+        $this->groups = array(
+            1 => 'A',
+            2 => 'B',
+            3 => 'C',
+            4 => 'D',
+            5 => 'E',
+            6 => 'F',
+            7 => 'G',
+            8 => 'H'
+        );
     
-		$this->currentTournament = 0;
+		$this->currentTournament = $this->data->settings['hslan-current-number'];
 	}
     
     public function editPage() {
@@ -197,22 +209,79 @@ class hearthstonelan extends System
 	
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
+        $this->pickedTournament = 0;
         
-        $rows = Db::fetchRows('SELECT `name` '.
+        $rows = Db::fetchRows('SELECT `name`, `seed_number`, `place`, `contact_info` '.
             'FROM `participants` '.
             'WHERE `game` = "hslan" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
-
+        foreach($rows as &$v) {
+            $v->contact_info = json_decode($v->contact_info);
+        }
         $this->participants = $rows;
+        unset($v);
         
         include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
+	}
+    
+    public function getTournamentList() {
+		$rows = Db::fetchRows('SELECT * '.
+			'FROM `tournaments` '.
+			'WHERE `game` = "hslan" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND' .
+            '`status` != "Registration" '.
+			'ORDER BY `id` DESC '.
+            'LIMIT 5'
+		);
+        if ($rows) {
+            foreach($rows as $v) {
+                $this->tournamentData[$v->name] = (array)$v;
+            }
+        }
 		
+        if ($this->tournamentData) {
+            $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
+                'FROM `participants` '.
+                'WHERE `game` = "hslan" AND '.
+                '`server` = "'.Db::escape($this->server).'" AND ' .
+                '`approved` = 1 AND '.
+                '`deleted` = 0 '.
+                'GROUP BY `tournament_id` '.
+                'ORDER BY `id` DESC'
+            );
+            if ($rows) {
+                foreach($rows as $v) {
+                    if ($this->tournamentData[$v->tournament_id]) {
+                        $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
+                    }
+                }
+            }
+        
+            $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
+                'FROM `participants` '.
+                'WHERE `game` = "lol" AND '.
+                '`server` = "'.Db::escape($this->server).'" AND '.
+                '`place` != 0 '.
+                'ORDER BY `tournament_id`, `place`'
+            );
+            
+            $previousTournamentId = 0;
+            if ($rows) {
+                foreach($rows as $v) {
+                    if ($v->tournament_id != $previousTournamentId && $this->tournamentData[$v->tournament_id]) {
+                        $this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
+                    }
+                }
+            }
+        }
+		
+		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
 	public static function getSeo() {
 		$seo = new stdClass();
-		$seo->title = 'Hearthstone LAN';
+		$seo->title = 'Hearthstone League | Season 1';
 		
 		return $seo;
 	}
@@ -224,8 +293,11 @@ class hearthstonelan extends System
         else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
 			$this->participantPage();
 		}
+        else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
+			$this->getTournamentData($_GET['val3']);
+		}
 		else {
-            $this->getTournamentData(0);
+			$this->getTournamentList();
 		}
 	}
     
