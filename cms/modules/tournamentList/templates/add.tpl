@@ -8,6 +8,7 @@
             <select id="game">
                 <option value="lol">League of Legends</option>
                 <option value="hs">Hearthstone</option>
+                <option value="hslan">Hearthstone League</option>
             </select>
         </td>
     </tr>

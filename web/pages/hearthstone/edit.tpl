@@ -10,10 +10,13 @@
 			<p class="team-edit-completed success-add"><?=t('info_edited')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
-                    <input type="text" name="phone" placeholder="Phone number" value="<?=$editData->phone?>" />
+					<input type="text" name="email" placeholder="Email*" value="<?=$editData->email?>" />
+					<div id="email-msg" class="message hidden"></div>
+                    <div class="clear"></div>
+                    <input type="text" name="phone" placeholder="Phone number" value="<?=$editData->contact_info->phone?>" />
 					<div id="phone-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <select class="hero1" name="hero1">
+                    <?/*<select class="hero1" name="hero1">
                         <? foreach($this->heroes as $k => $v) { ?>
                             <option value="<?=$k?>" <?=($editData->hero1==$k?'selected':null)?>><?=ucfirst($v)?></option>
                         <? } ?>
@@ -32,7 +35,7 @@
                         <h6><?=t('your_classes')?></h6>
                         <div id="hero1img" class="hsicons" attr-picked=""></div>
                         <div id="hero2img" class="hsicons" attr-picked=""></div>
-                    </div>
+                    </div>*/?>
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="edit-player-lan"><?=t('edit_information')?></a>

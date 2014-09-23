@@ -574,14 +574,21 @@ class Ajax extends System
     		$suc['email'] = '1;'.t('approved');
     	}
         
-        for($i=1;$i<=2;++$i) {
+        if (!$post['agree']) {
+    		$err['agree'] = '0;'.t('must_agree_with_rules');
+    	}
+        else {
+            $suc['agree'] = '1;'.t('approved');
+        }
+        
+        /*for($i=1;$i<=2;++$i) {
             if (!$post['hero'.$i]) {
                 $err['hero'.$i] = '0;'.t('pick_hero');
             }
         }
         if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
             $err['hero2'] = '0;'.t('same_hero_picked');
-        }
+        }*/
     	
     	if ($err) {
     		$answer['ok'] = 0;
@@ -595,22 +602,23 @@ class Ajax extends System
     		$answer['err'] = $suc;
             
             $contact_info = json_encode(array(
-                'hero1' => $post['hero1'],
-                'hero2' => $post['hero2'],
+                //'hero1' => $post['hero1'],
+                //'hero2' => $post['hero2'],
                 'phone' => $post['phone'],
+                'place' => 0,
             ));
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
     		Db::query('INSERT INTO `participants` SET '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
 	    		'`game` = "hslan", '.
-	    		'`tournament_id` = 0, '.
+	    		'`tournament_id` = '.(int)$this->data->settings['hslan-current-number'].', '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['battletag']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
-	    		'`link` = "'.$code.'"'
+	    		'`link` = "'.$code.'" '
     		);
             
     		$teamId = Db::lastId();
@@ -623,16 +631,35 @@ class Ajax extends System
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
     		);
+            
+            $subscribeRow = Db::fetchRow(
+                'SELECT * FROM `subscribe` WHERE '.
+                '`email` = "'.Db::escape($post['email']).'" '
+            );
+            
+            if (!$subscribeRow) {
+                Db::query('INSERT INTO `subscribe` SET '.
+                    '`email` = "'.Db::escape($post['email']).'", '.
+                    '`unsublink` = "'.sha1(Db::escape($post['email']).rand(0,9999).time()).'"'
+                );
+            }
     		
     		$text = Template::getMailTemplate('reg-hs-lan-player');
     	
     		$text = str_replace(
     			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstonelan', _cfg('site')),
+    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone', _cfg('site')),
     			$text
     		);
     	
-    		$this->sendMail($post['email'], 'Pentaclick Hearthstone LAN tournament participation', $text);
+    		$this->sendMail($post['email'], 'Pentaclick Hearthstone League tournament participation', $text);
+            
+            $this->sendMail('info@pcesports.com',
+            'Player added. Pentaclick eSports.',
+            'Participant was added!!!<br />
+            Date: '.date('d/m/Y H:i:s').'<br />
+            BattleTag: <b>'.$post['battletag'].'</b><br>
+            IP: '.$_SERVER['REMOTE_ADDR']);
     	}
     	 
     	return json_encode($answer);
@@ -643,14 +670,24 @@ class Ajax extends System
     	$suc = array();
     	parse_str($data['form'], $post);
         
-        for($i=1;$i<=2;++$i) {
+        /*for($i=1;$i<=2;++$i) {
             if (!$post['hero'.$i]) {
                 $err['hero'.$i] = '0;'.t('pick_hero');
             }
         }
         if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
             $err['hero2'] = '0;'.t('same_hero_picked');
-        }
+        }*/
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;'.t('field_empty');
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;'.t('email_invalid');
+    	}
+    	else {
+    		$suc['email'] = '1;'.t('approved');
+    	}
 		
         if ($err) {
     		$answer['ok'] = 0;
@@ -664,12 +701,14 @@ class Ajax extends System
     		$answer['err'] = $suc;
             
             $contact_info = json_encode(array(
-                'hero1' => $post['hero1'],
-                'hero2' => $post['hero2'],
+                //'hero1' => $post['hero1'],
+                //'hero2' => $post['hero2'],
                 'phone' => $post['phone'],
+                'place' => 0,
             ));
             
     		Db::query('UPDATE `participants` SET '.
+                '`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'" '.
 	    		'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "hslan" '

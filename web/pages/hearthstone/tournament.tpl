@@ -53,7 +53,7 @@
 	</div>
 	<? } ?>
     
-    <div class="block">
+    <?/*<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('tournament_rules')?></h1>
         </div>
@@ -61,7 +61,7 @@
         <div class="block-content">
             <?=t('hearthstone_lan_tournament_information')?>
         </div>
-    </div>
+    </div>*/?>
     
     <div class="block">
         <div class="block-header-wrapper">
@@ -80,6 +80,7 @@
 
         <div class="block-content groups">
             <?
+            $j = 0;
             foreach($this->groups as $k => $v) {
             ?>
                 <div class="group">
@@ -117,6 +118,11 @@
                     </div>
                 </div>
             <?
+                if ($j%2 == 1) {
+                    echo '<div class="clear"></div>';
+                }
+                
+                ++$j;
             }
             ?>
 			<div class="clear"></div>

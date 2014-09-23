@@ -14,12 +14,12 @@
             
             <? if ($_SESSION['participant']->game == 'hslan') { ?>
             <ul class="panel-links">
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/"><?=t('tournament_information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/"><?=t('information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/edit"><?=t('edit_information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$this->data->settings['hslan-current-number']?>"><?=t('tournament_information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/edit"><?=t('edit_information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
                 <? if (!$this->logged_in) { ?>
-                <li><a href="<?=_cfg('href')?>/hearthstonelan/participant/exit"><?=t('exit_panel')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
 			<? } else if ($_SESSION['participant']->game == 'hs') { ?>
@@ -71,8 +71,8 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <? if ($v['id'] == 'DreamForge') { ?>
-                <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>lan" class="button">
+            <? if ($v['game'] == 'hslan') { ?>
+                <a href="<?=_cfg('href')?>/hearthstone/<?=$v['id']?>" class="button">
                     <?=t('join')?>
                 </a>
             <? } else { ?>

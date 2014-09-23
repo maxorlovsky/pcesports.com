@@ -131,8 +131,9 @@ class System
                 $statusString = str_replace(' ', '_', strtolower($v->status));
                 $this->serverTimes[$time] = array(
                     'id'	=> $v->name,
-                    'server'	=> $v->server,
-                    'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone'),
+                    'server'=> $v->server,
+                    'game'  => $v->game,
+                    'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League'),
                     'status'=> $statusString,
                     'time' 	=> $time,
                 );

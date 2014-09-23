@@ -8,6 +8,7 @@
             <select id="game">
                 <option value="lol">League of Legends</option>
                 <option value="hs" <?=($module->editData->game=='hs'?'selected="selected"':null)?>>Hearthstone</option>
+                <option value="hslan" <?=($module->editData->game=='hslan'?'selected="selected"':null)?>>Hearthstone League</option>
             </select>
         </td>
     </tr>

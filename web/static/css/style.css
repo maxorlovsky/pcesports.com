@@ -791,7 +791,7 @@ footer .partners .skillz {
 	margin: 5px 0;
 }
 .tournament-rules p {
-	margin: 0 0 0 30px;
+	margin: 0;
 	padding: 0;
 }
 
@@ -952,6 +952,19 @@ footer .partners .skillz {
     margin-bottom: 10px;
     font-size: 16px;
     padding: 5px;
+}
+#join-form input[type='checkbox'] {
+    float: left;
+    display: block;
+    margin: 14px 5px 0 0;
+}
+#join-form label {
+    float: left;
+    font-size: 14px;
+    width: 40%;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 10px;
 }
 #join-form .message {
 	width: 50%;
@@ -1538,6 +1551,76 @@ footer .games img {
 }
 .hsicons.warrior {
     background-position: -600px -188px;
+}
+
+.groups {
+    
+}
+.groups .group {
+    float: left;
+    width: 48%;
+    margin-bottom: 20px;
+    border: 1px solid #222;
+    border-radius: 5px;
+    background-color: #32333b;
+    color: #ddd;
+}
+.groups .group:nth-child(1n) {
+    margin-right: 12px;
+}
+.groups .group .header {
+    border-bottom: 1px solid #444;
+    padding: 7px 0;
+}
+.groups .group h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin-left: 5px;
+    color: #fff;
+    font-family: Open Sans;
+    float: left;
+}
+.groups .group .place {
+    float: right;
+    font-size: 13px;
+    margin-top: 4px;
+    margin-right: 5px;
+    color: #fff;
+}
+.groups .group .group-list .holder {
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #555;
+    padding: 5px;
+    margin: 0;
+}
+.groups .group .group-list .empty {
+    font-style: italic;
+}
+.groups .group .group-list .holder:first-child {
+    border-top: 0;
+}
+.groups .group .group-list .holder:last-child {
+    border-bottom: 0;
+}
+.groups .group .group-list .holder .player-num {
+    float: left;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+}
+.groups .group .group-list .holder .player-name {
+    margin-left: 10px;
+    display: block;
+    float: left;
+    width: 285px;
+    font-size: 15px;
+}
+.groups .group .group-list .holder .player-score {
+    color: #fff;
+    float: right;
+    font-size: 15px;
 }
 
 /* Landscape phone to portrait tablet */
