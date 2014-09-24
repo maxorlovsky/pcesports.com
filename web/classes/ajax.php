@@ -544,7 +544,7 @@ class Ajax extends System
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
     	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
-    		'`tournament_id` = 0 AND '.
+    		'`tournament_id` = '.(int)$this->data->settings['hslan-current-number'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hslan" AND '.
     		'`approved` = 1 AND '.
@@ -626,7 +626,7 @@ class Ajax extends System
     		Db::query(
     			'INSERT INTO `players` SET '.
     			' `game` = "hslan", '.
-    			' `tournament_id` = 0, '.
+    			' `tournament_id` = '.(int)$this->data->settings['hslan-current-number'].', '.
     			' `participant_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
