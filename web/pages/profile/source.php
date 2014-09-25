@@ -79,6 +79,8 @@ class profile extends System
             '720' => 'GMT+12',
         );
         
+        $avatars = $this->getAvatarList();
+        
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
@@ -103,6 +105,31 @@ class profile extends System
             $this->getProfilePage();
 		}
 	}
+    
+    protected function getAvatarList() {
+        $directory = _cfg('dir').'/static/images/avatar';
+        $avatars = array();
+        
+        if (!file_exists($directory) && !is_dir($directory)) {
+            exit('Directory does not exists');
+        }
+        
+        $fileList = array();
+        $handler = opendir($directory);
+        $ignoreFiles = array('.svn');
+        while($file = readdir($handler)) {
+            //Checking if not hidden files
+            if ($file != "." && $file != "..") {
+                //Checking if file ignoring is required
+                if(!in_array($file, $ignoreFiles)) {
+                    $avatars[] = $file;
+                }
+            }
+        }
+        closedir($handler);
+        
+        return $avatars;
+    }
     
     protected function streamersList() {
         $return = new stdClass();

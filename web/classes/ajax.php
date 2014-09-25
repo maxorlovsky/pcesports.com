@@ -156,7 +156,7 @@ class Ajax extends System
     
     protected function getNewsComments($data) {
         $rows = Db::fetchRows(
-            'SELECT `nc`.`text`, `nc`.`added`, `u`.`name` '.
+            'SELECT `nc`.`text`, `nc`.`added`, `u`.`name`, `u`.`avatar` '.
             'FROM `news_comments` AS `nc` '.
             'LEFT JOIN `users` AS `u` ON `nc`.`user_id` = `u`.`id` '.
             'WHERE `nc`.`news_id` = '.(int)$data['id'].' '.
@@ -174,7 +174,10 @@ class Ajax extends System
                 
                 $html .= '<div class="master">'.
                     '<p>'.$text.'</p>'.
-                    '<span class="comment-user">'.$v->name.'</span> <span class="comment-time">- '.$interval.'</span>'.
+                    '<span class="comment-user">'.
+                    '<img class="avatar-block" src="'._cfg('avatars').'/'.$v->avatar.'.jpg" />'.$v->name.
+                    '</span> '.
+                    '<span class="comment-time">- '.$interval.'</span>'.
                     '</div>';
             }
         }

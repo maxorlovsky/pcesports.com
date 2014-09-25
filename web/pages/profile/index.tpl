@@ -29,11 +29,21 @@
                 <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
             </div>
             
-            <!--<div class="fields">
+            <div class="fields">
                 <label for="avatar"><?=t('avatar')?></label>
-                <div class="holder">Pick image (not yet working)</div>
+                <div class="holder">
+                    <div class="avatars-list">
+                        <? foreach($avatars as $v) { ?>
+                        <div class="avatar-block <?=($this->data->user->avatar==str_replace('.jpg','',$v)?'picked':null)?>" attr-id="<?=str_replace('.jpg','',$v)?>">
+                            <img src="<?=_cfg('avatars')?>/<?=$v?>" style="height: 50px;"/>
+                        </div>
+                        <? } ?>
+                        <div class="clear"></div>
+                    </div>
+                    <?//=?>
+                </div>
                 <input name="avatar" id="avatar" type="hidden" value="<?=$this->data->user->avatar?>" />
-            </div>-->
+            </div>
             
             <div class="fields">
                 <label for="timezone"><?=t('timezone')?></label>

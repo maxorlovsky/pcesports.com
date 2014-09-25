@@ -1435,6 +1435,14 @@ footer .games img {
 }
 .user-comments .comment-user {
     color: #111;
+    line-height: 30px;
+}
+.user-comments .comment-user .avatar-block {
+    height: 28px;
+    float: left;
+    margin-right: 5px;
+    border: 1px solid #fff;
+    outline: 1px solid #999;
 }
 .user-comments .comment-time {
     color: #717171;
@@ -1621,6 +1629,24 @@ footer .games img {
     color: #fff;
     float: right;
     font-size: 15px;
+}
+
+.avatars-list {
+    padding: 5px 10px 5px 0;
+}
+.avatars-list .avatar-block {
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border: 2px solid #fff;
+    height: 50px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.avatars-list .avatar-block.picked, .avatars-list .avatar-block:hover {
+    border: 2px solid #1697e1;
+    opacity: 1;
+    transition: .5s;
 }
 
 /* Landscape phone to portrait tablet */

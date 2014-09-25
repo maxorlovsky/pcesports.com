@@ -11,6 +11,7 @@ $cfg['static'] = $cfg['site'].'/web/static';
 $cfg['img'] = $cfg['static'].'/images';
 $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
+$cfg['avatars'] = $cfg['img'].'/avatar';
 
 $cfg['timeDifference'] = 0; //in minutes (+3h)
 

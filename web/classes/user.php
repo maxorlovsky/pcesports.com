@@ -255,11 +255,16 @@ class User extends System
             $timezone = 0;
         }
         
+        if (!is_numeric($form['avatar']) || $form['avatar'] > 30 || $form['avatar'] < 1) {
+            $form['avatar'] = 1;
+        }
+        
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
-            '`timezone` = "'.Db::escape($timezone).'" '.
+            '`timezone` = "'.Db::escape($timezone).'", '.
+            '`avatar` = '.(int)$form['avatar'].' '.
             'WHERE `id` = '.(int)$user->id
         );
         

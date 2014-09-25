@@ -1,3 +1,6 @@
+# 25.09.2014
+ALTER TABLE  `users` ADD  `avatar` TINYINT( 3 ) UNSIGNED NOT NULL DEFAULT  '1';
+
 # 23.09.2014
 INSERT INTO `tm_modules` (`name` ,`level` ,`added_timestamp`) VALUES ('leagueParticipants',  '3', CURRENT_TIMESTAMP);
 

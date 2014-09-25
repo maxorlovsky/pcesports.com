@@ -1,3 +1,9 @@
+$('.avatars-list .avatar-block').on('click', function() {
+    $('.avatars-list .avatar-block').removeClass('picked');
+    $(this).addClass('picked');
+    $('#avatar').val($(this).attr('attr-id'));
+});
+
 $('.editStreamerAction .change_game, .editStreamerAction .change_languages').on('change', function() {
     PC.editStreamer(this);
 });
