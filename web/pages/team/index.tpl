@@ -58,7 +58,7 @@
                 <div class="email">&nbsp;</div>
             </div>
             <div class="team-user">
-                <div class="icon"><img src="<?=_cfg('avatar')?>/<?=$this->team['serge']?>.jpg" /></div>
+                <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$this->team['serge']?>.jpg" /></div>
                 <div class="name">Serge "grobovsky" Pavlov</div>
                 <div class="role">Communications manager</div>
                 <div class="email">connect (at) pcesports (dot) com</div>
