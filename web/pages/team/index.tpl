@@ -36,13 +36,12 @@
 
         <div class="block-content team-list">
             <div class="team-user">
-                <div class="icon"><img src="<?=_cfg('img')?>/team/max.png" /></div>
+                <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$this->team['maxtream']?>.jpg" /></div>
             	<div class="name">Max "Maxtream" Orlovsky</div>
             	<div class="role">Founder</div>
                 <div class="email">maxtream (at) pcesports (dot) com</div>
             </div>
             <div class="team-user">
-                <div class="icon"><img src="<?=_cfg('img')?>/team/aven.png" /></div>
             	<div class="name">Martin "Aven" Petkevic</div>
             	<div class="role">Co-Founder</div>
                 <div class="email">aven (at) pcesports (dot) com</div>
@@ -53,11 +52,13 @@
                 <div class="email">&nbsp;</div>
             </div>
             <div class="team-user">
+                <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$this->team['anyatheeagle']?>.jpg" /></div>
             	<div class="name">Anya "AnyaTheEagle" Orlovsky</div>
             	<div class="role">Graphic designer</div>
                 <div class="email">&nbsp;</div>
             </div>
             <div class="team-user">
+                <div class="icon"><img src="<?=_cfg('avatar')?>/<?=$this->team['serge']?>.jpg" /></div>
                 <div class="name">Serge "grobovsky" Pavlov</div>
                 <div class="role">Communications manager</div>
                 <div class="email">connect (at) pcesports (dot) com</div>

@@ -673,6 +673,10 @@ footer .partners .skillz {
     height: 100px;
     margin-right: 15px;
 }
+.team .team-user .icon img {
+    width: 100px;
+    height: 100px;
+}
 .team .team-user .name {
 	padding: 15px 0 0 15px;
 	font-size: 17px;
