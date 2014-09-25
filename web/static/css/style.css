@@ -271,6 +271,22 @@ footer .copyrights .devs:hover {
 }
 .nav-user {
     float: right !important;
+    position: relative;
+}
+.nav-avatar {
+    position: absolute;
+    top: 0;
+    left: -67px;
+    cursor: pointer;
+}
+.nav-avatar img {
+    height: 67px;
+}
+.nav-avatar a {
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    
 }
 .nav-user .nav-sub {
     right: 0;
