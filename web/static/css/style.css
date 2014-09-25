@@ -663,6 +663,8 @@ footer .partners .skillz {
     width: 365px;
     margin-right: 20px;
     float: left;
+    height: 100px;
+    overflow: hidden;
 }
 .team .team-user:nth-child(even) {
     margin-right: 0;
@@ -682,8 +684,6 @@ footer .partners .skillz {
 	font-size: 17px;
 	font-weight: bold;
 	color: #777;
-    height: 100px;
-    overflow: hidden;
 }
 .team .team-user .role {
 	padding: 5px 0 0 15px;
