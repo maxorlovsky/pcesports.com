@@ -1,7 +1,14 @@
 $('.avatars-list .avatar-block').on('click', function() {
+    var oldId = $('#avatar').val();
+    
     $('.avatars-list .avatar-block').removeClass('picked');
     $(this).addClass('picked');
     $('#avatar').val($(this).attr('attr-id'));
+    
+    //Setting avatar in navigation
+    var src = $('.nav-avatar a img').attr('src');
+    src = src.replace(oldId+'.jpg', $(this).attr('attr-id')+'.jpg');
+    $('.nav-avatar a img').attr('src', src);
 });
 
 $('.editStreamerAction .change_game, .editStreamerAction .change_languages').on('change', function() {
