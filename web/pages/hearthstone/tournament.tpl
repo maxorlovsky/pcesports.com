@@ -139,7 +139,8 @@
         $participantsCount = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-            ++$participantsCount;
+                if ($v->approved == 1) {
+                ++$participantsCount;
         ?>
             <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
                 <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
@@ -147,6 +148,7 @@
                 <div class="clear"></div>
             </div>
         <?
+                }
             }
         }
         ?>
