@@ -139,7 +139,7 @@
         $participantsCount = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-                if ($v->approved == 1) {
+                if ($v->approved == 0) {
                 ++$participantsCount;
         ?>
             <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
