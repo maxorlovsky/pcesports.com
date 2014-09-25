@@ -276,11 +276,14 @@ footer .copyrights .devs:hover {
 .nav-avatar {
     position: absolute;
     top: 0;
-    left: -67px;
+    left: -66px;
     cursor: pointer;
+    border: 1px solid #fff;
+    outline: 1px solid #555;
+    height: 64px;
 }
 .nav-avatar img {
-    height: 67px;
+    height: 64px;
 }
 .nav-avatar a {
     margin: 0 !important;
