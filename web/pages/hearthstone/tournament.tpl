@@ -94,7 +94,7 @@
                         if ($this->participants) {
                             $i = 1;
                             foreach($this->participants as $p) {
-                                if ($p->seed_number == $k) {
+                                if ($p->seed_number == $k && $p->approved == 1) {
                                 ?>
                                 <div class="holder">
                                     <span class="player-num"><?=$i?></span>
@@ -128,10 +128,35 @@
 			<div class="clear"></div>
         </div>
     </div>
+    
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('pending_participants')?></h1>
+        </div>
+        
+        <div class="block-content participants">
+        <?
+        $participantsCount = 0;
+        if ($this->participants) {
+            foreach($this->participants as $v) {
+            ++$participantsCount;
+        ?>
+            <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
+                <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
+                <span class="team-num">#<?=$participantsCount?></span>
+                <div class="clear"></div>
+            </div>
+        <?
+            }
+        }
+        ?>
+        </div>
+    </div>
 </div>
 
+<script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
-$('.hero1, .hero2').on('change keyup', function() {
+/*$('.hero1, .hero2').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
@@ -162,7 +187,7 @@ $('.hero1, .hero2').on('change keyup', function() {
             $('#hero2img').attr('attr-picked', name.toLowerCase());
         }
     }
-});
+});*/
 
 $('#add-player-lan').on('click', function() {
     PC.addLanPlayer();

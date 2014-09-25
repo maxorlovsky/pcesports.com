@@ -110,9 +110,9 @@ class hearthstone extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $rows = Db::fetchRows('SELECT `name`, `seed_number`, `place`, `contact_info` '.
+        $rows = Db::fetchRows('SELECT `name`, `seed_number`, `place`, `contact_info`, `approved` '.
             'FROM `participants` '.
-            'WHERE `game` = "hslan" AND `approved` = 1 AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
+            'WHERE `game` = "hslan" AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
         foreach($rows as &$v) {
@@ -143,8 +143,6 @@ class hearthstone extends System
             $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
                 'FROM `participants` '.
                 'WHERE `game` = "hslan" AND '.
-                '`server` = "'.Db::escape($this->server).'" AND ' .
-                '`approved` = 1 AND '.
                 '`deleted` = 0 '.
                 'GROUP BY `tournament_id` '.
                 'ORDER BY `id` DESC'
