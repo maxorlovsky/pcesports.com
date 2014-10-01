@@ -23,6 +23,7 @@ RewriteRule ^web/static/? - [L]
 RewriteRule ^cms/static/? - [L]
 RewriteRule ^web/uploads/? - [L]
 RewriteRule ^screenshots/? - [L]
+RewriteRule ^jw/? - [L]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
