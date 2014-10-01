@@ -84,6 +84,10 @@ header .logo img {
     width: 150px;
     height: 72px;
 }
+header .header-middle {
+    float: left;
+    margin-left: 150px;
+}
 header .social {
     margin: 5px 10px 0 0;
 }

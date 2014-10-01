@@ -78,6 +78,7 @@
 
 <header class="container">
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
+    <a href="http://www.1a.lv" target="_blank" class="header-middle"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a>
     <div class="fright">
         <div class="social">
             <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
