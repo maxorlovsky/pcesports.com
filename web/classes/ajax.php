@@ -550,7 +550,7 @@ class Ajax extends System
     		'`tournament_id` = '.(int)$this->data->settings['hslan-current-number'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hslan" AND '.
-    		'`approved` = 1 AND '.
+    		//'`approved` = 1 AND '.
     		'`deleted` = 0 '
     	);
 

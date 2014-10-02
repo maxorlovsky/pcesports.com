@@ -170,9 +170,9 @@ class System
                 'FROM `participants` '.
                 'WHERE '.
                 '`user_id` = '.(int)$this->data->user->id.' AND '.
-                '`approved` = 1 AND '.
                 '`ended` = 0 AND ' .
-                '`deleted` = 0 '.
+                '`deleted` = 0 AND '.
+                '(`approved` = 1 OR `game` = "hslan") '.
                 'LIMIT 1 '
             );
             
