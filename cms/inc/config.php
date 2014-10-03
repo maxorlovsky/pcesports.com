@@ -44,7 +44,7 @@ case 'prod':
     $cfg['dbPort'] =3306;
     
     //Admin email (in case of errors)
-    $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
+    $cfg['adminEmail'] = 'info@pcesports.com';
     $cfg['site'] = 'http://www.pcesports.com';
     
     ini_set('display_errors', 0);
