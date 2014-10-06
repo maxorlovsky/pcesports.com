@@ -37,6 +37,16 @@
     </div>
     
     <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('season_stats')?></h1>
+        </div>
+        
+        <div class="block-content tournament-rules">
+            <?=t('hl_stats_1')?>
+        </div>
+    </div>
+    
+    <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('global_tournament_rules')?></h1>
