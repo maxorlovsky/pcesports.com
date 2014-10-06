@@ -24,27 +24,23 @@
                     <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hslan')?></label>
 					<div id="agree-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <?/*<select class="hero1" name="hero1">
+                    <? for ($i=1;$i<=4;++$i) { ?>
+                    <select class="hero<?=$i?>" name="hero<?=$i?>">
                         <option value="0"><?=t('pick_hero')?></option>
                         <? foreach($this->heroes as $k => $v) { ?>
                             <option value="<?=$k?>"><?=ucfirst($v)?></option>
                         <? } ?>
                     </select>
-                    <div id="hero1-msg" class="message hidden"></div>
+                    <div id="hero<?=$i?>-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <select class="hero2" name="hero2">
-                        <option value="0"><?=t('pick_hero')?></option>
-                        <? foreach($this->heroes as $k => $v) { ?>
-                            <option value="<?=$k?>"><?=ucfirst($v)?></option>
-                        <? } ?>
-                    </select>
-                    <div id="hero2-msg" class="message hidden"></div>
-                    <div class="clear"></div>
+                    <? } ?>
+                    
                     <div class="heroes-images">
                         <h6><?=t('your_classes')?></h6>
-                        <div id="hero1img" class="hsicons" attr-picked=""></div>
-                        <div id="hero2img" class="hsicons" attr-picked=""></div>
-                    </div>*/?>
+                        <? for ($i=1;$i<=4;++$i) { ?>
+                        <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
+                        <? } ?>
+                    </div>
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="add-player-lan"><?=t('join_tournament')?></a>
@@ -171,38 +167,23 @@
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
-/*$('.hero1, .hero2').on('change keyup', function() {
+$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
     
-    if (getClass == 'hero1') {
-        var picked = $('#hero1img').attr('attr-picked');
-        $('#hero1img').removeClass(picked);
-        
-        if (id == 0) {
-            $('#hero1img').removeClass('active');
-        }
-        else {
-            $('#hero1img').addClass(name.toLowerCase());
-            $('#hero1img').addClass('active');
-            $('#hero1img').attr('attr-picked', name.toLowerCase());
-        }
+    var picked = $('#'+getClass+'img').attr('attr-picked');
+    $('#'+getClass+'img').removeClass(picked);
+    
+    if (id == 0) {
+        $('#'+getClass+'img').removeClass('active');
     }
     else {
-        var picked = $('#hero2img').attr('attr-picked');
-        $('#hero2img').removeClass(picked);
-        
-        if (id == 0) {
-            $('#hero2img').removeClass('active');
-        }
-        else {
-            $('#hero2img').addClass(name.toLowerCase());
-            $('#hero2img').addClass('active');
-            $('#hero2img').attr('attr-picked', name.toLowerCase());
-        }
+        $('#'+getClass+'img').addClass(name.toLowerCase());
+        $('#'+getClass+'img').addClass('active');
+        $('#'+getClass+'img').attr('attr-picked', name.toLowerCase());
     }
-});*/
+});
 
 $('#add-player-lan').on('click', function() {
     PC.addLanPlayer();
