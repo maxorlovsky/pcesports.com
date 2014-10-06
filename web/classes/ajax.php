@@ -1002,9 +1002,9 @@ class Ajax extends System
     		);
             
             //Sending additionally to connect@pcesports.com
-            if ($form['subject'] == 'Advertising' || $form['subject'] == 'Bussiness offer') {
+            //if ($form['subject'] == 'Advertising' || $form['subject'] == 'Bussiness offer') {
                 $this->sendMail('connect@pcesports.com', 'Contact form submit: '.$form['subject'], $txt);
-            }
+            //}
             
     		return '1;'.t('form_success_sent');
     	}

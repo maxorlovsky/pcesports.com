@@ -154,8 +154,21 @@
         ?>
         </div>
     </div>
+    
+    <? if ($participantsCount >= 2) { ?>
+	<div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('brackets')?></h1>
+        </div>
+
+        <div class="block-content challonge-brackets">
+            <div id="challonge"></div>
+        </div>
+    </div>
+	<? } ?>
 </div>
 
+<script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
 /*$('.hero1, .hero2').on('change keyup', function() {
@@ -194,4 +207,19 @@
 $('#add-player-lan').on('click', function() {
     PC.addLanPlayer();
 });
+
+challongeHeight = 550;
+
+if ($('#challonge').length) {
+    $('#challonge').height(challongeHeight);
+    $('#challonge').challonge('hl1_<?=$this->pickedTournament?>', {
+        subdomain: 'pentaclick',
+        theme: '1',
+        multiplier: '1.0',
+        match_width_multiplier: '0.7',
+        show_final_results: '0',
+        show_standings: '0',
+        overflow: '0'
+    });
+}
 </script>
