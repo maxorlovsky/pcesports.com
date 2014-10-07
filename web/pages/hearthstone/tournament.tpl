@@ -92,7 +92,9 @@
                             foreach($this->participants as $p) {
                                 if ($p->seed_number == $k && $p->approved == 1) {
                                     $wonClass = '';
-                                    if (isset($p->contact_info->place) && $p->contact_info->place==1) {
+                                    if ( ($this->pickedTournament == 1 && isset($p->contact_info->place) && $p->contact_info->place == 1) ||
+                                         ($this->pickedTournament >= 2 && isset($p->contact_info->place) && $p->contact_info->place >= 2)
+                                       ){
                                         $wonClass = 'player-won';
                                     }
                                 ?>
@@ -131,6 +133,7 @@
         </div>
     </div>
     
+    <? if ($this->participants) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('pending_participants')?></h1>
@@ -139,25 +142,24 @@
         <div class="block-content participants">
         <?
         $participantsCount = 0;
-        if ($this->participants) {
-            foreach($this->participants as $v) {
-                if ($v->approved == 0) {
-                ++$participantsCount;
-        ?>
-            <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
-                <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
-                <span class="team-num">#<?=$participantsCount?></span>
-                <div class="clear"></div>
-            </div>
-        <?
-                }
+        foreach($this->participants as $v) {
+            if ($v->approved == 0) {
+            ++$participantsCount;
+    ?>
+        <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
+            <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
+            <span class="team-num">#<?=$participantsCount?></span>
+            <div class="clear"></div>
+        </div>
+    <?
             }
         }
-        ?>
+    ?>
         </div>
     </div>
+    <? } ?>
     
-    <? if ($participantsCount >= 2) { ?>
+    <? if ($this->participants && isset($participantsCount) && $participantsCount >= 2) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
