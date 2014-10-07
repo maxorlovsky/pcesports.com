@@ -12,8 +12,11 @@ date_default_timezone_set('GMT0');
 
 //=====================================================
 // Defining environment
-$protocol = explode('://', $_SERVER['HTTP_HOST']);
-$protocol = $protocol[0];
+$protocol = 'http';
+if ($_SERVER['HTTPS'] == 'on') {
+    $protocol = 'https';
+}
+
 $breakDown = explode('.', $_SERVER['HTTP_HOST']);
 if ($breakDown[0] == 'dev') { //Development environment
     $cfg['env'] = 'dev';
