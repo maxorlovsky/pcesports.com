@@ -142,7 +142,7 @@ class System
                 'id'	=> $v->name,
                 'server'=> $v->server,
                 'game'  => $v->game,
-                'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League'),
+                'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League S1 - '),
                 'status'=> $statusString,
             );
         }
