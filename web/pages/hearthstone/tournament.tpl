@@ -82,7 +82,7 @@
                 <div class="group">
                     <div class="header">
                         <h3><?=t('group')?> <?=$v?></h3>
-                        <span class="place"><?=t('score')?></span>
+                        <span class="place"><?=t('place_in_group')?></span>
                         <div class="clear"></div>
                     </div>
                     <div class="group-list">
