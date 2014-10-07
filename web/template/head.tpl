@@ -15,7 +15,7 @@
     
     <script src="<?=_cfg('static')?>/js/scripts.js"></script>
     
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/slider.css" />
 	<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/highslide.css" />
