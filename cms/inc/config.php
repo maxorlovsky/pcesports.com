@@ -12,6 +12,7 @@ date_default_timezone_set('GMT0');
 
 //=====================================================
 // Defining environment
+print_r($_SERVER);
 $protocol = 'http';
 if ($_SERVER['HTTPS'] == 'on') {
     $protocol = 'https';
