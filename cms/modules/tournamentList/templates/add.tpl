@@ -27,8 +27,12 @@
         <td><input type="text" id="name" size="50" value="" /></td>
     </tr>
     <tr>
-        <td width="20%"><b>Dates <span class="red">*</span></b></td>
-        <td><input type="text" id="dates" size="50" value="" /></td>
+        <td width="20%"><b>Dates (registration) <span class="red">*</span></b></td>
+        <td><input type="text" id="datesRegistration" size="50" value="" /></td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Dates (start) <span class="red">*</span></b></td>
+        <td><input type="text" id="datesStart" size="50" value="" /></td>
     </tr>
     <tr>
         <td width="20%">
@@ -42,11 +46,14 @@
         <td><input type="text" id="prize" size="50" value="" /></td>
     </tr>
     <tr>
+        <td width="20%"><b>Maximum participants count</b></td>
+        <td><input type="text" id="maxNum" size="50" value="128" /></td>
+    </tr>
+    <tr>
         <td width="20%"><b>Status <span class="red">*</span></b></td>
         <td>
             <select id="status">
                 <option>Ended</option>
-                <option>Registration</option>
                 <option>Start</option>
             </select>
         </td>

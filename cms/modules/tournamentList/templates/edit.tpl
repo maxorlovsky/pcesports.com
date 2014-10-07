@@ -27,8 +27,12 @@
         <td><input type="text" id="name" size="50" value="<?=$module->editData->name?>" /></td>
     </tr>
     <tr>
-        <td width="20%"><b>Dates <span class="red">*</span></b></td>
-        <td><input type="text" id="dates" size="50" value="<?=$module->editData->dates?>" /></td>
+        <td width="20%"><b>Dates (registration) <span class="red">*</span></b></td>
+        <td><input type="text" id="datesRegistration" size="50" value="<?=$module->editData->dates_registration?>" /></td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Dates (start) <span class="red">*</span></b></td>
+        <td><input type="text" id="datesStart" size="50" value="<?=$module->editData->dates_start?>" /></td>
     </tr>
     <tr>
         <td width="20%">
@@ -42,11 +46,14 @@
         <td><input type="text" id="prize" size="50" value="<?=$module->editData->prize?>" /></td>
     </tr>
     <tr>
+        <td width="20%"><b>Maximum participants count</b></td>
+        <td><input type="text" id="maxNum" size="50" value="<?=$module->editData->max_num?>" /></td>
+    </tr>
+    <tr>
         <td width="20%"><b>Status <span class="red">*</span></b></td>
         <td>
             <select id="status">
                 <option>Ended</option>
-                <option <?=($module->editData->status=='Registration'?'selected="selected"':null)?>>Registration</option>
                 <option <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start</option>
             </select>
         </td>

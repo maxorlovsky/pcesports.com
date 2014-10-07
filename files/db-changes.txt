@@ -1,3 +1,10 @@
+# 07.10.2014
+ALTER TABLE  `tournaments` CHANGE  `dates`  `datesRegistration` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE  `tournaments` ADD  `datesStart` VARCHAR( 15 ) NOT NULL AFTER  `datesRegistration`;
+ALTER TABLE  `tournaments` CHANGE  `datesRegistration`  `dates_registration` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+CHANGE  `datesStart`  `dates_start` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE  `tournaments` ADD  `max_num` SMALLINT( 3 ) UNSIGNED NOT NULL DEFAULT  '0' AFTER  `prize`
+
 # 25.09.2014
 ALTER TABLE  `users` ADD  `avatar` TINYINT( 3 ) UNSIGNED NOT NULL DEFAULT  '1';
 

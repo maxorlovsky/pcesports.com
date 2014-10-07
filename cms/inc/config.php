@@ -13,10 +13,10 @@ date_default_timezone_set('GMT0');
 //=====================================================
 // Defining environment
 if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])){
-    $protocol = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+    $cfg['protocol'] = $_SERVER['HTTP_X_FORWARDED_PROTO'];
 }
 else{
-    $protocol = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+    $cfg['protocol'] = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
 }
 
 $breakDown = explode('.', $_SERVER['HTTP_HOST']);
@@ -52,7 +52,7 @@ case 'prod':
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'info@pcesports.com';
-    $cfg['site'] = $protocol.'://www.pcesports.com';
+    $cfg['site'] = $cfg['protocol'].'://www.pcesports.com';
     
     ini_set('display_errors', 0);
 	
@@ -70,7 +70,7 @@ case 'test':
 
 	//Admin email (in case of errors)
 	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-	$cfg['site'] = $protocol.'://test.pcesports.com';
+	$cfg['site'] = $cfg['protocol'].'://test.pcesports.com';
 	
 	ini_set('display_errors', 1);
 
@@ -89,7 +89,7 @@ case 'dev':
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-    $cfg['site'] = $protocol.'://dev.pcesports.com';
+    $cfg['site'] = $cfg['protocol'].'://dev.pcesports.com';
     
     ini_set('display_errors', 1);
     

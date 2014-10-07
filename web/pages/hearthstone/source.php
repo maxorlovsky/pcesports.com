@@ -115,8 +115,10 @@ class hearthstone extends System
             'WHERE `game` = "hslan" AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
-        foreach($rows as &$v) {
-            $v->contact_info = json_decode($v->contact_info);
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
         }
         $this->participants = $rows;
         unset($v);

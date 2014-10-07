@@ -122,24 +122,31 @@ class System
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tournaments` '.
-            'ORDER BY `id` DESC'
+            'WHERE `status` != "Ended" '.
+            'ORDER BY `id` DESC '
         );
+        
         foreach($rows as $v) {
-            $time = strtotime($v->dates.' '.$v->time);
+            $time = strtotime($v->dates_registration.' '.$v->time);
             
             if ($time > (time() - 86400)) {
-                $statusString = str_replace(' ', '_', strtolower($v->status));
-                $this->serverTimes[$time] = array(
-                    'id'	=> $v->name,
-                    'server'=> $v->server,
-                    'game'  => $v->game,
-                    'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League'),
-                    'status'=> $statusString,
-                    'time' 	=> $time,
-                );
+                $statusString = str_replace(' ', '_', strtolower('registration'));
             }
+            else {
+                $time = strtotime($v->dates_start.' '.$v->time);
+                $statusString = str_replace(' ', '_', strtolower('start'));
+            }
+            
+            $this->serverTimes[] = array(
+                'time' 	=> $time,
+                'id'	=> $v->name,
+                'server'=> $v->server,
+                'game'  => $v->game,
+                'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League'),
+                'status'=> $statusString,
+            );
         }
-        ksort($this->serverTimes);
+        asort($this->serverTimes);
         
         if (_cfg('language') != 'Config not found') {
             $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.

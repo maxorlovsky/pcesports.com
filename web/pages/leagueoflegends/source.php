@@ -209,22 +209,16 @@ class leagueoflegends extends System
         $this->pickedTournament = (int)$number;
         
 		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 1) {
-            $tournamentRows = Db::fetchRows('SELECT `dates`, `time`, `status` '.
+            $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
                 'FROM `tournaments` '.
                 'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
-                '`name` = '.(int)$this->pickedTournament.' AND '.
-                '(`status` = "Registration" OR `status` = "Start" OR `status` = "Ended") '
+                '`name` = '.(int)$this->pickedTournament.' '
             );
             if ($tournamentRows) {
                 foreach($tournamentRows as $v) {
-                    $combineTime = strtotime($v->dates.' '.$v->time) + $this->data->user->timezone;
-                    if ($v->status == "Start" || $v->status == "Ended") {
-                        $tournamentTime['start'] = date('d M Y, H:i', $combineTime);
-                    }
-                    else {
-                        $tournamentTime['registration'] = date('d M Y, H:i', $combineTime);
-                    }
+                    $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
+                    $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
                 }
             }
             
@@ -263,11 +257,11 @@ class leagueoflegends extends System
 		$rows = Db::fetchRows('SELECT * '.
 			'FROM `tournaments` '.
 			'WHERE `game` = "lol" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND' .
-            '`status` != "Registration" '.
+            '`server` = "'.Db::escape($this->server).'" ' .
 			'ORDER BY `id` DESC '.
             'LIMIT 5'
 		);
+        
         if ($rows) {
             foreach($rows as $v) {
                 $this->tournamentData[$v->name] = (array)$v;

@@ -310,7 +310,7 @@ class Cron extends System {
     }
     
     public function sendNotifications() {
-        $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates`, `time` '.
+        $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates_start`, `time` '.
             'FROM `tournaments` '.
             'WHERE `status` = "Start" '
         );
@@ -325,7 +325,7 @@ class Cron extends System {
                 );
                 
                 $time = array();
-                $time['0'] = strtotime($v->dates.' '.$v->time);
+                $time['0'] = strtotime($v->dates_start.' '.$v->time);
                 $time['24'] = $time['0'] - 86400;
                 $time['1'] = $time['0'] - 3600;
                 if (!$row && $time['24'] <= time()) {
