@@ -1659,6 +1659,12 @@ footer .games img {
     float: right;
     font-size: 15px;
 }
+.groups .group .group-list .holder.player-won,
+.groups .group .group-list .holder.player-won  .player-num,
+.groups .group .group-list .holder.player-won  .player-score {
+    background-color: #FFD700;
+    color: #333;
+}
 
 .avatars-list {
     padding: 5px 10px 5px 0;

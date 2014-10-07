@@ -65,7 +65,7 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <?=t('hearthstone_lan_schedule_information')?>
+            <?=t('hearthstone_lan_schedule_information_'.$this->pickedTournament)?>
         </div>
     </div>
     
@@ -91,11 +91,17 @@
                             $i = 1;
                             foreach($this->participants as $p) {
                                 if ($p->seed_number == $k && $p->approved == 1) {
+                                    $wonClass = '';
+                                    if (isset($p->contact_info->place) && $p->contact_info->place==1) {
+                                        $wonClass = 'player-won';
+                                    }
                                 ?>
-                                <div class="holder">
+                                <div class="holder <?=$wonClass?>">
                                     <span class="player-num"><?=$i?></span>
                                     <span class="player-name"><?=$p->name?></span>
-                                    <span class="player-score"><?=(isset($p->contact_info->place)&&$p->contact_info->place?$p->contact_info->place:0)?></span>
+                                    <span class="player-score">
+                                        <?=(isset($p->contact_info->place)&&$p->contact_info->place?$p->contact_info->place:0)?>
+                                    </span>
                                     <div class="clear"></div>
                                 </div>
                                 <?
