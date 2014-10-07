@@ -12,6 +12,8 @@ date_default_timezone_set('GMT0');
 
 //=====================================================
 // Defining environment
+$protocol = explode('://', $_SERVER['HTTP_HOST']);
+$protocol = $protocol[0];
 $breakDown = explode('.', $_SERVER['HTTP_HOST']);
 if ($breakDown[0] == 'dev') { //Development environment
     $cfg['env'] = 'dev';
@@ -45,7 +47,7 @@ case 'prod':
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'info@pcesports.com';
-    $cfg['site'] = 'http://www.pcesports.com';
+    $cfg['site'] = $protocol.'://www.pcesports.com';
     
     ini_set('display_errors', 0);
 	
@@ -63,7 +65,7 @@ case 'test':
 
 	//Admin email (in case of errors)
 	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-	$cfg['site'] = 'http://test.pcesports.com';
+	$cfg['site'] = $protocol.'://test.pcesports.com';
 	
 	ini_set('display_errors', 1);
 
@@ -82,7 +84,7 @@ case 'dev':
     
     //Admin email (in case of errors)
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-    $cfg['site'] = 'http://dev.pcesports.com';
+    $cfg['site'] = $protocol.'://dev.pcesports.com';
     
     ini_set('display_errors', 1);
     
