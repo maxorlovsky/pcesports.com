@@ -36,3 +36,8 @@ $cfg['streamLanguages'] = array(
     'ru'    => 'Русский',
     'both'  => 'both',
 );
+$cfg['lolRegions'] = array(
+    'na'    => 'NA',
+    'euw'    => 'EUW',
+    'eune'  => 'EUNE',
+);

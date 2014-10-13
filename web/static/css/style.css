@@ -276,7 +276,9 @@ footer .copyrights .devs:hover {
 .nav-user {
     float: right !important;
     position: relative;
-    min-width: 120px;
+}
+.nav-user .nav-link {
+    min-width: 140px;
 }
 .nav-avatar {
     position: absolute;

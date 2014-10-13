@@ -31,6 +31,9 @@ class profile extends System
         if ($page == 'streamers-list') {
             $this->additional = $this->streamersList();
         }
+        else if ($page == 'summoners') {
+            $this->additional = $this->summonersList();
+        }
         
         include_once _cfg('pages').'/'.get_class().'/'.$page.'.tpl';
         
@@ -105,6 +108,17 @@ class profile extends System
             $this->getProfilePage();
 		}
 	}
+    
+    protected function summonersList() {
+        $return = new stdClass();
+        
+        $return->summoners = Db::fetchRows(
+            'SELECT * FROM `summoners` '.
+            'WHERE `user_id` = '.(int)$this->data->user->id
+        );
+        
+        return $return;
+    }
     
     protected function getAvatarList() {
         $directory = _cfg('dir').'/static/images/avatar';
