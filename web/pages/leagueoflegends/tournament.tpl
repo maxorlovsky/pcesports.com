@@ -61,53 +61,108 @@
             <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>"><?=t('global_tournament_rules')?></a>
         </div>
     </div>
-	
-	<div class="block">
+    
+    <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('participants')?></h1>
         </div>
 
-        <div class="block-content participants">
+        <div class="block-content participants isotope-participants">
 			<?
-			$participantsCount = 0;
             if ($this->participants) {
+                $i = 0;
                 foreach($this->participants as $v) {
-				++$participantsCount;
-            ?>
-                <div class="block" title="<?=$v['name']?> #<?=$participantsCount?>">
-                    <div class="team-name" title="<?=$v['name']?>">
-						<?=$v['name']?>
-					</div>
-                    <span class="team-num">#<?=$participantsCount?></span>
-                    <div class="clear"></div>
-					<div class="player-list">
-                        <ul>
-                            <?
-                            foreach($v as $k2 => $v2) {
-                                if (is_int($k2)) {
-                                ?>
-								<li>
-									<a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
-										<?=$v2['player']?>
-									</a>
-								</li><?
+                    if ($v['checked_in'] == 1) {
+                    ++$this->participantsCount;
+                ?>
+                    <div class="block" title="<?=$v['name']?> #<?=$this->participantsCount?>">
+                        <div class="team-name" title="<?=$v['name']?>">
+                            <?=$v['name']?>
+                        </div>
+                        <span class="team-num">#<?=$this->participantsCount?></span>
+                        <div class="clear"></div>
+                        <div class="player-list">
+                            <ul>
+                                <?
+                                foreach($v as $k2 => $v2) {
+                                    if (is_int($k2)) {
+                                    ?>
+                                    <li>
+                                        <a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
+                                            <?=$v2['player']?>
+                                        </a>
+                                    </li><?
+                                    }
                                 }
-                            }
-                            ?> 
-                        </ul>
+                                ?> 
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            <?
+                <?
+                    ++$i;
+                    }
                 }
             }
-            else {
+            
+            if ($i == 0) {
+                ?><p class="empty-list"><?=t('no_checked_in_teams')?></p><?
+            }
+            ?>
+        </div>
+    </div>
+	
+	<div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('pending_participants')?></h1>
+        </div>
+
+        <div class="block-content participants isotope-participants-pending">
+			<?
+            if ($this->participants) {
+                $j = 0;
+                foreach($this->participants as $v) {
+                    if ($v['checked_in'] == 0) {
+                    ++$this->participantsCount;
+                ?>
+                    <div class="block" title="<?=$v['name']?> #<?=$this->participantsCount?>">
+                        <div class="team-name" title="<?=$v['name']?>">
+                            <?=$v['name']?>
+                        </div>
+                        <span class="team-num">#<?=$this->participantsCount?></span>
+                        <div class="clear"></div>
+                        <div class="player-list">
+                            <ul>
+                                <?
+                                foreach($v as $k2 => $v2) {
+                                    if (is_int($k2)) {
+                                    ?>
+                                    <li>
+                                        <a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
+                                            <?=$v2['player']?>
+                                        </a>
+                                    </li><?
+                                    }
+                                }
+                                ?> 
+                            </ul>
+                        </div>
+                    </div>
+                <?
+                    ++$j;
+                    }
+                }
+            }
+            
+            if ($j == 0) {
                 ?><p class="empty-list"><?=t('no_teams_registered')?></p><?
             }
             ?>
         </div>
     </div>
 	
-	<? if ($participantsCount >= 2) { ?>
+	<? if ($this->participantsCount >= 2 || 
+          ($this->pickedTournament == $this->currentTournament && $this->data->settings['tournament-start-lol-'.$this->server] == 1)
+          ) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
@@ -129,7 +184,7 @@ $('#add-team').on('click', function() {
     PC.addTeam();
 });
 
-participantsNumber = <?=$participantsCount?>;
+participantsNumber = <?=$this->participantsCount?>;
 if (participantsNumber > 100) {
     challongeHeight = 3500;
 }

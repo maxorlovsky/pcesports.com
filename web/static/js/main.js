@@ -1,3 +1,7 @@
+$('#checkInLol').on('click', function() {
+    PC.checkIn();
+});
+
 $('.avatars-list .avatar-block').on('click', function() {
     var oldId = $('#avatar').val();
     
@@ -121,8 +125,14 @@ $('.confirm').on('click', function() {
 	return false;
 });
 
-if ($('.participants .block').length > 0) {
-	$('.participants').isotope({
+if ($('.participants.isotope-participants .block').length > 0) {
+	$('.participants.isotope-participants').isotope({
+	    itemSelector : '.block',
+	    layoutMode : 'fitRows'
+	});
+}
+if ($('.participants.isotope-participants-pending .block').length > 0) {
+	$('.participants.isotope-participants-pending').isotope({
 	    itemSelector : '.block',
 	    layoutMode : 'fitRows'
 	});
@@ -131,7 +141,12 @@ if ($('.participants .block').length > 0) {
 $('.participants').on('click', '.block', function(e) {
     if(!$(e.target).is('a')){
         $(this).find('.player-list').slideToggle(500, function() {
-            $('.participants').isotope( 'reLayout' );
+            if ($('.participants.isotope-participants .block').length > 0) {
+                $('.participants.isotope-participants').isotope( 'reLayout' );
+            }
+            if ($('.participants.isotope-participants-pending .block').length > 0) {
+                $('.participants.isotope-participants-pending').isotope( 'reLayout' );
+            }
         });
     }
 });
@@ -170,6 +185,36 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    checkIn: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        $(this).addClass('alpha');
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'checkInLOL'
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $(this).removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.block.check-in').fadeOut();
+                }
+                else {
+                    alert(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     editStreamer: function(element) {
         if (this.formInProgress == 1) {
             return false;
@@ -648,7 +693,7 @@ var PC = {
         this.ajax(query);
     },
     statusCheck: function() {
-		$('#fightStatus').removeClass('online');
+		$('#fightStatus').removeClass('online').removeClass('red');
 		var query = {
 			type: 'POST',
 			data: {
@@ -659,6 +704,9 @@ var PC = {
 				if (answer[2] == 'online') {
 					$('#fightStatus').addClass('online');
 				}
+                if (answer[0] == 2) {
+                    $('#fightStatus').addClass('red');
+                }
 				$('#fightStatus').html(answer[2]);
 			}
 		}

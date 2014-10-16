@@ -1,6 +1,24 @@
 <section class="container page lol">
 
 <div class="left-containers">
+    <? if ($_SESSION['participant']->checked_in != 1) { ?>
+    <div class="block check-in">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('check_in')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] != 1) {?>
+                <?=t('check_in_will_apear_in')?>
+            <? } else { ?>
+            <div class="check-in-holder">
+                <div class="button" id="checkInLol"><?=t('check_in')?></div>
+            </div>
+            <? } ?>
+        </div>
+    </div>
+    <? } ?>
+    
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('opponent_info')?></h1>

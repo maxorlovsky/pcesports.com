@@ -25,6 +25,7 @@ class Ajax extends System
         'submitStreamer',
         'removeStreamer',
         'editStreamer',
+        'checkInLOL',
 	);
 	
     public function ajaxRun($data) {
@@ -38,6 +39,66 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function checkInLOL() {
+        if (!$_SESSION['participant']) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $server = $_SESSION['participant']->server;
+        $currentTournament = (int)$this->data->settings['lol-current-number-'.$server];
+        
+        if ($this->data->settings['tournament-checkin-lol-'.$server] != 1) {
+            return '0;Check in is not in progress';
+        }
+        
+        //Generating other IDs for different environment
+		if (_cfg('env') == 'prod') {
+			$participant_id = $_SESSION['participant']->id + 100000;
+		}
+		else {
+			$participant_id = $_SESSION['participant']->id;
+		}
+        
+        $apiArray = array(
+			'participant_id' => $participant_id,
+			'participant[name]' => $_SESSION['participant']->name,
+		);
+		
+		//Adding team to Challonge bracket
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$currentTournament.'/participants.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        }
+		
+		//Registering ID, because Challonge idiots not giving an answer with ID
+        if (_cfg('env') == 'prod') {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$currentTournament.'/participants.json');
+        }
+        else {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        }
+        
+		array_reverse($answer, true);
+		
+		foreach($answer as $f) {
+			if ($f->participant->name == $_SESSION['participant']->name) {
+				Db::query('UPDATE `participants` '.
+					'SET `challonge_id` = '.(int)$f->participant->id.', '.
+                    '`checked_in` = 1 '.
+					'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+					'AND `game` = "lol" '.
+					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
+                    'AND `approved` = 1 '
+				);
+				break;
+			}
+		}
+        
+        return '1;1';
     }
     
     protected function editStreamer($data) {
@@ -339,6 +400,18 @@ class Ajax extends System
         }
         else {
             $challonge_id = 0;
+        }
+        
+        $row = Db::fetchRow('SELECT `checked_in` '.
+            'FROM `participants` '.
+            'WHERE '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+        
+        if ($row->checked_in == 0) {
+            return '2;'.t('none').';'.t('check_in_required').';'.t('none');
         }
         
         $row = Db::fetchRow('SELECT * FROM `fights` '.

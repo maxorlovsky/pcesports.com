@@ -6,6 +6,7 @@ class leagueoflegends extends System
 	public $currentTournament;
 	public $teamsPlaces;
 	public $participants;
+    public $participantsCount = 0;
     public $pickedTournament;
     public $server;
 	
@@ -24,7 +25,7 @@ class leagueoflegends extends System
     
     public function teamEditPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/euw');
+			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
         $rows = Db::fetchRows('SELECT * '.
             'FROM `players` '.
@@ -45,8 +46,9 @@ class leagueoflegends extends System
     
     public function fightPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/euw');
+			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
+        
         $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "lol" AND '.
@@ -64,7 +66,7 @@ class leagueoflegends extends System
 		
 		if (isset($_GET['val4']) && $_GET['val4'] == 'exit') {
 			unset($_SESSION['participant']);
-			go(_cfg('href').'/leagueoflegends/euw');
+			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
 		
 		if (isset($_GET['val4']) && $_GET['val4'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
@@ -76,7 +78,7 @@ class leagueoflegends extends System
 		}
 		
 		if (!isset($_GET['val5']) && !$_GET['val5'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/euw');
+			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
 		
 		if (isset($_SESSION['participant'])) {
@@ -103,7 +105,7 @@ class leagueoflegends extends System
 		
 		if ($row && $row->approved == 0) {
 			//Not approved, registration open, approving and adding to brackets
-			$row->challonge_id = $this->approveRegisterPlayer($row);
+			$this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;
 		}
@@ -149,7 +151,7 @@ class leagueoflegends extends System
             );
         }
 		
-		$apiArray = array(
+		/*$apiArray = array(
 			'participant_id' => $participant_id,
 			'participant[name]' => $row->name,
 		);
@@ -162,7 +164,7 @@ class leagueoflegends extends System
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
         }
 		
-		//Registering ID, becaus Challonge idiots not giving an answer with ID
+		//Registering ID, because Challonge idiots not giving an answer with ID
         if (_cfg('env') == 'prod') {
             $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants.json');
         }
@@ -183,7 +185,7 @@ class leagueoflegends extends System
 				$challonge_id = (int)$f->participant->id;
 				break;
 			}
-		}
+		}*/
         
         //Cleaning up duplicates
         Db::query('UPDATE `participants` '.
@@ -202,7 +204,7 @@ class leagueoflegends extends System
 		Team: <b>'.$row->name.'</b><br>
     	IP: '.$_SERVER['REMOTE_ADDR']);
 		
-		return $challonge_id;
+		return true;
 	}
 	
 	public function getTournamentData($number) {
@@ -222,7 +224,7 @@ class leagueoflegends extends System
                 }
             }
             
-			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `p`.`name` AS `player`, `p`.`player_id` '.
+			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `p`.`name` AS `player`, `p`.`player_id` '.
                 'FROM `participants` AS `t` '.
 				'JOIN  `players` AS  `p` ON  `p`.`participant_id` =  `t`.`id` '.
 				'WHERE `t`.`game` = "lol" AND '.
@@ -238,6 +240,7 @@ class leagueoflegends extends System
 			if ($rows) {
 				foreach($rows as $v) {
 					$participants[$v->id]['name'] = $v->name;
+                    $participants[$v->id]['checked_in'] = $v->checked_in;
 					$participants[$v->id][$i]['player'] = $v->player;
 					$participants[$v->id][$i]['player_id'] = $v->player_id;
 					++$i;
@@ -342,7 +345,7 @@ class leagueoflegends extends System
         );
         
         if (!$row) {
-            go(_cfg('href').'/leagueoflegends/euw');
+            go(_cfg('href').'/leagueoflegends/'.$this->server);
         }
         
         if ($row->player1_id == $_SESSION['participant']->challonge_id) {
@@ -386,14 +389,16 @@ class leagueoflegends extends System
         
         unset($_SESSION['participant']);
         
-        go(_cfg('href').'/leagueoflegends/euw');
+        go(_cfg('href').'/leagueoflegends/'.$this->server);
     }
     
     protected function leave() {
-        Db::query('UPDATE `participants` SET `deleted` = 1 '.
-        'WHERE `game` = "lol" AND '.
-        '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
-        '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
+        Db::query(
+            'UPDATE `participants` SET `deleted` = 1 '.
+            'WHERE `game` = "lol" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
+        );
         
         $apiArray = array(
             '_method' => 'delete',
@@ -414,6 +419,6 @@ class leagueoflegends extends System
         
         unset($_SESSION['participant']);
         
-        go(_cfg('href').'/leagueoflegends/euw');
+        go(_cfg('href').'/leagueoflegends/'.$this->server);
     }
 }

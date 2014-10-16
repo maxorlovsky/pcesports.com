@@ -336,6 +336,7 @@ class Cron extends System {
                     $v->template = 1;
                     $v->data = $row;
                     $this->sendReminders($v);
+                    $this->checkInProcess($v);
                 }
                 else if ($row && $row->delivered == 1 && $time['0'] <= time()) {
                     $v->data = $row;
@@ -416,12 +417,30 @@ class Cron extends System {
         }
     }
     
+    private function checkInProcess($tournament) {
+        //Enabling check in!
+        Db::query('UPDATE `tm_settings` SET '.
+            '`value` = 1 '.
+            'WHERE '.
+            '`setting` = "tournament-checkin-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+        );
+        
+        return true;
+    }
+    
     private function startUpTournament($tournament) {
         //Closing up registration!
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 0 '.
             'WHERE '.
             '`setting` = "tournament-reg-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+        );
+        
+        //Disabling check in!
+        Db::query('UPDATE `tm_settings` SET '.
+            '`value` = 0 '.
+            'WHERE '.
+            '`setting` = "tournament-checkin-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
         );
         
         //Starting up tournament
