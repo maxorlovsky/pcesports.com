@@ -29,10 +29,12 @@ class LeagueParticipants
             'ORDER BY `seed_number` ASC'
         );
         
-        foreach($this->participants as &$v) {
-            $v->contact_info = json_decode($v->contact_info);
+        if ($this->participants) {
+            foreach($this->participants as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
+            unset($v);
         }
-        unset($v);
         
         $this->groups = array(
             1 => 'A',
