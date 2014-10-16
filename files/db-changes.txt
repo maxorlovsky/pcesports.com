@@ -1,3 +1,8 @@
+# 16.10.2014
+ALTER TABLE `participants` ADD  `checked_in` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '1';
+ALTER TABLE `participants` CHANGE  `checked_in`  `checked_in` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0';
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-checkin-lol-eune', '0', 'Процесс checkin (LoL - EUNE)', 'checkbox', '3'), ('tournament-checkin-lol-euw', '0', 'Процесс checkin (LoL - EUW)', 'checkbox', '1');
+
 # 13.10.2014
 CREATE TABLE `summoners` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
