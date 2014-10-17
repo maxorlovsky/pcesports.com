@@ -8,9 +8,9 @@
         </div>
         
         <div class="block-content">
-            <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] != 1) {?>
-                <?=t('check_in_will_apear_in')?>
-            <? } else { ?>
+            <p><?=t('check_in_will_apear_in')?></p>
+            
+            <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {?>
             <div class="check-in-holder">
                 <div class="button" id="checkInLol"><?=t('check_in')?></div>
             </div>

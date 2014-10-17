@@ -112,6 +112,18 @@ class leagueoflegends extends System
 		else if ($row && $row->approved == 1) {
 			$verified = 1;
 		}
+        
+        $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
+            'FROM `participants` '.
+            'WHERE `game` = "lol" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND' .
+            '`approved` = 1 AND '.
+            '`checked_in` = 1 AND '.
+            '`tournament_id` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
+            '`deleted` = 0 '
+        );
+        
+        $this->participantsCount = $rows->count;
 		
 		if ($verified == 1) {
 			$_SESSION['participant'] = $row;
@@ -150,42 +162,6 @@ class leagueoflegends extends System
                 '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
             );
         }
-		
-		/*$apiArray = array(
-			'participant_id' => $participant_id,
-			'participant[name]' => $row->name,
-		);
-		
-		//Adding team to Challonge bracket
-        if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants.post', $apiArray);
-        }
-        else {
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
-        }
-		
-		//Registering ID, because Challonge idiots not giving an answer with ID
-        if (_cfg('env') == 'prod') {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants.json');
-        }
-        else {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
-        }
-        
-		array_reverse($answer, true);
-		
-		foreach($answer as $f) {
-			if ($f->participant->name == $row->name) {
-				Db::query('UPDATE `participants` '.
-					'SET `challonge_id` = '.(int)$f->participant->id.' '.
-					'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
-					'AND `game` = "lol" '.
-					'AND `id` = '.$row->id
-				);
-				$challonge_id = (int)$f->participant->id;
-				break;
-			}
-		}*/
         
         //Cleaning up duplicates
         Db::query('UPDATE `participants` '.
