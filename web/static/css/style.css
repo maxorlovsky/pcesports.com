@@ -651,7 +651,8 @@ footer .partners .skillz {
     display: none;
 }
 #hint-helper p {
-    padding: 10px 15px;
+    padding: 10px;
+    margin: 0;
     font-size: 13px;
 }
 
@@ -917,7 +918,9 @@ footer .partners .skillz {
 .lol .success-add, .lol .error-add, .lol .info-add {
     margin-top: 0;
 }
-.lol .check-in-holder,
+.lol .check-in-holder {
+    text-align: center;
+}
 .lol .connect-team {
     text-align: center;
     margin-bottom: 20px;

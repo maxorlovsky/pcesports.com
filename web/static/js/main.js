@@ -171,11 +171,11 @@ $(document).on('mousemove', '.hint', function(event) {
 		$('#hint-helper p').html(msg);
 	}
 	if ($('#hint-helper').is(':hidden')) {
-		$('#hint-helper').show();
+		$('#hint-helper').css('display', 'inline-block');
 	}
 }).on('mouseout', '.hint', function(){
 	$('#hint-helper').offset({ top: 0, left: 0 });
-	$('#hint-helper').hide();
+	$('#hint-helper').css('display', 'none');
 });
 
 // Functions
