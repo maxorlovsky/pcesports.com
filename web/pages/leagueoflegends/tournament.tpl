@@ -160,8 +160,8 @@
         </div>
     </div>
 	
-	<? if ($this->participantsCount >= 2 || 
-          ($this->pickedTournament == $this->currentTournament && $this->data->settings['tournament-start-lol-'.$this->server] == 1)
+	<? if ($this->participantsCount >= 2 && 
+          ($this->pickedTournament != $this->currentTournament && $this->data->settings['tournament-start-lol-'.$this->server] != 1)
           ) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
