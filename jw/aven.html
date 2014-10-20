@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<title>Aven: JW Player</title>
+<style>
+    body { padding: 50px 100px; width: 700px; font: 13px/20px Arial; background: #FFF; }
+    a, h1, h2 { color: #369; }
+    h2 { margin-top: 50px; }
+    pre { font-size: 12px; background:#E5F3C8; padding:5px 10px; border: 1px solid #D3EAA4; }
+    dt { font-weight: bold; }
+</style>
+
+<script type="text/javascript" src="jwplayer.js"></script>
+<script type="text/javascript">jwplayer.key="zfU35Y9DD1n0P0IpR7p3P5l+/eJyBkaaGcySZg==";</script>
+</head>
+<body>
+<div id="myElement">Loading the player...</div>
+
+<script type="text/javascript">
+    jwplayer("myElement").setup({
+        file: "rtmp://test.pcesports.com/live/aven",
+        image: "/assets/myVideo.jpg",
+        height: 360,
+        width: 640
+    });
+</script>
+
+
+</body>
+</html>
