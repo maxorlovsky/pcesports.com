@@ -9,7 +9,8 @@ class home
 	public function __construct($params = array()) {
 		
 		$this->slider = array(
-			//array(_cfg('href').'/leagueoflegends/eune/1', _cfg('img').'/poster-lol-5.jpg'),
+			array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
+            array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
 		);
         
         $this->streams = Db::fetchRows(
