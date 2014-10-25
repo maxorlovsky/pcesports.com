@@ -1711,6 +1711,9 @@ footer .games img {
     body {
         background: none;
     }
+    header .header-middle {
+        display: none;
+    }
     #head-line  {
         min-height: 0;
     }
@@ -1751,6 +1754,9 @@ footer .games img {
     }
     header .language-switcher {
         top: 35px;
+    }
+    header .header-middle {
+        display: none;
     }
     .navbar {
         height: auto;
