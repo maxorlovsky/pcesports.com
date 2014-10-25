@@ -7,7 +7,7 @@ class Tournaments
 		$this->system = $params['system'];
         
         $this->server = $params['var1'];
-		
+		echo Db::escape($this->server);
 		$this->chats = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
 			'FROM `fights` AS `f` '.
 			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
