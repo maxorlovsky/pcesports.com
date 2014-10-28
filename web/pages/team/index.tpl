@@ -38,7 +38,7 @@
             <? foreach($this->team as $k => $v) { ?>
                 <div class="team-user">
                     <? if ($v['avatar']) { ?>
-                        <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$this->team['maxtream']?>.jpg" /></div>
+                        <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
                     <? } ?>
                     <div class="name"><?=$v['name']?></div>
                     <div class="role"><?=$v['role']?></div>
