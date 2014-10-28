@@ -1005,6 +1005,9 @@ footer .partners .skillz {
     display: block;
     margin-bottom: 10px;
 }
+#join-form select {
+    margin-right: 15px;
+}
 #join-form .message {
 	width: 50%;
 }
@@ -1562,7 +1565,7 @@ footer .games img {
 }
 .heroes-images div {
     float: left;
-    min-height: 200px;
+    margin-bottom: 15px;
 }
 .hsicons {
     background-image: url('../images/hs_icons_by_mgbeach.png');

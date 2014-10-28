@@ -21,9 +21,6 @@
                     <input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
 					<div id="phone-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hslan')?></label>
-					<div id="agree-msg" class="message hidden"></div>
-                    <div class="clear"></div>
                     <? for ($i=1;$i<=4;++$i) { ?>
                     <select class="hero<?=$i?>" name="hero<?=$i?>">
                         <option value="0"><?=t('pick_hero')?></option>
@@ -41,6 +38,11 @@
                         <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
                         <? } ?>
                     </div>
+                    <div class="clear"></div>
+                    
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hslan')?></label>
+					<div id="agree-msg" class="message hidden"></div>
+                    <div class="clear"></div>
 				</form>
 				<div class="clear"></div>
 				<a href="javascript:void(0);" class="button" id="add-player-lan"><?=t('join_tournament')?></a>

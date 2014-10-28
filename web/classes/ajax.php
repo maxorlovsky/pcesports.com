@@ -657,14 +657,23 @@ class Ajax extends System
             $suc['agree'] = '1;'.t('approved');
         }
         
-        /*for($i=1;$i<=2;++$i) {
+        $heroesPicked = array();
+        for($i=1;$i<=4;++$i) {
             if (!$post['hero'.$i]) {
                 $err['hero'.$i] = '0;'.t('pick_hero');
+            }
+            
+            if (in_array($post['hero'.$i], $heroesPicked)) {
+                $err['hero'.$i] = '0;'.t('same_hero_picked');
+            }
+            
+            if ($post['hero'.$i]) {
+                $heroesPicked[] = $post['hero'.$i];
             }
         }
         if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
             $err['hero2'] = '0;'.t('same_hero_picked');
-        }*/
+        }
     	
     	if ($err) {
     		$answer['ok'] = 0;
@@ -678,8 +687,10 @@ class Ajax extends System
     		$answer['err'] = $suc;
             
             $contact_info = json_encode(array(
-                //'hero1' => $post['hero1'],
-                //'hero2' => $post['hero2'],
+                'hero1' => $post['hero1'],
+                'hero2' => $post['hero2'],
+                'hero3' => $post['hero3'],
+                'hero4' => $post['hero4'],
                 'phone' => $post['phone'],
                 'place' => 0,
             ));

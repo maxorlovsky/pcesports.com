@@ -14,14 +14,14 @@ class team
         );
         
         $this->team = array(
-            1 => array('avatar' => '', 'name' => '', 'role' => 'Founder', 'email' => 'maxtream (at) pcesports (dot) com'),
-            2 => array('avatar' => '', 'name' => 'Aven', 'role' => 'Co-founder', 'email' => 'aven (at) pcesports (dot) com'),
-            112 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'email' => '&nbsp;'),
-            44 => array('avatar' => '', 'name' => '', 'role' => 'Communications manager', 'email' => 'connect (at) pcesports (dot) com'),
-            3 => array('avatar' => '', 'name' => 'Angel-ada', 'role' => 'Community manager (VK)', 'email' => '&nbsp;'),
-            4 => array('avatar' => '', 'name' => 'Acolent', 'role' => 'Shoutcaster', 'email' => '&nbsp;'),
-            132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'email' => '&nbsp;'),
-            5 => array('avatar' => '', 'name' => 'Soldecroix', 'role' => 'Hearthstone judge', 'email' => '&nbsp;'),
+            1 => array('avatar' => '', 'name' => '', 'role' => 'Founder', 'contact' => 'maxtream (at) pcesports (dot) com'),
+            2 => array('avatar' => '', 'name' => 'Aven', 'role' => 'Co-founder', 'contact' => 'aven (at) pcesports (dot) com'),
+            112 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
+            44 => array('avatar' => '', 'name' => '', 'role' => 'Communications manager', 'contact' => 'connect (at) pcesports (dot) com'),
+            3 => array('avatar' => '', 'name' => 'Angel-ada', 'role' => 'Community manager (VK)', 'contact' => '&nbsp;'),
+            4 => array('avatar' => '', 'name' => 'Acolent', 'role' => 'Shoutcaster', 'contact' => '&nbsp;'),
+            132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
+            5 => array('avatar' => '', 'name' => 'Soldecroix', 'role' => 'Hearthstone judge', 'contact' => '&nbsp;'),
         );
         
         if ($rows) {

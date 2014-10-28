@@ -42,8 +42,8 @@
                     <? } ?>
                     <div class="name"><?=$v['name']?></div>
                     <div class="role"><?=$v['role']?></div>
-                    <? if ($v['email']) {?>
-                        <div class="email"><?=$v['email']?></div>
+                    <? if ($v['contact']) {?>
+                        <div class="contact"><?=$v['contact']?></div>
                     <? } ?>
                 </div>
             <? } ?>
