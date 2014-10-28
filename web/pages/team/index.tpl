@@ -43,7 +43,7 @@
                     <div class="name"><?=$v['name']?></div>
                     <div class="role"><?=$v['role']?></div>
                     <? if ($v['email']) {?>
-                        <div class="email">maxtream (at) pcesports (dot) com</div>
+                        <div class="email"><?=$v['email']?></div>
                     <? } ?>
                 </div>
             <? } ?>
