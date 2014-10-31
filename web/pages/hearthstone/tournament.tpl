@@ -211,7 +211,9 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     $.each(heroes, function(k, v) {
         if (v != 0) {
             for (i=1;i<=4;++i) {
-                $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
+                if (i != k) {
+                    $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
+                }
             }
         }
     });
