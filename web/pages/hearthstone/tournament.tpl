@@ -141,7 +141,7 @@
             <h1 class="bordered"><?=t('pending_participants')?></h1>
         </div>
         
-        <div class="block-content participants">
+        <div class="block-content participants isotope-participants">
         <?
         $participantsCount = 0;
         foreach($this->participants as $v) {
