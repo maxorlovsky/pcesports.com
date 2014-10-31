@@ -177,10 +177,18 @@
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
+var heroes = {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0    
+};
+
 $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
+    var num = getClass.substr(-1);
     
     var picked = $('#'+getClass+'img').attr('attr-picked');
     $('#'+getClass+'img').removeClass(picked);
@@ -193,6 +201,20 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
         $('#'+getClass+'img').addClass('active');
         $('#'+getClass+'img').attr('attr-picked', name.toLowerCase());
     }
+    
+    heroes[num] = id;
+    
+    $.each($('#da-form select'), function(k, v) {
+        $(this).find('option').attr('disabled', false);
+    });
+    
+    $.each(heroes, function(k, v) {
+        if (v != 0) {
+            for (i=1;i<=4;++i) {
+                $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
+            }
+        }
+    });
 });
 
 $('#add-player-lan').on('click', function() {
