@@ -98,6 +98,8 @@ class Ajax extends System
 			}
 		}
         
+        $_SESSION['participant']->checked_in = 1;
+        
         return '1;1';
     }
     
