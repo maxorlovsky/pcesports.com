@@ -972,6 +972,18 @@ footer .partners .skillz {
     color: #fff;
 }
 
+.participants .player-heroes {
+    margin-top: 5px;
+}
+.participants .player-heroes div {
+    display: inline-block;
+    margin: 0 4px 0 0;
+    padding: 0;
+}
+.participants .player-heroes div:nth-child(4n) {
+    margin: 0;
+}
+
 .reg-completed {
 	display: none;
 	font-size: 18px;
@@ -1601,6 +1613,40 @@ footer .games img {
 }
 .hsicons.warrior {
     background-position: -600px -188px;
+}
+
+.hsicons-small {
+    background-image: url('../images/hs-small-icons.png');
+    background-repeat: no-repeat;
+    width: 36px;
+    height: 18px;
+}
+.hsicons-small.druid {
+    background-position: 0 0;
+}
+.hsicons-small.hunter {
+    background-position: 0 -18px;
+}
+.hsicons-small.mage {
+    background-position: 0 -36px;
+}
+.hsicons-small.paladin {
+    background-position: 0 -54px;
+}
+.hsicons-small.priest {
+    background-position: 0 -72px;
+}
+.hsicons-small.rogue {
+    background-position: 0 -90px;
+}
+.hsicons-small.shaman {
+    background-position: 0 -108px;
+}
+.hsicons-small.warlock {
+    background-position: 0 -126px;
+}
+.hsicons-small.warrior {
+    background-position: 0 -144px;
 }
 
 .groups {

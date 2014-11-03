@@ -152,6 +152,12 @@
             <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
             <span class="team-num">#<?=$participantsCount?></span>
             <div class="clear"></div>
+            <div class="player-heroes">
+                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?>"></div>
+                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?>"></div>
+                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?>"></div>
+                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?>"></div>
+            </div>
         </div>
     <?
             }
