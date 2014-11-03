@@ -1710,8 +1710,11 @@ footer .games img {
     margin-left: 10px;
     display: block;
     float: left;
-    width: 285px;
+    width: 150px;
     font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .groups .group .group-list .holder .player-score {
     color: #fff;
@@ -1723,6 +1726,17 @@ footer .games img {
 .groups .group .group-list .holder.player-won  .player-score {
     background-color: #FFD700;
     color: #333;
+}
+
+.groups .group .group-list .holder .player-heroes {
+    display: inline-block;
+    padding: 0;
+    height: 18px;
+    margin: 3px 0 0 5px;
+}
+.groups .group .group-list .holder .player-heroes div {
+    display: inline-block;
+    margin: 0;
 }
 
 .avatars-list {
