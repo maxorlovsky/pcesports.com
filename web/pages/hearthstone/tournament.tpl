@@ -1,7 +1,7 @@
 <section class="container page lol">
 
 <div class="left-containers">
-	<? if ($this->data->settings['tournament-reg-hslan'] == 1 && !isset($_SESSION['participant']) && $_SESSION['participant']->game != 'hslan') { ?>
+	<? if ($this->data->settings['tournament-reg-hslan'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
 			<h1 class="bordered"><?=t('signin_league')?></h1>
