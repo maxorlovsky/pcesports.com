@@ -1792,13 +1792,6 @@ footer .games img {
     .container {
         width: 480px;
     }
-}
-
-/* Smallest phones */
-@media (max-width: 320px) {
-    .container {
-        width: 320px;
-    }
     .page {
         padding: 20px 0;
     }
@@ -1850,6 +1843,168 @@ footer .games img {
         display: none;
     }
     .block .block-header-wrapper {
+        background: none;
+    }
+    .block .block-header-wrapper h1 {
+        padding: 5px;
+    }
+    .big-block .image-holder {
+        max-width: 480px;
+        max-height: 140px;
+    }
+    .big-block .image-holder img {
+        max-width: 320px;
+    }
+    .big-block .add-box {
+        display: none;
+    }
+    .big-block.readmore {
+        padding: 2px !important;
+    }
+    .readmore .news-info {
+        float: none;
+        text-align: center;
+    }
+    .readmore .button {
+        float: none;
+        margin: 0 0 10px 100px;
+    }
+    .news .small-block {
+        float: none;
+        width: auto;
+        margin-right: 0;
+    }
+    .news .small-block .image-holder {
+        width: 225px;
+        margin: 0 auto;
+    }
+    #toTop, #hint-helper {
+        display: none !important;
+    }
+    .block .block-header-wrapper h1.bordered {
+        float: none;
+    }
+    .right-containers .block {
+        margin-bottom: 10px;
+    }
+    footer .separator {
+        width: 100% !important;
+        margin: 0 0 10px 0;
+        float: none;
+    }
+    footer .partners a {
+        position: initial !important;
+        left: initial !important;
+    }
+    footer .copyrights {
+        margin: 0;
+        padding: 0;
+    }
+    footer .copyrights .rights, footer .copyrights .devs {
+        margin: 3px 0 0 5px;
+        float: none;
+    }
+    #login-window {
+        width: 420px;
+    }
+    .contact-form .fields input {
+        width: 165px;
+    }
+    .contact-form .fields select {
+        width: 175px;
+    }
+    .contact-form .fields textarea {
+        width: 155px;
+        height: 150px;
+    }
+    .lol .title {
+        width: auto;
+        white-space: initial;
+    }
+    .lol .title img {
+        display: none;
+    }
+    .lol .right-part, .lol .left-part, .lol .mid-part {
+        float: none;
+        font-size: 15px;
+    }
+    .lol .mid-part {
+        display: none;
+    }
+    .ended-tournament, .active-tournament {
+        position: relative;
+        padding: 5px !important;
+    }
+    .lol .right-part .status {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+    .navbar .nav-sub {
+        display: block !important;
+        position: initial;
+        left: initial;
+        top: initial;
+        background: 0;
+    }
+    .navbar .nav-sub .nav-sublink {
+        border-bottom: 0;
+    }
+    .comments {
+        margin: 0 10px;
+    }
+    .profile .fields label {
+        width: 100px !important;
+    }
+    .profile .fields input, .profile .fields p {
+        width: 165px !important;
+    }
+    .profile .fields select {
+        width: 175px !important;
+    }
+    .profile .button {
+        margin-left: 90px !important;
+    }
+    .connections .status-holder {
+        width: 275px;
+    }
+    .connections .connect-line {
+        width: 30px;
+    }
+    .readmore .news-share {
+        float: none;
+        margin-left: 5px;
+    }
+    .leave-comment .formatting {
+        width: 300px;
+    }
+    .leave-comment .fields textarea {
+        width: 280px;
+    }
+    .chat .chat-input input[type="text"] {
+        width: 365px;
+    }
+    #tournamentCode  {
+        width: 315px;
+    }
+    .fields .holder {
+        width: 180px;
+        margin: 0 0 0 101px
+    }
+    .avatars-list {
+        padding: 5px 0;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+}
+
+/* Smallest phones */
+@media (max-width: 320px) {
+    .container {
+        width: 320px;
+    }
+    
+    .block .block-header-wrapper {
         min-height: 30px;
     }
     .block .block-header-wrapper h1 {
@@ -1896,7 +2051,7 @@ footer .games img {
         margin-bottom: 10px;
     }
     footer .separator {
-        width: 100%;
+        width: 100% !important;
         margin: 0 0 10px 0;
         float: none;
     }
@@ -1988,5 +2143,20 @@ footer .games img {
     }
     .leave-comment .fields textarea {
         width: 280px;
+    }
+    .chat .chat-input input[type="text"] {
+        width: 200px;
+    }
+    #tournamentCode  {
+        width: 155px;
+    }
+    .fields .holder {
+        width: 180px;
+        margin: 0 0 0 101px
+    }
+    .avatars-list {
+        padding: 5px 0;
+        max-height: 200px;
+        overflow-y: auto;
     }
 }
