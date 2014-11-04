@@ -45,10 +45,13 @@
                 <div class="chat-input">
                     <input type="text" id="chat-input" placeholder="<?=t('enter_text')?>" />
                     <div id="uploadScreen" class="attach-file" attr-msg="<?=t('attach_file')?>"></div>
+                    <div id="chatSound" class="chat-sound hint on" attr-msg="<?=t('turn_off_sound')?>"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
 
 <script src="<?=_cfg('static')?>/js/profiler.js"></script>

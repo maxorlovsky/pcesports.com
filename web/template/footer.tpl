@@ -1,7 +1,7 @@
 </section>
 
 <footer class="container">
-    <div class="separator">
+    <div class="separator left">
         <div class="block">
             <div class="block-header-wrapper">
                 <h1 class=""><?=t('available_leagues')?></h1>
@@ -13,17 +13,19 @@
         </div>
     </div>
     
-    <div class="separator">
+    <div class="separator right">
         <div class="block">
             <div class="block-header-wrapper">
                 <h1 class="bordered"><?=t('partners')?></h1>
             </div>
             <div class="block-content partners">
+                <a class="a" href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a.png" /></a>
                 <a class="unicon" href="http://www.unicon.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
+                <a class="lesf" href="http://lesf.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/lesf.png" /></a>
                 <a class="skillz" href="http://www.skillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/skillz.png" /></a>
                 <div class="clear"></div>
                 <a class="dreamforge" href="https://www.facebook.com/DreamforgeLatvia" target="_blank"><img src="<?=_cfg('img')?>/partners/dreamforge.png" /></a>
-                <a class="lesf" href="http://lesf.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/lesf.png" /></a>
+                <a class="aimskillz" href="http://www.aimskillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>
                 <div class="clear"></div>
             </div>
         </div>

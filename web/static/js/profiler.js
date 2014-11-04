@@ -8,6 +8,10 @@ $('.chat-input').on('click', function() {
    $('#chat-input').focus();
 });
 
+$('#chatSound').on('click', function() {
+    profiler.sound($(this));
+});
+
 $('#chat-input').on('keyup', function(e) {
     if (!e) {
         e = window.event;
@@ -71,12 +75,29 @@ new AjaxUpload(
 );
 $('input[name="upload"]').addClass('hint').attr('attr-msg', $('#uploadScreen').attr('attr-msg'));
 
+document.getElementById('ping').volume = 0.2;
+
 // --------------------------------------------------------------------------------------------------------------------
 
 
 //Main things
 var profiler = {
     checkTimer: 15,
+    chatStart: 0,
+    
+    sound: function(element) {
+        if (element.hasClass('on')) {
+            element.removeClass('on').addClass('off');
+            element.attr('attr-msg', g.str.turn_on_sound);
+            document.getElementById('ping').volume = 0;
+        }
+        else {
+            element.removeClass('off').addClass('on');
+            element.attr('attr-msg', g.str.turn_off_sound);
+            document.getElementById('ping').volume = 0.2;
+        }
+        element.trigger('mouseout');
+    },
     fetchChat: function() {
         var query = {
             type: 'POST',
@@ -88,12 +109,25 @@ var profiler = {
             success: function(answer) {
                 answer = answer.split(';');
                 if (answer[0] == 1) {
-                    checkTop = parseInt($('.chat-content').prop('scrollTop')) + parseInt($('.chat-content').height()) + 10;
+                    checkTop = parseInt($('.chat-content').scrollTop()) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     
-                    $('.chat-content').html(answer[1]);
+                    currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60').replace(/&gt;/g, '&#62');
                     
-                    if (checkTop == checkHeight) {
+                    if (escape(currentContent) != escape(answer[1]) && profiler.chatStart == 1) {
+                        //$('#ping').play();
+                        document.getElementById('ping').play();
+                        
+                        $('.chat-content').html(answer[1]);
+                        
+                        if (checkTop == checkHeight) {
+                            $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
+                        }
+                    }
+
+                    if (profiler.chatStart != 1) {
+                        profiler.chatStart = 1;
+                        $('.chat-content').html(answer[1]);
                         $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
                     }
                 }
@@ -120,7 +154,7 @@ var profiler = {
                 $('#opponentStatus').html(answer[2]);
                 
                 if ($('#tournamentCode').length > 0) {
-                    $('#tournamentCode').focus().val(answer[3]);
+                    $('#tournamentCode').val(answer[3]);//focus()
                 }
             }
         }
