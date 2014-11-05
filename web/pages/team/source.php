@@ -23,7 +23,7 @@ class team
             4 => array('avatar' => '', 'name' => 'Acolent', 'role' => 'Shoutcaster', 'contact' => '&nbsp;'),
             132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
             5 => array('avatar' => '', 'name' => 'Soldecroix', 'role' => 'Hearthstone judge', 'contact' => '&nbsp;'),
-            209 => array('avatar' => '', 'name' => '', 'role' => 'LoL EUNE manager', 'contact' => '&nbsp;'),
+            209 => array('avatar' => '', 'name' => '', 'role' => 'LoL EUNE manager', 'contact' => 'izaanko (at) pcesports (dot) com'),
         );
         
         if ($rows) {
