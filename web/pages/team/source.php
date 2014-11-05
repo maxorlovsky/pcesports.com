@@ -11,6 +11,7 @@ class team
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
             '`id` = 132 ' //arturs
+            '`id` = 209 ' //Zanko
         );
         
         $this->team = array(
