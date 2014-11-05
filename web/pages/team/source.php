@@ -10,7 +10,7 @@ class team
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
-            '`id` = 132 ' //arturs
+            '`id` = 132 '. //arturs
             '`id` = 209 ' //Zanko
         );
         
