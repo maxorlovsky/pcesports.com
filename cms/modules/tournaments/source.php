@@ -2,8 +2,12 @@
 
 class Tournaments
 {
+    public $chats;
+    public $system;
+    public $server;
+    public $config;
+    
 	function __construct($params = array()) {
-		
 		$this->system = $params['system'];
         
         $this->server = $params['var1'];
@@ -15,6 +19,16 @@ class Tournaments
 			'WHERE `f`.`done` = 0 AND '.
             '`t1`.`server` = "'.Db::escape($this->server).'" '
 		);
+        
+        $rows = Db::fetchRows('SELECT * '.
+			'FROM `tm_settings` '.
+			'WHERE `setting` = "tournament-auto-lol-euw" OR '.
+            '`setting` = "tournament-auto-lol-eune" '
+		);
+        
+        foreach($rows as $v) {
+            $this->config[$v->setting] = $v->value;
+        }
 
 		return $this;
 	}
@@ -46,7 +60,10 @@ class Tournaments
 		}
 		else {
 			$file = fopen($fileName, 'a');
-			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;<u>Pentaclick Admin</u>&#62; - '.$form[0].'</p>';
+			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> ';
+            $content .= '&#60;<u>'.$this->system->user->login.' (Manager)</u>&#62; - ';
+            $content .= $form[0];
+            $content .= '</p>';
 			fwrite($file, htmlspecialchars($content));
 			fclose($file);
 		}

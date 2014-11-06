@@ -154,7 +154,9 @@ class Cron extends System {
             'FROM `fights` AS `f` '.
             'LEFT JOIN `participants` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
             'LEFT JOIN `participants` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
-            'WHERE `f`.`done` = 0 '
+            'LEFT JOIN `lol_games` AS `lg` ON `lg`.`match_id` = `f`.`match_id` '.
+            'WHERE `f`.`done` = 0 AND '.
+            '`lg`.`ended` = 0 '
         );
         
         if ($rows)
@@ -176,13 +178,21 @@ class Cron extends System {
                     $team[$v2->participant_id]['players'][$v2->player_num] = array('id' => $v2->player_id, 'name' => $v2->name);
                 }
                 
-                Db::query('INSERT INTO `lol_games` SET '.
-                    '`match_id` = '.(int)$v->match_id.', '.
-                    '`message` = "Fight not found, ignoring match ('.Db::escape($team[$v->team1]['name']).' VS '.Db::escape($team[$v->team2]['name']).')", '.
-                    '`participant_id1` = '.(int)$v->team1.', '.
-                    '`participant_id2` = '.(int)$v->team2
-                );
-                $gameDbId = Db::lastId();
+                //Checking if match already registered
+                $row = Db::fetchRow('SELECT `id` FROM `lol_games` WHERE `match_id` = '.(int)$v->match_id.' ORDER BY `id` DESC LIMIT 1');
+                if (!$row) {
+                    Db::query('INSERT INTO `lol_games` SET '.
+                        '`match_id` = '.(int)$v->match_id.', '.
+                        '`message` = "Fight not found, ignoring match ('.Db::escape($team[$v->team1]['name']).' VS '.Db::escape($team[$v->team2]['name']).')", '.
+                        '`participant_id1` = '.(int)$v->team1.', '.
+                        '`participant_id2` = '.(int)$v->team2
+                    );
+                    $gameDbId = Db::lastId();
+                }
+                else {
+                    Db::query('UPDATE `lol_games` SET `date` = NOW() WHERE `id` = '.(int)$row->id.' LIMIT 1');
+                    $gameDbId = $row->id;
+                }
 
                 $i = 0;
                 foreach($insideRows as $vPlayer) {
@@ -259,41 +269,48 @@ class Cron extends System {
                                 $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0]['list'], $playersList[1]['list']), $emailText);
                                 $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
                                 
-                                //Registering email
+                                //Registering email, ending the game
                                 Db::query('UPDATE `lol_games` SET '.
                                     '`message` = "'.Db::escape($emailText).'", '.
-                                    '`game_id` = '.(int)$game->gameId.' '.
+                                    '`game_id` = '.(int)$game->gameId.', '.
+                                    '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
                                 );
                                 
-                                //Updating brackets
-                                $apiArray = array(
-                                    '_method' => 'put',
-                                    'match_id' => $v->match_id,
-                                    'match[scores_csv]' => $scores,
-                                    'match[winner_id]' => $winner,
-                                );
-                                if (_cfg('env') == 'prod') {
-                                    $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$this->data->settings['lol-current-number-'.$server].'/matches/'.$v->match_id.'.put', $apiArray);
+                                //Updating brackets only if automatic function is enabled
+                                if (_cfg('tournament-auto-lol-'.$server) == 1) {
+                                    $apiArray = array(
+                                        '_method' => 'put',
+                                        'match_id' => $v->match_id,
+                                        'match[scores_csv]' => $scores,
+                                        'match[winner_id]' => $winner,
+                                    );
+                                    if (_cfg('env') == 'prod') {
+                                        $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$this->data->settings['lol-current-number-'.$server].'/matches/'.$v->match_id.'.put', $apiArray);
+                                    }
+                                    else {
+                                        $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
+                                    }
+                                    
+                                    Db::query('UPDATE `participants` SET `ended` = 1 '.
+                                        'WHERE `game` = "lol" AND '.
+                                        '`server` = "'.$server.'" AND '.
+                                        '`id` = '.(int)$loserId.' '
+                                    );
+                                    
+                                    Db::query('UPDATE `fights` SET `done` = 1 '.
+                                        'WHERE `match_id` = '.(int)$v->match_id.' '
+                                    );
                                 }
-                                else {
-                                    $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
-                                }
-                                
-                                Db::query('UPDATE `participants` SET `ended` = 1 '.
-                                    'WHERE `game` = "lol" AND '.
-                                    '`server` = "'.$server.'" AND '.
-                                    '`id` = '.(int)$loserId.' '
-                                );
-                                
-                                Db::query('UPDATE `fights` SET `done` = 1 '.
-                                    'WHERE `match_id` = '.(int)$v->match_id.' '
-                                );
                                 
                                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
                                     
                                 $file = fopen($fileName, 'a');
-                                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Automatic message. Team '.$team[$whoWon]['name'].' won</b></p>';
+                                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
+                                if (_cfg('tournament-auto-lol-'.$server) == 1) {
+                                    $content .= ' (automatic advancement disabled, manual check required) ';
+                                }
+                                $content .= '</p>';
                                 fwrite($file, htmlspecialchars($content));
                                 fclose($file);
                             }

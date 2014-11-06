@@ -1,12 +1,22 @@
 <h1>Tournaments</h1>
 
+<table class="table">
+    <tr><td colspan="2"><center><b>EUNE settings</b></center></td></tr>
+    <tr>
+        <td width="30%"><b>Automatic advancement</b></td>
+        <td width="70%"><input type="checkbox" id="auto-advance" <?=($module->config['tournament-auto-lol-eune']==1?'checked':null)?>/></td>
+    </tr>
+</table>
+<br /><br />
 <table class="table"><tr><td>
 	<?
 	if ($module->chats) {
 		foreach($module->chats as $v) {
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>">
-		<h4><b class="player" id="player_<?=$v->id1?>"><?=$v->name1?></b> VS <b class="player" id="player_<?=$v->id2?>"><?=$v->name2?></b> [<?=$v->match_id?>]</h4>
+		<h4><b class="player" id="player_<?=$v->id1?>"><?=$v->name1?></b> VS <b class="player" id="player_<?=$v->id2?>"><?=$v->name2?></b></h4>
+        <div class="finish-match hint" name="Finish match">[End]</div>
+        <div class="close-chat hint" name="Hide chat">[X]</div>
 		<div class="chat-content"></div>
 		<div class="chat-input">
 			<input type="text" class="chat-submit" id="chat-input" attr-id="<?=$v->id1?>_vs_<?=$v->id2?>" />
@@ -18,7 +28,50 @@
 	?>
 </td></tr></table>
 
+<div class="finish-popup">
+    
+</div>
+
 <script>
+$('.finish-match').on('click', function() {
+    $('.finish-popup').show();
+});
+
+$('#auto-advance').on('click', function() {
+    showMsg(2,strings['loading']);
+    
+    var id = $(this).attr('id');
+    var checked = 0;
+    if ($(this).is(':checked') === true) {
+        checked = 1;
+    }
+    
+    var query = {
+        type: 'POST',
+        timeout: 10000,
+        data: {
+            control: 'saveSetting',
+            param: 'tournament-auto-lol-eune',
+            value: checked
+        },
+        success: function(data) {
+            answer = data.split(';');
+            cleanMsg();
+            showMsg(answer[0],answer[1]);
+            messageTimer = setTimeout(cleanMsg,3000);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            showMsg(0,'Error timeout');
+            messageTimer = setTimeout(cleanMsg,3000);
+        }
+    };
+    ajax(query);
+});
+
+$('.close-chat').on('click', function() {
+    $(this).parent().hide('slow');;
+});
+
 $('.chat-input').on('click', function() {
    $(this).closest('#chat-input').focus();
 });
@@ -136,10 +189,11 @@ $(document).ready(function() {
     border: 1px solid #333;
     border-radius: 8px;
     float: left;
-    width: 590px;
+    width: 49%;
     background-color: #fff;
     margin-left: 10px;
     margin-bottom: 10px;
+    position: relative;
 }
 .chat h4 {
 	font-size:15px;
@@ -160,6 +214,26 @@ $(document).ready(function() {
 .chat .chat-content #notice {
     font-size: 13px;
     color: #999;
+}
+.chat .close-chat {
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+.chat .close-chat:hover {
+    color: blue;
+}
+.chat .finish-match {
+    position: absolute;
+    top: 1px;
+    right: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+.chat .finish-match:hover {
+    color: blue;
 }
 .chat .chat-input {
     padding: 0 10px;

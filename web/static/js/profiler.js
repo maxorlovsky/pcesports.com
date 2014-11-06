@@ -98,6 +98,9 @@ var profiler = {
         }
         element.trigger('mouseout');
     },
+    stripTags: function(string) {
+        return string.replace(/(<([^>]+)>)/ig,'');
+    },
     fetchChat: function() {
         var query = {
             type: 'POST',
@@ -113,8 +116,7 @@ var profiler = {
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     
                     currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60').replace(/&gt;/g, '&#62');
-                    
-                    if (escape(currentContent) != escape(answer[1]) && profiler.chatStart == 1) {
+                    if (escape(profiler.stripTags(currentContent)) != escape(profiler.stripTags(answer[1])) && profiler.chatStart == 1) {
                         //$('#ping').play();
                         document.getElementById('ping').play();
                         
