@@ -20,17 +20,35 @@ $heroes = array(
     8 => 'paladin',
     9 => 'priest',
 );
-        
-$q = mysql_query('SELECT `name`, `contact_info` '.
-    'FROM `participants` '.
-    'WHERE `game` = "hslan" AND `approved` = 1 AND `deleted` = 0 '.
-    'ORDER BY `id` ASC '.
-    'LIMIT 32'
+
+$group = array(
+    1 => 'A',
+    2 => 'B',
+    3 => 'C',
+    4 => 'D',
+    5 => 'E',
+    6 => 'F',
+    7 => 'G',
+    8 => 'H',
 );
 
+$q = mysql_query('SELECT `name`, `contact_info`, `seed_number` '.
+    'FROM `participants` '.
+    'WHERE `game` = "hslan" AND `approved` = 1 AND `deleted` = 0 AND `seed_number` != 0 '.
+    'ORDER BY `seed_number` ASC '.
+    'LIMIT 32'
+);
+$previouSeed = 0;
 while($r = mysql_fetch_object($q)) {
     $info = json_decode($r->contact_info);
-    echo '<b>'.$r->name.'</b> - '.ucfirst($heroes[$info->hero1]).' / '.ucfirst($heroes[$info->hero2]).' '.($info->phone?'('.$info->phone.')':null).'<br />';
+    if ($r->seed_number != $previousSeed) {
+        echo '<b>Group '.$group[$r->seed_number].'</b><br />';
+    }
+    echo $r->name.' - '.
+        ucfirst($heroes[$info->hero1]).' / '.ucfirst($heroes[$info->hero2]).' '.' / '.ucfirst($heroes[$info->hero3]).' '.' / '.ucfirst($heroes[$info->hero4]).' '.
+        ($info->phone?'('.$info->phone.')':null).'<br />';
+        
+    $previousSeed = $r->seed_number;
 }
 
 ?>
