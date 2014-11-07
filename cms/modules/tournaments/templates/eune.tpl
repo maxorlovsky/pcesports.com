@@ -1,10 +1,10 @@
 <h1>Tournaments</h1>
 
 <table class="table">
-    <tr><td colspan="2"><center><b>EUNE settings</b></center></td></tr>
+    <tr><td colspan="2"><center><b><?=strtoupper($module->server)?> settings</b></center></td></tr>
     <tr>
         <td width="30%"><b>Automatic advancement</b></td>
-        <td width="70%"><input type="checkbox" id="auto-advance" <?=($module->config['tournament-auto-lol-eune']==1?'checked':null)?>/></td>
+        <td width="70%"><input type="checkbox" id="auto-advance" <?=($module->config['tournament-auto-lol-'.$module->server]==1?'checked':null)?>/></td>
     </tr>
 </table>
 <br /><br />
@@ -52,7 +52,7 @@ $('.finish-match').on('click', function() {
 $('.finish-popup button.team1, .finish-popup button.team2').on('click', function() {
     var form = [];
     form[0] = $(this).parent().attr('attr-match-id');
-    form[1] = 'eune';
+    form[1] = '<?=$module->server?>';
     form[2] = '0-0';
     form[3] = $('button.'+$(this).attr('class')).attr('attr-id');
     
@@ -110,7 +110,7 @@ $('#auto-advance').on('click', function() {
         timeout: 10000,
         data: {
             control: 'saveSetting',
-            param: 'tournament-auto-lol-eune',
+            param: 'tournament-auto-lol-<?=$module->server?>',
             value: checked
         },
         success: function(data) {
