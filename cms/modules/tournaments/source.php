@@ -102,6 +102,11 @@ class Tournaments
         $winner = (int)$form[3]; //winner id
         $loser = (int)$form[4]; //looser id
         
+        $q = Db::query('SELECT `id` FROM `fights` WHERE `match_id` = '.(int)$matchId);
+        if ($q->num_rows != 0) {
+            return '0;Match already ended';
+        }
+        
         if (!in_array($server, array('euw','eune'))) {
             return '0;Server error';
         }
