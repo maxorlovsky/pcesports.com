@@ -42,6 +42,9 @@ $previouSeed = 0;
 while($r = mysql_fetch_object($q)) {
     $info = json_decode($r->contact_info);
     if ($r->seed_number != $previousSeed) {
+        if ($r->seed_number != 1) {
+            echo '<br />';
+        }
         echo '<b>Group '.$group[$r->seed_number].'</b><br />';
     }
     echo $r->name.' - '.
