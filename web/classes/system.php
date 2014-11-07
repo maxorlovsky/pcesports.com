@@ -444,8 +444,8 @@ class System
         $mailData = 'MIME-Version: 1.0'."\r\n";
         $mailData .= 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
         $mailData .= 'Subject: '.$subject. "\r\n";
-        $mailData .= 'Reply-To: '._cfg('smtpMailFrom'). "\r\n";
-        $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailFrom').'> '."\r\n";
+        $mailData .= 'Reply-To: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailName').'> '."\r\n";
+        $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailName').'> '."\r\n";
         $mailData .= 'To: '.$email.''."\r\n";
         $mailData .= 'X-Priority: 3'."\r\n";
         $mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //

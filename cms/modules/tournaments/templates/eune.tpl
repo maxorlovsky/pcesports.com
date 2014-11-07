@@ -13,7 +13,7 @@
 	if ($module->chats) {
 		foreach($module->chats as $v) {
 	?>
-	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>">
+	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>" attr-challoge-team1="<?=$v->challongeTeam1?>" attr-challoge-team2="<?=$v->challongeTeam2?>" attr-name-team1="<?=$v->name1?>" attr-name-team2="<?=$v->name2?>">
 		<h4><b class="player" id="player_<?=$v->id1?>"><?=$v->name1?></b> VS <b class="player" id="player_<?=$v->id2?>"><?=$v->name2?></b></h4>
         <div class="finish-match hint" name="Finish match">[End]</div>
         <div class="close-chat hint" name="Hide chat">[X]</div>
@@ -29,12 +29,71 @@
 </td></tr></table>
 
 <div class="finish-popup">
-    
+    <h4>Select the winner</h4>
+    <div class="close">[X]</div>
+    <div class="buttons" attr-match-id="">
+        <button class="team1" attr-id="">The Real Fapping Lovers</button>
+        <button class="team2" attr-id="">Penta</button>
+    </div>
 </div>
 
 <script>
 $('.finish-match').on('click', function() {
+    var teamChallogeIds = [$(this).parent().attr('attr-challoge-team1'), $(this).parent().attr('attr-challoge-team2')];
+    var teamNames = [$(this).parent().attr('attr-name-team1'), $(this).parent().attr('attr-name-team2')];
+    
+    TM.fadeScr();
     $('.finish-popup').show();
+    $('.finish-popup').find('button.team1').attr('attr-id', teamChallogeIds[0]).text(teamNames[0]);
+    $('.finish-popup').find('button.team2').attr('attr-id', teamChallogeIds[1]).text(teamNames[1]);
+    $('.finish-popup').find('.buttons').attr('attr-match-id', $(this).parent().attr('id'));
+});
+
+$('.finish-popup button.team1, .finish-popup button.team2').on('click', function() {
+    var form = [];
+    form[0] = $(this).parent().attr('attr-match-id');
+    form[1] = 'eune';
+    form[2] = '0-0';
+    form[3] = $('button.'+$(this).attr('class')).attr('attr-id');
+    
+    if ($(this).attr('class') == 'team1') {
+        form[2] = '1-0';
+        form[4] = $('button.team2').attr('attr-id');
+    }
+    else if ($(this).attr('class') == 'team2') {
+        form[2] = '0-1';
+        form[4] = $('button.team1').attr('attr-id');
+    }
+    else {
+        alert('Error');
+        return false;
+    }
+    
+    var query = {
+        type: 'POST',
+        data: {
+            control: 'submitForm',
+            module: 'tournaments',
+            action: 'finishMatch',
+            form: form
+        },
+        success: function(answer) {
+            answer = answer.split(';');
+            if (answer[0] == 1) {
+                $('.finish-popup .close').trigger('click');
+                $('#'+form[0]+' .close-chat').trigger('click');
+                return false;
+            }
+            
+            alert('Error: '+answer[1]);
+        }
+    }
+    ajax(query);
+});
+
+$('.finish-popup .close, #fader').on('click', function() {
+    $('#fader').hide();
+    $('.finish-popup').hide();
 });
 
 $('#auto-advance').on('click', function() {
@@ -69,7 +128,11 @@ $('#auto-advance').on('click', function() {
 });
 
 $('.close-chat').on('click', function() {
-    $(this).parent().hide('slow');;
+    $(this).parent().find('div').css('visibility', 'hidden');
+    $(this).parent().find('h4').css({width: 0, height: 22, overflow: 'hidden'});
+    $(this).parent().animate({width:0}, 500, function() {
+        $(this).remove();
+    });
 });
 
 $('.chat-input').on('click', function() {
@@ -191,9 +254,12 @@ $(document).ready(function() {
     float: left;
     width: 49%;
     background-color: #fff;
-    margin-left: 10px;
+    margin-left: 0;
     margin-bottom: 10px;
     position: relative;
+}
+.chat:nth-child(2n) {
+    margin-left: 10px;
 }
 .chat h4 {
 	font-size:15px;
@@ -258,5 +324,44 @@ $(document).ready(function() {
     .chat {
         width: 280px;
     }
+}
+
+.finish-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -212px;
+    margin-top: -40px;
+    width: 424px;
+    height: 80px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 8px;
+    z-index: 200;
+}
+.finish-popup h4 {
+    padding: 3px 0 0 10px;
+    margin: 0;
+}
+.finish-popup .close {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    transition: .3s;
+    cursor: pointer;
+}
+.finish-popup .close:hover {
+    color: blue;
+}
+.finish-popup .buttons {
+    margin: 10px 0 0 10px;
+}
+.finish-popup button {
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
