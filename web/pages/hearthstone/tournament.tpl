@@ -97,7 +97,7 @@
                                     if ( ($this->pickedTournament == 1 && isset($p->contact_info->place) && $p->contact_info->place == 1) ||
                                          ($this->pickedTournament >= 2 && isset($p->contact_info->place) && $p->contact_info->place >= 2)
                                        ){
-                                        $wonClass = 'player-won';
+                                        //$wonClass = 'player-won';
                                     }
                                 ?>
                                 <div class="holder <?=$wonClass?>">
