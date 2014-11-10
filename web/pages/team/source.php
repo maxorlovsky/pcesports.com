@@ -16,7 +16,7 @@ class team
         );
         
         $this->team = array(
-            1 => array('avatar' => '', 'name' => '', 'role' => 'Founder', 'contact' => 'maxtream (at) pcesports (dot) com'),
+            1 => array('avatar' => '', 'name' => '', 'role' => 'Founder', 'contact' => 'info (at) pcesports (dot) com'),
             213 => array('avatar' => '', 'name' => '', 'role' => 'Co-founder', 'contact' => 'aven (at) pcesports (dot) com'),
             112 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
             44 => array('avatar' => '', 'name' => '', 'role' => 'Communications manager', 'contact' => 'connect (at) pcesports (dot) com'),
