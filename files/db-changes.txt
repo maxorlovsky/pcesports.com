@@ -1,3 +1,11 @@
+# 10.11.2014
+CREATE TABLE `users_auth` (
+`user_id` INT UNSIGNED NOT NULL ,
+`token` VARCHAR( 50 ) NOT NULL ,
+`timestamp` INT UNSIGNED NOT NULL ,
+PRIMARY KEY (  `user_id` )
+) ENGINE = INNODB;
+
 # 06.11.2014
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-auto-lol-eune', '1', 'Авто продвижение (League of Legends - EUNE)', 'checkbox', '3');
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-auto-lol-euw', '1', 'Авто продвижение (League of Legends - EUW)', 'checkbox', '2');
