@@ -343,7 +343,7 @@ class System
     }
 	
 	public function runAPI($apiAdditionalData, $server, $fullReturn = false) {
-        if (!$apiAdditionalData || !in_array($server, array('eune', 'euw'))) {
+        if (!$apiAdditionalData || !in_array($server, array_keys(_cfg('lolRegions')))) {
             return false;
         }
         

@@ -1766,6 +1766,55 @@ footer .games img {
     transition: .5s;
 }
 
+.summoners .summoner {
+    width: 100%;
+    display: block;
+    padding: 0 !important;
+    height: 38px;
+}
+.summoners .summoner:hover {
+    background-color: #eee;
+    transition: .3s;
+}
+.summoners .summoner.notApproved *:not(.status) {
+    opacity: 0.5;
+}
+.summoners .summoner .game-logo {
+    float: left;
+    height: 30px;
+    padding: 4px 0 0 5px;
+}
+.summoners .summoner .summoner-name {
+    display: inline-block;
+    height: 30px;
+    margin: 10px 0 0 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.summoners .summoner .right {
+    float: right;
+    padding: 10px 10px 0 0;
+}
+.summoners .summoner .status {
+    float: right;
+    line-height: 38px;
+    margin-right: 20px;
+    width: 130px;
+    text-align: center;
+}
+.summoners .summoner.approved .status {
+    background-color: #090;
+    color: #000;
+    cursor: default;
+}
+.summoners .summoner.notApproved .status {
+    background-color: #900;
+    color: #fff;
+}
+.summoner-form .success-sent {
+    margin-top: 20px;
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
 }

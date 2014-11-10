@@ -1,3 +1,7 @@
+$('#addSummoner').on('click', function() {
+    PC.addSummoner();
+});
+
 $('#checkInLol').on('click', function() {
     PC.checkIn();
 });
@@ -185,6 +189,40 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    addSummoner: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        $('#addSummoner').addClass('alpha');
+        $('.summoner-form #error').slideUp('fast');
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'addSummoner',
+                name: $('.summoner-form #name').val(),
+                region: $('.summoner-form #region').val()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $('#addSummoner').removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.success-sent').slideDown('fast');
+                    $('.success-sent p').html(answer[1]);
+                }
+                else {
+                    $('.summoner-form #error').html('<p>'+answer[1]+'</p>').slideDown('fast');
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     checkIn: function() {
         if (this.formInProgress == 1) {
             return false;

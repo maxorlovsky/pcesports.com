@@ -114,7 +114,8 @@ class profile extends System
         
         $return->summoners = Db::fetchRows(
             'SELECT * FROM `summoners` '.
-            'WHERE `user_id` = '.(int)$this->data->user->id
+            'WHERE `user_id` = '.(int)$this->data->user->id.' '.
+            'ORDER BY `id`, `approved` '
         );
         
         return $return;

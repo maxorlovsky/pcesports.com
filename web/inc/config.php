@@ -37,7 +37,14 @@ $cfg['streamLanguages'] = array(
     'both'  => 'both',
 );
 $cfg['lolRegions'] = array(
-    'na'    => 'NA',
-    'euw'    => 'EUW',
-    'eune'  => 'EUNE',
+    'euw' => 'Europe West',
+    'eune' => 'Europe Nordic & East',
+    'tr' => 'Turkey',
+    'ru' => 'Russia',
+    'na' => 'North America',
+    'lan' => 'Latin America North',
+    'las' => 'Latin America South',
+    'kr' => 'Korea',
+    'br' => 'Brazil',
+    'oce' => 'Oceania',
 );

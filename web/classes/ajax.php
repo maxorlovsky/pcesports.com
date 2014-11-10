@@ -26,6 +26,7 @@ class Ajax extends System
         'removeStreamer',
         'editStreamer',
         'checkInLOL',
+        'addSummoner',
 	);
 	
     public function ajaxRun($data) {
@@ -39,6 +40,42 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function addSummoner($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $name = $data['name'];
+        $region = $data['region'];
+        
+        if (!$name) {
+            return '0;'.t('input_name');
+        }
+        else if (!$region) {
+            return '0;Set region';
+        }
+        $response = $this->runAPI('/'.$region.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($name)), $region);
+        
+        if ($response == 404 || !$response) {
+            return '0;'.t('summoner_not_found').$response;
+        }
+        //$response->id;
+        //$response->name;
+        
+        $verificationCode = 'PC'.strtoupper(substr(md5(time().$response->name.$response->id), 1, 8));
+        
+        Db::query(
+            'INSERT INTO `summoners` SET '.
+            '`user_id`  = '.(int)$this->data->user->id.', '.
+            '`region` = "'.Db::escape($region).'", '.
+            '`summoner_id` = '.(int)$response->id.', '.
+            '`name` = "'.Db::escape($response->name).'", '.
+            '`masteries` = "'.$verificationCode.'" '
+        );
+        
+        return '1;'.t('create_masteries_page').': <b>'.$verificationCode.'</b>'; //Create masteries page with verification code
     }
     
     protected function checkInLOL() {

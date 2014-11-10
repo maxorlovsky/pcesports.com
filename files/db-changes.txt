@@ -1,10 +1,12 @@
 # 10.11.2014
-CREATE TABLE `users_auth` (
-`user_id` INT UNSIGNED NOT NULL ,
-`token` VARCHAR( 50 ) NOT NULL ,
-`timestamp` INT UNSIGNED NOT NULL ,
-PRIMARY KEY (  `user_id` )
-) ENGINE = INNODB;
+CREATE TABLE IF NOT EXISTS `users_auth` (
+  `user_id` int(10) unsigned NOT NULL,
+  `token` varchar(50) NOT NULL,
+  `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE  `summoners` ADD  `approved` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT  '0';
+ALTER TABLE  `summoners` ADD  `masteries` VARCHAR( 15 ) NULL;
 
 # 06.11.2014
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-auto-lol-eune', '1', 'Авто продвижение (League of Legends - EUNE)', 'checkbox', '3');

@@ -1,7 +1,7 @@
 <section class="container page contacts">
 
 <div class="left-containers">
-    <div class="block streamers edit-streamers">
+    <div class="block summoners">
         <div class="block-header-wrapper">
             <h1 class=""><?=t('added_summoners')?></h1>
         </div>
@@ -9,25 +9,12 @@
 		if ($this->additional->summoners) {
         	foreach($this->additional->summoners as $v) {
         ?>
-            <div class="block-content streamer" target="_blank" attr-id="<?=$v->id?>">
-                <? if ($v->game != 'other') { ?>
-                    <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
-                <? } ?>
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
-                
-                <span class="viewers editStreamerAction">
-                    <select class="change_game">
-                        <? foreach(_cfg('streamGames') as $k2 => $v2) { ?>
-                        <option value="<?=$k2?>" <?=($v->game==$k2?'selected="selected"':null)?>><?=t($v2)?></option>
-                        <? } ?>
-                    </select>
-                    <select class="change_languages">
-                        <? foreach(_cfg('streamLanguages') as $k2 => $v2) { ?>
-                        <option value="<?=$k2?>" <?=($v->languages==$k2?'selected="selected"':null)?>><?=ucfirst(t($v2))?></option>
-                        <? } ?>
-                    </select>
-                    <a href="javascript:void(0);" id="removeStreamer"><?=t('remove')?></a>
-                </span>
+            <div class="block-content summoner <?=($v->approved==1?'approved':'notApproved')?>" target="_blank" attr-id="<?=$v->id?>">
+                <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
+                <label class="summoner-name"><?=$v->name?></label>
+                <a href="javascript:void(0);" id="removeSummoner" class="right"><?=t('remove')?></a>
+                <a href="javascript:void(0);" class="status <?=($v->approved==1?null:'hint')?>" attr-msg="<?=t('create_masteries_page')?>: <b><?=$v->masteries?></b>"><?=($v->approved==1?'Approved':'Approval required')?></a>
+                <div class="clear"></div>
             </div>
         <?
         	}
@@ -48,7 +35,7 @@
         </div>
         
         <div class="block-content">
-            <form class="streamer-form contact-form">
+            <form class="summoner-form contact-form">
                 <div id="error"><p></p></div>
         
                 <div class="fields">
@@ -56,10 +43,10 @@
                     <input name="name" id="name" type="text" placeholder="" />
                 </div>
                 <div class="fields">
-                    <label for="game"><?=t('region')?></label>
-                    <select name="game" id="game">
+                    <label for="region"><?=t('region')?></label>
+                    <select name="region" id="region">
                         <? foreach(_cfg('lolRegions') as $k => $v) { ?>
-                        <option value="<?=$k?>"><?=t($v)?></option>
+                        <option value="<?=$k?>"><?=$v?></option>
                         <? } ?>
                     </select>
                 </div>
