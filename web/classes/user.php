@@ -42,10 +42,37 @@ class User extends System
             }
             else {
                 $_SESSION['user'] = (array)$row;
+                self::token();
             }
         }
         
         return true;
+    }
+    
+    public static function token() {
+        if (!$_SESSION['user'] || !$_SESSION['user']['id']) {
+            return false;
+        }
+        
+        $_SESSION['user']['token'] = sha1(rand(0,9999).time());
+        Db::query('DELETE FROM `users_auth` WHERE `user_id` = '.(int)$_SESSION['user']['id'].' LIMIT 1');
+        Db::query('INSERT IGNORE INTO `users_auth` '.
+            'SET '.
+            '`user_id` = '.(int)$_SESSION['user']['id'].', '.
+            '`token` = "'.Db::escape($_SESSION['user']['token']).'" '
+        );
+        
+        $days = time()+7776000; //90 days
+        setcookie('uid', $_SESSION['user']['id'], $days, '/', 'pcesports.com', false, true);
+        setcookie('token', $_SESSION['user']['token'], $days, '/', 'pcesports.com', false, true);
+        
+        return true;
+    }
+    
+    public static function tokenDestroy() {
+        Db::query('DELETE FROM `users_auth` WHERE `user_id` = '.(int)$_COOKIE['uid'].' LIMIT 1');
+        setcookie('uid', 0, time(), '/', 'pcesports.com', false, true);
+        setcookie('token', 0, time(), '/', 'pcesports.com', false, true);
     }
     
     private function socialRegister($data) {
@@ -86,7 +113,9 @@ class User extends System
         $_SESSION['registration'] = 1;
     	$_SESSION['user'] = (array)$row;
         
-    	return true;
+        User::token();
+        
+        return true;
     }
     
     private function register($data) {
@@ -153,10 +182,19 @@ class User extends System
     }
     
     public static function checkUser($user) {
+        $q = Db::query(
+            'SELECT * FROM `users_auth` '.
+            'WHERE `user_id` = '.(int)$_COOKIE['uid'].' AND '.
+            '`token` = "'.Db::escape($_COOKIE['token']).'" '
+        );
+
+        if ($q->num_rows == 0) {
+            return false;
+        }
+        
         $userRow = Db::fetchRow(
             'SELECT * FROM `users` '.
-            'WHERE `id` = '.(int)$user['id'].' AND '.
-            '`email` = "'.Db::escape($user['email']).'" '
+            'WHERE `id` = '.(int)$_COOKIE['uid'].' '
         );
         
         if (!$userRow) {
@@ -180,7 +218,8 @@ class User extends System
     }
     
     public static function logOut() {
-        unset($_SESSION['user'], $_SESSION['participant']);
+        self::tokenDestroy();
+        unset($_SESSION['user'], $_SESSION['participant'], $_COOKIE['uid'], $_COOKIE['token']);
         session_destroy();
         
         return true;

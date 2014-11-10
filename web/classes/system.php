@@ -46,7 +46,7 @@ class System
         	$data['token'] = false;
         }
         
-        if (isset($_SESSION['user'])) {
+        if (isset($_SESSION['user']) || $_COOKIE['uid'] && $_COOKIE['token']) {
             $checkUser = User::checkUser($_SESSION['user']);
         }
         else {
@@ -56,6 +56,7 @@ class System
         if ($checkUser) {
             $this->logged_in = 1;
             $this->data->user = $checkUser;
+            //User::token();
         }
         else {
             $this->logged_in = 0;
