@@ -58,7 +58,7 @@ class Ajax extends System
         
         $response = $this->runAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
         foreach($response->pages as $v) {
-            if ($v->name == $row->masteries) {
+            if (trim($v->name) == trim($row->masteries)) {
                 Db::fetchRow(
                     'UPDATE `summoners` SET '.
                     '`approved` = 1, '.
