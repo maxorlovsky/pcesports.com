@@ -28,6 +28,7 @@ class Ajax extends System
         'checkInLOL',
         'addSummoner',
         'removeSummoner',
+        'verifySummoner',
 	);
 	
     public function ajaxRun($data) {
@@ -41,6 +42,36 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function verifySummoner($data) {
+        $row = Db::fetchRow(
+            'SELECT `id`, `region`, `summoner_id`, `masteries` FROM `summoners` WHERE '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`user_id`  = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        
+        if ($row == false) {
+            return '0;'.t('summoner_not_found');
+        }
+        
+        $response = $this->runAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
+        foreach($response->pages as $v) {
+            if ($v->name == $row->masteries) {
+                Db::fetchRow(
+                    'UPDATE `summoners` SET '.
+                    '`approved` = 1, '.
+                    '`masteries` = "" '.
+                    'WHERE `id` = '.(int)$row->id.' AND '.
+                    '`user_id`  = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1 '
+                );
+                return '1;'.$row->id;
+            }
+        }
+        
+        return '0;'.str_replace('%code%', $row->masteries, t('mastery_page_not_found'));
     }
     
     protected function removeSummoner($data) {

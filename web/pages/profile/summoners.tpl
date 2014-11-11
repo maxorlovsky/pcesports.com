@@ -50,11 +50,14 @@
             <h1 class=""><?=t('how_to_approve_summoner')?></h1>
         </div>
         
-        <div class="block-content">
-            <p><?=t('create_masteries_page')?>: <b id="masteries-code"><?=$v->masteries?></b></p>
-            <input type="text" class="verification-code" value="<?=$v->masteries?>" />
-            <img src="<?=_cfg('img')?>/summoner-verification.jpg" /> <!--width 750-->
+        <div class="block-content summoner-verification">
+            <p><?=str_replace('%code%', '<b id="masteries-code"></b>', t('create_masteries_page'))?></p>
+            <div class="summoner-verification-image">
+                <input type="text" class="verification-code" value="<?=$v->masteries?>" readonly="readonly" />
+                <img src="<?=_cfg('img')?>/summoner-verification.jpg" />
+            </div>
             <input type="hidden" id="summonerVerifyId" value="" />
+            <div id="error"><p></p></div>
             <a href="javascript:void(0);" class="button" id="verifySummoner"><?=t('verify_summoner')?></a>
         </div>
     </div>

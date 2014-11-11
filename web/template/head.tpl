@@ -46,6 +46,7 @@
                 enter_url: '<?=t('enter_url')?>',
                 turn_off_sound: '<?=t('turn_off_sound')?>',
                 turn_on_sound: '<?=t('turn_on_sound')?>',
+                approved: '<?=t('approved')?>',
             }
         };
 		

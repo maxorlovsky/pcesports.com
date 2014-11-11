@@ -43,7 +43,7 @@ class System
         	$data['token'] = false;
         }
         
-        if (isset($_SESSION['user']) || $_COOKIE['uid'] && $_COOKIE['token']) {
+        if (isset($_SESSION['user']) || isset($_COOKIE['uid']) && $_COOKIE['uid'] && isset($_COOKIE['token']) && $_COOKIE['token']) {
             $checkUser = User::checkUser($_SESSION['user']);
         }
         else {

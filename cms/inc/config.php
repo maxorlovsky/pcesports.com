@@ -91,6 +91,7 @@ case 'dev':
     $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
     $cfg['site'] = $cfg['protocol'].'://dev.pcesports.com';
     
+    error_reporting(E_ALL & ~E_NOTICE);
     ini_set('display_errors', 1);
     
 	break;

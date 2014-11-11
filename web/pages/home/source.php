@@ -5,8 +5,13 @@ class home
 	public $news;
 	public $slider;
     public $streams;
+    public $timezone = 0;
 	
 	public function __construct($params = array()) {
+    
+        if (isset($this->data->user->timezone)) {
+            $this->timezone = $this->data->user->timezone;
+        }
 		
 		$this->slider = array(
 			array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),

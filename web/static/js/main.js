@@ -9,6 +9,10 @@ $('.summoners').on('click', '.notApproved .status', function() {
     });
 });
 
+$('#verifySummoner').on('click', function() {
+    PC.verifySummoner($(this));
+});
+
 $('.summoners').on('click', '.removeSummoner', function() {
     PC.removeSummoner($(this).closest('.summoner'));
 });
@@ -204,6 +208,43 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    verifySummoner: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        $(element).addClass('alpha');
+        $('.summoner-verification #error').slideUp('fast');
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'verifySummoner',
+                id: parseInt($('#summonerVerifyId').val()),
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $(element).removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.summoner-verification #error').slideUp('fast');
+                    $('.how_to_approve').slideUp('slow', function() {
+                        $('.summoner[attr-id="'+answer[1]+'"]').removeClass('notApproved').addClass('approved');
+                        $('.summoner[attr-id="'+answer[1]+'"] .status').removeClass('hint').html(g.str.approved);
+                    });
+                }
+                else {
+                    $('.summoner-verification #error p').html(answer[1]);
+                    $('.summoner-verification #error').slideDown('fast')
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     removeSummoner: function(element) {
         if (this.formInProgress == 1) {
             return false;

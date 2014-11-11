@@ -1808,7 +1808,7 @@ footer .games img {
 }
 .summoners .summoner.approved .status {
     background-color: #090;
-    color: #000;
+    color: #fff;
     cursor: default;
 }
 .summoners .summoner.notApproved .status {
@@ -1821,14 +1821,16 @@ footer .games img {
 
 .how_to_approve {
     margin-top: 40px;
-    position: relative;
     display: none;
+}
+.summoner-verification-image {
+    position: relative;
 }
 .how_to_approve .verification-code {
     position: absolute;
-    top: 194px;
-    left: 175px;
-    width: 140px;
+    top: 87px;
+    left: 92px;
+    width: 175px;
     height: 25px;
     line-height: 28px;
     font-size: 20px;
