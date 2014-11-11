@@ -13,7 +13,7 @@ class team
             '`id` = 132 OR '. //arturs
             '`id` = 209 OR '. //zanko
             '`id` = 213 OR '. //aven
-            '`id` = 126 OR '. //angel-ada
+            '`id` = 126 OR ' //angel-ada
             
         );
         
