@@ -12,7 +12,9 @@ class team
             '`id` = 112 OR '. //anya
             '`id` = 132 OR '. //arturs
             '`id` = 209 OR '. //zanko
-            '`id` = 213 ' //aven
+            '`id` = 213 OR '. //aven
+            '`id` = 126 OR '. //angel-ada
+            
         );
         
         $this->team = array(
@@ -20,7 +22,7 @@ class team
             213 => array('avatar' => '', 'name' => '', 'role' => 'Co-founder', 'contact' => 'aven (at) pcesports (dot) com'),
             112 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
             44 => array('avatar' => '', 'name' => '', 'role' => 'Communications manager', 'contact' => 'connect (at) pcesports (dot) com'),
-            3 => array('avatar' => '', 'name' => 'Angel-ada', 'role' => 'Community manager (VK)', 'contact' => '&nbsp;'),
+            126 => array('avatar' => '', 'name' => '', 'role' => 'Community manager (VK)', 'contact' => 'bugerman21 (at) pisem (dot) net'),
             4 => array('avatar' => '', 'name' => 'Acolent', 'role' => 'Shoutcaster', 'contact' => '&nbsp;'),
             132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
             5 => array('avatar' => '', 'name' => 'Soldecroix', 'role' => 'Hearthstone judge', 'contact' => '&nbsp;'),
