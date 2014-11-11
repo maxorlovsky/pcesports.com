@@ -1,3 +1,18 @@
+$('.summoners').on('click', '.notApproved .status', function() {
+    var id = parseInt($(this).closest('.summoner').attr('attr-id'));
+    var masteries = $(this).closest('.summoner').attr('attr-masteries');
+    $('.how_to_approve').slideUp('fast', function() {
+        $('.how_to_approve').slideDown('slow');
+        $('.how_to_approve').find('.verification-code').val(masteries);
+        $('.how_to_approve').find('#masteries-code').html(masteries);
+        $('.how_to_approve').find('#summonerVerifyId').val(id);
+    });
+});
+
+$('.summoners').on('click', '.removeSummoner', function() {
+    PC.removeSummoner($(this).closest('.summoner'));
+});
+
 $('#addSummoner').on('click', function() {
     PC.addSummoner();
 });
@@ -189,6 +204,43 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    removeSummoner: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        $(element).addClass('alpha');
+        $('.summoner-form #error').slideUp('fast');
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'removeSummoner',
+                id: parseInt(element.attr('attr-id')),
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                //$(element).removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $(element).slideUp('slow', function() {
+                        $(this).remove();
+                        if ($('.summoners .block-content.summoner').length <= 1) {
+                            $('.summoners').append('<div class="block-content empty">none</div>');
+                        }
+                    });
+                }
+                else {
+                    alert(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     addSummoner: function() {
         if (this.formInProgress == 1) {
             return false;
@@ -211,8 +263,22 @@ var PC = {
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
-                    $('.success-sent').slideDown('fast');
-                    $('.success-sent p').html(answer[1]);
+                    data = $.parseJSON(answer[1]);
+                    var html = $('.dumpSummoner').html();
+                    html = html.replace('%id%', data.id);
+                    html = html.replace('%masteries%', data.verificationCode);
+                    html = html.replace(/%name%/g, data.name);
+                    html = html.replace('%regionName%', data.regionName);
+                    html = html.replace('%region%', data.region);
+                    
+                    if ($('.summoners .block-content').hasClass('empty')) {
+                        $('.summoners .block-content').remove();
+                    }
+                    
+                    $('.summoners').append(html);
+                    $('.summoners').find('.summoner:hidden').slideDown('slow', function() {
+                        $(this).find('.status').trigger('click');
+                    });
                 }
                 else {
                     $('.summoner-form #error').html('<p>'+answer[1]+'</p>').slideDown('fast');

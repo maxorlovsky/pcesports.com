@@ -118,6 +118,15 @@ class profile extends System
             'ORDER BY `id`, `approved` '
         );
         
+        foreach($return->summoners as &$v) {
+            foreach(_cfg('lolRegions') as $k => $lr) {
+                if ($k == $v->region) {
+                    $v->regionName = $lr;
+                }
+            }
+        }
+        unset($v);
+        
         return $return;
     }
     

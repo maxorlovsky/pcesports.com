@@ -34,9 +34,6 @@ class System
     public function fetchParams() {
         global $cfg;
         
-        $this->data->settings = array();
-        $this->data->links = new stdClass();
-        
         $data = array_merge($_GET, $_POST, $_SESSION);
          
         if (!isset($data['val1'])) {
@@ -66,11 +63,14 @@ class System
             }
         }
         
-        $rows = Db::fetchRows('SELECT * FROM `tm_settings`');
-        if ($rows) {
-        	foreach($rows as $v) {
-        		$this->data->settings[$v->setting] = $v->value;
-        	}
+        if (!isset($this->data->settings) && !$this->data->settings) {
+            $this->data->settings = array();
+            $rows = Db::fetchRows('SELECT * FROM `tm_settings`');
+            if ($rows) {
+                foreach($rows as $v) {
+                    $this->data->settings[$v->setting] = $v->value;
+                }
+            }
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
@@ -78,24 +78,27 @@ class System
             'ORDER BY `position` '
         );
         
-        if ($rows) {
-            foreach($rows as $k => $v) {
-                if ($v->main_link == 0) {
-                    $id = $v->id;
-                    $this->data->links->$id = $v;
-                    $this->data->links->$id->sublinks = new stdClass();
+        if (!isset($this->data->links) && !$this->data->links) {
+            $this->data->links = new stdClass();
+            if ($rows) {
+                foreach($rows as $k => $v) {
+                    if ($v->main_link == 0) {
+                        $id = $v->id;
+                        $this->data->links->$id = $v;
+                        $this->data->links->$id->sublinks = new stdClass();
+                    }
                 }
-            }
-            
-            foreach($rows as $k => $v) {
-                if ($v->main_link != 0) {
-                    $mainId = $v->main_link;
-                    $id = $v->id;
-                    $this->data->links->$mainId->sublinks->$id = $v;
+                
+                foreach($rows as $k => $v) {
+                    if ($v->main_link != 0) {
+                        $mainId = $v->main_link;
+                        $id = $v->id;
+                        $this->data->links->$mainId->sublinks->$id = $v;
+                    }
                 }
+                
+                $this->data->links = $rows;
             }
-            
-        	$this->data->links = $rows;
         }
         
         if (!isset($this->data->langugePicker)) {

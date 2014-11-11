@@ -41,6 +41,10 @@ body {
     min-height: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
 .button {
     color: #eee;
     display: inline-block;
@@ -1812,6 +1816,27 @@ footer .games img {
     color: #fff;
 }
 .summoner-form .success-sent {
+    margin-top: 20px;
+}
+
+.how_to_approve {
+    margin-top: 40px;
+    position: relative;
+    display: none;
+}
+.how_to_approve .verification-code {
+    position: absolute;
+    top: 194px;
+    left: 175px;
+    width: 140px;
+    height: 25px;
+    line-height: 28px;
+    font-size: 20px;
+    background-color: transparent;
+    border: 0;
+    padding: 0 5px;
+}
+.how_to_approve .button {
     margin-top: 20px;
 }
 

@@ -8,25 +8,55 @@
         <?
 		if ($this->additional->summoners) {
         	foreach($this->additional->summoners as $v) {
-        ?>
-            <div class="block-content summoner <?=($v->approved==1?'approved':'notApproved')?>" target="_blank" attr-id="<?=$v->id?>">
-                <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
-                <label class="summoner-name"><?=$v->name?></label>
-                <a href="javascript:void(0);" id="removeSummoner" class="right"><?=t('remove')?></a>
-                <a href="javascript:void(0);" class="status <?=($v->approved==1?null:'hint')?>" attr-msg="<?=t('create_masteries_page')?>: <b><?=$v->masteries?></b>"><?=($v->approved==1?'Approved':'Approval required')?></a>
-                <div class="clear"></div>
-            </div>
-        <?
+                //Better to split, or code is too messy
+                if ($v->approved == 1) {
+                    ?>
+                    <div class="block-content summoner approved" attr-id="<?=$v->id?>">
+                        <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
+                        <label class="summoner-name"><?=$v->name?></label>
+                        <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+                        <a href="javascript:void(0);" class="status"><?=t('approved')?></a>
+                        <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+                        <div class="clear"></div>
+                    </div>
+                    <?
+                }
+                else {
+                    ?>
+                    <div class="block-content summoner notApproved" attr-id="<?=$v->id?>" attr-masteries="<?=$v->masteries?>">
+                        <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
+                        <label class="summoner-name"><?=$v->name?></label>
+                        <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+                        <a href="javascript:void(0);" class="status hint" attr-msg="<?=t('click_to_see_instructions')?>"><?=t('approval_required')?></a>
+                        <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+                        <div class="clear"></div>
+                    </div>
+                    <?
+                }
         	}
         }
         else {
         ?>
-            <div class="block-content">
+            <div class="block-content empty">
                 <?=t('none')?>
             </div>
         <?
         }
         ?>
+    </div>
+    
+    <div class="block how_to_approve hidden">
+        <div class="block-header-wrapper">
+            <h1 class=""><?=t('how_to_approve_summoner')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <p><?=t('create_masteries_page')?>: <b id="masteries-code"><?=$v->masteries?></b></p>
+            <input type="text" class="verification-code" value="<?=$v->masteries?>" />
+            <img src="<?=_cfg('img')?>/summoner-verification.jpg" /> <!--width 750-->
+            <input type="hidden" id="summonerVerifyId" value="" />
+            <a href="javascript:void(0);" class="button" id="verifySummoner"><?=t('verify_summoner')?></a>
+        </div>
     </div>
     
     <div class="block add-streamer">
@@ -55,5 +85,16 @@
             
             <div class="success-sent"><p></p></div>
         </div>
+    </div>
+</div>
+
+<div class="dumpSummoner hidden">
+    <div class="block-content summoner notApproved" attr-id="%id%" attr-masteries="%masteries%" style="display: none">
+        <img class="game-logo" src="http://avatar.leagueoflegends.com/%region%/%name%.png" />
+        <label class="summoner-name">%name%</label>
+        <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+        <a href="javascript:void(0);" class="status hint" attr-msg="<?=t('click_to_see_instructions')?>"><?=t('approval_required')?></a>
+        <span href="javascript:void(0);" class="region right">%regionName%</span>
+        <div class="clear"></div>
     </div>
 </div>
