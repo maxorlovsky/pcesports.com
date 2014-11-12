@@ -1,7 +1,7 @@
 <?
 global $cfg;
 global $astr;
-
+//aa
 require_once dirname(__FILE__).'/cms/inc/config.php';
 require_once $cfg['cmsinc'].'/functions.php';
 
