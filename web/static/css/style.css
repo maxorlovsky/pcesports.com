@@ -300,7 +300,6 @@ footer .copyrights .devs:hover {
     margin: 0 !important;
     padding: 0 !important;
     opacity: 1 !important;
-    
 }
 .nav-user .nav-sub {
     right: 0;
@@ -1839,6 +1838,29 @@ footer .games img {
     padding: 0 5px;
 }
 .how_to_approve .button {
+    margin-top: 20px;
+}
+
+.member .avatar {
+    border: 1px solid #fff;
+    outline: 1px solid #555;
+    height: 150px;
+    float: left;
+    margin: 0 10px 10px 0;
+}
+.member .avatar img {
+    height: 150px;
+}
+.member .information label {
+    display: inline-block;
+    font-weight: bold;
+    min-width: 130px;
+}
+.member .information p {
+    margin-top: 0;
+}
+
+.member-summoners {
     margin-top: 20px;
 }
 

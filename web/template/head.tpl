@@ -159,7 +159,7 @@
                         ?>
                         <li class="nav-link" id="<?=$v->link?>">
                             <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=$v->link?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
-                            <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=$this->data->user->name?><?//=t($v->value)?></a>
+                            <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><?=$this->data->user->name?><?//=t($v->value)?></a>
                             <ul class="nav-sub">
                             <?
                             if ($v->sublinks) {

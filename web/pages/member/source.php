@@ -7,15 +7,32 @@ class member extends System
 	public function __construct($params = array()) {
 		parent::__construct();
         
-        if (isset($_GET['val2']) && $_GET['val2']) {
+        if (isset($_GET['val2']) && $_GET['val2'] && !$this->member) {
             $row = Db::fetchRow(
-                'SELECT * FROM `users` '.
+                'SELECT `id`, `name`, `avatar`, `registration_date` '.
+                'FROM `users` '.
                 'WHERE `id` = "'.(int)$_GET['val2'].'" OR '.
                 '`name` = "'.Db::escape($_GET['val2']).'" '.
                 'LIMIT 1'
             );
             
             if ($row) {
+                $rows = Db::fetchRows(
+                    'SELECT `region`, `summoner_id`, `name` FROM `summoners` '.
+                    'WHERE `user_id` = '.(int)$row->id.' AND '.
+                    '`approved` = 1 '
+                );
+                $row->summoners = $rows;
+                
+                $rows = Db::fetchRows(
+                    'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
+                    'FROM `participants` '.
+                    'WHERE `user_id` = '.(int)$row->id.' '//.AND
+                    //'`approved` = 1 AND '.
+                    //'`deleted` = 0 '
+                );
+                $row->tournaments = $rows;
+                
                 $this->member = $row;
             }
         }
