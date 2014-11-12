@@ -443,7 +443,7 @@ class System
             return false;
         }
         
-        $mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
+        //$mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
 
         $mailData = 'MIME-Version: 1.0'."\r\n";
         $mailData .= 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
@@ -452,8 +452,8 @@ class System
         $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailName').'> '."\r\n";
         $mailData .= 'To: '.$email.''."\r\n";
         $mailData .= 'X-Priority: 3'."\r\n";
-        $mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
-        $mailData .= '--'.$mime_boundary."\r\n\r\n";
+        //$mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
+        //$mailData .= '--'.$mime_boundary."\r\n\r\n";
         
         //fucking axigen
         /*if ($files) {
