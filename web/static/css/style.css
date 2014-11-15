@@ -676,6 +676,12 @@ footer .partners .aimskillz {
     float: left;
     height: 100px;
     overflow: hidden;
+    display: block;
+    transition: .5s;
+    color: #777;
+}
+.team .team-user:hover {
+    background-color: #eee;
 }
 .team .team-user:nth-child(even) {
     margin-right: 0;

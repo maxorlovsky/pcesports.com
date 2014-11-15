@@ -36,7 +36,7 @@
 
         <div class="block-content team-list">
             <? foreach($this->team as $k => $v) { ?>
-                <div class="team-user">
+                <a class="team-user" href="<?=_cfg('href')?>/member/<?=$v['name']?>">
                     <? if ($v['avatar']) { ?>
                         <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
                     <? } ?>
@@ -45,7 +45,7 @@
                     <? if ($v['contact']) {?>
                         <div class="contact"><?=$v['contact']?></div>
                     <? } ?>
-                </div>
+                </a>
             <? } ?>
             <div class="clear"></div>
         </div>
