@@ -343,8 +343,10 @@ class Ajax extends System
                 $html .= '<div class="master">'.
                     '<p>'.$text.'</p>'.
                     '<span class="comment-user">'.
+                    '<a href="'._cfg('href').'/member/'.$v->name.'">'.
                     '<img class="avatar-block" src="'._cfg('avatars').'/'.$v->avatar.'.jpg" />'.
-                    '<a href="'._cfg('href').'/member/'.$v->name.'">'.$v->name.'</a>'.
+                    $v->name.
+                    '</a>'.
                     '</span> '.
                     '<span class="comment-time">- '.$interval.'</span>'.
                     '</div>';
