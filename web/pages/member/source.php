@@ -24,6 +24,15 @@ class member extends System
                 );
                 $row->summoners = $rows;
                 
+                foreach($row->summoners as &$v) {
+                    foreach(_cfg('lolRegions') as $k => $lr) {
+                        if ($k == $v->region) {
+                            $v->regionName = $lr;
+                        }
+                    }
+                }
+                unset($v);
+                
                 $rows = Db::fetchRows(
                     'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
                     'FROM `participants` '.

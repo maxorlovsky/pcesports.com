@@ -1860,8 +1860,21 @@ footer .games img {
     margin-top: 0;
 }
 
-.member-summoners {
+.member-summoners, .member-tournaments {
     margin-top: 20px;
+}
+
+.tournament-info  {
+    padding: 10px !important;
+}
+.tournament-info .game-logo {
+    float: left;
+    padding-right: 10px;
+}
+.tournament-info .tournament-name {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 30px;
 }
 
 /* Landscape phone to portrait tablet */

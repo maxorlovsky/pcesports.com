@@ -1,4 +1,4 @@
-<section class="container page contacts">
+<section class="container page members">
 
 <div class="left-containers">
     <div class="block">
@@ -17,36 +17,40 @@
         </div>
     </div>
     
-    <div class="block">
-        <div class="block-header-wrapper member-summoners">
+    <? if ($this->member->summoners) { ?>
+    <div class="block summoners member-summoners">
+        <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('summoners_accounts')?></h1>
         </div>
-        <div class="block-content member">
-            <?=dump($this->member)?>
-        </div>
+        <? foreach ($this->member->summoners as $v) { ?>
+        <a href="http://www.lolking.net/summoner/<?=$v->region?>/<?=$v->summoner_id?>" target="_blank" class="block-content summoner">
+            <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
+            <label class="summoner-name"><?=$v->name?></label>
+            <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+            <div class="clear"></div>
+        </a>
+        <? } ?>
     </div>
+    <? } ?>
     
-    <?/*<div class="block connections">
+    <? if ($this->member->tournaments) { ?>
+    <div class="block member-tournaments">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('connections')?></h1>
+            <h1 class="bordered"><?=t('participated_in_tournaments')?></h1>
         </div>
-        <div class="block-content">
-            <? foreach(_cfg('social') as $k => $v) { ?>
-                <div class="status-holder">
-                    <img src="<?=_cfg('img')?>/<?=$k?>-login.png" />
-                    <? if (in_array($k, $this->data->user->socials->connected)) { ?>
-                        <div class="connect-line"></div>
-                        <div class="status">
-                            <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>"><?=t('connected')?></a>
-                        </div>
-                    <? } else {?>
-                        <div class="connect-line dashed"></div>
-                        <div class="status">
-                            <a href="javascript:void(0);" class="disconnected socialConnect" id="<?=$k?>"><?=t('disconnected')?></a>
-                        </div>
-                    <? } ?>
-                </div>
-            <? } ?>
+        <? foreach ($this->member->tournaments as $v) { ?>
+        <div class="block-content tournament-info">
+            <img class="game-logo" src="<?=_cfg('img')?>/<?=str_replace('lan', '', $v->game)?>-logo-small.png">
+            <label class="tournament-name">
+                <?=($v->game=='lol'?'League of Legends':'Hearthstone League S1 - ')?> 
+                <? if ($v->server) { ?>(<?=strtoupper($v->server)?>)<?}?> 
+                #<?=$v->tournament_id?>
+            </label>
+            <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+            <div class="clear"></div>
         </div>
-    </div>*/?>
+        <?//=dump($v)?>
+        <? } ?>
+    </div>
+    <? } ?>
 </div>
