@@ -326,6 +326,34 @@ class Cron extends System {
         }
     }
     
+    public function tournamentsOpenReg() {
+        $rows = Db::fetchRows('SELECT * '.
+            'FROM `tournaments` '.
+            'WHERE `status` = "Start" AND '.
+            '`reg_activated` = 0 '
+        );
+        
+        if ($rows) {
+            foreach($rows as $v) {
+                if (strtotime($v->dates_registration) <= time()) {
+                    //Opening up registration!
+                    Db::query('UPDATE `tm_settings` SET '.
+                        '`value` = 1 '.
+                        'WHERE '.
+                        '`setting` = "tournament-reg-'.$v->game.($v->server?'-'.Db::escape($v->server):null).'"'
+                    );
+                    Db::query('UPDATE `tournaments` SET '.
+                        '`reg_activated` = 1 '.
+                        'WHERE '.
+                        '`id` = '.(int)$v->id
+                    );
+                }
+            }
+        }
+        
+        return true;
+    }
+    
     public function sendNotifications() {
         $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates_start`, `time` '.
             'FROM `tournaments` '.

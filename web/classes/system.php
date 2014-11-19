@@ -587,6 +587,7 @@ class System
                     $cronClass = new Cron();
                     $cronClass->cleanImagesTmp();
                     $cronClass->updateChallongeMatches();
+                    $cronClass->tournamentsOpenReg();
                     $cronClass->sendNotifications();
                     $cronClass->checkLolGames();
                     $cronClass->updateStreamers();

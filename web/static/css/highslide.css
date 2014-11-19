@@ -32,6 +32,9 @@
 	border-style: solid;
 	border-color: white;
 }
+.highslide-wrapper {
+    display: initial !important;
+}
 .highslide-wrapper, .highslide-outline {
 	background: white;
 }
