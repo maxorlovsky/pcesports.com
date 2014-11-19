@@ -1872,6 +1872,10 @@ footer .games img {
 
 .tournament-info  {
     padding: 10px !important;
+    color: #000;
+}
+.tournament-info label {
+    cursor: pointer;
 }
 .tournament-info .game-logo {
     float: left;
@@ -1881,6 +1885,34 @@ footer .games img {
     font-size: 15px;
     font-weight: bold;
     line-height: 30px;
+}
+.tournament-info.place-1 .place,
+.tournament-info.place-2 .place,
+.tournament-info.place-3 .place {
+    font-weight: bold;
+}
+
+.tournament-info.place-1 {
+    background: #ffd739;
+}
+.tournament-info.place-2 {
+    background: #bebebe;
+}
+.tournament-info.place-3 {
+    background: #bb8644;
+}
+.tournament-info.place-4 {
+    background: #f8996b;
+}
+.tournament-info .right {
+    float: right;
+    padding: 0 10px 0 0;
+    line-height: 30px;
+}
+.tournament-info .place img {
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
 }
 
 .share-tournament {

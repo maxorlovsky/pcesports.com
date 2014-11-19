@@ -42,16 +42,21 @@
             <h1 class="bordered"><?=t('participated_in_tournaments')?></h1>
         </div>
         <? foreach ($this->member->tournaments as $v) { ?>
-        <div class="block-content tournament-info">
+        <a href="<?=_cfg('href')?>/<?=$this->fullGameName[$v->game]?><?=($v->game=='lol'?'/'.$v->server:null)?>/<?=$v->tournament_id?>" class="block-content tournament-info place-<?=$v->place?>">
             <img class="game-logo" src="<?=_cfg('img')?>/<?=str_replace('lan', '', $v->game)?>-logo-small.png">
             <label class="tournament-name">
                 <?=($v->game=='lol'?'League of Legends':'Hearthstone League S1 - ')?> 
                 <? if ($v->server) { ?>(<?=strtoupper($v->server)?>)<?}?> 
                 #<?=$v->tournament_id?>
             </label>
-            <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+            <span class="right place">
+                <? if ($v->place>=1 && $v->place<=3) { ?>
+                    <img src="<?=_cfg('img')?>/<?=$this->places[$v->place]?>-cup.png" />
+                <? } ?>
+                <?=$v->place?> place
+            </span>
             <div class="clear"></div>
-        </div>
+        </a>
         <?//=dump($v)?>
         <? } ?>
     </div>

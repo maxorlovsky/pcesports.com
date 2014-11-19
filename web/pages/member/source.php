@@ -3,9 +3,21 @@
 class member extends System
 {
     public $member;
+    public $fullGameName = array();
+    public $places = array();
     
 	public function __construct($params = array()) {
 		parent::__construct();
+        
+        $this->fullGameName = array(
+            'lol' => 'leagueoflegends',
+            'hslan' => 'hearthstone',
+        );
+        $this->places = array(
+            1 => 'gold',
+            2 => 'silver',
+            3 => 'bronze',
+        );
         
         if (isset($_GET['val2']) && $_GET['val2'] && !$this->member) {
             $row = Db::fetchRow(
