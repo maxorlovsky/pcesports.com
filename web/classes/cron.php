@@ -370,7 +370,12 @@ class Cron extends System {
                     Db::query('UPDATE `participants` SET '.
                         '`place` = '.(int)$v->participant->final_rank.', '.
                         '`seed_number` = '.(int)$v->participant->seed.' '.
-                        'WHERE `challonge_id` = '.(int)$v->participant->id
+                        'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
+                        '`game` = "lol" AND '
+                        '`approved` = 1 AND '.
+                        '`server` = "'.Db::escape($row->server).'" AND '.
+                        '`deleted` = 1 AND '
+                        '`tournament_id` = "'.Db::escape($row->name).'" '
                     );
                 }
             }
