@@ -158,7 +158,7 @@
                         if ($v->logged_in == 1 && $v->main_link == 0 && $v->block == 1) {
                         ?>
                         <li class="nav-link" id="<?=$v->link?>">
-                            <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=$v->link?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
+                            <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
                             <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><?=$this->data->user->name?><?//=t($v->value)?></a>
                             <ul class="nav-sub">
                             <?
