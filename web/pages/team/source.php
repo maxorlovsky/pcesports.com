@@ -13,7 +13,8 @@ class team
             '`id` = 132 OR '. //arturs
             '`id` = 209 OR '. //zanko
             '`id` = 213 OR '. //aven
-            '`id` = 126 ' //angel-ada
+            '`id` = 126 OR '. //angel-ada
+            '`id` = 220 ' //darkwing229
             
         );
         
@@ -27,6 +28,7 @@ class team
             132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
             5 => array('avatar' => '', 'name' => 'Soldecroix', 'role' => 'Hearthstone judge', 'contact' => '&nbsp;'),
             209 => array('avatar' => '', 'name' => '', 'role' => 'LoL EUNE manager', 'contact' => 'izaanko (at) pcesports (dot) com'),
+            220 => array('avatar' => '', 'name' => '', 'role' => 'Video Editor', 'contact' => '&nbsp;'),
         );
         
         if ($rows) {

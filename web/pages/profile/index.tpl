@@ -30,6 +30,11 @@
             </div>
             
             <div class="fields">
+                <label for="battletag">Battle Tag</label>
+                <input name="battletag" id="battletag" type="text" value="<?=$this->data->user->battletag?>" placeholder="Battle Tag" />
+            </div>
+            
+            <div class="fields">
                 <label for="avatar"><?=t('avatar')?></label>
                 <div class="holder">
                     <div class="avatars-list">

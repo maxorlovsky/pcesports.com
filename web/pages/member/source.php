@@ -9,7 +9,7 @@ class member extends System
         
         if (isset($_GET['val2']) && $_GET['val2'] && !$this->member) {
             $row = Db::fetchRow(
-                'SELECT `id`, `name`, `avatar`, `registration_date` '.
+                'SELECT `id`, `name`, `avatar`, `registration_date`, `battletag` '.
                 'FROM `users` '.
                 'WHERE `id` = "'.(int)$_GET['val2'].'" OR '.
                 '`name` = "'.Db::escape($_GET['val2']).'" '.

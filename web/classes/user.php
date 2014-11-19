@@ -294,6 +294,13 @@ class User extends System
             $timezone = 0;
         }
         
+        if ($form['battletag']) {
+            $battleTagBreakdown = explode('#', $form['battletag']);
+            if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
+                return '0;'.t('field_battletag_incorrect');
+            }
+        }
+        
         if (!is_numeric($form['avatar']) || $form['avatar'] > 30 || $form['avatar'] < 1) {
             $form['avatar'] = 1;
         }
@@ -303,7 +310,8 @@ class User extends System
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
             '`timezone` = "'.Db::escape($timezone).'", '.
-            '`avatar` = '.(int)$form['avatar'].' '.
+            '`avatar` = '.(int)$form['avatar'].', '.
+            '`battletag` = "'.Db::escape($form['battletag']).'" '.
             'WHERE `id` = '.(int)$user->id
         );
         

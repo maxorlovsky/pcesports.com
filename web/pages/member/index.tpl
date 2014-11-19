@@ -11,6 +11,7 @@
             </div>
             <div class="information">
                 <p><label><?=t('name')?></label> <?=$this->member->name?></p>
+                <p><label>Battle Tag</label> <?=$this->member->battletag?></p>
                 <p><label><?=t('registration_date')?></label> <?=date('d.m.Y', strtotime($this->member->registration_date))?></p>
             </div>
             <div class="clear"></div>
