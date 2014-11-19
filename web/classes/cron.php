@@ -373,6 +373,7 @@ class Cron extends System {
                         'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
                         '`game` = "lol" AND '.
                         '`approved` = 1 AND '.
+                        '`checked_in` = 1 AND '.
                         '`server` = "'.Db::escape($row->server).'" AND '.
                         '`deleted` = 0 AND '.
                         '`tournament_id` = "'.Db::escape($row->name).'" '
