@@ -48,7 +48,7 @@
                 <?=($v->game=='lol'?'League of Legends':'Hearthstone League S1 - ')?> 
                 <? if ($v->server) { ?>(<?=strtoupper($v->server)?>)<?}?> 
                 #<?=$v->tournament_id?>
-            </label>
+            </label> - <?=$v->name?>
             <span class="right place">
                 <? if ($v->place>=1 && $v->place<=3) { ?>
                     <img src="<?=_cfg('img')?>/<?=$this->places[$v->place]?>-cup.png" />
