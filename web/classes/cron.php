@@ -374,7 +374,7 @@ class Cron extends System {
                         '`game` = "lol" AND '.
                         '`approved` = 1 AND '.
                         '`server` = "'.Db::escape($row->server).'" AND '.
-                        '`deleted` = 1 AND '.
+                        '`deleted` = 0 AND '.
                         '`tournament_id` = "'.Db::escape($row->name).'" '
                     );
                 }
