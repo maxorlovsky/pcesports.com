@@ -443,7 +443,7 @@ class System
             return false;
         }
         
-        //$mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
+        $mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
 
         $mailData = 'MIME-Version: 1.0'."\r\n";
         $mailData .= 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
@@ -452,34 +452,32 @@ class System
         $mailData .= 'From: "'._cfg('smtpMailFrom').'" <'._cfg('smtpMailName').'> '."\r\n";
         $mailData .= 'To: '.$email.''."\r\n";
         $mailData .= 'X-Priority: 3'."\r\n";
-        //$mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
-        //$mailData .= '--'.$mime_boundary."\r\n\r\n";
+        $mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
+        $mailData .= '--'.$mime_boundary."\r\n";  //
         
-        //fucking axigen
-        /*if ($files) {
+        if ($files) {
             foreach($files as $k => $v) {
                 if ($v['content']) {
                     $mailData .= 'Content-Type: application/octet-stream; name='.$v['name'].''."\r\n";
                     $mailData .= 'Content-Transfer-Encoding: base64 '."\r\n";
                     $mailData .= 'Content-Disposition: attachment; filename="'.$v['name'].'" '."\r\n";
-                    $mailData .= base64_encode($v['content'])."\r\n";
-                    $mailData .= '--'.$mime_boundary."\r\n\r\n";
+                    $mailData .= "\r\n".base64_encode($v['content'])."\r\n\r\n";
+                    
+                    $mailData .= '--'.$mime_boundary."\r\n";
                 }
             }
-        }*/
-        
-        //$mailData .= '--'.$mime_boundary."\r\n\r\n";
+        }
         
         $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
         $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n\r\n";
         $mailData .= $msg;
         
-        if(!$socket = fsockopen(_cfg('smtpMailHost'), _cfg('smtpMailPort'), $errno, $errstr, 20)) {
+        if(!$socket = fsockopen(_cfg('smtpMailHost'), _cfg('smtpMailPort'), $errno, $errstr, 30)) {
             return $errno."&lt;br&gt;".$errstr;
         }
         if (!$this->serverParse($socket, '220', __LINE__)) return false;
         
-        fputs($socket, 'EHLO '._cfg('smtpMailHost'). "\r\n");
+        fputs($socket, 'HELO '._cfg('smtpMailHost'). "\r\n");
         if (!$this->serverParse($socket, '250', __LINE__)) return false;
         
         fputs($socket, 'AUTH LOGIN'."\r\n");

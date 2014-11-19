@@ -99,11 +99,11 @@ case 'dev':
 //=====================================================
 
 // SMTP config
-$cfg['smtpMailName'] = 'info@pcesports.com';
-$cfg['smtpMailPort'] = '587';
-$cfg['smtpMailHost'] = 'smtp.pcesports.com';
+$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+$cfg['smtpMailPort'] = '465';
+$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
 $cfg['smtpMailPass'] = 'aveclickius777';
-$cfg['smtpMailFrom'] = 'Pentaclick eSports';
+$cfg['smtpMailFrom'] = 'info@pcesports.com';
 
 //=====================================================
 // Making some defines for easyer coding (directories)
