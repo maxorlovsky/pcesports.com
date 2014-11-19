@@ -368,7 +368,7 @@ class Cron extends System {
             if ($answer) {
                 foreach($answer as $v) {
                     Db::query('UPDATE `participants` SET '.
-                        '`place` = '.(int)$v->participant->final_rank.' '.
+                        '`place` = '.(int)$v->participant->final_rank.', '.
                         '`seed_number` = '.(int)$v->participant->seed.' '.
                         'WHERE `challonge_id` = '.(int)$v->participant->id
                     );
