@@ -59,6 +59,11 @@
                 t('lol_'.$this->server.'_tournament_information_'.$this->pickedTournament)
             )?>
             <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>"><?=t('global_tournament_rules')?></a>
+            
+            <div class="share-tournament">
+                <h2><?=t('share_this_tournament')?></h2>
+                <div class="addthis_sharing_toolbox"></div>
+            </div>
         </div>
     </div>
     
@@ -211,3 +216,5 @@ if ($('#challonge').length) {
     });
 }
 </script>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4dfdc8015d8f785b"></script>
