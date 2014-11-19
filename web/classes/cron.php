@@ -354,6 +354,36 @@ class Cron extends System {
         return true;
     }
     
+    public function finalizeTournament() {
+        $row = Db::fetchRow('SELECT `id`, `server`, `name` '.
+            'FROM `tournaments` '.
+            'WHERE `status` = "Ended" AND '.
+            '`game` = "lol" AND '.
+            '`finalized` = 0 '.
+            'LIMIT 1 '
+        );
+        
+        if ($row) {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$row->server.$row->name.'/participants.json');
+            if ($answer) {
+                foreach($answer as $v) {
+                    Db::query('UPDATE `participants` SET '.
+                        '`place` = '.(int)$v->participant->final_rank.' '.
+                        '`seed_number` = '.(int)$v->participant->seed.' '.
+                        'WHERE `challonge_id` = '.(int)$v->participant->id
+                    );
+                }
+            }
+            
+            Db::query('UPDATE `tournaments` SET '.
+                '`finalized` = 1 '.
+                'WHERE `id` = '.(int)$row->id
+            );
+        }
+        
+        return true;
+    }
+    
     public function sendNotifications() {
         $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates_start`, `time` '.
             'FROM `tournaments` '.
