@@ -78,7 +78,7 @@ class news extends System
 	}
     
     public static function getSeo() {
-        $news = Db::fetchRow('SELECT `id`, `title`, `extension` '.
+        $news = Db::fetchRow('SELECT `id`, `title`, `extension`, `short_english` '.
 			'FROM `news` '.
 			'WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' '.
 			'ORDER BY `id` DESC '.
@@ -88,6 +88,7 @@ class news extends System
         $seo = array(
             'title' => ($news->title?$news->title.' | ':null).'News',
             'ogImg' => ($news->extension?_cfg('imgu').'/news/small-'.$news->id.'.'.$news->extension:null),
+            'ogDesc' => $this->short_english,
         );
         
         return (object)$seo;
