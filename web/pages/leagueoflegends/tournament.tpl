@@ -26,7 +26,7 @@
 					<input type="text" name="team" placeholder="<?=t('team_name')?>" />
 					<div id="team-msg" class="message hidden"></div>
 					<div class="clear"></div>
-					<input type="text" name="email" placeholder="Email" />
+					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
 					<div id="email-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)" value="<?=$pickedSummoner?>" />

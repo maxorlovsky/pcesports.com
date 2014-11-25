@@ -15,7 +15,7 @@
 					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
 					<div id="battletag-msg" class="message hidden"></div>
 					<div class="clear"></div>
-					<input type="text" name="email" placeholder="Email*" />
+					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
 					<div id="email-msg" class="message hidden"></div>
                     <div class="clear"></div>
                     <input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
