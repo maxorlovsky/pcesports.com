@@ -230,6 +230,7 @@ class leagueoflegends extends System
                 foreach($this->data->user->summoners as $v) {
                     if ($v->region == $this->server) {
                         $pickedSummoner = $v->name;
+                        break;
                     }
                 }
             }
