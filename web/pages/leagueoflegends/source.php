@@ -224,6 +224,15 @@ class leagueoflegends extends System
 			}
 
 			$this->participants = $participants;
+            
+            $pickedSummoner = '';
+            if ($this->data->user->summoners) {
+                foreach($this->data->user->summoners as $v) {
+                    if ($v->region == $this->server) {
+                        $pickedSummoner = $v->name;
+                    }
+                }
+            }
 			
 			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 		}

@@ -212,6 +212,12 @@ class User extends System
             }
         }
         
+        $userRow->summoners = Db::fetchRows(
+            'SELECT * FROM `summoners` '.
+            'WHERE `user_id` = '.$userRow->id.' AND '.
+            '`approved` = 1 '
+        );
+        
         $userRow->timezone = $userRow->timezone * 60;
         
         return $userRow;

@@ -12,7 +12,7 @@
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
-					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" />
+					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
 					<div id="battletag-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<input type="text" name="email" placeholder="Email*" />

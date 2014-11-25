@@ -29,7 +29,7 @@
 					<input type="text" name="email" placeholder="Email" />
 					<div id="email-msg" class="message hidden"></div>
 					<div class="clear"></div>
-					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)" />
+					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)" value="<?=$pickedSummoner?>" />
 					<div id="mem1-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<? for($i=2;$i<=7;++$i) { ?>
