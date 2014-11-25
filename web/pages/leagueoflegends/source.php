@@ -315,7 +315,16 @@ class leagueoflegends extends System
 	
 	public static function getSeo() {
 		$seo = new stdClass();
-		$seo->title = 'League of Legends';
+		$seo->title = 'League of Legends tournaments';
+        
+        $u = new self;
+        
+        if (is_numeric($_GET['val3'])) {
+            $seo->title = 'League of Legends tournament '.strtoupper($u->server).'#'.$_GET['val3'];
+            $seo->ogDesc = $seo->title;
+        }
+        
+        $seo->ogImg = _cfg('img').'/footer-lol-logo.png';
 		
 		return $seo;
 	}

@@ -208,8 +208,17 @@ class hearthstone extends System
 	}
 	
 	public static function getSeo() {
-		$seo = new stdClass();
-		$seo->title = 'Hearthstone League | Season 1';
+        $seo = new stdClass();
+		$seo->title = 'Hearthstone League | S1';
+        
+        $u = new self;
+        
+        if (is_numeric($_GET['val3'])) {
+            $seo->title = 'Hearthstone League | S1T'.$_GET['val3'];
+            $seo->ogDesc = $seo->title;
+        }
+        
+        $seo->ogImg = _cfg('img').'/footer-hs-logo.png';
 		
 		return $seo;
 	}
