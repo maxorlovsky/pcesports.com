@@ -67,7 +67,6 @@
         </div>
         
         <div class="block-content tournament-rules">
-			<h1><?=t('specific_tournament_rules')?></h1>
 			<?=str_replace(
                 array('%startTime%', '%registrationTime%'),
                 array($tournamentTime['start'], $tournamentTime['registration']),
