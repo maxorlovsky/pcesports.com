@@ -63,6 +63,28 @@
     
     <div class="block">
         <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('information')?></h1>
+        </div>
+        
+        <div class="block-content tournament-rules">
+			<h1><?=t('specific_tournament_rules')?></h1>
+			<?=str_replace(
+                array('%startTime%', '%registrationTime%'),
+                array($tournamentTime['start'], $tournamentTime['registration']),
+                t('hslan_tournament_information')
+            )?>
+            <br />
+            <a href="<?=_cfg('href')?>/hearthstone"><?=t('tournament_rules')?></a>
+            
+            <div class="share-tournament">
+                <h2><?=t('share_this_tournament')?></h2>
+                <div class="addthis_sharing_toolbox"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="block">
+        <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('schedule')?></h1>
         </div>
         
@@ -252,3 +274,5 @@ if ($('#challonge').length) {
     });
 }
 </script>
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4dfdc8015d8f785b"></script>
