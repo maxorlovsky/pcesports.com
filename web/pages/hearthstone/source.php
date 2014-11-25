@@ -115,19 +115,25 @@ class hearthstone extends System
             'WHERE `game` = "hslan" AND `tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
-        
         if ($rows) {
-            foreach($rows as $v) {
-                $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
-                $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
-            }
-        
             foreach($rows as &$v) {
                 $v->contact_info = json_decode($v->contact_info);
             }
         }
         $this->participants = $rows;
         unset($v);
+        
+        $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
+            'FROM `tournaments` '.
+            'WHERE `game` = "hslan" AND '.
+            '`name` = '.(int)$this->pickedTournament.' '
+        );
+        if ($tournamentRows) {
+            foreach($tournamentRows as $v) {
+                $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
+                $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
+            }
+        }
         
         include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 	}
