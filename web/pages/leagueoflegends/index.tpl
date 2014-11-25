@@ -15,7 +15,7 @@
             </div>
             
             <div class="right-part">
-                <div class="status"><?=(strtolower($v['status'])=='ended'?t('ended'):t('active'))?></div>
+                <div class="status"><?=$v['status']?></div>
                 <div class="event-date"><?=t('event_date')?>: <?=$v['dates_start']?></div>
                 <div class="event-date"><?=t('prize_pool')?>: <?=$v['prize']?></div>
             </div>

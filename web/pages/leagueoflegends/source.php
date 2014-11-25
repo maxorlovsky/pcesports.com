@@ -238,11 +238,28 @@ class leagueoflegends extends System
 			'WHERE `game` = "lol" AND '.
             '`server` = "'.Db::escape($this->server).'" ' .
 			'ORDER BY `id` DESC '.
-            'LIMIT 5'
+            'LIMIT 10'
 		);
         
         if ($rows) {
             foreach($rows as $v) {
+                if ($v->status != 'Ended') {
+                    $startTime = strtotime($v->dates_start.' '.$v->time);
+                    $regTime = strtotime($v->dates_registration.' '.$v->time);
+                    
+                    if (time() > $startTime) {
+                        $v->status = t('live');
+                    }
+                    else if (time() < $startTime && time() > $regTime) {
+                        $v->status = t('registration');
+                    }
+                    else if ($v->status == 'ended') {
+                        $v->status = t('ended');
+                    }
+                    else {
+                        $v->status = t('active');
+                    }
+                }
                 $this->tournamentData[$v->name] = (array)$v;
             }
         }
