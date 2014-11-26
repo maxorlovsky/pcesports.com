@@ -34,16 +34,22 @@ class member extends System
                     'WHERE `user_id` = '.(int)$row->id.' AND '.
                     '`approved` = 1 '
                 );
-                $row->summoners = $rows;
                 
-                foreach($row->summoners as &$v) {
-                    foreach(_cfg('lolRegions') as $k => $lr) {
-                        if ($k == $v->region) {
-                            $v->regionName = $lr;
+                if ($rows) {
+                    $row->summoners = $rows;
+                    
+                    foreach($row->summoners as &$v) {
+                        foreach(_cfg('lolRegions') as $k => $lr) {
+                            if ($k == $v->region) {
+                                $v->regionName = $lr;
+                            }
                         }
                     }
+                    unset($v);
                 }
-                unset($v);
+                else {
+                    $row->summoners = array();
+                }
                 
                 $rows = Db::fetchRows(
                     'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
@@ -52,7 +58,13 @@ class member extends System
                     //'`approved` = 1 AND '.
                     //'`deleted` = 0 '
                 );
-                $row->tournaments = $rows;
+                if ($rows) {
+                    $row->tournaments = $rows;
+                }
+                else {
+                    $row->tournaments = array();
+                }
+                
                 
                 $this->member = $row;
             }
