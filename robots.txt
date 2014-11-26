@@ -1,3 +1,9 @@
 User-agent: *
+
 Allow: /
+
+#Disallow
 Disallow: /screenshots/
+
+#Sitemap Reference
+Sitemap:http://www.example.com/sitemap.xml
