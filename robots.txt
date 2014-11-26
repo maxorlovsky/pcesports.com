@@ -1,6 +1,2 @@
 User-agent: *
-Disallow: /chats/
-Disallow: /cms/
-Disallow: /files/
 Disallow: /screenshots/
-Disallow: /vendor/
