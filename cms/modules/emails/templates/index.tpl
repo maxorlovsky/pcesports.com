@@ -20,7 +20,7 @@
         <td>
             <textarea id="query" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"><?=$module->query?></textarea>
             <br />
-            Themes = "all", "lol, "hs"
+            Themes = "all", "lol", "hs"
         </td>
     </tr>
     <tr>
