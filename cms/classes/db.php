@@ -112,4 +112,24 @@ class Db
             return $array;
         }
     }
+    
+    public static function multi_query($query) {
+        if (self::$connection == NULL) {
+            return false;
+        }
+        
+        return self::$connection->multi_query($query);
+    }
+    
+    public static function store_result() {
+        return self::$connection->store_result();
+    }
+    
+    public static function more_results() {
+        return self::$connection->more_results();
+    }
+    
+    public static function next_result() {
+        return self::$connection->next_result();
+    }
 }

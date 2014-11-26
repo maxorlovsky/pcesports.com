@@ -5,6 +5,18 @@ class Cron extends System {
         parent::__construct();
     }
     
+    public function sqlCleanUp() {
+        Db::multi_query('CALL cleanupOldData()');
+        
+        do 
+        {
+            $r = Db::store_result();
+        }
+        while ( Db::more_results() && Db::next_result() );
+        
+        return true;
+    }
+    
     public function cleanImagesTmp() {
         $file = _cfg('uploads').'/cronCleanImages';
 

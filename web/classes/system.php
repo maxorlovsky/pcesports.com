@@ -585,13 +585,18 @@ class System
                 if ($_GET['val1'] === _cfg('cronjob')) {
                     set_time_limit(300);
                     $cronClass = new Cron();
-                    $cronClass->cleanImagesTmp();
+                    
+                    //SQL involved functions
                     $cronClass->updateChallongeMatches();
                     $cronClass->tournamentsOpenReg();
                     $cronClass->finalizeTournament();
                     $cronClass->sendNotifications();
                     $cronClass->checkLolGames();
                     $cronClass->updateStreamers();
+                    $cronClass->sqlCleanUp();
+                    
+                    //Others functions without SQL
+                    $cronClass->cleanImagesTmp();
                 }
                 else if ($_GET['val1'] == 'riotcode') {
                     set_time_limit(300);
