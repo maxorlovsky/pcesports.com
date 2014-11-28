@@ -213,8 +213,8 @@ class hearthstone extends System
         
         $u = new self;
         
-        if (is_numeric($_GET['val3'])) {
-            $seo->title = 'Hearthstone League | S1T'.$_GET['val3'];
+        if (is_numeric($_GET['val2'])) {
+            $seo->title = 'Hearthstone League | S1T'.$_GET['val2'];
             $seo->ogDesc = $seo->title;
         }
         
