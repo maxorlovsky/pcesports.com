@@ -347,7 +347,7 @@ class Cron extends System {
         
         if ($rows) {
             foreach($rows as $v) {
-                if (strtotime($v->dates_registration) <= time()) {
+                if (strtotime($v->dates_registration.' '.$v->time) <= time()) {
                     //Opening up registration!
                     Db::query('UPDATE `tm_settings` SET '.
                         '`value` = 1 '.
