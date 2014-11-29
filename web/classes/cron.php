@@ -167,7 +167,7 @@ class Cron extends System {
             'LEFT JOIN `participants` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
             'LEFT JOIN `participants` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
             'LEFT JOIN `lol_games` AS `lg` ON `lg`.`match_id` = `f`.`match_id` '.
-            'WHERE `f`.`done` = 0 AND '.
+            'WHERE `f`.`done` = 0 OR '.
             '`lg`.`ended` = 0 '
         );
         
