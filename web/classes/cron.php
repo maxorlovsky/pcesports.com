@@ -213,7 +213,7 @@ class Cron extends System {
                     $game = $answer->games[0]; //We're interested only in last game
                     
                     //Do not check ranked and solo games
-                    if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 1 && $game->fellowPlayers) {
+                    if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 11 && $game->fellowPlayers) {
                         $getPlayers = array();
                         $getPlayers[] = $team[$v->team1]['captain'];
                         foreach($game->fellowPlayers as $fellowPlayers) {
