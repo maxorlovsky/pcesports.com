@@ -170,6 +170,13 @@ class Cron extends System {
             'WHERE `f`.`done` = 0 AND '.
             '`lg`.`ended` = 0 '
         );
+        exit('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2`, `t1`.`challonge_id` AS `challongeId1`, `t2`.`challonge_id` AS `challongeId2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
+            'LEFT JOIN `lol_games` AS `lg` ON `lg`.`match_id` = `f`.`match_id` '.
+            'WHERE `f`.`done` = 0 OR '.
+            '`lg`.`ended` = 0 ');
         
         if ($rows)
         {
