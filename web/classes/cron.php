@@ -288,9 +288,10 @@ class Cron extends System {
                                     '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
                                 );
-                                
+                                echo 1;
                                 //Updating brackets only if automatic function is enabled
                                 if (_cfg('tournament-auto-lol-'.$server) == 1) {
+                                    echo 2;
                                     $apiArray = array(
                                         '_method' => 'put',
                                         'match_id' => $v->match_id,
@@ -309,20 +310,21 @@ class Cron extends System {
                                         '`server` = "'.$server.'" AND '.
                                         '`id` = '.(int)$loserId.' '
                                     );
-                                    
+                                    echo 3;
                                     Db::query('UPDATE `fights` SET `done` = 1 '.
                                         'WHERE `match_id` = '.(int)$v->match_id.' '
                                     );
                                 }
                                 
                                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
-                                    
+                                echo 4;
                                 $file = fopen($fileName, 'a');
                                 $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
                                 if (_cfg('tournament-auto-lol-'.$server) == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
                                 $content .= '</p>';
+                                echo 5;
                                 fwrite($file, htmlspecialchars($content));
                                 fclose($file);
                             }
