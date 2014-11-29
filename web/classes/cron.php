@@ -319,7 +319,7 @@ class Cron extends System {
                                     
                                 $file = fopen($fileName, 'a');
                                 $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
-                                if (_cfg('tournament-auto-lol-'.$server) == 1) {
+                                if (_cfg('tournament-auto-lol-'.$server) == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
                                 $content .= '</p>';
