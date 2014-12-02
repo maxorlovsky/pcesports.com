@@ -186,18 +186,17 @@ class leagueoflegends extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-		if ($this->pickedTournament > 0 && $this->pickedTournament <= $this->currentTournament + 4) {
-            $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
-                'FROM `tournaments` '.
-                'WHERE `game` = "lol" AND '.
-                '`server` = "'.Db::escape($this->server).'" AND '.
-                '`name` = '.(int)$this->pickedTournament.' '
-            );
-            if ($tournamentRows) {
-                foreach($tournamentRows as $v) {
-                    $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
-                    $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
-                }
+        $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
+            'FROM `tournaments` '.
+            'WHERE `game` = "lol" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND '.
+            '`name` = '.(int)$this->pickedTournament.' '
+        );
+        
+		if ($tournamentRows) {
+            foreach($tournamentRows as $v) {
+                $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
+                $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
             }
             
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `p`.`name` AS `player`, `p`.`player_id` '.
