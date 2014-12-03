@@ -414,7 +414,7 @@ class Cron extends System {
             foreach($rows as $v) {
                 $row = Db::fetchRow('SELECT * '.
                     'FROM `notifications` '.
-                    'WHERE `game` = "'.Db::escape($v->game).'" '.
+                    'WHERE `game` = "'.Db::escape($v->game.$v->server).'" '.
                     'AND `tournament_name` = "'.Db::escape($v->name).'" '
                     //'AND `delivered` != 1 '
                 );
@@ -423,6 +423,7 @@ class Cron extends System {
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
                 $time['24'] = $time['0'] - 86400;
                 $time['1'] = $time['0'] - 3600;
+                
                 if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
                     $this->sendReminders($v);
@@ -430,8 +431,8 @@ class Cron extends System {
                 else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
                     $v->template = 1;
                     $v->data = $row;
-                    $this->sendReminders($v);
                     $this->checkInProcess($v);
+                    $this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 1 && $time['0'] <= time()) {
                     $v->data = $row;
@@ -495,20 +496,20 @@ class Cron extends System {
                     $i = 0;
                 }
             }
-            
-            if ($tournament->template == 1 && $tournament->data) {
-                Db::query('UPDATE `notifications` SET '.
-                    '`delivered` = 1 '.
-                    'WHERE `id` = '.(int)$tournament->data->id
-                );
-            }
-            else {
-                Db::query('INSERT INTO `notifications` SET '.
-                    '`game` = "'.Db::escape($tournament->game).'", '.
-                    '`tournament_name` = "'.Db::escape($tournament->name).'", '.
-                    '`delivered` = 24'
-                );
-            }
+        }
+        
+        if ($tournament->template == 1 && $tournament->data) {
+            Db::query('UPDATE `notifications` SET '.
+                '`delivered` = 1 '.
+                'WHERE `id` = '.(int)$tournament->data->id
+            );
+        }
+        else {
+            Db::query('INSERT INTO `notifications` SET '.
+                '`game` = "'.Db::escape($tournament->game.$tournament->server).'", '.
+                '`tournament_name` = "'.Db::escape($tournament->name).'", '.
+                '`delivered` = 24'
+            );
         }
     }
     
