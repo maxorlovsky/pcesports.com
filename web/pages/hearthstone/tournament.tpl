@@ -184,7 +184,7 @@
             ++$participantsCount;
                 if ($v->user_id != 0) {
                 ?>
-                <div class="block hoverable" title="<?=$v->battletag?> #<?=$participantsCount?>">
+                <div class="block hoverable" title="<?=$v->battletag?>">
                     <a href="<?=_cfg('href').'/member/'.$v->name?>">
                         <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
                         <span class="team-num">#<?=$participantsCount?></span>
@@ -201,8 +201,8 @@
                 }
                 else {
                 ?>
-                <div class="block title="<?=$v->battletag?> #<?=$participantsCount?>">
-                    <div class="team-name" title="<?=$v->battletag?>"><?=$v->battletag?></div>
+                <div class="block" title="<?=$v->battletag?>">
+                    <div class="team-name"><?=$v->battletag?></div>
                     <span class="team-num">#<?=$participantsCount?></span>
                     <div class="clear"></div>
                     <div class="player-heroes">
