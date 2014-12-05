@@ -184,17 +184,19 @@
             ++$participantsCount;
                 if ($v->user_id != 0) {
                 ?>
-                <a href="<?=($v->user_id!=0?_cfg('href').'/member/'.$v->name:null)?>" class="block hoverable" title="<?=$v->battletag?> #<?=$participantsCount?>">
-                    <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
-                    <span class="team-num">#<?=$participantsCount?></span>
-                    <div class="clear"></div>
-                    <div class="player-heroes">
-                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                    </div>
-                </a>
+                <div class="block hoverable" title="<?=$v->battletag?> #<?=$participantsCount?>">
+                    <a href="<?=_cfg('href').'/member/'.$v->name?>">
+                        <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
+                        <span class="team-num">#<?=$participantsCount?></span>
+                        <div class="clear"></div>
+                        <div class="player-heroes">
+                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
+                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
+                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
+                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                        </div>
+                    </a>
+                </div>
                 <?
                 }
                 else {
