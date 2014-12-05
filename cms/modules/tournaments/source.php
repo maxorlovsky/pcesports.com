@@ -36,13 +36,17 @@ class Tournaments
 	}
 	
 	public function fetchChat($form) {
-		foreach($form as $v) {
-			$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$v[1].'.txt';
-			$return[$v[0]] = '<p id="notice">Chat is empty</p>';
-			if (file_exists($fileName)) {
-				$return[$v[0]] = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
-			}
-		}
+        $return = array();
+        
+        if ($form) {
+            foreach($form as $v) {
+                $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$v[1].'.txt';
+                $return[$v[0]] = '<p id="notice">Chat is empty</p>';
+                if (file_exists($fileName)) {
+                    $return[$v[0]] = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
+                }
+            }
+        }
 		
 		return json_encode($return);
 	}
@@ -75,22 +79,24 @@ class Tournaments
 	
 	public function statusCheck($form) {
 		$playersStatus = array();
-		foreach($form as $v) {
-			$breakdown = explode('_vs_', $v);
-			$rows = Db::fetchRows('SELECT `id`, `online` FROM `participants` '.
-				'WHERE `id` = '.(int)$breakdown[0].' OR `id` = '.(int)$breakdown[1].' '.
-				'LIMIT 2'
-			);
-			
-			foreach($rows as $v2) {
-				if ($v2->online != 0 && $v2->online+30 >= time()) {
-                    $playersStatus[$v2->id] = 'online';
+        if ($form) {
+            foreach($form as $v) {
+                $breakdown = explode('_vs_', $v);
+                $rows = Db::fetchRows('SELECT `id`, `online` FROM `participants` '.
+                    'WHERE `id` = '.(int)$breakdown[0].' OR `id` = '.(int)$breakdown[1].' '.
+                    'LIMIT 2'
+                );
+                
+                foreach($rows as $v2) {
+                    if ($v2->online != 0 && $v2->online+30 >= time()) {
+                        $playersStatus[$v2->id] = 'online';
+                    }
+                    else {
+                        $playersStatus[$v2->id] = 'offline';
+                    }
                 }
-                else {
-                    $playersStatus[$v2->id] = 'offline';
-                }
-			}
-		}
+            }
+        }
 		
 		return json_encode($playersStatus);
 	}
