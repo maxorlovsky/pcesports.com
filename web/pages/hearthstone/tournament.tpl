@@ -123,9 +123,15 @@
                                 ?>
                                 <div class="holder <?=$wonClass?>">
                                     <span class="player-num"><?=$i?></span>
-                                    <span class="player-name">
-                                        <?=$p->name?>
-                                    </span>
+                                    <? if ($p->user_id != 0) { ?>
+                                        <a class="player-name" href="<?=_cfg('href')?>/member/<?=$p->name?>" title="<?=$p->battletag?>">
+                                            <?=$p->name?>
+                                        </a>
+                                    <? } else { ?>
+                                        <span class="player-name">
+                                            <?=$p->battletag?>
+                                        </span>
+                                    <? } ?>
                                     <div class="player-heroes">
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero1])?>"></div>
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero2])?>"></div>
@@ -176,19 +182,36 @@
         foreach($this->participants as $v) {
             if ($v->approved == 0) {
             ++$participantsCount;
-    ?>
-        <div class="block" title="<?=$v->name?> #<?=$participantsCount?>">
-            <div class="team-name" title="<?=$v->name?>"><?=strlen($v->name) > 14?substr($v->name,0,13).'...':$v->name?></div>
-            <span class="team-num">#<?=$participantsCount?></span>
-            <div class="clear"></div>
-            <div class="player-heroes">
-                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-            </div>
-        </div>
-    <?
+                if ($v->user_id != 0) {
+                ?>
+                <a href="<?=($v->user_id!=0?_cfg('href').'/member/'.$v->name:null)?>" class="block hoverable" title="<?=$v->battletag?> #<?=$participantsCount?>">
+                    <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
+                    <span class="team-num">#<?=$participantsCount?></span>
+                    <div class="clear"></div>
+                    <div class="player-heroes">
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                    </div>
+                </a>
+                <?
+                }
+                else {
+                ?>
+                <div class="block title="<?=$v->battletag?> #<?=$participantsCount?>">
+                    <div class="team-name" title="<?=$v->battletag?>"><?=$v->battletag?></div>
+                    <span class="team-num">#<?=$participantsCount?></span>
+                    <div class="clear"></div>
+                    <div class="player-heroes">
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
+                        <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                    </div>
+                </div>
+                <?
+                }
             }
         }
     ?>
