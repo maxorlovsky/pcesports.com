@@ -1375,6 +1375,19 @@ footer .games img {
     background-color: #eee;
     line-height: 40px;
 }
+.profile .fields .check_holder {
+    width: 602px;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 0 4px 4px 0;
+    margin-left: 142px;
+    height: 40px;
+}
+.profile .fields input[type="checkbox"] {
+    height: 35px;
+    margin-top: 3px;
+    box-shadow: none;
+}
 
 .profile .button {
 	margin-left: 140px !important;

@@ -48,23 +48,22 @@ class Social
 	}
     
     private function bnComplete($data = array()) {
-        exit('rawr');
-		/*$user = $_POST;
-		$user['social'] = 'fb';
+		$user = $_POST;
+		$user['social'] = 'bn';
 	
 		if(empty($data)) {
-			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['fb'])) {
+			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['bn'])) {
                 $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
                 return false;
             }
-			$data = $_SESSION['social']['fb'];
+			$data = $_SESSION['social']['bn'];
 		}
 	
 		$user['name'] = $data['first_name'] ? $data['first_name'] : 'Anonymous';
 		if(isset($data['email'])) {
 			$user['email'] = $data['email'];
 		}
-		$user['social_uid'] = $data['id'];
+		$user['social_uid'] = $data['accountId'];
         
 		$user = User::socialLogin($user);
 		if($user !== true) {
@@ -73,7 +72,7 @@ class Social
             return false;
         }
 		
-		return true;*/
+		return true;
 	}
 	
 	private function bnVerify() {
@@ -90,54 +89,42 @@ class Social
             
             return false;
 		}
-        ddump($_GET);
-		/*$cfg = array(
-            'url'=>'https://graph.facebook.com/oauth/access_token',
-            'get'=>array(
+        
+        $region = $_GET['state'];
+        if ($region == 'se') {
+            $region = 'us';
+        }
+        
+		$cfg = array(
+            'url'=>'https://'.$region.'.battle.net/oauth/token',
+            'post'=>array(
                 'code'=>$_GET['code'],
-                'redirect_uri'=>_cfg('site').'/run/social/fb',
+                'redirect_uri'=>_cfg('site').'/run/social/bn',
+                'grant_type'=>'authorization_code'
+            ),
+            'get'=>array(
                 'client_id'=>$this->config['id'],
                 'client_secret'=>$this->config['private'],
-                //'grant_type'=>'client_credentials'
             ),
 		);
 	
 		$f = $this->oAuthRequest($cfg);
+        
 		if($f === false) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
             return false;
         }
 	
-		parse_str($f,$f);
-		 
+        $f = (array)json_decode($f);
+        
 		if(!isset($f['access_token'])) {
             $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
             return false;
         }
 	
-		$cfg = array(
-            'url'=>'https://graph.facebook.com/me',
-            'get'=>array(
-                'access_token'=>$f['access_token'],
-            ),
-		);
+		$_SESSION['social']['bn'] = $f;
 	
-		$f = $this->oAuthRequest($cfg);
-		if($f === false ) {
-            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
-            return false;
-        }
-	
-		$f = json_decode($f,1);
-		
-		if(!isset($f['id'])) {
-            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
-            return false;
-        }
-	
-		$_SESSION['social']['fb'] = $f;
-	
-		return $this->bnComplete($f);*/
+		return $this->bnComplete($f);
 	}
 	
 	private function bn() {
@@ -149,6 +136,7 @@ class Social
 				.'?client_id='.$this->config['id']
 				.'&redirect_uri='._cfg('site').'/run/social/bn'
 				.'&scope=wow.profile+sc2.profile'
+                .'&state=eu'
 				.'&response_type=code';
 
 		return $url;
@@ -731,7 +719,7 @@ class Social
 			}
 				
 			$cfg['url'] = $cfg['url'] . '?'.implode('&',$cfg['get']);
-		} 
+		}
 	
 		$curlOptions = array (
             CURLOPT_URL => $cfg['url'],
@@ -747,12 +735,11 @@ class Social
 			$curlOptions[CURLOPT_POST] = 1;
 			$curlOptions[CURLOPT_POSTFIELDS] = $cfg['post'];
 		}
-	
+        
 		curl_setopt_array($ch,$curlOptions);
 		$response = curl_exec($ch); // run the whole process
 		$status = curl_getinfo($ch);
 		curl_close($ch);
-	
 	
 		if($status['http_code']!=200) {
             $_SESSION['errors'][] = $response.' ('.__LINE__.')';

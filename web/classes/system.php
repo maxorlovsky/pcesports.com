@@ -53,6 +53,10 @@ class System
         if ($checkUser) {
             $this->logged_in = 1;
             $this->data->user = $checkUser;
+            if ($this->data->user->https == 1) {
+                $cfg['site'] = str_replace('http://', 'https://', $cfg['site']);
+                $cfg['href'] = str_replace('http://', 'https://', $cfg['href']);
+            }
             //User::token();
         }
         else {

@@ -311,13 +311,21 @@ class User extends System
             $form['avatar'] = 1;
         }
         
+        if (isset($form['https']) && $form['https'] == 1) {
+            $form['https'] = 1;
+        }
+        else {
+            $form['https'] = 0;
+        }
+        
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
             '`timezone` = "'.Db::escape($timezone).'", '.
             '`avatar` = '.(int)$form['avatar'].', '.
-            '`battletag` = "'.Db::escape($form['battletag']).'" '.
+            '`battletag` = "'.Db::escape($form['battletag']).'", '.
+            '`https` = '.(int)$form['https'].' '.
             'WHERE `id` = '.(int)$user->id
         );
         
