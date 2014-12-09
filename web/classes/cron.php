@@ -150,6 +150,223 @@ class Cron extends System {
         }
     }
     
+    public function checkDotaGames() {
+    
+        /*$params = array(
+            'module' => 'IDOTA2Match_570/GetMatchHistory/v001',
+            'get' => 'matches_requested=1&account_id=84762925',
+        );
+        $response = $this->runDotaAPI($params);
+        foreach($response['result']['matches'] as $v) {
+            $matchId = $v['match_id'];
+            
+            $params = array(
+                'module' => 'IDOTA2Match_570/GetMatchDetails/v001',
+                'get' => 'match_id='.$matchId,
+            );
+            $response = $this->runDotaAPI($params);
+            if ($response['result']['radiant_win'] == 1) {
+                dump('Match ID '.$matchId.' won by radiant');
+            }
+            else {
+                dump('Match ID '.$matchId.' won by dire');
+            }
+        }
+        exit();*/
+        
+        if ($this->data->settings['tournament-start-dota'] == 1) {
+            $text = '
+            Team 1: %team1%<br />
+            Players 1:<br />
+            %players1%<br />
+            
+            Team 2: %team2%<br />
+            Players 2:<br />
+            %players2%<br />
+            
+            Team won: <b>%win%</b>';
+            
+            //Getting all fights with status "done" = 0
+            $rows = Db::fetchRows(
+                'SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2`, `t1`.`challonge_id` AS `challongeId1`, `t2`.`challonge_id` AS `challongeId2` '.
+                'FROM `fights` AS `f` '.
+                'LEFT JOIN `participants` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
+                'LEFT JOIN `participants` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
+                'LEFT JOIN `dota_games` AS `lg` ON `lg`.`match_id` = `f`.`match_id` '.
+                'WHERE `f`.`done` = 0 OR '.
+                '`lg`.`ended` = 0 '
+            );
+            
+            /*if ($rows)
+            {
+                foreach($rows as $v) {
+                    //Gathering team data
+                    $team = array(
+                        $v->team1 => array('captain' => $v->captain1, 'name' => $v->teamName1, 'challonge_id' => $v->challongeId1),
+                        $v->team2 => array('captain' => $v->captain2, 'name' => $v->teamName2, 'challonge_id' => $v->challongeId2),
+                    );
+                    
+                    //Gathering players
+                    $insideRows = Db::fetchRows('SELECT `participant_id`, `player_num`, `player_id`, `name` '.
+                        'FROM `players` '.
+                        'WHERE `participant_id` = '.(int)$v->team1.' OR `participant_id` = '.(int)$v->team2.' '.
+                        'ORDER BY `player_num` ASC '
+                    );
+                    foreach($insideRows as $v2) {
+                        $team[$v2->participant_id]['players'][$v2->player_num] = array('id' => $v2->player_id, 'name' => $v2->name);
+                    }
+                    
+                    //Checking if match already registered
+                    $row = Db::fetchRow('SELECT `id` FROM `dota_games` WHERE `match_id` = '.(int)$v->match_id.' ORDER BY `id` DESC LIMIT 1');
+                    if (!$row) {
+                        Db::query('INSERT INTO `dota_games` SET '.
+                            '`match_id` = '.(int)$v->match_id.', '.
+                            '`message` = "Fight not found, ignoring match ('.Db::escape($team[$v->team1]['name']).' VS '.Db::escape($team[$v->team2]['name']).')", '.
+                            '`participant_id1` = '.(int)$v->team1.', '.
+                            '`participant_id2` = '.(int)$v->team2
+                        );
+                        $gameDbId = Db::lastId();
+                    }
+                    else {
+                        Db::query('UPDATE `dota_games` SET `date` = NOW() WHERE `id` = '.(int)$row->id.' LIMIT 1');
+                        $gameDbId = $row->id;
+                    }
+
+                    $i = 0;
+                    foreach($insideRows as $vPlayer) {
+                        //Getting player recent games
+                        $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
+                        $game = $answer->games[0]; //We're interested only in last game
+                        
+                        //Do not check ranked and solo games
+                        if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 11 && $game->fellowPlayers) {
+                            $getPlayers = array();
+                            $getPlayers[] = $team[$v->team1]['captain'];
+                            foreach($game->fellowPlayers as $fellowPlayers) {
+                                $getPlayers[] = $fellowPlayers->summonerId;
+                            }
+                            
+                            //If player not found in the list, we aren't interested in this match
+                            if (in_array($vPlayer->player_id, $getPlayers)) {
+                            
+                                $playersList = array(0=>'',1=>'');
+                                //Looping teams
+                                for($j=0;$j<=1;++$j) {
+                                    $found = 0;
+                                    foreach($team[($j==0?$v->team1:$v->team2)]['players'] as $players) {
+                                        if (in_array($players['id'], $getPlayers)) {
+                                            $playersList[$j]['list'] .= $players['name'].' - found ('.$players['id'].')<br />';
+                                            ++$found;
+                                            if ($players['id'] == $vPlayer->player_id) {
+                                                $playerTeam['id'] = ($j==0?$v->team1:$v->team2);
+                                                $playerTeam['num'] = $j;
+                                                $playerTeam['riotNum'] = $game->stats->team;
+                                                $playerTeam['vsTeamId'] = ($j==1?$v->team1:$v->team2);
+                                                $playerTeam['vsTeamNum'] = ($j==1?$v->team1:$v->team2);
+                                            }
+                                        }
+                                        else {
+                                            $playersList[$j]['list'] .= '<u>'.$players['name'].'</u> - <span style="color:red">player not found</span> ('.$players['id'].')<br />';
+                                        }
+                                    }
+                                    $playersList[$j]['list'] .= '<b>Found:</b> '.$found.'<br />';
+                                    $playersList[$j]['count'] = $found;
+                                }
+                                
+                                if ($playersList[0]['count'] >= 1 && $playersList[1]['count'] >= 1) {
+                                    //Deciding who's won. If 1 then team 1 won of empty then team 2 won
+                                    if ($game->stats->win == 1 && $game->stats->team == $playerTeam['riotNum']) {
+                                        $whoWon = $playerTeam['id'];
+                                        $emailText = str_replace('%win%', $team[$playerTeam['id']]['name'], $text);
+                                        $winner = $team[$playerTeam['id']]['challonge_id'];
+                                        $loserId = $playerTeam['vsTeamId'];
+                                        if ($playerTeam['num'] == 0) {
+                                            $scores = '1-0';
+                                        }
+                                        else {
+                                            $scores = '0-1';
+                                        }
+                                    }
+                                    else {
+                                        $whoWon = $playerTeam['vsTeamId'];
+                                        $emailText = str_replace('%win%', $team[$playerTeam['vsTeamId']]['name'], $text);
+                                        $winner = $team[$playerTeam['vsTeamId']]['challonge_id'];
+                                        $loserId = $playerTeam['id'];
+                                        if ($playerTeam['num'] == 0) {
+                                            $scores = '0-1';
+                                        }
+                                        else {
+                                            $scores = '1-0';
+                                        }
+                                    }
+                            
+                                    //Adding teams names to email text
+                                    $emailText = str_replace(array('%team1%', '%team2%'), array($team[$v->team1]['name'], $team[$v->team2]['name']), $emailText);
+                                    
+                                    //Sending email
+                                    $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0]['list'], $playersList[1]['list']), $emailText);
+                                    $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick Dota tournament - Result', $emailText);
+                                    
+                                    //Registering email, ending the game
+                                    Db::query('UPDATE `dota_games` SET '.
+                                        '`message` = "'.Db::escape($emailText).'", '.
+                                        '`game_id` = '.(int)$game->gameId.', '.
+                                        '`ended` = 1 '.
+                                        'WHERE `id` = '.(int)$gameDbId
+                                    );
+                                    echo 1;
+                                    //Updating brackets only if automatic function is enabled
+                                    if (_cfg('tournament-auto-dota') == 1) {
+                                        echo 2;
+                                        $apiArray = array(
+                                            '_method' => 'put',
+                                            'match_id' => $v->match_id,
+                                            'match[scores_csv]' => $scores,
+                                            'match[winner_id]' => $winner,
+                                        );
+                                        if (_cfg('env') == 'prod') {
+                                            $this->runChallongeAPI('tournaments/pentaclick-dota'.$this->data->settings['dota-current-number'.'/matches/'.$v->match_id.'.put', $apiArray);
+                                        }
+                                        else {
+                                            $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
+                                        }
+                                        
+                                        Db::query('UPDATE `participants` SET `ended` = 1 '.
+                                            'WHERE `game` = "lol" AND '.
+                                            '`server` = "'.$server.'" AND '.
+                                            '`id` = '.(int)$loserId.' '
+                                        );
+                                        echo 3;
+                                        Db::query('UPDATE `fights` SET `done` = 1 '.
+                                            'WHERE `match_id` = '.(int)$v->match_id.' '
+                                        );
+                                    }
+                                    
+                                    $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
+                                    echo 4;
+                                    $file = fopen($fileName, 'a');
+                                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
+                                    if (_cfg('tournament-auto-lol-'.$server) == 0) {
+                                        $content .= ' (automatic advancement disabled, manual check required) ';
+                                    }
+                                    $content .= '</p>';
+                                    echo 5;
+                                    fwrite($file, htmlspecialchars($content));
+                                    fclose($file);
+                                }
+                            }
+                        }
+                        
+                        if ($i >= 5) {
+                            break(1);
+                        }
+                        ++$i;
+                    }
+                }
+            }*/
+        }
+    }
+    
     protected function checkLolGamesByServer($server) {
         $text = '
         Team 1: %team1%<br />

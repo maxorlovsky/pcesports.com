@@ -6,9 +6,9 @@
         <td width="20%"><b>Game <span class="red">*</span></b></td>
         <td>
             <select id="game">
-                <option value="lol">League of Legends</option>
-                <option value="hs">Hearthstone</option>
-                <option value="hslan">Hearthstone League</option>
+                <? foreach($module->availableGames as $k => $v) { ?>
+                <option value="<?=$k?>"><?=$v?></option>
+                <? } ?>
             </select>
         </td>
     </tr>

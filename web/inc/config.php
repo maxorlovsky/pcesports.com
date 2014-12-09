@@ -29,6 +29,9 @@ $cfg['social'] = array(
 $cfg['streamGames'] = array(
     'lol'   => 'league_of_legends',
     'hs'    => 'hearthstone',
+    'dota'  => 'dota',
+    'smite' => 'smite',
+    'cs'    => 'csgo',
     'other' => 'random',
 );
 $cfg['streamLanguages'] = array(

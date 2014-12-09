@@ -3,10 +3,20 @@ class TournamentList
 {
     public $system;
 	public $tournaments = array();
+    public $availableGames = array();
     
 	function __construct($params = array()) {
 		
 		$this->system = $params['system'];
+        
+        $this->availableGames = array(
+            'lol' => 'League of Legends',
+            'hs' => 'Hearthstone',
+            'hslan' => 'Hearthstone League',
+            'dota' => 'Dota 2',
+            'smite' => 'Smite',
+            'cs' => 'CS:Global Offensive',
+        );
         
         if (isset($params['var1']) && $params['var1'] == 'edit' && isset($params['var2'])) {
 			$this->editData = $this->fetchEditData($params['var2']);

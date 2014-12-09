@@ -29,6 +29,7 @@ class Ajax extends System
         'addSummoner',
         'removeSummoner',
         'verifySummoner',
+        'registerInDota',
 	);
 	
     public function ajaxRun($data) {
@@ -1245,5 +1246,157 @@ class Ajax extends System
     	);
     	
     	return '1;'.$num;
+    }
+    
+    protected function registerInDota($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+        
+        if ($this->data->settings['tournament-reg-dota'] != 1) {
+            return '0;Server error!';
+        }
+    	
+    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
+    		'`tournament_id` = '.(int)$this->data->settings['dota-current-number'].' AND '.
+    		'`name` = "'.Db::escape($post['team']).'" AND '.
+            '`server` = "'.Db::escape($server).'" AND '.
+    		'`game` = "dota" AND '.
+    		'`approved` = 1 AND '.
+    		'`deleted` = 0'
+    	);
+
+    	if (!$post['team']) {
+    		$err['team'] = '0;'.t('field_empty');
+    	}
+		else if (strlen($post['team']) < 4) {
+			$err['team'] = '0;'.t('team_name_small');
+		}
+		else if (strlen($post['team']) > 60) {
+			$err['team'] = '0;'.t('team_name_big');
+		}
+        else if ($row) {
+            $err['team'] = '0;'.t('team_name_taken');
+        }
+		else {
+			$suc['team'] = '1;'.t('approved');
+		}
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;'.t('field_empty');
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;'.t('email_invalid');
+    	}
+    	else {
+    		$suc['email'] = '1;'.t('approved');
+    	}
+		
+		$players = array();
+		$checkForSame = array();
+		for($i=1;$i<=7;++$i) {
+            $post['mem'.$i] = trim($post['mem'.$i]);
+            
+			if (!$post['mem'.$i] && $i < 6) {
+				$err['mem'.$i] = '0;'.t('field_empty');    
+			}
+			else if ($post['mem'.$i]) {
+                $accountId = $i;
+                
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'http://steamcommunity.com/id/'.rawurlencode(htmlspecialchars($post['mem'.$i])).'?xml=1'); // set url to post to
+                curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+                curl_setopt($ch, CURLOPT_TIMEOUT, 5); // times out after 2s
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+                curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+                $response = curl_exec($ch); // run the whole process 
+                curl_close($ch);
+                $response = new SimpleXMLElement($response);
+                
+                if (!$response || $response->error) {
+                    $err['mem'.$i] = '0;'.t('user_not_found');
+                }
+                else {
+                    $accountId = (int)$response->steamID64 - 76561197960265728;
+
+                    $params = array(
+                        'module' => 'IDOTA2Match_570/GetMatchHistory/v001',
+                        'get' => 'matches_requested=1&account_id='.$accountId,
+                    );
+                    $response = $this->runDotaAPI($params);
+                    
+                    if ($response['result']['status'] == 15 || !$response) {
+                        $err['mem'.$i] = '0;'.t('dota_user_not_public');
+                    }
+                    else if (in_array($accountId, $checkForSame)) {
+                        $err['mem'.$i] = '0;'.t('same_player');
+                    }
+                    else {
+                        $players[$i]['id'] = $accountId;
+                        $players[$i]['name'] = Db::escape($post['mem'.$i]);
+                        $suc['mem'.$i] = '1;'.t('approved');
+                        
+                    }
+                }
+                
+                $checkForSame[] = $accountId;
+			}
+		}
+    	
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+    	
+    		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
+    		Db::query('INSERT INTO `participants` SET '.
+	    		'`game` = "dota", '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`server` = "'.$server.'", '.
+	    		'`tournament_id` = '.(int)$this->data->settings['dota-current-number'].', '.
+	    		'`timestamp` = NOW(), '.
+	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`name` = "'.Db::escape($post['team']).'", '.
+	    		'`email` = "'.Db::escape($post['email']).'", '.
+	    		'`contact_info` = "'.Db::escape($team).'", '.
+                '`cpt_player_id` = '.(int)$players[1]['id'].', '.
+	    		'`link` = "'.$code.'"'
+    		);
+    	
+    		$teamId = Db::lastId();
+			
+			foreach($players as $k => $v) {
+				Db::query(
+					'INSERT INTO `players` SET '.
+					' `game` = "dota", '.
+					' `tournament_id` = '.(int)$this->data->settings['dota-current-number'].', '.
+					' `participant_id` = '.(int)$teamId.', '.
+					' `name` = "'.Db::escape($v['name']).'", '.
+					' `player_num` = "'.(int)$k.'", '.
+					' `player_id` = "'.(int)$v['id'].'"'
+				);
+			}
+    		
+    		$text = Template::getMailTemplate('reg-dota-team');
+    	
+    		$text = str_replace(
+    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+    			array($post['team'], $teamId, $code, _cfg('href').'/dota', _cfg('site')),
+    			$text
+    		);
+    	
+    		$this->sendMail($post['email'], 'Pentaclick DotA 2 tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
     }
 }

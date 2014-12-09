@@ -15,8 +15,8 @@ class System
     	if (!$this->data) {
     		$this->data = new stdClass();
     	}
-    	
-    	$this->loadClasses();
+        
+        $this->loadClasses();
         
         //Making a connection
         Db::connect();
@@ -211,9 +211,52 @@ class System
     	go(_cfg('site'));
     }
     
+    public function runDotaAPI($params = array()) {
+    	$startTime = microtime(true);
+        
+        $apiUrl = 'https://api.steampowered.com/'.$params['module'].'/';
+        $apiUrl .= '?key=B562BDCF6768E330A9B01B1A016E82E0&';
+        $apiUrl .= $params['get'];
+        
+        Db::query(
+    		'INSERT INTO `dota_requests` SET '.
+    		' `timestamp` = NOW(), '.
+    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+    		' `data` = "'.Db::escape($apiUrl).'" '
+		);
+        
+        $lastId = Db::lastId();
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // times out after 2s
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+        $response = curl_exec($ch); // run the whole process 
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+    	$endTime = microtime(true);
+    	$duration = $endTime - $startTime; //calculates total time taken
+    
+    	Db::query(
+	    	'UPDATE `dota_requests` SET '.
+	    	' `response` = "'.Db::escape($response).'", '.
+	    	' `time` = "'.(float)$duration.'" '.
+	    	' WHERE id='.$lastId
+    	);
+    
+    	$response = json_decode($response, true);
+    
+    	return $response;
+    }
+    
     public function runTwitchAPI($channelName) {
     	$startTime = microtime(true);
-    	$error = '';
         $channelName = strtolower(htmlspecialchars($channelName, ENT_QUOTES));
         
         $apiUrl = 'https://api.twitch.tv/kraken/streams/';
@@ -596,6 +639,7 @@ class System
                     $cronClass->finalizeTournament();
                     $cronClass->sendNotifications();
                     $cronClass->checkLolGames();
+                    $cronClass->checkDotaGames();
                     $cronClass->updateStreamers();
                     $cronClass->sqlCleanUp();
                     

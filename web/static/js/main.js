@@ -887,6 +887,11 @@ var PC = {
             
             return false;
         },
+        st: function() {
+            this.get_token('st');
+            
+            return false;
+        },
         get_token: function(provider) {
             var query = {
                 type: 'POST',
@@ -955,7 +960,11 @@ var PC = {
             PC.ajax(query);
         },
     },
-    addTeam: function() {
+    addTeam: function(game) {
+        if (!game) {
+            game = 'registerInLoL';
+        }
+        
         if (this.formInProgress == 1) {
             return false;
         }
@@ -969,7 +978,7 @@ var PC = {
             type: 'POST',
             dataType: 'json',
             data: {
-                ajax: 'registerInLOL',
+                ajax: game,
                 form: $('#da-form').serialize()
             },
             success: function(answer) {
