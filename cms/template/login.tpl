@@ -9,10 +9,17 @@
                 <div class="msgs_text"><?=$this->messages['login_error']?></div>
     		</div>
     	<? } ?>
-    
+        
         <form method="post">
             <input type="text" name="login" id="login" placeholder="Login" />
             <input type="password" name="password" id="password" placeholder="Password" />
+            
+            <? if (isset($_SESSION['recaptcha_login']) && $_SESSION['recaptcha_login'] >= _cfg('availableLoginAttempts')) { ?>
+                <div class="recaptcha">
+                    Too many fail attempts, please prove that you're not a robot!
+                    <div class="g-recaptcha" data-sitekey="6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z"></div>
+                </div>
+            <? } ?>
             
             <input type="submit" value="Enter" name="submit_login" onclick="$(this).attr('readonly', 'readonly');" class="enter" />
 		</form>
@@ -25,3 +32,7 @@
     </footer>
     
 </section>
+
+<? if (isset($_SESSION['recaptcha_login']) && $_SESSION['recaptcha_login'] >= _cfg('availableLoginAttempts')) { ?>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<? } ?>

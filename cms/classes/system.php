@@ -14,7 +14,7 @@ class System
     
     public function __construct($status = 1) {
     	$this->loadClasses();
-    	
+        
     	if ($status != 1) {
     		//return false;
     	}
@@ -26,7 +26,7 @@ class System
         $this->userClass = new User();
         $this->defaultPage = 'dashboard';
         
-        $this->fetchParams();
+        $this->fetchParams($status);
     }
     
     public function run() {
@@ -37,7 +37,7 @@ class System
         $template->parse();
     }
     
-    public function fetchParams() {
+    public function fetchParams($status) {
         global $cfg;
         
         $this->data->cmsSettings = array();
@@ -78,9 +78,10 @@ class System
         }
         
         //Loggin in admin
-        if (isset($data['submit_login']) && $data['submit_login'] && !$data['token']) {
+        if (isset($data['submit_login']) && $data['submit_login'] && !$data['token'] && $status == 1) {
             $this->logged_in = 0;
             $result = $this->userClass->login($data);
+            
             if (!is_object($result) && substr($result,0,1) == 0) {
                 $this->data->login_error = 1;
                 $breakDown = explode(';', $result);
@@ -134,7 +135,8 @@ class System
     }
     
     public function cleanData() {
-    	unset($_SESSION['token']);
+    	unset($_SESSION['token'], $_SESSION['recaptcha_login']);
+        session_destroy();
     	$this->logged_in = 0;
     	$this->user = array();
     	go(_cfg('site').'/admin');
@@ -346,6 +348,65 @@ class System
         else {
         	require_once(_cfg('cmslocale').'/'._cfg('defaultLanguage').'.php');
         }
+    }
+    
+    protected function update($params = array()) {
+        if (!$params) {
+            return '0;Parameters not set';
+        }
+        
+        if (!is_writable(_cfg('cmsdir').'/classes/system.php')) {
+            return '0;Update impossible, editing files are forbidden. Try <a href="'._cfg('cmssite').'/#update">manual update</a>';
+        }
+        
+        $answer = $this->runAPI($params);
+        
+        if ($answer && substr($answer,0,1) == '2') {
+            $json = json_decode(substr($answer,2));
+            
+            if ($json->files != '-') {
+                $error = '0;';
+                foreach($json->files as $k => $v) {
+                    //Updating files
+                    if (!is_writable(_cfg('cmsdir').$k)) {
+                        $error .= '<p>File .'._cfg('cmsdir').$k.' is not writable</p>';
+                    }
+                }
+                
+                if ($error == '0;') {
+                    foreach($json->files as $k => $v) {
+                        file_put_contents(_cfg('cmsdir').$k, base64_decode($v));
+                    }
+                }
+                else {
+                    return $error;
+                }
+            }
+            
+            if ($json->sql != '-') {
+                $breakdown = explode(';', $json->sql);
+                foreach($breakdown as $v) {
+                    if ($v) {
+                        Db::query($v);
+                        if (Db::error()) {
+                            return '0;There was an error while trying to update SQL:<br>'.Db::error().'<br />Make <a href="'._cfg('cmssite').'/#update">manual update</a> <b>ONLY FOR SQL</b>';
+                        }
+                    }
+                }
+            }
+            
+            $message = 'Success';
+            if ($json->description != '-') {
+                $message .= ' ('.$json->description.')';
+            }
+            
+            return '1;'.$message;
+        }
+        else {
+            return $answer;
+        }
+        
+        return '0;System error';
     }
     
     /*Private functions*/

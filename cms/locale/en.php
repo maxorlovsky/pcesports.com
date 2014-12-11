@@ -6,7 +6,7 @@
 
 // Main language strings
 $astr['title_err']='Please input title/name';
-$astr['title_have_spaces']='Please input title/name without as 1 word, without spaces';
+$astr['title_have_spaces']='Please input title/name without without spaces, as 1 word';
 $astr['exit']='Exit';
 $astr['dashboard']='Dashboard';
 $astr['languages']='Languages';
@@ -80,9 +80,10 @@ $astr['last_ent_overall_ent']='Last entrance / Overall entrance in the system';
 $astr['admin']='admin';
 $astr['cpages'] = 'Client pages';
 $astr['site_prefix'] = 'Prefix (only for developers)';
-
 $astr['admin_exist']='Admin already exist';
 $astr['admin_err']='Login is empty';
+$astr['are_you_robot']='Are you a robot?';
+$astr['prove_not_robot']='Prove that you are not a robot, check captcha';
 
 //--------------------------------------------------//
 
@@ -167,6 +168,7 @@ $astr['admin_profile_update_success'] = 'Profile was updated successfully';
 $astr['new_password'] = 'New password';
 $astr['update_profile'] = 'Update profile';
 $astr['custom'] = 'Custom';
+$astr['redirect_on_edit'] = 'Auto-redirect after edit';
 //--------------------------------------------------//
 
 //Other language strings
@@ -192,6 +194,7 @@ $astr['hint_admin_password']='To change password, input value in to the field an
 $astr['cms_json_strings'] = json_encode(
     array(
         'loading' => 'Loading...',
-        'sure_to_delete' => 'Are you sure you wan\'t to delete this?'
+        'sure_to_delete' => 'Are you sure you wan\'t to delete this?',
+        'will_redirect_auto' => 'will be redirected automatically',
     )
 );

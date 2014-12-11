@@ -6,6 +6,10 @@ if (logged_in) {
 	});
 }
 
+$(document).on('click', '#cmsUpdate', function() {
+    TM.updateCMS();
+});
+
 //Setting load block in correct position
 if ($('.content').length > 0) {
 	var offset = $('.content').offset();
@@ -88,8 +92,10 @@ $(document).on('click', '.submitButton', function(){
             TM.messageTimer = setTimeout(cleanMsg,3000);
             
             if (answer[0] == 1) {
-				showMsg(answer[0],answer[1] + ' (will be redirected automatically)');
-                goDelay('#'+element.attr('name'), 3200);
+				showMsg(answer[0],answer[1] + (redirect==1?' ('+strings.will_redirect_auto+')':''));
+                if (redirect == 1) {
+                    goDelay('#'+element.attr('name'), 3200);
+                }
             }
     	},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -118,6 +124,9 @@ $('#submenu').on('click', function() {
 });
 
 function goDelay(url, delay) {
+    if (!url) {
+        url = '';
+    }
 	url = site+'/admin/'+url;
 	setTimeout(function(){ window.location = url; }, delay);
 }
@@ -418,6 +427,43 @@ var TM = {
     messageTimer: 0,
     
     //Functions
+    updateCMS: function() {
+        if (!confirm('WARNING: Be sure to backup your files and database before doing any update, it will fully overwrite existing files!')) {
+            return false;
+        }
+        
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        showMsg(2,'Initializing');
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            timeout: 120000,
+            data: {
+                control: 'updateCMS'
+            },
+            success: function(data) {
+            console.log(data);
+                answer = data.split(';');
+                cleanMsg();
+                showMsg(answer[0],answer[1]);
+                TM.formInProgress = 0;
+                TM.messageTimer = setTimeout(cleanMsg,15000);
+                if (answer[0] == 1) {
+                    goDelay('', 15000);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                TM.formInProgress = 0;
+                showMsg(0,'Error timeout');
+                TM.messageTimer = setTimeout(cleanMsg,3000);
+            }
+        }
+        ajax(query);
+    },
     checkCustomAccess: function() {
         if ($('#level').val() == 0) {
             $('.customAccess').show();

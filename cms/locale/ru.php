@@ -6,11 +6,13 @@
 
 // Main language strings
 $astr['title_err']='Пожалуйста, введите название/имя';
+$astr['title_have_spaces']='Пожалуйста, введите название/имя одним словом, без пробелов';
 $astr['exit']='Выход';
 $astr['dashboard']='Консоль';
 $astr['languages']='Языки';
 $astr['pages']='Страницы';
 $astr['links']='Ссылки';
+$astr['logs']='Логи';
 $astr['mlinks']='Ссылки';
 $astr['strings']='Строки';
 $astr['settings']='Настройки';
@@ -78,6 +80,10 @@ $astr['last_ent_overall_ent']='Последний вход / Всего вход
 $astr['admin']='админ';
 $astr['cpages'] = 'Страницы клиента';
 $astr['site_prefix'] = 'Префикс (не меняйте если не понимаете что это)';
+$astr['admin_exist']='Админ уже существует';
+$astr['admin_err']='Логин пустой';
+$astr['are_you_robot']='Ты робот?';
+$astr['prove_not_robot']='Докажи что ты не робот, подтверди каптчу';
 //--------------------------------------------------//
 
 //Template language strings
@@ -161,6 +167,7 @@ $astr['admin_profile_update_success'] = 'Профиль обновлён';
 $astr['new_password'] = 'Новый пароль';
 $astr['update_profile'] = 'Обновить профиль';
 $astr['custom'] = 'Самодельный';
+$astr['redirect_on_edit'] = 'Авто-редирект после редактирования';
 //--------------------------------------------------//
 
 //Other language strings
@@ -186,6 +193,7 @@ $astr['']='';
 $astr['cms_json_strings'] = json_encode(
     array(
         'loading' => 'Загрузка...',
-        'sure_to_delete' => 'Вы уверены, что хотите это удалить?'
+        'sure_to_delete' => 'Вы уверены, что хотите это удалить?',
+        'will_redirect_auto' => 'редирект произойдёт автоматически',
     )
 );

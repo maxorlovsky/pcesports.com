@@ -15,6 +15,7 @@ class Template extends System
             'settings',
         	'links',
         	'logs',
+            'update',
         );
     }
     

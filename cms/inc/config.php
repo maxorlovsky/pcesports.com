@@ -7,18 +7,11 @@
 // Making some defines for easyer coding (main)
 $cfg['dir'] = $_SERVER['DOCUMENT_ROOT'].'/web';
 $cfg['cmsdir'] = dirname(__DIR__);
-date_default_timezone_set('GMT0');
+date_default_timezone_set('UTC');
 //=====================================================
 
 //=====================================================
 // Defining environment
-if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])){
-    $cfg['protocol'] = $_SERVER['HTTP_X_FORWARDED_PROTO'];
-}
-else{
-    $cfg['protocol'] = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
-}
-
 $breakDown = explode('.', $_SERVER['HTTP_HOST']);
 if ($breakDown[0] == 'dev') { //Development environment
     $cfg['env'] = 'dev';
@@ -35,75 +28,35 @@ if (!$cfg['env'])
 	die('Configuration Error 0');
 }
 
-//=====================================================
-// Defining main variables
-switch ( $cfg['env'] )
-{
-//=====================================================
-// Prod Env
-//=====================================================
-case 'prod':
-    // DB config
-    $cfg['dbHost'] ='127.0.0.1';
-    $cfg['dbBase'] ='pentaclick_prod';
-    $cfg['dbUser'] ='pcuserprod';
-    $cfg['dbPass'] ='ASDIJ201*S*D912kka';
-    $cfg['dbPort'] =3306;
-    
-    //Admin email (in case of errors)
-    $cfg['adminEmail'] = 'info@pcesports.com';
-    $cfg['site'] = $cfg['protocol'].'://www.pcesports.com';
-    
-    ini_set('display_errors', 0);
-	
-	break;
-//=====================================================
-// Test Env
-//=====================================================
-case 'test':
-	// DB config
-	$cfg['dbHost'] ='127.0.0.1';
-	$cfg['dbBase'] ='pentaclick_dev';
-	$cfg['dbUser'] ='pcusertest';
-	$cfg['dbPass'] ='s12WD@#$asdaAD2';
-	$cfg['dbPort'] =3306;
+// Defining main default variables
+// DB config
+$cfg['dbHost'] ='';
+$cfg['dbBase'] ='';
+$cfg['dbUser'] ='';
+$cfg['dbPass'] ='';
+$cfg['dbPort'] =3306;
 
-	//Admin email (in case of errors)
-	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-	$cfg['site'] = $cfg['protocol'].'://test.pcesports.com';
-	
-	ini_set('display_errors', 1);
-
-	break;
-		
-//=====================================================
-// Dev Env
-//=====================================================
-case 'dev':
-	// DB config
-    $cfg['dbHost'] ='77.93.30.172';
-    $cfg['dbBase'] ='pentaclick_dev';
-    $cfg['dbUser'] ='pcusertest';
-    $cfg['dbPass'] ='s12WD@#$asdaAD2';
-    $cfg['dbPort'] =3306;
-    
-    //Admin email (in case of errors)
-    $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
-    $cfg['site'] = $cfg['protocol'].'://dev.pcesports.com';
-    
-    error_reporting(E_ALL & ~E_NOTICE);
-    ini_set('display_errors', 1);
-    
-	break;
-}
-//=====================================================
+//Admin email (in case of errors)
+$cfg['adminEmail'] = '';
+$cfg['site'] = '';
 
 // SMTP config
-$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
-$cfg['smtpMailPort'] = '465';
-$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-$cfg['smtpMailPass'] = 'aveclickius777';
-$cfg['smtpMailFrom'] = 'info@pcesports.com';
+$cfg['smtpMailName'] = '';
+$cfg['smtpMailPort'] = '';
+$cfg['smtpMailHost'] = '';
+$cfg['smtpMailPass'] = '';
+$cfg['smtpMailFrom'] = '';
+
+//Additional variables
+$cfg['maxLevel'] = 4;
+$cfg['logs'] = 1;
+$cfg['allowedLanguages'] = array('en', 'ru');
+$cfg['defaultLanguage'] = 'en';
+$cfg['availableLoginAttempts'] = 5;
+$cfg['recaptchaSecretKey'] = '6LcwJ_8SAAAAAFoAQ0onOpvPNMo8-Y-g-lwtY22P';
+
+// Adding site config
+require_once $cfg['dir'].'/inc/config.php';
 
 //=====================================================
 // Making some defines for easyer coding (directories)
@@ -121,28 +74,11 @@ $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
 $cfg['pages'] = $cfg['dir'].'/pages';
 
-$cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
-$cfg['salt'] = 'eethaiASLDK21lae6AASDta9ChoDDCh';
-$cfg['logs'] = 1;
-$cfg['maxLevel'] = 4;
-$cfg['allowedLanguages'] = array('en', 'ru');
-$cfg['defaultLanguage'] = 'en';
-
-$cfg['apiUrl'] = 'https://api.themages.net';
-$cfg['apiUsername'] = 'pcesports';
-$cfg['apiPassword'] = 'diaO2@(ujdp1';
-
 // Needed for Language functionality (to add/delete)
 // Add new language table fields here
 $cfg['ud_alter'] = array(
 	array('tm_strings', ''),
 	array('tm_pages', ''),
-    
-    /*
-	array('news', 'title_'),
-	array('news', 'short_text_'),
-	array('news', 'text_'),
-	*/
 );
 //=====================================================
 

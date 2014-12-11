@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?=_cfg('language')?>">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="description" content="<?=$this->data->settings['site_description']?>" />
     <meta name="keywords" content="<?=$this->data->settings['site_keywords']?>" />
     
@@ -23,8 +23,9 @@
     	var site = "<?=_cfg('site')?>";
     	var img = "<?=_cfg('cmsimg')?>";
         var strings = <?=at('cms_json_strings')?>;
-        var lang = 'en';
+        var lang = '<?=$this->user->language?>';
         var logged_in = <?=$this->logged_in?>;
+        var redirect = <?=$this->user->editRedirect?>;
     </script>
 </head>
 <body>

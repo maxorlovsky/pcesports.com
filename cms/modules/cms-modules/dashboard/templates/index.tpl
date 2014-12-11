@@ -38,6 +38,12 @@
 				</td>
 			</tr>
             <tr>
+				<td width="50%" class="b"><?=at('redirect_on_edit')?></td>
+				<td width="50%">
+					<input type="checkbox" id="editRedirect" value="<?=$this->user->editRedirect?>" <?=($this->user->editRedirect==1?'checked="checked"':null)?>/>
+				</td>
+			</tr>
+            <tr>
 				<td width="50%" class="b"><?=at('new_password')?></td>
 				<td width="50%">
 					<input type="password" id="adminPassword" value=""/>
@@ -79,11 +85,15 @@
 			</tr>
 		</table>
 		<div class="verdict">
-			<? if ($module->line['version'] == $this->data->cmsSettings['version']) {?>
+			<? if (!is_numeric($module->line['version']) || $module->line['version'] == $this->data->cmsSettings['version']) { ?>
 				<?=at('cms_up_to_date')?>
 			<? } else {?>
                 <?=at('cms_outdated')?><br ><br />
-				<a href="javascript:void(0);" onclick="alert('Currently impossible to update'); return false;"><?=at('update')?></a>
+                
+                <? if (_cfg('env') != 'dev') { ?>
+                    <p>You're located on <b><?=_cfg('env')?></b> environment, it is highly NOT recommended to do an update on any environment except <b>development</b></p>
+                <? } ?>
+				<a href="javascript:void(0);" id="cmsUpdate"><?=at('update')?></a>
 			<? } ?>
 		</div>
 	</div>
@@ -115,7 +125,8 @@ $('.updateProfile').on('click', function(){
     		lang: $('#change_language').val(),
             email: $('#adminEmail').val(),
             password: $('#adminPassword').val(),
-            currentPassword: $('#currentPassword').val()
+            currentPassword: $('#currentPassword').val(),
+            editRedirect: $('#editRedirect').val()
 		},
     	success: function(data) {
     		answer = data.split(';');
@@ -138,6 +149,15 @@ $('.updateProfile').on('click', function(){
     	}
     }
 	ajax(query);
+});
+
+$('#editRedirect').on('click', function() {
+    if ($(this).is(':checked')) {
+        $(this).val('1');
+    }
+    else {
+        $(this).val('0');
+    }
 });
 
 </script>

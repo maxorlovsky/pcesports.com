@@ -12,6 +12,7 @@ class Ajax extends System
     	'submitForm',
     	'saveSetting',
         'updateProfile',
+        'updateCMS',
 	);
 	
     public function ajaxRun($data) {
@@ -38,6 +39,15 @@ class Ajax extends System
             echo '0;'.at('controller_not_exists');
             return false;
         }
+    }
+    
+    protected function updateCMS() {
+        $params = array(
+            'control' => 'update',
+            'ver' => $this->data->cmsSettings['version'],
+        );
+        
+        return $this->update($params);
     }
     
     protected function saveSetting($data) {
@@ -168,7 +178,8 @@ class Ajax extends System
     	 
     	Db::query('UPDATE `tm_admins` SET '.
         '`language` = "'.Db::escape($data['lang']).'", '.
-        '`email` = "'.Db::escape($email).'" '.
+        '`email` = "'.Db::escape($email).'", '.
+        '`editRedirect` = '.(int)$data['editRedirect'].' '.
     	$passwordChange.
     	'WHERE `id` = '.intval($this->user->id).' '.
     	'LIMIT 1');

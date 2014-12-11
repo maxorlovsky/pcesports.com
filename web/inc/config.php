@@ -1,4 +1,92 @@
 <?php
+
+if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])){
+    $cfg['protocol'] = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+}
+else{
+    $cfg['protocol'] = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+}
+
+//=====================================================
+// Defining main variables
+switch ( $cfg['env'] )
+{
+//=====================================================
+// Prod Env
+//=====================================================
+case 'prod':
+    // DB config
+    $cfg['dbHost'] ='127.0.0.1';
+    $cfg['dbBase'] ='pentaclick_prod';
+    $cfg['dbUser'] ='pcuserprod';
+    $cfg['dbPass'] ='ASDIJ201*S*D912kka';
+    $cfg['dbPort'] =3306;
+    
+    //Admin email (in case of errors)
+    $cfg['adminEmail'] = 'info@pcesports.com';
+    $cfg['site'] = $cfg['protocol'].'://www.pcesports.com';
+    
+    ini_set('display_errors', 0);
+	
+	break;
+//=====================================================
+// Test Env
+//=====================================================
+case 'test':
+	// DB config
+	$cfg['dbHost'] ='127.0.0.1';
+	$cfg['dbBase'] ='pentaclick_dev';
+	$cfg['dbUser'] ='pcusertest';
+	$cfg['dbPass'] ='s12WD@#$asdaAD2';
+	$cfg['dbPort'] =3306;
+
+	//Admin email (in case of errors)
+	$cfg['adminEmail'] = 'max.orlovsky@gmail.com';
+	$cfg['site'] = $cfg['protocol'].'://test.pcesports.com';
+	
+	ini_set('display_errors', 1);
+
+	break;
+		
+//=====================================================
+// Dev Env
+//=====================================================
+case 'dev':
+	// DB config
+    $cfg['dbHost'] ='77.93.30.172';
+    $cfg['dbBase'] ='pentaclick_dev';
+    $cfg['dbUser'] ='pcusertest';
+    $cfg['dbPass'] ='s12WD@#$asdaAD2';
+    $cfg['dbPort'] =3306;
+    
+    //Admin email (in case of errors)
+    $cfg['adminEmail'] = 'max.orlovsky@gmail.com';
+    $cfg['site'] = $cfg['protocol'].'://dev.pcesports.com';
+    
+    error_reporting(E_ALL & ~E_NOTICE);
+    ini_set('display_errors', 1);
+    
+	break;
+}
+
+$cfg['apiUrl'] = 'https://api.themages.net';
+$cfg['apiUsername'] = 'pcesports';
+$cfg['apiPassword'] = 'diaO2@(ujdp1';
+
+$cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
+$cfg['salt'] = 'eethaiASLDK21lae6AASDta9ChoDDCh';
+$cfg['logs'] = 1;
+$cfg['maxLevel'] = 4;
+$cfg['allowedLanguages'] = array('en', 'ru');
+$cfg['defaultLanguage'] = 'en';
+
+// SMTP config
+$cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
+$cfg['smtpMailPort'] = '465';
+$cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
+$cfg['smtpMailPass'] = 'aveclickius777';
+$cfg['smtpMailFrom'] = 'info@pcesports.com';
+
 $cfg['href'] = $cfg['site'].'/%lang%';
 $cfg['hssite'] = '/hearthstone';
 $cfg['lolsite'] = '/league';
