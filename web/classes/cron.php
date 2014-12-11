@@ -137,19 +137,6 @@ class Cron extends System {
         }
     }
     
-    public function checkLolGames() {
-        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-            if ($this->data->settings['tournament-start-lol-euw'] == 1) {
-                $this->checkLolGamesByServer('euw');
-            }
-            if ($this->data->settings['tournament-start-lol-eune'] == 1) {
-                $this->checkLolGamesByServer('eune');
-            }
-            
-            return false;
-        }
-    }
-    
     public function checkDotaGames() {
     
         /*$params = array(
@@ -367,6 +354,19 @@ class Cron extends System {
         }
     }
     
+    public function checkLolGames() {
+        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+            if ($this->data->settings['tournament-start-lol-euw'] == 1) {
+                $this->checkLolGamesByServer('euw');
+            }
+            if ($this->data->settings['tournament-start-lol-eune'] == 1) {
+                $this->checkLolGamesByServer('eune');
+            }
+            
+            return false;
+        }
+    }
+    
     protected function checkLolGamesByServer($server) {
         $text = '
         Team 1: %team1%<br />
@@ -389,7 +389,8 @@ class Cron extends System {
             'WHERE `f`.`done` = 0 OR '.
             '`lg`.`ended` = 0 '
         );
-        
+        dump($server);
+        ddump($rows);
         if ($rows)
         {
             foreach($rows as $v) {

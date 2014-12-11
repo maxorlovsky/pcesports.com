@@ -1,3 +1,26 @@
+# 09.12.2014
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('dota-current-number', '1', 'Название (Dota)', 'text', '5'), ('tournament-reg-dota', '0', 'Регистрация на турнир (Dota)', 'checkbox', '5');
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-auto-dota', '1', 'Авто продвижение (Dota)', 'checkbox', '5'), ('tournament-checkin-dota', '1', 'Процесс checkin (Dota)', 'checkbox', '5');
+
+ALTER TABLE `tournaments` CHANGE `game` `game` ENUM('lol','hs','hslan','dota','smite','cs') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `participants` CHANGE `game` `game` ENUM('lol','hs','hslan','dota','smite','cs') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `notifications` CHANGE `game` `game` ENUM('lol','loleuw','loleune','hs','hslan','dota','smite','cs') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `players` CHANGE `game` `game` ENUM('lol','hs','hslan','dota','smite','cs') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `streams` CHANGE `game` `game` ENUM('lol','hs','dota','smite','cs','other') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `subscribe` CHANGE `theme` `theme` ENUM('all','lol','hs','dota','smite','cs') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'all';
+
+# 08.12.2014
+ALTER TABLE `users` ADD `https` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0';
+CREATE TABLE IF NOT EXISTS `dota_requests` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip` varchar(20) NOT NULL,
+  `data` text NOT NULL,
+  `response` text,
+  `time` varchar(99) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
 # 03.12.2014
 ALTER TABLE `notifications` CHANGE `game` `game` ENUM('lol','loleuw','loleune','hs','hslan') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
