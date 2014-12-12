@@ -389,8 +389,7 @@ class Cron extends System {
             'WHERE `f`.`done` = 0 OR '.
             '`lg`.`ended` = 0 '
         );
-        dump($server);
-        ddump($rows);
+        
         if ($rows)
         {
             foreach($rows as $v) {
