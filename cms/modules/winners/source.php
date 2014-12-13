@@ -50,6 +50,7 @@ class Winners extends System
         $prizes = array(1 => '3200 RP + Triumphant Ryze skin', 2 => '2400 RP', 3 => '1600 RP', 4 => '800 RP');
         $i = 1;
         foreach($rows as &$v) {
+        echo $v->place;
             if ($v->place == $i) {
             dump($v);
                 $v->prizes = $prizes[$i];
@@ -60,7 +61,6 @@ class Winners extends System
         }
         unset($v);
         
-        $i = 0;
         foreach($rows as $v) {
             $text = str_replace(
     			array(
