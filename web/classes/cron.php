@@ -381,6 +381,9 @@ class Cron extends System {
         
         Team won: <b>%win%</b>';
         
+        echo 'tournament-auto-lol-'.$server;
+        dump(_cfg('tournament-auto-lol-'.$server));
+        
         //Getting all fights with status "done" = 0
         $rows = Db::fetchRows(
             'SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `team1`, `t1`.`cpt_player_id` AS `captain1`, `t2`.`id` AS `team2`,  `t2`.`cpt_player_id` AS `captain2`, `t1`.`name` AS `teamName1`, `t2`.`name` AS `teamName2`, `t1`.`challonge_id` AS `challongeId1`, `t2`.`challonge_id` AS `challongeId2` '.
@@ -391,7 +394,7 @@ class Cron extends System {
             'WHERE `f`.`done` = 0 OR '.
             '`lg`.`ended` = 0 '
         );
-        dump($rows);
+        
         if ($rows)
         {
             foreach($rows as $v) {
@@ -509,8 +512,7 @@ class Cron extends System {
                                     '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
                                 );
-                                dump('1');
-                                dump(_cfg('tournament-auto-lol-'.$server));
+                                
                                 //Updating brackets only if automatic function is enabled
                                 if (_cfg('tournament-auto-lol-'.$server) == 1) {
                                     dump('2');
@@ -532,21 +534,21 @@ class Cron extends System {
                                         '`server` = "'.$server.'" AND '.
                                         '`id` = '.(int)$loserId.' '
                                     );
-                                    echo 3;
+                                    
                                     Db::query('UPDATE `fights` SET `done` = 1 '.
                                         'WHERE `match_id` = '.(int)$v->match_id.' '
                                     );
                                 }
                                 
                                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
-                                echo 4;
+                                
                                 $file = fopen($fileName, 'a');
                                 $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
                                 if (_cfg('tournament-auto-lol-'.$server) == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
                                 $content .= '</p>';
-                                echo 5;
+                                
                                 fwrite($file, htmlspecialchars($content));
                                 fclose($file);
                             }
