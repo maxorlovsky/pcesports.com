@@ -31,7 +31,7 @@ class Tournaments
 			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
 			'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
             'JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` AND `p1`.`tournament_id` = "'.Db::escape($this->config['lol-current-number-'.$this->server]).'" '.
-            'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
+            'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` AND `p2`.`tournament_id` = "'.Db::escape($this->config['lol-current-number-'.$this->server]).'" '.
 			'WHERE `f`.`done` = 0 AND '.
             '`t1`.`server` = "'.$this->server.'" '.
             'GROUP BY `f`.`match_id` '
