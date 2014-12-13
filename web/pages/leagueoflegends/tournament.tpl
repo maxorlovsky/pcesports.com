@@ -165,7 +165,7 @@
         </div>
     </div>
 	
-	<? if ($this->participantsCount >= 1 //&& 
+	<? if ($this->participantsCount >= 2 //&& 
           //($this->pickedTournament != $this->currentTournament && $this->data->settings['tournament-start-lol-'.$this->server] != 1)
           ) { ?>
 	<div class="block">

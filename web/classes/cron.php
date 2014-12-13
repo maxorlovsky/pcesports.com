@@ -674,10 +674,10 @@ class Cron extends System {
         );
         
         if ($tournament->template == 1) {
-            $text = Template::getMailTemplate($v->game.'-reminder-1');
+            $text = Template::getMailTemplate($tournament->game.'-reminder-1');
         }
         else {
-            $text = Template::getMailTemplate($v->game.'-reminder-24');
+            $text = Template::getMailTemplate($tournament->game.'-reminder-24');
         }
         
         if ($rows) {
