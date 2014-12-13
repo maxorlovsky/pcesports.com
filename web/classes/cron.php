@@ -357,9 +357,11 @@ class Cron extends System {
     public function checkLolGames() {
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
             if ($this->data->settings['tournament-start-lol-euw'] == 1) {
+                echo 'euw';
                 $this->checkLolGamesByServer('euw');
             }
             if ($this->data->settings['tournament-start-lol-eune'] == 1) {
+                echo 'eune';
                 $this->checkLolGamesByServer('eune');
             }
             
@@ -389,7 +391,7 @@ class Cron extends System {
             'WHERE `f`.`done` = 0 OR '.
             '`lg`.`ended` = 0 '
         );
-        
+        dump($rows);
         if ($rows)
         {
             foreach($rows as $v) {
@@ -507,10 +509,11 @@ class Cron extends System {
                                     '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
                                 );
-                                echo 1;
+                                dump('1');
+                                dump(_cfg('tournament-auto-lol-'.$server));
                                 //Updating brackets only if automatic function is enabled
                                 if (_cfg('tournament-auto-lol-'.$server) == 1) {
-                                    echo 2;
+                                    dump('2');
                                     $apiArray = array(
                                         '_method' => 'put',
                                         'match_id' => $v->match_id,
