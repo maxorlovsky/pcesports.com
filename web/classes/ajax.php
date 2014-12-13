@@ -6,7 +6,7 @@ class Ajax extends System
     	'submitContactForm',
     	'registerInHS',
         'registerInLanHS',
-		'registerInLoL',
+		'registerInLOL',
         'editInLOL',
         'editInLanHS',
         'chat',
