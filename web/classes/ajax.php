@@ -1,16 +1,12 @@
 <?php
 class Ajax extends System
 {
-    public function __construct() {
-        parent::__construct();
-    }
-    
     private $allowed_ajax_methods = array(
 		'newsVote',
     	'submitContactForm',
     	'registerInHS',
         'registerInLanHS',
-		'registerInLOL',
+		'registerInLoL',
         'editInLOL',
         'editInLanHS',
         'chat',
@@ -31,6 +27,10 @@ class Ajax extends System
         'verifySummoner',
         'registerInDota',
 	);
+    
+    public function __construct() {
+        parent::__construct();
+    }
 	
     public function ajaxRun($data) {
     	$controller = $data['ajax'];
