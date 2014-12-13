@@ -30,7 +30,7 @@ class Winners extends System
             '`server` = "'.Db::escape('eune').'" AND '.
             '`tournament_id` = "'.Db::escape($this->config['lol-current-number-eune']).'" AND '.
             '`place` >= 1 AND `place` <= 4 '.
-            'LIMIT 3'
+            'LIMIT 4'
         );
         
         if (!$rows) {
@@ -56,6 +56,7 @@ class Winners extends System
                 $v->playersList = $form[$places[$i].'_place'];
                 $v->placesNum = $placesNum[$i];
             }
+            ++$i;
         }
         unset($v);
         
