@@ -2,102 +2,94 @@
 class Winners extends System
 {
     public $system;
-    public $emails;
-    public $templates;
-    public $directory;
-    public $query;
+    public $config;
+    public $file;
     
 	function __construct($params = array()) {
 		$this->system = $params['system'];
-        $this->directory = _cfg('dir').'/template/mails';
-        $this->emails = array();
-        $this->templates = $this->fetchEmailTemplates();
+        $this->file = _cfg('dir').'/template/mails/lol-winners.html';
         
-        $this->query = 'SELECT * FROM `subscribe` WHERE (`theme` = "all" OR `theme` = "lol") AND `removed` = 0;';
+        $rows = Db::fetchRows('SELECT * '.
+			'FROM `tm_settings` '.
+			'WHERE `setting` = "lol-current-number-euw" OR '.
+            '`setting` = "lol-current-number-eune" '
+		);
+        
+        foreach($rows as $v) {
+            $this->config[$v->setting] = $v->value;
+        }
         
         return $this;
 	}
-    
-    public function fetchTemplateText($form) {
-        $file = $form;
-        if (!file_exists($file)) {
-            exit('0;File '.$file.' does not exists');
-        }
-        
-    	return '1;'.file_get_contents($file);
-    }
 
 	public function send($form) {
-        set_time_limit(600);
-        
-        $rows = Db::fetchRows($form['query']);
+        $rows = Db::fetchRows(
+            'SELECT `name`, `place`, `server` '.
+            'FROM `participants` '.
+            'WHERE `game` = "lol" AND '.
+            '`server` = "'.Db::escape('eune').'" AND '.
+            //'`tournament_id` = "'.Db::escape($this->config['lol-current-number-eune']).'" AND '.
+            '`place` >= 1 AND `place` <= 4 '.
+            'LIMIT 3'
+        );
         
         if (!$rows) {
-			$this->system->log('Sending email <b>No emails to send</b>', array('module'=>get_class(), 'type'=>'send'));
+			$this->system->log('Sending email to winners <b>No emails to send</b>', array('module'=>get_class(), 'type'=>'send'));
 			return '0;No emails to send';
 		}
+        
+        if (!file_exists($this->file)) {
+            $this->system->log('Sending email to winners <b>File does not exist</b>', array('module'=>get_class(), 'type'=>'send'));
+			return '0;File does not exist';
+        }
+        
+        $emailText = file_get_contents($this->file);
+        
+        $places = array(1 => 'first', 2 => 'second', 3 => 'third', 4 => 'fourth');
+        $placesNum = array(1 => '1st', 2 => '2nd', 3 => '3rd', 4 => '4th');
+        $prizes = array(1 => '3200 RP + Triumphant Ryze skin', 2 => '2400 RP', 3 => '1600 RP', 4 => '800 RP');
+        $i = 1;
+        foreach($rows as &$v) {
+            if ($v->place == $i) {
+            dump($v);
+                $v->prizes = $prizes[$i];
+                $v->playersList = $form[$places[$i].'_place'];
+                $v->placesNum = $placesNum[$i];
+            }
+        }
+        unset($v);
         
         $i = 0;
         foreach($rows as $v) {
             $text = str_replace(
     			array(
-                    '%unsublink%',
-                    '%url%',
-                    '%hsurl%',
-                    '%lolurl%',
-                    '%code%',
-                    '%teamId%',
                     '%name%',
+                    '%place%',
+                    '%prize%',
+                    '%server%',
+                    '%playerList%',
+                    '%subscriptionNumber%',
                 ),
     			array(
-                    _cfg('href').'unsubscribe/'.$v->unsublink,
-                    _cfg('site'),
-                    _cfg('site').'/en/hearthstone',
-                    _cfg('site').'/en/leagueoflegends',
-                    $v->code,
-                    $v->teamId,
                     $v->name,
+                    $v->placesNum,
+                    $v->prizes,
+                    strtoupper($v->server),
+                    $v->playersList,
+                    $form['subscription_number'],
                 ),
-    			$form['text']
+    			$emailText
     		);
             
-            $this->sendMail($v->email, $form['title'], $text);
-            
-            ++$i;
-            if ($i >= 3) {
-                sleep(1);
-                $i = 0;
-            }
+            $title = 'Pentaclick LoL tournament '.strtoupper($v->server).' #'.$this->config['lol-current-number-eune'].' - '.$v->placesNum.' place';
+            dump($v->email);
+            dump($title);
+            dump($text);
+            //$this->sendMail($v->email, $title, $text);
         }
 
-		$this->system->log('Sending email <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
+		$this->system->log('Sending email to winners <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
 							 
-        return '1;Emails sent';
+        return '1;Emails sent to winners';
 	}
-
-	protected function fetchEmailTemplates() {
-        if (!file_exists($this->directory) && !is_dir($this->directory)) {
-            exit('Directory '.$this->directory.' does not exists');
-        }
-    
-        $fileList = array();
-        $handler = opendir($this->directory);
-        $ignoreFiles = array('.svn');
-        while($file = readdir($handler)) {
-            //Checking if not hidden files
-            if ($file != "." && $file != "..") {
-                //Checking if file ignoring is required
-                if(!in_array($file, $ignoreFiles)) {
-                    $fileList[$file] = $this->directory.'/'.$file;
-                }
-            }
-        }
-        closedir($handler);
-        
-        if ($fileList) {
-    		return $fileList;
-    	}
-    	
-    	return array();
-    }
 }
