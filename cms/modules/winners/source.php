@@ -28,7 +28,7 @@ class Winners extends System
             'FROM `participants` '.
             'WHERE `game` = "lol" AND '.
             '`server` = "'.Db::escape('eune').'" AND '.
-            //'`tournament_id` = "'.Db::escape($this->config['lol-current-number-eune']).'" AND '.
+            '`tournament_id` = "'.Db::escape($this->config['lol-current-number-eune']).'" AND '.
             '`place` >= 1 AND `place` <= 4 '.
             'LIMIT 3'
         );
