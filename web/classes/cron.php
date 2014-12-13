@@ -355,8 +355,6 @@ class Cron extends System {
     }
     
     public function checkLolGames() {
-    $this->checkLolGamesByServer('eune');
-    
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
             if ($this->data->settings['tournament-start-lol-euw'] == 1) {
                 $this->checkLolGamesByServer('euw');
