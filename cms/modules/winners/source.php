@@ -83,7 +83,7 @@ class Winners extends System
             
             $title = 'Pentaclick LoL tournament '.strtoupper($v->server).' #'.$this->config['lol-current-number-eune'].' - '.$v->placesNum.' place';
             
-            $this->sendMail('max.orlovsky@gmail.com', $title, $text);//$v->email
+            $this->sendMail($v->email, $title, $text);
         }
 
 		$this->system->log('<b>Emails sent to winners</b>', array('module'=>get_class(), 'type'=>'send'));
