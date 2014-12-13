@@ -16,10 +16,11 @@ class Tournaments
 			'FROM `fights` AS `f` '.
 			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
 			'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-            'LEFT JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` '.
-            'LEFT JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
+            'JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` '.
+            'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
 			'WHERE `f`.`done` = 0 AND '.
-            '`t1`.`server` = "'.Db::escape($this->server).'" '
+            '`t1`.`server` = "'.Db::escape($this->server).'" '.
+            'LIMIT 1'
 		);
         
         $rows = Db::fetchRows('SELECT * '.
