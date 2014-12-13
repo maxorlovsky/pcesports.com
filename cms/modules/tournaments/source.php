@@ -12,17 +12,6 @@ class Tournaments
         
         $this->server = $params['var1'];
         
-		$this->chats = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `t1`.`challonge_id` AS `challongeTeam1`, `t2`.`challonge_id` AS `challongeTeam2`, `p1`.`name` AS `playerName1`, `p2`.`name` AS `playerName2` '.
-			'FROM `fights` AS `f` '.
-			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-			'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-            'JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` '.
-            'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
-			'WHERE `f`.`done` = 0 AND '.
-            '`t1`.`server` = "'.Db::escape($this->server).'" '.
-            'GROUP BY `f`.`match_id` '
-		);
-        
         $rows = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
 			'WHERE `setting` = "tournament-auto-lol-euw" OR '.
@@ -34,6 +23,21 @@ class Tournaments
         foreach($rows as $v) {
             $this->config[$v->setting] = $v->value;
         }
+        
+        $this->server = Db::escape($this->server);
+        
+		$this->chats = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `t1`.`challonge_id` AS `challongeTeam1`, `t2`.`challonge_id` AS `challongeTeam2`, `p1`.`name` AS `playerName1`, `p2`.`name` AS `playerName2` '.
+			'FROM `fights` AS `f` '.
+			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+			'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` '.
+            'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
+			'WHERE `f`.`done` = 0 AND '.
+            '`t1`.`server` = "'.$this->server.'" AND '.
+            '`p1`.`tournament_id` = "'.Db::escape($this->config['lol-current-number-'.$this->server]).'" AND '.
+            '`p2`.`tournament_id` = "'.Db::escape($this->config['lol-current-number-'.$this->server]).'" '.
+            'GROUP BY `f`.`match_id` '
+		);
 
 		return $this;
 	}
