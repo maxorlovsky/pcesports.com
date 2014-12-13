@@ -24,7 +24,7 @@ class Winners extends System
 
 	public function send($form) {
         $rows = Db::fetchRows(
-            'SELECT `name`, `place`, `server` '.
+            'SELECT `name`, `place`, `server`, `email` '.
             'FROM `participants` '.
             'WHERE `game` = "lol" AND '.
             '`server` = "'.Db::escape('eune').'" AND '.
@@ -53,7 +53,7 @@ class Winners extends System
         foreach($rows as &$v) {
             if ($v->place == $i) {
                 $v->prizes = $prizes[$i];
-                $v->playersList = $form[$places[$i].'_place'];
+                $v->playersList = nl2br($form[$places[$i].'_place']);
                 $v->placesNum = $placesNum[$i];
             }
             ++$i;
@@ -82,13 +82,11 @@ class Winners extends System
     		);
             
             $title = 'Pentaclick LoL tournament '.strtoupper($v->server).' #'.$this->config['lol-current-number-eune'].' - '.$v->placesNum.' place';
-            dump($v->email);
-            dump($title);
-            dump($text);
-            //$this->sendMail($v->email, $title, $text);
+            
+            $this->sendMail('max.orlovsky@gmail.com', $title, $text);//$v->email
         }
 
-		$this->system->log('Sending email to winners <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
+		$this->system->log('<b>Emails sent to winners</b>', array('module'=>get_class(), 'type'=>'send'));
 							 
         return '1;Emails sent to winners';
 	}
