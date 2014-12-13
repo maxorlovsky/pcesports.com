@@ -99,7 +99,7 @@ class Social
             'url'=>'https://'.$region.'.battle.net/oauth/token',
             'post'=>array(
                 'code'=>$_GET['code'],
-                'redirect_uri'=>str_replace('http','https',_cfg('site')).'/run/social/bn',
+                'redirect_uri'=>str_replace('http://','https://',_cfg('site')).'/run/social/bn',
                 'grant_type'=>'authorization_code'
             ),
             'get'=>array(
@@ -134,7 +134,7 @@ class Social
 
 		$url = 'https://eu.battle.net/oauth/authorize'
 				.'?client_id='.$this->config['id']
-				.'&redirect_uri='.str_replace('http','https',_cfg('site')).'/run/social/bn'
+				.'&redirect_uri='.str_replace('http://','https://',_cfg('site')).'/run/social/bn'
 				.'&scope=wow.profile+sc2.profile'
                 .'&state=eu'
 				.'&response_type=code';
