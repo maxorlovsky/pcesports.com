@@ -313,6 +313,9 @@ $(document).ready(function() {
 .chat .chat-input input[type="text"]:hover {
 	background-color: #fff;
 }
+.player {
+    font-weight: bold;
+}
 .player.online {
 	color: #090;
 }
