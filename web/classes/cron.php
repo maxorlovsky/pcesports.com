@@ -355,13 +355,13 @@ class Cron extends System {
     }
     
     public function checkLolGames() {
+    $this->checkLolGamesByServer('eune');
+    
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
             if ($this->data->settings['tournament-start-lol-euw'] == 1) {
-                echo 'euw';
                 $this->checkLolGamesByServer('euw');
             }
             if ($this->data->settings['tournament-start-lol-eune'] == 1) {
-                echo 'eune';
                 $this->checkLolGamesByServer('eune');
             }
             
@@ -380,9 +380,6 @@ class Cron extends System {
         %players2%<br />
         
         Team won: <b>%win%</b>';
-        
-        echo 'tournament-auto-lol-'.$server;
-        dump(_cfg('tournament-auto-lol-'.$server));
         
         //Getting all fights with status "done" = 0
         $rows = Db::fetchRows(
@@ -514,8 +511,7 @@ class Cron extends System {
                                 );
                                 
                                 //Updating brackets only if automatic function is enabled
-                                if (_cfg('tournament-auto-lol-'.$server) == 1) {
-                                    dump('2');
+                                if ($this->data->settings['tournament-auto-lol-'.$server] == 1) {
                                     $apiArray = array(
                                         '_method' => 'put',
                                         'match_id' => $v->match_id,
@@ -544,7 +540,7 @@ class Cron extends System {
                                 
                                 $file = fopen($fileName, 'a');
                                 $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
-                                if (_cfg('tournament-auto-lol-'.$server) == 0) {
+                                if ($this->data->settings['tournament-auto-lol-'.$server] == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
                                 $content .= '</p>';
