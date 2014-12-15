@@ -165,15 +165,22 @@
         </div>
     </div>
 	
-	<? if ($i >= 2 && $this->pickedTournament == $this->currentTournament) { ?>
+	<? if ($i >= 2) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
         </div>
 
+    
+        <? if ($this->data->user->https == 1) { ?>
+        <div class="block-content participants">
+            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->pickedTournament?></a>
+        </div>
+        <? } else { ?>
         <div class="block-content challonge-brackets">
             <div id="challonge"></div>
         </div>
+        <? } ?>
     </div>
 	<? } ?>
 	
