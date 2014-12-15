@@ -8,25 +8,25 @@
     <tr>
         <td width="20%"><b>1st place players</b></td>
         <td>
-            <textarea id="first_place" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"></textarea>
+            <textarea id="first_place" class="noEditor" style="width: 98%; resize: vertical; height: 100px;"></textarea>
         </td>
     </tr>
     <tr>
         <td width="20%"><b>2nd place players</b></td>
         <td>
-            <textarea id="second_place" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"></textarea>
+            <textarea id="second_place" class="noEditor" style="width: 98%; resize: vertical; height: 100px;"></textarea>
         </td>
     </tr>
     <tr>
         <td width="20%"><b>3rd place players</b></td>
         <td>
-            <textarea id="third_place" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"></textarea>
+            <textarea id="third_place" class="noEditor" style="width: 98%; resize: vertical; height: 100px;"></textarea>
         </td>
     </tr>
     <tr>
         <td width="20%"><b>4th place players</b></td>
         <td>
-            <textarea id="forth_place" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"></textarea>
+            <textarea id="fourth_place" class="noEditor" style="width: 98%; resize: vertical; height: 100px;"></textarea>
         </td>
     </tr>
     <tr><td colspan="2"><button class="submitButton">Send</button></td></tr>

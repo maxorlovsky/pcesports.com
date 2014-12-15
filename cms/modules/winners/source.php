@@ -46,7 +46,7 @@ class Winners extends System
         
         $emailText = file_get_contents($this->file);
         
-        $places = array(1 => 'first', 2 => 'second', 3 => 'third', 4 => 'forth');
+        $places = array(1 => 'first', 2 => 'second', 3 => 'third', 4 => 'fourth');
         $placesNum = array(1 => '1st', 2 => '2nd', 3 => '3rd', 4 => '4th');
         $prizes = array(1 => '3200 RP + Triumphant Ryze skin', 2 => '2400 RP', 3 => '1600 RP', 4 => '800 RP');
         $i = 1;

@@ -74,8 +74,8 @@
 
         <div class="block-content participants isotope-participants">
 			<?
+            $i = 0;
             if ($this->participants) {
-                $i = 0;
                 foreach($this->participants as $v) {
                     if ($v['checked_in'] == 1) {
                     ++$this->participantsCount;
@@ -123,8 +123,8 @@
 
         <div class="block-content participants isotope-participants-pending">
 			<?
+            $j = 0;
             if ($this->participants) {
-                $j = 0;
                 foreach($this->participants as $v) {
                     if ($v['checked_in'] == 0) {
                     ++$this->participantsCount;
@@ -157,7 +157,7 @@
                     }
                 }
             }
-            
+
             if ($j == 0) {
                 ?><p class="empty-list"><?=t('no_teams_registered')?></p><?
             }
@@ -165,9 +165,7 @@
         </div>
     </div>
 	
-	<? if ($this->participantsCount >= 2 //&& 
-          //($this->pickedTournament != $this->currentTournament && $this->data->settings['tournament-start-lol-'.$this->server] != 1)
-          ) { ?>
+	<? if ($i >= 2 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
