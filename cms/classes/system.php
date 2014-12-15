@@ -86,7 +86,7 @@ class System
                 $this->data->login_error = 1;
                 $breakDown = explode(';', $result);
                 $this->messages['login_error'] = $breakDown[1];
-                $this->log('Error login as <b>'.$data['login'].'</b>', array('module'=>'login', 'type'=>'fail'));
+                $this->log('Error login as <b>'.$data['login'].'</b>, ('.$this->messages['login_error'].')', array('module'=>'login', 'type'=>'fail'));
             }
             else if ($result !== false) {
                 $this->logged_in = 1;
