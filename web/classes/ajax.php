@@ -927,7 +927,7 @@ class Ajax extends System
     	return json_encode($answer);
     }
 	
-	protected function registerInLOL($data) {
+	protected function registerInLoL($data) {
     	$err = array();
     	$suc = array();
     	parse_str($data['form'], $post);
