@@ -10,7 +10,7 @@
     <meta property="og:title" content="<?=$this->title?><?=$this->data->settings['site_name']?>" />
     <meta property="og:description" content="<?=(isset($this->seoData->ogDesc)?$this->seoData->ogDesc:null)?>" />
     <meta property="og:image" content="<?=$this->seoData->ogImg?>" />
-    <meta property="og:url" content="" />
+    <meta property="og:url" content="<?=_cfg('site').$_SERVER['REQUEST_URI']?>" />
     
     <title><?=$this->title?><?=$this->data->settings['site_name']?></title>
     
