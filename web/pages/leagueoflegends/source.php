@@ -173,13 +173,6 @@ class leagueoflegends extends System
             '`name` = "'.Db::escape($row->name).'" '
         );
 		
-		$this->sendMail('info@pcesports.com',
-		'Team added. Pentaclick eSports.',
-		'Team was added!!!<br />
-    	Date: '.date('d/m/Y H:i:s').'<br />
-		Team: <b>'.$row->name.'</b><br>
-    	IP: '.$_SERVER['REMOTE_ADDR']);
-		
 		return true;
 	}
 	
@@ -420,13 +413,6 @@ class leagueoflegends extends System
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
         }
-        
-        $this->sendMail('info@pcesports.com',
-        'Team deleted. Pentaclick eSports.',
-        'Team was deleted!!!<br />
-        Date: '.date('d/m/Y H:i:s').'<br />
-        Team: <b>'.$_SESSION['participant']->name.'</b><br>
-        IP: '.$_SERVER['REMOTE_ADDR']);
         
         unset($_SESSION['participant']);
         
