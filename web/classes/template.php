@@ -45,9 +45,13 @@ class Template extends System
             }
     		$this->title .= $title;
     		$this->title .= ' | ';
-            
-            $this->seoData = $seoPageData;
     	}
+        
+        if (!isset($seoPageData)) {
+            $seoPageData = $this->defaultSeo();
+        }
+        
+        $this->seoData = $seoPageData;
     }
     
     public function getTxtPages() {
@@ -125,4 +129,13 @@ class Template extends System
     		echo '<br />Template '.$page.' not found<br />';
     	}
     }
+    
+    protected function defaultSeo() {
+		$seo = new stdClass();
+        
+        $seo->ogDesc = 'Pentaclick eSports';
+        $seo->ogImg = _cfg('img').'/download/wallpaper.jpg';
+		
+		return $seo;
+	}
 }

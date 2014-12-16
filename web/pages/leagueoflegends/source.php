@@ -316,7 +316,7 @@ class leagueoflegends extends System
             $seo->ogDesc = $seo->title;
         }
         
-        $seo->ogImg = _cfg('img').'/footer-lol-logo.png';
+        $seo->ogImg = _cfg('img').'/lol-logo-big.png';
 		
 		return $seo;
 	}
