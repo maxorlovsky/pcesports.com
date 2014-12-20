@@ -48,7 +48,7 @@ class Tournaments
                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$v[1].'.txt';
                 $return[$v[0]] = '<p id="notice">Chat is empty</p>';
                 if (file_exists($fileName)) {
-                    $return[$v[0]] = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
+                    $return[$v[0]] = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>');
                 }
             }
         }
@@ -58,26 +58,13 @@ class Tournaments
 	
 	public function sendChat($form) {
 		$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$form[1].'.txt';
-		if (substr($form[0], 0, 1) == '/') {
-			$breakdown = explode('/', $form[0]);
-			$command = $breakdown[1];
-			if ($command == 'end') {
-				Db::query('UPDATE `fights` SET `done` = 1 WHERE `match_id` = '.(int)$form[2]);
-				return '0;ENDED';
-			}
-			else {
-				return '0;Command not found';
-			}
-		}
-		else {
-			$file = fopen($fileName, 'a');
-			$content = '<p><span id="notice">('.date('H:i:s', time()).')</span> ';
-            $content .= '&#60;<u>'.$this->system->user->login.' (Manager)</u>&#62; - ';
-            $content .= $form[0];
-            $content .= '</p>';
-			fwrite($file, htmlspecialchars($content));
-			fclose($file);
-		}
+        $file = fopen($fileName, 'a');
+        $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> ';
+        $content .= '&#60;<u>'.$this->system->user->login.' (Manager)</u>&#62; - ';
+        $content .= $form[0];
+        $content .= '</p>';
+        fwrite($file, htmlspecialchars($content));
+        fclose($file);
 		
 		return '1;1';
 	}
