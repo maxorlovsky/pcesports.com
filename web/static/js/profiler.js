@@ -117,8 +117,8 @@ var profiler = {
                     
                     currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;');
                     console.log('chat-debug');
-                    console.log(escape(profiler.stripTags(currentContent)));
-                    console.log(escape(profiler.stripTags(answer[1])));
+                    console.log(escape(currentContent));
+                    console.log(escape(answer[1]));
                     if (escape(profiler.stripTags(currentContent)) != escape(profiler.stripTags(answer[1])) && profiler.chatStart == 1) {
                         //$('#ping').play();
                         document.getElementById('ping').play();
