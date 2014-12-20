@@ -33,7 +33,7 @@ class Tournaments
             //'JOIN `players` AS `p1` ON `t1`.`cpt_player_id` = `p1`.`player_id` '.
             //'JOIN `players` AS `p2` ON `t2`.`cpt_player_id` = `p2`.`player_id` '.
 			'WHERE `f`.`done` = 0 AND '.
-            '`t1`.`server` = "'.$this->server.'" '.
+            '`t1`.`server` = "'.$this->server.'" '
             //'GROUP BY `f`.`match_id` '
 		);
 
