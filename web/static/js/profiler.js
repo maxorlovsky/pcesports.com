@@ -28,7 +28,7 @@ $('#chat-input').on('keyup', function(e) {
                 text: text
             },
             success: function(answer) {
-                answer = answer.split(';');
+                answer = answer.split(';;');
                 if (answer[0] != 0) {
                     checkTop = parseInt($('.chat-content').prop('scrollTop')) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
@@ -110,7 +110,7 @@ var profiler = {
             },
             timeout: 5000,
             success: function(answer) {
-                answer = answer.split(';');
+                answer = answer.split(';;');
                 if (answer[0] == 1) {
                     checkTop = parseInt($('.chat-content').scrollTop()) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));

@@ -601,7 +601,7 @@ class Ajax extends System
         );
         
         if (!$row) {
-            return '1;<p id="notice">'.t('chat_disabled_no_opp').'</p>';
+            return '1;;<p id="notice">'.t('chat_disabled_no_opp').'</p>';
         }
         
         $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
@@ -622,16 +622,16 @@ class Ajax extends System
             }
             fclose($file);
             
-            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
+            $chat = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>');
             
             if (!$chat) {
                 $chat = '<p id="notice">'.t('chat_active_can_start').'</p>';
             }
             
-            return '1;'.$chat;
+            return '1;;'.$chat;
         }
         else {
-            return '0;'.t('error');
+            return '0;;'.t('error');
         }
         
         return '0;'.t('error');
