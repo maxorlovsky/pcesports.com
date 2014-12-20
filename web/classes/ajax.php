@@ -622,7 +622,7 @@ class Ajax extends System
             }
             fclose($file);
             
-            $chat = str_replace(';', '', strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>'));
+            $chat = str_replace(';', '', strip_tags(stripslashes(file_get_contents($fileName)), '<p><b><a><u><span>'));
             
             if (!$chat) {
                 $chat = '<p id="notice">'.t('chat_active_can_start').'</p>';
