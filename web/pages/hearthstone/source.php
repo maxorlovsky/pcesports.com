@@ -219,7 +219,7 @@ class hearthstone extends System
             $seo->ogDesc = $seo->title;
         }
         
-        $seo->ogImg = _cfg('img').'/footer-hs-logo.png';
+        $seo->ogImg = _cfg('img').'/hs-logo-big.png';
 		
 		return $seo;
 	}
