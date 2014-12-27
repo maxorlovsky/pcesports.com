@@ -354,17 +354,12 @@ class Cron extends System {
         }
     }
     
-    public function checkLolGames() {
-        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-            if ($this->data->settings['tournament-start-lol-euw'] == 1) {
-                $this->checkLolGamesByServer('euw');
-            }
-            if ($this->data->settings['tournament-start-lol-eune'] == 1) {
-                $this->checkLolGamesByServer('eune');
-            }
-            
-            return false;
+    public function checkLolGames($server) {
+        if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
+            $this->checkLolGamesByServer($server);
         }
+        
+        return false;
     }
     
     protected function checkLolGamesByServer($server) {

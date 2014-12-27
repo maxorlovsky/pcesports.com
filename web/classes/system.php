@@ -638,7 +638,7 @@ class System
                     $cronClass->tournamentsOpenReg();
                     $cronClass->finalizeTournament();
                     $cronClass->sendNotifications();
-                    $cronClass->checkLolGames();
+                    //$cronClass->checkLolGames();
                     $cronClass->checkDotaGames();
                     $cronClass->updateStreamers();
                     $cronClass->sqlCleanUp();
@@ -646,10 +646,20 @@ class System
                     //Others functions without SQL
                     $cronClass->cleanImagesTmp();
                 }
+                else if ($_GET['val1'] == 'euw' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(300);
+                    $cronClass = new Cron();
+                    $cronClass->checkLolGames('euw');
+                }
+                else if ($_GET['val1'] == 'eune' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(300);
+                    $cronClass = new Cron();
+                    $cronClass->checkLolGames('eune');
+                }
                 else if ($_GET['val1'] == 'riotcode') {
                     set_time_limit(300);
                     $cronClass = new Cron();
-                    $cronClass->checkLolGames();
+                    $cronClass->checkLolGames('eune');
                 }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
