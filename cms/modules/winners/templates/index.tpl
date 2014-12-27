@@ -6,6 +6,10 @@
         <td><input type="text" id="subscription_number" size="50" value="" /></td>
     </tr>
     <tr>
+        <td width="20%"><b>Server</b></td>
+        <td><select id="server"><option value="euw">EUW</option><option value="eune">EUNE</option></select></td>
+    </tr>
+    <tr>
         <td width="20%"><b>1st place players</b></td>
         <td>
             <textarea id="first_place" class="noEditor" style="width: 98%; resize: vertical; height: 100px;"></textarea>

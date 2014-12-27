@@ -200,11 +200,12 @@ class Ajax extends System
 					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
                     'AND `approved` = 1 '
 				);
+                
+                $_SESSION['participant']->checked_in = 1;
+                
 				break;
 			}
 		}
-        
-        $_SESSION['participant']->checked_in = 1;
         
         return '1;1';
     }

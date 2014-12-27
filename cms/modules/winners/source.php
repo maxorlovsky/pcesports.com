@@ -27,8 +27,8 @@ class Winners extends System
             'SELECT `name`, `place`, `server`, `email` '.
             'FROM `participants` '.
             'WHERE `game` = "lol" AND '.
-            '`server` = "'.Db::escape('eune').'" AND '.
-            '`tournament_id` = "'.Db::escape($this->config['lol-current-number-eune']).'" AND '.
+            '`server` = "'.Db::escape($form['server']).'" AND '.
+            '`tournament_id` = "'.Db::escape($this->config['lol-current-number-'.$form['server']]).'" AND '.
             '`place` >= 1 AND `place` <= 4 '.
             'ORDER BY `place` ASC '.
             'LIMIT 4'
@@ -61,6 +61,16 @@ class Winners extends System
         unset($v);
         
         foreach($rows as $v) {
+            $additionalPrice = '';
+        
+            if ($form['server'] == 'euw' && $v->place == 1) {
+                $additionalPrice = '<br />'.
+                'There is additional prize that you must receive for winning the 1st place, it is 30€ that will be sent to your paypal account.<br />'.
+                'We consider email as the only reliable resource on which your team was registered, in this case it is '.$v->email.'.'.
+                'So we ask you to respond from it and write down paypal account where should we send your prize money.'.
+                '<br />';
+            }
+        
             $text = str_replace(
     			array(
                     '%name%',
@@ -69,6 +79,7 @@ class Winners extends System
                     '%server%',
                     '%playerList%',
                     '%subscriptionNumber%',
+                    '%additionalPrice%',
                 ),
     			array(
                     $v->name,
@@ -77,11 +88,12 @@ class Winners extends System
                     strtoupper($v->server),
                     $v->playersList,
                     $form['subscription_number'],
+                    $additionalPrice,
                 ),
     			$emailText
     		);
             
-            $title = 'Pentaclick LoL tournament '.strtoupper($v->server).' #'.$this->config['lol-current-number-eune'].' - '.$v->placesNum.' place';
+            $title = 'Pentaclick LoL tournament '.strtoupper($v->server).' #'.$this->config['lol-current-number-'.$form['server']].' - '.$v->placesNum.' place';
             
             $this->sendMail($v->email, $title, $text);
         }
