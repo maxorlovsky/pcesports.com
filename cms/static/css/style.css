@@ -568,6 +568,9 @@ nav #menusub:hover #arrows.active {
 
 /* Smallest phones */
 @media (max-width: 320px) {
+    #aerrmsg, #asucmsg, #amsg {
+        top: 0;
+    }
     .login {
         width: 300px;
         margin: 30% auto 0 auto;
@@ -674,5 +677,32 @@ nav #menusub:hover #arrows.active {
     }
     .version table td, .table td {
         padding: 2px;
+    }
+    .content input[type="text"], .content input[type="password"], .content textarea {
+        width: 200px;
+    }
+    .settings_input {
+        width: 140px !important;
+    }
+    
+    .logged_in_menu .account_settings  {
+        width: 270px;
+    }
+    .logged_in_menu .account_settings input[type="text"], .logged_in_menu .account_settings input[type="password"] {
+        width: 150px;
+    }
+    /*.pages_module tr td:nth-child(2),
+    .pages_module tr td:nth-child(3)    {
+        display: none;
+    }
+    .links tr td:nth-child(3) {
+        display: none;
+    }
+    .logs tr td:nth-child(3),
+    .logs tr td:nth-child(4) {
+        display: none;
+    }*/
+    .strings .search input[type="text"] {
+        width: 70px;
     }
 }

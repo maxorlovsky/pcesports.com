@@ -25,7 +25,7 @@
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#accounts/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a>
                         <? if ($v->level < $this->user->level) { ?>
-                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#accounts/delete/'.$v->id?>'); return false;">
+                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#accounts/delete/'.$v->id?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
                         <? } else { ?>

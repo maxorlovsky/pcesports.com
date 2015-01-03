@@ -67,7 +67,7 @@ class Links
 			return '0;'.at('title_have_spaces');
 		}
 		else {
-            $title = Db::escape($form['title']);
+            $title = Db::escape_tags($form['title']);
 			$q = Db::query('SELECT * FROM `tm_links` WHERE `value` = "web-link-'.$title.'" LIMIT 1');
 			if ($q->num_rows != 0) {
 				$this->system->log('Adding new link <b>'.at('link_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
@@ -80,10 +80,10 @@ class Links
 				Db::query('INSERT INTO `tm_links` '.
                 	'SET `value` = "web-link-'.$title.'", '.
 					'`main_link` = "'.intval($form['main_link']).'", '.
-					'`position` = '.$position.', '.
-					'`block` = "'.Db::escape($form['link_block']).'", '.
+					'`position` = '.Db::escape($position).', '.
+					'`block` = "'.Db::escape_tags($form['link_block']).'", '.
                     '`logged_in` = '.(int)$form['logged_in'].', '.
-					'`link` = "'.Db::escape($form['href']).'" '
+					'`link` = "'.Db::escape_tags($form['href']).'" '
 				);
 				Db::query('INSERT INTO `tm_strings` SET `key` = "web-link-'.$title.'", `status` = 1');
 				
@@ -91,7 +91,7 @@ class Links
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-                        'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                         'WHERE `key` = "web-link-'.$title.'"');
 					}
 				}
@@ -106,9 +106,9 @@ class Links
 	}
     
     public function edit($form) {
-    	$title = Db::escape($form['title']);
+    	$title = Db::escape_tags($form['title']);
     	$linkId = (int)$form['link_id'];
-    	$oldValue = Db::escape($form['link_value']);
+    	$oldValue = Db::escape_tags($form['link_value']);
         
     	if (!$form['title']) {
     		$this->system->log('Editing link <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
@@ -128,9 +128,9 @@ class Links
                 Db::query('UPDATE `tm_links` '.
 	    			'SET `value` = "web-link-'.$title.'", '.
 	    			'`main_link` = "'.(int)$form['main_link'].'", '.
-	    			'`block` = "'.$form['link_block'].'", '.
+	    			'`block` = "'.Db::escape($form['link_block']).'", '.
                     '`logged_in` = '.(int)$form['logged_in'].', '.
-	    			'`link` = "'.Db::escape($form['href']).'" '.
+	    			'`link` = "'.Db::escape_tags($form['href']).'" '.
 	    			'WHERE `id` = "'.$linkId.'"'
     			);
     			Db::query('INSERT INTO `tm_strings` SET `key` = "web-link-'.$title.'", `status` = 1');
@@ -139,7 +139,7 @@ class Links
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-                        	'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        	'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                         	'WHERE `key` = "web-link-'.$title.'"'
     					);
 					}
@@ -154,16 +154,16 @@ class Links
 			Db::query('UPDATE `tm_links` '.
     			'SET `value` = "web-link-'.$title.'", '.
     			'`main_link` = "'.(int)$form['main_link'].'", '.
-    			'`block` = "'.$form['link_block'].'", '.
+    			'`block` = "'.Db::escape($form['link_block']).'", '.
                 '`logged_in` = '.(int)$form['logged_in'].', '.
-    			'`link` = "'.Db::escape($form['href']).'" '.
+    			'`link` = "'.Db::escape_tags($form['href']).'" '.
     			'WHERE `id` = "'.$linkId.'"'
     		);
     		foreach ($form as $k => $v) {
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
 					Db::query('UPDATE `tm_strings` '.
-                        'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                     	'WHERE `key` = "web-link-'.$title.'"'
     				);
 				}

@@ -80,6 +80,9 @@ $cfg['maxLevel'] = 4;
 $cfg['allowedLanguages'] = array('en', 'ru');
 $cfg['defaultLanguage'] = 'en';
 
+$cfg['recaptchaSiteKey'] = '6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z';
+$cfg['recaptchaSecretKey'] = '6LcwJ_8SAAAAAFoAQ0onOpvPNMo8-Y-g-lwtY22P';
+
 // SMTP config
 $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
 $cfg['smtpMailPort'] = '465';

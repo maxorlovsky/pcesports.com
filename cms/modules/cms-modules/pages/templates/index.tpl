@@ -1,6 +1,6 @@
 <h1><?=at('pages')?></h1>
 
-<table class="table">
+<table class="table pages_module">
     <td colspan="4" id="buttons" class="hint" name="Add">
             <a href="<?=_cfg('cmssite').'/#pages/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=at('text_page')?></a>
         </td>
@@ -21,7 +21,7 @@
                     </td>
 					<td class="centered">
                         <a href="<?=_cfg('cmssite').'/#pages/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
-                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#pages/delete/'.$v->id?>'); return false;"><img src="<?=_cfg('cmsimg')?>/cancel.png" /></a>
+                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#pages/delete/'.$v->id?>'); return false;"><img src="<?=_cfg('cmsimg')?>/cancel.png" /></a>
                     </td>
 				  </tr><?
 			}

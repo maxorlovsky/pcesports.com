@@ -28,7 +28,7 @@
 	?>
 	<?
 	foreach($module->languages as $v) {
-        $text = text_.$v->title;
+        $text = 'text_'.$v->title;
 		?>
 		<tr>
 			<td class="b">

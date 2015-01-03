@@ -1,13 +1,24 @@
 <?php
 
-class User extends System
+class User
 {
-    public function __construct() {
-    }
-    
-    public function login($data) {
+    public static function login($data) {
         if (!isset($_SESSION['recaptcha_login'])) {
             $_SESSION['recaptcha_login'] = 0;
+        }
+        
+        Db::query('DELETE FROM `tm_user_auth_attempts` WHERE `ip` = "'.Db::escape_tags($_SERVER['REMOTE_ADDR']).'" AND `timestamp` < NOW() - INTERVAL 5 MINUTE LIMIT 2');
+        $row = Db::fetchRow('SELECT `attempts` FROM `tm_user_auth_attempts` WHERE `ip` = "'.Db::escape_tags($_SERVER['REMOTE_ADDR']).'"');
+        
+        if (isset($row->attempts) && $row->attempts >= 20) {
+            return '0;Brute force detected, your IP is blocked for 5 minutes';
+        }
+        
+        if ($row) {
+            Db::query('UPDATE `tm_user_auth_attempts` SET `attempts` = `attempts` + 1, `timestamp` = NOW() WHERE `ip` = "'.Db::escape_tags($_SERVER['REMOTE_ADDR']).'"');
+        }
+        else {
+            Db::query('INSERT INTO `tm_user_auth_attempts` SET `ip` = "'.Db::escape_tags($_SERVER['REMOTE_ADDR']).'", `attempts` = 1');
         }
         
         if (isset($_SESSION['recaptcha_login']) && $_SESSION['recaptcha_login'] >= _cfg('availableLoginAttempts')) {
@@ -37,7 +48,7 @@ class User extends System
             $row = Db::fetchRow(
                 'SELECT `id`, `login`, `email`, `level`, `language`, `editRedirect` '.
                 'FROM `tm_admins` '.
-                'WHERE `login` = "'.Db::escape($data['login']).'" AND `password` = "'.sha1($data['password']._cfg('salt')).'" '.
+                'WHERE `login` = "'.Db::escape_tags($data['login']).'" AND `password` = "'.sha1($data['password']._cfg('salt')).'" '.
                 'LIMIT 1'
             );
             
@@ -45,7 +56,7 @@ class User extends System
                 Db::query('UPDATE `tm_admins` '.
                     'SET '.
                     '`login_attempts` = `login_attempts` + 1 '.
-                    'WHERE `login` = "'.Db::escape($data['login']).'" '.
+                    'WHERE `login` = "'.Db::escape_tags($data['login']).'" '.
                     'LIMIT 1'
                 );
                 
@@ -82,11 +93,11 @@ class User extends System
         return false;
     }
     
-    public function fetchUserByToken($token) {
+    public static function fetchUserByToken($token) {
         $row = Db::fetchRow('SELECT `a`.`id`, `a`.`login`, `a`.`email`, `a`.`level`, `a`.`language`, `a`.`custom_access`, `a`.`editRedirect` '.
         'FROM `tm_user_auth` AS `ua` '.
         'LEFT JOIN `tm_admins` AS `a` ON `ua`.`user_id` = `a`.`id` '.
-        'WHERE `ua`.`token` = "'.Db::escape($token).'" '.
+        'WHERE `ua`.`token` = "'.Db::escape_tags($token).'" '.
         'LIMIT 1');
         if ($row !== false) {
             $row->custom_access = json_decode($row->custom_access);
@@ -97,5 +108,13 @@ class User extends System
         }
         
         return false;
+    }
+    
+    public static function logout() {
+        unset($_SESSION['token'], $_SESSION['recaptcha_login']);
+        session_destroy();
+        go(_cfg('site').'/admin');
+        
+        die;
     }
 }

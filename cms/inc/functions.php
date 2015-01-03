@@ -22,29 +22,29 @@ function pages($data) {
     $data['pageNum'] = abs((int)$data['pageNum']);
     $return = new stdClass();
     
-    if (!isset($data['tableName']) && !$data['tableName']) {
+    if (!isset($data['tableName']) || !$data['tableName']) {
 		return 'Table name for pages not set';
     }
     
 	if ($data['pageNum'] == 0) {
 		$data['pageNum'] = 1;
     }
-    if (!isset($data['maxNumShow']) && !$data['maxNumShow']) {
+    if (!isset($data['maxNumShow']) || !$data['maxNumShow']) {
 		$data['maxNumShow'] = 10;
     }
     if (!isset($data['pageNum']) && !$data['pageNum']) {
 		$data['pageNum'] = 3;
     }
-    if (!isset($data['where']) && !$data['where']) {
+    if (!isset($data['where']) || !$data['where']) {
 		$data['where'] = '';
     }
-    if (!isset($data['count']) && !$data['count']) {
+    if (!isset($data['count']) || !$data['count']) {
 		$data['count'] = 'id';
     }
-    if (!isset($data['cms']) && !$data['cms']) {
+    if (!isset($data['cms']) || !$data['cms']) {
 		$data['cms'] = 0;
     }
-    if (!isset($data['additionalLink']) && !$data['additionalLink']) {
+    if (!isset($data['additionalLink']) || !$data['additionalLink']) {
         $data['additionalLink'] = '';
     }
     
@@ -59,7 +59,7 @@ function pages($data) {
 	$strt *= ($data['countPerPage']/10);
 	$strt -= $data['countPerPage'];
     
-    if ($_GET['val1']) {
+    if (isset($_GET['val1']) && $_GET['val1']) {
         $link .= '/'.$_GET['val1'];
     }
     else if ($data['cms'] == 1) {
@@ -86,7 +86,7 @@ function pages($data) {
 		for ($i=1;$i<=$lastp;++$i) {
 			if ($data['pageNum'] != 1 && $i == 1) {
 				$bl = $data['pageNum'] - 1;
-				$html .= '<a href="'.$link.''.$_GET['p'].'/page/'.$bl.$plink.'" class="inpage"><<</a>';
+				$html .= '<a href="'.$link.'/page/'.$bl.'" class="inpage"><<</a>';
 			}
 			
 			if ($data['pageNum'] == $i) {
@@ -94,7 +94,7 @@ function pages($data) {
 			}
 			
 			if ($data['pageNum'] > $st && $i == 1) {
-				$html .= '<a href="'.$link.''.$_GET['p'].'/page/1" class="inpage">1</a> ... ';
+				$html .= '<a href="'.$link.'/page/1" class="inpage">1</a> ... ';
 			}
 			
 			for ($j=1;$j<=$data['maxNumShow'];++$j) {
@@ -103,19 +103,19 @@ function pages($data) {
 						//Drat those 2 and last piece
 					}
 					else {
-						$html .= '<a href="'.$link.''.$_GET['p'].'/page/'.$i.$plink.'" class="inpage">'.$i.'</a>';
+						$html .= '<a href="'.$link.'/page/'.$i.'" class="inpage">'.$i.'</a>';
 					}
 					break;
 				}
 			}
             
 			if ($data['pageNum'] <= ($lastp - $lt) && $i == $lastp) {
-				$html .= ' ... <a href="'.$link.''.$_GET['p'].'/page/'.$lastp.'" class="inpage">'.$lastp.'</a>';
+				$html .= ' ... <a href="'.$link.'/page/'.$lastp.'" class="inpage">'.$lastp.'</a>';
 			}
 			
 			if (round($so) == $i && $data['pageNum'] != round($lastp)) {
 				$fl = $data['pageNum'] + 1;
-				$html .= '<a href="'.$link.''.$_GET['p'].'/page/'.$fl.$plink.'" class="inpage">>></a>';
+				$html .= '<a href="'.$link.'/page/'.$fl.'" class="inpage">>></a>';
 			}
 		}
 		$html .= '</div>';
@@ -224,7 +224,10 @@ function t($key) {
 	$key = strtolower($key);
     
 	if (isset($str[$key])) {
-	   return $str[$key];
+        if (_cfg('language') == 'lv') {
+            return html_entity_decode($str[$key]);
+        }
+        return $str[$key];
     }
 	
     return $key;

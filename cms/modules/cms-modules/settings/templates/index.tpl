@@ -60,7 +60,7 @@
 	        foreach($this->data->modules as $v) {
 	            ?><tr>
 	                <td><?=$v->displayName?></td>
-	                <td align="center"><div id="module-<?=$v->name?>" class="pointer settings_div" onclick="do_input('module-<?=$v->name?>', 1);"><?=$v->level?></div></td>
+	                <td align="center"><div id="module-<?=$v->name?>" class="pointer settings_div" onclick="TM.addInput('module-<?=$v->name?>', 1);"><?=$v->level?></div></td>
 	              </tr><?
 	            ++$i;
 	        }
@@ -71,7 +71,7 @@
 
 <script>
 $('.save_setting_checkbox').on('click', function() {
-    showMsg(2,strings['loading']);
+    TM.showMsg(2,strings['loading']);
     
     var id = $(this).attr('id');
     var checked = 0;
@@ -89,15 +89,15 @@ $('.save_setting_checkbox').on('click', function() {
         },
         success: function(data) {
             answer = data.split(';');
-            cleanMsg();
-            showMsg(answer[0],answer[1]);
-            messageTimer = setTimeout(cleanMsg,3000);
+            TM.cleanMsg();
+            TM.showMsg(answer[0],answer[1]);
+            messageTimer = setTimeout(TM.cleanMsg,3000);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            showMsg(0,'Error timeout');
-            messageTimer = setTimeout(cleanMsg,3000);
+            TM.showMsg(0,'Error timeout');
+            messageTimer = setTimeout(TM.cleanMsg,3000);
         }
     };
-    ajax(query);
+    TM.ajax(query);
 });
 </script>

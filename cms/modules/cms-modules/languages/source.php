@@ -32,10 +32,10 @@ class Languages
             return '0;'.at('language_err_file');
 		}
 		else {
-			$title = Db::escape(strtolower($form['title']));
+			$title = Db::escape_tags(strtolower($form['title']));
 
 			Db::query('INSERT INTO `tm_languages`'.
-            'SET `title` = "'.$title.'", `flag` = "'.Db::escape($form['meta']).'"');
+            'SET `title` = "'.$title.'", `flag` = "'.Db::escape_tags($form['meta']).'"');
             
 			foreach(_cfg('ud_alter') as $v) {
 				Db::query('ALTER TABLE `'.$v[0].'` ADD `'.$v[1].$title.'` TEXT NULL ');
@@ -59,14 +59,14 @@ class Languages
             return '0;'.at('language_err_file');
 		}
 		else {
-			$title = Db::escape(strtolower($form['title']));
+			$title = Db::escape_tags(strtolower($form['title']));
 
 			Db::query('UPDATE `tm_languages` '.
-            'SET `title` = "'.$title.'", `flag` = "'.Db::escape($form['meta']).'" '.
+            'SET `title` = "'.$title.'", `flag` = "'.Db::escape_tags($form['meta']).'" '.
             'WHERE `id` = '.(int)$form['lang_id']);
 			foreach(_cfg('ud_alter') as $v) {
 				Db::query('ALTER TABLE `'.$v[0].'` '.
-                'CHANGE `'.Db::escape($form['lang_old_title']).'` '.
+                'CHANGE `'.Db::escape_tags($form['lang_old_title']).'` '.
                 '`'.$v[1].$title.'` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL');
 			}
 			

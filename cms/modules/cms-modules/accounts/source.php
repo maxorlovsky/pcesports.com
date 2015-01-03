@@ -44,7 +44,7 @@ class Accounts
 			return '0;'.at('email_incorrect');
 		}
 		else {
-			$login = Db::escape($form['login']);
+			$login = Db::escape_tags($form['login']);
 			$q = Db::query('SELECT * FROM `tm_admins` WHERE `login` = "'.$login.'" LIMIT 1');
 			if ($q->num_rows != 0) {
 				$this->system->log('Adding new admin <b>'.at('admin_exist').'</b> ('.$form['login'].')', array('module'=>get_class(), 'type'=>'add'));
@@ -54,7 +54,7 @@ class Accounts
 				Db::query('INSERT INTO `tm_admins` '.
 					'SET `login` = "'.$login.'", '.
 					'`password` = "'.sha1($form['password']._cfg('salt')).'", '.
-					'`email` = "'.Db::escape($form['email']).'", '.
+					'`email` = "'.Db::escape_tags($form['email']).'", '.
 					'`level` = '.(int)$form['level']
 				);
                 $lastId = Db::lastId();
@@ -93,7 +93,7 @@ class Accounts
 		}
 		else {
 			$query = 'UPDATE `tm_admins` ';
-			$query .= 'SET `email` = "'.Db::escape($form['email']).'"';
+			$query .= 'SET `email` = "'.Db::escape_tags($form['email']).'"';
 			if ($form['level'] <= $this->system->user->level) { //if level allow to change
 				$query .= ', `level` = '.(int)$form['level'].' ';
 			}

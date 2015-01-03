@@ -24,11 +24,11 @@
                 ?>
                 <tr>
                     <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=$v->key?></a></td>
-                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=substr(strip_tags(t($v->value)),0,100)?></a></td>
+                    <td><a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>"><?=substr(strip_tags($v->value),0,100)?></a></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#strings/edit/'.$v->key?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a>
                         <? if ($v->status != 1) { ?> 
-                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#strings/delete/'.$v->key?>'); return false;">
+                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#strings/delete/'.$v->key?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
                         <? } else { ?>

@@ -116,7 +116,7 @@
 <script>
 
 $('.updateProfile').on('click', function(){
-	showMsg(2,strings['loading']);
+	TM.showMsg(2,strings['loading']);
 	
 	var query = {
         type: 'POST',
@@ -130,13 +130,13 @@ $('.updateProfile').on('click', function(){
 		},
     	success: function(data) {
     		answer = data.split(';');
-    		cleanMsg();
+    		TM.cleanMsg();
             msgAnswer = answer[0];
             if (msgAnswer > 0) {
                 msgAnswer = 1;
             }
-			showMsg(msgAnswer,answer[1]);
-			messageTimer = setTimeout(cleanMsg, 3000);
+			TM.showMsg(msgAnswer,answer[1]);
+			messageTimer = setTimeout(TM.cleanMsg, 3000);
             
             if (answer[0] >= 1) {
                 $('#adminPassword').val('');
@@ -144,11 +144,11 @@ $('.updateProfile').on('click', function(){
             }
             
             if (answer[0] == 2) {
-				goDelay('', 3000);
+				TM.goDelay('', 3000);
 			}
     	}
     }
-	ajax(query);
+	TM.ajax(query);
 });
 
 $('#editRedirect').on('click', function() {

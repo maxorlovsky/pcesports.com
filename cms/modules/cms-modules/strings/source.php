@@ -37,8 +37,8 @@ class Strings
             $_SESSION['searchString'] = $this->searchString;
 			$this->strings = Db::fetchRows('SELECT `key`, `status`, `'.$language.'` AS `value` '.
 				'FROM `tm_strings` '.
-				'WHERE `key` LIKE "%'.Db::escape($this->searchString).'%" OR '.
-				'`'.$language.'` LIKE "%'.Db::escape($this->searchString).'%"'
+				'WHERE `key` LIKE "%'.Db::escape_tags($this->searchString).'%" OR '.
+				'`'.$language.'` LIKE "%'.Db::escape_tags($this->searchString).'%"'
 			);
 		}
 		else {
@@ -62,7 +62,7 @@ class Strings
 			return '0;'.at('title_have_spaces');
 		}
 		else {
-			$title = Db::escape($form['title']);
+			$title = Db::escape_tags($form['title']);
 			$q = Db::query('SELECT * FROM `tm_strings` WHERE `key` = "'.$title.'" LIMIT 1');
 			if ($q->num_rows != 0) {
 				$this->system->log('Adding new string <b>'.at('string_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
@@ -74,7 +74,7 @@ class Strings
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+							'SET `'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
 							'WHERE `key` = "'.$title.'"'
 						);
 					}
@@ -90,8 +90,8 @@ class Strings
 	}
 
 	public function edit($form) {
-		$title = Db::escape($form['title']);
-		$oldTitle = Db::escape($form['string_old_key']);
+		$title = Db::escape_tags($form['title']);
+		$oldTitle = Db::escape_tags($form['string_old_key']);
 		 
 		if (!$form['title']) {
 			$this->system->log('Editing string <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
@@ -117,14 +117,14 @@ class Strings
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+							'SET `'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
 							'WHERE `key` = "'.$title.'"'
 						);
 					}
 				}
-								 
+                
 				$this->system->log('Editing string <b>'.at('string_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-								 
+                
 				return '1;'.at('string_updated');
 			}
 		}
@@ -133,14 +133,14 @@ class Strings
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
 					Db::query('UPDATE `tm_strings` '.
-						'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+						'SET `'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
 						'WHERE `key` = "'.$title.'"'
 					);
 				}
 			}
-							 
+            
 			$this->system->log('Editing string <b>'.at('link_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
-							 
+            
 			return '1;'.at('string_updated');
 		}
 
@@ -154,18 +154,18 @@ class Strings
 	protected function fetchEditData($key) {
 		return Db::fetchRow('SELECT * '.
 			'FROM `tm_strings` '.
-			'WHERE `key` = "'.Db::escape($key).'" '.
+			'WHERE `key` = "'.Db::escape_tags($key).'" '.
 			'LIMIT 1'
 		);
 	}
 
 	protected function deleteRow($key) {
-		$row = Db::fetchRow('SELECT `status` FROM `tm_strings` WHERE `key` = "'.Db::escape($key).'" LIMIT 1');
+		$row = Db::fetchRow('SELECT `status` FROM `tm_strings` WHERE `key` = "'.Db::escape_tags($key).'" LIMIT 1');
 		if ($row->status == 1) {
 			$this->system->log('Deleting string error, it doesnt exist or unavailable by status <b>('.$key.')</b>', array('module'=>get_class(), 'type'=>'delete'));
 		}
 		else {
-			Db::query('DELETE FROM `tm_strings` WHERE `key` = "'.Db::escape($key).'" AND `status` = 0');
+			Db::query('DELETE FROM `tm_strings` WHERE `key` = "'.Db::escape_tags($key).'" AND `status` = 0');
 			$this->system->log('Deleted string <b>'.$row->value.'</b>', array('module'=>get_class(), 'type'=>'delete'));
 		}
 	}

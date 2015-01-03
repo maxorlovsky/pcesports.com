@@ -53,7 +53,16 @@ $cfg['logs'] = 1;
 $cfg['allowedLanguages'] = array('en', 'ru');
 $cfg['defaultLanguage'] = 'en';
 $cfg['availableLoginAttempts'] = 5;
-$cfg['recaptchaSecretKey'] = '6LcwJ_8SAAAAAFoAQ0onOpvPNMo8-Y-g-lwtY22P';
+$cfg['recaptchaSiteKey'] = '';
+$cfg['recaptchaSecretKey'] = '';
+$cfg['demo'] = 0;
+
+// Needed for Language functionality (to add/delete)
+// Add new language table fields here
+$cfg['ud_alter'] = array(
+	array('tm_strings', ''),
+	array('tm_pages', ''),
+);
 
 // Adding site config
 require_once $cfg['dir'].'/inc/config.php';
@@ -73,13 +82,6 @@ $cfg['cmslib'] = $cfg['cmsdir'].'/lib';
 $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
 $cfg['pages'] = $cfg['dir'].'/pages';
-
-// Needed for Language functionality (to add/delete)
-// Add new language table fields here
-$cfg['ud_alter'] = array(
-	array('tm_strings', ''),
-	array('tm_pages', ''),
-);
 //=====================================================
 
 //==================================================

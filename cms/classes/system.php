@@ -10,22 +10,20 @@ class System
     public $language;
     public $defaultPage;
     public $subPageOpen;
-    protected $userClass;
     
     public function __construct($status = 1) {
     	$this->loadClasses();
         
-    	if ($status != 1) {
-    		//return false;
+        //Run only once!
+        if ($status != 1) {
+    		//Making a connection
+            Db::connect();
     	}
-
-        //Making a connection
-        Db::connect();
         
-        $this->data = new stdClass();
-        $this->userClass = new User();
+        if (!$this->data) {
+            $this->data = new stdClass();
+        }
         $this->defaultPage = 'dashboard';
-        
         $this->fetchParams($status);
     }
     
@@ -77,33 +75,14 @@ class System
         	}
         }
         
-        //Loggin in admin
-        if (isset($data['submit_login']) && $data['submit_login'] && !$data['token'] && $status == 1) {
-            $this->logged_in = 0;
-            $result = $this->userClass->login($data);
-            
-            if (!is_object($result) && substr($result,0,1) == 0) {
-                $this->data->login_error = 1;
-                $breakDown = explode(';', $result);
-                $this->messages['login_error'] = $breakDown[1];
-                $this->log('Error login as <b>'.$data['login'].'</b>, ('.$this->messages['login_error'].')', array('module'=>'login', 'type'=>'fail'));
-            }
-            else if ($result !== false) {
-                $this->logged_in = 1;
-                $this->user = $result;
-            	$this->log('Success login as <b>'.$data['login'].'</b>', array('module'=>'login', 'type'=>'success'));
-                go(_cfg('cmssite').'/');
-            }
-        }
-        
         //If there is a token then probably user is already logged in
         if ($data['token'] && !isset($this->logged_in)) {
-            $this->user = $this->userClass->fetchUserByToken($data['token']);
+            $this->user = User::fetchUserByToken($data['token']);
             if ($this->user !== false) {
                 $this->logged_in = 1;
             }
             else {
-            	$this->cleanData();
+            	User::logout();
             }
         }
         else {
@@ -123,6 +102,25 @@ class System
         }
         else {
             $this->language = 'en';
+        }
+        
+        //Loggin in admin
+        if (isset($data['submit_login']) && $data['submit_login'] && !$data['token'] && $status == 1) {
+            $this->logged_in = 0;
+            $result = User::login($data);
+            
+            if (!is_object($result) && substr($result,0,1) == 0) {
+                $this->data->login_error = 1;
+                $breakDown = explode(';', $result);
+                $this->messages['login_error'] = $breakDown[1];
+                $this->log('Error login as <b>'.$data['login'].'</b>, ('.$this->messages['login_error'].')', array('module'=>'login', 'type'=>'fail'));
+            }
+            else if ($result !== false) {
+                $this->logged_in = 1;
+                $this->user = $result;
+            	$this->log('Success login as <b>'.$data['login'].'</b>', array('module'=>'login', 'type'=>'success'));
+                go(_cfg('cmssite').'/');
+            }
         }
     }
     
@@ -145,7 +143,7 @@ class System
     public static function errorMail($desc, $cls, $line, $fulldesc) {
         $timestamp = strftime('%Y-%m-%d %H:%M:%S %Z');
         
-        /*$this->sendMail(
+        $this->sendMail(
             _cfg('adminEmail'),
             'Error '.$desc,
             "Summary: $desc\n" .
@@ -153,7 +151,7 @@ class System
             "Source: $cls:$line\n" .
             'IP: '.$_SERVER['REMOTE_ADDR']."\n" .
             $fulldesc
-        );*/
+        );
     }
     
     public function sendMail($email, $subject, $msg) {
@@ -279,11 +277,11 @@ class System
     	
     	Db::query('INSERT INTO `tm_logs` '.
 	    	'SET '.
-    		'`module` = "'.Db::escape(strtolower($type['module'])).'", '.
-	    	'`type` = "'.Db::escape($type['type']).'", '.
-	    	'`user_id` = '.(int)$userId.', '.
+    		'`module` = "'.Db::escape_tags(strtolower($type['module'])).'", '.
+	    	'`type` = "'.Db::escape_tags($type['type']).'", '.
+	    	'`user_id` = '.intval($userId).', '.
 	    	'`date` = NOW(), '.
-	    	'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    	'`ip` = "'.Db::escape_tags($_SERVER['REMOTE_ADDR']).'", '.
 	    	'`info` = "'.Db::escape($text).'"'
     	);
     	
@@ -291,11 +289,11 @@ class System
     		//If enabled, sending external logs
     		$array = array(
     			'control' => 'log',
-    			'module' => strtolower($type['module']),
-    			'type' => $type['type'],
-    			'user_id' => $userId,
-    			'ip' => $_SERVER['REMOTE_ADDR'],
-    			'info' => $text,
+    			'module' => Db::escape_tags(strtolower($type['module'])),
+    			'type' => Db::escape_tags($type['type']),
+    			'user_id' => intval($userId),
+    			'ip' => Db::escape_tags($_SERVER['REMOTE_ADDR']),
+    			'info' => Db::escape($text, '<b>'),
     		);
     		$this->runAPI($array);
     	}

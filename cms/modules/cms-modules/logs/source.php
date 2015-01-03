@@ -28,6 +28,11 @@ class Logs
 			'ORDER BY `id` DESC '.
             'LIMIT '.$this->pages->start.', '.(int)$this->pages->countPerPage
 		);
+        
+        foreach($this->logs as &$v) {
+            $v->info = Db::escape_tags($v->info, '<b>');
+        }
+        unset($v);
 
 		return $this;
 	}

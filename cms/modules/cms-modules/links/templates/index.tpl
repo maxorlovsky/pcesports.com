@@ -44,7 +44,7 @@
                     </td>
 					<td class="centered">
 						<a href="<?=_cfg('cmssite').'/#links/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
-						<a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#links/delete/'.$v->id?>'); return false;">
+						<a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#links/delete/'.$v->id?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
 					</td>
@@ -79,7 +79,7 @@
 		                    </td>
 							<td class="centered">
 								<a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
-								<a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#links/delete/'.$vs->id?>'); return false;">
+								<a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#links/delete/'.$vs->id?>'); return false;">
 		                            <img src="<?=_cfg('cmsimg')?>/cancel.png" />
 		                        </a>
 							</td>

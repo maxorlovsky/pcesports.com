@@ -4,7 +4,7 @@
 
 <?=$module->pages->html?>
 
-<table class="table">
+<table class="table logs">
     <tr>
         <td width="10%"><b><?=at('module')?></b></td>
         <td width="10%"><b><?=at('type')?></b></td>

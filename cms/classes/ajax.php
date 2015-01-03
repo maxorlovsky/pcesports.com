@@ -8,7 +8,6 @@ class Ajax extends System
     private $allowed_ajax_methods = array(
 		'showPage',
     	'exit',
-    	'cleanData',
     	'submitForm',
     	'saveSetting',
         'updateProfile',
@@ -18,7 +17,7 @@ class Ajax extends System
     public function ajaxRun($data) {
     	//If not logged_in, not allowing anything!
     	if (!$this->logged_in) {
-    		$this->cleanData();
+    		User::logout();
     		return false;
     	}
     	
@@ -27,7 +26,7 @@ class Ajax extends System
         //If exit, exit!
         if (isset($data['page']) && $data['page'] == '#exit') {
             $this->log('Exit', array('module'=>'logout'));
-        	$this->cleanData();
+        	User::logout();
         	return true;
         }
 		
@@ -53,14 +52,14 @@ class Ajax extends System
     protected function saveSetting($data) {
         if (substr($data['param'],0,6) == 'module') {
             $data['param'] = str_replace('module-','',$data['param']);
-            $q = Db::query('SELECT * FROM `tm_modules` WHERE `name` = "'.Db::escape($data['param']).'" LIMIT 1');
+            $q = Db::query('SELECT * FROM `tm_modules` WHERE `name` = "'.Db::escape_tags($data['param']).'" LIMIT 1');
             if ($q->num_rows == 0) {
                 return '0;Module setting not found';
             }
             
             Db::query('UPDATE `tm_modules` '.
-                'SET `level` = "'.Db::escape($data['value']).'" '.
-                'WHERE `name` = "'.Db::escape($data['param']).'" '.
+                'SET `level` = "'.Db::escape_tags($data['value']).'" '.
+                'WHERE `name` = "'.Db::escape_tags($data['param']).'" '.
                 'LIMIT 1'
             );
             
@@ -68,14 +67,14 @@ class Ajax extends System
         }
         else {
             $data['param'] = str_replace('setting-','',$data['param']);
-            $q = Db::query('SELECT * FROM `tm_settings` WHERE `setting` = "'.Db::escape($data['param']).'" LIMIT 1');
+            $q = Db::query('SELECT * FROM `tm_settings` WHERE `setting` = "'.Db::escape_tags($data['param']).'" LIMIT 1');
             if ($q->num_rows == 0) {
                 return '0;Setting not found';
             }
             
             Db::query('UPDATE `tm_settings` '.
-                'SET `value` = "'.Db::escape($data['value']).'" '.
-                'WHERE `setting` = "'.Db::escape($data['param']).'" '.
+                'SET `value` = "'.Db::escape_tags($data['value']).'" '.
+                'WHERE `setting` = "'.Db::escape_tags($data['param']).'" '.
                 'LIMIT 1'
             );
             
@@ -125,7 +124,7 @@ class Ajax extends System
     	}
     	 
     	Db::query('UPDATE `tm_admins` '.
-    	'SET `email` = "'.Db::escape($email).'" '.
+    	'SET `email` = "'.Db::escape_tags($email).'" '.
     	'WHERE `id` = '.intval($this->user->id).' '.
     	'LIMIT 1');
     	
@@ -177,8 +176,8 @@ class Ajax extends System
         }
     	 
     	Db::query('UPDATE `tm_admins` SET '.
-        '`language` = "'.Db::escape($data['lang']).'", '.
-        '`email` = "'.Db::escape($email).'", '.
+        '`language` = "'.Db::escape_tags($data['lang']).'", '.
+        '`email` = "'.Db::escape_tags($email).'", '.
         '`editRedirect` = '.(int)$data['editRedirect'].' '.
     	$passwordChange.
     	'WHERE `id` = '.intval($this->user->id).' '.

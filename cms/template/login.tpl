@@ -17,11 +17,17 @@
             <? if (isset($_SESSION['recaptcha_login']) && $_SESSION['recaptcha_login'] >= _cfg('availableLoginAttempts')) { ?>
                 <div class="recaptcha">
                     Too many fail attempts, please prove that you're not a robot!
-                    <div class="g-recaptcha" data-sitekey="6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z"></div>
+                    <div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
                 </div>
             <? } ?>
             
             <input type="submit" value="Enter" name="submit_login" onclick="$(this).attr('readonly', 'readonly');" class="enter" />
+            
+            <? if (_cfg('demo') == 1) { ?>
+			<div id="login_guest_form">
+				<button onclick="$('#login').val('Demo'); $('#password').val('demo'); $('.enter').trigger('click'); return false;">Login as Demo</button>
+			</div>
+            <? } ?>
 		</form>
     </div>
     

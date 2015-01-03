@@ -36,7 +36,7 @@ class Pages
     		return '0;'.at('title_have_spaces');
     	}
 		else {
-            $title = Db::escape($form['title']);
+            $title = Db::escape_tags($form['title']);
 			$q = Db::query('SELECT * FROM `tm_pages` WHERE `link` = "'.$title.'"');
 			if ($q->num_rows != 0) {
 				$this->system->log('Adding new page <b>'.at('page_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'add'));
@@ -53,7 +53,7 @@ class Pages
 					$string = explode('_', $k);
 					if ($string[0] == 'text') {
 						Db::query('UPDATE `tm_pages` '.
-                        'SET `text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'SET `text_'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
                         'WHERE `link` = "'.$title.'"');
 					}
 				}
@@ -64,7 +64,7 @@ class Pages
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-                        'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                         'WHERE `key` = "web-page-'.$title.'"');
 					}
 				}
@@ -79,9 +79,9 @@ class Pages
 	}
     
     public function edit($form) {
-        $title = Db::escape($form['title']);
+        $title = Db::escape_tags($form['title']);
     	$pageId = (int)$form['page_id'];
-    	$oldValue = Db::escape($form['page_link']);
+    	$oldValue = Db::escape_tags($form['page_link']);
         
         if (!$form['title']) {
         	$this->system->log('Editing page <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
@@ -109,7 +109,7 @@ class Pages
                     $string = explode('_', $k);
                     if ($string[0] == 'text') {
                         Db::query('UPDATE `tm_pages` SET '.
-                            '`text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                            '`text_'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
                             'WHERE `id` = '.$pageId
                         );
                     }
@@ -121,7 +121,7 @@ class Pages
 					$string = explode('_', $k);
 					if ($string[0] == 'string') {
 						Db::query('UPDATE `tm_strings` '.
-                        	'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        	'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                         	'WHERE `key` = "web-page-'.$title.'"'
     					);
 					}
@@ -142,7 +142,7 @@ class Pages
                 $string = explode('_', $k);
                 if ($string[0] == 'text') {
                     Db::query('UPDATE `tm_pages` SET '.
-                        '`text_'.$string[1].'` = "'.Db::escape($v).'" '.
+                        '`text_'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
                         'WHERE `id` = '.$pageId
                     );
                 }
@@ -151,7 +151,7 @@ class Pages
                 $string = explode('_', $k);
                 if ($string[0] == 'string') {
                     Db::query('UPDATE `tm_strings` '.
-                        'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
+                        'SET `'.Db::escape($string[1]).'` = "'.Db::escape_tags($v).'" '.
                         'WHERE `key` = "web-page-'.$title.'"'
                     );
                 }
