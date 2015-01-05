@@ -1147,7 +1147,7 @@ class Ajax extends System
     	
     		Db::query('UPDATE `participants` SET '.
                 '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
-                'WHERE `participant_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
                 '`game` = "lol" AND '.
                 '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
             );

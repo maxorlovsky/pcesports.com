@@ -49,14 +49,6 @@ class leagueoflegends extends System
 			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
         
-        $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
-            '`tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "lol" AND '.
-            '`approved` = 1 AND '.
-            '`deleted` = 0 AND '.
-            '`ended` = 0 '
-        );
-
         include_once _cfg('pages').'/'.get_class().'/fight.tpl';
     }
 	
