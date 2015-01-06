@@ -1441,6 +1441,16 @@ footer .games img {
     margin-bottom: 20px;
 }
 
+.leave-comment .login {
+    float: initial;
+    line-height: initial;
+    margin-right: inherit;
+    text-transform: inherit;
+    font-weight: inherit;
+}
+.leave-comment .login:hover {
+    color: #000;
+}
 .leave-comment.fields {
 	margin-bottom: 15px;
 	white-space: nowrap;
