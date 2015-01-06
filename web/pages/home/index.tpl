@@ -64,7 +64,7 @@
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
-				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
+				<?=t('added_by')?> <a href="<?=_cfg('href')?>/member/<?=$this->news->top->login?>"><?=$this->news->top->login?></a>, 
 				<span id="news-like-<?=$this->news->top->id?>"><?=$this->news->top->likes?></span> <?=t('likes')?>,
                 <span><?=$this->news->top->views?></span> <?=t('views')?>, 
 				<span><?=$this->news->top->comments?></span> <?=t('comments')?>

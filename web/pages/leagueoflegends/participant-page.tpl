@@ -25,19 +25,17 @@
         </div>
     </div>
     
+    <? if ($this->participantsCount >= 2) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
         </div>
 
         <div class="block-content challonge-brackets">
-            <? if ($this->participantsCount >= 2) { ?>
             <div id="challonge"></div>
-            <? } else { ?>
-                <p class="empty-list"><?=t('no_checked_in_teams')?></p>
-            <? } ?>
         </div>
     </div>
+    <? } ?>
 </div>
 
 <script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>

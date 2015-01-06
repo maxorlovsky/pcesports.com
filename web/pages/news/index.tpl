@@ -30,7 +30,7 @@
         </div>
         <div class="block-content news big-block readmore">
         	<div class="news-info">
-				<?=t('added_by')?> <a href="<?=_cfg('href')?>/team/#<?=$v->login?>"><?=$v->login?></a>, 
+				<?=t('added_by')?> <a href="<?=_cfg('href')?>/member/<?=$v->login?>"><?=$v->login?></a>, 
 				<span id="news-like-<?=$v->id?>"><?=$v->likes?></span> <?=t('likes')?>, 
                 <span><?=$v->views?></span> <?=t('views')?>,
                 <span><?=$v->comments?></span> <?=t('comments')?>
