@@ -62,7 +62,7 @@
                 <input type="hidden" id="module" name="module" value="news" />
                 <input type="hidden" id="id" name="id" value="<?=$this->news->id?>" />
                 <? } else { ?>
-                    <p class="login"><?=t('login_to_leave_comment')?></p>
+                    <a href="javascript:void(0);" class="login"><?=t('login_to_leave_comment')?></a>
                 <? } ?>
             </form>
             
