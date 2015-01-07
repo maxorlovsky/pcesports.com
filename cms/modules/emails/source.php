@@ -64,8 +64,8 @@ class Emails extends System
             $this->sendMail($v->email, $form['title'], $text);
             
             ++$i;
-            if ($i >= 3) {
-                sleep(1);
+            if ($i >= 5) {
+                sleep(3);
                 $i = 0;
             }
         }
