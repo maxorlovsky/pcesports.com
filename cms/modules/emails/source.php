@@ -61,7 +61,12 @@ class Emails extends System
     			$form['text']
     		);
             
-            $this->sendMail($v->email, $form['title'], $text);
+            $answer = $this->sendMail($v->email, $form['title'], $text);
+            
+            if (!$answer) {
+                $this->system->log('Sending email <b>Error</b> '.$answer, array('module'=>get_class(), 'type'=>'error'));
+                return $answer;
+            }
             
             ++$i;
             if ($i >= 5) {
@@ -71,7 +76,7 @@ class Emails extends System
         }
 
 		$this->system->log('Sending email <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
-							 
+        
         return '1;Emails sent';
 	}
 
