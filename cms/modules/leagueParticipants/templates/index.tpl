@@ -61,7 +61,7 @@ $('.groups').on('change', function() {
         },
         success: function(answer) {}
     };
-    ajax(query);
+    TM.ajax(query);
 });
 
 $('.place').on('change', function() {
@@ -81,6 +81,6 @@ $('.place').on('change', function() {
             
         }
     };
-    ajax(query);
+    TM.ajax(query);
 });
 </script>

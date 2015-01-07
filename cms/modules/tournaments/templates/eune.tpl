@@ -88,7 +88,7 @@ $('.finish-popup button.team1, .finish-popup button.team2').on('click', function
             alert('Error: '+answer[1]);
         }
     }
-    ajax(query);
+    TM.ajax(query);
 });
 
 $('.finish-popup .close, #fader').on('click', function() {
@@ -124,7 +124,7 @@ $('#auto-advance').on('click', function() {
             messageTimer = setTimeout(cleanMsg,3000);
         }
     };
-    ajax(query);
+    TM.ajax(query);
 });
 
 $('.close-chat').on('click', function() {
@@ -168,7 +168,7 @@ $('.chat-submit').on('keyup', function(e) {
                 }
             }
         }
-        ajax(query);
+        TM.ajax(query);
     }
 });
 
@@ -208,7 +208,7 @@ profiler = {
 				});
             }
         }
-        ajax(query);
+        TM.ajax(query);
     },
     statusCheck: function() {
 		var i = 0;
@@ -234,7 +234,7 @@ profiler = {
 				});
             }
         }
-        ajax(query);
+        TM.ajax(query);
     },
 };
 

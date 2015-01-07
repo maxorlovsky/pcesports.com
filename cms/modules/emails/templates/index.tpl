@@ -61,7 +61,7 @@ function updateText() {
 
         }
     };
-    ajax(query);
+    TM.ajax(query);
 }
 
 $('#template').on('change', function() {
