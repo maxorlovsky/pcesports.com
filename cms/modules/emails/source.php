@@ -65,7 +65,7 @@ class Emails extends System
             
             if (!$answer) {
                 $this->system->log('Sending email <b>Error</b> '.$answer, array('module'=>get_class(), 'type'=>'error'));
-                return $answer;
+                return '0;Error sending emails, check Logs';
             }
             
             ++$i;
