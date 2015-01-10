@@ -544,7 +544,7 @@ class Cron extends System {
                         }
                     }
                     
-                    if ($i >= 5) {
+                    if ($i >= 7) {
                         break(1);
                     }
                     ++$i;
