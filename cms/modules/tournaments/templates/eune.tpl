@@ -97,7 +97,7 @@ $('.finish-popup .close, #fader').on('click', function() {
 });
 
 $('#auto-advance').on('click', function() {
-    showMsg(2,strings['loading']);
+    TM.showMsg(2,strings['loading']);
     
     var id = $(this).attr('id');
     var checked = 0;
@@ -115,13 +115,13 @@ $('#auto-advance').on('click', function() {
         },
         success: function(data) {
             answer = data.split(';');
-            cleanMsg();
-            showMsg(answer[0],answer[1]);
-            messageTimer = setTimeout(cleanMsg,3000);
+            TM.cleanMsg();
+            TM.showMsg(answer[0],answer[1]);
+            messageTimer = setTimeout(TM.cleanMsg,3000);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            showMsg(0,'Error timeout');
-            messageTimer = setTimeout(cleanMsg,3000);
+            TM.showMsg(0,'Error timeout');
+            messageTimer = setTimeout(TM.cleanMsg,3000);
         }
     };
     TM.ajax(query);

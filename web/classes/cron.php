@@ -490,10 +490,13 @@ class Cron extends System {
                         
                                 //Adding teams names to email text
                                 $emailText = str_replace(array('%team1%', '%team2%'), array($team[$v->team1]['name'], $team[$v->team2]['name']), $emailText);
-                                
-                                //Sending email
+                                //Adding player lists to email text
                                 $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0]['list'], $playersList[1]['list']), $emailText);
-                                $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
+                                
+                                //Sending email only if automatic function is disabled
+                                if ($this->data->settings['tournament-auto-lol-'.$server] != 1) {
+                                    $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
+                                }
                                 
                                 //Registering email, ending the game
                                 Db::query('UPDATE `lol_games` SET '.
