@@ -764,7 +764,7 @@ class Cron extends System {
             $challongeTournament = $this->data->settings['hs-current-number'];
         }
         else {
-            $challongeTournament = $tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
+            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
         }
         
         //Reshuffle tournament
