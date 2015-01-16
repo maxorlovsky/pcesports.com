@@ -167,6 +167,7 @@ class System
         
         $rows = Db::fetchRows('SELECT * FROM `tournaments` '.
             'WHERE `status` != "Ended" '.
+            'GROUP BY `server`, `game` '.
             'ORDER BY `id` DESC '
         );
         
