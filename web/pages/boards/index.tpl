@@ -5,7 +5,7 @@
         <? if ($this->logged_in) { ?>
             <a class="button submit" href="<?=_cfg('href')?>/boards/submit"><?=t('submit_post')?></a>
         <? } else { ?>
-            <a class="button submit must-login" href="javascipt:void(0);"><?=t('login_to_post')?></a>
+            <a href="javascript:void(0);" class="button submit must-login"><?=t('login_to_post')?></a>
         <? } ?>
         <div class="block-header-wrapper">
             <h1 class=""><?=t('boards')?></h1>
@@ -52,7 +52,7 @@
         <? if ($this->logged_in) { ?>
             <a class="button submit bottom" href="<?=_cfg('href')?>/boards/submit"><?=t('submit_post')?></a>
         <? } else { ?>
-            <a class="button submit bottom must-login" href="javascipt:void(0);"><?=t('login_to_post')?></a>
+            <a href="javascript:void(0);" class="button submit bottom must-login"><?=t('login_to_post')?></a>
         <? } ?>
     </div>
 </div>
