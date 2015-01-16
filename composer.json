@@ -3,23 +3,14 @@
     "authors": [
         {
             "name": "Maxtream",
-            "email": "info@pcesports.com"
+            "email": "max.orlovsky@gmail.com"
         }
     ],
     "require": {
         "php-64bit" : ">=5.4",
-        "ext-ctype" : "*",
         "ext-curl" : "*",
-        "ext-gettext" : "*",
-        "ext-hash" : ">=1",
         "ext-json" : ">=1",
-        "ext-libxml" : "*",
         "ext-mbstring" : "*",
-        "ext-mcrypt" : "*",
-        "ext-pcre" : "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": ">4.1",
-        "phpunit/php-invoker": "*"
+        "ext-mcrypt" : "*"
     }
 }

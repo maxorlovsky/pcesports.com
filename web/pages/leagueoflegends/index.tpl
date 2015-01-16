@@ -43,6 +43,7 @@
     </div>
     
     <div class="block">
+        <a name="rules"></a>
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('tournament_rules')?></h1>
         </div>
