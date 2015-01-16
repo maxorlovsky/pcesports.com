@@ -654,6 +654,32 @@ class System
         return true;
     }
     
+    public function parseText($text) {
+        $text = strip_tags($text); //just in case, never know how those fuckers can hack you
+
+        $text = str_replace(
+            array("\n", "\r"),
+            array('<br />', '<br />'),
+            $text
+        );
+        $text = preg_replace(
+            array('/\*\*(.*?)\*\*/i', '/\*(.*?)\*/i', '/\~~(.*?)\~~/i', '/\[q](.*?)\[\/q]/i', '/\[(.*?)\]\((.*?)\)/i'),
+            array('<b>$1</b>', '<i>$1</i>', '<s>$1</s>', '<blockquote>$1</blockquote>','<a href="$2" target="_blank">$1</a>' ),
+            $text
+        );
+        
+        return $text;
+    }
+    
+    public function getAboutTime($interval) {
+        if ($interval->y) return $interval->y.' '.t('year_ago');
+        else if ($interval->m) return $interval->m.' '.t('months_ago');
+        else if ($interval->d) return $interval->d.' '.t('days_ago');
+        else if ($interval->h) return $interval->h.' '.t('hours_ago');
+        else if ($interval->i) return $interval->i.' '.t('minutes_ago');
+        else return $interval->s.' '.t('seconds_ago');
+    }
+    
     /*Protected functions*/
     protected function loadClasses() {
     	require_once _cfg('cmsclasses').'/db.php';

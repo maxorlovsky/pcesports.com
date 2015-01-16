@@ -25,6 +25,18 @@ $('#checkInLol').on('click', function() {
     PC.checkIn();
 });
 
+$('.submitBoard .categories').on('click', 'div', function() {
+    $('.submitBoard .categories div').removeClass('active');
+    $(this).addClass('active');
+    $('.submitBoard #category').val($(this).attr('attr-category'));
+});
+$('.submitBoard #submitBoard').on('click', function() {
+    PC.submitBoard();
+});
+$('#submitBoardComment').on('click', function() {
+    PC.submitBoardComment();
+});
+
 $('.avatars-list .avatar-block').on('click', function() {
     var oldId = $('#avatar').val();
     
@@ -76,7 +88,7 @@ if ($('.ad-holder').height() == 0) {
     $('.ad-blocked').show();
 }
 
-$('.login').on('click', function() {
+$('.login, .must-login').on('click', function() {
     PC.openPopup('login-window');
 });
 
@@ -208,6 +220,76 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    submitBoardComment: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#submitBoardComment').addClass('alpha');
+        $('.leave-comment #error').hide();
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'submitBoard',
+                module: $('.leave-comment #module').val(),
+                text: $('.leave-comment #msg').val(),
+                id: $('.leave-comment #id').val()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $('#submitBoardComment').removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    $('.leave-comment #msg').val('');
+                    $('.user-comments').prepend(answer[1]);
+                }
+                else {
+                    $('.leave-comment #error').html('<p>'+answer[1]+'</p>').slideDown('fast');
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
+    submitBoard: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#submitBoard').addClass('alpha');
+        $('.submitBoard #error').hide();
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'submitBoard',
+                module: $('.submitBoard #module').val(),
+                title: $('.submitBoard #title').val(),
+                text: $('.submitBoard #msg').val(),
+                category: $('.submitBoard #category').val()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                $('#submitBoard').removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    window.location.replace(answer[1]);
+                }
+                else {
+                    $('.submitBoard #error').html('<p>'+answer[1]+'</p>').slideDown('fast');
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
     verifySummoner: function(element) {
         if (this.formInProgress == 1) {
             return false;

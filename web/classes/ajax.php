@@ -26,6 +26,7 @@ class Ajax extends System
         'removeSummoner',
         'verifySummoner',
         'registerInDota',
+        'submitBoard',
 	);
     
     public function __construct() {
@@ -43,6 +44,96 @@ class Ajax extends System
             echo '0;'.t('controller_not_exist');
             return false;
         }
+    }
+    
+    protected function submitBoard($data) {
+        if ($data['module'] == 'boards') {
+            $categoryList = _cfg('boardGames');
+            $categoryList[] = 'general';
+            if (!trim($data['category']) || !in_array($data['category'], $categoryList)) {
+                return '0;'.t('error');
+            }
+            
+            if (!trim($data['title'])) {
+                return '0;'.t('title_not_set');
+            }
+            else if (strlen(trim($data['title'])) > 200) {
+                return '0;'.str_replace('%num%', 200, t('title_must_be_less'));
+            }
+            
+            if (!trim($data['text'])) {
+                return '0;'.t('text_not_set');
+            }
+            
+            if ($this->logged_in != 1 || $this->data->user->id == 0) {
+                return '0;'.t('not_logged_in');
+            }
+            
+            $title = Db::escape_tags($data['title']);
+            $text = Db::escape_tags($data['text']);
+            Db::query(
+                'INSERT INTO `boards` SET '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`category` = "'.Db::escape_tags($data['category']).'", '.
+                '`title` = "'.$title.'", '.
+                '`text` = "'.$text.'", '.
+                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+                '`activity` = '.time()
+            );
+            $id = Db::lastId();
+            
+            return '1;'._cfg('href').'/boards/'.$id;
+        }
+        else if ($data['module'] == 'comment') {
+            if (!trim($data['text'])) {
+                return '0;'.t('text_not_set');
+            }
+            
+            if (!$data['id']) {
+                return '0;error';
+            }
+            
+            $row = Db::fetchRow('SELECT `id` FROM `boards` WHERE `id` = '.(int)$data['id']);
+            if (!$row) {
+                return '0;Thread does not exist';
+            }
+            
+            $text = Db::escape_tags($data['text']);
+            Db::query(
+                'INSERT INTO `boards_comments` SET '.
+                '`board_id` = '.(int)$data['id'].', '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`text` = "'.$text.'", '.
+                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
+            );
+            
+            Db::query(
+                'UPDATE `boards` SET '.
+                '`comments` = `comments` + 1, '.
+                '`activity` = '.time().' '.
+                'WHERE `id` = '.(int)$data['id']
+            );
+            
+            $text = $this->parseText($text);
+            
+            $html = '<div class="master">'.
+                        '<div class="body">'.
+                            '<p>'.$text.'</p>'.
+                            '<span class="comment-user">'.
+                                '<a href="'._cfg('href').'/member/'.$this->data->user->name.'">'.
+                                    '<img class="avatar-block" src="'._cfg('avatars').'/'.$this->data->user->avatar.'.jpg" />'.
+                                    $this->data->user->name.
+                                '</a>'.
+                            '</span>'.
+                            '<span class="comment-time">- 0 '.t('seconds_ago').'</span>'.
+                        '</div>'.
+                        '<div class="clear"></div>'.
+                    '</div>';
+            
+            return '1;'.$html;
+        }
+        
+        return '0;'.t('module_not_exist');
     }
     
     protected function verifySummoner($data) {
@@ -356,32 +447,6 @@ class Ajax extends System
         }
         
         return $html;
-    }
-    
-    private function parseText($text) {
-        $text = strip_tags($text); //just in case, never know how those fuckers can hack you
-
-        $text = str_replace(
-            array("\n", "\r"),
-            array('<br />', '<br />'),
-            $text
-        );
-        $text = preg_replace(
-            array('/\*\*(.*?)\*\*/i', '/\*(.*?)\*/i', '/\~~(.*?)\~~/i', '/\[q](.*?)\[\/q]/i', '/\[(.*?)\]\((.*?)\)/i'),
-            array('<b>$1</b>', '<i>$1</i>', '<s>$1</s>', '<blockquote>$1</blockquote>','<a href="$2" target="_blank">$1</a>' ),
-            $text
-        );
-        
-        return $text;
-    }
-    
-    private function getAboutTime($interval) {
-        if ($interval->y) return $interval->y.' year ago';
-        else if ($interval->m) return $interval->m.' months ago';
-        else if ($interval->d) return $interval->d.' days ago';
-        else if ($interval->h) return $interval->h.' hours ago';
-        else if ($interval->i) return $interval->i.' minutes ago';
-        else return $interval->s.' seconds ago';
     }
     
     protected function comment($data) {

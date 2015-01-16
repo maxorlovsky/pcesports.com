@@ -1540,6 +1540,8 @@ footer .games img {
 .user-comments .master p {
     margin: 0 0 10px 0;
     padding: 0;
+    max-width: 770px;
+    overflow-x: auto;
 }
 .user-comments .comment-user {
     color: #111;
@@ -1960,6 +1962,129 @@ footer .games img {
 
 .block-content.challonge-brackets {
     padding: 0;
+}
+
+.boards .submit {
+    margin-bottom: 10px;
+    width: 760px;
+    font-size: 20px;
+    text-align: center;
+}
+.boards .submit.bottom {
+    margin-top: 10px;
+}
+
+.boards .board {
+    padding: 0;
+    overflow: hidden;
+}
+.boards .board .voting {
+    float: left;
+    width: 35px;
+    text-align: center;
+}
+.boards .board .voting .arrow {
+    height: 25px;
+    margin: 1px 0;
+}
+.boards .board .category {
+    display: block;
+    float: left;
+    width: 55px;
+    line-height: 72px;
+    margin: 0 10px 0 0;
+    min-height: 1px;
+}
+.boards .board .category img {
+    width: 55px;
+    vertical-align: middle;
+}
+.boards .board .thread {
+    float: left;
+}
+.boards .board .thread .title {
+    font-size: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.boards .board .thread .date-user-box {
+    font-size: 11px;
+    color: #555;
+    line-height: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.boards .board .thread .date-user-box .comment-user img {
+    float: right;
+    width: 20px;
+    margin-left: 5px;
+}
+.boards .board .thread .actions a {
+    font-size: 12px;
+    margin-right: 10px;
+}
+.boards .board .thread .share-box {
+    float: right;
+    min-height: 36px;
+    margin-top: 5px;
+}
+.boards .board .thread .text {
+    border: 1px solid #999;
+    border-radius: 4px;
+    width: 650px;
+    overflow: auto;
+    padding: 5px;
+    max-height: 1000px;
+}
+.boards  .user-comments .voting {
+    float: left;
+    width: 35px;
+    text-align: center;
+}
+.boards  .user-comments .voting .arrow {
+    height: 18px;
+    margin: 1px 0;
+}
+.boards  .user-comments .body {
+    float: left;
+}
+
+.submitBoard #title {
+    font-size: 22px;
+    width: 720px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid #000;
+}
+.submitBoard #title:focus {
+	border-color: #1697e1;
+	transition: linear .3s;
+	outline: 0;
+}
+.submitBoard .categories div {
+    float: left;
+    border: 3px solid #000;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    margin-right: 20px;
+    line-height: 80px;
+    opacity: 0.5;
+    transition: .5s;
+    cursor: pointer;
+}
+.submitBoard .categories div img {
+    vertical-align: middle;
+}
+.submitBoard .categories div:hover,
+.submitBoard .categories div.active {
+    opacity: 1;
+    background-color: #1697e1;
+}
+
+.submitBoard .categories div.active {
+    border: 3px solid #1697e1;
 }
 
 /* Landscape phone to portrait tablet */
