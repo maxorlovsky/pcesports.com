@@ -34,7 +34,7 @@
                     <td><a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>"><?=$v->status?></a></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#tournamentList/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
-                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="deletion('<?=_cfg('cmssite').'/#tournamentList/delete/'.$v->id?>'); return false;">
+                        <a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#tournamentList/delete/'.$v->id?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
                     </td>
