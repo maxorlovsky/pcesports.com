@@ -38,6 +38,7 @@
     <script>
         var g = {
             site: '<?=_cfg('site')?>',
+            logged_in: <?=($this->logged_in?1:0)?>,
             str: {
                 days: '<?=t('days')?>',
                 day: '<?=t('day')?>',

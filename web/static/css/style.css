@@ -1984,8 +1984,28 @@ footer .games img {
     text-align: center;
 }
 .boards .board .voting .arrow {
-    height: 25px;
-    margin: 1px 0;
+    width: 20px;
+    height: 17px;
+    margin: 5px 7px;
+    cursor: pointer;
+}
+.boards .board .voting .arrow.top {
+    background: url('../images/arrows-icons.png') no-repeat -20px 0;
+}
+.boards .board .voting .arrow.top:hover {
+    background-position: 0 0;
+}
+.boards .board .voting .arrow.top.voted {
+    background-position: -40px 0;
+}
+.boards .board .voting .arrow.bottom {
+    background: url('../images/arrows-icons.png') no-repeat -20px 100%;
+}
+.boards .board .voting .arrow.bottom:hover {
+    background-position: 0 100%;
+}
+.boards .board .voting .arrow.bottom.voted {
+    background-position: -40px 100%;
 }
 .boards .board .category {
     display: block;

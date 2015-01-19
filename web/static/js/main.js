@@ -1,3 +1,18 @@
+$('.board .voting').on('click', '.arrow', function() {
+    if (g.logged_in === 0) {
+        PC.openPopup('login-window');
+        return false;
+    }
+    
+    var id = parseInt($(this).parent().attr('attr-id'));
+    if ($(this).hasClass('top')) {
+        PC.boardVote('plus', id);
+    }
+    else {
+        PC.boardVote('minus', id);
+    }
+});
+
 $('.summoners').on('click', '.notApproved .status', function() {
     var id = parseInt($(this).closest('.summoner').attr('attr-id'));
     var masteries = $(this).closest('.summoner').attr('attr-masteries');
@@ -220,6 +235,54 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    boardVote: function(status, id) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'boardVote',
+                type: 'board',
+                status: status,
+                id: id
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                answer = data.split(';');
+                
+                count = parseInt($('#board_vote_'+id).html());
+                
+                if (answer[0] != 3) {
+                    $('#board_vote_'+id).parent().find('.arrow.top').removeClass('voted');
+                    $('#board_vote_'+id).parent().find('.arrow.bottom').removeClass('voted');
+                }
+                
+                if (answer[0] == 1) {
+                    if (status == 'plus') {
+                        $('#board_vote_'+id).parent().find('.arrow.top').addClass('voted');
+                        $('#board_vote_'+id).html(count + 1);
+                    }
+                    else {
+                        $('#board_vote_'+id).parent().find('.arrow.bottom').addClass('voted');
+                        $('#board_vote_'+id).html(count - 1);
+                    }
+                }
+                else if (answer[0] == 2) {
+                    if (status == 'plus') {
+                        $('#board_vote_'+id).html(count - 1);
+                    }
+                    else {
+                        $('#board_vote_'+id).html(count + 1);
+                    }
+                }
+            }
+        };
+        this.ajax(query);
+    },
     submitBoardComment: function() {
         if (this.formInProgress == 1) {
             return false;

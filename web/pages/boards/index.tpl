@@ -15,10 +15,10 @@
         	foreach($this->boards as $v) {
         ?>
         <div class="block-content board">
-            <div class="voting">
-                <div class="arrow top"></div>
-                <div class="count"><?=$v->votes?></div>
-                <div class="arrow bottom"></div>
+            <div class="voting" attr-id="<?=$v->id?>">
+                <div class="arrow top <?=($v->direction=='plus'?'voted':null)?>"></div>
+                <div class="count" id="board_vote_<?=$v->id?>"><?=$v->votes?></div>
+                <div class="arrow bottom <?=($v->direction=='minus'?'voted':null)?>"></div>
             </div>
             <a class="category" href="<?=_cfg('href')?>/boards/<?=$v->id?>">
                 <? if ($v->category != 'general') { ?>
@@ -37,7 +37,12 @@
                 <div class="actions">
                     <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t('comments')?></a>
                     <!--<a class="share" href="#"><?=t('share')?></a>-->
-                    <!--<a class="report" href="#"><?=t('report')?></a>-->
+                    <? if ($v->user_id == $this->data->user->id) { ?>
+                        <a class="edit" href="#"><?=t('edit')?></a>
+                        <a class="delete" href="#"><?=t('delete')?></a>
+                    <? } else { ?>
+                        <a class="report" href="#"><?=t('report')?></a>
+                    <? } ?>
                 </div>
             </div>
             

@@ -27,6 +27,7 @@ class Ajax extends System
         'verifySummoner',
         'registerInDota',
         'submitBoard',
+        'boardVote',
 	);
     
     public function __construct() {
@@ -46,7 +47,52 @@ class Ajax extends System
         }
     }
     
+    protected function boardVote($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('error');
+        }
+        
+        if ($data['type'] == 'board') {
+            $row = Db::fetchRow('SELECT * FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
+            if ($row && (($row->direction == 'plus' && $data['status'] == 'plus') || ($row->direction == 'minus' && $data['status'] == 'minus'))) {
+                Db::query('DELETE FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
+                if ($data['status'] == 'plus') {
+                    Db::query('UPDATE `boards` SET `votes` = `votes` - 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
+                }
+                else {
+                    Db::query('UPDATE `boards` SET `votes` = `votes` + 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
+                }
+                return '2;1';
+            }
+            else if ($row) {
+                return '3;1';
+            }
+            
+            Db::query(
+                'INSERT INTO `boards_votes` SET '.
+                '`board_id` = '.(int)$data['id'].', '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`direction` = "'.Db::escape_tags($data['status']).'" '
+            );
+            if ($data['status'] == 'plus') {
+                Db::query('UPDATE `boards` SET `votes` = `votes` + 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
+            }
+            else {
+                Db::query('UPDATE `boards` SET `votes` = `votes` - 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
+            }
+            
+            return '1;1';
+        }
+        else {
+            return '0;'.t('error');
+        }
+    }
+    
     protected function submitBoard($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('error');
+        }
+        
         if ($data['module'] == 'boards') {
             $categoryList = _cfg('boardGames');
             $categoryList[] = 'general';
@@ -137,6 +183,10 @@ class Ajax extends System
     }
     
     protected function verifySummoner($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('error');
+        }
+        
         $row = Db::fetchRow(
             'SELECT `id`, `region`, `summoner_id`, `masteries` FROM `summoners` WHERE '.
             '`id` = '.(int)$data['id'].' AND '.

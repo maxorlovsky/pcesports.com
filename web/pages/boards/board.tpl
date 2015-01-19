@@ -6,10 +6,10 @@
 		if ($row) {
         ?>
         <div class="block-content board">
-            <div class="voting">
-                <div class="arrow top"></div>
-                <div class="count"><?=$row->votes?></div>
-                <div class="arrow bottom"></div>
+            <div class="voting" attr-id="<?=$row->id?>">
+                <div class="arrow top <?=($row->direction=='plus'?'voted':null)?>"></div>
+                <div class="count" id="board_vote_<?=$row->id?>"><?=$row->votes?></div>
+                <div class="arrow bottom <?=($row->direction=='minus'?'voted':null)?>"></div>
             </div>
             <a class="category" href="<?=_cfg('href')?>/boards/<?=$row->id?>">
                 <? if ($row->category != 'general') { ?>
@@ -27,6 +27,14 @@
                 </div>
                 <div class="text">
                     <?=$this->parseText($row->text)?>
+                </div>
+                <div class="actions">
+                    <? if ($row->user_id == $this->data->user->id) { ?>
+                        <a class="edit" href="#"><?=t('edit')?></a>
+                        <a class="delete" href="#"><?=t('delete')?></a>
+                    <? } else { ?>
+                        <a class="report" href="#"><?=t('report')?></a>
+                    <? } ?>
                 </div>
                 <div class="actions">
                     <!--<a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$row->id?>"><?=$row->comments?> <?=t('comments')?></a>-->
@@ -96,6 +104,7 @@
                             </span>
                             <span class="comment-time">- <?=$v->interval?></span>
                         </div>
+                        
                         <div class="clear"></div>
                     </div>
                 <?

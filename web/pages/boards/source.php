@@ -23,11 +23,11 @@ class boards extends System
         $additionalSelect = '';
         $additionalSql = '';
         if ($this->logged_in) {
-            $additionalSelect .= ', `bv`.`user_id` AS `active`';
+            $additionalSelect .= ', `bv`.`direction`';
             $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
         }
         
-		$this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
+		$this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
 			'FROM `boards` AS `b` '.
             $additionalSql.
             'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
@@ -51,11 +51,11 @@ class boards extends System
         $additionalSelect = '';
         $additionalSql = '';
         if ($this->logged_in) {
-            $additionalSelect .= ', `bv`.`user_id` AS `active`';
+            $additionalSelect .= ', `bv`.`direction`';
             $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
         }
         
-        $row = Db::fetchRow('SELECT `b`.`id`, `b`.`title`, `b`.`text`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
+        $row = Db::fetchRow('SELECT `b`.`id`, `b`.`title`, `b`.`text`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
 			'FROM `boards` AS `b` '.
 			$additionalSql.
             'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
