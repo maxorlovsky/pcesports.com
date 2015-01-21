@@ -1490,6 +1490,26 @@ footer .games img {
   max-width: 770px;
   overflow-x: auto; }
 
+.user-comments .actions {
+  margin: 5px 0;
+  font-size: 12px; }
+
+.user-comments .actions a {
+  margin-right: 10px; }
+
+.user-comments .actions .edit-text {
+  display: none; }
+
+.user-comments .actions .edit-text textarea {
+  display: block;
+  width: 500px;
+  min-height: 80px;
+  margin-bottom: 10px;
+  border-color: #333;
+  border-radius: 8px;
+  padding: 3px;
+  outline: 0; }
+
 .user-comments .comment-user {
   color: #111;
   line-height: 30px; }
@@ -2029,6 +2049,11 @@ footer .games img {
 
 .submitBoard .categories div.active {
   border: 3px solid #1697e1; }
+
+.deleted {
+  font-style: italic;
+  color: #444;
+  font-size: 12px; }
 
 /* Landscape phone to portrait tablet */
 /* Galaxy tab */
