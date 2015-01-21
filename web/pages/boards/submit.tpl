@@ -10,14 +10,14 @@
         	<?=t('submit_board_notice')?>
         </div>
         <div class="block-content">
-            <div><input type="text" id="title" placeholder="<?=t('title')?>" /></div>
+            <div><input type="text" id="title" placeholder="<?=t('title')?>" value="<?=($row->title?$row->title:null)?>" /></div>
         </div>
         <div class="block-content">
             <h3>Category</h3>
             <div class="categories">
-                <div attr-category="general" class="active"></div>
+                <div attr-category="general" <?=($row->category=='general'?'class="active"':null)?>"></div>
                 <? foreach(_cfg('boardGames') as $v) { ?>
-                    <div attr-category="<?=$v?>"><img src="<?=_cfg('img')?>/<?=$v?>.png" /></div>
+                    <div attr-category="<?=$v?>" <?=($row->category==$v?'class="active"':null)?>><img src="<?=_cfg('img')?>/<?=$v?>.png" /></div>
                 <? } ?>
             </div>
             <div class="clear"></div>
@@ -38,13 +38,17 @@
                     <div class="clear"></div>
                 </div>
                 <div class="fields">
-                    <textarea name="msg" id="msg" placeholder="<?=t('post_text')?>"></textarea>
+                    <textarea name="msg" id="msg" placeholder="<?=t('post_text')?>"><?=($row->text?$row->text:null)?></textarea>
                 </div>
                 
-                <a href="javascript:void(0);" class="button" id="submitBoard"><?=t('post')?></a>
+                <a href="javascript:void(0);" class="button" id="submitBoard"><?=($row->id?t('edit'):t('post'))?></a>
+                <? if ($row->id) { ?>
+                    <a href="<?=_cfg('href')?>/boards/<?=$row->id?>"><?=t('cancel')?></a>
+                <? } ?>
                 
-                <input type="hidden" id="module" name="module" value="boards" />
-                <input type="hidden" id="category" name="category" value="general" />
+                <input type="hidden" id="boardId" name="boardId" value="<?=($row->id?$row->id:'0')?>" />
+                <input type="hidden" id="module" name="module" value="<?=($row->id?'editBoard':'boards')?>" />
+                <input type="hidden" id="category" name="category" value="<?=($row->category?$row->category:'general')?>" />
                 
             </form>
             

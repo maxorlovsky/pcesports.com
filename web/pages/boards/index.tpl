@@ -14,8 +14,8 @@
 		if ($this->boards) {
         	foreach($this->boards as $v) {
         ?>
-        <div class="block-content board">
-            <div class="voting" attr-id="<?=$v->id?>">
+        <div class="block-content board" attr-id="<?=$v->id?>">
+            <div class="voting">
                 <div class="arrow top <?=($v->direction=='plus'?'voted':null)?>"></div>
                 <div class="count" id="board_vote_<?=$v->id?>"><?=$v->votes?></div>
                 <div class="arrow bottom <?=($v->direction=='minus'?'voted':null)?>"></div>
@@ -29,7 +29,16 @@
                 <a class="title" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->title?></a>
                 <div class="clear"></div>
                 <div class="date-user-box">
-                    <?=t('submitted')?> <?=$v->interval?> <?=t('by')?> 
+                    <?=t('submitted')?> <?=$v->interval?>
+                    <?
+                    if ($v->edited==1 && $v->status != 1) {
+                        echo ' <i>('.t('edited').')</i>';
+                    }
+                    else if ($v->status == 1) {
+                        echo ' <span class="deleted">('.t('deleted').') </span>';
+                    }
+                    ?> 
+                    <?=t('by')?> 
                     <a class="comment-user" href="<?=_cfg('href')?>/member/<?=$v->name?>">
                         <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$v->avatar?>.jpg" /><?=$v->name?>
                     </a>
@@ -37,11 +46,11 @@
                 <div class="actions">
                     <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t('comments')?></a>
                     <!--<a class="share" href="#"><?=t('share')?></a>-->
-                    <? if ($v->user_id == $this->data->user->id) { ?>
-                        <a class="edit" href="#"><?=t('edit')?></a>
-                        <a class="delete" href="#"><?=t('delete')?></a>
-                    <? } else { ?>
-                        <a class="report" href="#"><?=t('report')?></a>
+                    <? if ($v->user_id == $this->data->user->id && $v->status != 1) { ?>
+                        <a class="edit" href="<?=_cfg('href')?>/boards/submit/<?=$v->id?>"><?=t('edit')?></a>
+                        <a class="delete" href="#" attr-msg="<?=t('sure_to_delete_message')?>"><?=t('delete')?></a>
+                    <? } else if ($v->status != 1) { ?>
+                        <a class="report" href="#" attr-msg="<?=t('sure_to_report_message')?>"><?=t('report')?></a>
                     <? } ?>
                 </div>
             </div>

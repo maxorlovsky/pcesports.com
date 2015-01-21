@@ -5,8 +5,8 @@
         <?
 		if ($row) {
         ?>
-        <div class="block-content board">
-            <div class="voting" attr-id="<?=$row->id?>">
+        <div class="block-content board" attr-id="<?=$row->id?>">
+            <div class="voting">
                 <div class="arrow top <?=($row->direction=='plus'?'voted':null)?>"></div>
                 <div class="count" id="board_vote_<?=$row->id?>"><?=$row->votes?></div>
                 <div class="arrow bottom <?=($row->direction=='minus'?'voted':null)?>"></div>
@@ -20,26 +20,28 @@
                 <a class="title" href="<?=_cfg('href')?>/boards/<?=$row->id?>"><?=Db::escape_tags($row->title)?></a>
                 <div class="clear"></div>
                 <div class="date-user-box">
-                    <?=t('submitted')?> <?=$row->interval?> <?=t('by')?> 
+                    <?=t('submitted')?> <?=$row->interval?> <?=($row->edited==1&&$row->status!=1?' <i>('.t('edited').')</i>':null)?> <?=t('by')?> 
                     <a class="comment-user" href="<?=_cfg('href')?>/member/<?=$row->name?>">
                         <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$row->avatar?>.jpg" /><?=$row->name?>
                     </a>
                 </div>
                 <div class="text">
-                    <?=$this->parseText($row->text)?>
+                    <?
+                    if ($row->status != 1) {
+                        echo $this->parseText($row->text);
+                    }
+                    else {
+                        echo '<span class="deleted">'.t('deleted').'</span>';
+                    }
+                    ?>
                 </div>
                 <div class="actions">
-                    <? if ($row->user_id == $this->data->user->id) { ?>
-                        <a class="edit" href="#"><?=t('edit')?></a>
-                        <a class="delete" href="#"><?=t('delete')?></a>
-                    <? } else { ?>
-                        <a class="report" href="#"><?=t('report')?></a>
+                    <? if ($row->user_id == $this->data->user->id && $row->status != 1) { ?>
+                        <a class="edit" href="<?=_cfg('href')?>/boards/submit/<?=$row->id?>"><?=t('edit')?></a>
+                        <a class="delete" href="#" attr-msg="<?=t('sure_to_delete_message')?>"><?=t('delete')?></a>
+                    <? } else if ($row->status != 1) { ?>
+                        <a class="report" href="#" attr-msg="<?=t('sure_to_report_message')?>"><?=t('report')?></a>
                     <? } ?>
-                </div>
-                <div class="actions">
-                    <!--<a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$row->id?>"><?=$row->comments?> <?=t('comments')?></a>-->
-                    <!--<a class="share" href="#"><?=t('share')?></a>-->
-                    <!--<a class="report" href="#"><?=t('report')?></a>-->
                 </div>
                 <div class="share-box">
                     <div class="addthis_sharing_toolbox"></div>
@@ -55,7 +57,7 @@
         <div class="block-divider"></div>
         
         <div class="comments">
-        	<h2><?=t('post_submit')?></h2>
+        	<h2><?=t('leave_comment')?></h2>
             
             <form class="leave-comment">
                 <? if ($this->logged_in) { ?>
@@ -88,24 +90,50 @@
                 if ($this->comments) {
                     foreach($this->comments as $v) {
                 ?>
-                    <div class="master">
+                    <div class="master" attr-id="<?=$v->id?>">
                         <!--<div class="voting">
                             <div class="arrow top"></div>
                             <div class="count"><?=$v->votes?></div>
                             <div class="arrow bottom"></div>
                         </div>-->
                         <div class="body">
-                            <p><?=$v->text?></p>
+                            <p>
+                            <?
+                            if ($v->status != 1) {
+                                echo $this->parseText($v->text);
+                            }
+                            else {
+                                echo '<span class="deleted">'.t('deleted').'</span>';
+                            }
+                            ?>
+                            </p>
                             <span class="comment-user">
                                 <a href="<?=_cfg('href')?>/member/<?=$v->name?>">
                                     <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$v->avatar?>.jpg" />
                                     <?=$v->name?>
                                 </a>
                             </span>
-                            <span class="comment-time">- <?=$v->interval?></span>
+                            <span class="comment-time">- <?=$v->interval?></span> 
+                            <span class="deleted edited <?=($v->edited==0||$v->status==1?'hidden':null)?>">(<?=t('edited')?>)</span>
                         </div>
-                        
                         <div class="clear"></div>
+                        
+                        <div class="actions">
+                            <? if ($v->user_id == $this->data->user->id && $v->status != 1) { ?>
+                                <a class="edit" href="javascript:void(0);"><?=t('edit')?></a>
+                                <a class="delete" href="#" attr-msg="<?=t('sure_to_delete_message')?>"><?=t('delete')?></a>
+                                
+                                <div class="edit-text">
+                                    <textarea><?=$v->text?></textarea>
+                                    <div id="error"><p></p></div>
+                                    <a href="javascript:void(0);" class="button" id="editComment"><?=t('edit')?></a>
+                                    <a href="javascript:void(0);" id="closeEditComment"><?=t('cancel')?></a>
+                                </div>
+                                
+                            <? } else if ($v->status != 1) { ?>
+                                <a class="report" href="#" attr-msg="<?=t('sure_to_report_message')?>"><?=t('report')?></a>
+                            <? } ?>
+                        </div>
                     </div>
                 <?
                     }

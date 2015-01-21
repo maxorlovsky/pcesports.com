@@ -27,11 +27,10 @@ class boards extends System
             $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
         }
         
-		$this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
+		$this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
 			'FROM `boards` AS `b` '.
             $additionalSql.
             'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
-			'WHERE (`status` = 0 OR `status` = 2) '.
 			'ORDER BY `activity` DESC '.
 			'LIMIT '.(int)$this->pages->start.', '.(int)$this->pages->countPerPage
 		);
@@ -55,14 +54,14 @@ class boards extends System
             $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
         }
         
-        $row = Db::fetchRow('SELECT `b`.`id`, `b`.`title`, `b`.`text`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
+        $row = Db::fetchRow('SELECT `b`.`id`, `b`.`title`, `b`.`text`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
 			'FROM `boards` AS `b` '.
 			$additionalSql.
             'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
-			'WHERE (`status` = 0 OR `status` = 2) '.
-            'AND `b`.`id` = '.(int)$_GET['val2'].' '.
+            'WHERE `b`.`id` = '.(int)$_GET['val2'].' '.
 			'LIMIT 1'
 		);
+        
         if (!$row) {
             go(_cfg('href').'/boards');
         }
@@ -71,11 +70,10 @@ class boards extends System
         $dbDate = new DateTime($row->added);
         $row->interval = $this->getAboutTime($currDate->diff($dbDate));
         
-		$this->comments = Db::fetchRows('SELECT `bc`.`id`, `bc`.`answer_to_id`, `bc`.`text`, `bc`.`added`, `bc`.`votes`, `u`.`name`, `u`.`avatar` '.
+		$this->comments = Db::fetchRows('SELECT `bc`.`id`, `bc`.`user_id`, `bc`.`answer_to_id`, `bc`.`text`, `bc`.`added`, `bc`.`votes`, `bc`.`status`, `u`.`name`, `u`.`avatar`, `bc`.`edited` '.
 			'FROM `boards_comments` AS `bc` '.
             'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
 			'WHERE `bc`.`board_id` = '.(int)$_GET['val2'].' '.
-            'AND (`bc`.`status` = 0 OR `bc`.`status` = 2) '.
 			'ORDER BY `id` DESC '
 		);
         
@@ -83,7 +81,6 @@ class boards extends System
             foreach($this->comments as &$v) {
                 $dbDate = new DateTime($v->added);
                 $v->interval = $this->getAboutTime($currDate->diff($dbDate));
-                $v->text = $this->parseText($v->text);
             }
             unset($v);
         }
@@ -92,6 +89,21 @@ class boards extends System
 	}
     
     public function submitPage() {
+        if (isset($_GET['val3']) && $this->logged_in) {
+            $row = Db::fetchRow(
+                'SELECT * '.
+                'FROM `boards` '.
+                'WHERE `id` = '.(int)$_GET['val3'].' AND '.
+                '`user_id` = '.(int)$this->data->user->id.' AND '.
+                '`status` != 1 '.
+                'LIMIT 1'
+            );
+            
+            if (!$row) {
+                go(_cfg('href').'/boards');
+                exit();
+            }
+        }
         include_once _cfg('pages').'/'.get_class().'/submit.tpl';
     }
 	

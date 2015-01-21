@@ -93,9 +93,10 @@ class Ajax extends System
             return '0;'.t('error');
         }
         
+        $categoryList = _cfg('boardGames');
+        $categoryList[] = 'general';
+            
         if ($data['module'] == 'boards') {
-            $categoryList = _cfg('boardGames');
-            $categoryList[] = 'general';
             if (!trim($data['category']) || !in_array($data['category'], $categoryList)) {
                 return '0;'.t('error');
             }
@@ -103,8 +104,8 @@ class Ajax extends System
             if (!trim($data['title'])) {
                 return '0;'.t('title_not_set');
             }
-            else if (strlen(trim($data['title'])) > 200) {
-                return '0;'.str_replace('%num%', 200, t('title_must_be_less'));
+            else if (strlen(trim($data['title'])) > 50) {
+                return '0;'.str_replace('%num%', 50, t('title_must_be_less'));
             }
             
             if (!trim($data['text'])) {
@@ -129,6 +130,42 @@ class Ajax extends System
             $id = Db::lastId();
             
             return '1;'._cfg('href').'/boards/'.$id;
+        }
+        else if ($data['module'] == 'editBoard') {
+            if (!$data['id'] || !trim($data['category']) || !in_array($data['category'], $categoryList)) {
+                return '0;'.t('error');
+            }
+            
+            if (!trim($data['title'])) {
+                return '0;'.t('title_not_set');
+            }
+            else if (strlen(trim($data['title'])) > 50) {
+                return '0;'.str_replace('%num%', 50, t('title_must_be_less'));
+            }
+            
+            if (!trim($data['text'])) {
+                return '0;'.t('text_not_set');
+            }
+            
+            if ($this->logged_in != 1 || $this->data->user->id == 0) {
+                return '0;'.t('not_logged_in');
+            }
+            
+            $title = Db::escape_tags($data['title']);
+            $text = Db::escape_tags($data['text']);
+            Db::query(
+                'UPDATE `boards` SET '.
+                '`category` = "'.Db::escape_tags($data['category']).'", '.
+                '`title` = "'.$title.'", '.
+                '`text` = "'.$text.'", '.
+                '`edited` = 1 '.
+                'WHERE '.
+                '`user_id` = '.(int)$this->data->user->id.' AND '.
+                '`id` = '.(int)$data['id'].' AND '.
+                '`status` != 1 '
+            );
+            
+            return '1;'._cfg('href').'/boards/'.$data['id'];
         }
         else if ($data['module'] == 'comment') {
             if (!trim($data['text'])) {
@@ -159,10 +196,13 @@ class Ajax extends System
                 '`activity` = '.time().' '.
                 'WHERE `id` = '.(int)$data['id']
             );
+            $id = Db::lastId();
             
             $text = $this->parseText($text);
             
-            $html = '<div class="master">'.
+            $text = str_replace('\n', '', $text);//don't know why it still there
+            
+            $html = '<div class="master" attr-id="'.$id.'">'.
                         '<div class="body">'.
                             '<p>'.$text.'</p>'.
                             '<span class="comment-user">'.
@@ -174,9 +214,42 @@ class Ajax extends System
                             '<span class="comment-time">- 0 '.t('seconds_ago').'</span>'.
                         '</div>'.
                         '<div class="clear"></div>'.
+                        '<div class="actions">'.
+                            '<a class="edit" href="javascript:void(0)">'.t('edit').'</a>'.
+                                '<a class="delete" href="#" attr-msg="'.t('sure_to_delete_message').'">'.t('delete').'</a>'.
+                                '<div class="edit-text">'.
+                                    '<textarea>'.$text.'</textarea>'.
+                                    '<a href="javascript:void(0)" class="button" id="editComment">'.t('edit').'</a>'.
+                                    '<a href="javascript:void(0)" id="closeEditComment">'.t('cancel').'</a>'.
+                                '</div>'.
+                        '</div>'.
                     '</div>';
             
             return '1;'.$html;
+        }
+        else if ($data['module'] == 'delete') {
+            if ($data['type'] == 'board') {
+                Db::query(
+                    'UPDATE `boards` SET '.
+                    '`status` = 1 '.
+                    'WHERE `id` = '.(int)$data['id'].' AND '.
+                    '`user_id` = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1'
+                );
+                return '1;<span class="deleted">'.t('deleted').'</span>';
+            }
+            else if ($data['type'] == 'comment') {
+                Db::query(
+                    'UPDATE `boards_comments` SET '.
+                    '`status` = 1 '.
+                    'WHERE `id` = '.(int)$data['id'].' AND '.
+                    '`user_id` = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1'
+                );
+                return '1;<span class="deleted">'.t('deleted').'</span>';
+            }
+            
+            return '0;'.t('type_not_set');
         }
         
         return '0;'.t('module_not_exist');
@@ -523,6 +596,30 @@ class Ajax extends System
             );
             
             return '1;1';
+        }
+        else if ($data['module'] == 'editBoardComment') {
+            if (!trim($data['text'])) {
+                return '0;'.t('text_not_set');
+            }
+            
+            if (!$data['id']) {
+                return '0;error';
+            }
+            
+            $text = Db::escape_tags($data['text']);
+            Db::query(
+                'UPDATE `boards_comments` SET '.
+                '`text` = "'.$text.'", '.
+                '`edited` = 1 '.
+                'WHERE '.
+                '`id` = '.(int)$data['id'].' AND '.
+                '`user_id` = '.(int)$this->data->user->id.' '.
+                'LIMIT 1'
+            );
+            
+            $text = $this->parseText($text);
+            $text = str_replace('\n', '', $text);//don't know why it still there
+            return '1;'.$text;
         }
         
         return '0;'.t('module_not_exist');

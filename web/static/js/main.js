@@ -1,10 +1,57 @@
+$('.user-comments').on('click', '.edit', function() {
+    var element = $(this).closest('.actions').find('.edit-text');
+    element.stop().slideToggle();
+}).on('click', '#closeEditComment', function() {
+    var element = $(this).closest('.actions').find('.edit-text');
+    element.stop().slideUp();
+}).on('click', '.delete', function() {
+    if(confirm($(this).attr('attr-msg'))) {
+		PC.deleteBoardComment($(this));
+	}
+    
+    return false;
+}).on('click', '.report', function() {
+    if(confirm($(this).attr('attr-msg'))) {
+		
+	}
+    
+    return false;
+}).on('click', '#editComment', function() {
+    PC.editComment($(this));
+});
+
+$('.board').on('click', '.delete', function() {
+    var parent = $(this).closest('.board');
+    var id = parent.attr('attr-id');
+    
+    if(confirm($(this).attr('attr-msg'))) {
+		PC.deleteBoard(id);
+	}
+    
+    return false;
+}).on('click', '.report', function() {
+    var parent = $(this).closest('.board');
+    var id = parent.attr('attr-id');
+    if(confirm($(this).attr('attr-msg'))) {
+		//PC.reportBoard(id);
+	}
+    return false;
+});
+
+$('.confirm').on('click', function() {
+	if(confirm($(this).attr('attr-msg'))) {
+		location.href = $(this).attr('href');
+	}
+	return false;
+});
+
 $('.board .voting').on('click', '.arrow', function() {
     if (g.logged_in === 0) {
         PC.openPopup('login-window');
         return false;
     }
     
-    var id = parseInt($(this).parent().attr('attr-id'));
+    var id = parseInt($(this).closest('.board').attr('attr-id'));
     if ($(this).hasClass('top')) {
         PC.boardVote('plus', id);
     }
@@ -235,6 +282,68 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    deleteBoardComment: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'submitBoard',
+                module: 'delete',
+                type: 'comment',
+                id: parseInt(element.closest('.master').attr('attr-id'))
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                element.removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    element.closest('.master').find('.body .edited').hide();
+                    element.closest('.master').find('.actions').remove();
+                    element.closest('.master').find('.body p').html(answer[1]);
+                }
+                
+                return false;
+            }
+        };
+        this.ajax(query);
+    },
+    deleteBoard: function(id) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'submitBoard',
+                module: 'delete',
+                type: 'board',
+                id: id
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    if ($('.board .thread .text').length > 0) {
+                        $('.board .thread .text').html(answer[1]);
+                    }
+                }
+                else {
+                    alert(answer[1]);
+                }
+            }
+        };
+        this.ajax(query);
+    },
     boardVote: function(status, id) {
         if (this.formInProgress == 1) {
             return false;
@@ -307,6 +416,7 @@ var PC = {
                 
                 if (answer[0] == 1) {
                     $('.leave-comment #msg').val('');
+                    console.log(answer[1]);
                     $('.user-comments').prepend(answer[1]);
                 }
                 else {
@@ -334,7 +444,8 @@ var PC = {
                 module: $('.submitBoard #module').val(),
                 title: $('.submitBoard #title').val(),
                 text: $('.submitBoard #msg').val(),
-                category: $('.submitBoard #category').val()
+                category: $('.submitBoard #category').val(),
+                id: $('.submitBoard #boardId').val()
             },
             success: function(data) {
                 PC.formInProgress = 0;
@@ -645,6 +756,43 @@ var PC = {
             },
             success: function(data) {
                 $('.user-comments').html(data);
+            }
+        };
+        this.ajax(query);
+    },
+    editComment: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        element.addClass('alpha');
+        element.closest('.master').find('.edit-text #error').hide();
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'comment',
+                module: 'editBoardComment',
+                id: parseInt(element.closest('.master').attr('attr-id')),
+                text: element.closest('.master').find('.edit-text textarea').val()
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                element.removeClass('alpha');
+                answer = data.split(';');
+                
+                if (answer[0] == 1) {
+                    element.closest('.master').find('#closeEditComment').trigger('click');
+                    element.closest('.master').find('.body p').html(answer[1]);
+                    element.closest('.master').find('.body .edited').show();
+                }
+                else {
+                    element.closest('.master').find('.edit-text #error p').html(answer[1]);
+                    element.closest('.master').find('.edit-text #error').slideDown();
+                }
+                
+                return false;
             }
         };
         this.ajax(query);
