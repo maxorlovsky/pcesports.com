@@ -1156,6 +1156,13 @@ class Ajax extends System
         if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
             return '0;Server error!';
         }
+        
+        if (!$post['agree']) {
+    		$err['agree'] = '0;'.t('must_agree_with_rules');
+    	}
+        else {
+            $suc['agree'] = '1;'.t('approved');
+        }
     	
     	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
     		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
@@ -1194,47 +1201,58 @@ class Ajax extends System
 		
 		$players = array();
 		$checkForSame = array();
+        $summonersNames = array();
 		for($i=1;$i<=7;++$i) {
             $post['mem'.$i] = trim($post['mem'.$i]);
             
 			if (!$post['mem'.$i] && $i < 6) {
 				$err['mem'.$i] = '0;'.t('field_empty');    
 			}
+            else if (in_array($post['mem'.$i], $checkForSame)) {
+                $err['mem'.$i] = '0;'.t('same_summoner');
+            }
 			else if ($post['mem'.$i]) {
-				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
-				/*$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
-					'LEFT JOIN `participants` AS `t` ON `p`.`participant_id` = `t`.`id` '.
-					'WHERE '.
-					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
-					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
-					'`p`.`game` = "lol" AND '.
-					'`t`.`approved` = 1 AND '.
-                    '`t`.`server` = "'.$server.'" AND '.
-					'`t`.`deleted` = 0'
-				);*/
-                
-				if ($response == 404 || !$response) {
-					$err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
-				}
-				else if ($response && $response->summonerLevel != 30) {
-					$err['mem'.$i] = '0;'.t('summoner_low_lvl');
-				}
-				else if (in_array($post['mem'.$i], $checkForSame)) {
-					$err['mem'.$i] = '0;'.t('same_summoner');
-				}
-				/*else if ($row) {
-					$err['mem'.$i] = '0;'.t('summoner_already_registered');
-				}*/
-				else {
-					$players[$i]['id'] = $response->id;
-					$players[$i]['name'] = $response->name;
-					$suc['mem'.$i] = '1;'.t('approved');
-				}
-				
-				$checkForSame[] = $post['mem'.$i];
+                $summonersNames[] = rawurlencode(htmlspecialchars($post['mem'.$i]));
+                $checkForSame[] = $post['mem'.$i];
 			}
 		}
-    	
+        
+        if (!$err) {
+    		$summonersNames = implode(',', $summonersNames);
+            $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
+            for($i=1;$i<=7;++$i) {
+                $name = strtolower($post['mem'.$i]);
+                if (isset($response->$name) && $response->$name) {
+                    if ($response->$name->summonerLevel != 30) {
+                        $err['mem'.$i] = '0;'.t('summoner_low_lvl');
+                    }
+                    else {
+                        $players[$i]['id'] = $response->$name->id;
+                        $players[$i]['name'] = $response->$name->name;
+                        $suc['mem'.$i] = '1;'.t('approved');
+                    }
+                }
+                else if ($post['mem'.$i] && !isset($response->$name)) {
+                    $err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
+                }
+            }
+        }
+        
+        $addStream = 0;
+        if ($post['stream']) {
+            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
+            
+            $twitch = $this->runTwitchAPI($post['stream']);
+            
+            if (!$twitch) {
+                $err['stream'] = '0;'.t('channel_not_found');
+            }
+            else {
+                $addStream = 1;
+                $suc['stream'] = '1;'.t('approved');
+            }
+        }
+        
     	if ($err) {
     		$answer['ok'] = 0;
     		if ($suc) {
@@ -1274,6 +1292,17 @@ class Ajax extends System
 					' `player_id` = "'.(int)$v['id'].'"'
 				);
 			}
+            
+            if ($addStream == 1) {
+                Db::query(
+                    'INSERT INTO `streams` SET '.
+                    '`user_id`  = '.(int)$this->data->user->id.', '.
+                    '`name` = "'.Db::escape($post['stream']).'", '.
+                    '`game` = "lolcup", '.
+                    '`languages` = "en", '.
+                    '`approved` = 1 '
+                );
+            }
     		
     		$text = Template::getMailTemplate('reg-lol-team');
     	

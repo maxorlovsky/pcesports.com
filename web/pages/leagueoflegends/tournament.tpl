@@ -37,6 +37,12 @@
 						<div id="mem<?=$i?>-msg" class="message hidden"></div>
 						<div class="clear"></div>
 					<? } ?>
+                    <input type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
+					<div id="stream-msg" class="message hidden"></div>
+					<div class="clear"></div>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
+					<div id="agree-msg" class="message hidden"></div>
+                    <div class="clear"></div>
                     <input type="hidden" name="server" value="<?=$this->server?>" />
 				</form>
 				<div class="clear"></div>
