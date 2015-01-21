@@ -211,7 +211,7 @@ class Ajax extends System
                                     $this->data->user->name.
                                 '</a>'.
                             '</span>'.
-                            '<span class="comment-time">- 0 '.t('seconds_ago').'</span>'.
+                            '<span class="comment-time">- 0 '.t('seconds_ago').'</span> '.
                             '<span class="deleted edited hidden">('.t('edited').')</span>'.
                         '</div>'.
                         '<div class="clear"></div>'.
