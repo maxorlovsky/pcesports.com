@@ -299,16 +299,13 @@ var PC = {
             },
             success: function(data) {
                 PC.formInProgress = 0;
-                element.removeClass('alpha');
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
                     element.closest('.master').find('.body .edited').hide();
-                    element.closest('.master').find('.actions').remove();
                     element.closest('.master').find('.body p').html(answer[1]);
+                    element.closest('.master').find('.actions').remove();
                 }
-                
-                return false;
             }
         };
         this.ajax(query);

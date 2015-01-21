@@ -13,7 +13,7 @@
             <div><input type="text" id="title" placeholder="<?=t('title')?>" value="<?=($row->title?$row->title:null)?>" /></div>
         </div>
         <div class="block-content">
-            <h3>Category</h3>
+            <h3><?=t('category')?></h3>
             <div class="categories">
                 <div attr-category="general" <?=($row->category=='general'?'class="active"':null)?>"></div>
                 <? foreach(_cfg('boardGames') as $v) { ?>

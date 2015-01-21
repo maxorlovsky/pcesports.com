@@ -73,7 +73,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="fields">
-                    <textarea name="msg" id="msg" placeholder="Leave a comment"></textarea>
+                    <textarea name="msg" id="msg" placeholder="<?=t('reply_text')?>"></textarea>
                 </div>
                 
                 <a href="javascript:void(0);" class="button" id="submitBoardComment"><?=t('post')?></a>

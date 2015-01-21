@@ -189,6 +189,7 @@ class Ajax extends System
                 '`text` = "'.$text.'", '.
                 '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
             );
+            $id = Db::lastId();
             
             Db::query(
                 'UPDATE `boards` SET '.
@@ -196,7 +197,6 @@ class Ajax extends System
                 '`activity` = '.time().' '.
                 'WHERE `id` = '.(int)$data['id']
             );
-            $id = Db::lastId();
             
             $text = $this->parseText($text);
             
