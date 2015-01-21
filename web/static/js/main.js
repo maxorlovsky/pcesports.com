@@ -99,7 +99,7 @@ $('.formbut').on('click', function() {
     });
 });
 
-if ($('.ad-holder').height() == 0) {
+if ($('.ad-holder').height() === 0) {
     $('.ad-blocked').show();
 }
 
@@ -153,12 +153,12 @@ $('.languages a').on('click', function() {
 });
 
 $(document).on('scroll', function() {
-	if (parseInt($(document).scrollTop()) != 0 && $('#toTop').is(':hidden')) {
+	if (parseInt($(document).scrollTop()) !== 0 && $('#toTop').is(':hidden')) {
 		$('#toTop').fadeIn('slow', function() {
 			$('#toTop').css('transition', '.3s');
 		});
 	}
-	else if (parseInt($(document).scrollTop()) == 0) {
+	else if (parseInt($(document).scrollTop()) === 0) {
 		$('#toTop').css('transition', '0');
 		$('#toTop').fadeOut('fast');
 	}
@@ -382,7 +382,7 @@ var PC = {
                 }
                 else {
                     $('.summoner-verification #error p').html(answer[1]);
-                    $('.summoner-verification #error').slideDown('fast')
+                    $('.summoner-verification #error').slideDown('fast');
                 }
                 
                 return false;
@@ -796,7 +796,7 @@ var PC = {
                 plusNum = 3;
                 console.log(end);
                 console.log(text.length);
-                if (end == text.length && end != 0) {
+                if (end == text.length && end !== 0) {
                     addBreak = '\r';
                     plusNum = 4;
                 }
@@ -999,7 +999,7 @@ var PC = {
                 }
 				$('#fightStatus').html(answer[2]);
 			}
-		}
+		};
 		this.ajax(query);
 	},
     social: {
@@ -1073,7 +1073,7 @@ var PC = {
                 success: function(answer) {
                     data = answer.split(';');
                     
-                    if (data[0] == 0) {
+                    if (data[0] === 0) {
                         alert(data[1]);
                         PC.social.windowSocial.close();
                         return false;
@@ -1156,7 +1156,7 @@ var PC = {
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
-        }
+        };
         this.ajax(query);
     },
     editPlayerLan: function(element) {
@@ -1203,7 +1203,7 @@ var PC = {
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
-        }
+        };
         this.ajax(query);
     },
     editTeam: function(element) {
@@ -1250,7 +1250,7 @@ var PC = {
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
             }
-        }
+        };
         this.ajax(query);
     },
     addLanPlayer: function() {

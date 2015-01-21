@@ -59,7 +59,12 @@
 <div id="toTop"></div>
 <div id="fader"></div>
 
+<? if (_cfg('env') == 'dev') { ?>
 <script src="<?=_cfg('static')?>/js/main.js"></script>
+<? } else { ?>
+<script src="<?=_cfg('static')?>/js/combined.js"></script>
+<? } ?>
+
 <? if (_cfg('language') == 'ru') { ?>
 <script type="text/javascript" src="//vk.com/js/api/openapi.js?113"></script>
 <? } ?>
