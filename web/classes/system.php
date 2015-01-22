@@ -764,8 +764,7 @@ class System
                     $cronClass->tournamentsOpenReg();
                     $cronClass->finalizeTournament();
                     $cronClass->sendNotifications();
-                    //$cronClass->checkLolGames();
-                    $cronClass->checkDotaGames();
+                    //$cronClass->checkDotaGames();
                     $cronClass->updateStreamers();
                     $cronClass->sqlCleanUp();
                     
