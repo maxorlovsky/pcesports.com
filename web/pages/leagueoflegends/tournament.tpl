@@ -23,21 +23,21 @@
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
-					<input type="text" name="team" placeholder="<?=t('team_name')?>" />
+					<input type="text" name="team" placeholder="<?=t('team_name')?>*" />
 					<div id="team-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
 					<div id="email-msg" class="message hidden"></div>
 					<div class="clear"></div>
-					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)" value="<?=$pickedSummoner?>" />
+					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)*" value="<?=$pickedSummoner?>" />
 					<div id="mem1-msg" class="message hidden"></div>
 					<div class="clear"></div>
 					<? for($i=2;$i<=7;++$i) { ?>
-						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?>" />
+						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" />
 						<div id="mem<?=$i?>-msg" class="message hidden"></div>
 						<div class="clear"></div>
 					<? } ?>
-                    <input type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
+                    <input class="hint" attr-msg="<?=t('stream_tournament_hint_lol')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
 					<div id="stream-msg" class="message hidden"></div>
 					<div class="clear"></div>
                     <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
