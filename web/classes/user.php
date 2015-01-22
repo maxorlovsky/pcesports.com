@@ -239,7 +239,7 @@ class User extends System
             `user_id` = '.(int)$_SESSION['user']['id']
         );
         
-        exit('<script>window.opener.location = '.str_replace('https', 'http', _cfg('href')).'/profile; window.close()</script>');
+        exit('<script>window.opener.location = "'.str_replace('https', 'http', _cfg('href')).'/profile"; window.close()</script>');
         
         return true;
     }
