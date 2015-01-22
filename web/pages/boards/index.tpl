@@ -21,9 +21,7 @@
                 <div class="arrow bottom <?=($v->direction=='minus'?'voted':null)?>"></div>
             </div>
             <a class="category" href="<?=_cfg('href')?>/boards/<?=$v->id?>">
-                <? if ($v->category != 'general') { ?>
                 <img src="<?=_cfg('img').'/'.$v->category?>.png" />
-                <? } ?>
             </a>
             <div class="thread">
                 <a class="title" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->title?></a>

@@ -15,7 +15,7 @@
         <div class="block-content">
             <h3><?=t('category')?></h3>
             <div class="categories">
-                <div attr-category="general" <?=($row->category=='general'?'class="active"':null)?>"></div>
+                <div attr-category="general" <?=($row->category=='general'||!$row->category?'class="active"':null)?>><img src="<?=_cfg('img')?>/general.png" /></div>
                 <? foreach(_cfg('boardGames') as $v) { ?>
                     <div attr-category="<?=$v?>" <?=($row->category==$v?'class="active"':null)?>><img src="<?=_cfg('img')?>/<?=$v?>.png" /></div>
                 <? } ?>
