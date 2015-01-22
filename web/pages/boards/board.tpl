@@ -12,9 +12,7 @@
                 <div class="arrow bottom <?=($row->direction=='minus'?'voted':null)?>"></div>
             </div>
             <a class="category" href="<?=_cfg('href')?>/boards/<?=$row->id?>">
-                <? if ($row->category != 'general') { ?>
                 <img src="<?=_cfg('img').'/'.$row->category?>.png" />
-                <? } ?>
             </a>
             <div class="thread">
                 <a class="title" href="<?=_cfg('href')?>/boards/<?=$row->id?>"><?=Db::escape_tags($row->title)?></a>
