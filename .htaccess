@@ -35,5 +35,6 @@ RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4&val4=$5 [QSA,L]
 RewriteRule ^([a-z]+)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?$ /index.php?language=$1&val1=$2&val2=$3&val3=$4&val4=$5&val5=$6 [QSA,L]
 
-
-    Header set Access-Control-Allow-Origin http(s)?://www.pcesports.com$
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin *
+</IfModule>
