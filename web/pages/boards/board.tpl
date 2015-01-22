@@ -95,7 +95,7 @@
                             <div class="arrow bottom"></div>
                         </div>-->
                         <div class="body">
-                            <p>
+                            <div>
                             <?
                             if ($v->status != 1) {
                                 echo $this->parseText($v->text);
@@ -104,7 +104,7 @@
                                 echo '<span class="deleted">'.t('deleted').'</span>';
                             }
                             ?>
-                            </p>
+                            </div>
                             <span class="comment-user">
                                 <a href="<?=_cfg('href')?>/member/<?=$v->name?>">
                                     <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$v->avatar?>.jpg" />

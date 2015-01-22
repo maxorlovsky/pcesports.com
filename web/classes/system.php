@@ -657,15 +657,37 @@ class System
     
     public function parseText($text) {
         $text = strip_tags($text); //just in case, never know how those fuckers can hack you
-
+        
         $text = str_replace(
             array("\n", "\r"),
             array('<br />', '<br />'),
             $text
         );
-        $text = preg_replace(
-            array('/\*\*(.*?)\*\*/i', '/\*(.*?)\*/i', '/\~~(.*?)\~~/i', '/\[q](.*?)\[\/q]/i', '/\[(.*?)\]\((.*?)\)/i'),
-            array('<b>$1</b>', '<i>$1</i>', '<s>$1</s>', '<blockquote>$1</blockquote>','<a href="$2" target="_blank">$1</a>' ),
+        
+        $search = array(
+            '/\*\*(.*?)\*\*/i',
+            '/\*(.*?)\*/i',
+            '/\~~(.*?)\~~/i',
+            '/\[q](.*?)\[\/q]/i',
+            //'/\[(.+?)\]\((.*?)\)/i'
+        );
+        $replace = array(
+            '<b>$1</b>',
+            '<i>$1</i>',
+            '<s>$1</s>',
+            '<blockquote>$1</blockquote>',
+            //'<a href="$2" target="_blank">$1</a>'
+        );
+        $text = preg_replace($search, $replace, $text);
+        
+        //link regex
+        $text = preg_replace_callback(
+            '~\[(.*?)]\(([^)]+)\)~',
+            function($a) {
+                $urlText = ($a[1]?$a[1]:$a[2]);
+                $urlText = (strlen($urlText)>50?substr($urlText, 0, 47).'...':$urlText);
+                return '<a href="'.$a[2].'" target="_blank" title="'.$a[2].'">'.$urlText.'</a>';
+            },
             $text
         );
         

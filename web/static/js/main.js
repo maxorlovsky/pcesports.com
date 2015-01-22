@@ -289,12 +289,17 @@ var PC = {
         
         this.formInProgress = 1;
         
+        var type = 'comment';
+        if (element.closest('.master').attr('attr-module') == 'newsComment') {
+            type = 'newsComment';
+        }
+        
         var query = {
             type: 'POST',
             data: {
                 ajax: 'submitBoard',
                 module: 'delete',
-                type: 'comment',
+                type: type,
                 id: parseInt(element.closest('.master').attr('attr-id'))
             },
             success: function(data) {
@@ -303,7 +308,7 @@ var PC = {
                 
                 if (answer[0] == 1) {
                     element.closest('.master').find('.body .edited').hide();
-                    element.closest('.master').find('.body p').html(answer[1]);
+                    element.closest('.master').find('.body div').html(answer[1]);
                     element.closest('.master').find('.actions').remove();
                 }
             }
@@ -765,12 +770,16 @@ var PC = {
         this.formInProgress = 1;
         element.addClass('alpha');
         element.closest('.master').find('.edit-text #error').hide();
+        var module = 'editBoardComment';
+        if (element.closest('.master').attr('attr-module') == 'newsComment') {
+            module = 'editNewsComment';
+        }
         
         var query = {
             type: 'POST',
             data: {
                 ajax: 'comment',
-                module: 'editBoardComment',
+                module: module,
                 id: parseInt(element.closest('.master').attr('attr-id')),
                 text: element.closest('.master').find('.edit-text textarea').val()
             },
@@ -781,7 +790,7 @@ var PC = {
                 
                 if (answer[0] == 1) {
                     element.closest('.master').find('#closeEditComment').trigger('click');
-                    element.closest('.master').find('.body p').html(answer[1]);
+                    element.closest('.master').find('.body div').html(answer[1]);
                     element.closest('.master').find('.body .edited').show();
                 }
                 else {

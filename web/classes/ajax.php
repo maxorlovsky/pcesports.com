@@ -204,7 +204,7 @@ class Ajax extends System
             
             $html = '<div class="master" attr-id="'.$id.'">'.
                         '<div class="body">'.
-                            '<p>'.$text.'</p>'.
+                            '<div>'.$text.'</div>'.
                             '<span class="comment-user">'.
                                 '<a href="'._cfg('href').'/member/'.$this->data->user->name.'">'.
                                     '<img class="avatar-block" src="'._cfg('avatars').'/'.$this->data->user->avatar.'.jpg" />'.
@@ -220,6 +220,7 @@ class Ajax extends System
                                 '<a class="delete" href="#" attr-msg="'.t('sure_to_delete_message').'">'.t('delete').'</a>'.
                                 '<div class="edit-text">'.
                                     '<textarea>'.$text.'</textarea>'.
+                                    '<div id="error"><p></p></div>'.
                                     '<a href="javascript:void(0)" class="button" id="editComment">'.t('edit').'</a>'.
                                     '<a href="javascript:void(0)" id="closeEditComment">'.t('cancel').'</a>'.
                                 '</div>'.
@@ -242,6 +243,16 @@ class Ajax extends System
             else if ($data['type'] == 'comment') {
                 Db::query(
                     'UPDATE `boards_comments` SET '.
+                    '`status` = 1 '.
+                    'WHERE `id` = '.(int)$data['id'].' AND '.
+                    '`user_id` = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1'
+                );
+                return '1;<span class="deleted">'.t('deleted').'</span>';
+            }
+            else if ($data['type'] == 'newsComment') {
+                Db::query(
+                    'UPDATE `news_comments` SET '.
                     '`status` = 1 '.
                     'WHERE `id` = '.(int)$data['id'].' AND '.
                     '`user_id` = '.(int)$this->data->user->id.' '.
@@ -541,7 +552,7 @@ class Ajax extends System
     
     protected function getNewsComments($data) {
         $rows = Db::fetchRows(
-            'SELECT `nc`.`text`, `nc`.`added`, `u`.`name`, `u`.`avatar` '.
+            'SELECT `nc`.`id`, `nc`.`text`, `nc`.`added`, `nc`.`edited`, `nc`.`status`, `u`.`id` AS `userId`, `u`.`name`, `u`.`avatar` '.
             'FROM `news_comments` AS `nc` '.
             'LEFT JOIN `users` AS `u` ON `nc`.`user_id` = `u`.`id` '.
             'WHERE `nc`.`news_id` = '.(int)$data['id'].' '.
@@ -557,16 +568,32 @@ class Ajax extends System
                 
                 $text = $this->parseText($v->text);
                 
-                $html .= '<div class="master">'.
-                    '<p>'.$text.'</p>'.
-                    '<span class="comment-user">'.
-                    '<a href="'._cfg('href').'/member/'.$v->name.'">'.
-                    '<img class="avatar-block" src="'._cfg('avatars').'/'.$v->avatar.'.jpg" />'.
-                    $v->name.
-                    '</a>'.
-                    '</span> '.
-                    '<span class="comment-time">- '.$interval.'</span>'.
-                    '</div>';
+                $html .= '<div class="master" attr-id="'.$v->id.'" attr-module="newsComment">'.
+                            '<div class="body">'.
+                                '<div>'.$text.'</div>'.
+                                '<span class="comment-user">'.
+                                    '<a href="'._cfg('href').'/member/'.$v->name.'">'.
+                                        '<img class="avatar-block" src="'._cfg('avatars').'/'.$v->avatar.'.jpg" />'.
+                                        $v->name.
+                                    '</a>'.
+                                '</span> '.
+                                '<span class="comment-time">- '.$interval.'</span> '.
+                                '<span class="deleted edited '.($v->edited!=1?'hidden':null).'">('.t('edited').')</span>'.
+                            '</div>'.
+                            '<div class="clear"></div>';
+                if ($v->userId == $this->data->user->id && $v->status != 1) {
+                    $html .='<div class="actions">'.
+                                '<a class="edit" href="javascript:void(0)">'.t('edit').'</a>'.
+                                    '<a class="delete" href="#" attr-msg="'.t('sure_to_delete_message').'">'.t('delete').'</a>'.
+                                    '<div class="edit-text">'.
+                                        '<textarea>'.$v->text.'</textarea>'.
+                                        '<div id="error"><p></p></div>'.
+                                        '<a href="javascript:void(0)" class="button" id="editComment">'.t('edit').'</a>'.
+                                        '<a href="javascript:void(0)" id="closeEditComment">'.t('cancel').'</a>'.
+                                    '</div>'.
+                            '</div>';
+                }
+                $html .= '</div>';
             }
         }
         
@@ -619,7 +646,31 @@ class Ajax extends System
             );
             
             $text = $this->parseText($text);
-            $text = str_replace('\n', '', $text);//don't know why it still there
+            $text = str_replace('\n', '<br />', $text);//don't know why it still there
+            return '1;'.$text;
+        }
+        else if ($data['module'] == 'editNewsComment') {
+            if (!trim($data['text'])) {
+                return '0;'.t('text_not_set');
+            }
+            
+            if (!$data['id']) {
+                return '0;error';
+            }
+            
+            $text = Db::escape_tags($data['text']);
+            Db::query(
+                'UPDATE `news_comments` SET '.
+                '`text` = "'.$text.'", '.
+                '`edited` = 1 '.
+                'WHERE '.
+                '`id` = '.(int)$data['id'].' AND '.
+                '`user_id` = '.(int)$this->data->user->id.' '.
+                'LIMIT 1'
+            );
+            
+            $text = $this->parseText($text);
+            $text = str_replace('\n', '<br />', $text);//don't know why it still there
             return '1;'.$text;
         }
         

@@ -2015,6 +2015,9 @@ footer .games img {
 .boards .user-comments .body {
   float: left; }
 
+.master .body > div {
+  margin: 5px 0; }
+
 .submitBoard #title {
   font-size: 22px;
   width: 720px;
