@@ -818,7 +818,8 @@ class System
                         exit();
                     }
                     
-                    header('Location: '._cfg('href').'/profile');
+                    header('Location: '.$_SERVER['HTTP_REFERER']);
+                    //header('Location: '._cfg('href').'/profile');
                 }
                 else if ($_GET['val1'] == 'logout') {
                     User::logout();
