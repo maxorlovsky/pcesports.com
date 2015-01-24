@@ -1,3 +1,17 @@
+# 24.01.2015
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES
+('smite-current-number-na', '1', 'Название/номер турнира (Smite NA)', 'text', 6),
+('tournament-auto-smite-na', '1', 'Авто продвижение (Smite NA)', 'checkbox', 6),
+('tournament-checkin-smite-na', '0', 'Процесс checkin (Smite NA)', 'checkbox', 6),
+('tournament-reg-smite-na', '1', 'Регистрация на турнир (Smite NA)', 'checkbox', 6);
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES
+('smite-current-number-eu', '1', 'Название/номер турнира (Smite EU)', 'text', 7),
+('tournament-auto-smite-eu', '1', 'Авто продвижение (Smite EU)', 'checkbox', 7),
+('tournament-checkin-smite-eu', '0', 'Процесс checkin (Smite EU)', 'checkbox', 7),
+('tournament-reg-smite-eu', '1', 'Регистрация на турнир (Smite EU)', 'checkbox', 7);
+ALTER TABLE `tournaments` CHANGE `server` `server` ENUM('euw','eune','na','eu','') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `streams` CHANGE `game` `game` ENUM('lol','hs','dota','smite','cs','other','lolcup','smitecup') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
 # 22.01.2015
 ALTER TABLE `news_comments` ADD `edited` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' ;
 ALTER TABLE `news_comments` ADD `status` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '0 - ok, 1 - deleted, 2 - reported' AFTER `added`;

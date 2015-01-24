@@ -8,11 +8,19 @@ class smite extends System
 	public $participants;
     public $participantsCount = 0;
     public $pickedTournament;
+    public $server;
 	
 	public function __construct($params = array()) {
 		parent::__construct();
-
-		$this->currentTournament = $this->data->settings['smite-current-number'];
+        
+        if (in_array($_GET['val2'], array('na', 'eu'))) {
+            $this->server = $_GET['val2'];
+        }
+        else {
+            $this->server = 'eu';
+        }
+		
+		$this->currentTournament = $this->data->settings['smite-current-number-'.$this->server];
 	}
     
     public function teamEditPage() {
@@ -23,7 +31,7 @@ class smite extends System
             'FROM `players` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "smite" AND '.
+            '`game` = "lol" AND '.
             '`participant_id` = '.(int)$_SESSION['participant']->id.' '.
             'ORDER BY `player_num` '
         );
@@ -41,14 +49,6 @@ class smite extends System
 			go(_cfg('href').'/leagueoflegends/'.$this->server);
 		}
         
-        $row = Db::fetchRow('SELECT `id` FROM `players` WHERE '.
-            '`tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "smite" AND '.
-            '`approved` = 1 AND '.
-            '`deleted` = 0 AND '.
-            '`ended` = 0 '
-        );
-
         include_once _cfg('pages').'/'.get_class().'/fight.tpl';
     }
 	
@@ -58,7 +58,7 @@ class smite extends System
 		
 		if (isset($_GET['val4']) && $_GET['val4'] == 'exit') {
 			unset($_SESSION['participant']);
-			go(_cfg('href').'/leagueoflegends/'.$this->server);
+			go(_cfg('href').'/smite/'.$this->server);
 		}
 		
 		if (isset($_GET['val4']) && $_GET['val4'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
@@ -70,7 +70,7 @@ class smite extends System
 		}
 		
 		if (!isset($_GET['val5']) && !$_GET['val5'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/'.$this->server);
+			go(_cfg('href').'/smite/'.$this->server);
 		}
 		
 		if (isset($_SESSION['participant'])) {
@@ -165,13 +165,6 @@ class smite extends System
             '`name` = "'.Db::escape($row->name).'" '
         );
 		
-		$this->sendMail('info@pcesports.com',
-		'Team added. Pentaclick eSports.',
-		'Team was added!!!<br />
-    	Date: '.date('d/m/Y H:i:s').'<br />
-		Team: <b>'.$row->name.'</b><br>
-    	IP: '.$_SERVER['REMOTE_ADDR']);
-		
 		return true;
 	}
 	
@@ -248,7 +241,10 @@ class smite extends System
                     $startTime = strtotime($v->dates_start.' '.$v->time);
                     $regTime = strtotime($v->dates_registration.' '.$v->time);
                     
-                    if (time() > $startTime) {
+                    if ($this->data->settings['tournament-checkin-smite-'.$this->server] == 1) {
+                        $v->status = 'Check in';
+                    }
+                    else if (time() > $startTime) {
                         $v->status = t('live');
                     }
                     else if (time() < $startTime && time() > $regTime) {
@@ -285,7 +281,7 @@ class smite extends System
         
             $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
                 'FROM `participants` '.
-                'WHERE `game` = "smite" AND '.
+                'WHERE `game` = "lol" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
                 '`place` != 0 '.
                 'ORDER BY `tournament_id`, `place`'
@@ -306,32 +302,32 @@ class smite extends System
 	
 	public static function getSeo() {
 		$seo = new stdClass();
-		$seo->title = 'smite 2 tournaments';
+		$seo->title = 'Smite tournaments';
         
         $u = new self;
         
-        if (is_numeric($_GET['val2'])) {
-            $seo->title = 'smite 2 tournament '.strtoupper($u->server).'#'.$_GET['val3'];
+        if (is_numeric($_GET['val3'])) {
+            $seo->title = 'Smite tournament '.strtoupper($u->server).'#'.$_GET['val3'];
             $seo->ogDesc = $seo->title;
         }
         
-        $seo->ogImg = _cfg('img').'/footer-smite-logo.png';
+        $seo->ogImg = _cfg('img').'/smite-logo-big.png';
 		
 		return $seo;
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val3']) && $_GET['val3'] == 'fight') {
+		if (isset($_GET['val4']) && $_GET['val4'] == 'fight') {
 			$this->fightPage();
 		}
-        else if (isset($_GET['val3']) && $_GET['val3'] == 'team') {
+        else if (isset($_GET['val4']) && $_GET['val4'] == 'team') {
 			$this->teamEditPage();
 		}
-		else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
+		else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
 			$this->participantPage();
 		}
-        else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
-			$this->getTournamentData($_GET['val2']);
+        else if (isset($_GET['val3']) && is_numeric($_GET['val3'])) {
+			$this->getTournamentData($_GET['val3']);
 		}
 		else {
 			$this->getTournamentList();
@@ -374,7 +370,7 @@ class smite extends System
         }
         
         Db::query('UPDATE `participants` SET `ended` = 1 '.
-            'WHERE `game` = "smite" AND '.
+            'WHERE `game` = "lol" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
@@ -398,7 +394,7 @@ class smite extends System
     protected function leave() {
         Db::query(
             'UPDATE `participants` SET `deleted` = 1 '.
-            'WHERE `game` = "smite" AND '.
+            'WHERE `game` = "lol" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
@@ -412,13 +408,6 @@ class smite extends System
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
         }
-        
-        $this->sendMail('info@pcesports.com',
-        'Team deleted. Pentaclick eSports.',
-        'Team was deleted!!!<br />
-        Date: '.date('d/m/Y H:i:s').'<br />
-        Team: <b>'.$_SESSION['participant']->name.'</b><br>
-        IP: '.$_SERVER['REMOTE_ADDR']);
         
         unset($_SESSION['participant']);
         

@@ -13,12 +13,14 @@
         </td>
     </tr>
     <tr>
-        <td width="20%"><b>Server<br /><small>Only for LoL</small></td>
+        <td width="20%"><b>Server<br /><small>Only for LoL and Smite</small></td>
         <td>
             <select id="server">
                 <option value="">none</option>
                 <option value="euw" <?=($module->editData->server=='euw'?'selected="selected"':null)?>>EUW</option>
                 <option value="eune" <?=($module->editData->server=='eune'?'selected="selected"':null)?>>EUNE</option>
+                <option value="na" <?=($module->editData->server=='na'?'selected="selected"':null)?>>NA</option>
+                <option value="eu" <?=($module->editData->server=='eu'?'selected="selected"':null)?>>EU</option>
             </select>
         </td>
     </tr>

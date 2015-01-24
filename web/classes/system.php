@@ -23,23 +23,7 @@ class System
         
         $this->fetchParams();
         
-        /*$params['module'] = 'createsession';
-        $smiteApiData = $this->runSmiteAPI($params);
-        
-        $params = array(
-            'module'    => 'getplayer',
-            'command'   => 'Zyrhoes',
-            'session'   => $smiteApiData['session_id'],
-        );
-        $this->runSmiteAPI($params);
-        
-        $params = array(
-            'module'    => 'getplayer',
-            'command'   => 'Maxtream',
-            'session'   => $smiteApiData['session_id'],
-        );
-        $this->runSmiteAPI($params);
-        
+        /*
         $params = array(
             'module'    => 'getmatchhistory',
             'command'   => 'Maxtream',
@@ -55,9 +39,7 @@ class System
             );
             $this->runSmiteAPI($params);
             exit();
-        }
-        
-        exit();*/
+        }*/
     }
     
     public function run() {
@@ -348,9 +330,6 @@ class System
     	);
     
     	$response = json_decode($response, true);
-        dump($http_status);
-        echo $apiUrl;
-        dump($response);
         
     	return $response;
     }

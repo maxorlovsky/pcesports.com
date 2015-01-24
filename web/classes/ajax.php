@@ -7,6 +7,7 @@ class Ajax extends System
     	'registerInHS',
         'registerInLanHS',
 		'registerInLoL',
+        'registerInSmite',
         'editInLOL',
         'editInLanHS',
         'chat',
@@ -1364,6 +1365,190 @@ class Ajax extends System
     		);
     	
     		$this->sendMail($post['email'], 'Pentaclick League of Legends tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
+    }
+    
+    protected function registerInSmite($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+        
+        if (in_array($post['server'], array('na', 'eu'))) {
+            $server = $post['server'];
+        }
+        else {
+            $server = 'eu';
+        }
+        
+        if ($this->data->settings['tournament-reg-smite-'.$server] != 1) {
+            return '0;Server error!';
+        }
+        
+        if (!$post['agree']) {
+    		$err['agree'] = '0;'.t('must_agree_with_rules');
+    	}
+        else {
+            $suc['agree'] = '1;'.t('approved');
+        }
+    	
+    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
+    		'`tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].' AND '.
+    		'`name` = "'.Db::escape($post['team']).'" AND '.
+            '`server` = "'.Db::escape($server).'" AND '.
+    		'`game` = "smite" AND '.
+    		'`approved` = 1 AND '.
+    		'`deleted` = 0'
+    	);
+
+    	if (!$post['team']) {
+    		$err['team'] = '0;'.t('field_empty');
+    	}
+		else if (strlen($post['team']) < 4) {
+			$err['team'] = '0;'.t('team_name_small');
+		}
+		else if (strlen($post['team']) > 60) {
+			$err['team'] = '0;'.t('team_name_big');
+		}
+        else if ($row) {
+            $err['team'] = '0;'.t('team_name_taken');
+        }
+		else {
+			$suc['team'] = '1;'.t('approved');
+		}
+    	
+    	if (!$post['email']) {
+    		$err['email'] = '0;'.t('field_empty');
+    	}
+    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+    		$err['email'] = '0;'.t('email_invalid');
+    	}
+    	else {
+    		$suc['email'] = '1;'.t('approved');
+    	}
+		
+		$players = array();
+		$checkForSame = array();
+        $summonersNames = array();
+		for($i=1;$i<=7;++$i) {
+            $post['mem'.$i] = trim($post['mem'.$i]);
+            
+			if (!$post['mem'.$i] && $i < 6) {
+				$err['mem'.$i] = '0;'.t('field_empty');    
+			}
+            else if (in_array($post['mem'.$i], $checkForSame)) {
+                $err['mem'.$i] = '0;'.t('same_player_nickname');
+            }
+			else if ($post['mem'.$i]) {
+                $summonersNames[$i] = rawurlencode(htmlspecialchars($post['mem'.$i]));
+                $checkForSame[] = $post['mem'.$i];
+			}
+		}
+        
+        if (!$err) {
+            //creating session
+            $params['module'] = 'createsession';
+            $smiteApiData = $this->runSmiteAPI($params);
+            
+            for($i=1;$i<=7;++$i) {
+                //looping players
+                $params = array(
+                    'module'    => 'getplayer',
+                    'command'   => $summonersNames[$i],
+                    'session'   => $smiteApiData['session_id'],
+                );
+                $response = $this->runSmiteAPI($params);
+                if (!$response && $summonersNames[$i]) {
+                    $err['mem'.$i] = '0;'.t('player_not_found');
+                }
+                else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
+                    $err['mem'.$i] = '0;'.t('player_low_lvl');
+                }
+                else if ($summonersNames[$i]) {
+                    $players[$i]['id'] = $response[0]['Id'];
+                    $players[$i]['name'] = $response[0]['Name'];
+                    $suc['mem'.$i] = '1;'.t('approved');
+                }
+                
+            }
+        }
+        
+        $addStream = 0;
+        if ($post['stream']) {
+            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
+            
+            $twitch = $this->runTwitchAPI($post['stream']);
+            
+            if (!$twitch) {
+                $err['stream'] = '0;'.t('channel_not_found');
+            }
+            else {
+                $addStream = 1;
+                $suc['stream'] = '1;'.t('approved');
+            }
+        }
+        
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+    	
+    		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
+    		Db::query('INSERT INTO `participants` SET '.
+	    		'`game` = "smite", '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`server` = "'.$server.'", '.
+	    		'`tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].', '.
+	    		'`timestamp` = NOW(), '.
+	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`name` = "'.Db::escape($post['team']).'", '.
+	    		'`email` = "'.Db::escape($post['email']).'", '.
+	    		'`contact_info` = "'.Db::escape($team).'", '.
+                '`cpt_player_id` = '.(int)$players[1]['id'].', '.
+	    		'`link` = "'.$code.'"'
+    		);
+    	
+    		$teamId = Db::lastId();
+			
+			foreach($players as $k => $v) {
+				Db::query(
+					'INSERT INTO `players` SET '.
+					' `game` = "smite", '.
+					' `tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].', '.
+					' `participant_id` = '.(int)$teamId.', '.
+					' `name` = "'.Db::escape($v['name']).'", '.
+					' `player_num` = "'.(int)$k.'", '.
+					' `player_id` = "'.(int)$v['id'].'"'
+				);
+			}
+            
+            if ($addStream == 1) {
+                Db::query(
+                    'INSERT INTO `streams` SET '.
+                    '`user_id`  = '.(int)$this->data->user->id.', '.
+                    '`name` = "'.Db::escape($post['stream']).'", '.
+                    '`game` = "smitecup", '.
+                    '`languages` = "en", '.
+                    '`approved` = 1 '
+                );
+            }
+    		
+    		$text = Template::getMailTemplate('reg-smite-team');
+    	
+    		$text = str_replace(
+    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+    			array($post['team'], $teamId, $code, _cfg('href').'/smite/'.$server, _cfg('site')),
+    			$text
+    		);
+    	
+    		$this->sendMail($post['email'], 'Pentaclick Smite tournament participation', $text);
     	}
     	 
     	return json_encode($answer);
