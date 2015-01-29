@@ -792,13 +792,18 @@ class System
                     
                     $social = new Social();
                     $answer = $social->Verify($_GET['val2']);
+                    
                     if ($answer === false) {
                         header('Location: '._cfg('href').'/profile/error');
                         exit();
                     }
                     
-                    header('Location: '.$_SERVER['HTTP_REFERER']);
-                    //header('Location: '._cfg('href').'/profile');
+                    if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
+                        header('Location: '.$_SERVER['HTTP_REFERER']);
+                    }
+                    else {
+                        header('Location: '._cfg('href').'/profile');
+                    }
                 }
                 else if ($_GET['val1'] == 'logout') {
                     User::logout();

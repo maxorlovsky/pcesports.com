@@ -538,27 +538,33 @@ class Social
 	
 		return $url;
 	}
-	
+    
 	private function twComplete($data = array()) {
-	
 		$user = $_POST;
 		$user['social'] = 'tw';
 	
 		if(empty($data)) {
-			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['tw'])) return array('error'=>'auth error ('.__LINE__.')');
+			if(!isset($_SESSION['social']) || !isset($_SESSION['social']['tw'])) {
+                $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
+                return false;
+            }
 			$data = $_SESSION['social']['tw'];
 		}
 	
-		$user['name'] = $data['screen_name'] ? $data['screen_name'] : 'Anonymous';
+		$user['name'] = $data['name'] ? $data['name'] : 'Anonymous';
+        if(isset($data['email'])) {
+			$user['email'] = $data['email'];
+		}
 		$user['social_uid'] = $data['id'];
-	
-		$user = User::socialLogin($user);
-        if($user===false) {
-            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+        
+        $user = User::socialLogin($user);
+		if($user !== true) {
+			$_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            
             return false;
         }
 	
-		return $user;
+		return true;
 	}
 	
 	function twVerify() {
@@ -649,7 +655,7 @@ class Social
 		);
 
 		$f = $this->oAuthRequest($cfg);
-	
+        
 		$f = json_decode($f,1);
         if(!isset($f['id'])) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
