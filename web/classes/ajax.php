@@ -1566,52 +1566,50 @@ class Ajax extends System
             $server = 'euw';
         }
         
-        /*if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
-            return '0;Server error!';
-        }*/
-		
-		$players = array();
-		$checkForSame = array();
-		for($i=1;$i<=7;++$i) {
-            if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
-                $err['mem'.$i] = '0;'.t('tournament_in_progress');
+        if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
+            $err['mem1'] = '0;'.t('tournament_in_progress');
+        }
+        else {
+            $players = array();
+            $checkForSame = array();
+            $summonersNames = array();
+            for($i=1;$i<=7;++$i) {
+                $post['mem'.$i] = trim($post['mem'.$i]);
+                
+                if (!$post['mem'.$i] && $i < 6) {
+                    $err['mem'.$i] = '0;'.t('field_empty');    
+                }
+                else if (in_array($post['mem'.$i], $checkForSame)) {
+                    $err['mem'.$i] = '0;'.t('same_summoner');
+                }
+                else if ($post['mem'.$i]) {
+                    $summonersNames[] = rawurlencode(htmlspecialchars($post['mem'.$i]));
+                    $checkForSame[] = $post['mem'.$i];
+                }
             }
-			else if (!$post['mem'.$i] && $i < 6) {
-				$err['mem'.$i] = '0;'.t('field_empty');
-			}
-			else if ($post['mem'.$i]) {
-				$response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($post['mem'.$i])), $server);
-				$row = Db::fetchRow('SELECT `p`.* FROM `players` AS `p` '.
-					'LEFT JOIN `participants` AS `t` ON `p`.`participant_id` = `t`.`id` '.
-					'WHERE '.
-					'`p`.`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
-					'`p`.`name` = "'.Db::escape($post['mem'.$i]).'" AND '.
-					'`p`.`game` = "lol" AND '.
-					'`t`.`approved` = 1 AND '.
-					'`t`.`deleted` = 0'
-				);
-				if (!$response) {
-					$err['mem'.$i] = '0;'.t('summoner_not_found_euw');
-				}
-				else if ($response && $response->summonerLevel != 30) {
-					$err['mem'.$i] = '0;'.t('summoner_low_lvl');
-				}
-				else if (in_array($post['mem'.$i], $checkForSame)) {
-					$err['mem'.$i] = '0;'.t('same_summoner');
-				}
-				else if ($row && $row->name != $post['mem'.$i]) {
-					$err['mem'.$i] = '0;'.t('summoner_already_registered');
-				}
-				else {
-					$players[$i]['id'] = $response->id;
-					$players[$i]['name'] = $response->name;
-					$suc['mem'.$i] = '1;'.t('approved');
-				}
-				
-				$checkForSame[] = $post['mem'.$i];
-			}
-		}
-    	
+        }
+        
+        if (!$err) {
+            $summonersNames = implode(',', $summonersNames);
+            $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
+            for($i=1;$i<=7;++$i) {
+                $name = strtolower($post['mem'.$i]);
+                if (isset($response->$name) && $response->$name) {
+                    if ($response->$name->summonerLevel != 30) {
+                        $err['mem'.$i] = '0;'.t('summoner_low_lvl');
+                    }
+                    else {
+                        $players[$i]['id'] = $response->$name->id;
+                        $players[$i]['name'] = $response->$name->name;
+                        $suc['mem'.$i] = '1;'.t('approved');
+                    }
+                }
+                else if ($post['mem'.$i] && !isset($response->$name)) {
+                    $err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
+                }
+            }
+        }
+    
     	if ($err) {
     		$answer['ok'] = 0;
     		if ($suc) {
