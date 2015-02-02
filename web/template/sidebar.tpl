@@ -35,6 +35,22 @@
                 <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
+			<? } else if ($_SESSION['participant']->game == 'smite') { ?>
+            <ul class="panel-links">
+                <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+                <? if ($this->data->settings['tournament-start-smite-na'] != 1 && $this->data->settings['tournament-start-smite-eu'] != 1) {?>
+                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
+                <? } ?>
+				<? if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {?>
+                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
+				<? } else { ?>
+                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
+				<? } ?>
+                <? if (!$this->logged_in) { ?>
+                <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
+                <? } ?>
+            </ul>
 			<? } else { ?>
 			<ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>

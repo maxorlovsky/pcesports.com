@@ -48,7 +48,7 @@
         </div>
 
         <div class="block-content tournament-rules">
-			<?=t('dota_tournament_rules')?>
+			<?=t('smite_tournament_rules')?>
         </div>
     </div>
 </div>

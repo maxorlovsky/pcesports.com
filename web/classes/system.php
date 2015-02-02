@@ -163,13 +163,26 @@ class System
                 $time = strtotime($v->dates_start.' '.$v->time);
                 $statusString = str_replace(' ', '_', strtolower('start'));
             }
+
+            if ($v->game == 'hslan') {
+                $game = 'Hearthstone League S1 - ';
+            }
+            else if ($v->game == 'lol') {
+                $game = 'League of Legends';
+            }
+            else if ($v->game == 'smite') {
+                $game = 'Smite';
+            }
+            else {
+                $game = $v->game;
+            }
             
             $this->serverTimes[] = array(
                 'time' 	=> $time,
                 'id'	=> $v->name,
                 'server'=> $v->server,
                 'game'  => $v->game,
-                'name' 	=> ($v->game=='lol'?'League of Legends':'Hearthstone League S1 - '),
+                'name' 	=> $game,
                 'status'=> $statusString,
             );
         }
