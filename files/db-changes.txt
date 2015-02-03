@@ -1,3 +1,12 @@
+# 03.02.2015
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES
+('tournament-start-smite-eu', '0', 'Старт турнира (Smite EU)', 'checkbox', 6),
+('tournament-start-smite-na', '0', 'Старт турнира (Smite NA)', 'checkbox', 7);
+ALTER TABLE `tournaments` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `tournaments` CHANGE `server` `server` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `players` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `notifications` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
 # 24.01.2015
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES
 ('smite-current-number-na', '1', 'Название/номер турнира (Smite NA)', 'text', 6),

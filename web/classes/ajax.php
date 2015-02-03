@@ -873,7 +873,7 @@ class Ajax extends System
         );
         
         if ($playersRow) {
-            $enemyRow = Db::fetchRow('SELECT `name`, `online`, `server` '.
+            $enemyRow = Db::fetchRow('SELECT `id`, `name`, `online`, `server` '.
                 'FROM `participants` '.
                 'WHERE '.
                 '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
@@ -906,6 +906,19 @@ class Ajax extends System
 					);
 					$code = 'pvpnet://lol/customgame/joinorcreate/map11/pick6/team5/specALL/';
 					$code .= base64_encode(json_encode($array));
+                }
+                else if ($_SESSION['participant']->game == 'smite') {
+                    $rows = Db::fetchRows(
+                        'SELECT `name` FROM `players` '.
+                        'WHERE `game` = "smite" AND '.
+                        '`participant_id` = '.(int)$enemyRow->id.' '.
+                        'ORDER BY `player_num` DESC '
+                    );
+                    
+                    $code = '';
+                    foreach($rows as $v) {
+                        $code .= $v->name."\n";
+                    }
                 }
 
                 return '1;'.$enemyRow->name.';'.$status.';'.$code;
