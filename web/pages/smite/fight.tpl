@@ -1,4 +1,4 @@
-<section class="container page lol">
+<section class="container page lol smite">
 
 <div class="left-containers">
     <? if ($_SESSION['participant']->checked_in != 1) { ?>
@@ -10,9 +10,9 @@
         <div class="block-content">
             <p><?=t('check_in_will_apear_in')?></p>
             
-            <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {?>
+            <? if ($this->data->settings['tournament-checkin-smite-'.$this->server] == 1) {?>
             <div class="check-in-holder">
-                <div class="button" id="checkInLol"><?=t('check_in')?></div>
+                <div class="button" id="checkInSmite"><?=t('check_in')?></div>
             </div>
             <? } ?>
         </div>

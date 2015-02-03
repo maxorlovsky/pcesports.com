@@ -26,6 +26,6 @@
 
 <script>
 $('#edit-team').on('click', function() {
-    PC.editTeam($(this));
+    PC.editSmiteTeam($(this));
 });
 </script>

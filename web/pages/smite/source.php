@@ -25,13 +25,13 @@ class smite extends System
     
     public function teamEditPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/'.$this->server);
+			go(_cfg('href').'/smite/'.$this->server);
 		}
         $rows = Db::fetchRows('SELECT * '.
             'FROM `players` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "lol" AND '.
+            '`game` = "smite" AND '.
             '`participant_id` = '.(int)$_SESSION['participant']->id.' '.
             'ORDER BY `player_num` '
         );
@@ -46,7 +46,7 @@ class smite extends System
     
     public function fightPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/'.$this->server);
+			go(_cfg('href').'/smite/'.$this->server);
 		}
         
         include_once _cfg('pages').'/'.get_class().'/fight.tpl';
@@ -281,7 +281,7 @@ class smite extends System
         
             $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
                 'FROM `participants` '.
-                'WHERE `game` = "lol" AND '.
+                'WHERE `game` = "smite" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
                 '`place` != 0 '.
                 'ORDER BY `tournament_id`, `place`'
@@ -344,7 +344,7 @@ class smite extends System
         );
         
         if (!$row) {
-            go(_cfg('href').'/leagueoflegends/'.$this->server);
+            go(_cfg('href').'/smite/'.$this->server);
         }
         
         if ($row->player1_id == $_SESSION['participant']->challonge_id) {
@@ -363,14 +363,14 @@ class smite extends System
             'match[winner_id]' => $winner,
         );
         if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-smite'.$this->server.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
         }
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
         }
         
         Db::query('UPDATE `participants` SET `ended` = 1 '.
-            'WHERE `game` = "lol" AND '.
+            'WHERE `game` = "smite" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
@@ -388,13 +388,13 @@ class smite extends System
         
         unset($_SESSION['participant']);
         
-        go(_cfg('href').'/leagueoflegends/'.$this->server);
+        go(_cfg('href').'/smite/'.$this->server);
     }
     
     protected function leave() {
         Db::query(
             'UPDATE `participants` SET `deleted` = 1 '.
-            'WHERE `game` = "lol" AND '.
+            'WHERE `game` = "smite" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
@@ -403,7 +403,7 @@ class smite extends System
             '_method' => 'delete',
         );
         if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-smite'.$this->server.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
         }
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
@@ -411,6 +411,6 @@ class smite extends System
         
         unset($_SESSION['participant']);
         
-        go(_cfg('href').'/leagueoflegends/'.$this->server);
+        go(_cfg('href').'/smite/'.$this->server);
     }
 }

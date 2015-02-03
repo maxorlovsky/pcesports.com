@@ -7,6 +7,7 @@ class Ajax extends System
     	'registerInHS',
         'registerInLanHS',
 		'registerInLoL',
+        'editInSmite',
         'registerInSmite',
         'editInLOL',
         'editInLanHS',
@@ -372,6 +373,69 @@ class Ajax extends System
         }
         
         return '1;'.json_encode($summoner);
+    }
+    
+    protected function checkInSmite() {
+        if (!$_SESSION['participant']) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $server = $_SESSION['participant']->server;
+        $currentTournament = (int)$this->data->settings['smite-current-number-'.$server];
+        
+        if ($this->data->settings['tournament-checkin-smite-'.$server] != 1) {
+            return '0;Check in is not in progress';
+        }
+        
+        //Generating other IDs for different environment
+		if (_cfg('env') == 'prod') {
+			$participant_id = $_SESSION['participant']->id + 100000;
+		}
+		else {
+			$participant_id = $_SESSION['participant']->id;
+		}
+        
+        $apiArray = array(
+			'participant_id' => $participant_id,
+			'participant[name]' => $_SESSION['participant']->name,
+		);
+		
+		//Adding team to Challonge bracket
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-smite'.$server.$currentTournament.'/participants.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        }
+		
+		//Registering ID, because Challonge idiots not giving an answer with ID
+        if (_cfg('env') == 'prod') {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-smite'.$server.$currentTournament.'/participants.json');
+        }
+        else {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        }
+        
+		array_reverse($answer, true);
+		
+		foreach($answer as $f) {
+			if ($f->participant->name == $_SESSION['participant']->name) {
+				Db::query('UPDATE `participants` '.
+					'SET `challonge_id` = '.(int)$f->participant->id.', '.
+                    '`checked_in` = 1 '.
+					'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+					'AND `game` = "smite" '.
+					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
+                    'AND `approved` = 1 '
+				);
+                
+                $_SESSION['participant']->checked_in = 1;
+                
+				break;
+			}
+		}
+        
+        return '1;1';
     }
     
     protected function checkInLOL() {
@@ -1351,7 +1415,7 @@ class Ajax extends System
                     '`user_id`  = '.(int)$this->data->user->id.', '.
                     '`name` = "'.Db::escape($post['stream']).'", '.
                     '`game` = "lolcup", '.
-                    '`languages` = "en", '.
+                    '`languages` = "both", '.
                     '`approved` = 1 '
                 );
             }
@@ -1365,6 +1429,109 @@ class Ajax extends System
     		);
     	
     		$this->sendMail($post['email'], 'Pentaclick League of Legends tournament participation', $text);
+    	}
+    	 
+    	return json_encode($answer);
+    }
+    
+    protected function editInSmite($data) {
+    	$err = array();
+    	$suc = array();
+    	parse_str($data['form'], $post);
+        
+        if (in_array($post['server'], array('na', 'eu'))) {
+            $server = $post['server'];
+        }
+        else {
+            $server = 'eu';
+        }
+        
+        if ($this->data->settings['tournament-start-smite-'.$server] == 1) {
+            $err['mem1'] = '0;'.t('tournament_in_progress');
+        }
+        else {
+            $players = array();
+            $checkForSame = array();
+            $summonersNames = array();
+            for($i=1;$i<=7;++$i) {
+                $post['mem'.$i] = trim($post['mem'.$i]);
+                
+                if (!$post['mem'.$i] && $i < 6) {
+                    $err['mem'.$i] = '0;'.t('field_empty');    
+                }
+                else if (in_array($post['mem'.$i], $checkForSame)) {
+                    $err['mem'.$i] = '0;'.t('same_player_nickname');
+                }
+                else if ($post['mem'.$i]) {
+                    $summonersNames[$i] = rawurlencode(htmlspecialchars($post['mem'.$i]));
+                    $checkForSame[] = $post['mem'.$i];
+                }
+            }
+        }
+        
+        if (!$err) {
+            //creating session
+            $params['module'] = 'createsession';
+            $smiteApiData = $this->runSmiteAPI($params);
+            
+            for($i=1;$i<=7;++$i) {
+                //looping players
+                $params = array(
+                    'module'    => 'getplayer',
+                    'command'   => $summonersNames[$i],
+                    'session'   => $smiteApiData['session_id'],
+                );
+                $response = $this->runSmiteAPI($params);
+                if (!$response && $summonersNames[$i]) {
+                    $err['mem'.$i] = '0;'.t('player_not_found');
+                }
+                else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
+                    $err['mem'.$i] = '0;'.t('player_low_lvl');
+                }
+                else if ($summonersNames[$i]) {
+                    $players[$i]['id'] = $response[0]['Id'];
+                    $players[$i]['name'] = $response[0]['Name'];
+                    $suc['mem'.$i] = '1;'.t('approved');
+                }
+                
+            }
+        }
+        
+    	if ($err) {
+    		$answer['ok'] = 0;
+    		if ($suc) {
+    			$err = array_merge($err, $suc);
+    		}
+    		$answer['err'] = $err;
+    	}
+    	else {
+    		$answer['ok'] = 1;
+    		$answer['err'] = $suc;
+            
+            Db::query('UPDATE `participants` SET '.
+                '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
+                'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
+                '`game` = "smite" AND '.
+                '`tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].' '
+            );
+            
+            Db::query('DELETE FROM `players` '.
+                'WHERE `participant_id` = '.(int)$_SESSION['participant']->id.' AND '.
+                '`game` = "smite" AND '.
+                '`tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].' '
+            );
+            
+            foreach($players as $k => $v) {
+				Db::query(
+					'INSERT INTO `players` SET '.
+					' `game` = "smite", '.
+					' `tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].', '.
+					' `participant_id` = '.(int)$_SESSION['participant']->id.', '.
+					' `name` = "'.Db::escape($v['name']).'", '.
+					' `player_num` = "'.(int)$k.'", '.
+					' `player_id` = "'.(int)$v['id'].'"'
+				);
+			}
     	}
     	 
     	return json_encode($answer);

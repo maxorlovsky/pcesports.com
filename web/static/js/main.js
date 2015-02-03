@@ -83,8 +83,12 @@ $('#addSummoner').on('click', function() {
     PC.addSummoner();
 });
 
+$('#checkInSmite').on('click', function() {
+    PC.checkIn('smite');
+});
+
 $('#checkInLol').on('click', function() {
-    PC.checkIn();
+    PC.checkIn('lol');
 });
 
 $('.submitBoard .categories').on('click', 'div', function() {
@@ -588,7 +592,7 @@ var PC = {
         };
         this.ajax(query);
     },
-    checkIn: function() {
+    checkIn: function(game) {
         if (this.formInProgress == 1) {
             return false;
         }
@@ -596,10 +600,21 @@ var PC = {
         $(this).addClass('alpha');
         this.formInProgress = 1;
         
+        if (game == 'lol') {
+            command = 'checkInLOL';
+        }
+        else if (game == 'smite') {
+            command = 'checkInSmite';
+        }
+        else {
+            alert('No game');
+            return false;
+        }
+        
         var query = {
             type: 'POST',
             data: {
-                ajax: 'checkInLOL'
+                ajax: command
             },
             success: function(data) {
                 PC.formInProgress = 0;
@@ -1306,6 +1321,53 @@ var PC = {
             },
             error: function() {
                 $('#add-team').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                alert('Something went wrong... Contact admin at info@pcesports.com');
+            }
+        };
+        this.ajax(query);
+    },
+    editSmiteTeam: function(element) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('#da-form .message').hide();
+        $('#da-form .message').removeClass('error success');
+        $('.team-edit-completed').hide();
+        element.addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ajax: 'editInSmite',
+                form: $('#da-form').serialize()
+            },
+            success: function(answer) {
+                $('#edit-team').removeClass('alpha');
+                PC.formInProgress = 0;
+                
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('#'+k+'-msg').html(answ[1]);
+                    $('#'+k+'-msg').show();
+                    if (answ[0] == 1) {
+                        $('#'+k+'-msg').addClass('success');
+                    }
+                    else {
+                        $('#'+k+'-msg').addClass('error');
+                    }
+                });
+                
+                if (answer.ok == 1) {
+                    $('.team-edit-completed').slideDown(1000);
+                }
+            },
+            error: function() {
+                $('#edit-team').removeClass('alpha');
                 PC.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');
