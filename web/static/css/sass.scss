@@ -2136,6 +2136,29 @@ footer .games img {
     font-size: 12px;
 }
 
+.donate-bar {
+    width: 200px;
+    margin: 10px auto;
+    text-align: center;
+}
+.donate-bar > p {
+    display: block;
+}
+.donate-bar > p span {
+    font-weight: bold;
+}
+.donate-bar > div {
+    border: 1px solid #1697e1;
+    border-radius: 15px;
+    height: 10px;
+}
+.donate-bar > div span {
+    display: block;
+    background-color: #1697e1;
+    border-radius: 15px;
+    height: 10px;
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
 }

@@ -1,3 +1,15 @@
+$('.donate-bar').ready(function() {
+    var current = $('.donate-bar').attr('attr-current');
+    var goal = $('.donate-bar').attr('attr-goal');
+    
+    $('.donate-bar').find('#gathered').html(current);
+    $('.donate-bar').find('#goal').html(goal);
+    
+    percentage = ((current / goal) * 100) * 2;
+    
+    $('.donate-bar div span').css('width', percentage);
+});
+
 $('.user-comments').on('click', '.edit', function() {
     var element = $(this).closest('.actions').find('.edit-text');
     element.stop().slideToggle();

@@ -153,12 +153,14 @@
     <? if (_cfg('language') == 'en') { ?>
     <div class="block donate">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Help Pentaclick Project</h1>
+            <h1 class="bordered">Donations</h1>
         </div>
 		<div class="block-content">
-            <p>If you like what we do</p>
-            <p>If you want to help us grow even further and provide better quality content</p>
-            <p>Then you are welcome to donate</p>
+            <p>Pentaclick in need of new good PC that will be able to stream games in good quality.</p>
+            <div class="donate-bar" attr-goal="900" attr-current="16.10">
+                <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
+                <div><span></span></div>
+            </div>
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
 		</div>
     </div>
