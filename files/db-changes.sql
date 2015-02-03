@@ -6,6 +6,7 @@ ALTER TABLE `tournaments` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 CO
 ALTER TABLE `tournaments` CHANGE `server` `server` VARCHAR(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 ALTER TABLE `players` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 ALTER TABLE `notifications` CHANGE `game` `game` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('tournamentEUNE', '4', CURRENT_TIMESTAMP), ('tournamentSmite', '4', CURRENT_TIMESTAMP), ('tournamentEUW', '4', CURRENT_TIMESTAMP);
 
 # 24.01.2015
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES

@@ -1202,7 +1202,7 @@ footer .games img {
 .fb-comments-count {
   display: inline; }
 
-#tournamentCode {
+.opponent-info textarea {
   width: 625px;
   height: 70px;
   float: right; }
