@@ -1,3 +1,7 @@
+$('.donate').on('click', '.arrow-down', function() {
+    $('.donate').find('.list').slideToggle();
+});
+
 $('.donate-bar').ready(function() {
     var current = $('.donate-bar').attr('attr-current');
     var goal = $('.donate-bar').attr('attr-goal');

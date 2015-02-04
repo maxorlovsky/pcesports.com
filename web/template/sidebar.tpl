@@ -133,21 +133,6 @@
         <?
         }
         ?>
-        <?/*<a href="http://www.twitch.tv/pentaclick_tv" class="block-content streamer featured">
-            <img class="game-logo" src="http://clgaming.net/interface/img/game/lol.png" />
-            <label class="streamer-name">Pentaclick TV</label>
-            <span class="viewers">200 viewers</span>
-        </a>
-        <a href="#" class="block-content streamer">
-            <img class="game-logo" src="http://clgaming.net/interface/img/game/d3.png" />
-            <label class="streamer-name">Aven</label>
-            <span class="viewers">9 viewers</span>
-        </a>
-        <a href="#" class="block-content streamer">
-            <img class="game-logo" src="http://clgaming.net/interface/img/game/sc2.png" />
-            <label class="streamer-name">Demo</label>
-            <span class="viewers">0 viewers</span>
-        </a>*/?>
     </div>
     
     <? if (_cfg('language') == 'en') { ?>
@@ -156,13 +141,21 @@
             <h1 class="bordered">Donations</h1>
         </div>
 		<div class="block-content">
-            <p>Pentaclick in need of new good PC that will be able to stream games in good quality.</p>
+            <p>Help us broadcast in better quality for you! Goal to get good streaming PC. <a href="http://pcpartpicker.com/p/GfLfkL" target="_blank">Rough PC specification.</a></p>
             <div class="donate-bar" attr-goal="900" attr-current="16.10">
                 <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
 		</div>
+        <div class="separator"></div>
+        <div class="arrow-down hint" attr-msg="Show donators"></div>
+        <div class="list">
+            <ul>
+                <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
     </div>
 	<? } ?>
     

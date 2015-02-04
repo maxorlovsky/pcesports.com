@@ -23,7 +23,8 @@
     <? if (_cfg('env') == 'dev') { ?>
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/slider.css" />
 	<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/highslide.css" />
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/sass.scss" />
+    <!--<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/style.css" />-->
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/sass.css" />
     <? } else { ?>
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css" />
     <? } ?>
