@@ -1707,6 +1707,14 @@ footer .games img {
     background-color: #2878d1;
     transition: .3s;
 }
+.streamers .event {
+    background-color: #ffd739;
+    color: #000;
+}
+.streamers .event:hover {
+    background-color: #e0bd33;
+    transition: .3s;
+}
 
 .add-streamer {
     margin-top: 40px;

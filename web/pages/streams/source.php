@@ -11,14 +11,38 @@ class streams extends System
 	}
 	
 	public function getStreamList() {
+        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+            $eventStreams = Db::fetchRows(
+                'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+                'FROM `streams` '.
+                'WHERE `online` != 0 AND '.
+                '`game` = "lolcup" AND '.
+                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                'ORDER BY `viewers` DESC, `onlineStatus` DESC '
+            );
+        }
+        
         $this->streams = Db::fetchRows(
             'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
             'FROM `streams` '.
             'WHERE `online` != 0 AND '.
             '`approved` = 1 AND '.
+            '`game` != "lolcup" AND '.
             '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
+        
+        if ($eventStreams) {
+            $this->streams = (object)array_merge((array)$eventStreams, (array)$this->streams);
+            
+            foreach($this->streams as &$v) {
+                if ($v->game == 'lolcup') {
+                    $v->game = 'lol';
+                    $v->event = 1;
+                }
+            }
+            unset($v);
+        }
         
         if (isset($_GET['val2']) && $_GET['val2']) {
             $this->pickedStream = (int)$_GET['val2'];

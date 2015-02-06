@@ -189,23 +189,45 @@ class System
         asort($this->serverTimes);
         
         if (_cfg('language') != 'Config not found') {
-            $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
-                'WHERE `online` >= '.(time() - 360).' AND '.
-                '`approved` = 1 AND '.
-                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-                'ORDER BY `featured` DESC, `viewers` DESC '.
-                'LIMIT 5'
-            );
-            if ($rows) {
-                foreach($rows as $v) {
-                    $this->streams[$v->id] = (object)array(
-                        'name' => $v->name,
-                        'display_name' => $v->display_name,
-                        'featured' => $v->featured,
-                        'game' => $v->game,
-                        'viewers' => $v->viewers,
-                        'link' => $v->name,
-                    );
+            if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+                $this->streams = Db::fetchRows(
+                    'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+                    'FROM `streams` '.
+                    'WHERE `online` >= '.(time() - 360).' AND '.
+                    '`game` = "lolcup" AND '.
+                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                    'ORDER BY `viewers` DESC '
+                );
+                
+                if ($this->streams) {
+                    foreach($this->streams as &$v) {
+                        if ($v->game == 'lolcup') {
+                            $v->game = 'lol';
+                            $v->event = 1;
+                        }
+                    }
+                    unset($v);
+                }
+            }
+            else {
+                $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
+                    'WHERE `online` >= '.(time() - 360).' AND '.
+                    '`approved` = 1 AND '.
+                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                    'ORDER BY `featured` DESC, `viewers` DESC '.
+                    'LIMIT 5'
+                );
+                if ($rows) {
+                    foreach($rows as $v) {
+                        $this->streams[$v->id] = (object)array(
+                            'name' => $v->name,
+                            'display_name' => $v->display_name,
+                            'featured' => $v->featured,
+                            'game' => $v->game,
+                            'viewers' => $v->viewers,
+                            'link' => $v->name,
+                        );
+                    }
                 }
             }
         }

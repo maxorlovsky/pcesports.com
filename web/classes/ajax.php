@@ -1195,12 +1195,12 @@ class Ajax extends System
     	
     		$this->sendMail($post['email'], 'Pentaclick Hearthstone League tournament participation', $text);
             
-            $this->sendMail('info@pcesports.com',
+            /*$this->sendMail('info@pcesports.com',
             'Player added. Pentaclick eSports.',
             'Participant was added!!!<br />
             Date: '.date('d/m/Y H:i:s').'<br />
             BattleTag: <b>'.$post['battletag'].'</b><br>
-            IP: '.$_SERVER['REMOTE_ADDR']);
+            IP: '.$_SERVER['REMOTE_ADDR']);*/
     	}
     	 
     	return json_encode($answer);

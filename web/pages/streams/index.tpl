@@ -9,11 +9,11 @@
 		if ($this->streams) {
         	foreach($this->streams as $v) {
         ?>
-            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank" attr-id="<?=$v->id?>">
+            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank" attr-id="<?=$v->id?>">
                 <? if ($v->game != 'other') { ?>
                     <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <? } ?>
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
+                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label> <?=(isset($v->event)&&$v->event==1?'(Tournament stream)':null)?>
                 <span class="viewers"><?=($v->onlineStatus==0?0:$v->viewers)?> <?=t('viewers')?></span>
             </div>
             <div class="block twitch <?=($this->pickedStream!=$v->id?'hidden_info':null)?>" id="stream_<?=$v->id?>">
