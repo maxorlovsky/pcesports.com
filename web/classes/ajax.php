@@ -1350,7 +1350,8 @@ class Ajax extends System
     		$summonersNames = implode(',', $summonersNames);
             $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
             for($i=1;$i<=7;++$i) {
-                $name = strtolower($post['mem'.$i]);
+                $name = str_replace(' ', '', strtolower($post['mem'.$i]));
+                
                 if (isset($response->$name) && $response->$name) {
                     if ($response->$name->summonerLevel != 30) {
                         $err['mem'.$i] = '0;'.t('summoner_low_lvl');
@@ -1773,7 +1774,7 @@ class Ajax extends System
             $summonersNames = implode(',', $summonersNames);
             $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
             for($i=1;$i<=7;++$i) {
-                $name = strtolower($post['mem'.$i]);
+                $name = str_replace(' ', '', strtolower($post['mem'.$i]));
                 if (isset($response->$name) && $response->$name) {
                     if ($response->$name->summonerLevel != 30) {
                         $err['mem'.$i] = '0;'.t('summoner_low_lvl');
