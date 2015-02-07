@@ -63,13 +63,13 @@ class Winners extends System
         foreach($rows as $v) {
             $additionalPrice = '';
         
-            if ($form['server'] == 'euw' && $v->place == 1) {
+            /*if ($form['server'] == 'euw' && $v->place == 1) {
                 $additionalPrice = '<br />'.
                 'There is additional prize that you must receive for winning the 1st place, it is 30€ that will be sent to your paypal account.<br />'.
                 'We consider email as the only reliable resource on which your team was registered, in this case it is '.$v->email.'.'.
                 'So we ask you to respond from it and write down paypal account where should we send your prize money.'.
                 '<br />';
-            }
+            }*/
         
             $text = str_replace(
     			array(
