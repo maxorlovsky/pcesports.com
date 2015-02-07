@@ -11,7 +11,6 @@ class team
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
             '`id` = 132 OR '. //arturs
-            '`id` = 209 OR '. //zanko
             '`id` = 213 OR '. //aven
             '`id` = 126 ' //angel-ada
             
