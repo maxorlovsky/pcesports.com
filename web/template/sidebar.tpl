@@ -141,7 +141,7 @@
             <h1 class="bordered">Donations</h1>
         </div>
 		<div class="block-content">
-            <p>Help us broadcast in better quality for you! Goal to get good streaming PC. <a href="http://pcpartpicker.com/p/GfLfkL" target="_blank">Rough PC specification.</a></p>
+            <p><?=t('donate_text')?></p>
             <div class="donate-bar" attr-goal="900" attr-current="16.10">
                 <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
                 <div><span></span></div>

@@ -18,12 +18,11 @@ class team
         );
         
         $this->team = array(
-            1 => array('avatar' => '', 'name' => '', 'role' => 'Chief Executive Officer', 'contact' => '&nbsp;'),
-            112 => array('avatar' => '', 'name' => '', 'role' => 'Chief Creative Officer', 'contact' => '&nbsp;'),
-            44 => array('avatar' => '', 'name' => '', 'role' => 'Chief Communications Officer', 'contact' => '&nbsp;'),
-            213 => array('avatar' => '', 'name' => '', 'role' => 'Co-founder', 'contact' => '&nbsp;'),
+            1 => array('avatar' => '', 'name' => '', 'role' => 'Pentaclick Developer/Dreamer/Chief', 'contact' => '&nbsp;'),
+            112 => array('avatar' => '', 'name' => '', 'role' => 'Creativity generator', 'contact' => '&nbsp;'),
+            44 => array('avatar' => '', 'name' => '', 'role' => 'Master Manager', 'contact' => '&nbsp;'),
+            213 => array('avatar' => '', 'name' => '', 'role' => 'Co-creator of Pentaclick', 'contact' => '&nbsp;'),
             132 => array('avatar' => '', 'name' => '', 'role' => 'Graphic designer', 'contact' => '&nbsp;'),
-            209 => array('avatar' => '', 'name' => '', 'role' => 'LoL EUNE manager', 'contact' => '&nbsp;'),
             126 => array('avatar' => '', 'name' => '', 'role' => 'Community manager (VK)', 'contact' => '&nbsp;'),
         );
         
