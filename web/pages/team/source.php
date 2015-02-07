@@ -18,7 +18,7 @@ class team
         );
         
         $this->team = array(
-            1 => array('avatar' => '', 'name' => '', 'role' => 'Pentaclick Developer/Dreamer/Chief', 'contact' => '&nbsp;'),
+            1 => array('avatar' => '', 'name' => '', 'role' => 'Pentaclick Creator', 'contact' => '&nbsp;'),
             112 => array('avatar' => '', 'name' => '', 'role' => 'Creativity generator', 'contact' => '&nbsp;'),
             44 => array('avatar' => '', 'name' => '', 'role' => 'Master Manager', 'contact' => '&nbsp;'),
             213 => array('avatar' => '', 'name' => '', 'role' => 'Co-creator of Pentaclick', 'contact' => '&nbsp;'),
