@@ -11,7 +11,7 @@
 			<div id="join-form">
 				<form id="da-form" method="post">
                     <? for($i=1;$i<=7;++$i) { ?>
-					<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?>" value="<?=$players[$i]?>" />
+					<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?>" value="<?=preg_replace('/\[.*?\]/','',$players[$i])?>" />
 					<div id="mem<?=$i?>-msg" class="message hidden"></div>
 					<div class="clear"></div>
                     <? } ?>
