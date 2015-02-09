@@ -513,12 +513,12 @@ class System
         
 		$startTime = microtime(true);
 		
-        if (_cfg('env') == 'dev') {
-            $apiUrl = 'http://';
-        }
-        else {
+        /*if (_cfg('env') == 'dev') {
             $apiUrl = 'https://';
         }
+        else {*/
+            $apiUrl = 'https://';
+        //}
         
 		$apiUrl .= $server.'.api.pvp.net/api/lol';
 		$apiUrl .= $apiAdditionalData;
@@ -587,7 +587,7 @@ class System
 			$response = $response[0];
 		}
 		else {
-			$response = json_decode($response);
+            $response = json_decode($response);
 		}
 		
 		return (object)$response;

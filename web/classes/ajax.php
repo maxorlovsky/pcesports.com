@@ -1,37 +1,6 @@
 <?php
 class Ajax extends System
 {
-    private $allowed_ajax_methods = array(
-		'newsVote',
-    	'submitContactForm',
-    	'registerInHS',
-        'registerInLanHS',
-		'registerInLoL',
-        'editInSmite',
-        'registerInSmite',
-        'editInLOL',
-        'editInLanHS',
-        'chat',
-        'statusCheck',
-        'uploadScreenshot',
-        'socialLogin',
-        'socialDisconnect',
-        'updateProfile',
-        'comment',
-        'getNewsComments',
-        'connectTeamToAccount',
-        'submitStreamer',
-        'removeStreamer',
-        'editStreamer',
-        'checkInLOL',
-        'addSummoner',
-        'removeSummoner',
-        'verifySummoner',
-        'registerInDota',
-        'submitBoard',
-        'boardVote',
-	);
-    
     public function __construct() {
         parent::__construct();
     }
@@ -39,7 +8,7 @@ class Ajax extends System
     public function ajaxRun($data) {
     	$controller = $data['ajax'];
         
-        if ( in_array( $controller, $this->allowed_ajax_methods ) ) {
+        if (method_exists($this, $controller)) {
             echo $this->$controller($data);
             return true;
         }
