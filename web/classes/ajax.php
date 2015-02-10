@@ -1396,6 +1396,7 @@ class Ajax extends System
                 Db::query(
                     'INSERT INTO `streams` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
+                    '`participant_id` = '.(int)$teamId.', '.
                     '`name` = "'.Db::escape($post['stream']).'", '.
                     '`game` = "lolcup", '.
                     '`languages` = "both", '.
@@ -1683,6 +1684,7 @@ class Ajax extends System
                 Db::query(
                     'INSERT INTO `streams` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
+                    '`participant_id` = '.(int)$teamId.', '.
                     '`name` = "'.Db::escape($post['stream']).'", '.
                     '`game` = "smitecup", '.
                     '`languages` = "en", '.

@@ -1,3 +1,6 @@
+# 10.02.2015
+ALTER TABLE `streams` ADD `participant_id` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `user_id`, ADD INDEX (`participant_id`) ;
+
 # 03.02.2015
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES
 ('tournament-start-smite-eu', '0', 'Старт турнира (Smite EU)', 'checkbox', 6),

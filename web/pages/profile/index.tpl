@@ -65,6 +65,7 @@
                     <option value="all"><?=t('all')?></option>
                     <option value="lol"><?=t('only_about_lol')?></option>
                     <option value="hs"><?=t('only_about_hs')?></option>
+                    <option value="smite"><?=t('only_about_smite')?></option>
                     <option value="none"><?=t('turn_off')?></option>
                 </select>
             </div>
