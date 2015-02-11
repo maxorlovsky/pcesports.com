@@ -822,6 +822,16 @@ class System
                     $cronClass = new Cron();
                     $cronClass->checkLolGames('eune');
                 }
+                else if ($_GET['val1'] == 'na' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(300);
+                    $cronClass = new Cron();
+                    $cronClass->checkSmiteGames('na');
+                }
+                else if ($_GET['val1'] == 'eu' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(300);
+                    $cronClass = new Cron();
+                    $cronClass->checkSmiteGames('eu');
+                }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
                     
