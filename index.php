@@ -1,5 +1,5 @@
 <?php
-//CMS TheMages v3.1
+//CMS TheMages v3.12
 //Credits (dev): MaxOrlovsky
 //Credits (design): MaxOrlovsky, AnyaOrlovsky
 
@@ -8,17 +8,17 @@ if (file_exists('../maint_mode')) {
 	die('This site is on maintenance');
 }
 
+if (file_exists('../vendor/autoload.php')) {
+    require_once '../vendor/autoload.php';
+}
+
 session_start();
 global $cfg;
 global $astr;
 
-if (isset($_SERVER['HTTP_CF_CONNECTING_IP']) && $_SERVER['HTTP_CF_CONNECTING_IP']) {
-    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
-}
+$cfg['root'] = str_replace('\\', '/', __DIR__);
 
-if (file_exists('vendor/autoload.php')) {
-    require_once 'vendor/autoload.php';
-}
+date_default_timezone_set('UTC');
 
 require_once dirname(__FILE__).'/cms/inc/config.php';
 require_once $cfg['cmsinc'].'/functions.php';
