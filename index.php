@@ -9,7 +9,6 @@ if (file_exists('../maint_mode')) {
 }
 
 if (file_exists('vendor/autoload.php')) {
-    //s
     require_once 'vendor/autoload.php';
 }
 
