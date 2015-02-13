@@ -1,3 +1,4 @@
+<? if ($module->system->user != 'GGFwoofus') { ?>
 <table class="table">
     <tr><td colspan="2"><center><b><?=strtoupper($module->server)?> settings</b></center></td></tr>
     <tr>
@@ -6,14 +7,15 @@
     </tr>
 </table>
 <br /><br />
+<? } ?>
 <table class="table"><tr><td>
 	<?
 	if ($module->chats) {
 		foreach($module->chats as $v) {
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>" attr-challoge-team1="<?=$v->challongeTeam1?>" attr-challoge-team2="<?=$v->challongeTeam2?>" attr-name-team1="<?=$v->name1?>" attr-name-team2="<?=$v->name2?>">
-        <h4><a href="http://euw.op.gg/summoner/userName=<?=$v->playerName1?>" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="http://euw.op.gg/summoner/userName=<?=$v->playerName2?>" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
-        <div class="finish-match hint" name="Finish match">[End]</div>
+        <h4><a href="https://account.hirezstudios.com/smitegame/stats.aspx?player=<?=$v->playerName1?>" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="https://account.hirezstudios.com/smitegame/stats.aspx?player=<?=$v->playerName2?>" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
+        <? if ($module->system->user != 'GGFwoofus') { ?><div class="finish-match hint" name="Finish match">[End]</div><? } ?>
         <div class="close-chat hint" name="Hide chat">[X]</div>
 		<div class="chat-content"></div>
 		<div class="chat-input">
