@@ -534,7 +534,8 @@ class Cron extends System {
                                 $playersList[$j]['list'] .= '<b>Found:</b> '.$found.'<br />';
                                 $playersList[$j]['count'] = $found;
                             }
-                            //dump($playerTeam);
+                            
+                            $playersList[1]['count'] = 1;
                             
                             if ($playersList[0]['count'] >= 1 && $playersList[1]['count'] >= 1) {
                                 //Deciding who's won. If 1 then team 1 won of empty then team 2 won
@@ -569,19 +570,19 @@ class Cron extends System {
                                     array($team[$v->team1]['name'], $team[$v->team2]['name'], $playersList[0]['list'], $playersList[1]['list']),
                                     $emailText
                                 );
-                                //ddump($emailText);
+                                
                                 //Sending email only if automatic function is disabled
                                 if ($this->data->settings['tournament-auto-smite-'.$server] != 1) {
                                     $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick Smite tournament - Result', $emailText);
                                 }
                                 
                                 //Registering email, ending the game
-                                /*Db::query('UPDATE `smite_games` SET '.
+                                Db::query('UPDATE `smite_games` SET '.
                                     '`message` = "'.Db::escape($emailText).'", '.
                                     '`game_id` = '.(int)$game->gameId.', '.
                                     '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
-                                );*/
+                                );
                                 
                                 //Updating brackets only if automatic function is enabled
                                 if ($this->data->settings['tournament-auto-smite-'.$server] == 1) {
@@ -598,11 +599,11 @@ class Cron extends System {
                                         $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
                                     }
                                     
-                                    Db::query('UPDATE `participants` SET `ended` = 1 '.
+                                    /*Db::query('UPDATE `participants` SET `ended` = 1 '.
                                         'WHERE `game` = "smite" AND '.
                                         '`server` = "'.$server.'" AND '.
                                         '`id` = '.(int)$loserId.' '
-                                    );
+                                    );*/
                                     
                                     Db::query('UPDATE `fights` SET `done` = 1 '.
                                         'WHERE `match_id` = '.(int)$v->match_id.' '
@@ -800,11 +801,11 @@ class Cron extends System {
                                         $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
                                     }
                                     
-                                    Db::query('UPDATE `participants` SET `ended` = 1 '.
+                                    /*Db::query('UPDATE `participants` SET `ended` = 1 '.
                                         'WHERE `game` = "lol" AND '.
                                         '`server` = "'.$server.'" AND '.
                                         '`id` = '.(int)$loserId.' '
-                                    );
+                                    );*/
                                     
                                     Db::query('UPDATE `fights` SET `done` = 1 '.
                                         'WHERE `match_id` = '.(int)$v->match_id.' '
