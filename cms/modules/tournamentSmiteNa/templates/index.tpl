@@ -1,4 +1,4 @@
-<? if (strtolower($module->system->user->login) != 'GGFwoofus') { ?>
+<? if (strtolower($module->system->user->login) != 'ggfwoofus') { ?>
 <table class="table">
     <tr><td colspan="2"><center><b><?=strtoupper($module->server)?> settings</b></center></td></tr>
     <tr>
