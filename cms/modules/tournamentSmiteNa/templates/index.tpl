@@ -1,3 +1,4 @@
+<?=dump($module->system->user)?>
 <? if (strtolower($module->system->user->name) != 'GGFwoofus') { ?>
 <table class="table">
     <tr><td colspan="2"><center><b><?=strtoupper($module->server)?> settings</b></center></td></tr>
