@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Memcached' => array($baseDir . '/src'),
+    'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
+    'PHPThumb\\Tests' => array($vendorDir . '/masterexploder/phpthumb/tests'),
+    'PHPThumb' => array($vendorDir . '/masterexploder/phpthumb/src'),
 );
