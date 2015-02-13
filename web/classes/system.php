@@ -22,24 +22,6 @@ class System
         Db::connect();
         
         $this->fetchParams();
-        
-        /*
-        $params = array(
-            'module'    => 'getmatchhistory',
-            'command'   => 'Maxtream',
-            'session'   => $smiteApiData['session_id'],
-        );
-        $smiteGames = $this->runSmiteAPI($params);
-        
-        foreach($smiteGames as $f) {
-            $params = array(
-                'module'    => 'getmatchdetails',
-                'command'   => $f['Match'],
-                'session'   => $smiteApiData['session_id'],
-            );
-            $this->runSmiteAPI($params);
-            exit();
-        }*/
     }
     
     public function run() {

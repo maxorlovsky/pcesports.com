@@ -434,13 +434,16 @@ class Cron extends System {
             'FROM `fights` AS `f` '.
             'LEFT JOIN `participants` AS `t1` ON `t1`.`challonge_id` = `f`.`player1_id` '.
             'LEFT JOIN `participants` AS `t2` ON `t2`.`challonge_id` = `f`.`player2_id` '.
-            'LEFT JOIN `smite_games` AS `lg` ON `lg`.`match_id` = `f`.`match_id` '.
+            'LEFT JOIN `smite_games` AS `sg` ON `sg`.`match_id` = `f`.`match_id` '.
             'WHERE `f`.`done` = 0 OR '.
-            '`lg`.`ended` = 0 '
+            '`sg`.`ended` = 0 '
         );
         
         if ($rows)
         {
+            $params['module'] = 'createsession';
+            $smiteApiData = $this->runSmiteAPI($params);
+            
             foreach($rows as $v) {
                 //Gathering team data
                 $team = array(
@@ -454,14 +457,15 @@ class Cron extends System {
                     'WHERE `participant_id` = '.(int)$v->team1.' OR `participant_id` = '.(int)$v->team2.' '.
                     'ORDER BY `player_num` ASC '
                 );
+                
                 foreach($insideRows as $v2) {
                     $team[$v2->participant_id]['players'][$v2->player_num] = array('id' => $v2->player_id, 'name' => $v2->name);
                 }
                 
                 //Checking if match already registered
-                $row = Db::fetchRow('SELECT `id` FROM `lol_games` WHERE `match_id` = '.(int)$v->match_id.' ORDER BY `id` DESC LIMIT 1');
+                $row = Db::fetchRow('SELECT `id` FROM `smite_games` WHERE `match_id` = '.(int)$v->match_id.' ORDER BY `id` DESC LIMIT 1');
                 if (!$row) {
-                    Db::query('INSERT INTO `lol_games` SET '.
+                    Db::query('INSERT INTO `smite_games` SET '.
                         '`match_id` = '.(int)$v->match_id.', '.
                         '`message` = "Fight not found, ignoring match ('.Db::escape($team[$v->team1]['name']).' VS '.Db::escape($team[$v->team2]['name']).')", '.
                         '`participant_id1` = '.(int)$v->team1.', '.
@@ -470,27 +474,45 @@ class Cron extends System {
                     $gameDbId = Db::lastId();
                 }
                 else {
-                    Db::query('UPDATE `lol_games` SET `date` = NOW() WHERE `id` = '.(int)$row->id.' LIMIT 1');
+                    Db::query('UPDATE `smite_games` SET `date` = NOW() WHERE `id` = '.(int)$row->id.' LIMIT 1');
                     $gameDbId = $row->id;
                 }
 
                 $i = 0;
                 foreach($insideRows as $vPlayer) {
+                    $vPlayer->name = preg_replace('/\[.*?\]/','',$vPlayer->name);
                     //Getting player recent games
-                    $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
-                    $game = $answer->games[0]; //We're interested only in last game
+                    $params = array(
+                        'module'    => 'getmatchhistory',
+                        'command'   => $vPlayer->name,
+                        'session'   => $smiteApiData['session_id'],
+                    );
+                    $answer = $this->runSmiteAPI($params);
+                    $game = $answer[0];
                     
-                    //Do not check ranked and solo games
-                    if ($game->gameType == 'CUSTOM_GAME' && $game->gameMode == 'CLASSIC' && $game->mapId == 11 && $game->fellowPlayers) {
+                    //Do not other games, only custom conquest
+                    if ($game['Queue'] == 'Custom: Conquest') {
+                        $params = array(
+                            'module'    => 'getmatchdetails',
+                            'command'   => $game['Match'],
+                            'session'   => $smiteApiData['session_id'],
+                        );
+                        $match = $this->runSmiteAPI($params);
+
                         $getPlayers = array();
+                        $matchStatus = array();
                         $getPlayers[] = $team[$v->team1]['captain'];
-                        foreach($game->fellowPlayers as $fellowPlayers) {
-                            $getPlayers[] = $fellowPlayers->summonerId;
+                        foreach($match as $matchPlayers) {
+                            if ($team[$v->team1]['captain'] != $matchPlayers['playerId']) {
+                                $getPlayers[] = $matchPlayers['playerId'];
+                            }
+                            
+                            $matchStatus[$matchPlayers['playerId']] = $matchPlayers['Win_Status'];
                         }
                         
                         //If player not found in the list, we aren't interested in this match
                         if (in_array($vPlayer->player_id, $getPlayers)) {
-                        
+                            
                             $playersList = array(0=>'',1=>'');
                             //Looping teams
                             for($j=0;$j<=1;++$j) {
@@ -502,9 +524,7 @@ class Cron extends System {
                                         if ($players['id'] == $vPlayer->player_id) {
                                             $playerTeam['id'] = ($j==0?$v->team1:$v->team2);
                                             $playerTeam['num'] = $j;
-                                            $playerTeam['riotNum'] = $game->stats->team;
                                             $playerTeam['vsTeamId'] = ($j==1?$v->team1:$v->team2);
-                                            $playerTeam['vsTeamNum'] = ($j==1?$v->team1:$v->team2);
                                         }
                                     }
                                     else {
@@ -514,10 +534,11 @@ class Cron extends System {
                                 $playersList[$j]['list'] .= '<b>Found:</b> '.$found.'<br />';
                                 $playersList[$j]['count'] = $found;
                             }
+                            //dump($playerTeam);
                             
                             if ($playersList[0]['count'] >= 1 && $playersList[1]['count'] >= 1) {
                                 //Deciding who's won. If 1 then team 1 won of empty then team 2 won
-                                if ($game->stats->win == 1 && $game->stats->team == $playerTeam['riotNum']) {
+                                if ($matchStatus[$vPlayer->player_id] == 'Winner') {
                                     $whoWon = $playerTeam['id'];
                                     $emailText = str_replace('%win%', $team[$playerTeam['id']]['name'], $text);
                                     $winner = $team[$playerTeam['id']]['challonge_id'];
@@ -541,27 +562,29 @@ class Cron extends System {
                                         $scores = '1-0';
                                     }
                                 }
-                        
-                                //Adding teams names to email text
-                                $emailText = str_replace(array('%team1%', '%team2%'), array($team[$v->team1]['name'], $team[$v->team2]['name']), $emailText);
-                                //Adding player lists to email text
-                                $emailText = str_replace(array('%players1%', '%players2%'), array($playersList[0]['list'], $playersList[1]['list']), $emailText);
                                 
+                                //Adding teams names and players names to email text
+                                $emailText = str_replace(
+                                    array('%team1%', '%team2%', '%players1%', '%players2%'),
+                                    array($team[$v->team1]['name'], $team[$v->team2]['name'], $playersList[0]['list'], $playersList[1]['list']),
+                                    $emailText
+                                );
+                                //ddump($emailText);
                                 //Sending email only if automatic function is disabled
-                                if ($this->data->settings['tournament-auto-lol-'.$server] != 1) {
-                                    $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick LoL tournament - Result', $emailText);
+                                if ($this->data->settings['tournament-auto-smite-'.$server] != 1) {
+                                    $this->sendMail('max.orlovsky@gmail.com', 'Pentaclick Smite tournament - Result', $emailText);
                                 }
                                 
                                 //Registering email, ending the game
-                                Db::query('UPDATE `lol_games` SET '.
+                                /*Db::query('UPDATE `smite_games` SET '.
                                     '`message` = "'.Db::escape($emailText).'", '.
                                     '`game_id` = '.(int)$game->gameId.', '.
                                     '`ended` = 1 '.
                                     'WHERE `id` = '.(int)$gameDbId
-                                );
+                                );*/
                                 
                                 //Updating brackets only if automatic function is enabled
-                                if ($this->data->settings['tournament-auto-lol-'.$server] == 1) {
+                                if ($this->data->settings['tournament-auto-smite-'.$server] == 1) {
                                     $apiArray = array(
                                         '_method' => 'put',
                                         'match_id' => $v->match_id,
@@ -569,14 +592,14 @@ class Cron extends System {
                                         'match[winner_id]' => $winner,
                                     );
                                     if (_cfg('env') == 'prod') {
-                                        $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$this->data->settings['lol-current-number-'.$server].'/matches/'.$v->match_id.'.put', $apiArray);
+                                        $this->runChallongeAPI('tournaments/pentaclick-smite'.$server.$this->data->settings['smite-current-number-'.$server].'/matches/'.$v->match_id.'.put', $apiArray);
                                     }
                                     else {
                                         $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$v->match_id.'.put', $apiArray);
                                     }
                                     
                                     Db::query('UPDATE `participants` SET `ended` = 1 '.
-                                        'WHERE `game` = "lol" AND '.
+                                        'WHERE `game` = "smite" AND '.
                                         '`server` = "'.$server.'" AND '.
                                         '`id` = '.(int)$loserId.' '
                                     );
@@ -590,7 +613,7 @@ class Cron extends System {
                                 
                                 $file = fopen($fileName, 'a');
                                 $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
-                                if ($this->data->settings['tournament-auto-lol-'.$server] == 0) {
+                                if ($this->data->settings['tournament-auto-smite-'.$server] == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
                                 $content .= '</p>';
@@ -601,7 +624,7 @@ class Cron extends System {
                         }
                     }
                     
-                    if ($i >= 7) {
+                    if ($i >= 5) {
                         break(1);
                     }
                     ++$i;
