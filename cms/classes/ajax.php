@@ -46,7 +46,8 @@ class Ajax extends System
             'ver' => $this->data->cmsSettings['version'],
         );
         
-        return $this->update($params);
+        $update = new Update();
+        return $update->run($params);
     }
     
     protected function saveSetting($data) {

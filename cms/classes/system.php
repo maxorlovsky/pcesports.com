@@ -249,7 +249,6 @@ class System
     	$endTime = microtime(true);
     	$duration = $endTime - $startTime; //calculates total time taken
     	
-    	//---
     	Db::query('UPDATE `tm_api_request` SET '.
     		'`response_data` = "'.Db::escape( $rspdata ).'", '.
     		'`call_time` = '.(float)$duration.' '.
@@ -346,65 +345,6 @@ class System
         else {
         	require_once(_cfg('cmslocale').'/'._cfg('defaultLanguage').'.php');
         }
-    }
-    
-    protected function update($params = array()) {
-        if (!$params) {
-            return '0;Parameters not set';
-        }
-        
-        if (!is_writable(_cfg('cmsdir').'/classes/system.php')) {
-            return '0;Update impossible, editing files are forbidden. Try <a href="'._cfg('cmssite').'/#update">manual update</a>';
-        }
-        
-        $answer = $this->runAPI($params);
-        
-        if ($answer && substr($answer,0,1) == '2') {
-            $json = json_decode(substr($answer,2));
-            
-            if ($json->files != '-') {
-                $error = '0;';
-                foreach($json->files as $k => $v) {
-                    //Updating files
-                    if (!is_writable(_cfg('cmsdir').$k)) {
-                        $error .= '<p>File .'._cfg('cmsdir').$k.' is not writable</p>';
-                    }
-                }
-                
-                if ($error == '0;') {
-                    foreach($json->files as $k => $v) {
-                        file_put_contents(_cfg('cmsdir').$k, base64_decode($v));
-                    }
-                }
-                else {
-                    return $error;
-                }
-            }
-            
-            if ($json->sql != '-') {
-                $breakdown = explode(';', $json->sql);
-                foreach($breakdown as $v) {
-                    if ($v) {
-                        Db::query($v);
-                        if (Db::error()) {
-                            return '0;There was an error while trying to update SQL:<br>'.Db::error().'<br />Make <a href="'._cfg('cmssite').'/#update">manual update</a> <b>ONLY FOR SQL</b>';
-                        }
-                    }
-                }
-            }
-            
-            $message = 'Success';
-            if ($json->description != '-') {
-                $message .= ' ('.$json->description.')';
-            }
-            
-            return '1;'.$message;
-        }
-        else {
-            return $answer;
-        }
-        
-        return '0;System error';
     }
     
     /*Private functions*/

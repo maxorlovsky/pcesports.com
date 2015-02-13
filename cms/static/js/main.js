@@ -44,10 +44,10 @@ if (logged_in) {
         //param[1] = variable name
         //param[2] = variable value
         if (param[2]) {
-            form['param_id'] = param[2];
+            form.param_id = param[2];
         }
         
-        TM.showMsg(2,strings['loading']);
+        TM.showMsg(2,strings.loading);
         var query = {
             type: 'POST',
             timeout: 10000,
@@ -78,7 +78,7 @@ if (logged_in) {
                 TM.messageTimer = setTimeout(TM.cleanMsg,3000);
                 $('.submitButton').html(oldValue);
             }
-        }
+        };
         TM.ajax(query);
     });
 }
@@ -154,7 +154,7 @@ var TM = {
     
     //Functions
     cancelInput: function(id, t) {
-        if (t==0) {
+        if (t === 0) {
             $('#'+id).html(this.saveSettingInput);
         }
         else {
@@ -177,7 +177,7 @@ var TM = {
         
         this.saveSettingInput = $('#'+id).html();
         this.saveSettingId = id;
-        if (t == 0) {
+        if (t === 0) {
             html = '<input id="input_setting_text" class="settings_input" type="text" value="'+this.saveSettingInput+'" /> ';
             html += '<span class="recycler" onclick="TM.cancelInput(\''+id+'\', 0);">';
             html += '</span>';
@@ -196,7 +196,7 @@ var TM = {
         
         $('#input_setting_text').keypress(function(event) {
             if (event.which == 13) {
-                TM.showMsg(2,strings['loading']);
+                TM.showMsg(2,strings.loading);
                 
                 var query = {
                     type: 'POST',
@@ -223,7 +223,7 @@ var TM = {
         });
         
         $('#input_setting_select').change(function(event) {
-            TM.showMsg(2,strings['loading']);
+            TM.showMsg(2,strings.loading);
             
             var query = {
                 type: 'POST',
@@ -269,12 +269,12 @@ var TM = {
         
         var woffset = $('body')[0].clientWidth;
         
-        if (t==1) {
+        if (t == 1) {
             $('#asucmsg').html(text);
             $('#asucmsg').css('left',(((woffset/2)-($('#asucmsg').width()/2))+'px'));
             $('#asucmsg').stop().slideDown();
         }
-        else if (t==0) {
+        else if (t === 0) {
             $('#aerrmsg').html(text);
             $('#aerrmsg').css('left',(((woffset/2)-($('#aerrmsg').width()/2))+'px'));
             $('#aerrmsg').stop().slideDown();
@@ -397,11 +397,11 @@ var TM = {
                 TM.showMsg(0,'Error timeout');
                 TM.messageTimer = setTimeout(TM.cleanMsg,3000);
             }
-        }
+        };
         TM.ajax(query);
     },
     checkCustomAccess: function() {
-        if ($('#level').val() == 0) {
+        if ($('#level').val() === 0) {
             $('.customAccess').show();
         }
         else {
