@@ -1,6 +1,6 @@
 <?php
 
-class TournamentSmite
+class TournamentSmiteNa
 {
     public $chats;
     public $system;
@@ -10,12 +10,12 @@ class TournamentSmite
 	function __construct($params = array()) {
 		$this->system = $params['system'];
         
-        $this->server = 'eune';
+        $this->server = 'na';
         
         $rows = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
-			'WHERE `setting` = "tournament-auto-lol-eune" OR '.
-            '`setting` = "lol-current-number-eune" '
+			'WHERE `setting` = "tournament-auto-smite-'.$this->server.'" OR '.
+            '`setting` = "smite-current-number-'.$this->server.'" '
 		);
         
         foreach($rows as $v) {
@@ -93,7 +93,7 @@ class TournamentSmite
     
     public function finishMatch($form) {
         $matchId = (int)$form[0]; //match id
-        $server = $form[1]; //lol server
+        $server = $form[1]; //smite server
         $scores = $form[2]; //scores as string
         $winner = (int)$form[3]; //winner id
         $loser = (int)$form[4]; //looser id
@@ -115,14 +115,14 @@ class TournamentSmite
         );
         
         if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$this->config['lol-current-number-'.$server].'/matches/'.$matchId.'.put', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-smite'.$server.$this->config['smite-current-number-'.$server].'/matches/'.$matchId.'.put', $apiArray);
         }
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$matchId.'.put', $apiArray);
         }
         
         Db::query('UPDATE `participants` SET `ended` = 1 '.
-            'WHERE `game` = "lol" AND '.
+            'WHERE `game` = "smite" AND '.
             '`server` = "'.$server.'" AND '.
             '`id` = '.(int)$loser.' '
         );

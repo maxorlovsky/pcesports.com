@@ -1,3 +1,6 @@
+# 13.02.2015
+UPDATE `tm_modules` SET `name` = 'tournamentSmiteNa' WHERE `tm_modules`.`name` = 'tournamentSmite';
+
 # 11.02.2015
 CREATE TABLE IF NOT EXISTS `lol_games` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
