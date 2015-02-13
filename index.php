@@ -8,8 +8,8 @@ if (file_exists('../maint_mode')) {
 	die('This site is on maintenance');
 }
 
-if (file_exists('../vendor/autoload.php')) {
-    require_once '../vendor/autoload.php';
+if (file_exists('vendor/autoload.php')) {
+    require_once 'vendor/autoload.php';
 }
 
 session_start();

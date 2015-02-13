@@ -586,19 +586,28 @@ class System
             return false;
         }
         
-        $mime_boundary = '==Multipart_Boundary_x'.md5(time()).'x';
-
-        $mailData = 'MIME-Version: 1.0'."\r\n";
-        $mailData .= 'Date: '.date('D, d M Y H:i:s')." UT\r\n";
-        $mailData .= 'Subject: '.$subject. "\r\n";
-        $mailData .= 'Reply-To: "Pentaclick eSports" <'._cfg('smtpMailFrom').'> '."\r\n";
-        $mailData .= 'From: "Pentaclick eSports" <'._cfg('smtpMailFrom').'> '."\r\n";
-        $mailData .= 'To: '.$email.''."\r\n";
-        $mailData .= 'X-Priority: 3'."\r\n";
-        $mailData .= 'Content-Type: multipart/mixed; boundary="'.$mime_boundary.'" '."\r\n"; //
-        $mailData .= '--'.$mime_boundary."\r\n";  //
+        // Connecting
+        $transport = Swift_SmtpTransport::newInstance(_cfg('smtpMailHost'), _cfg('smtpMailPort'));
+        $transport->setUsername(_cfg('smtpMailName'));
+        $transport->setPassword(_cfg('smtpMailPass'));
         
-        if ($files) {
+        $message = Swift_Message::newInstance()
+        // Give the message a subject
+        ->setSubject($subject)
+        // Set the From address with an associative array
+        ->setFrom(array(_cfg('smtpMailName') => _cfg('smtpMailFrom')))
+        // Set the To addresses with an associative array
+        ->setTo(array($email))
+        // Give it a body
+        ->setBody($msg, 'text/html');
+        // Optionally add any attachments
+        //->attach(Swift_Attachment::fromPath('my-document.pdf'))
+        
+        //Sending message
+        $mailer = Swift_Mailer::newInstance($transport);
+        $mailer->send($message, $fails);
+        
+        /*if ($files) {
             foreach($files as $k => $v) {
                 if ($v['content']) {
                     $mailData .= 'Content-Type: application/octet-stream; name='.$v['name'].''."\r\n";
@@ -609,44 +618,12 @@ class System
                     $mailData .= '--'.$mime_boundary."\r\n";
                 }
             }
+        }*/
+        
+        if($fails) {
+            $_SESSION['mailError'] = $fails;
+            return false;
         }
-        
-        $mailData .= 'Content-Type: text/html; charset="UTF-8"'."\r\n";
-        $mailData .= 'Content-Transfer-Encoding: 8bit'."\r\n\r\n";
-        $mailData .= $msg;
-        
-        if(!$socket = fsockopen(_cfg('smtpMailHost'), _cfg('smtpMailPort'), $errno, $errstr, 30)) {
-            return $errno."&lt;br&gt;".$errstr;
-        }
-        if (!$this->serverParse($socket, '220', __LINE__)) return false;
-        
-        fputs($socket, 'HELO '._cfg('smtpMailHost'). "\r\n");
-        if (!$this->serverParse($socket, '250', __LINE__)) return false;
-        
-        fputs($socket, 'AUTH LOGIN'."\r\n");
-        if (!$this->serverParse($socket, '334', __LINE__)) return false;
-        
-        fputs($socket, base64_encode(_cfg('smtpMailName')) . "\r\n");
-        if (!$this->serverParse($socket, '334', __LINE__)) return false;
-        
-        fputs($socket, base64_encode(_cfg('smtpMailPass')) . "\r\n");
-        if (!$this->serverParse($socket, '235', __LINE__)) return false;
-        
-        fputs($socket, 'MAIL FROM: <'._cfg('smtpMailName').'>'."\r\n");
-        if (!$this->serverParse($socket, '250', __LINE__)) return false;
-        
-        fputs($socket, 'RCPT TO: <'.$email.'>'."\r\n");
-        if (!$this->serverParse($socket, '250', __LINE__)) return false;
-        
-        fputs($socket, 'DATA'."\r\n");
-        if (!$this->serverParse($socket, '354', __LINE__)) return false;
-        
-        fputs($socket, $mailData."\r\n.\r\n");
-        if (!$this->serverParse($socket, '250', __LINE__)) return false;
-        
-        fputs($socket, 'QUIT'."\r\n");
-        
-        fclose($socket);
         
         return true;
     }

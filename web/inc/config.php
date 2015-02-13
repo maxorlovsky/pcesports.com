@@ -88,7 +88,7 @@ $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
 $cfg['smtpMailPort'] = '465';
 $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
 $cfg['smtpMailPass'] = 'aveclickius777';
-$cfg['smtpMailFrom'] = 'info@pcesports.com';
+$cfg['smtpMailFrom'] = 'Pentaclick eSports';
 
 $cfg['href'] = $cfg['site'].'/%lang%';
 $cfg['hssite'] = '/hearthstone';
