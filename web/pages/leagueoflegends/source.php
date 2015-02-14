@@ -241,7 +241,7 @@ class leagueoflegends extends System
                     $startTime = strtotime($v->dates_start.' '.$v->time);
                     $regTime = strtotime($v->dates_registration.' '.$v->time);
                     
-                    if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {
+                    if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1 && $this->currentTournament == $v->name) {
                         $v->status = 'Check in';
                     }
                     else if (time() > $startTime) {
