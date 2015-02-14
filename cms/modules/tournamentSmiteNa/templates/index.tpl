@@ -276,6 +276,7 @@ $(document).ready(function() {
     background-color: #eee;
     font-size: 15px;
     overflow-y: auto;
+    word-break: break-all;
 }
 .chat .chat-content #notice {
     font-size: 13px;

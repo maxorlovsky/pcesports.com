@@ -2,6 +2,7 @@
 
 class TournamentSmiteNa
 {
+    
     public $chats;
     public $system;
     public $server;
