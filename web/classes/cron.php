@@ -964,6 +964,9 @@ class Cron extends System {
                 if ($v->game == 'lol') {
                     $url = _cfg('site').'/en/leagueoflegends/'.$v->server;
                 }
+                else if ($v->game == 'smite') {
+                    $url = _cfg('site').'/en/smite/'.$v->server;
+                }
                 else {
                     $url = _cfg('site').'/en/hearthstone';
                 }
