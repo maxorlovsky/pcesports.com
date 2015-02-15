@@ -1,7 +1,7 @@
 <section class="container page lol">
 
 <div class="left-containers">
-	<? if ($this->data->settings['tournament-reg-hslan'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
+	<? if ($this->data->settings['tournament-reg-hs'] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
 			<h1 class="bordered"><?=t('signin_league')?></h1>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="clear"></div>
                     
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hslan')?></label>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs')?></label>
 					<div id="agree-msg" class="message hidden"></div>
                     <div class="clear"></div>
 				</form>
@@ -70,7 +70,7 @@
 			<?=str_replace(
                 array('%startTime%', '%registrationTime%'),
                 array($tournamentTime['start'], $tournamentTime['registration']),
-                t('hslan_tournament_information')
+                t('hs_tournament_information')
             )?>
             <br />
             <a href="<?=_cfg('href')?>/hearthstone"><?=t('tournament_rules')?></a>

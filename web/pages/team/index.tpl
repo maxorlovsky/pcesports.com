@@ -12,41 +12,19 @@
 			</div>
         </div>
     </div>
-	
-	<?/*<div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Hearthstone <?=t('division')?></h1>
-        </div>
 
-        <div class="block-content team-list">
-			<div class="game-logo"><img src="<?=_cfg('img')?>/footer-hs-logo.png" /></div>
-            <div class="team-user">
-            	<div class="name">Soldecroix</div>
-            	<div class="role">Team captain/Player</div>
-                <div class="email">&nbsp;</div>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>*/?>
-	
 	<div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('organization')?></h1>
+            <h1 class="bordered"><?=t('team')?></h1>
         </div>
 
         <div class="block-content team-list">
-            <? foreach($this->team as $k => $v) { ?>
-                <a class="team-user" href="<?=_cfg('href')?>/member/<?=$v['name']?>">
-                    <? if ($v['avatar']) { ?>
-                        <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
-                    <? } ?>
-                    <div class="name"><?=$v['name']?></div>
-                    <div class="role"><?=$v['role']?></div>
-                    <? if ($v['contact']) {?>
-                        <div class="contact"><?=$v['contact']?></div>
-                    <? } ?>
-                </a>
-            <? } ?>
+            <a class="team-division hearthstone" href="<?=_cfg('href')?>/team/hearthstone">
+                <div class="name">Hearthstone <?=t('division')?></div>
+            </a>
+            <a class="team-division staff" href="<?=_cfg('href')?>/team/staff">
+                <div class="name">Staff</div>
+            </a>
             <div class="clear"></div>
         </div>
     </div>

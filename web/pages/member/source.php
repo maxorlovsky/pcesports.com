@@ -11,7 +11,8 @@ class member extends System
         
         $this->fullGameName = array(
             'lol' => 'leagueoflegends',
-            'hslan' => 'hearthstone',
+            'hs' => 'hearthstone',
+            'smite' => 'smite',
         );
         $this->places = array(
             1 => 'gold',

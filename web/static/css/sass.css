@@ -95,63 +95,48 @@ header .header-middle {
   float: left;
   margin-left: 150px; }
 
-header .social {
+.social {
   margin: 5px 10px 0 0; }
-
-header .social a {
-  background-image: url("../images/icons.png");
-  height: 30px;
-  display: inline-block;
-  margin-right: 10px; }
-
-header .social a.fb {
-  background-position: 0px 0px;
-  width: 30px; }
-
-header .social a.fb:hover {
-  background-position: 0px -36px; }
-
-header .social a.tw {
-  background-position: -38px 0px;
-  width: 27px; }
-
-header .social a.tw:hover {
-  background-position: -38px -36px; }
-
-header .social a.gp {
-  background-position: -74px 0px;
-  width: 29px; }
-
-header .social a.gp:hover {
-  background-position: -74px -36px; }
-
-header .social a.yt {
-  background-position: -109px 0px;
-  width: 28px; }
-
-header .social a.yt:hover {
-  background-position: -109px -36px; }
-
-header .social a.tv {
-  background-position: -177px 0px;
-  width: 28px; }
-
-header .social a.tv:hover {
-  background-position: -177px -36px; }
-
-header .social a.vk {
-  background-position: -212px 0px;
-  width: 28px; }
-
-header .social a.vk:hover {
-  background-position: -212px -36px; }
-
-header .social a.sm {
-  background-position: -143px 0px;
-  width: 28px; }
-
-header .social a.sm:hover {
-  background-position: -143px -36px; }
+  .social a {
+    background-image: url("../images/icons.png");
+    height: 30px;
+    display: inline-block;
+    margin-right: 10px; }
+    .social a.fb {
+      background-position: 0px 0px;
+      width: 30px; }
+      .social a.fb:hover {
+        background-position: 0px -36px; }
+    .social a.tw {
+      background-position: -38px 0px;
+      width: 27px; }
+      .social a.tw:hover {
+        background-position: -38px -36px; }
+    .social a.gp {
+      background-position: -74px 0px;
+      width: 29px; }
+      .social a.gp:hover {
+        background-position: -74px -36px; }
+    .social a.yt {
+      background-position: -109px 0px;
+      width: 28px; }
+      .social a.yt:hover {
+        background-position: -109px -36px; }
+    .social a.tv {
+      background-position: -177px 0px;
+      width: 28px; }
+      .social a.tv:hover {
+        background-position: -177px -36px; }
+    .social a.vk {
+      background-position: -212px 0px;
+      width: 28px; }
+      .social a.vk:hover {
+        background-position: -212px -36px; }
+    .social a.sm {
+      background-position: -143px 0px;
+      width: 28px; }
+      .social a.sm:hover {
+        background-position: -143px -36px; }
 
 header .languages {
   float: right;
@@ -649,56 +634,83 @@ footer .partners .aimskillz {
 
 .team .block {
   margin-bottom: 40px; }
-
 .team .team-list .game-logo {
   text-align: center;
   display: block;
   width: 100%;
   margin-bottom: 20px; }
-
 .team .team-user {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.35);
   margin-bottom: 20px;
   width: 365px;
   margin-right: 20px;
   float: left;
-  height: 100px;
+  height: 120px;
   overflow: hidden;
   display: block;
   transition: .5s;
   color: #777; }
-
-.team .team-user:hover {
-  background-color: #eee; }
-
-.team .team-user:nth-child(even) {
-  margin-right: 0; }
-
-.team .team-user .icon {
+  .team .team-user.hearthstone {
+    width: 100%;
+    height: auto;
+    padding-bottom: 15px; }
+  .team .team-user .social {
+    padding: 5px 0 0 15px; }
+  .team .team-user:hover {
+    background-color: #eee; }
+  .team .team-user:nth-child(even) {
+    margin-right: 0; }
+  .team .team-user .icon {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-right: 15px; }
+    .team .team-user .icon img {
+      width: 100px;
+      height: 100px; }
+  .team .team-user .name {
+    padding: 15px 0 0 15px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #777;
+    display: block; }
+  .team .team-user .role {
+    padding: 5px 0 0 15px;
+    font-size: 14px;
+    text-transform: uppercase; }
+  .team .team-user .email {
+    padding: 5px 0 10px 15px;
+    font-size: 13px;
+    font-style: italic; }
+.team .team-division {
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.35);
+  margin-bottom: 20px;
+  width: 365px;
+  margin-right: 20px;
   float: left;
-  width: 100px;
-  height: 100px;
-  margin-right: 15px; }
-
-.team .team-user .icon img {
-  width: 100px;
-  height: 100px; }
-
-.team .team-user .name {
-  padding: 15px 0 0 15px;
-  font-size: 17px;
-  font-weight: bold;
+  height: 150px;
+  overflow: hidden;
+  display: block;
+  transition: .5s;
   color: #777; }
-
-.team .team-user .role {
-  padding: 5px 0 0 15px;
-  font-size: 14px;
-  text-transform: uppercase; }
-
-.team .team-user .email {
-  padding: 5px 0 10px 15px;
-  font-size: 13px;
-  font-style: italic; }
+  .team .team-division.hearthstone {
+    background-image: url("../images/footer-hs-logo.png");
+    background-position: top center;
+    background-repeat: no-repeat; }
+  .team .team-division.staff {
+    background-image: url("../images/logo.png");
+    background-position: top center;
+    background-repeat: no-repeat; }
+  .team .team-division:hover {
+    background-color: #eee; }
+  .team .team-division:nth-child(even) {
+    margin-right: 0; }
+  .team .team-division .name {
+    margin-top: 100px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #555;
+    text-align: center; }
 
 .contact-form .fields {
   margin-bottom: 15px;

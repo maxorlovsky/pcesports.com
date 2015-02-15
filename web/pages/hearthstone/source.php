@@ -8,9 +8,12 @@ class hearthstone extends System
 	public $participants;
     public $pickedTournament;
     public $groups;
+    public $server;
 	
 	public function __construct($params = array()) {
         parent::__construct();
+        
+        $this->server = 's1';
         
         $this->heroes = array(
             1 => 'warrior',
@@ -35,7 +38,7 @@ class hearthstone extends System
             8 => 'H'
         );
     
-		$this->currentTournament = $this->data->settings['hslan-current-number'];
+		$this->currentTournament = $this->data->settings['hs-current-number'];
 	}
     
     public function editPage() {
@@ -46,7 +49,7 @@ class hearthstone extends System
             'FROM `participants` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "hslan" AND '.
+            '`game` = "hs" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' '
         );
         $row->contact_info = json_decode($row->contact_info);
@@ -85,7 +88,7 @@ class hearthstone extends System
 			'FROM `participants` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
-			'`t`.`game` = "hslan" AND '.
+			'`t`.`game` = "hs" AND '.
 			'`t`.`id` = '.Db::escape($id).' AND '.
 			'`t`.`link` = "'.Db::escape($code).'" AND '.
 			'`t`.`deleted` = 0 AND '.
@@ -113,7 +116,7 @@ class hearthstone extends System
         $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
-            'WHERE `p`.`game` = "hslan" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
+            'WHERE `p`.`game` = "hs" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `p`.`id` ASC'
         );
         if ($rows) {
@@ -126,7 +129,7 @@ class hearthstone extends System
         
         $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
             'FROM `tournaments` '.
-            'WHERE `game` = "hslan" AND '.
+            'WHERE `game` = "hs" AND '.
             '`name` = '.(int)$this->pickedTournament.' '
         );
         if ($tournamentRows) {
@@ -142,11 +145,9 @@ class hearthstone extends System
     public function getTournamentList() {
 		$rows = Db::fetchRows('SELECT * '.
 			'FROM `tournaments` '.
-			'WHERE `game` = "hslan" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND' .
-            '`status` != "Registration" '.
+			'WHERE `game` = "hs" '.
 			'ORDER BY `id` DESC '.
-            'LIMIT 5'
+            'LIMIT 10'
 		);
         if ($rows) {
             foreach($rows as $v) {
@@ -174,7 +175,7 @@ class hearthstone extends System
         if ($this->tournamentData) {
             $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
                 'FROM `participants` '.
-                'WHERE `game` = "hslan" AND '.
+                'WHERE `game` = "hs" AND '.
                 '`deleted` = 0 '.
                 'GROUP BY `tournament_id` '.
                 'ORDER BY `id` DESC'
@@ -225,14 +226,14 @@ class hearthstone extends System
 	}
 	
 	public function showTemplate() {
-        if (isset($_GET['val3']) && $_GET['val3'] == 'edit') {
+        if (isset($_GET['val4']) && $_GET['val4'] == 'edit') {
 			$this->editPage();
 		}
-        else if (isset($_GET['val2']) && $_GET['val2'] == 'participant') {
+        else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
 			$this->participantPage();
 		}
-        else if (isset($_GET['val2']) && is_numeric($_GET['val2'])) {
-			$this->getTournamentData($_GET['val2']);
+        else if (isset($_GET['val3']) && is_numeric($_GET['val3'])) {
+			$this->getTournamentData($_GET['val3']);
 		}
 		else {
 			$this->getTournamentList();
@@ -241,7 +242,7 @@ class hearthstone extends System
     
     protected function leave() {
         Db::query('UPDATE `participants` SET `deleted` = 1 '.
-        'WHERE `game` = "hslan" AND '.
+        'WHERE `game` = "hs" AND '.
         '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
         '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
         
@@ -254,13 +255,6 @@ class hearthstone extends System
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
         }*/
-        
-        $this->sendMail('info@pcesports.com',
-        'Player deleted. PentaClick eSports.',
-        'Participant was deleted!!!<br />
-        Date: '.date('d/m/Y H:i:s').'<br />
-        BattleTag: <b>'.$_SESSION['participant']->name.'</b><br>
-        IP: '.$_SERVER['REMOTE_ADDR']);
         
         unset($_SESSION['participant']);
         

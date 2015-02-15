@@ -4,12 +4,12 @@
     <div class="separator left">
         <div class="block">
             <div class="block-header-wrapper">
-                <h1 class=""><?=t('available_leagues')?></h1>
+                <h1 class=""><?=t('available_disciplines')?></h1>
             </div>
             <div class="block-content games">
                 <a href="http://www.leagueoflegends.com" target="_blank"><img src="<?=_cfg('img')?>/footer-lol-logo.png" /></a>
                 <a href="http://eu.battle.net/hearthstone/" target="_blank"><img src="<?=_cfg('img')?>/footer-hs-logo.png" /></a>
-                <a href="http://www.dota2.com" target="_blank"><img src="<?=_cfg('img')?>/footer-dota-logo.png" /></a>
+                <!--<a href="http://www.dota2.com" target="_blank"><img src="<?=_cfg('img')?>/footer-dota-logo.png" /></a>-->
                 <a href="http://www.smitegame.com" target="_blank"><img src="<?=_cfg('img')?>/footer-smite-logo.png" /></a>
             </div>
         </div>

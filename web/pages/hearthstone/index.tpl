@@ -3,14 +3,14 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Hearthstone League <?=$this->server?> <?=t('tournament_list')?></h1>
+            <h1 class="bordered">Hearthstone <?=$this->server?> <?=t('tournament_list')?></h1>
         </div>
         
 		<? if ($this->tournamentData) {
             foreach($this->tournamentData as $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$v['name']?>">
+        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
-                <div class="title"><img src="<?=_cfg('img')?>/hs-logo-small.png" />Season 1 - <?=t('tournament')?> #<?=$v['name']?></div>
+                <div class="title"><img src="<?=_cfg('img')?>/hs-logo-small.png" /><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> <?=$v['max_num']?> <?=t('participants')?></div>
             </div>
             

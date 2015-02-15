@@ -13,7 +13,7 @@
         </td>
     </tr>
     <tr>
-        <td width="20%"><b>Server<br /><small>Only for LoL and Smite</small></td>
+        <td width="20%"><b>Addition</b></td>
         <td>
             <select id="server">
                 <option value="">none</option>
@@ -21,6 +21,7 @@
                 <option value="eune">EUNE</option>
                 <option value="na">NA</option>
                 <option value="eu">EU</option>
+                <option value="s1">Season 1</option>
             </select>
         </td>
     </tr>

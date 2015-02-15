@@ -12,7 +12,6 @@ class TournamentList
         $this->availableGames = array(
             'lol' => 'League of Legends',
             'hs' => 'Hearthstone',
-            'hslan' => 'Hearthstone League',
             'dota' => 'Dota 2',
             'smite' => 'Smite',
             'cs' => 'CS:Global Offensive',

@@ -12,27 +12,18 @@
                 <h1 class="bordered"><?=t('panel')?> (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
             </div>
             
-            <? if ($_SESSION['participant']->game == 'hslan') { ?>
+            <? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links">
-                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$this->data->settings['hslan-current-number']?>"><?=t('tournament_information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/edit"><?=t('edit_information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
-                <? if (!$this->logged_in) { ?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
-                <? } ?>
-            </ul>
-			<? } else if ($_SESSION['participant']->game == 'hs') { ?>
-            <ul class="panel-links">
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/"><?=t('information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
 				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/edit"><?=t('edit_information')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
 				<? } ?>
                 <? if (!$this->logged_in) { ?>
-                <li><a href="<?=_cfg('href')?>/hearthstone/participant/exit"><?=t('exit_panel')?></a></li>
+                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
 			<? } else if ($_SESSION['participant']->game == 'smite') { ?>
@@ -87,7 +78,7 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <? if ($v['game'] == 'hslan') { ?>
+            <? if ($v['game'] == 'hs') { ?>
                 <a href="<?=_cfg('href')?>/hearthstone/<?=$v['id']?>" class="button">
                     <?=t('join')?>
                 </a>
@@ -142,7 +133,7 @@
         </div>
 		<div class="block-content">
             <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="900" attr-current="16.10">
+            <div class="donate-bar" attr-goal="900" attr-current="22.10">
                 <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
@@ -152,6 +143,7 @@
         <div class="arrow-down hint" attr-msg="Show donators"></div>
         <div class="list">
             <ul>
+                <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
                 <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
             </ul>
             <div class="clear"></div>

@@ -1,3 +1,10 @@
+# 14.02.2015
+UPDATE `participants` SET `game` = "hsold", `deleted` = 1 WHERE `game` = "hs";
+UPDATE `participants` SET `game` = "hs", `server` = "s1" WHERE `game` = "hslan";
+ALTER TABLE `tournaments` CHANGE `status` `status` ENUM('Ended','Start') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+UPDATE `tournaments` SET `game` = "hsold" WHERE `game` = "hs";
+UPDATE `tournaments` SET `server` = "s1", `game` = "hs" WHERE `game` = "hslan";
+
 # 13.02.2015
 UPDATE `tm_modules` SET `name` = 'tournamentSmiteNa' WHERE `tm_modules`.`name` = 'tournamentSmite';
 

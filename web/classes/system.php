@@ -146,7 +146,7 @@ class System
                 $statusString = str_replace(' ', '_', strtolower('start'));
             }
 
-            if ($v->game == 'hslan') {
+            if ($v->game == 'hs') {
                 $game = 'Hearthstone League S1 - ';
             }
             else if ($v->game == 'lol') {
@@ -223,7 +223,7 @@ class System
                 '`user_id` = '.(int)$this->data->user->id.' AND '.
                 '`ended` = 0 AND ' .
                 '`deleted` = 0 AND '.
-                '(`approved` = 1 OR `game` = "hslan") '.
+                '`approved` = 1 '.
                 'LIMIT 1 '
             );
             

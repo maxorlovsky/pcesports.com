@@ -16,13 +16,13 @@ class LeagueParticipants
         	go(_cfg('cmssite').'/#leagueParticipants');
         }
         
-        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hslan-current-number"');
+        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hs-current-number"');
         $this->currentTournament = $row->value;
         
 		$this->participants = Db::fetchRows(
             'SELECT `id`, `name`, `email`, `contact_info`, `approved`, `place`, `seed_number` '.
             'FROM `participants` '.
-            'WHERE `game` = "hslan" AND '.
+            'WHERE `game` = "hs" AND '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`deleted` = 0 AND '.
             '`ended` = 0 '.
@@ -74,14 +74,14 @@ class LeagueParticipants
     
     protected function able($id) {
     	$id = (int)$id;
-    	$row = Db::fetchRow('SELECT `name`, `approved` FROM `participants` WHERE `id` = '.$id.' AND `game` = "hslan" LIMIT 1');
+    	$row = Db::fetchRow('SELECT `name`, `approved` FROM `participants` WHERE `id` = '.$id.' AND `game` = "hs" LIMIT 1');
     	if ($row->approved == 1) {
     		$enable = 0;
     	}
     	else {
     		$enable = 1;
     	}
-    	Db::query('UPDATE `participants` SET `approved` = '.$enable.' WHERE `id` = '.$id.' AND `game` = "hslan" LIMIT 1');
+    	Db::query('UPDATE `participants` SET `approved` = '.$enable.' WHERE `id` = '.$id.' AND `game` = "hs" LIMIT 1');
 
     	if ($enable == 1) {
     		$this->system->log('Verified participant <b>('.$row->name.')</b>', array('module'=>get_class(), 'type'=>'enabling'));

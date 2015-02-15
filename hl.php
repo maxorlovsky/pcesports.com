@@ -34,7 +34,7 @@ $group = array(
 
 $q = mysql_query('SELECT `name`, `contact_info`, `seed_number` '.
     'FROM `participants` '.
-    'WHERE `game` = "hslan" AND `tournament_id` = 4 AND `approved` = 1 AND `deleted` = 0 AND `seed_number` != 0 '.
+    'WHERE `game` = "hs" AND `tournament_id` = 6 AND `approved` = 1 AND `deleted` = 0 AND `seed_number` != 0 '.
     'ORDER BY `seed_number` ASC '.
     'LIMIT 32'
 );
