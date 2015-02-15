@@ -99,7 +99,7 @@
             <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
             <a class="vk" href="https://vk.com/pentaclickesports" target="_blank"></a>
             <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
-            <!--<a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>-->
+            <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
         </div>
         <script>
         $('.social a').css('transition', '.5s');

@@ -1,6 +1,6 @@
 <?php
 
-class TournamentEUNE
+class TournamentLolEune
 {
     public $chats;
     public $system;

@@ -1,6 +1,6 @@
 <?php
 
-class Tournaments
+class TournamentLolEuw
 {
     public $chats;
     public $system;
@@ -10,14 +10,12 @@ class Tournaments
 	function __construct($params = array()) {
 		$this->system = $params['system'];
         
-        $this->server = $params['var1'];
+        $this->server = 'euw';
         
         $rows = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
 			'WHERE `setting` = "tournament-auto-lol-euw" OR '.
-            '`setting` = "tournament-auto-lol-eune" OR '.
-            '`setting` = "lol-current-number-euw" OR '.
-            '`setting` = "lol-current-number-eune" '
+            '`setting` = "lol-current-number-euw" '
 		);
         
         foreach($rows as $v) {

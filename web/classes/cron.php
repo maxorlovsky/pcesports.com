@@ -967,8 +967,11 @@ class Cron extends System {
                 else if ($v->game == 'smite') {
                     $url = _cfg('site').'/en/smite/'.$v->server;
                 }
+                else if ($v->game == 'hs') {
+                    $url = _cfg('site').'/en/hearthstone/'.$v->server;
+                }
                 else {
-                    $url = _cfg('site').'/en/hearthstone';
+                    return 'Game not found';
                 }
                 
                 $message = str_replace(

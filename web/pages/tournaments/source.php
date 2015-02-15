@@ -78,7 +78,7 @@ class tournaments extends System
             }
         }
 		
-        /*if ($this->tournamentData) {
+        if ($this->tournamentData) {
             $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
                 'FROM `participants` '.
                 'WHERE `game` = "lol" AND '.
@@ -95,24 +95,7 @@ class tournaments extends System
                     }
                 }
             }
-        
-            $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
-                'FROM `participants` '.
-                'WHERE `game` = "lol" AND '.
-                '`server` = "'.Db::escape($this->server).'" AND '.
-                '`place` != 0 '.
-                'ORDER BY `tournament_id`, `place`'
-            );
-            
-            $previousTournamentId = 0;
-            if ($rows) {
-                foreach($rows as $v) {
-                    if ($v->tournament_id != $previousTournamentId && $this->tournamentData[$v->tournament_id]) {
-                        $this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
-                    }
-                }
-            }
-        }*/
+        }
 		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}

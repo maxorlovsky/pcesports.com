@@ -82,7 +82,7 @@
         </div>
     </div>
     
-    <div class="block">
+    <?/*<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('schedule')?></h1>
         </div>
@@ -90,7 +90,7 @@
         <div class="block-content tournament-rules">
             <?=t('hearthstone_lan_schedule_information_'.$this->pickedTournament)?>
         </div>
-    </div>
+    </div>*/?>
     
     <div class="block">
         <div class="block-header-wrapper">
