@@ -45,7 +45,7 @@
         <a href="<?=_cfg('href')?>/<?=$this->fullGameName[$v->game]?><?=($v->game=='lol'?'/'.$v->server:null)?>/<?=$v->tournament_id?>" class="block-content tournament-info place-<?=$v->place?>">
             <img class="game-logo" src="<?=_cfg('img')?>/<?=str_replace('lan', '', $v->game)?>-logo-small.png">
             <label class="tournament-name">
-                <?=($v->game=='lol'?'League of Legends':'Hearthstone League S1 - ')?> 
+                <?=t($this->fullGameName[$v->game])?> 
                 <? if ($v->server) { ?>(<?=strtoupper($v->server)?>)<?}?> 
                 #<?=$v->tournament_id?>
             </label> - <?=$v->name?>
