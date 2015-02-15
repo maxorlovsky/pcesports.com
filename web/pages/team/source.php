@@ -24,7 +24,7 @@ class team
                 'achievements' => 
                     '5x legend<br />'.
                     'World first legend in january 2015.<br />'.
-                    '4th blace in unicon<br />'.
+                    '4th place in UniCon<br />'.
                     'ESL tournament 1st place and 2st place in king of the hill.'
             ),
         );
@@ -47,7 +47,8 @@ class team
             '`id` = 112 OR '. //anya
             '`id` = 132 OR '. //arturs
             '`id` = 213 OR '. //aven
-            '`id` = 126 ' //angel-ada
+            '`id` = 126 OR '. //angel-ada
+            '`id` = 491 ' //vanngarrd
         );
         
         $this->team = array(
@@ -87,6 +88,12 @@ class team
                 'role' => 'Community manager (FB)',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/martin.petkevich',
+                )
+            ),
+            491 => array(
+                'role' => 'Smite tournament manager',
+                'socials' => array(
+                    'tw' => 'https://twitter.com/vanngarrd',
                 )
             ),
         );
