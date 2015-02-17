@@ -1836,12 +1836,7 @@ class Ajax extends System
     			'`timestamp` = '.(time() + 300)
     		);
             
-            //Sending additionally to connect@pcesports.com
-            //if ($form['subject'] == 'Advertising' || $form['subject'] == 'Bussiness offer') {
-                $this->sendMail('connect@pcesports.com', 'Contact form submit: '.$form['subject'], $txt);
-            //}
-            
-    		return '1;'.t('form_success_sent');
+            return '1;'.t('form_success_sent');
     	}
     	
     	return '0;'.t('error_sending_form');

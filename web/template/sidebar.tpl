@@ -168,10 +168,6 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
 		</div>
-        <div class="ad-blocked block-content">
-            Help our survivability!<br />
-			Don't block our ads, we love you ;(
-		</div>
     </div>
     <? } ?>
 	

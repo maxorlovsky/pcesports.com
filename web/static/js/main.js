@@ -166,10 +166,6 @@ $('.formbut').on('click', function() {
     });
 });
 
-if ($('.ad-holder').height() === 0) {
-    $('.ad-blocked').show();
-}
-
 $('.login, .must-login').on('click', function() {
     PC.openPopup('login-window');
 });
