@@ -21,8 +21,6 @@
         	<a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="image-holder">
                 <? if ($v->extension && file_exists(_cfg('imgu').'/news/big-'.$v->id.'.'.$v->extension)) { ?>
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$v->id?>.<?=$v->extension?>" />
-                <? } else { ?>
-                    <p><?=t('no_image')?></p>
                 <? } ?>
             </a>
         	<a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="title"><?=$v->title?></a>

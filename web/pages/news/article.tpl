@@ -17,8 +17,6 @@
         	<div class="image-holder">
                 <? if ($this->news->extension && file_exists(_cfg('imgu').'/news/big-'.$this->news->id.'.'.$this->news->extension)) { ?>
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->id?>.<?=$this->news->extension?>" />
-                <? } else { ?>
-                    <p><?=t('no_image')?></p>
                 <? } ?>
             </div>
         	<div class="text"><?=$this->news->value?></div>
