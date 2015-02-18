@@ -50,7 +50,7 @@
 					</div>
         		</a>
         	</div>
-            <? if ($this->news->top->extension) { ?>
+            <? if ($this->news->top->extension && file_exists(_cfg('imgu').'/news/big-'.$this->news->top->id.'.'.$this->news->top->extension)) { ?>
                 <a class="image-holder" href="<?=_cfg('href')?>/news/<?=$this->news->top->id?>">
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->top->id?>.<?=$this->news->top->extension?>" />
                 </a>
@@ -82,7 +82,7 @@
             <div class="small-block">
                 <div class="image-holder">
                 	<a href="<?=_cfg('href')?>/news/<?=$v->id?>">
-                    <? if ($v->extension) { ?>
+                    <? if ($v->extension && file_exists(_cfg('imgu').'/news/small-'.$v->id.'.'.$v->extension)) { ?>
                         <img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
                     <? } else { ?>
                         <p><?=t('no_image')?></p>
