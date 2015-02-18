@@ -812,7 +812,7 @@ class Ajax extends System
             $challonge_id = 0;
         }
         
-        $row = Db::fetchRow('SELECT `checked_in` '.
+        $row = Db::fetchRow('SELECT `game`, `server`, `checked_in` '.
             'FROM `participants` '.
             'WHERE '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '.
@@ -821,6 +821,14 @@ class Ajax extends System
         );
         
         if ($row->checked_in == 0) {
+            if (
+               ($row->game == 'hs' && $this->data->settings['tournament-checkin-'.$row->game] != 1) ||
+               $this->data->settings['tournament-checkin-'.$row->game.'-'.$row->server] != 1
+               )
+            {
+                return '2;'.t('none').';'.t('wait_for_start').';'.t('none');
+            }
+            
             return '2;'.t('none').';'.t('check_in_required').';'.t('none');
         }
         
