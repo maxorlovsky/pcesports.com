@@ -385,13 +385,6 @@ footer .copyrights .devs:hover {
     line-height: 100px;
     margin: 0;
 }
-.big-block .title {
-    display: block;
-    margin: 20px 20px 5px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
 .big-block .text {
     display: block;
     color: #444;
