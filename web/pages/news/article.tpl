@@ -15,7 +15,7 @@
         		</a>
         	</div>
         	<div class="image-holder">
-                <? if ($this->news->extension && file_exists(_cfg('imgu').'/news/big-'.$this->news->id.'.'.$this->news->extension)) { ?>
+                <? if ($this->news->extension) { ?>
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$this->news->id?>.<?=$this->news->extension?>" />
                 <? } ?>
             </div>

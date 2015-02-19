@@ -19,7 +19,7 @@
         		</a>
         	</div>
         	<a href="<?=_cfg('href')?>/news/<?=$v->id?>" class="image-holder">
-                <? if ($v->extension && file_exists(_cfg('imgu').'/news/big-'.$v->id.'.'.$v->extension)) { ?>
+                <? if ($v->extension) { ?>
                     <img src="<?=_cfg('imgu')?>/news/big-<?=$v->id?>.<?=$v->extension?>" />
                 <? } ?>
             </a>
