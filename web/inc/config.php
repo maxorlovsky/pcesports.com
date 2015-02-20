@@ -93,7 +93,7 @@ $cfg['smtpMailFrom'] = 'Pentaclick eSports';*/
 $cfg['smtpMailName'] = 'pentaclickesports@gmail.com';
 $cfg['smtpMailPort'] = '465';
 $cfg['smtpMailHost'] = 'ssl://smtp.gmail.com';
-$cfg['smtpMailPass'] = 'aveclickius777';
+$cfg['smtpMailPass'] = 'zwAt!&JfA!MU!YE&gArw';
 $cfg['smtpMailFrom'] = 'Pentaclick eSports';
 
 $cfg['href'] = $cfg['site'].'/%lang%';
