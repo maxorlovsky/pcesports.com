@@ -195,6 +195,7 @@ class System
                 $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
                     '`approved` = 1 AND '.
+                    '`game` != "lolcup" AND '.
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `featured` DESC, `viewers` DESC '.
                     'LIMIT 5'
