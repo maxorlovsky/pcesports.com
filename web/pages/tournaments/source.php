@@ -78,25 +78,6 @@ class tournaments extends System
             }
         }
 		
-        if ($this->tournamentData) {
-            $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
-                'FROM `participants` '.
-                'WHERE `game` = "lol" AND '.
-                '`server` = "'.Db::escape($this->server).'" AND ' .
-                '`approved` = 1 AND '.
-                '`deleted` = 0 '.
-                'GROUP BY `tournament_id` '.
-                'ORDER BY `id` DESC'
-            );
-            if ($rows) {
-                foreach($rows as $v) {
-                    if ($this->tournamentData[$v->tournament_id]) {
-                        $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
-                    }
-                }
-            }
-        }
-		
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	

@@ -518,20 +518,20 @@ class System
 		
 		$ch = curl_init();
 		
-		//---
-		curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
-		curl_setopt($ch, CURLOPT_FAILONERROR, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-		curl_setopt($ch, CURLOPT_POST, 0); // set POST method
-		//curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST fields
-		
+        $curlOptions = array (
+            CURLOPT_URL => $apiUrl,
+            CURLOPT_FAILONERROR => 1,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CONNECTTIMEOUT => 30,
+            CURLOPT_POST => 0,
+        );
+        curl_setopt_array($ch,$curlOptions);		
 		$response = curl_exec($ch); // run the whole process 
-		
 		$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		
+        //$error = curl_error($ch);
 		curl_close($ch);
 		
 		if ($http_status == 400) {
