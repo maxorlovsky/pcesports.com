@@ -1477,9 +1477,9 @@ class Ajax extends System
                 if (!$response && $summonersNames[$i]) {
                     $err['mem'.$i] = '0;'.t('player_not_found');
                 }
-                else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
-                    $err['mem'.$i] = '0;'.t('player_low_lvl');
-                }
+                //else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
+                //    $err['mem'.$i] = '0;'.t('player_low_lvl');
+                //}
                 else if ($summonersNames[$i]) {
                     $players[$i]['id'] = $response[0]['Id'];
                     $players[$i]['name'] = $response[0]['Name'];
@@ -1621,9 +1621,9 @@ class Ajax extends System
                 if (!$response && $summonersNames[$i]) {
                     $err['mem'.$i] = '0;'.t('player_not_found');
                 }
-                else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
-                    $err['mem'.$i] = '0;'.t('player_low_lvl');
-                }
+                //else if ($response[0]['Level'] != 30 && $summonersNames[$i]) {
+                //    $err['mem'.$i] = '0;'.t('player_low_lvl');
+                //}
                 else if ($summonersNames[$i]) {
                     $players[$i]['id'] = $response[0]['Id'];
                     $players[$i]['name'] = $response[0]['Name'];
