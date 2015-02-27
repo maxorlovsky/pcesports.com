@@ -29,7 +29,7 @@
 </head>
 <body>
 
-<script async src="<?=_cfg('static')?>/js/scripts.js"></script>
+<script src="<?=_cfg('static')?>/js/scripts.js"></script>
 
 <section id="full-site-wrapper">
 <div id="head-line"></div>
