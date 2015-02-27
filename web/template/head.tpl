@@ -15,8 +15,6 @@
     
     <title><?=$this->title?><?=$this->data->settings['site_name']?></title>
     
-    <script src="<?=_cfg('static')?>/js/scripts.js"></script>
-    
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
@@ -28,52 +26,54 @@
     <? } else { ?>
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css" />
     <? } ?>
-    
-    <? if (_cfg('env') == 'prod') { ?>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-47216717-1', 'pcesports.com');
-        ga('require', 'displayfeatures');
-        ga('send', 'pageview');
-    </script>
-    <? } ?>
-    
-    <script>
-        var g = {
-            site: '<?=_cfg('site')?>',
-            logged_in: <?=($this->logged_in?1:0)?>,
-            str: {
-                days: '<?=t('days')?>',
-                day: '<?=t('day')?>',
-                connect: '<?=t('connect')?>',
-                disconnect: '<?=t('disconnect')?>',
-                connected: '<?=t('connected')?>',
-                disconnected: '<?=t('disconnected')?>',
-                enter_url: '<?=t('enter_url')?>',
-                turn_off_sound: '<?=t('turn_off_sound')?>',
-                turn_on_sound: '<?=t('turn_on_sound')?>',
-                approved: '<?=t('approved')?>',
-            }
-        };
-		
-		//Highslide
-		hs.graphicsDir = '<?=_cfg('static')?>/images/graphics/';
-		hs.wrapperClassName = 'hidden';
-		hs.align = 'center';
-		hs.transitions = ['expand'];
-		hs.outlineType = 'rounded-white';
-		hs.fadeInOut = false;
-		hs.dimmingOpacity = 0.8;
-		//Highslide
-    </script>
 </head>
+<body>
+
+<script async src="<?=_cfg('static')?>/js/scripts.js"></script>
 
 <section id="full-site-wrapper">
-
 <div id="head-line"></div>
+
+<? if (_cfg('env') == 'prod') { ?>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-47216717-1', 'pcesports.com');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+</script>
+<? } ?>
+
+<script>
+var g = {
+    site: '<?=_cfg('site')?>',
+    logged_in: <?=($this->logged_in?1:0)?>,
+    str: {
+        days: '<?=t('days')?>',
+        day: '<?=t('day')?>',
+        connect: '<?=t('connect')?>',
+        disconnect: '<?=t('disconnect')?>',
+        connected: '<?=t('connected')?>',
+        disconnected: '<?=t('disconnected')?>',
+        enter_url: '<?=t('enter_url')?>',
+        turn_off_sound: '<?=t('turn_off_sound')?>',
+        turn_on_sound: '<?=t('turn_on_sound')?>',
+        approved: '<?=t('approved')?>',
+    }
+};
+
+//Highslide
+hs.graphicsDir = '<?=_cfg('static')?>/images/graphics/';
+hs.wrapperClassName = 'hidden';
+hs.align = 'center';
+hs.transitions = ['expand'];
+hs.outlineType = 'rounded-white';
+hs.fadeInOut = false;
+hs.dimmingOpacity = 0.8;
+//Highslide
+</script>
 
 <? if (_cfg('env') != 'dev') { ?>
 <div id="fb-root"></div>
