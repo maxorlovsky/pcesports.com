@@ -1,9 +1,14 @@
+# 28.02.2015
+INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('tournamentSmiteEu', '4', CURRENT_TIMESTAMP);
+
 # 14.02.2015
 UPDATE `participants` SET `game` = "hsold", `deleted` = 1 WHERE `game` = "hs";
 UPDATE `participants` SET `game` = "hs", `server` = "s1" WHERE `game` = "hslan";
 ALTER TABLE `tournaments` CHANGE `status` `status` ENUM('Ended','Start') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 UPDATE `tournaments` SET `game` = "hsold" WHERE `game` = "hs";
 UPDATE `tournaments` SET `server` = "s1", `game` = "hs" WHERE `game` = "hslan";
+UPDATE `tm_modules` SET `name` = 'tournamentLolEune' WHERE `tm_modules`.`name` = 'tournamentEUNE';
+UPDATE `tm_modules` SET `name` = 'tournamentLolEuw' WHERE `tm_modules`.`name` = 'tournamentEUW';
 
 # 13.02.2015
 UPDATE `tm_modules` SET `name` = 'tournamentSmiteNa' WHERE `tm_modules`.`name` = 'tournamentSmite';
