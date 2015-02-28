@@ -176,7 +176,8 @@ class System
                     'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
                     'FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
-                    '`game` = "lolcup" AND '.
+                    '`game` = "lolcup" OR '.
+                    '`name` = "pentaclick_tv" AND '
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `viewers` DESC '
                 );
@@ -196,7 +197,8 @@ class System
                     'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
                     'FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
-                    '`game` = "smitecup" AND '.
+                    '`game` = "smitecup" OR '.
+                    '`name` = "pentaclick_tv" AND '
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `viewers` DESC '
                 );
