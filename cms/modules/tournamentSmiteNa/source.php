@@ -104,7 +104,7 @@ class TournamentSmiteNa
             return '0;Match already ended';
         }
         
-        if (!in_array($server, array('euw','eune'))) {
+        if (!in_array($server, array('na','eu'))) {
             return '0;Server error';
         }
         

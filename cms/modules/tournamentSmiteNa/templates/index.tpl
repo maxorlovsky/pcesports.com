@@ -3,7 +3,7 @@
     <tr><td colspan="2"><center><b><?=strtoupper($module->server)?> settings</b></center></td></tr>
     <tr>
         <td width="30%"><b>Automatic advancement</b></td>
-        <td width="70%"><input type="checkbox" id="auto-advance" <?=($module->config['tournament-auto-lol-'.$module->server]==1?'checked':null)?>/></td>
+        <td width="70%"><input type="checkbox" id="auto-advance" <?=($module->config['tournament-auto-smite-'.$module->server]==1?'checked':null)?>/></td>
     </tr>
 </table>
 <br /><br />
