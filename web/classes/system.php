@@ -177,7 +177,7 @@ class System
                     'FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
                     '`game` = "lolcup" OR '.
-                    '`name` = "pentaclick_tv" AND '
+                    '`name` = "pentaclick_tv" AND '.
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `viewers` DESC '
                 );
@@ -198,7 +198,7 @@ class System
                     'FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
                     '`game` = "smitecup" OR '.
-                    '`name` = "pentaclick_tv" AND '
+                    '`name` = "pentaclick_tv" AND '.
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `viewers` DESC '
                 );
