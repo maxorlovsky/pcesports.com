@@ -191,11 +191,32 @@ class System
                     unset($v);
                 }
             }
+            else if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
+                $this->streams = Db::fetchRows(
+                    'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+                    'FROM `streams` '.
+                    'WHERE `online` >= '.(time() - 360).' AND '.
+                    '`game` = "smitecup" AND '.
+                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                    'ORDER BY `viewers` DESC '
+                );
+                
+                if ($this->streams) {
+                    foreach($this->streams as &$v) {
+                        if ($v->game == 'smitecup') {
+                            $v->game = 'smite';
+                            $v->event = 1;
+                        }
+                    }
+                    unset($v);
+                }
+            }
             else {
                 $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
                     'WHERE `online` >= '.(time() - 360).' AND '.
                     '`approved` = 1 AND '.
                     '`game` != "lolcup" AND '.
+                    '`game` != "smitecup" AND '.
                     '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `featured` DESC, `viewers` DESC '.
                     'LIMIT 5'

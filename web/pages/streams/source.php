@@ -22,6 +22,17 @@ class streams extends System
             );
         }
         
+        if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
+            $eventStreams = Db::fetchRows(
+                'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+                'FROM `streams` '.
+                'WHERE `online` != 0 AND '.
+                '`game` = "smitecup" AND '.
+                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
+                'ORDER BY `viewers` DESC, `onlineStatus` DESC '
+            );
+        }
+        
         $this->streams = Db::fetchRows(
             'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
             'FROM `streams` '.
@@ -38,6 +49,10 @@ class streams extends System
             foreach($this->streams as &$v) {
                 if ($v->game == 'lolcup') {
                     $v->game = 'lol';
+                    $v->event = 1;
+                }
+                if ($v->game == 'smitecup') {
+                    $v->game = 'smitecup';
                     $v->event = 1;
                 }
             }
