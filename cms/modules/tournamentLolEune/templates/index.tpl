@@ -12,7 +12,7 @@
 		foreach($module->chats as $v) {
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>" attr-challoge-team1="<?=$v->challongeTeam1?>" attr-challoge-team2="<?=$v->challongeTeam2?>" attr-name-team1="<?=$v->name1?>" attr-name-team2="<?=$v->name2?>">
-        <h4><a href="http://euw.op.gg/summoner/userName=<?=$v->playerName1?>" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="http://euw.op.gg/summoner/userName=<?=$v->playerName2?>" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
+        <h4><a href="http://eune.op.gg/summoner/userName=<?=$v->playerName1?>" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="http://eune.op.gg/summoner/userName=<?=$v->playerName2?>" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
         <div class="finish-match hint" name="Finish match">[End]</div>
         <div class="close-chat hint" name="Hide chat">[X]</div>
 		<div class="chat-content"></div>
@@ -71,7 +71,7 @@ $('.finish-popup button.team1, .finish-popup button.team2').on('click', function
         type: 'POST',
         data: {
             control: 'submitForm',
-            module: 'tournaments',
+            module: 'tournamentLolEune',
             action: 'finishMatch',
             form: form
         },
@@ -152,7 +152,7 @@ $('.chat-submit').on('keyup', function(e) {
             type: 'POST',
             data: {
 				control: 'submitForm',
-                module: 'tournaments',
+                module: 'tournamentLolEune',
 				action: 'sendChat',
 				form: form
             },
@@ -188,7 +188,7 @@ profiler = {
             type: 'POST',
             data: {
                 control: 'submitForm',
-                module: 'tournaments',
+                module: 'tournamentLolEune',
 				action: 'fetchChat',
 				form: arrayElements
             },
@@ -222,7 +222,7 @@ profiler = {
             type: 'POST',
             data: {
                 control: 'submitForm',
-                module: 'tournaments',
+                module: 'tournamentLolEune',
 				action: 'statusCheck',
 				form: arrayElements
             },
