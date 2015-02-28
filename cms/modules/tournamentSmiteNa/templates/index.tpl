@@ -110,7 +110,7 @@ $('#auto-advance').on('click', function() {
         timeout: 10000,
         data: {
             control: 'saveSetting',
-            param: 'tournament-auto-lol-<?=$module->server?>',
+            param: 'tournament-auto-smite-<?=$module->server?>',
             value: checked
         },
         success: function(data) {
