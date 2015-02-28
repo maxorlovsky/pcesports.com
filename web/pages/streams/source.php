@@ -39,6 +39,7 @@ class streams extends System
             'WHERE `online` != 0 AND '.
             '`approved` = 1 AND '.
             '`game` != "lolcup" AND '.
+            '`game` != "smitecup" AND '.
             '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
@@ -51,7 +52,7 @@ class streams extends System
                     $v->game = 'lol';
                     $v->event = 1;
                 }
-                if ($v->game == 'smitecup') {
+                else if ($v->game == 'smitecup') {
                     $v->game = 'smitecup';
                     $v->event = 1;
                 }
