@@ -73,7 +73,7 @@ $('.finish-popup button.team1, .finish-popup button.team2').on('click', function
         type: 'POST',
         data: {
             control: 'submitForm',
-            module: 'tournamentSmiteNa',
+            module: 'tournamentSmiteEu',
             action: 'finishMatch',
             form: form
         },
@@ -154,7 +154,7 @@ $('.chat-submit').on('keyup', function(e) {
             type: 'POST',
             data: {
 				control: 'submitForm',
-                module: 'tournamentSmiteNa',
+                module: 'tournamentSmiteEu',
 				action: 'sendChat',
 				form: form
             },
@@ -190,7 +190,7 @@ profiler = {
             type: 'POST',
             data: {
                 control: 'submitForm',
-                module: 'tournamentSmiteNa',
+                module: 'tournamentSmiteEu',
 				action: 'fetchChat',
 				form: arrayElements
             },
@@ -224,7 +224,7 @@ profiler = {
             type: 'POST',
             data: {
                 control: 'submitForm',
-                module: 'tournamentSmiteNa',
+                module: 'tournamentSmiteEu',
 				action: 'statusCheck',
 				form: arrayElements
             },
