@@ -53,7 +53,7 @@ class streams extends System
                     $v->event = 1;
                 }
                 else if ($v->game == 'smitecup') {
-                    $v->game = 'smitecup';
+                    $v->game = 'smite';
                     $v->event = 1;
                 }
             }
