@@ -1,6 +1,18 @@
 <section class="container page lol smite <?=$this->server?>">
 
 <div class="left-containers">
+    <? if (t('smite_tournament_vod_'.$this->server.'_'.$this->pickedTournament) != 'smite_tournament_vod_'.$this->server.'_'.$this->pickedTournament) { ?>
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('broadcast_vod')?></h1>
+        </div>
+        
+        <div class="block-content vods">
+            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('smite_tournament_vod_'.$this->server.'_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+    <? } ?>
+    
 	<? if ($this->data->settings['tournament-reg-smite-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block">
 		<div class="block-header-wrapper">
