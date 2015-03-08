@@ -147,7 +147,7 @@ class System
             }
 
             if ($v->game == 'hs') {
-                $game = 'Hearthstone League S1 - ';
+                $game = 'Hearthstone - ';
             }
             else if ($v->game == 'lol') {
                 $game = 'League of Legends';
