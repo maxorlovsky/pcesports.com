@@ -79,7 +79,7 @@
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
             <? if ($v['game'] == 'hs') { ?>
-                <a href="<?=_cfg('href')?>/hearthstone/<?=$v['id']?>" class="button">
+                <a href="<?=_cfg('href')?>/hearthstone/s1/<?=$v['id']?>" class="button">
                     <?=t('join')?>
                 </a>
             <? } else { ?>

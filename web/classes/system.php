@@ -692,6 +692,10 @@ class System
     }
     
     public function convertTime($date, $format = 'd M Y, H:i') {
+        if (!is_numeric($date)) {
+            $date = strtotime($date);
+        }
+        
         if (isset($this->data->user->timezone) && $this->data->user->timezone) {
             if (intval($this->data->user->timezone) > 0) {
                 $sign = '+';
@@ -699,10 +703,10 @@ class System
             else {
                 $timezone = str_replace('-', '', $timezone);
             }
-            $return = date($format, strtotime($date) + $this->data->user->timezone).' (GMT'.$sign.($this->data->user->timezone/3600).')';
+            $return = date($format, $date + $this->data->user->timezone).' (GMT'.$sign.($this->data->user->timezone/3600).')';
         }
         else {
-            $return = date($format, strtotime($date)).' (GMT-0)';
+            $return = date($format, $date).' (GMT-0)';
         }
         
         return $return;
