@@ -691,6 +691,23 @@ class System
         return $text;
     }
     
+    public function convertTime($date, $format = 'd M Y, H:i') {
+        if (isset($this->data->user->timezone) && $this->data->user->timezone) {
+            if (intval($this->data->user->timezone) > 0) {
+                $sign = '+';
+            }
+            else {
+                $timezone = str_replace('-', '', $timezone);
+            }
+            $return = date($format, strtotime($date) + $this->data->user->timezone).' (GMT'.$sign.($this->data->user->timezone/3600).')';
+        }
+        else {
+            $return = date($format, strtotime($date)).' (GMT-0)';
+        }
+        
+        return $return;
+    }
+    
     public function getAboutTime($interval) {
         if ($interval->y) return $interval->y.' '.t('year_ago');
         else if ($interval->m) return $interval->m.' '.t('months_ago');

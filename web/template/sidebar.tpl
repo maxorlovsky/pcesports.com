@@ -70,7 +70,7 @@
         $i = 0;
         foreach($this->serverTimes as $v) {
         ?>
-        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=date('j M - H:i', $v['time'] + $this->data->user->timezone)?>">
+        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>">
             <? if ($i!=0) { ?>
                 <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
             <? } else { ?>

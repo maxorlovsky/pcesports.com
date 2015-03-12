@@ -180,8 +180,8 @@ class smite extends System
         
 		if ($tournamentRows) {
             foreach($tournamentRows as $v) {
-                $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
-                $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
+                $tournamentTime['registration'] = $this->convertTime($v->dates_registration.' '.$v->time);
+                $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
             }
             
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `p`.`name` AS `player`, `p`.`player_id` '.

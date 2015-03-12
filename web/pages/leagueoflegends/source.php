@@ -180,8 +180,8 @@ class leagueoflegends extends System
         
 		if ($tournamentRows) {
             foreach($tournamentRows as $v) {
-                $tournamentTime['registration'] = date('d M Y, H:i', strtotime($v->dates_registration.' '.$v->time) + $this->data->user->timezone);
-                $tournamentTime['start'] = date('d M Y, H:i', strtotime($v->dates_start.' '.$v->time) + $this->data->user->timezone);
+                $tournamentTime['registration'] = $this->convertTime($v->dates_registration.' '.$v->time);
+                $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
             }
             
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `p`.`name` AS `player`, `p`.`player_id` '.
@@ -396,17 +396,27 @@ class leagueoflegends extends System
             'UPDATE `participants` SET `deleted` = 1 '.
             'WHERE `game` = "lol" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '.
+            'LIMIT 1'
+        );
+        
+        $row = Db::fetchRow('SELECT `challonge_id` '.
+            'FROM `participants` '.
+            'WHERE `game` = "lol" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
         
-        $apiArray = array(
-            '_method' => 'delete',
-        );
-        if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-        }
-        else {
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+        if ($row->challonge_id != 0) {
+            $apiArray = array(
+                '_method' => 'delete',
+            );
+            if (_cfg('env') == 'prod') {
+                $this->runChallongeAPI('tournaments/pentaclick-lol'.$this->server.(int)$this->currentTournament.'/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
+            else {
+                $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
         }
         
         unset($_SESSION['participant']);
