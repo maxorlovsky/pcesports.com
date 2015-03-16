@@ -15,7 +15,7 @@
             <? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
+                <?/*<li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>*/?>
 				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
@@ -78,15 +78,9 @@
             <? } ?>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <? if ($v['game'] == 'hs') { ?>
-                <a href="<?=_cfg('href')?>/hearthstone/s1/<?=$v['id']?>" class="button">
-                    <?=t('join')?>
-                </a>
-            <? } else { ?>
             <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button">
                 <?=t('join')?>
             </a>
-            <? } ?>
             
             <? if ($i!=0) { ?>
                 <div class="clear"></div>

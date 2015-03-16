@@ -961,6 +961,8 @@ class Ajax extends System
     	$err = array();
     	$suc = array();
     	parse_str($data['form'], $post);
+        
+        $server = 's1';
     	
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
@@ -968,8 +970,8 @@ class Ajax extends System
     		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.
-    		'`approved` = 1 AND '.
-    		'`deleted` = 0'
+    		//'`approved` = 1 AND '.
+    		'`deleted` = 0 '
     	);
 
     	if (!$post['battletag']) {
@@ -994,6 +996,46 @@ class Ajax extends System
     	else {
     		$suc['email'] = '1;'.t('approved');
     	}
+        
+        if (!$post['agree']) {
+    		$err['agree'] = '0;'.t('must_agree_with_rules');
+    	}
+        else {
+            $suc['agree'] = '1;'.t('approved');
+        }
+        
+        $heroesPicked = array();
+        for($i=1;$i<=4;++$i) {
+            if (!$post['hero'.$i]) {
+                $err['hero'.$i] = '0;'.t('pick_hero');
+            }
+            
+            if (in_array($post['hero'.$i], $heroesPicked)) {
+                $err['hero'.$i] = '0;'.t('same_hero_picked');
+            }
+            
+            if ($post['hero'.$i]) {
+                $heroesPicked[] = $post['hero'.$i];
+            }
+        }
+        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
+            $err['hero2'] = '0;'.t('same_hero_picked');
+        }
+        
+        $addStream = 0;
+        if ($post['stream']) {
+            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
+            
+            $twitch = $this->runTwitchAPI($post['stream']);
+            
+            if (!$twitch) {
+                $err['stream'] = '0;'.t('channel_not_found');
+            }
+            else {
+                $addStream = 1;
+                $suc['stream'] = '1;'.t('approved');
+            }
+        }
     	
     	if ($err) {
     		$answer['ok'] = 0;
@@ -1005,17 +1047,27 @@ class Ajax extends System
     	else {
     		$answer['ok'] = 1;
     		$answer['err'] = $suc;
+            
+            $contact_info = json_encode(array(
+                'hero1' => $post['hero1'],
+                'hero2' => $post['hero2'],
+                'hero3' => $post['hero3'],
+                'hero4' => $post['hero4'],
+                'phone' => $post['phone'],
+                'place' => 0,
+            ));
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
     		Db::query('INSERT INTO `participants` SET '.
-	    		' `game` = "hs", '.
-	    		' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
-	    		' `timestamp` = NOW(), '.
-	    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
-	    		' `name` = "'.Db::escape($post['battletag']).'", '.
-	    		' `email` = "'.Db::escape($post['email']).'", '.
-	    		' `contact_info` = "'.Db::escape($battleTagBreakdown[0]).'", '.
-	    		' `link` = "'.$code.'"'
+	    		'`game` = "hs", '.
+                '`server` = "'.Db::escape($server).'", '.
+	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
+	    		'`timestamp` = NOW(), '.
+	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`name` = "'.Db::escape($post['battletag']).'", '.
+	    		'`email` = "'.Db::escape($post['email']).'", '.
+	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
+	    		'`link` = "'.$code.'"'
     		);
     	
     		$teamId = Db::lastId();
@@ -1028,12 +1080,24 @@ class Ajax extends System
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
     		);
+            
+            if ($addStream == 1) {
+                Db::query(
+                    'INSERT INTO `streams` SET '.
+                    '`user_id`  = '.(int)$this->data->user->id.', '.
+                    '`participant_id` = '.(int)$teamId.', '.
+                    '`name` = "'.Db::escape($post['stream']).'", '.
+                    '`game` = "hscup", '.
+                    '`languages` = "both", '.
+                    '`approved` = 1 '
+                );
+            }
     		
     		$text = Template::getMailTemplate('reg-hs-player');
     	
     		$text = str_replace(
     			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone', _cfg('site')),
+    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone/'.$server, _cfg('site')),
     			$text
     		);
     	
@@ -1183,7 +1247,7 @@ class Ajax extends System
     	return json_encode($answer);
     }
     
-    protected function editInLanHS($data) {
+    protected function editInHS($data) {
     	$err = array();
     	$suc = array();
     	parse_str($data['form'], $post);
@@ -1232,7 +1296,6 @@ class Ajax extends System
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
                 'hero4' => $post['hero4'],
-                'phone' => $post['phone'],
                 'place' => 0,
             ));
             
@@ -1240,7 +1303,7 @@ class Ajax extends System
                 '`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'" '.
 	    		'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
-                '`game` = "hslan" '
+                '`game` = "hs" '
     		);
     	}
         

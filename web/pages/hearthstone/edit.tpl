@@ -13,9 +13,9 @@
 					<input type="text" name="email" placeholder="Email*" value="<?=$editData->email?>" />
 					<div id="email-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <input type="text" name="phone" placeholder="Phone number" value="<?=$editData->contact_info->phone?>" />
+                    <!--<input type="text" name="phone" placeholder="Phone number" value="<?=$editData->contact_info->phone?>" />
 					<div id="phone-msg" class="message hidden"></div>
-                    <div class="clear"></div>
+                    <div class="clear"></div>-->
                     
                     <? for ($i=1;$i<=4;++$i) { ?>
                     <select class="hero<?=$i?>" name="hero<?=$i?>">
@@ -39,15 +39,15 @@
                     <div class="clear"></div>
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="edit-player-lan"><?=t('edit_information')?></a>
+				<a href="javascript:void(0);" class="button" id="edit-player"><?=t('edit_information')?></a>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-$('#edit-player-lan').on('click', function() {
-    PC.editPlayerLan($(this));
+$('#edit-player').on('click', function() {
+    PC.editPlayer($(this));
 });
 
 $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {

@@ -1,7 +1,12 @@
 <section class="container page lol">
 
 <div class="left-containers">
-    <? if ($verified != 1) { ?>
+    <? /*if ($regged == 1) { ?>
+		<p class="success-add"><?=t('participation_verified')?></p>
+        <br />
+	<? }*/ ?>
+    
+    <? if ($checked_in != 1) { ?>
 		<p class="error-add"><?=t('participation_hsleague_not_verified')?></p>
 	<? } ?>
     
@@ -20,7 +25,7 @@
         </div>
         
         <div class="block-content">
-            <?=t('lan_participant_information_txt')?>
+            <?=t('hs_participant_information_txt')?>
         </div>
     </div>
     

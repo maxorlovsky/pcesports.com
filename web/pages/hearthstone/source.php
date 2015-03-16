@@ -43,7 +43,7 @@ class hearthstone extends System
     
     public function editPage() {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/hearthstone');
+			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
         $row = Db::fetchRow('SELECT `email`, `contact_info` '.
             'FROM `participants` '.
@@ -62,17 +62,21 @@ class hearthstone extends System
 	public function participantPage() {
 		$verified = 0;
 		
-		if (isset($_GET['val3']) && $_GET['val3'] == 'exit') {
+		if (isset($_GET['val4']) && $_GET['val4'] == 'exit') {
 			unset($_SESSION['participant']);
-			go(_cfg('href').'/hearthstone');
+			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
 		
-		if (isset($_GET['val3']) && $_GET['val3'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+		if (isset($_GET['val4']) && $_GET['val4'] == 'leave' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             $this->leave();
 		}
 		
-		if (!isset($_GET['val4']) && !$_GET['val4'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/hearthstone');
+        if (isset($_GET['val4']) && $_GET['val4'] == 'surrender' && isset($_SESSION['participant']) && $_SESSION['participant']->id) {
+            $this->surrender();
+		}
+		
+		if (!isset($_GET['val5']) && !$_GET['val5'] && !$_SESSION['participant'] && !$_SESSION['participant']->id) {
+			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
 		
 		if (isset($_SESSION['participant'])) {
@@ -80,40 +84,102 @@ class hearthstone extends System
 			$code = $_SESSION['participant']->link;
 		}
 		else {
-			$id = (int)$_GET['val3'];
-			$code = $_GET['val4'];
+			$id = (int)$_GET['val4'];
+			$code = $_GET['val5'];
 		}
-		
-		$row = Db::fetchRow('SELECT * '.
+        
+        $row = Db::fetchRow(
+			'SELECT * '.
 			'FROM `participants` AS `t` '.
 			'WHERE '.
 			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
 			'`t`.`game` = "hs" AND '.
+            '`t`.`server` = "'.Db::escape($this->server).'" AND ' .
 			'`t`.`id` = '.Db::escape($id).' AND '.
 			'`t`.`link` = "'.Db::escape($code).'" AND '.
 			'`t`.`deleted` = 0 AND '.
 			'`t`.`ended` = 0'
 		);
-		
-		if ($row && $row->approved == 0 && $row->deleted == 0) {
-			$verified = 0;
+
+		if ($row && $row->approved == 0) {
+			//Not approved, registration open, approving
+			$this->approveRegisterPlayer($row);
+			$verified = 1;
+			$regged = 1;
 		}
-		else if ($row && $row->approved == 1 && $row->deleted == 0) {
+		else if ($row && $row->approved == 1) {
 			$verified = 1;
 		}
-        else {
-            go(_cfg('href').'/hearthstone');
-        }
-		
-        $_SESSION['participant'] = $row;
+        $checked_in = $row->checked_in;
+        $regged = 1;
         
-        include_once _cfg('pages').'/'.get_class().'/participant-page.tpl';
+        $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
+            'FROM `participants` '.
+            'WHERE `game` = "lol" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND' .
+            '`approved` = 1 AND '.
+            '`checked_in` = 1 AND '.
+            '`tournament_id` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
+            '`deleted` = 0 '
+        );
+        
+        $this->participantsCount = $rows->count;
+		
+		if ($verified == 1) {
+			$_SESSION['participant'] = $row;
+			
+			include_once _cfg('pages').'/'.get_class().'/participant-page.tpl';
+		}
+		else {
+			include_once _cfg('pages').'/'.get_class().'/participant-error.tpl';
+		}
+	}
+    
+    protected function approveRegisterPlayer($row) {
+		//Generating other IDs for different environment
+		if (_cfg('env') == 'prod') {
+			$participant_id = $row->id + 100000;
+		}
+		else {
+			$participant_id = $row->id;
+		}
+		
+		Db::query('UPDATE `participants` '.
+			'SET `approved` = 1 '.
+			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
+			'AND `game` = "hs" '.
+			'AND `id` = '.$row->id
+		);
+        
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($row->email).'" '
+        );
+        
+        if (!$subscribeRow) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($row->email).'", '.
+                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+            );
+        }
+        
+        //Cleaning up duplicates
+        Db::query('UPDATE `participants` '.
+            'SET `deleted` = 1 '.
+            'WHERE `tournament_id` = '.(int)$this->currentTournament.' AND '.
+            '`game` = "hs" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND '.
+            '`id` != '.$row->id.' AND '.
+            '`name` = "'.Db::escape($row->name).'" '
+        );
+		
+		return true;
 	}
 	
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved` '.
+        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
             'WHERE `p`.`game` = "hs" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
@@ -226,7 +292,10 @@ class hearthstone extends System
 	}
 	
 	public function showTemplate() {
-        if (isset($_GET['val4']) && $_GET['val4'] == 'edit') {
+        if (isset($_GET['val4']) && $_GET['val4'] == 'fight') {
+			$this->fightPage();
+		}
+        else if (isset($_GET['val4']) && $_GET['val4'] == 'edit') {
 			$this->editPage();
 		}
         else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
@@ -240,24 +309,90 @@ class hearthstone extends System
 		}
 	}
     
+    protected function surrender() {
+        $row = Db::fetchRow('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND `f`.`done` = 0 '
+        );
+        
+        if (!$row) {
+            go(_cfg('href').'/hearthstone/'.$this->server);
+        }
+        
+        if ($row->player1_id == $_SESSION['participant']->challonge_id) {
+            $winner = $row->player2_id;
+            $scores = '0-1';
+        }
+        else {
+            $winner = $row->player1_id;
+            $scores = '1-0';
+        }
+        
+        $apiArray = array(
+            '_method' => 'put',
+            'match_id' => $row->match_id,
+            'match[scores_csv]' => $scores,
+            'match[winner_id]' => $winner,
+        );
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->server.(int)$this->currentTournament.'/matches/'.$row->match_id.'.put', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
+        }
+        
+        Db::query('UPDATE `participants` SET `ended` = 1 '.
+            'WHERE `game` = "hs" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
+        );
+        
+        Db::query('UPDATE `fights` SET `done` = 1 '.
+            'WHERE `match_id` = '.(int)$row->match_id.' '
+        );
+        
+        $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+        $file = fopen($fileName, 'a');
+        $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
+        fwrite($file, htmlspecialchars($content));
+        fclose($file);
+        
+        unset($_SESSION['participant']);
+        
+        go(_cfg('href').'/hearthstone/'.$this->server);
+    }
+    
     protected function leave() {
         Db::query('UPDATE `participants` SET `deleted` = 1 '.
         'WHERE `game` = "hs" AND '.
         '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
         '`link` = "'.Db::escape($_SESSION['participant']->link).'" ');
         
-        /*$apiArray = array(
-            '_method' => 'delete',
+        $row = Db::fetchRow('SELECT `challonge_id` '.
+            'FROM `participants` '.
+            'WHERE `game` = "hs" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
-        if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-dreamforge/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+        
+        if ($row->challonge_id != 0) {
+            $apiArray = array(
+                '_method' => 'delete',
+            );
+            if (_cfg('env') == 'prod') {
+                $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->server.(int)$this->currentTournament.'/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
+            else {
+                $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
         }
-        else {
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-        }*/
         
         unset($_SESSION['participant']);
         
-        go(_cfg('href').'/hearthstone');
+        go(_cfg('href').'/hearthstone/'.$this->server);
     }
 }

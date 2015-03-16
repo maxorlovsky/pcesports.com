@@ -96,7 +96,7 @@ class leagueoflegends extends System
 		);
 		
 		if ($row && $row->approved == 0) {
-			//Not approved, registration open, approving and adding to brackets
+			//Not approved, registration open, approving
 			$this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;

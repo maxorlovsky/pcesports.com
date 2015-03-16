@@ -1387,7 +1387,7 @@ var PC = {
         };
         this.ajax(query);
     },
-    editPlayerLan: function(element) {
+    editPlayer: function(element) {
         if (this.formInProgress == 1) {
             return false;
         }
@@ -1402,11 +1402,11 @@ var PC = {
             type: 'POST',
             dataType: 'json',
             data: {
-                ajax: 'editInLanHS',
+                ajax: 'editInHS',
                 form: $('#da-form').serialize()
             },
             success: function(answer) {
-                $('#edit-player-lan').removeClass('alpha');
+                $('#edit-player').removeClass('alpha');
                 PC.formInProgress = 0;
                 
                 $.each(answer.err, function(k, v) {
@@ -1426,7 +1426,7 @@ var PC = {
                 }
             },
             error: function() {
-                $('#edit-player-lan').removeClass('alpha');
+                $('#edit-player').removeClass('alpha');
                 PC.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');

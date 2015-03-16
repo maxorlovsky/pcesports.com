@@ -8,7 +8,7 @@
 		</div>
 		
 		<div class="block-content">
-            <p class="info-add"><?=t('this_is_lan_event')?></p>
+            <?/*<p class="info-add"><?=t('this_is_lan_event')?></p>*/?>
 			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 			<div id="join-form">
 				<form id="da-form" method="post">
@@ -18,8 +18,11 @@
 					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
 					<div id="email-msg" class="message hidden"></div>
                     <div class="clear"></div>
-                    <input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
-					<div id="phone-msg" class="message hidden"></div>
+                    <!--<input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
+					<div id="phone-msg" class="message hidden"></div>-->
+                    <input class="hint" attr-msg="<?=t('stream_tournament_hint_hs')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
+					<div id="stream-msg" class="message hidden"></div>
+					<div class="clear"></div>
                     <div class="clear"></div>
                     <? for ($i=1;$i<=4;++$i) { ?>
                     <select class="hero<?=$i?>" name="hero<?=$i?>">
@@ -45,7 +48,7 @@
                     <div class="clear"></div>
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="add-player-lan"><?=t('join_tournament')?></a>
+				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?></a>
 			</div>
 		</div>
 	</div>
@@ -92,6 +95,10 @@
         </div>
     </div>*/?>
     
+    <?
+    //Deprecated groups
+    if ($this->pickedTournament < 6) {
+    ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('participants')?></h1>
@@ -169,6 +176,7 @@
 			<div class="clear"></div>
         </div>
     </div>
+    <? } ?>
     
     <? if ($this->participants) { ?>
     <div class="block">
@@ -180,7 +188,7 @@
         <?
         $participantsCount = 0;
         foreach($this->participants as $v) {
-            if ($v->approved == 0) {
+            if ($v->checked_in == 0) {
             ++$participantsCount;
                 if ($v->user_id != 0) {
                 ?>
@@ -279,8 +287,8 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     });
 });
 
-$('#add-player-lan').on('click', function() {
-    PC.addLanPlayer();
+$('#add-player').on('click', function() {
+    PC.addPlayer();
 });
 
 challongeHeight = 550;
