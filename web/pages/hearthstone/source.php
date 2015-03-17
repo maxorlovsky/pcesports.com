@@ -110,6 +110,7 @@ class hearthstone extends System
 		else if ($row && $row->approved == 1) {
 			$verified = 1;
 		}
+        $paymentVerified = $row->verified;
         $checked_in = $row->checked_in;
         $regged = 1;
         
@@ -179,7 +180,7 @@ class hearthstone extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in` '.
+        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
             'WHERE `p`.`game` = "hs" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.

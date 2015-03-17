@@ -1,3 +1,6 @@
+# 17.03.2015
+ALTER TABLE `participants` ADD `verified` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' ;
+
 # 28.02.2015
 INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('tournamentSmiteEu', '4', CURRENT_TIMESTAMP);
 

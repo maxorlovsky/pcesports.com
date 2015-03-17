@@ -1056,24 +1056,23 @@ footer .games img {
   margin: 0;
   padding: 0;
   list-style: none; }
-
-.block .panel-links li a {
-  color: #000;
-  display: block;
-  padding: 10px 15px;
-  transition: .5s;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold; }
-
-.block .panel-links li a:hover {
-  background-color: #1697e1;
-  color: #eee; }
-
-.block .panel-links li a.inactive:hover {
-  background-color: #444;
-  color: #eee;
-  cursor: default; }
+  .block .panel-links li a {
+    color: #000;
+    display: block;
+    padding: 10px 15px;
+    transition: .5s;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold; }
+    .block .panel-links li a:hover {
+      background-color: #1697e1;
+      color: #eee; }
+    .block .panel-links li a.inactive:hover {
+      background-color: #444;
+      color: #eee;
+      cursor: default; }
+  .block .panel-links.hs {
+    border: 1px solid #E5DC2D; }
 
 #toTop {
   position: fixed;

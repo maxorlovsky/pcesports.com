@@ -6,9 +6,12 @@
         <br />
 	<? }*/ ?>
     
-    <? if ($checked_in != 1) { ?>
+    <? if ($paymentVerified != 1) { ?>
 		<p class="error-add"><?=t('participation_hsleague_not_verified')?></p>
-	<? } ?>
+	<? } else { ?>
+        <p class="success-add"><?=t('participation_hsleague_verified')?></p>
+        <br />
+    <? } ?>
     
     <? if (!$this->logged_in) { ?>
         <p class="info-add"><?=t('participant_not_user')?></p>
@@ -36,7 +39,7 @@
         </div>
         
         <div class="block-content">
-            <?=t('lan_verification_txt')?>
+            <?=t('hs_verification_txt')?>
         </div>
     </div>
 </div>

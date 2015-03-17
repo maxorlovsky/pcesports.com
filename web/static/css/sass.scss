@@ -1117,32 +1117,39 @@ footer .games img {
     margin-right: 20px;
 }
 
-.block .panel-links {
-    display: block;
-    background-color: #fff;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-    font-size: 13px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-.block .panel-links li a {
-    color: #000;
-    display: block;
-    padding: 10px 15px;
-    transition: .5s;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-.block .panel-links li a:hover {
-    background-color: #1697e1;
-    color: #eee;
-}
-.block .panel-links li a.inactive:hover {
-    background-color: #444;
-    color: #eee;
-    cursor: default;
+.block {
+    .panel-links {
+        display: block;
+        background-color: #fff;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+        font-size: 13px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li a {
+            color: #000;
+            display: block;
+            padding: 10px 15px;
+            transition: .5s;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            &:hover {
+                background-color: #1697e1;
+                color: #eee;
+            }
+            &.inactive {
+                &:hover {
+                    background-color: #444;
+                    color: #eee;
+                    cursor: default;
+                }
+            }
+        }
+        &.hs {
+            border: 1px solid #E5DC2D;
+        }
+    }
 }
 
 #toTop {

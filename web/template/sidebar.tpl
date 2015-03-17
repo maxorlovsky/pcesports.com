@@ -13,7 +13,7 @@
             </div>
             
             <? if ($_SESSION['participant']->game == 'hs') { ?>
-            <ul class="panel-links">
+            <ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <?/*<li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>*/?>
 				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
