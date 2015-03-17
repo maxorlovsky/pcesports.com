@@ -327,7 +327,7 @@
     </div>
     <? } ?>
     
-    <? if ($this->participants && isset($participantsCount) && $participantsCount >= 2) { ?>
+    <? if ($this->participants) { ?>
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('brackets')?></h1>
@@ -393,7 +393,9 @@ challongeHeight = 550;
 
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
-    $('#challonge').challonge('hl1_<?=$this->pickedTournament?>', {
+    
+        
+    $('#challonge').challonge('<?=($this->pickedTournament<6?'hl1_'.$this->pickedTournament:'hs'.$this->server.$this->pickedTournament)?>', {
         subdomain: 'pentaclick',
         theme: '1',
         multiplier: '1.0',
