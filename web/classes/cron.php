@@ -64,8 +64,8 @@ class Cron extends System {
     }
     
     public function updateChallongeMatches() {
-        if ($this->data->settings['tournament-start-hs'] == 1) {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->data->settings['hs-current-number'].'/matches.json', array(), 'state=open');
+        if ($this->data->settings['tournament-start-hs-s1'] == 1) {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->data->settings['hs-current-number-s1'].'/matches.json', array(), 'state=open');
 
             foreach($answer as $v) {
                 //Checking if match is already registered
@@ -1050,7 +1050,7 @@ class Cron extends System {
         
         $challongeTournament = $tournament->game;
         if ($tournament->game == 'hs') {
-            $challongeTournament = $this->data->settings['hs-current-number'];
+            $challongeTournament = $this->data->settings['hs-current-number-s1'];
         }
         else {
             $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];

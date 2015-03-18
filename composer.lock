@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6d1d40bc35eedf3b8d81c0e56d1cf71c",
+    "hash": "87ea895e8f8d5259b9dffd56b365d723",
     "packages": [
         {
             "name": "masterexploder/phpthumb",
@@ -163,7 +163,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php-64bit": ">=5.4",
         "ext-curl": "*",
         "ext-json": ">=1",
         "ext-mbstring": "*",

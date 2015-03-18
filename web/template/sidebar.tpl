@@ -15,8 +15,7 @@
             <? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-                <?/*<li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>*/?>
-				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
+				<? if ($this->data->settings['tournament-start-hs-s1'] == 1) {?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/edit"><?=t('edit_information')?></a></li>
@@ -30,10 +29,10 @@
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
-                <? if ($this->data->settings['tournament-start-smite-na'] != 1 && $this->data->settings['tournament-start-smite-eu'] != 1) {?>
+                <? if ($this->data->settings['tournament-start-smite-'.$_SESSION['participant']->server] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
                 <? } ?>
-				<? if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {?>
+				<? if ($this->data->settings['tournament-start-smite-'.$_SESSION['participant']->server] == 1) {?>
                     <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
                     <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
@@ -45,11 +44,10 @@
 			<? } else { ?>
 			<ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-                <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
-                <? if ($this->data->settings['tournament-start-lol-euw'] != 1 && $this->data->settings['tournament-start-lol-eune'] != 1) {?>
+                <? if ($this->data->settings['tournament-start-lol-'.$_SESSION['participant']->server] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
                 <? } ?>
-				<? if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {?>
+				<? if ($this->data->settings['tournament-start-lol-'.$_SESSION['participant']->server] == 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>

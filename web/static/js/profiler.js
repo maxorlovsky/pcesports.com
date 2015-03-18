@@ -155,8 +155,22 @@ var profiler = {
                 $('#opponentName').html(answer[1]);
                 $('#opponentStatus').html(answer[2]);
                 
+                //Required for LoL
                 if ($('#tournamentCode').length > 0) {
                     $('#tournamentCode').val(answer[3]);//focus()
+                }
+                
+                //Required for HS
+                if ($('.opponent-info .player-heroes').length > 0) {
+                    var html = $('#hsicons-holder').html();
+                    var heroes = $.parseJSON(answer[3]);
+                    var returnHtml = '';
+                    var buildUp = '';
+                    $.each(heroes, function(k,v) {
+                        returnHtml = returnHtml+html.replace('%hero%', v).replace('%heroName%', v.charAt(0).toUpperCase() + v.slice(1));
+                    });
+                    
+                    $('.opponent-info .player-heroes').html(returnHtml);
                 }
             }
         }

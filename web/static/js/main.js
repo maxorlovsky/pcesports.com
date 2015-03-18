@@ -99,6 +99,10 @@ $('#addSummoner').on('click', function() {
     PC.addSummoner();
 });
 
+$('#checkInHs').on('click', function() {
+    PC.checkIn('hs');
+});
+
 $('#checkInSmite').on('click', function() {
     PC.checkIn('smite');
 });
@@ -229,13 +233,6 @@ $(document).on('scroll', function() {
 
 $('#toTop').on('click', function() {
 	$('html, body').animate({scrollTop: 0}, 500);
-});
-
-$('.confirm').on('click', function() {
-	if(confirm($(this).attr('attr-msg'))) {
-		location.href = $(this).attr('href');
-	}
-	return false;
 });
 
 if ($('.participants.isotope-participants .block').length > 0) {
@@ -618,6 +615,9 @@ var PC = {
         else if (game == 'smite') {
             command = 'checkInSmite';
         }
+        else if (game == 'hs') {
+            command = 'checkInHs';
+        }
         else {
             alert('No game');
             return false;
@@ -635,6 +635,7 @@ var PC = {
                 
                 if (answer[0] == 1) {
                     $('.block.check-in').fadeOut();
+                    location.reload();
                 }
                 else {
                     alert(answer[1]);
@@ -764,8 +765,7 @@ var PC = {
                 answer = data.split(';');
                 
                 if (answer[0] == 1) {
-                    $('.info-add').fadeOut();
-                    $('.connect-team').fadeOut();
+                    $('.info-add').closest('.block').fadeOut();
                 }
                 else {
                     alert(answer[1]);

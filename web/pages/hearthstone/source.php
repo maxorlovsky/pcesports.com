@@ -38,7 +38,7 @@ class hearthstone extends System
             8 => 'H'
         );
     
-		$this->currentTournament = $this->data->settings['hs-current-number'];
+		$this->currentTournament = $this->data->settings['hs-current-number-s1'];
 	}
     
     public function editPage() {
@@ -111,8 +111,6 @@ class hearthstone extends System
 			$verified = 1;
 		}
         $paymentVerified = $row->verified;
-        $checked_in = $row->checked_in;
-        $regged = 1;
         
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
@@ -293,10 +291,7 @@ class hearthstone extends System
 	}
 	
 	public function showTemplate() {
-        if (isset($_GET['val4']) && $_GET['val4'] == 'fight') {
-			$this->fightPage();
-		}
-        else if (isset($_GET['val4']) && $_GET['val4'] == 'edit') {
+        if (isset($_GET['val4']) && $_GET['val4'] == 'edit') {
 			$this->editPage();
 		}
         else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {

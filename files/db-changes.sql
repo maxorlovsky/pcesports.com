@@ -1,3 +1,10 @@
+# 18.03.2015
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-checkin-hs-s1', '0', 'Процесс checkin (Hearthstone)', 'checkbox', '2');
+UPDATE `tm_settings` SET `setting` = 'hs-current-number-s1' WHERE `tm_settings`.`setting` = 'hs-current-number';
+UPDATE `tm_settings` SET `setting` = 'tournament-reg-hs-s1' WHERE `tm_settings`.`setting` = 'tournament-reg-hs';
+UPDATE `tm_settings` SET `setting` = 'tournament-start-hs-s1' WHERE `tm_settings`.`setting` = 'tournament-start-hs';
+INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('tournamentHs', '4', CURRENT_TIMESTAMP);
+
 # 17.03.2015
 ALTER TABLE `participants` ADD `verified` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' ;
 

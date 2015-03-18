@@ -344,6 +344,80 @@ class Ajax extends System
         return '1;'.json_encode($summoner);
     }
     
+    protected function checkInHs() {
+        if (!$_SESSION['participant']) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $server = $_SESSION['participant']->server;
+        $currentTournament = (int)$this->data->settings['hs-current-number-'.$server];
+        
+        if ($this->data->settings['tournament-checkin-hs-'.$server] != 1) {
+            return '0;Check in is not in progress';
+        }
+        
+        //Generating other IDs for different environment
+		if (_cfg('env') == 'prod') {
+			$participant_id = $_SESSION['participant']->id + 100000;
+		}
+		else {
+			$participant_id = $_SESSION['participant']->id;
+		}
+        
+        $apiArray = array(
+			'participant_id' => $participant_id,
+			'participant[name]' => $_SESSION['participant']->name,
+		);
+		
+		//Adding team to Challonge bracket
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-hs'.$server.$currentTournament.'/participants.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        }
+		
+		//Registering ID, because Challonge idiots not giving an answer with ID
+        if (_cfg('env') == 'prod') {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$server.$currentTournament.'/participants.json');
+        }
+        else {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        }
+        
+		array_reverse($answer, true);
+		
+		foreach($answer as $f) {
+			if ($f->participant->name == $_SESSION['participant']->name) {
+                $row = Db::fetchRow('SELECT * FROM `participants` '.
+					'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+					'AND `game` = "hs" '.
+					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
+                    'AND `approved` = 1 '.
+                    'AND `verified` = 1 '.
+                    'AND `checked_in` = 0 '
+				);
+                if ($row != 0) {
+                    Db::query('UPDATE `participants` '.
+                        'SET `challonge_id` = '.(int)$f->participant->id.', '.
+                        '`checked_in` = 1 '.
+                        'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+                        'AND `game` = "hs" '.
+                        'AND `id` = '.(int)$_SESSION['participant']->id.' '.
+                        'AND `approved` = 1 '.
+                        'AND `verified` = 1 '
+                    );
+                    
+                    $_SESSION['participant']->checked_in = 1;
+                }
+                
+				break;
+			}
+		}
+        
+        return '1;1';
+    }
+    
     protected function checkInSmite() {
         if (!$_SESSION['participant']) {
             return '0;'.t('not_logged_in');
@@ -826,7 +900,7 @@ class Ajax extends System
                $this->data->settings['tournament-checkin-'.$row->game.'-'.$row->server] != 1
                )
             {
-                return '2;'.t('none').';'.t('wait_for_start').';'.t('none');
+                return '0;'.t('none').';'.t('tournament_not_started_yet').';'.t('none');
             }
             
             return '2;'.t('none').';'.t('check_in_required').';'.t('none');
@@ -896,6 +970,35 @@ class Ajax extends System
                     foreach($rows as $v) {
                         $code .= $v->name."\n";
                     }
+                }
+                else if ($_SESSION['participant']->game == 'hs') {
+                    $row = Db::fetchRow(
+                        'SELECT `contact_info` FROM `participants` '.
+                        'WHERE `game` = "hs" AND '.
+                        '`id` = '.(int)$enemyRow->id
+                    );
+                    
+                    $row->contact_info = json_decode($row->contact_info);
+                    //{"hero1":"1","hero2":"4","hero3":"3","hero4":"2","phone":null,"place":0}
+                    $heroes = array(
+                        1 => 'warrior',
+                        2 => 'hunter',
+                        3 => 'mage',
+                        4 => 'warlock',
+                        5 => 'shaman',
+                        6 => 'rogue',
+                        7 => 'druid',
+                        8 => 'paladin',
+                        9 => 'priest',
+                    );
+                    
+                    $code = '';
+                    foreach($row->contact_info as $k => $v) {
+                        if (substr($k, 0, 4) == 'hero') {
+                            $code[$k] = $heroes[$v];
+                        }
+                    }
+                    $code = json_encode($code);
                 }
 
                 return '1;'.$enemyRow->name.';'.$status.';'.$code;
@@ -967,7 +1070,7 @@ class Ajax extends System
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
     	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
+    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.
     		//'`approved` = 1 AND '.
@@ -1061,7 +1164,7 @@ class Ajax extends System
     		Db::query('INSERT INTO `participants` SET '.
 	    		'`game` = "hs", '.
                 '`server` = "'.Db::escape($server).'", '.
-	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
+	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['battletag']).'", '.
@@ -1075,7 +1178,7 @@ class Ajax extends System
     		Db::query(
     			'INSERT INTO `players` SET '.
     			' `game` = "hs", '.
-    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
+    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
     			' `participant_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
