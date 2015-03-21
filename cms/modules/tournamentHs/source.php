@@ -107,11 +107,11 @@ class TournamentHs
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$matchId.'.put', $apiArray);
         }
         
-        Db::query('UPDATE `participants` SET `ended` = 1 '.
+        /*Db::query('UPDATE `participants` SET `ended` = 1 '.
             'WHERE `game` = "hs" AND '.
             '`server` = "'.$server.'" AND '.
             '`id` = '.(int)$loser.' '
-        );
+        );*/
         
         Db::query('UPDATE `fights` SET `done` = 1 '.
             'WHERE `match_id` = '.(int)$matchId.' '
