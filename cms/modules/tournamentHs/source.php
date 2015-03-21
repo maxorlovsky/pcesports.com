@@ -13,6 +13,15 @@ class TournamentHs
         
         $this->server = 's1';
         
+        $rows = Db::fetchRows('SELECT * '.
+			'FROM `tm_settings` '.
+			'WHERE `setting` = "hs-current-number-s1" '
+		);
+        
+        foreach($rows as $v) {
+            $this->config[$v->setting] = $v->value;
+        }
+        
 		$this->chats = Db::fetchRows('SELECT `f`.`match_id`, `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `t1`.`challonge_id` AS `challongeTeam1`, `t2`.`challonge_id` AS `challongeTeam2` './/, `p1`.`name` AS `playerName1`, `p2`.`name` AS `playerName2`
 			'FROM `fights` AS `f` '.
 			'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.

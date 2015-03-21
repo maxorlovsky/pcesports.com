@@ -42,7 +42,7 @@ $('.finish-match').on('click', function() {
 $('.finish-popup button.team1, .finish-popup button.team2').on('click', function() {
     var form = [];
     form[0] = $(this).parent().attr('attr-match-id');
-    form[1] = 's1';
+    form[1] = '<?=$module->server?>';
     form[2] = '0-0';
     form[3] = $('button.'+$(this).attr('class')).attr('attr-id');
     
