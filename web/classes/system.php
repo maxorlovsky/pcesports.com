@@ -112,12 +112,14 @@ class System
         
         if (!$this->data->langugePicker && _cfg('language') != 'Config not found') {
             $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
-            foreach($languageRows as $v) {
-                if ($v->flag != _cfg('language')) {
-                    $this->data->langugePicker[] = $v;
-                }
-                else {
-                    $this->data->langugePicker['picked'] = $v;
+            if ($languageRows) {
+                foreach($languageRows as $v) {
+                    if ($v->flag != _cfg('language')) {
+                        $this->data->langugePicker[] = $v;
+                    }
+                    else {
+                        $this->data->langugePicker['picked'] = $v;
+                    }
                 }
             }
         }
@@ -134,41 +136,43 @@ class System
             'GROUP BY `server`, `game` '.
             'ORDER BY `id` DESC '
         );
-        
-        foreach($rows as $v) {
-            $time = strtotime($v->dates_registration.' '.$v->time);
-            
-            if ($time > (time() - 86400)) {
-                $statusString = str_replace(' ', '_', strtolower('registration'));
-            }
-            else {
-                $time = strtotime($v->dates_start.' '.$v->time);
-                $statusString = str_replace(' ', '_', strtolower('start'));
-            }
 
-            if ($v->game == 'hs') {
-                $game = 'Hearthstone';
+        if ($rows) {
+            foreach($rows as $v) {
+                $time = strtotime($v->dates_registration.' '.$v->time);
+                
+                if ($time > (time() - 86400)) {
+                    $statusString = str_replace(' ', '_', strtolower('registration'));
+                }
+                else {
+                    $time = strtotime($v->dates_start.' '.$v->time);
+                    $statusString = str_replace(' ', '_', strtolower('start'));
+                }
+
+                if ($v->game == 'hs') {
+                    $game = 'Hearthstone';
+                }
+                else if ($v->game == 'lol') {
+                    $game = 'League of Legends';
+                }
+                else if ($v->game == 'smite') {
+                    $game = 'Smite';
+                }
+                else {
+                    $game = $v->game;
+                }
+                
+                $this->serverTimes[] = array(
+                    'time' 	=> $time,
+                    'id'	=> $v->name,
+                    'server'=> $v->server,
+                    'game'  => $v->game,
+                    'name' 	=> $game,
+                    'status'=> $statusString,
+                );
             }
-            else if ($v->game == 'lol') {
-                $game = 'League of Legends';
-            }
-            else if ($v->game == 'smite') {
-                $game = 'Smite';
-            }
-            else {
-                $game = $v->game;
-            }
-            
-            $this->serverTimes[] = array(
-                'time' 	=> $time,
-                'id'	=> $v->name,
-                'server'=> $v->server,
-                'game'  => $v->game,
-                'name' 	=> $game,
-                'status'=> $statusString,
-            );
+            asort($this->serverTimes);
         }
-        asort($this->serverTimes);
         
         if (_cfg('language') != 'Config not found') {
             if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
@@ -768,9 +772,11 @@ class System
         $availableLanguages = array();
         $fetchingFullLanguage = array();
         $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
-        foreach($languageRows as $v) {
-        	$availableLanguages[] = $v->flag;
-            $fetchingFullLanguage[$v->flag] = $v->title;
+        if ($languageRows) {
+            foreach($languageRows as $v) {
+                $availableLanguages[] = $v->flag;
+                $fetchingFullLanguage[$v->flag] = $v->title;
+            }
         }
         
         //Setting - Languages

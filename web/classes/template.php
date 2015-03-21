@@ -57,8 +57,10 @@ class Template extends System
     public function getTxtPages() {
         $rows = Db::fetchRows('SELECT `link` FROM `tm_pages`');
         $pagesList = array();
-        foreach($rows as $v) {
-            $pagesList[] = $v->link;
+        if ($rows) {
+            foreach($rows as $v) {
+                $pagesList[] = $v->link;
+            }
         }
 
         return $pagesList;

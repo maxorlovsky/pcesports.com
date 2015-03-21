@@ -6,7 +6,7 @@ AddDefaultCharset UTF-8
 Options -Indexes
 Options +FollowSymLinks
 
-<Files ~ "(.tpl)">
+<Files ~ "(.tpl|composer.json|composer.lock|composer.phar|Gruntfile.js|package.json)">
     Order allow,deny
     Deny from all
     Require all denied

@@ -223,7 +223,7 @@ class Ajax extends System
             }
             else if ($data['type'] == 'newsComment') {
                 Db::query(
-                    'UPDATE `news_comments` SET '.
+                    'UPDATE `blog_comments` SET '.
                     '`status` = 1 '.
                     'WHERE `id` = '.(int)$data['id'].' AND '.
                     '`user_id` = '.(int)$this->data->user->id.' '.
@@ -661,9 +661,9 @@ class Ajax extends System
     protected function getNewsComments($data) {
         $rows = Db::fetchRows(
             'SELECT `nc`.`id`, `nc`.`text`, `nc`.`added`, `nc`.`edited`, `nc`.`status`, `u`.`id` AS `userId`, `u`.`name`, `u`.`avatar` '.
-            'FROM `news_comments` AS `nc` '.
+            'FROM `blog_comments` AS `nc` '.
             'LEFT JOIN `users` AS `u` ON `nc`.`user_id` = `u`.`id` '.
-            'WHERE `nc`.`news_id` = '.(int)$data['id'].' '.
+            'WHERE `nc`.`blog_id` = '.(int)$data['id'].' '.
             'ORDER BY `nc`.`id` DESC '
         );
         
@@ -719,15 +719,15 @@ class Ajax extends System
             
             $text = Db::escape(strip_tags($data['text']));
             Db::query(
-                'INSERT INTO `news_comments` SET '.
-                '`news_id` = '.(int)$data['id'].', '.
+                'INSERT INTO `blog_comments` SET '.
+                '`blog_id` = '.(int)$data['id'].', '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
                 '`text` = "'.$text.'", '.
                 '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
             );
             
             Db::query(
-                'UPDATE `news` SET `comments` = `comments` + 1 '.
+                'UPDATE `blog` SET `comments` = `comments` + 1 '.
                 'WHERE `id` = '.(int)$data['id'].' '
             );
             
@@ -768,7 +768,7 @@ class Ajax extends System
             
             $text = Db::escape_tags($data['text']);
             Db::query(
-                'UPDATE `news_comments` SET '.
+                'UPDATE `blog_comments` SET '.
                 '`text` = "'.$text.'", '.
                 '`edited` = 1 '.
                 'WHERE '.
@@ -2017,27 +2017,27 @@ class Ajax extends System
     }
     
     protected function newsVote($data) {
-    	$row = Db::fetchRow('SELECT * FROM `news_likes`'.
-    		'WHERE `news_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+    	$row = Db::fetchRow('SELECT * FROM `blog_likes`'.
+    		'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
     		'LIMIT 1'
    		);
     	
     	if ($row) {
     		$num = '- 1';
-    		Db::query('DELETE FROM `news_likes`'.
-    			'WHERE `news_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+    		Db::query('DELETE FROM `blog_likes`'.
+    			'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
     			'LIMIT 1'
     		);
     	}
     	else {
     		$num = '+ 1';
-    		Db::query('INSERT INTO `news_likes` SET '.
-    			'`news_id` = '.(int)$data['id'].', '.
+    		Db::query('INSERT INTO `blog_likes` SET '.
+    			'`blog_id` = '.(int)$data['id'].', '.
     			'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'
     		);
     	}
     	
-    	Db::query('UPDATE `news`'.
+    	Db::query('UPDATE `blog`'.
     		'SET `likes` = `likes` '.$num.' '.
     		'WHERE `id` = '.(int)$data['id'].' '.
     		'LIMIT 1'

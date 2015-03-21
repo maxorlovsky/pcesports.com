@@ -8,13 +8,13 @@ class Db
         if (!self::$connection) {
             self::$connection = new mysqli(_cfg('dbHost'), _cfg('dbUser'), _cfg('dbPass'), _cfg('dbBase'), _cfg('dbPort'));
             if(self::$connection->connect_error) {
-                book::errorMail(
+                /*book::errorMail(
         			'[FATAL] TheMages CMS:',
         			get_class(), __LINE__,
         			"Exc: ${msg}\n".
         			" on: "._cfg('site')."\n
                     Mysql response: ".mysqli_connect_error()." (".self::$connection->connect_errno.") - (".self::$connection->connect_error.")"
-                );
+                );*/
                 
                 exit('SQL Error');
             }

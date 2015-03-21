@@ -257,7 +257,16 @@ class Links
     }
     
     protected function recalculateLocations() {
-    	$rows = Db::fetchRows('SELECT `id` FROM `tm_links` ORDER BY `position`');
+    	$rows = Db::fetchRows('SELECT `id`, `link`, `position` FROM `tm_links` WHERE `main_link` = 0 ORDER BY `position`');
+    	$i = 1;
+    	if ($rows) {
+	    	foreach($rows as $v) {
+	    		Db::query('UPDATE `tm_links` SET position = '.$i.' WHERE id = '.$v->id);
+	    		++$i;
+	    	}
+    	}
+        
+        $rows = Db::fetchRows('SELECT `id`, `link`, `position` FROM `tm_links` WHERE `main_link` != 0 ORDER BY `position`');
     	$i = 1;
     	if ($rows) {
 	    	foreach($rows as $v) {

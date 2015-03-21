@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class=""><?=$this->news->title?> | <?=t('news')?></h1>
+            <h1 class=""><?=$this->news->title?> | <?=t('blog')?></h1>
         </div>
         <div class="block-content news big-block">
         	<div class="add-box">

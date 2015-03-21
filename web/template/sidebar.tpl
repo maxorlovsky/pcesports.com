@@ -60,34 +60,53 @@
         </div>
     <? } ?>
     
+    <? if ($this->page != 'home' && $this->page != 'tournaments') { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('next_tournament')?></h1>
         </div>
         <?
-        $i = 0;
         foreach($this->serverTimes as $v) {
+            $live = (intval($v['time'] - time() + _cfg('timeDifference'))<0?'live':'');
         ?>
-        <div class="block-content <?=($i==0?'next-tournaments':'incoming-tournament')?> hint" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>">
-            <? if ($i!=0) { ?>
-                <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
-            <? } else { ?>
-                <h2><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></h2>
-            <? } ?>
+        <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>">
+            <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?><br /><?=t($v['status'])?></div>
             
             <div class="timer" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
+            <? if ($live === 0) {?>
             <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button">
                 <?=t('join')?>
             </a>
-            
-            <? if ($i!=0) { ?>
-                <div class="clear"></div>
             <? } ?>
+            <div class="clear"></div>
         </div>
         <?
-            $i = 1;
         }
         ?>
+    </div>
+    <? } ?>
+    
+    <div class="block donate">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Donations</h1>
+        </div>
+		<div class="block-content">
+            <p><?=t('donate_text')?></p>
+            <div class="donate-bar" attr-goal="900" attr-current="22.10">
+                <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
+                <div><span></span></div>
+            </div>
+			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
+		</div>
+        <div class="separator"></div>
+        <div class="arrow-down hint" attr-msg="Show donators"></div>
+        <div class="list">
+            <ul>
+                <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
+                <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
     </div>
     
     <div class="block streamers">
@@ -117,31 +136,17 @@
         }
         ?>
     </div>
-    
-    <? if (_cfg('language') == 'en') { ?>
-    <div class="block donate">
+	
+	<? if (_cfg('env') != 'dev') { ?>    
+    <div class="block fb">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Donations</h1>
+            <h1 class="bordered">Like us!</h1>
         </div>
-		<div class="block-content">
-            <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="900" attr-current="22.10">
-                <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
-                <div><span></span></div>
-            </div>
-			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
-		</div>
-        <div class="separator"></div>
-        <div class="arrow-down hint" attr-msg="Show donators"></div>
-        <div class="list">
-            <ul>
-                <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
-                <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
-            </ul>
-            <div class="clear"></div>
+        <div class="facebook-holder block-content">
+            <div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
         </div>
     </div>
-	<? } ?>
+    <? } ?>
     
     <? if (_cfg('env') == 'prod') { ?>
 	<div class="block adsense">
@@ -160,38 +165,6 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
 		</div>
-    </div>
-    <? } ?>
-	
-	<? if (_cfg('env') != 'dev') { ?>
-	
-	<? if (_cfg('language') == 'ru') { ?>
-		<div class="block vk">
-			<div class="block-header-wrapper">
-				<h1 class="bordered">Мы Вконтакте!</h1>
-			</div>
-			<div class="vk-holder block-content">
-				<div id="vk_groups"></div>
-			</div>
-		</div>
-	<? } ?>
-    
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Like us!</h1>
-        </div>
-        <div class="facebook-holder block-content">
-            <div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
-        </div>
-    </div>
-
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">@Tweet</h1>
-        </div>
-        <div class="twitter-holder block-content">
-            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick"  data-widget-id="422786485738147841">Tweets by @pentaclick</a>
-        </div>
     </div>
     <? } ?>
 </div>

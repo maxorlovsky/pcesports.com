@@ -28,7 +28,7 @@ class News
 			go(_cfg('cmssite').'/#news');
 		}
 		
-		$this->news = Db::fetchRows('SELECT *, `english` AS `value` FROM `news` '.
+		$this->news = Db::fetchRows('SELECT *, `english` AS `value` FROM `blog` '.
 			'ORDER BY `id` DESC'
 		);
 		/*foreach($this->news as $v) {
@@ -42,14 +42,14 @@ class News
 	
 	protected function able($id) {
 		$id = (int)$id;
-		$row = Db::fetchRow('SELECT `id`, `title`, `able` FROM `news` WHERE `id` = '.$id.' LIMIT 1');
+		$row = Db::fetchRow('SELECT `id`, `title`, `able` FROM `blog` WHERE `id` = '.$id.' LIMIT 1');
 		if ($row->able == 1) {
 			$enable = 0;
 		}
 		else {
 			$enable = 1;
 		}
-		Db::query('UPDATE `news` SET `able` = '.$enable.' WHERE `id` = '.$id);
+		Db::query('UPDATE `blog` SET `able` = '.$enable.' WHERE `id` = '.$id);
 	
 		if ($enable == 1) {
 			$this->system->log('Enabling article <b>('.$row->title.' ['.$row->id.'])</b>', array('module'=>get_class(), 'type'=>'enabling'));
@@ -104,7 +104,7 @@ class News
 				$getExt = substr(str_replace('.tmp', '', $form['uploadedFiles']), -3);
 			}
 			
-			Db::query('INSERT INTO `news` SET '.
+			Db::query('INSERT INTO `blog` SET '.
 				'`title` = "'.Db::escape($form['title']).'", '.
 				'`extension` = "'.Db::escape($getExt).'", '.
 				'`admin_id` = '.(int)$this->system->user->id
@@ -120,13 +120,13 @@ class News
 			foreach ($form as $k => $v) {
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
-					Db::query('UPDATE `news` '.
+					Db::query('UPDATE `blog` '.
 						'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
 						'WHERE `id` = '.$lastId
 					);
 				}
 				else if ($string[0] == 'short') {
-					Db::query('UPDATE `news` '.
+					Db::query('UPDATE `blog` '.
 							'SET `short_'.$string[1].'` = "'.Db::escape($v).'" '.
 							'WHERE `id` = '.$lastId
 					);
@@ -155,7 +155,7 @@ class News
 			if (isset($form['uploadedFiles']) && $form['uploadedFiles']) {
 				if ($form['uploadedFiles'] == 'remove') {
 					$extQuery = ', `extension` = NULL';
-					$row = Db::fetchRow('SELECT `extension` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
+					$row = Db::fetchRow('SELECT `extension` FROM `blog` WHERE `id` = '.(int)$id.' LIMIT 1');
 					if (file_exists(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension)) {
 						unlink(_cfg('uploads').'/news/original-'.$id.'.'.$row->extension);
 						unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->extension);
@@ -171,7 +171,7 @@ class News
 				}
 			}
 			
-			Db::query('UPDATE `news` '.
+			Db::query('UPDATE `blog` '.
 				'SET `title` = "'.Db::escape($form['title']).'" '. 
 				$extQuery.' '.
 				'WHERE `id` = '.$id
@@ -180,13 +180,13 @@ class News
 			foreach ($form as $k => $v) {
 				$string = explode('_', $k);
 				if ($string[0] == 'string') {
-					Db::query('UPDATE `news` '.
+					Db::query('UPDATE `blog` '.
 							'SET `'.$string[1].'` = "'.Db::escape($v).'" '.
 							'WHERE `id` = '.$id
 					);
 				}
 				else if ($string[0] == 'short') {
-					Db::query('UPDATE `news` '.
+					Db::query('UPDATE `blog` '.
 							'SET `short_'.$string[1].'` = "'.Db::escape($v).'" '.
 							'WHERE `id` = '.$id
 					);
@@ -208,14 +208,14 @@ class News
 
 	protected function fetchEditData($id) {
 		return Db::fetchRow('SELECT * '.
-			'FROM `news` '.
+			'FROM `blog` '.
 			'WHERE `id` = '.(int)$id.' '.
 			'LIMIT 1'
 		);
 	}
 
 	protected function deleteRow($id) {
-		$row = Db::fetchRow('SELECT `title`, `extension` FROM `news` WHERE `id` = '.(int)$id.' LIMIT 1');
+		$row = Db::fetchRow('SELECT `title`, `extension` FROM `blog` WHERE `id` = '.(int)$id.' LIMIT 1');
 		if (!$row) {
 			return false;
 		}
@@ -225,7 +225,7 @@ class News
 			unlink(_cfg('uploads').'/news/big-'.$id.'.'.$row->extension);
 			unlink(_cfg('uploads').'/news/small-'.$id.'.'.$row->extension);
 		}
-		Db::query('DELETE FROM `news` WHERE `id` = '.(int)$id);
+		Db::query('DELETE FROM `blog` WHERE `id` = '.(int)$id);
 		$this->system->log('Deleting news <b>'.$row->title.'</b>', array('module'=>get_class(), 'type'=>'delete'));
 	}
 }

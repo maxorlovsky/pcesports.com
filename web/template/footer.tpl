@@ -15,6 +15,28 @@
         </div>
     </div>
     
+    <div class="separator left">
+        <div class="block">
+            <div class="block-header-wrapper">
+                <h1 class=""><?=t('follow_us')?></h1>
+            </div>
+            <div class="block-content social">
+                <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
+                <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
+                <!--<a class="gp" href="https://plus.google.com/u/0/communities/106917438189046033786" target="_blank"></a>-->
+                <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
+                <a class="vk" href="https://vk.com/pentaclickesports" target="_blank"></a>
+                <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
+                <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
+                <script>
+                $('.social a').css('transition', '.5s');
+                </script>
+            </div>
+        </div>
+    </div>
+    
+    
+    
     <div class="separator right">
         <div class="block">
             <div class="block-header-wrapper">

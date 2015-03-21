@@ -3,7 +3,7 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class=""><?=t('news')?></h1>
+            <h1 class=""><?=t('blog')?></h1>
         </div>
         <?
 		if ($this->news) {

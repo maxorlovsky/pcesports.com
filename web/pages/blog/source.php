@@ -1,6 +1,6 @@
 <?php
 
-class news extends System
+class blog extends System
 {
 	public $news;
     public $pages;
@@ -20,9 +20,9 @@ class news extends System
         $this->pages = pages($pagesData);
         
 		$this->news = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`views`, `n`.`comments`, `a`.`login`, `nl`.`ip` AS `active` '.
-			'FROM `news` AS `n` '.
+			'FROM `blog` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
-			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+			'LEFT JOIN `blog_likes` AS `nl` ON `n`.`id` = `nl`.`blog_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
 			'WHERE `able` = 1 '.
 			'ORDER BY `id` DESC '.
 			'LIMIT '.(int)$this->pages->start.', '.(int)$this->pages->countPerPage
@@ -41,13 +41,13 @@ class news extends System
 	}
 	
 	public function getArticle() {
-        $row = Db::fetchRow('SELECT `id` FROM `news` WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' LIMIT 1');
+        $row = Db::fetchRow('SELECT `id` FROM `blog` WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' LIMIT 1');
         if (!$row) {
             go(_cfg('href').'/news');
         }
         
 		if ($_SESSION['news_views'][$_GET['val2']] != 1) {
-			Db::query('UPDATE `news` SET '.
+			Db::query('UPDATE `blog` SET '.
 				'`views` = `views` + 1 '.
 				'WHERE `id` = '.(int)$_GET['val2']
 			);
@@ -55,9 +55,9 @@ class news extends System
 		}
 
 		$this->news = Db::fetchRow('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`comments`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
-			'FROM `news` AS `n` '.
+			'FROM `blog` AS `n` '.
 			'LEFT JOIN `tm_admins` AS `a` ON `n`.`admin_id` = `a`.`id` '.
-			'LEFT JOIN `news_likes` AS `nl` ON `n`.`id` = `nl`.`news_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+			'LEFT JOIN `blog_likes` AS `nl` ON `n`.`id` = `nl`.`blog_id` AND `nl`.`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
 			'WHERE `able` = 1 AND `n`.`id` = '.(int)$_GET['val2'].' '.
 			'ORDER BY `id` DESC '.
 			'LIMIT 1'
@@ -79,14 +79,14 @@ class news extends System
     
     public static function getSeo() {
         $news = Db::fetchRow('SELECT `id`, `title`, `extension`, `short_english` '.
-			'FROM `news` '.
+			'FROM `blog` '.
 			'WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' '.
 			'ORDER BY `id` DESC '.
 			'LIMIT 1'
 		);
         
         $seo = array(
-            'title' => ($news->title?$news->title.' | ':null).'News',
+            'title' => ($news->title?$news->title.' | ':null).'Blog',
             'ogImg' => ($news->extension?_cfg('imgu').'/news/small-'.$news->id.'.'.$news->extension:null),
             'ogDesc' => strip_tags($news->short_english),
         );
