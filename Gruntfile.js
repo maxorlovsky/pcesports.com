@@ -17,7 +17,6 @@ module.exports = function(grunt) {
                 src: [
                     '<%= dirs.css %>/slider.css',
                     '<%= dirs.css %>/highslide.css',
-                    '<%= dirs.css %>/style.css',
                     '<%= dirs.css %>/sass.css'
                 ],
                 dest: '<%= dirs.css %>/combined.css'
