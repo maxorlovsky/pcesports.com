@@ -345,7 +345,7 @@ header {
 }
 
 footer {
-    margin: 30px auto 0 auto !important;
+    margin: 0 auto !important;
     background-color: #1f1f1f;
 }
 footer .copyrights {
@@ -1439,11 +1439,12 @@ footer .games img {
 .login {
     float: right;
     cursor: pointer;
-    line-height: 65px;
-    margin-right: 20px;
+    line-height: 80px;
+    margin-right: 2%;
     text-transform: uppercase;
     font-family: Open Sans;
     font-weight: bold;
+    color: #ccc;
     transition: .5s;
 }
 .login .usericon {
@@ -1453,13 +1454,13 @@ footer .games img {
 .login .usericon:before {
     display:block;
     content:'+';
-    color:#111;
+    color:#ccc;
     font-family:'entyporegular';
     font-size:80px;
     transition: .5s;
 }
 .login:hover, .login:hover .usericon:before {
-    color: #eee;
+    color: #fff;
 }
 
 #fader {
@@ -1478,6 +1479,7 @@ footer .games img {
 
 .popup {
     position: fixed;
+    z-index: 60;
 }
 
 #login-window {
@@ -1486,7 +1488,6 @@ footer .games img {
     box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #43CDEF;
     background-color: #fff;
     border-radius: $defaultBorderRadius;
-    z-index: 11;
 }
 
 #login-window .login-inside {
