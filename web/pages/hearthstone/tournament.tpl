@@ -235,7 +235,7 @@
         <?
         $participantsCount = 0;
         foreach($this->participants as $v) {
-            if ($v->verified == 1) {
+            if ($v->verified == 1 && $v->checked_in != 1) {
             ++$participantsCount;
                 if ($v->user_id != 0) {
                 ?>
