@@ -97,8 +97,7 @@ hs.dimmingOpacity = 0.8;
                     foreach($this->data->links as $v) {
                         if ((($v->logged_in == 1 && $this->logged_in) || $v->logged_in == 0) && $v->main_link == 0 && $v->block != 1) {
                         ?>
-                        <li class="nav-link" id="<?=$v->link?>">
-                            <img src="<?=_cfg('img')?>/icon-<?=$v->value?>.png" />
+                        <li class="nav-link <?=$v->value?>" id="<?=$v->link?>">
                             <a href="<?=_cfg('href')?>/<?=$v->link?>"><?=t($v->value)?></a>
                             <?
                             if ($v->sublinks) {

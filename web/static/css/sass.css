@@ -124,18 +124,15 @@ header {
         float: left;
         line-height: 50px;
         position: relative;
-        height: 81px;
-        padding: 0 10px; }
+        height: 81px; }
         header nav .nav .nav-link img {
           position: absolute;
           left: 10px;
           top: 30px; }
         header nav .nav .nav-link a {
           opacity: 0.8;
-          padding: 8px 10px 13px 10px;
+          padding: 14px 20px 13px 35px;
           display: block;
-          margin-top: 6px;
-          margin-left: 15px;
           font-size: 13px;
           text-transform: uppercase;
           font-weight: bold;
@@ -147,10 +144,14 @@ header {
             opacity: 1; }
         header nav .nav .nav-link.active a {
           opacity: 1; }
+        header nav .nav .nav-link.active :before {
+          opacity: 1; }
         header nav .nav .nav-link:hover {
           background: linear-gradient(to bottom, #27c6d0 0%, #217fbb 100%); }
           header nav .nav .nav-link:hover .nav-sub {
             display: block; }
+          header nav .nav .nav-link:hover:before {
+            opacity: 1; }
         header nav .nav .nav-link .nav-sub {
           display: none;
           position: absolute;
@@ -171,6 +172,24 @@ header {
               padding: 0 10px;
               text-transform: none;
               font-weight: normal; }
+        header nav .nav .nav-link:before {
+          opacity: 0.8;
+          position: absolute;
+          top: 15px;
+          left: 10px;
+          color: #fff;
+          font-family: 'entyporegular';
+          font-size: 30px;
+          transition: .5s; }
+        header nav .nav .nav-link.web-link-home:before {
+          content: '\00EF'; }
+        header nav .nav .nav-link.web-link-tournaments:before {
+          content: 'B'; }
+        header nav .nav .nav-link.web-link-pentaclick:before {
+          content: '\005F';
+          left: 15px; }
+        header nav .nav .nav-link.web-link-community:before {
+          content: ','; }
   header .nav-user {
     float: right;
     position: relative;
@@ -233,6 +252,9 @@ header {
       padding: 0 !important;
       opacity: 1 !important; }
 
+@media (max-width: 1300px) {
+  header .header-middle {
+    display: none; } }
 @media (min-width: 1600px) {
   header nav {
     margin-left: 10%; }
@@ -663,7 +685,7 @@ footer .partners .aimskillz {
   background-color: #fff;
   border-radius: 4px;
   display: none;
-  z-index: 9; }
+  z-index: 99; }
 
 #hint-helper p {
   padding: 10px;

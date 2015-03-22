@@ -77,7 +77,7 @@ $cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
 $cfg['salt'] = 'eethaiASLDK21lae6AASDta9ChoDDCh';
 $cfg['logs'] = 1;
 $cfg['maxLevel'] = 4;
-$cfg['allowedLanguages'] = array('en', 'ru');
+$cfg['allowedLanguages'] = array('en');//ru
 $cfg['defaultLanguage'] = 'en';
 
 $cfg['recaptchaSiteKey'] = '6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z';
