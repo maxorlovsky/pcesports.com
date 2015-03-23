@@ -1,3 +1,15 @@
+$('.twitch .featured-list').on('click', '.featured-streamer', function() {
+    var streamer = $(this).attr('attr-name');
+    var oldStreamer = $('#player').attr('attr-current');
+    var objectData = $('#player object').attr('data');
+    var flashvars = $('#player object param[name="flashvars"]').val();
+    
+    objectData = objectData.replace(oldStreamer, streamer);
+    flashvars = flashvars.replace(oldStreamer, streamer);
+    $('#player object').attr('data', objectData);
+    $('#player object param[name="flashvars"]').val(flashvars);
+});
+
 $('.donate').on('click', '.arrow-down', function() {
     $('.donate').find('.list').slideToggle();
 });

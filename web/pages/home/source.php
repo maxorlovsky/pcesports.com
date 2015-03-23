@@ -16,16 +16,16 @@ class home extends System
         }
 		
 		$this->slider = array(
-			//array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
-            //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
+			array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
+            array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
 		);
         
         $this->streams = Db::fetchRows(
-            'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
+            'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `viewers` '.
             'FROM `streams` '.
             'WHERE `online` != 0 AND '.
             '`approved` = 1 AND '.
-            '(`id` = 1 OR `id` = 2) '.
+            '`featured` = 1 '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
 		);
         

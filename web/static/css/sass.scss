@@ -2494,6 +2494,52 @@ footer .games img {
     height: 10px;
 }
 
+.twitch {
+    #player {
+        float: left;
+        width: 590px;
+    }
+    .featured-list {
+        float: right;
+        border: 1px solid #32333b;
+        background-color: #252525;
+        height: 398px;
+        width: 198px;
+        overflow-y: auto;
+        .featured-streamer {
+            cursor: pointer;
+            border-bottom: 1px solid #32333b;
+            padding: 5px;
+            .image {
+                padding: 0;
+                img {
+                    float: left;
+                    margin-right: 5px;
+                }
+            }
+            .name {
+                color: #ddd;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100px;
+                font-size: 14px;
+            }
+            .viewers {
+                color: #aaa;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100px;
+                font-size: 11px;
+            }
+            &:hover, .active {
+                background-color: #32333b;
+            }
+        }
+    }
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 1280px) {
 }
