@@ -9,6 +9,8 @@ class System
     public $links;
     public $serverTimes = array();
     public $streams = array();
+    public $cacheTtl = 600;
+    public $apcEnabled = false;
     protected $userClass;
     
     public function __construct() {
@@ -16,6 +18,7 @@ class System
     		$this->data = new stdClass();
     	}
         
+        $this->apcEnabled = extension_loaded('apc');
         $this->loadClasses();
         
         //Making a connection
@@ -725,6 +728,20 @@ class System
         else return $interval->s.' '.t('seconds_ago');
     }
     
+    public function getCache($key) {
+        $resouse = false;
+        $data = apc_fetch($key, $resouse);
+        return $resouse ? $data : null;
+    }
+    
+    public function setCache($key, $data) {
+        return apc_store($key, $data, $this->cacheTtl);
+    }
+
+    public function deleteCache($key) {
+        return (apc_exists($key)) ? apc_delete($key) : true;
+    }
+    
     /*Protected functions*/
     protected function loadClasses() {
     	require_once _cfg('cmsclasses').'/db.php';
@@ -755,12 +772,19 @@ class System
     protected function getStrings() {
         global $str;
         
+        $str = $this->getCache('strings');
+        if (is_array($str)) {
+            return true;
+        }
+        
         $rows = Db::fetchRows('SELECT `key`, `'._cfg('fullLanguage').'` AS `value` FROM `tm_strings`');
         if ($rows) {
         	foreach($rows as $v) {
         		$str[$v->key] = $v->value;
         	}
         }
+        
+        $this->setCache('strings', $str);
         
         return true;
     }

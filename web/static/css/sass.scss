@@ -2193,6 +2193,76 @@ footer .games img {
     margin-top: 20px;
 }
 
+.users-list {
+    .block-content {
+        padding: 0;
+        cursor: pointer;
+        .avatar {
+            float: left;
+            border: 1px solid #fff;
+            outline: 1px solid #555;
+            margin: 0;
+            padding: 0;
+            height: 36px;
+            img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+        label, span {
+            display: inline-block;
+            line-height: 35px;
+            cursor: pointer;
+        }
+        .user-name {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .user-summoner {
+            
+        }
+        .user-battle-tag {
+            
+        }
+        &:hover {
+            background-color: #eee;
+        }
+        .date {
+            display: inline-block;
+        }
+    }
+    .headers {
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #666;
+        padding-left: 48px;
+        color: #eee;
+        label {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    
+    .cell1 {
+        width: 150px;
+    }
+    .cell2 {
+        width: 235px;/*170*/
+    }
+    .cell3 {
+        width: 200px;/*170*/
+    }
+    .cell4 {
+        width: 130px;
+    }
+    .cell5 {
+        width: 135px;
+        text-align: right;
+    }
+}
+
 .tournament-info  {
     padding: 10px !important;
     color: #000;
@@ -2660,6 +2730,40 @@ footer .games img {
 @media (max-width: 320px) {
     .container {
         width: 320px;
+        position: relative !important;
+        padding: 0;
+        margin: 0;
+    }
+    
+    header {
+        nav {
+            float: initial;
+            padding-top: 70px;
+            .nav {
+                margin: 0;
+                .nav-link {
+                    float: initial;
+                    height: auto;
+                    line-height: 35px;
+                    a {
+                        padding: 5px 0 0 35px;
+                    }
+                    .nav-sub {
+                        display: block;
+                        position: initial;
+                        left: initial;
+                        top: initial;
+                        background: 0;
+                        .nav-sublink {
+                            border: 0;
+                        }
+                    }
+                    &:before {
+                        top: 5px;
+                    }
+                }
+            }
+        }
     }
     
     .block .block-header-wrapper {

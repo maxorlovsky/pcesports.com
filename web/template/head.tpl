@@ -89,6 +89,45 @@ hs.dimmingOpacity = 0.8;
 
 <header class="container">
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
+    
+    <? if ($this->logged_in == 1) { ?>
+        <ul class="nav-user">
+            <?
+            if ($this->data->links) {
+                foreach($this->data->links as $v) {
+                    if ($v->logged_in == 1 && $v->main_link == 0 && $v->block == 1) {
+                    ?>
+                    <li class="nav-link" id="<?=$v->link?>">
+                        <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
+                        <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><?=$this->data->user->name?><?//=t($v->value)?></a>
+                        <ul class="nav-sub">
+                        <?
+                        if ($v->sublinks) {
+                            foreach($v->sublinks as $v2) {
+                                ?>
+                                <li class="nav-sublink" id="<?=$v2->link?>">
+                                    <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
+                                </li>
+                                <?
+                            }
+                        }
+                        ?>
+                            <li class="nav-sublink" id="logout">
+                                <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?
+                    }
+                }
+            }
+            ?>
+        </ul>
+        
+    <? } else { ?>
+        <div class="login"><?=t('login')?><div class="usericon"></div></div>
+    <? } ?>
+    
     <nav>
         <div class="navbar-inner">
             <ul class="nav">
@@ -128,42 +167,6 @@ hs.dimmingOpacity = 0.8;
     
     <div class="header-middle"><a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a></div>
     
-    <? if ($this->logged_in == 1) { ?>
-        <ul class="nav-user">
-            <?
-            if ($this->data->links) {
-                foreach($this->data->links as $v) {
-                    if ($v->logged_in == 1 && $v->main_link == 0 && $v->block == 1) {
-                    ?>
-                    <li class="nav-link" id="<?=$v->link?>">
-                        <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
-                        <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><?=$this->data->user->name?><?//=t($v->value)?></a>
-                        <ul class="nav-sub">
-                        <?
-                        if ($v->sublinks) {
-                            foreach($v->sublinks as $v2) {
-                                ?>
-                                <li class="nav-sublink" id="<?=$v2->link?>">
-                                    <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
-                                </li>
-                                <?
-                            }
-                        }
-                        ?>
-                            <li class="nav-sublink" id="logout">
-                                <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <?
-                    }
-                }
-            }
-            ?>
-        </ul>
-        
-    <? } else { ?>
-        <div class="login"><?=t('login')?><div class="usericon"></div></div>
-    <? } ?>
+    
     <div class="clear"></div>
 </header>

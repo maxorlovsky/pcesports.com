@@ -250,7 +250,7 @@ class Links
     	$position = $row->position + 1;
     	Db::query('UPDATE `tm_links` SET `position` = '.($position-1).' WHERE `position` >= '.$position.' LIMIT 1');
     	Db::query('UPDATE `tm_links` SET `position` = '.$position.' WHERE `id` = '.$id);
-    	 
+
     	$this->recalculateLocations();
     
     	$this->system->log('Moving link DOWN <b>('.$id.')</b>', array('module'=>get_class(), 'type'=>'movedown'));

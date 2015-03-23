@@ -13,7 +13,7 @@ class blog extends System
         $pagesData = array(
             'countPerPage'  => 5,
             'maxNumShow'    => 3,
-            'tableName'     => 'news',
+            'tableName'     => 'blog',
             'pageNum'       => $_GET['val3'],
         );
         
