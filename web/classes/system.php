@@ -729,16 +729,28 @@ class System
     }
     
     public function getCache($key) {
+        if ($this->apcEnabled === false) {
+            return false;
+        }
+        
         $resouse = false;
         $data = apc_fetch($key, $resouse);
         return $resouse ? $data : null;
     }
     
     public function setCache($key, $data) {
+        if ($this->apcEnabled === false) {
+            return false;
+        }
+        
         return apc_store($key, $data, $this->cacheTtl);
     }
 
     public function deleteCache($key) {
+        if ($this->apcEnabled === false) {
+            return false;
+        }
+        
         return (apc_exists($key)) ? apc_delete($key) : true;
     }
     
