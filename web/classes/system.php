@@ -784,10 +784,10 @@ class System
     protected function getStrings() {
         global $str;
         
-        /*$str = $this->getCache('strings');
+        $str = $this->getCache('strings');
         if (is_array($str)) {
             return true;
-        }*/
+        }
         
         $rows = Db::fetchRows('SELECT `key`, `'._cfg('fullLanguage').'` AS `value` FROM `tm_strings`');
         if ($rows) {

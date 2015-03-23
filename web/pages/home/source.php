@@ -20,14 +20,15 @@ class home extends System
             array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
 		);
         
-        $this->streams = Db::fetchRows(
+        /*$this->streams = Db::fetchRows(
             'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `viewers` '.
             'FROM `streams` '.
             'WHERE `online` != 0 AND '.
             '`approved` = 1 AND '.
             '`featured` = 1 '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
-		);
+		);*/
+        $this->streams = array();
         
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.

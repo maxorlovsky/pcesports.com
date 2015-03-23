@@ -1,3 +1,7 @@
+# 23.03.2015
+ALTER TABLE `blog_comments` CHANGE `news_id` `blog_id` INT(10) UNSIGNED NOT NULL;
+ALTER TABLE `blog_likes` CHANGE `news_id` `blog_id` INT(10) UNSIGNED NOT NULL;
+
 # 18.03.2015
 INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-checkin-hs-s1', '0', 'Процесс checkin (Hearthstone)', 'checkbox', '2');
 UPDATE `tm_settings` SET `setting` = 'hs-current-number-s1' WHERE `tm_settings`.`setting` = 'hs-current-number';
