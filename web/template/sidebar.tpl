@@ -90,7 +90,7 @@
         </div>
 		<div class="block-content">
             <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="900" attr-current="22.10">
+            <div class="donate-bar" attr-goal="900" attr-current="24.10">
                 <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
@@ -100,6 +100,7 @@
         <div class="arrow-down hint" attr-msg="Show donators"></div>
         <div class="list">
             <ul>
+                <li><span class="person">Hearthstone League 6</span><span class="price">2€</span></li>
                 <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
                 <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
             </ul>
