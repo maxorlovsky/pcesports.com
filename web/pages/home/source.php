@@ -16,26 +16,25 @@ class home extends System
         }
 		
 		$this->slider = array(
-			array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
-            array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
+			//array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
+            //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
 		);
         
-        /*$this->streams = Db::fetchRows(
+        $this->streams = Db::fetchRows(
             'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `viewers` '.
             'FROM `streams` '.
-            'WHERE `online` != 0 AND '.
+            'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
             '`approved` = 1 AND '.
             '`featured` = 1 '.
-            'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
-		);*/
-        $this->streams = array();
+            'ORDER BY `viewers` DESC '
+		);
         
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
-            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].') '.
+            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw" AND `status` = "Start") OR '.
+            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune" AND `status` = "Start") OR '.
+            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na" AND `status` = "Start") OR '.
+            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu" AND `status` = "Start") OR '.
+            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].' AND `status` = "Start") '.
             'ORDER BY `id` DESC '
         );
         
@@ -75,13 +74,13 @@ class home extends System
                 }
                 
                 if ($v->game == 'lol') {
-                    $link = 'leagueoflegends/'.$v->server;
+                    $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
                 }
                 else if ($v->game == 'hs') {
-                    $link = 'hearthstone';
+                    $link = 'hearthstone/'.$v->server.'/'.$v->name;
                 }
                 else if ($v->game == 'smite') {
-                    $link = 'smite/'.$v->server;
+                    $link = 'smite/'.$v->server.'/'.$v->name;
                 }
                 
                 $this->tournamentData[] = array(
@@ -106,6 +105,29 @@ class home extends System
 			'ORDER BY `id` DESC '.
 			'LIMIT 1'
 		);
+        
+        $additionalSelect = '';
+        $additionalSql = '';
+        if ($this->logged_in) {
+            $additionalSelect .= ', `bv`.`direction`';
+            $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
+        }
+        
+        $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
+			'FROM `boards` AS `b` '.
+            $additionalSql.
+            'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
+			'ORDER BY `activity` DESC '.
+			'LIMIT 3 '
+		);
+        
+        $currDate = new DateTime();
+        
+        foreach($this->boards as &$v) {
+            $dbDate = new DateTime($v->added);
+            $v->interval = $this->getAboutTime($currDate->diff($dbDate));
+        }
+        unset($v);
 	}
 	
 	public function showTemplate() {
