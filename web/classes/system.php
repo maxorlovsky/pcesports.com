@@ -182,11 +182,10 @@ class System
                 $this->streams = Db::fetchRows(
                     'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
                     'FROM `streams` '.
-                    'WHERE `online` >= '.(time() - 360).' AND '.
+                    'WHERE '.
                     '`approved` = "1" AND '.
                     '`game` = "lolcup" './/OR
                     //'`name` = "pentaclick_tv" AND '.
-                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
                     'ORDER BY `viewers` DESC '
                 );
                 

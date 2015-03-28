@@ -116,7 +116,7 @@
         if ($this->streams) {
             foreach($this->streams as $k => $v) {
         ?>
-            <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?>">
+            <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=(isset($v->onlineStatus)&&$v->onlineStatus==0?'alpha':null)?>">
                 <? if ($v->game != 'other') { ?>
                     <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <? } ?>
