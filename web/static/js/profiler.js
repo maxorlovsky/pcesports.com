@@ -115,7 +115,7 @@ var profiler = {
                     checkTop = parseInt($('.chat-content').scrollTop()) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     
-                    currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;');//.replace(/&/g)
+                    currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;').replace(/&amp;/g, '&');
                     console.log(currentContent);
                     console.log(answer[1]);
                     console.log(profiler.stripTags(currentContent));
