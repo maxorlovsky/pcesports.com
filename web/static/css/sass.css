@@ -2285,7 +2285,31 @@ footer .games img {
   width: 198px;
   overflow-y: auto; }
   .twitch .featured-list .event {
-    background-color: #998206; }
+    position: relative;
+    background-color: #ffd739; }
+    .twitch .featured-list .event .name {
+      color: #111 !important; }
+    .twitch .featured-list .event:hover {
+      background-color: #e0bd33 !important; }
+    .twitch .featured-list .event::after {
+      content: "";
+      opacity: 0.05;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      position: absolute;
+      z-index: 0; }
+    .twitch .featured-list .event.lol::after {
+      background-image: url("../images/footer-lol-logo.png"); }
+    .twitch .featured-list .event.hs::after {
+      background-image: url("../images/footer-hs-logo.png"); }
+    .twitch .featured-list .event.smite::after {
+      background-image: url("../images/footer-smite-logo.png"); }
+    .twitch .featured-list .event .viewers {
+      color: #888 !important; }
   .twitch .featured-list .featured-streamer {
     cursor: pointer;
     border-bottom: 1px solid #32333b;

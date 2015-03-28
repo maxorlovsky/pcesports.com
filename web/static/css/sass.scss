@@ -2507,7 +2507,38 @@ footer .games img {
         width: 198px;
         overflow-y: auto;
         .event {
-            background-color: #998206;
+            position: relative;
+            background-color: #ffd739;
+            .name {
+                color: #111 !important;
+            }
+            &:hover {
+                background-color: #e0bd33 !important;
+            }
+            &::after {
+                content: "";
+                opacity: 0.05;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+                position: absolute;
+                z-index: 0;
+            }
+            &.lol::after {
+                background-image: url('../images/footer-lol-logo.png');
+            }
+            &.hs::after {
+                background-image: url('../images/footer-hs-logo.png');
+            }
+            &.smite::after {
+                background-image: url('../images/footer-smite-logo.png');
+            }
+            .viewers {
+                color: #888 !important;
+            }
         }
         .featured-streamer {
             cursor: pointer;

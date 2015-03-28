@@ -86,12 +86,12 @@
     
     <div class="block donate">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Donations</h1>
+            <h1 class="bordered"><?=t('donations')?></h1>
         </div>
 		<div class="block-content">
             <p><?=t('donate_text')?></p>
             <div class="donate-bar" attr-goal="900" attr-current="24.10">
-                <p><span id="gathered"></span>€ out of <span id="goal"></span>€</p>
+                <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
@@ -102,7 +102,7 @@
             <ul>
                 <li><span class="person">Hearthstone League 6</span><span class="price">2€</span></li>
                 <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
-                <li><span class="person annon">Annonimous</span><span class="price">16.10€</span></li>
+                <li><span class="person annon">Anonymous</span><span class="price">16.10€</span></li>
             </ul>
             <div class="clear"></div>
         </div>
@@ -110,7 +110,7 @@
     
     <div class="block streamers">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Streamers</h1>
+            <h1 class="bordered"><?=t('streamers')?></h1>
         </div>
         <?
         if ($this->streams) {
@@ -139,7 +139,7 @@
 	<? if (_cfg('env') != 'dev') { ?>    
     <div class="block fb">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Like us!</h1>
+            <h1 class="bordered"><?=t('like_us')?>!</h1>
         </div>
         <div class="facebook-holder block-content">
             <div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>

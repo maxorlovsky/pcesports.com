@@ -17,7 +17,7 @@
                         <param name="allowScriptAccess" value="always" />
                         <param name="allowNetworking" value="all" />
                         <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-                        <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=true&amp;start_volume=25" />
+                        <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=false&amp;start_volume=25" />
                     </object>
                 </div>
             <?
@@ -29,7 +29,7 @@
                 <?
                 foreach($this->streams as $v) {
                 ?>
-                    <div class="featured-streamer <?=($i==0?'active':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> hint" attr-msg="<?=$v->display_name?>" attr-name="<?=$v->name?>">
+                    <div class="featured-streamer <?=($i==0?'active':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=$v->game?> hint" attr-msg="<?=$v->display_name?>" attr-name="<?=$v->name?>">
                         <div class="image"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_<?=$v->name?>-80x45.jpg" /></div>
                         <div class="name"><?=$v->display_name?></div>
                         <div class="viewers"><?=t('viewers')?>: <?=$v->viewers?></div>
