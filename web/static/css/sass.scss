@@ -2506,6 +2506,9 @@ footer .games img {
         height: 398px;
         width: 198px;
         overflow-y: auto;
+        .event {
+            background-color: #998206;
+        }
         .featured-streamer {
             cursor: pointer;
             border-bottom: 1px solid #32333b;

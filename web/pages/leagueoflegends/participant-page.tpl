@@ -34,7 +34,7 @@
                 
                 <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {?>
                 <div class="check-in-holder">
-                    <div class="button checkIn" id="checkInHs"><?=t('check_in')?></div>
+                    <div class="button checkIn" id="checkInLol"><?=t('check_in')?></div>
                 </div>
                 <? } else { ?>
                 <div class="check-in-holder">

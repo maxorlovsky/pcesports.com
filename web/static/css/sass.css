@@ -2284,6 +2284,8 @@ footer .games img {
   height: 398px;
   width: 198px;
   overflow-y: auto; }
+  .twitch .featured-list .event {
+    background-color: #998206; }
   .twitch .featured-list .featured-streamer {
     cursor: pointer;
     border-bottom: 1px solid #32333b;
