@@ -880,7 +880,7 @@ class Cron extends System {
                         '`place` = '.(int)$v->participant->final_rank.', '.
                         '`seed_number` = '.(int)$v->participant->seed.' '.
                         'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
-                        '`game` = "'.$v->game.'" AND '.
+                        '`game` = "'.$row->game.'" AND '.
                         '`approved` = 1 AND '.
                         '`checked_in` = 1 AND '.
                         '`server` = "'.Db::escape($row->server).'" AND '.
