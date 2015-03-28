@@ -115,7 +115,7 @@ var profiler = {
                     checkTop = parseInt($('.chat-content').scrollTop()) + parseInt($('.chat-content').height()) + 10;
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     
-                    currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;').replace(/&amp;/g, '');
+                    currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;').replace(/&amp;/g, '%26');
                     console.log(profiler.stripTags(currentContent));
                     if (escape(profiler.stripTags(currentContent)) != escape(profiler.stripTags(answer[1])) && profiler.chatStart == 1) {
                         //$('#ping').play();
