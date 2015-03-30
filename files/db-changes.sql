@@ -1,3 +1,6 @@
+# 30.03.2015
+DELETE FROM `tm_modules` WHERE `tm_modules`.`name` = "leagueParticipants";
+
 # 23.03.2015
 ALTER TABLE `blog_comments` CHANGE `news_id` `blog_id` INT(10) UNSIGNED NOT NULL;
 ALTER TABLE `blog_likes` CHANGE `news_id` `blog_id` INT(10) UNSIGNED NOT NULL;
