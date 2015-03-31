@@ -42,7 +42,7 @@
             <h1 class="bordered"><?=t('participated_in_tournaments')?></h1>
         </div>
         <? foreach ($this->member->tournaments as $v) { ?>
-        <a href="<?=_cfg('href')?>/<?=$this->fullGameName[$v->game]?><?=$v->server?>/<?=$v->tournament_id?>" class="block-content tournament-info place-<?=$v->place?>">
+        <a href="<?=_cfg('href')?>/<?=$this->fullGameName[$v->game]?>/<?=$v->server?>/<?=$v->tournament_id?>" class="block-content tournament-info place-<?=$v->place?>">
             <img class="game-logo" src="<?=_cfg('img')?>/<?=str_replace('lan', '', $v->game)?>-logo-small.png">
             <label class="tournament-name">
                 <?=t($this->fullGameName[$v->game])?> 
