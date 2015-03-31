@@ -69,7 +69,7 @@ class blog extends System
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val1']) && $_GET['val1'] == 'news' && isset($_GET['val2']) && $_GET['val2'] != 'page') {
+		if (isset($_GET['val1']) && $_GET['val1'] == 'blog' && isset($_GET['val2']) && $_GET['val2'] != 'page') {
 			$this->getArticle();
 		}
 		else {
