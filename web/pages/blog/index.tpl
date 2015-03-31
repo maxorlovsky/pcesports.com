@@ -20,7 +20,7 @@
         	</div>
         	<a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="image-holder">
                 <? if ($v->extension) { ?>
-                    <img src="<?=_cfg('imgu')?>/blog/big-<?=$v->id?>.<?=$v->extension?>" />
+                    <img src="<?=_cfg('imgu')?>/news/big-<?=$v->id?>.<?=$v->extension?>" />
                 <? } ?>
             </a>
         	<a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="title"><?=$v->title?></a>

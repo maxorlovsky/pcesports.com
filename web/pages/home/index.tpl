@@ -108,9 +108,9 @@
             <? if ($this->blog->extension) { ?>
                 <a class="image-holder" href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>">
                     <? if (_cfg('env') == 'dev') { ?>
-                        <img src="http://www.pcesports.com/web/uploads/blog/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                        <img src="http://www.pcesports.com/web/uploads/news/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
                     <? } else { ?>
-                        <img src="<?=_cfg('imgu')?>/blog/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                        <img src="<?=_cfg('imgu')?>/news/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
                     <? } ?>
                 </a>
             <? } ?>
