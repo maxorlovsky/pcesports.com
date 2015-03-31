@@ -22,7 +22,7 @@ class users extends System
             'FROM `users` AS `u` '.
             'LEFT JOIN `summoners` AS `s` ON `u`.`id` = `s`.`user_id` '.
             'GROUP BY `u`.`id` '.
-            'ORDER BY `registration_date` '.
+            'ORDER BY `registration_date` DESC '.
             'LIMIT '.(int)$this->pages->start.', '.(int)$this->pages->countPerPage
         );
 	}
