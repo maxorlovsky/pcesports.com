@@ -15,7 +15,7 @@ class DBV_Adapter_MySQLi implements DBV_Adapter_Interface
         $this->database_name = $database_name; // the DB name is later used to restrict SHOW PROCEDURE STATUS and SHOW_FUNCTION_STATUS to the current database
 
         try {
-            $this->_connection = new mysqli($host, $username, $password, $database_name, $port);
+            @$this->_connection = new mysqli($host, $username, $password, $database_name, $port);
             $this->_connection->query('SET NAMES "utf8"');
         } catch (PDOException $e) {
             throw new DBV_Exception($e->getMessage(), (int) $e->getCode());
