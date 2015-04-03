@@ -63,7 +63,7 @@ class home extends System
             '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na" AND `status` = "Start") OR '.
             '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu" AND `status` = "Start") OR '.
             '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].' AND `status` = "Start") '.
-            'ORDER BY `id` DESC '
+            'ORDER BY `dates_registration` ASC '
         );
         
         if ($rows) {
