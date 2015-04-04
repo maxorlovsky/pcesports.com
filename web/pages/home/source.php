@@ -62,8 +62,7 @@ class home extends System
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune" AND `status` = "Start") OR '.
             '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na" AND `status` = "Start") OR '.
             '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu" AND `status` = "Start") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].' AND `status` = "Start") '.
-            'ORDER BY `dates_start` ASC, `dates_registration` ASC '
+            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].' AND `status` = "Start") '
         );
         
         if ($rows) {
@@ -86,19 +85,20 @@ class home extends System
                 if ($checkInStatus == 1) {
                     $v->status = t('check_in');
                     $time = $startTime;
+                    $v->priority = 2;
                 }
                 else if ($checkLive == 1) {
                     $v->status = t('live');
                     $time = $startTime;
+                    $v->priority = 1;
                 }
                 else if ($checkReg == 1) {
                     $v->status = t('registration');
-                }
-                else if ($v->status == 'Ended') {
-                    $v->status = t('ended');
+                    $v->priority = 3;
                 }
                 else {
                     $v->status = t('active');
+                    $v->priority = 4;
                 }
                 
                 if ($v->game == 'lol') {
@@ -112,17 +112,19 @@ class home extends System
                 }
                 
                 $this->tournamentData[] = array(
-                    'id'	=> $v->name,
-                    'server'=> $v->server,
-                    'game'  => $v->game,
-                    'name' 	=> $v->name,
-                    'status'=> $v->status,
-                    'max_num'=> $v->max_num,
-                    'prize' => $v->prize,
+                    'priority'  => $v->priority,
+                    'id'	    => $v->name,
+                    'server'    => $v->server,
+                    'game'      => $v->game,
+                    'name' 	    => $v->name,
+                    'status'    => $v->status,
+                    'max_num'   => $v->max_num,
+                    'prize'     => $v->prize,
                     'dates_start'=> $v->dates_start,
-                    'link'  => $link,
+                    'link'      => $link,
                 );
             }
+            asort($this->tournamentData);
         }
 		
 		$this->blog = Db::fetchRow('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`comments`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
