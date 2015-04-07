@@ -309,28 +309,86 @@ header {
 footer {
   margin: 0 auto !important;
   background-color: #1f1f1f; }
+  footer .copyrights {
+    color: #888;
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+    margin: 20px 0 0 0;
+    border-top: 1px solid #484848;
+    font-size: 12px;
+    line-height: 20px; }
+    footer .copyrights .rights {
+      float: left;
+      margin: 3px 0 0 15px; }
+    footer .copyrights .devs {
+      float: right;
+      color: #888;
+      margin: 3px 15px 0 0; }
+      footer .copyrights .devs:hover {
+        color: #1697e1; }
 
-footer .copyrights {
-  color: #888;
-  width: 100%;
-  background-color: #333;
-  padding: 10px 0;
-  margin: 20px 0 0 0;
-  border-top: 1px solid #484848;
-  font-size: 12px;
-  line-height: 20px; }
-
-footer .copyrights .rights {
+.home-tournaments .parent {
+  position: relative; }
+.home-tournaments .lol-euw {
+  width: 380px;
+  height: 790px;
+  background-image: url("../images/home-euw-bg.jpg");
   float: left;
-  margin: 3px 0 0 15px; }
-
-footer .copyrights .devs {
-  float: right;
-  color: #888;
-  margin: 3px 15px 0 0; }
-
-footer .copyrights .devs:hover {
-  color: #1697e1; }
+  cursor: pointer; }
+  .home-tournaments .lol-euw .inner {
+    display: block;
+    margin-top: 175px; }
+    .home-tournaments .lol-euw .inner h1 {
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      text-align: center;
+      font-size: 35px;
+      text-shadow: 2px 2px #111;
+      text-transform: uppercase; }
+    .home-tournaments .lol-euw .inner .status {
+      background-color: rgba(22, 151, 225, 0.8);
+      width: 100%;
+      padding: 0;
+      border-radius: 0;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 20px;
+      float: none; }
+      .home-tournaments .lol-euw .inner .status label {
+        color: #fff;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-size: 24px; }
+    .home-tournaments .lol-euw .inner .prize-pool {
+      margin-top: 20px; }
+      .home-tournaments .lol-euw .inner .prize-pool h4 {
+        padding: 0;
+        margin: 0;
+        color: #fff;
+        text-align: center;
+        font-size: 28px;
+        text-shadow: 2px 2px #111; }
+      .home-tournaments .lol-euw .inner .prize-pool div {
+        padding: 0;
+        margin: 0;
+        color: #fff;
+        text-align: center;
+        font-size: 22px;
+        text-shadow: 2px 2px #111; }
+  .home-tournaments .lol-euw .ended {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 380px;
+    height: 790px;
+    opacity: 0.6;
+    background-color: #999;
+    transition: .3s; }
+    .home-tournaments .lol-euw .ended:hover {
+      opacity: 0;
+      display: none; }
 
 .page {
   width: 1130px;

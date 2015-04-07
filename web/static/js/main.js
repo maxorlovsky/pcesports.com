@@ -1695,7 +1695,7 @@ var PC = {
     }
 };
 
-if (requireStatus == 1) {
+if (typeof requireStatus != 'undefined' && requireStatus == 1) {
 	PC.statusCheck();
 	setInterval(function () { PC.statusCheck(); }, 15000);
 }
