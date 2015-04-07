@@ -1,6 +1,6 @@
 <?php
 
-class leagueoflegendsRiot extends System
+class leagueoflegendsriot extends System
 {
 	public $teamsCount;
 	public $currentTournament;
