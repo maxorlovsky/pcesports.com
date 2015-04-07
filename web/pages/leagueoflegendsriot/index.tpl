@@ -140,10 +140,10 @@
                         <p><b><?=$participantsNames[$v->participant_id1]?></b> VS <b><?=$participantsNames[$v->participant_id2]?></b></p>
                         <? if ($v->game_id) { ?>
                             <p><b>Game ID:</b> <?=$v->game_id?></p>
+                            <a href="http://matchhistory.euw.leagueoflegends.com/en/#match-details/<?=($this->server=='eune'?'EUN1':'EUW1')?>/<?=$v->game_id?>/0?tab=overview" target="_blank">Match on official website</a>
                         <? } else { ?>
                             <p><i>Game not registered, probably forfeit</i></p>
                         <? } ?>
-                        <a href="http://matchhistory.euw.leagueoflegends.com/en/#match-details/<?=($this->server=='eune'?'EUN1':'EUW1')?>/<?=$v->game_id?>/0?tab=overview" target="_blank">Match on official website</a>
                     </div>
                 <?
                 }
