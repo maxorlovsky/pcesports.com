@@ -15,7 +15,9 @@ class Template extends System
 		
 		$this->loadPage($this);
     	
-        $this->getMainTemplate('sidebar');
+        if ($this->page != 'leagueoflegendsriot') {
+            $this->getMainTemplate('sidebar');
+        }
         $this->getMainTemplate('footer');
         
         return true;

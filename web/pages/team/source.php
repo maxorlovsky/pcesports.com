@@ -56,7 +56,7 @@ class team
                 'role' => 'Pentaclick Creator',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/MaxOrlovsky',
-                    'tw' => 'https://twitter.com/pentaclick',
+                    'tw' => 'https://twitter.com/MaxOrlovsky',
                     'tv' => 'http://www.twitch.tv/pentaclick_tv',
                 )
             ),

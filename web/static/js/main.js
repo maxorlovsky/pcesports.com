@@ -260,7 +260,7 @@ if ($('.participants.isotope-participants-pending .block').length > 0) {
 	});
 }
 
-$('.participants').on('click', '.block', function(e) {
+$('.participants:not(.not)').on('click', '.block', function(e) {
     if(!$(e.target).is('a')){
         $(this).find('.player-list').slideToggle(500, function() {
             if ($('.participants.isotope-participants .block').length > 0) {
