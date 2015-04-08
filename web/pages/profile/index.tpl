@@ -58,6 +58,11 @@
                     <? } ?>
                 </select>
             </div>
+
+            <div class="fields">
+                <label for="summer_time"><?=t('daylight_saving_time')?></label>
+                <div class="check_holder"><input name="summer_time" id="summer_time" type="checkbox" value="<?=$this->data->user->summer_time?>" <?=($this->data->user->summer_time==1?'checked="checked"':null)?> /></div>
+            </div>
             
             <div class="fields">
                 <label for="subscribe"><?=t('receive_emails')?></label>
@@ -114,8 +119,7 @@
 </div>
 
 <script>
-$('.check_holder').on('click', '#https', function() {
-console.log($(this).is(':checked'));
+$('.check_holder').on('click', '#https, #summer_time', function() {
     if ($(this).is(':checked')) {
         $(this).val('1');
     }
