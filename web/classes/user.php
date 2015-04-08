@@ -317,20 +317,12 @@ class User extends System
         else {
             $form['https'] = 0;
         }
-
-        if (isset($form['summer_time']) && $form['summer_time'] == 1) {
-            $form['summer_time'] = 1;
-        }
-        else {
-            $form['summer_time'] = 0;
-        }
         
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
             '`timezone` = "'.Db::escape($timezone).'", '.
-            '`summer_time` = '.(int)$form['summer_time'].', '.
             '`avatar` = '.(int)$form['avatar'].', '.
             '`battletag` = "'.Db::escape($form['battletag']).'", '.
             '`https` = '.(int)$form['https'].' '.
