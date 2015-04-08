@@ -71,8 +71,8 @@
         
         <div class="block-content tournament-rules">
 			<?=str_replace(
-                array('%startTime%', '%registrationTime%'),
-                array($tournamentTime['start'], $tournamentTime['registration']),
+                array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                 t('hs_tournament_information')
             )?>
             <br />

@@ -60,8 +60,8 @@
         <div class="block-content tournament-rules">
 			<h1><?=t('specific_tournament_rules')?></h1>
 			<?=str_replace(
-                array('%startTime%', '%registrationTime%'),
-                array($tournamentTime['start'], $tournamentTime['registration']),
+                array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                 t('smite_'.$this->server.'_tournament_information')
             )?>
             <a href="<?=_cfg('href')?>/smite/<?=$this->server?>"><?=t('global_tournament_rules')?></a>

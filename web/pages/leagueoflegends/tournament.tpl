@@ -60,8 +60,8 @@
         <div class="block-content tournament-rules">
 			<h1><?=t('specific_tournament_rules')?></h1>
 			<?=str_replace(
-                array('%startTime%', '%registrationTime%'),
-                array($tournamentTime['start'], $tournamentTime['registration']),
+                array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
             <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>"><?=t('global_tournament_rules')?></a>
