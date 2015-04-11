@@ -73,7 +73,7 @@
                         <h4 class="timer hint" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
                     </div>
                     <div class="registered-now">
-                        <div>0 / <?=$v['max_num']?></div>
+                        <div><?=$v['teams']?> / <?=$v['max_num']?></div>
                     </div>
                 </a>
             </div>

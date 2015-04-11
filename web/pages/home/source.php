@@ -117,7 +117,18 @@ class home extends System
                 //else if ($v->game == 'smite') {
                 //    $link = 'smite/'.$v->server.'/'.$v->name;
                 //}
-                
+
+                //Fetching number of players for each tournament
+                $row = Db::fetchRow('SELECT COUNT(`tournament_id`) AS `value`'.
+                    'FROM `participants` '.
+                    'WHERE `game` = "'.Db::escape($v->game).'" AND '.
+                    '`server` = "'.Db::escape($v->server).'" AND ' .
+                    '`approved` = 1 AND '.
+                    '`deleted` = 0 AND '.
+                    '`tournament_id` = "'.Db::escape($v->name).'" '.
+                    'LIMIT 1 '
+                );
+
                 $this->tournamentData[$v->game.''.$v->server] = array(
                     'priority'  => $v->priority,
                     'id'	    => $v->name,
@@ -127,6 +138,7 @@ class home extends System
                     'prize'     => $v->prize,
                     'time'      => $time,
                     'link'      => $link,
+                    'teams'     => $row->value,
                 );
             }
             asort($this->tournamentData);
