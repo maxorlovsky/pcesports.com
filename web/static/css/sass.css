@@ -388,6 +388,8 @@ footer {
       text-shadow: 1px 1px #222;
       font-size: 24px;
       background-color: rgba(255, 215, 57, 0.9); }
+      .home-tournaments .loleuw .inner .timing .timer, .home-tournaments .loleune .inner .timing .timer, .home-tournaments .hss1 .inner .timing .timer {
+        cursor: pointer; }
     .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now {
       color: #fff;
       text-align: center;
