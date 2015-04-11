@@ -29,7 +29,6 @@ class Template extends System
         if (file_exists(_cfg('pages').'/'.$this->page.'/source.php')) {
     		require_once _cfg('pages').'/'.$this->page.'/source.php';
 
-    		$seoPage = new $this->page();
     		if (method_exists($seoPage, 'getSeo')) {
     			$seoPageData = $seoPage::getSeo();
     		}

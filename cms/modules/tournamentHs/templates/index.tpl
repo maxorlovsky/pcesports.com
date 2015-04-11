@@ -15,6 +15,9 @@
 	<?
 		}
 	}
+    else {
+        ?><i>No chats</i><?
+    }
 	?>
 </td></tr></table>
 

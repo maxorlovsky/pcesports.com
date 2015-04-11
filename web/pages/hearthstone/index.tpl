@@ -37,6 +37,7 @@
     </div>
     
     <div class="block">
+        <a name="stats"></a>
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('season_stats')?></h1>
         </div>

@@ -28,7 +28,7 @@ a img {
   font-weight: normal;
   font-style: normal; }
 body {
-  margin: 0;
+  margin: 81px 0 0 0;
   padding: 0;
   width: 100%;
   height: 100%;
@@ -330,16 +330,20 @@ footer {
 
 .home-tournaments .parent {
   position: relative; }
-.home-tournaments .lol-euw {
-  width: 380px;
-  height: 790px;
+.home-tournaments .loleuw {
   background-image: url("../images/home-euw-bg.jpg");
-  float: left;
+  float: left; }
+.home-tournaments .loleune {
+  background-image: url("../images/home-eune-bg.jpg");
+  float: right; }
+.home-tournaments .loleuw, .home-tournaments .loleune, .home-tournaments .hss1 {
+  width: 380px;
+  min-height: 580px;
   cursor: pointer; }
-  .home-tournaments .lol-euw .inner {
+  .home-tournaments .loleuw .inner, .home-tournaments .loleune .inner, .home-tournaments .hss1 .inner {
     display: block;
-    margin-top: 175px; }
-    .home-tournaments .lol-euw .inner h1 {
+    padding-top: 175px; }
+    .home-tournaments .loleuw .inner h1, .home-tournaments .loleune .inner h1, .home-tournaments .hss1 .inner h1 {
       margin: 0;
       padding: 0;
       color: #fff;
@@ -347,7 +351,7 @@ footer {
       font-size: 35px;
       text-shadow: 2px 2px #111;
       text-transform: uppercase; }
-    .home-tournaments .lol-euw .inner .status {
+    .home-tournaments .loleuw .inner .status, .home-tournaments .loleune .inner .status, .home-tournaments .hss1 .inner .status {
       background-color: rgba(22, 151, 225, 0.8);
       width: 100%;
       padding: 0;
@@ -356,45 +360,79 @@ footer {
       padding: 10px 0;
       margin-top: 20px;
       float: none; }
-      .home-tournaments .lol-euw .inner .status label {
+      .home-tournaments .loleuw .inner .status label, .home-tournaments .loleune .inner .status label, .home-tournaments .hss1 .inner .status label {
         color: #fff;
         text-transform: uppercase;
         cursor: pointer;
-        font-size: 24px; }
-    .home-tournaments .lol-euw .inner .prize-pool {
+        font-size: 30px; }
+    .home-tournaments .loleuw .inner .prize-pool, .home-tournaments .loleune .inner .prize-pool, .home-tournaments .hss1 .inner .prize-pool {
       margin-top: 20px; }
-      .home-tournaments .lol-euw .inner .prize-pool h4 {
+      .home-tournaments .loleuw .inner .prize-pool h4, .home-tournaments .loleune .inner .prize-pool h4, .home-tournaments .hss1 .inner .prize-pool h4 {
         padding: 0;
         margin: 0;
         color: #fff;
         text-align: center;
         font-size: 28px;
         text-shadow: 2px 2px #111; }
-      .home-tournaments .lol-euw .inner .prize-pool div {
+      .home-tournaments .loleuw .inner .prize-pool div, .home-tournaments .loleune .inner .prize-pool div, .home-tournaments .hss1 .inner .prize-pool div {
         padding: 0;
         margin: 0;
         color: #fff;
         text-align: center;
         font-size: 22px;
         text-shadow: 2px 2px #111; }
-  .home-tournaments .lol-euw .ended {
+    .home-tournaments .loleuw .inner .timing, .home-tournaments .loleune .inner .timing, .home-tournaments .hss1 .inner .timing {
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      text-shadow: 1px 1px #222;
+      font-size: 24px;
+      background-color: rgba(255, 215, 57, 0.9); }
+    .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now {
+      color: #fff;
+      text-align: center;
+      font-size: 35px;
+      text-shadow: 2px 2px #111;
+      margin-bottom: 10px; }
+  .home-tournaments .loleuw.ended .status, .home-tournaments .loleune.ended .status, .home-tournaments .hss1.ended .status {
+    background-color: rgba(151, 22, 0, 0.8); }
+  .home-tournaments .loleuw.ended:after, .home-tournaments .loleune.ended:after, .home-tournaments .hss1.ended:after {
+    content: " (" attr(href) ")";
     position: absolute;
     top: 0;
     left: 0;
-    width: 380px;
-    height: 790px;
-    opacity: 0.6;
-    background-color: #999;
-    transition: .3s; }
-    .home-tournaments .lol-euw .ended:hover {
-      opacity: 0;
-      display: none; }
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-color: #111;
+    transition: .5s; }
+  .home-tournaments .loleuw.ended .timing, .home-tournaments .loleune.ended .timing, .home-tournaments .hss1.ended .timing {
+    visibility: hidden; }
+  .home-tournaments .loleuw:hover:after, .home-tournaments .loleune:hover:after, .home-tournaments .hss1:hover:after {
+    opacity: 0.1;
+    z-index: -1; }
+.home-tournaments .hss1 {
+  clear: both;
+  float: left;
+  background-image: url("../images/home-hs-bg.jpg");
+  width: 790px;
+  height: 380px;
+  min-height: 0;
+  margin-top: 20px; }
+  .home-tournaments .hss1 .inner {
+    padding-top: 100px; }
+    .home-tournaments .hss1 .inner .status, .home-tournaments .hss1 .inner .prize-pool {
+      margin-top: 0; }
+    .home-tournaments .hss1 .inner .timing h4 {
+      margin: 5px 0; }
+    .home-tournaments .hss1 .inner .registered-now {
+      margin-top: 10px;
+      margin-bottom: 0; }
 
 .page {
   width: 1130px;
   background-color: #f1f1f1;
   padding: 20px;
-  margin-top: 81px;
   z-index: 10; }
 
 .left-containers {
