@@ -97,11 +97,14 @@ header {
     padding: 0;
     background-color: #191919;
     border-bottom: 1px solid $mainColor;
-    position: fixed !important;
+    position: fixed;
     width: 100%;
     top: 0;
     z-index: 50;
     box-shadow: 0 1px 2px rgba(0,0,0,.6);
+    .burger {
+        display: none;
+    }
     .logo {
         margin-left: 2%;
         float: left;
@@ -2723,6 +2726,7 @@ footer .games img {
 @media (max-width: 480px) {
     body {
         background: none;
+        margin: 0;
     }
     header .header-middle {
         display: none;
@@ -2736,34 +2740,138 @@ footer .games img {
     .page {
         padding: 20px 0;
     }
+    .home {
+        padding: 0;
+    }
+    .home-tournaments {
+        .parent {
+            width: 380px;
+            margin: 0 auto;
+            float: none;
+        }
+    }
     
+    .burger {
+        &:before {
+            content: "\0069";
+        }
+        display: block !important;
+        font: 80px 'EntypoRegular';
+        float: left;
+        color: #fff;
+        margin: 9px 10px 0 10px;
+        transition: .5s;
+        &.active {
+            transform: rotate(90deg);
+        }
+    }
     header {
+        position: relative;
         padding: 5px 0;
         min-height: 0;
+        .logo {
+            margin-left: 10px;
+            img {
+                width: 100px;
+                height: auto;
+            }
+        }
+        .social {
+            margin: 5px 5px 0 0;
+            a {
+                margin-right: 2px;
+                transition: 0 !important;
+            }
+        }
+        .languages {
+            margin: 10px 5px 0 0;
+        }
+        .language-switcher {
+            top: 35px;
+        }
+        .header-middle {
+            display: none;
+        }
+        nav {
+            margin-left: 0;
+            margin-top: 58px;
+            float: none;
+            .navbar-inner {
+                display: none;
+            }
+            .nav {
+                .nav-link {
+                    height: auto;
+                    line-height: 50px;
+                    float: none;
+                    &:before {
+                        top: 0;
+                    }
+                    a {
+                        padding: 0 0 0 30px;
+                    }
+                    .nav-sub {
+                        display: block !important;
+                        position: initial;
+                        left: initial;
+                        top: initial;
+                        background: 0;
+                    }
+                }
+            }
+        }
+
+        .nav-user {
+            margin: 0;
+            li a {
+                padding: 20px 8px;
+            }
+            .nav-avatar {
+                height: 55px;
+                left: -55px;
+                img {
+                    height: 55px;
+                }
+            }
+            .nav-sub {
+                top: 58px;
+                left: -68px;
+            }
+        }
     }
-    header .logo {
-        margin-left: 10px;
+
+    .home-tournaments {
+        .parent {
+            width: 320px;
+            background-size: cover;
+            min-height: 0;
+            margin-bottom: 20px;
+            .inner {
+                padding-top: 5px;
+                .prize-pool {
+                    marign-top: 0;
+                }
+            }
+            .status {
+                margin-top: 0;
+                padding: 5px 0;
+                label {
+                    font-size: 20px;
+                }
+            }
+            .timing h4 {
+                margin: 0;
+            }
+        }
+        .hss1 {
+            height: auto;
+            background-position: center center;
+            h1 {
+                visibility: hidden;
+            }
+        }
     }
-    header .logo img {
-        width: 100px;
-        height: auto;
-    }
-    header .social {
-        margin: 5px 5px 0 0;
-    }
-    header .social a {
-        margin-right: 2px;
-        transition: 0 !important;
-    }
-    header .languages {
-        margin: 10px 5px 0 0;
-    }
-    header .language-switcher {
-        top: 35px;
-    }
-    header .header-middle {
-        display: none;
-    }
+    
     .navbar {
         height: auto;
     }
@@ -2967,6 +3075,8 @@ footer .games img {
                         left: initial;
                         top: initial;
                         background: 0;
+                        top: 60px;
+                        left: -67px;
                         .nav-sublink {
                             border: 0;
                         }

@@ -892,9 +892,11 @@ class Cron extends System {
             $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/participants.json');
             if ($answer) {
                 foreach($answer as $v) {
+                    //Ending participants and settings places
                     Db::query('UPDATE `participants` SET '.
                         '`place` = '.(int)$v->participant->final_rank.', '.
-                        '`seed_number` = '.(int)$v->participant->seed.' '.
+                        '`seed_number` = '.(int)$v->participant->seed.', '.
+                        '`ended` = 1 '.
                         'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
                         '`game` = "'.$row->game.'" AND '.
                         '`approved` = 1 AND '.
@@ -905,7 +907,21 @@ class Cron extends System {
                     );
                 }
             }
+
+            //Removing event stream
+            Db::query(
+                'DELETE FROM `streams_events` '.
+                'WHERE `tournament_id` = "'.Db::escape($row->name).'" AND '.
+                '`game` = "'.Db::escape($row->game).'" '
+            );
             
+            //Removing tournament start
+            Db::query('UPDATE `tm_settings` SET '.
+                '`value` = 0 '.
+                'WHERE `setting` = "tournament-start-'.$row->game.'-'.$row->server.'" '
+            );
+
+            //Registering that tournament is finalized
             Db::query('UPDATE `tournaments` SET '.
                 '`finalized` = 1 '.
                 'WHERE `id` = '.(int)$row->id

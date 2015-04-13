@@ -88,6 +88,7 @@ hs.dimmingOpacity = 0.8;
 <? } ?>
 
 <header class="container">
+    <div class="burger"></div>
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
     
     <? if ($this->logged_in == 1) { ?>

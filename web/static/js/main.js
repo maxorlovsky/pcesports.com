@@ -1,3 +1,13 @@
+$('.burger').on('click', function() {
+    if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+    }
+    else {
+        $(this).addClass('active');   
+    }
+    $('header nav .navbar-inner, header .nav-user .nav-sub').slideToggle();
+});
+
 $('.twitch .featured-list').on('click', '.featured-streamer', function() {
     var streamer = $(this).attr('attr-name');
     var oldStreamer = $('#player').attr('attr-current');
