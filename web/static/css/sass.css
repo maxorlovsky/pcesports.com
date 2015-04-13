@@ -92,7 +92,7 @@ header {
   padding: 0;
   background-color: #191919;
   border-bottom: 1px solid #1697e1;
-  position: fixed;
+  position: fixed !important;
   width: 100%;
   top: 0;
   z-index: 50;
@@ -2445,9 +2445,6 @@ footer .games img {
     background: none;
     margin: 0; }
 
-  header .header-middle {
-    display: none; }
-
   #head-line {
     min-height: 0; }
 
@@ -2478,9 +2475,11 @@ footer .games img {
       transform: rotate(90deg); }
 
   header {
-    position: relative;
+    position: relative !important;
     padding: 5px 0;
     min-height: 0; }
+    header .header-middle {
+      display: none; }
     header .logo {
       margin-left: 10px; }
       header .logo img {
@@ -2495,8 +2494,6 @@ footer .games img {
       margin: 10px 5px 0 0; }
     header .language-switcher {
       top: 35px; }
-    header .header-middle {
-      display: none; }
     header nav {
       margin-left: 0;
       margin-top: 58px;
