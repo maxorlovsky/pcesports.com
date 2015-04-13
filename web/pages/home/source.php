@@ -97,6 +97,7 @@ class home extends System
                     $v->status = t('active');
                 }
                 
+                $additionalWhere = '';
                 $name = '';
                 if ($v->game == 'lol') {
                     $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
@@ -108,6 +109,7 @@ class home extends System
                         $name = 'Europe West';
                         $v->priority = 1;
                     }
+                    $additionalWhere = '`approved` = 1 AND ';
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
@@ -123,7 +125,7 @@ class home extends System
                     'FROM `participants` '.
                     'WHERE `game` = "'.Db::escape($v->game).'" AND '.
                     '`server` = "'.Db::escape($v->server).'" AND ' .
-                    '`approved` = 1 AND '.
+                    $additionalWhere.
                     '`deleted` = 0 AND '.
                     '`tournament_id` = "'.Db::escape($v->name).'" '.
                     'LIMIT 1 '
