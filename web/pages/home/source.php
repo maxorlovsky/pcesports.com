@@ -19,42 +19,41 @@ class home extends System
 			//array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
             //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
 		);
-        
-        //if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+
+        $where = '';
+        if ($this->data->settings['tournament-start-hs-s1'] == 1) {
+            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' ';
+        }
+        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+            $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
+        }
+        if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
+            $where .= '`game` = "smite" AND (`tournament_id` = '.(int)$this->data->settings['smite-current-number-na'].' OR `tournament_id` = '.(int)$this->data->settings['smite-current-number-eu'].') ';
+        }
+
+        if ($where) {
             $eventStreams = Db::fetchRows(
-                'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-                'FROM `streams` '.
+                'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
+                'FROM `streams_events` '.
                 'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
-                '`game` = "lolcup" AND '.
-                '`approved` = 1 '.
+                $where.
                 'ORDER BY `viewers` DESC '
             );
-        //}
+        }
         
-        $this->streams = Db::fetchRows(
-            'SELECT `id`, `name`, `display_name`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `viewers` '.
+        $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` '.
             'FROM `streams` '.
             'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
             '`approved` = 1 AND '.
             '`featured` = 1 '.
             'ORDER BY `viewers` DESC '
-		);
-        
-        if ($eventStreams) {
-            if ($this->streams) {
-                $this->streams = (object)array_merge((array)$eventStreams, (array)$this->streams);
-            }
-            else {
-                $this->streams = $eventStreams;
-            }
-            
-            foreach($this->streams as &$v) {
-                if ($v->game == 'lolcup') {
-                    $v->game = 'lol';
-                    $v->event = 1;
-                }
-            }
-            unset($v);
+        );
+
+        if ($eventStreams && $this->streams) {
+            $this->streams = (object)array_merge((array)$eventStreams, (array)$this->streams);
+        }
+        else if ($eventStreams) {
+            $this->streams = (object)$eventStreams;
         }
         
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.

@@ -21,11 +21,6 @@
                         <option value="<?=$k2?>" <?=($v->game==$k2?'selected="selected"':null)?>><?=t($v2)?></option>
                         <? } ?>
                     </select>
-                    <select class="change_languages">
-                        <? foreach(_cfg('streamLanguages') as $k2 => $v2) { ?>
-                        <option value="<?=$k2?>" <?=($v->languages==$k2?'selected="selected"':null)?>><?=ucfirst(t($v2))?></option>
-                        <? } ?>
-                    </select>
                     <a href="javascript:void(0);" id="removeStreamer"><?=t('remove')?></a>
                 </span>
             </div>
@@ -53,14 +48,6 @@
                     <select name="game" id="game">
                         <? foreach(_cfg('streamGames') as $k => $v) { ?>
                         <option value="<?=$k?>"><?=t($v)?></option>
-                        <? } ?>
-                    </select>
-                </div>
-                <div class="fields">
-                    <label for="languages"><?=t('languages')?></label>
-                    <select name="languages" id="languages">
-                        <? foreach(_cfg('streamLanguages') as $k => $v) { ?>
-                        <option value="<?=$k?>"><?=ucfirst(t($v))?></option>
                         <? } ?>
                     </select>
                 </div>

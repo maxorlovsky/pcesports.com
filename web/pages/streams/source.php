@@ -11,55 +11,40 @@ class streams extends System
 	}
 	
 	public function getStreamList() {
+        $where = '';
+        if ($this->data->settings['tournament-start-hs-s1'] == 1) {
+            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' ';
+        }
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-            $eventStreams = Db::fetchRows(
-                'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-                'FROM `streams` '.
-                'WHERE `online` != 0 AND '.
-                '`approved` = 1 AND '.
-                '`game` = "lolcup" AND '.
-                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-                'ORDER BY `viewers` DESC, `onlineStatus` DESC '
-            );
+            $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
         }
-        
         if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
+            $where .= '`game` = "smite" AND (`tournament_id` = '.(int)$this->data->settings['smite-current-number-na'].' OR `tournament_id` = '.(int)$this->data->settings['smite-current-number-eu'].') ';
+        }
+
+        if ($where) {
             $eventStreams = Db::fetchRows(
-                'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-                'FROM `streams` '.
+                'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
+                'FROM `streams_events` '.
                 'WHERE `online` != 0 AND '.
-                '`game` = "smitecup" AND '.
-                '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-                'ORDER BY `viewers` DESC, `onlineStatus` DESC '
+                $where.
+                'ORDER BY `viewers` DESC '
             );
         }
         
-        $this->streams = Db::fetchRows(
-            'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-            'FROM `streams` '.
+        $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` FROM `streams` '.
             'WHERE `online` != 0 AND '.
-            '`approved` = 1 AND '.
-            '`game` != "lolcup" AND '.
-            '`game` != "smitecup" AND '.
-            '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-            'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
-		);
-        
-        if ($eventStreams) {
+            '`approved` = 1 '.
+            'ORDER BY `featured` DESC, `viewers` DESC '
+        );
+
+        if ($eventStreams && $this->streams) {
             $this->streams = (object)array_merge((array)$eventStreams, (array)$this->streams);
-            
-            foreach($this->streams as &$v) {
-                if ($v->game == 'lolcup') {
-                    $v->game = 'lol';
-                    $v->event = 1;
-                }
-                else if ($v->game == 'smitecup') {
-                    $v->game = 'smite';
-                    $v->event = 1;
-                }
-            }
-            unset($v);
         }
+        else if ($eventStreams) {
+            $this->streams = (object)$eventStreams;
+        }
+
         
         if (isset($_GET['val2']) && $_GET['val2']) {
             $this->pickedStream = (int)$_GET['val2'];

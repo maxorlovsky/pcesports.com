@@ -49,14 +49,6 @@
                             <? } ?>
                         </select>
                     </div>
-                    <div class="fields">
-                        <label for="languages"><?=t('languages')?></label>
-                        <select name="languages" id="languages">
-                            <? foreach(_cfg('streamLanguages') as $k => $v) { ?>
-                            <option value="<?=$k?>"><?=ucfirst(t($v))?></option>
-                            <? } ?>
-                        </select>
-                    </div>
                     
                     <a href="javascript:void(0);" class="button" id="submitStreamer"><?=t('send_form')?></a>
                 </form>

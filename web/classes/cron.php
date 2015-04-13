@@ -61,6 +61,22 @@ class Cron extends System {
                 );
             }
         }
+
+        $rows = Db::fetchRows('SELECT * FROM `streams_events`');
+        
+        foreach($rows as $v) {
+            $twitch = $this->runTwitchAPI($v->name);
+            
+            if ($twitch['stream'] != NULL) {
+                Db::query(
+                    'UPDATE `streams` '.
+                    'SET `online` = '.time().', '.
+                    '`viewers` = '.(int)$twitch['stream']['viewers'].', '.
+                    '`display_name` = "'.Db::escape($twitch['stream']['channel']['display_name']).'" '.
+                    'WHERE `id` = '.(int)$v->id
+                );
+            }
+        }
     }
     
     public function updateChallongeMatches() {

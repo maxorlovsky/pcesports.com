@@ -4,8 +4,8 @@
     <tr>
     	<td width="3%" class="b">ID</td>
         <td width="27%" class="b">Name (Display name)</td>
-        <td width="10%" class="b">Added by</td>
-        <td width="20%" class="b">Game / Languages</td>
+        <td width="20%" class="b">Added by</td>
+        <td width="10%" class="b">Game</td>
         <td width="10%" class="b">Last online</td>
         <td width="10%" class="centered b">Featured</td>
         <td width="10%" class="centered b">Approved</td>
@@ -19,7 +19,7 @@
                     <td><?=$v->id?></td>
                     <td><?=$v->name?> <?=($v->display_name?'('.$v->display_name.')':null)?></td>
                     <td><?=$v->added_by?></td>
-                    <td><?=$v->game?> / <?=$v->languages?></td>
+                    <td><?=$v->game?></td>
                     <td><?=($v->online!=0?$v->online:null)?></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#streamers/featured/'.$v->id?>">

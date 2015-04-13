@@ -19,6 +19,7 @@ class Settings
 		$i = 0;
 		foreach($this->settings as $v) {
             $this->siteSettings[$i]['type'] = $v->type;
+            $this->siteSettings[$i]['position'] = $v->position;
             
             if ($v->field) {
                 $this->siteSettings[$i]['value'] = $v->field;

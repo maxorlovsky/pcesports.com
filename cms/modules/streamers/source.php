@@ -21,11 +21,9 @@ class Streamers
         	go(_cfg('cmssite').'/#streamers');
         }
         $this->streams = Db::fetchRows(
-            'SELECT `s`.`id`, `s`.`name`, `s`.`display_name`, `s`.`featured`, `s`.`game`, `s`.`viewers`, `s`.`online`, IF(`s`.`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `u`.`name` AS `added_by`, `s`.`languages`, `s`.`approved` '.
+            'SELECT `s`.`id`, `s`.`name`, `s`.`display_name`, `s`.`featured`, `s`.`game`, `s`.`viewers`, `s`.`online`, IF(`s`.`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `u`.`name` AS `added_by`, `s`.`approved` '.
             'FROM `streams` AS `s` '.
             'LEFT JOIN `users` AS `u` ON `s`.`user_id` = `u`.`id` '.
-            'WHERE `s`.`game` != "lolcup" AND '.
-            '`s`.`game` != "smitecup" '.
             'ORDER BY `onlineStatus` DESC, `s`.`featured` DESC, `s`.`viewers` DESC '
 		);
 

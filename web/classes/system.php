@@ -176,73 +176,37 @@ class System
             }
             asort($this->serverTimes);
         }
-        
-        if (_cfg('language') != 'Config not found') {
-            if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-                $this->streams = Db::fetchRows(
-                    'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-                    'FROM `streams` '.
-                    'WHERE '.
-                    '`approved` = "1" AND '.
-                    '`game` = "lolcup" './/OR
-                    //'`name` = "pentaclick_tv" AND '.
-                    'ORDER BY `viewers` DESC '
-                );
-                
-                if ($this->streams) {
-                    foreach($this->streams as &$v) {
-                        if ($v->game == 'lolcup') {
-                            $v->game = 'lol';
-                            $v->event = 1;
-                        }
-                    }
-                    unset($v);
-                }
-            }
-            else if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
-                $this->streams = Db::fetchRows(
-                    'SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus` '.
-                    'FROM `streams` '.
-                    'WHERE `online` >= '.(time() - 360).' AND '.
-                    '`game` = "smitecup" OR '.
-                    '`name` = "pentaclick_tv" AND '.
-                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-                    'ORDER BY `viewers` DESC '
-                );
-                
-                if ($this->streams) {
-                    foreach($this->streams as &$v) {
-                        if ($v->game == 'smitecup') {
-                            $v->game = 'smite';
-                            $v->event = 1;
-                        }
-                    }
-                    unset($v);
-                }
-            }
-            else {
-                $rows = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
-                    'WHERE `online` >= '.(time() - 360).' AND '.
-                    '`approved` = 1 AND '.
-                    '`game` != "lolcup" AND '.
-                    '`game` != "smitecup" AND '.
-                    '(`languages` = "'.Db::escape(_cfg('language')).'" OR `languages` = "both") '.
-                    'ORDER BY `featured` DESC, `viewers` DESC '.
-                    'LIMIT 5'
-                );
-                if ($rows) {
-                    foreach($rows as $v) {
-                        $this->streams[$v->id] = (object)array(
-                            'name' => $v->name,
-                            'display_name' => $v->display_name,
-                            'featured' => $v->featured,
-                            'game' => $v->game,
-                            'viewers' => $v->viewers,
-                            'link' => $v->name,
-                        );
-                    }
-                }
-            }
+
+        $where = '';
+        if ($this->data->settings['tournament-start-hs-s1'] == 1) {
+            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' ';
+        }
+        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
+            $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
+        }
+        if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
+            $where .= '`game` = "smite" AND (`tournament_id` = '.(int)$this->data->settings['smite-current-number-na'].' OR `tournament_id` = '.(int)$this->data->settings['smite-current-number-eu'].') ';
+        }
+
+        if ($where) {
+            $this->streams = Db::fetchRows(
+                'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
+                'FROM `streams_events` '.
+                'WHERE '.
+                $where.
+                'ORDER BY `viewers` DESC '.
+                'LIMIT 5'
+            );
+        }
+        else {
+            $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` FROM `streams` '.
+                'WHERE `online` >= '.(time() - 360).' AND '.
+                '`approved` = 1 AND '.
+                '`game` != "lolcup" AND '.
+                '`game` != "smitecup" '.
+                'ORDER BY `featured` DESC, `viewers` DESC '.
+                'LIMIT 5'
+            );
         }
         
         if ($this->logged_in == 1 && !isset($_SESSION['participant'])) {
@@ -842,12 +806,10 @@ class System
                     $cronClass = new Cron();
                     
                     //SQL involved functions
-                    $cronClass->updateChallongeMatches();
                     $cronClass->tournamentsOpenReg();
                     $cronClass->finalizeTournament();
                     $cronClass->sendNotifications();
                     //$cronClass->checkDotaGames();
-                    $cronClass->updateStreamers();
                     $cronClass->sqlCleanUp();
                     
                     //Others functions without SQL
@@ -877,6 +839,16 @@ class System
                     set_time_limit(300);
                     $cronClass = new Cron();
                     $cronClass->checkSmiteGames('eu');
+                }
+                else if ($_GET['val1'] == 'streams' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(120);
+                    $cronClass = new Cron();
+                    $cronClass->updateStreamers();
+                }
+                else if ($_GET['val1'] == 'matches' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(60);
+                    $cronClass = new Cron();
+                    $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);

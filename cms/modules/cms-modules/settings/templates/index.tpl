@@ -2,7 +2,12 @@
     <tr><td colspan="2"><center><b><?=at('settings')?></b></center></td></tr>
     <?
     if ($module->siteSettings) {
+        $currentPosition = 0;
         foreach($module->siteSettings as $v) {
+            if ($currentPosition != $v['position']) {
+                $currentPosition = $v['position'];
+                ?><tr><td colspan="2"><hr /></td></tr><?
+            }
             if ($v['type'] == 'text' || $v['type'] == 'checkbox') {
                 ?>
                 <tr>

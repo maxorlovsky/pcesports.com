@@ -160,8 +160,7 @@ class profile extends System
         
         $return->streams = Db::fetchRows(
             'SELECT * FROM `streams` '.
-            'WHERE `user_id` = '.(int)$this->data->user->id.' AND '.
-            '`game` != "lolcup" '
+            'WHERE `user_id` = '.(int)$this->data->user->id.' '
         );
         
         return $return;

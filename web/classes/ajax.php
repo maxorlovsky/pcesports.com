@@ -551,7 +551,6 @@ class Ajax extends System
         
         $id = (int)$data['id'];
         $game = Db::escape($data['game']);
-        $language = Db::escape($data['language']);
         
         $row = Db::fetchRow(
             'SELECT * FROM `streams` '.
@@ -565,8 +564,7 @@ class Ajax extends System
         
         Db::query(
             'UPDATE `streams` SET '.
-            '`game` = "'.$game.'", '.
-            '`languages` = "'.$language.'" '.
+            '`game` = "'.$game.'" '.
             'WHERE `id` = '.$id.' '.
             'LIMIT 1 '
         );
@@ -610,7 +608,7 @@ class Ajax extends System
         if (!isset($post['name']) || !$post['name']) {
             return '0;'.t('input_name');
         }
-        else if (!$post['game'] || !$post['languages']) {
+        else if (!$post['game']) {
             return '0;Error';
         }
         $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
@@ -631,17 +629,10 @@ class Ajax extends System
             '`user_id`  = '.(int)$this->data->user->id.', '.
             '`name` = "'.Db::escape($post['name']).'", '.
             '`game` = "'.Db::escape($post['game']).'", '.
-            '`languages` = "'.Db::escape($post['languages']).'" '
+            '`approved` = 1 '
         );
         
-        $this->sendMail('info@pcesports.com',
-		'Streamer added. Pentaclick eSports.',
-		'Streamer was added!!!<br />
-    	Date: '.date('d/m/Y H:i:s').'<br />
-		Streamer name: <b>'.$post['name'].'</b><br>
-    	IP: '.$_SERVER['REMOTE_ADDR']);
-        
-        return '1;'.t('streamer_added_to_check');
+        return '1;'.t('stream_added');
     }
     
     protected function connectTeamToAccount() {
@@ -1186,13 +1177,12 @@ class Ajax extends System
             
             if ($addStream == 1) {
                 Db::query(
-                    'INSERT INTO `streams` SET '.
+                    'INSERT INTO `streams_events` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
                     '`participant_id` = '.(int)$teamId.', '.
-                    '`name` = "'.Db::escape($post['stream']).'", '.
-                    '`game` = "hscup", '.
-                    '`languages` = "both", '.
-                    '`approved` = 1 '
+                    ' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
+                    '`game` = "hs", '.
+                    '`name` = "'.Db::escape($post['stream']).'" '
                 );
             }
     		
@@ -1568,13 +1558,12 @@ class Ajax extends System
             
             if ($addStream == 1) {
                 Db::query(
-                    'INSERT INTO `streams` SET '.
+                    'INSERT INTO `streams_events` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
                     '`participant_id` = '.(int)$teamId.', '.
-                    '`name` = "'.Db::escape($post['stream']).'", '.
-                    '`game` = "lolcup", '.
-                    '`languages` = "both", '.
-                    '`approved` = 1 '
+                    ' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
+                    '`game` = "lol", '.
+                    '`name` = "'.Db::escape($post['stream']).'" '
                 );
             }
     		
@@ -1856,13 +1845,12 @@ class Ajax extends System
             
             if ($addStream == 1) {
                 Db::query(
-                    'INSERT INTO `streams` SET '.
+                    'INSERT INTO `streams_events` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
                     '`participant_id` = '.(int)$teamId.', '.
-                    '`name` = "'.Db::escape($post['stream']).'", '.
-                    '`game` = "smitecup", '.
-                    '`languages` = "en", '.
-                    '`approved` = 1 '
+                    ' `tournament_id` = '.(int)$this->data->settings['smite-current-number-'.$server].', '.
+                    '`game` = "smite", '.
+                    '`name` = "'.Db::escape($post['stream']).'" '
                 );
             }
     		
