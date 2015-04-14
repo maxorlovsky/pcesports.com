@@ -69,7 +69,7 @@ class home extends System
                 $startTime = strtotime($v->dates_start.' '.$v->time);
                 $regTime = strtotime($v->dates_registration.' '.$v->time);
                 $time = $regTime;
-                
+
                 if ($v->server) {
                     $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
                     $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
@@ -91,6 +91,7 @@ class home extends System
                 }
                 else if ($checkReg == 1) {
                     $v->status = t('registration');
+                    $time = $startTime;
                 }
                 else if (strtolower($v->status) == 'start') {
                     $v->status = t('active');

@@ -25,7 +25,10 @@
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
-			<? } else if ($_SESSION['participant']->game == 'smite') { ?>
+			<? } ?>
+
+
+            <? if ($_SESSION['participant']->game == 'smite') { ?>
             <ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/fight"><?=t('fight_status')?> (<span id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></span>)</a></li>
@@ -41,7 +44,9 @@
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
                 <? } ?>
             </ul>
-			<? } else { ?>
+			<? } ?>
+
+            <? if ($_SESSION['participant']->game == 'lol') { ?>
 			<ul class="panel-links">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <? if ($this->data->settings['tournament-start-lol-'.$_SESSION['participant']->server] != 1) {?>
