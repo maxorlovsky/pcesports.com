@@ -42,7 +42,7 @@
                     </a>
                 </div>
                 <div class="actions">
-                    <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t('comments')?></a>
+                    <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t(($v->comments>1?'comments':'comment'))?></a>
                     <!--<a class="share" href="#"><?=t('share')?></a>-->
                     <? if ($v->user_id == $this->data->user->id && $v->status != 1) { ?>
                         <a class="edit" href="<?=_cfg('href')?>/boards/submit/<?=$v->id?>"><?=t('edit')?></a>

@@ -330,108 +330,110 @@ footer {
       footer .copyrights .devs:hover {
         color: #1697e1; }
 
-.home-tournaments .parent {
-  position: relative; }
-.home-tournaments .loleuw {
-  background-image: url("../images/home-euw-bg.jpg");
-  float: left; }
-.home-tournaments .loleune {
-  background-image: url("../images/home-eune-bg.jpg");
-  float: right; }
-.home-tournaments .loleuw, .home-tournaments .loleune, .home-tournaments .hss1 {
-  width: 380px;
-  min-height: 580px;
-  cursor: pointer; }
-  .home-tournaments .loleuw .inner, .home-tournaments .loleune .inner, .home-tournaments .hss1 .inner {
-    display: block;
-    padding-top: 175px; }
-    .home-tournaments .loleuw .inner h1, .home-tournaments .loleune .inner h1, .home-tournaments .hss1 .inner h1 {
-      margin: 0;
-      padding: 0;
-      color: #fff;
-      text-align: center;
-      font-size: 35px;
-      text-shadow: 2px 2px #111;
-      text-transform: uppercase; }
-    .home-tournaments .loleuw .inner .status, .home-tournaments .loleune .inner .status, .home-tournaments .hss1 .inner .status {
-      background-color: rgba(22, 151, 225, 0.8);
-      width: 100%;
-      padding: 0;
-      border-radius: 0;
-      text-align: center;
-      padding: 10px 0;
-      margin-top: 20px;
-      float: none; }
-      .home-tournaments .loleuw .inner .status label, .home-tournaments .loleune .inner .status label, .home-tournaments .hss1 .inner .status label {
-        color: #fff;
-        text-transform: uppercase;
-        cursor: pointer;
-        font-size: 30px; }
-    .home-tournaments .loleuw .inner .prize-pool, .home-tournaments .loleune .inner .prize-pool, .home-tournaments .hss1 .inner .prize-pool {
-      margin-top: 20px; }
-      .home-tournaments .loleuw .inner .prize-pool h4, .home-tournaments .loleune .inner .prize-pool h4, .home-tournaments .hss1 .inner .prize-pool h4 {
-        padding: 0;
+.home-tournaments {
+  margin-bottom: 0 !important; }
+  .home-tournaments .parent {
+    position: relative; }
+  .home-tournaments .loleuw {
+    background-image: url("../images/home-euw-bg.jpg");
+    float: left; }
+  .home-tournaments .loleune {
+    background-image: url("../images/home-eune-bg.jpg");
+    float: right; }
+  .home-tournaments .loleuw, .home-tournaments .loleune, .home-tournaments .hss1 {
+    width: 380px;
+    min-height: 580px;
+    cursor: pointer;
+    margin-bottom: 20px; }
+    .home-tournaments .loleuw .inner, .home-tournaments .loleune .inner, .home-tournaments .hss1 .inner {
+      display: block;
+      padding-top: 175px; }
+      .home-tournaments .loleuw .inner h1, .home-tournaments .loleune .inner h1, .home-tournaments .hss1 .inner h1 {
         margin: 0;
+        padding: 0;
         color: #fff;
         text-align: center;
-        font-size: 28px;
-        text-shadow: 2px 2px #111; }
-      .home-tournaments .loleuw .inner .prize-pool div, .home-tournaments .loleune .inner .prize-pool div, .home-tournaments .hss1 .inner .prize-pool div {
+        font-size: 35px;
+        text-shadow: 2px 2px #111;
+        text-transform: uppercase; }
+      .home-tournaments .loleuw .inner .status, .home-tournaments .loleune .inner .status, .home-tournaments .hss1 .inner .status {
+        background-color: rgba(22, 151, 225, 0.8);
+        width: 100%;
         padding: 0;
-        margin: 0;
+        border-radius: 0;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 20px;
+        float: none; }
+        .home-tournaments .loleuw .inner .status label, .home-tournaments .loleune .inner .status label, .home-tournaments .hss1 .inner .status label {
+          color: #fff;
+          text-transform: uppercase;
+          cursor: pointer;
+          font-size: 30px; }
+      .home-tournaments .loleuw .inner .prize-pool, .home-tournaments .loleune .inner .prize-pool, .home-tournaments .hss1 .inner .prize-pool {
+        margin-top: 20px; }
+        .home-tournaments .loleuw .inner .prize-pool h4, .home-tournaments .loleune .inner .prize-pool h4, .home-tournaments .hss1 .inner .prize-pool h4 {
+          padding: 0;
+          margin: 0;
+          color: #fff;
+          text-align: center;
+          font-size: 28px;
+          text-shadow: 2px 2px #111; }
+        .home-tournaments .loleuw .inner .prize-pool div, .home-tournaments .loleune .inner .prize-pool div, .home-tournaments .hss1 .inner .prize-pool div {
+          padding: 0;
+          margin: 0;
+          color: #fff;
+          text-align: center;
+          font-size: 22px;
+          text-shadow: 2px 2px #111; }
+      .home-tournaments .loleuw .inner .timing, .home-tournaments .loleune .inner .timing, .home-tournaments .hss1 .inner .timing {
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        text-shadow: 1px 1px #222;
+        font-size: 24px;
+        background-color: rgba(255, 215, 57, 0.9); }
+        .home-tournaments .loleuw .inner .timing .timer, .home-tournaments .loleune .inner .timing .timer, .home-tournaments .hss1 .inner .timing .timer {
+          cursor: pointer; }
+      .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now {
         color: #fff;
         text-align: center;
-        font-size: 22px;
-        text-shadow: 2px 2px #111; }
-    .home-tournaments .loleuw .inner .timing, .home-tournaments .loleune .inner .timing, .home-tournaments .hss1 .inner .timing {
+        font-size: 35px;
+        text-shadow: 2px 2px #111;
+        margin-bottom: 10px; }
+    .home-tournaments .loleuw.ended .status, .home-tournaments .loleune.ended .status, .home-tournaments .hss1.ended .status {
+      background-color: rgba(151, 22, 0, 0.8); }
+    .home-tournaments .loleuw.ended:after, .home-tournaments .loleune.ended:after, .home-tournaments .hss1.ended:after {
+      content: " (" attr(href) ")";
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      text-align: center;
-      color: #fff;
-      text-shadow: 1px 1px #222;
-      font-size: 24px;
-      background-color: rgba(255, 215, 57, 0.9); }
-      .home-tournaments .loleuw .inner .timing .timer, .home-tournaments .loleune .inner .timing .timer, .home-tournaments .hss1 .inner .timing .timer {
-        cursor: pointer; }
-    .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now {
-      color: #fff;
-      text-align: center;
-      font-size: 35px;
-      text-shadow: 2px 2px #111;
-      margin-bottom: 10px; }
-  .home-tournaments .loleuw.ended .status, .home-tournaments .loleune.ended .status, .home-tournaments .hss1.ended .status {
-    background-color: rgba(151, 22, 0, 0.8); }
-  .home-tournaments .loleuw.ended:after, .home-tournaments .loleune.ended:after, .home-tournaments .hss1.ended:after {
-    content: " (" attr(href) ")";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.7;
-    background-color: #111;
-    transition: .5s; }
-  .home-tournaments .loleuw.ended .timing, .home-tournaments .loleune.ended .timing, .home-tournaments .hss1.ended .timing {
-    visibility: hidden; }
-  .home-tournaments .loleuw:hover:after, .home-tournaments .loleune:hover:after, .home-tournaments .hss1:hover:after {
-    opacity: 0.1;
-    z-index: -1; }
-.home-tournaments .hss1 {
-  clear: both;
-  float: left;
-  background-image: url("../images/home-hs-bg.jpg");
-  width: 790px;
-  height: 380px;
-  min-height: 0;
-  margin-top: 20px; }
-  .home-tournaments .hss1 .inner {
-    padding-top: 100px; }
-    .home-tournaments .hss1 .inner .status, .home-tournaments .hss1 .inner .prize-pool {
-      margin-top: 0; }
-    .home-tournaments .hss1 .inner .timing h4 {
-      margin: 5px 0; }
-    .home-tournaments .hss1 .inner .registered-now {
-      margin-top: 10px;
-      margin-bottom: 0; }
+      height: 100%;
+      opacity: 0.7;
+      background-color: #111;
+      transition: .5s; }
+    .home-tournaments .loleuw.ended .timing, .home-tournaments .loleune.ended .timing, .home-tournaments .hss1.ended .timing {
+      visibility: hidden; }
+    .home-tournaments .loleuw:hover:after, .home-tournaments .loleune:hover:after, .home-tournaments .hss1:hover:after {
+      opacity: 0.1;
+      z-index: -1; }
+  .home-tournaments .hss1 {
+    clear: both;
+    float: left;
+    background-image: url("../images/home-hs-bg.jpg");
+    width: 790px;
+    height: 380px;
+    min-height: 0; }
+    .home-tournaments .hss1 .inner {
+      padding-top: 100px; }
+      .home-tournaments .hss1 .inner .status, .home-tournaments .hss1 .inner .prize-pool {
+        margin-top: 0; }
+      .home-tournaments .hss1 .inner .timing h4 {
+        margin: 5px 0; }
+      .home-tournaments .hss1 .inner .registered-now {
+        margin-top: 10px;
+        margin-bottom: 0; }
 
 .page {
   width: 1130px;
@@ -2528,7 +2530,7 @@ footer .games img {
         left: -68px; }
 
   .home-tournaments .parent {
-    width: 320px;
+    width: 380px;
     background-size: cover;
     min-height: 0;
     margin-bottom: 20px; }
@@ -2569,10 +2571,10 @@ footer .games img {
     display: none; }
 
   .block .block-header-wrapper {
-    background: none; }
-
-  .block .block-header-wrapper h1 {
-    padding: 5px; }
+    background: none;
+    min-height: 31px; }
+    .block .block-header-wrapper h1 {
+      padding: 5px; }
 
   .big-block .image-holder {
     max-width: 480px;
@@ -2588,12 +2590,9 @@ footer .games img {
     padding: 2px !important; }
 
   .readmore .news-info {
-    float: none;
-    text-align: center; }
-
+    margin-left: 20px; }
   .readmore .button {
-    float: none;
-    margin: 0 0 10px 100px; }
+    margin: 0 10px 0 0; }
 
   .news .small-block {
     float: none;
@@ -2634,13 +2633,13 @@ footer .games img {
     width: 420px; }
 
   .contact-form .fields input {
-    width: 165px; }
+    width: 335px; }
 
   .contact-form .fields select {
-    width: 175px; }
+    width: 345px; }
 
   .contact-form .fields textarea {
-    width: 155px;
+    width: 325px;
     height: 150px; }
 
   .lol .title {
@@ -2720,9 +2719,37 @@ footer .games img {
   .avatars-list {
     padding: 5px 0;
     max-height: 200px;
-    overflow-y: auto; } }
+    overflow-y: auto; }
+
+  .donate a {
+    width: 93%; }
+  .donate .arrow-down {
+    top: 212px;
+    left: 235px; }
+  .donate .list {
+    top: 224px;
+    width: 100%; }
+  .donate .separator {
+    top: 223px;
+    width: 100%; }
+
+  .participants .block {
+    margin: 20px 30px 0 0; }
+    .participants .block:nth-child(2n) {
+      margin-right: 0 !important; }
+    .participants .block:nth-of-type(-n+2) {
+      margin-top: 0 !important; }
+
+  .boards .submit {
+    width: 450px; }
+
+  .submitBoard #title {
+    width: 420px; } }
 /* Smallest phones */
 @media (max-width: 320px) {
+  body {
+    margin: 0; }
+
   .container {
     width: 320px;
     position: relative !important;
@@ -2730,6 +2757,7 @@ footer .games img {
     margin: 0; }
 
   header nav {
+    margin-top: 0;
     float: initial;
     padding-top: 70px; }
     header nav .nav {
@@ -2753,11 +2781,21 @@ footer .games img {
         header nav .nav .nav-link:before {
           top: 5px; }
 
+  .boards .board .thread {
+    max-width: 215px; }
+
   .block .block-header-wrapper {
     min-height: 30px; }
+    .block .block-header-wrapper h1 {
+      padding: 5px; }
 
-  .block .block-header-wrapper h1 {
-    padding: 5px; }
+  .donate .arrow-down {
+    top: 220px;
+    left: 160px; }
+  .donate .list {
+    top: 232px; }
+  .donate .separator {
+    top: 231px; }
 
   .big-block .image-holder {
     max-width: 320px;
@@ -2906,6 +2944,20 @@ footer .games img {
   .avatars-list {
     padding: 5px 0;
     max-height: 200px;
-    overflow-y: auto; } }
+    overflow-y: auto; }
+
+  .participants .block {
+    margin: 20px 30px 0 40px; }
+
+  .team .team-division {
+    width: 280px; }
+
+  .boards .submit {
+    width: 290px; }
+
+  .submitBoard #title {
+    width: 250px; }
+  .submitBoard .categories div {
+    margin-right: 5px; } }
 
 /*# sourceMappingURL=sass.css.map */

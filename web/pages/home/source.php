@@ -102,18 +102,17 @@ class home extends System
                     $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
                     if ($v->server == 'eune') {
                         $name = 'Europe East';
-                        $v->priority = 2;
                     }
                     else {
                         $name = 'Europe West';
-                        $v->priority = 1;
                     }
                     $additionalWhere = '`approved` = 1 AND ';
+                    $v->priority = 2;
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League';
-                    $v->priority = 3;
+                    $v->priority = 1;
                 }
                 //else if ($v->game == 'smite') {
                 //    $link = 'smite/'.$v->server.'/'.$v->name;

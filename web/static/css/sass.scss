@@ -410,6 +410,7 @@ footer {
 }
 
 .home-tournaments {
+    margin-bottom: 0 !important;
     .parent {
         position: relative;
     }
@@ -425,6 +426,7 @@ footer {
         width: 380px;
         min-height: 580px;
         cursor: pointer;
+        margin-bottom: 20px;
         .inner {
             display: block;
             padding-top: 175px;
@@ -524,7 +526,6 @@ footer {
         width: 790px;
         height: 380px;
         min-height: 0;
-        margin-top: 20px;
         .inner {
             padding-top: 100px;
             .status, .prize-pool {
@@ -2839,7 +2840,7 @@ footer .games img {
 
     .home-tournaments {
         .parent {
-            width: 320px;
+            width: 380px;
             background-size: cover;
             min-height: 0;
             margin-bottom: 20px;
@@ -2888,12 +2889,16 @@ footer .games img {
     .promo {
         display: none;
     }
-    .block .block-header-wrapper {
-        background: none;
+    .block {
+        .block-header-wrapper {
+            background: none;
+            min-height: 31px;
+            h1 {
+                padding: 5px;
+            }
+        }
     }
-    .block .block-header-wrapper h1 {
-        padding: 5px;
-    }
+    
     .big-block .image-holder {
         max-width: 480px;
         max-height: 140px;
@@ -2907,13 +2912,13 @@ footer .games img {
     .big-block.readmore {
         padding: 2px !important;
     }
-    .readmore .news-info {
-        float: none;
-        text-align: center;
-    }
-    .readmore .button {
-        float: none;
-        margin: 0 0 10px 100px;
+    .readmore {
+        .news-info {
+            margin-left: 20px;
+        }
+        .button {
+            margin: 0 10px 0 0;
+        }
     }
     .news .small-block {
         float: none;
@@ -2954,13 +2959,13 @@ footer .games img {
         width: 420px;
     }
     .contact-form .fields input {
-        width: 165px;
+        width: 335px;
     }
     .contact-form .fields select {
-        width: 175px;
+        width: 345px;
     }
     .contact-form .fields textarea {
-        width: 155px;
+        width: 325px;
         height: 150px;
     }
     .lol .title {
@@ -3042,10 +3047,56 @@ footer .games img {
         max-height: 200px;
         overflow-y: auto;
     }
+
+    .donate {
+        a {
+            width: 93%;
+        }
+        .arrow-down {
+            top: 212px;
+            left: 235px;
+        }
+        .list {
+            top: 224px;
+            width: 100%;
+        }
+        .separator {
+            top: 223px;
+            width: 100%;
+        }
+    }
+
+    .participants {
+        .block {
+            margin: 20px 30px 0 0;
+            &:nth-child(2n) {
+                margin-right: 0 !important;
+            }
+            &:nth-of-type(-n+2) {
+                margin-top: 0 !important;
+            }
+        }
+    }
+
+    .boards {
+        .submit {
+            width: 450px;
+        }
+    }
+
+    .submitBoard {
+        #title {
+            width: 420px;
+        }
+    }
 }
 
 /* Smallest phones */
 @media (max-width: 320px) {
+    body {
+        margin: 0;
+    }
+
     .container {
         width: 320px;
         position: relative !important;
@@ -3055,6 +3106,7 @@ footer .games img {
     
     header {
         nav {
+            margin-top: 0;
             float: initial;
             padding-top: 70px;
             .nav {
@@ -3085,13 +3137,37 @@ footer .games img {
             }
         }
     }
+
+    .boards {
+        .board {
+            .thread {
+                max-width: 215px;
+            }
+        }
+    }
     
-    .block .block-header-wrapper {
-        min-height: 30px;
+    .block {
+        .block-header-wrapper {
+            min-height: 30px;
+            h1 {
+                padding: 5px;
+            }
+        }
     }
-    .block .block-header-wrapper h1 {
-        padding: 5px;
+
+    .donate {
+        .arrow-down {
+            top: 220px;
+            left: 160px;
+        }
+        .list {
+            top: 232px;
+        }
+        .separator {
+            top: 231px;
+        }
     }
+
     .big-block .image-holder {
         max-width: 320px;
         max-height: 140px;
@@ -3240,5 +3316,32 @@ footer .games img {
         padding: 5px 0;
         max-height: 200px;
         overflow-y: auto;
+    }
+
+    .participants {
+        .block {
+            margin: 20px 30px 0 40px;
+        }
+    }
+
+    .team {
+        .team-division {
+            width: 280px;
+        }
+    }
+
+    .boards {
+        .submit {
+            width: 290px;
+        }
+    }
+
+    .submitBoard {
+        #title {
+            width: 250px;
+        }
+        .categories div {
+            margin-right: 5px;
+        }
     }
 }

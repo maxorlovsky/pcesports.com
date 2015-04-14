@@ -31,7 +31,7 @@
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/member/<?=$v->login?>"><?=$v->login?></a>, 
 				<span id="news-like-<?=$v->id?>"><?=$v->likes?></span> <?=t('likes')?>, 
                 <span><?=$v->views?></span> <?=t('views')?>,
-                <span><?=$v->comments?></span> <?=t('comments')?>
+                <span><?=$v->comments?></span> <?=t(($v->comments>1?'comments':'comment'))?>
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/blog/<?=$v->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>
