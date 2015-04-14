@@ -2528,6 +2528,8 @@ footer .games img {
       header .nav-user .nav-sub {
         top: 58px;
         left: -68px; }
+    header .login {
+      line-height: 55px; }
 
   .home-tournaments .parent {
     width: 380px;
@@ -2759,7 +2761,7 @@ footer .games img {
   header nav {
     margin-top: 0;
     float: initial;
-    padding-top: 70px; }
+    padding-top: 55px; }
     header nav .nav {
       margin: 0; }
       header nav .nav .nav-link {
@@ -2780,6 +2782,9 @@ footer .games img {
             border: 0; }
         header nav .nav .nav-link:before {
           top: 5px; }
+
+  .home-tournaments .parent {
+    width: 320px; }
 
   .boards .board .thread {
     max-width: 215px; }

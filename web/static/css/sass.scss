@@ -2836,6 +2836,10 @@ footer .games img {
                 left: -68px;
             }
         }
+
+        .login {
+            line-height: 55px;
+        }
     }
 
     .home-tournaments {
@@ -3108,7 +3112,7 @@ footer .games img {
         nav {
             margin-top: 0;
             float: initial;
-            padding-top: 70px;
+            padding-top: 55px;
             .nav {
                 margin: 0;
                 .nav-link {
@@ -3135,6 +3139,12 @@ footer .games img {
                     }
                 }
             }
+        }
+    }
+
+    .home-tournaments {
+        .parent {
+            width: 320px;
         }
     }
 

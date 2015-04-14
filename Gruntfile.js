@@ -1,8 +1,11 @@
 module.exports = function(grunt) {
+    var mozjpeg = require('imagemin-mozjpeg');
+
     grunt.initConfig({
         dirs: {
             css: 'web/static/css',
-            js: 'web/static/js'
+            js: 'web/static/js',
+            images: 'web/static/images'
         },
         pkg: grunt.file.readJSON('package.json'),
         sass: {
@@ -59,6 +62,16 @@ module.exports = function(grunt) {
 				files: '<%= dirs.css %>/sass.scss',
 				tasks: ['sass']
 			}
+        },
+        imagemin: {
+            dynamic: {                         // Another target
+                files: [{
+                    expand: true,                  // Enable dynamic expansion
+                    cwd: '<%= dirs.images %>',                   // Src matches are relative to this path
+                    src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
+                    dest: '<%= dirs.images %>/dist/'                  // Destination path prefix
+                }]
+            }
         }
     });
     
@@ -68,8 +81,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.registerTask('default', [ 'sass', 'jshint', 'concat:css', 'cssmin:css', 'concat:js', 'uglify:js' ]);
-    grunt.registerTask('style', [ 'watch' ]);
-    
+    grunt.registerTask('imagemin', ['imagemin']);
     grunt.registerTask('dev', [ 'watch' ]);
 };
