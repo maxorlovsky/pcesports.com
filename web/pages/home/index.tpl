@@ -70,7 +70,7 @@
                         <div><?=$v['prize']?></div>
                     </div>
                     <div class="timing">
-                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
+                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time() + _cfg('timeDifference'))?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i')?>" <?=($k=='hss1'?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
                     </div>
                     <div class="registered-now">
                         <div><?=$v['teams']?> / <?=$v['max_num']?></div>
