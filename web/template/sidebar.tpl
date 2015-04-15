@@ -97,7 +97,7 @@
         </div>
 		<div class="block-content">
             <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="600" attr-current="24.10">
+            <div class="donate-bar" attr-goal="900" attr-current="24.10">
                 <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
