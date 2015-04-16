@@ -11,7 +11,7 @@
         <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
                 <div class="title"><img src="<?=_cfg('img')?>/lol-logo-small.png" /><?=t('tournament')?> #<?=$v['name']?></div>
-                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> <?=$v['max_num']?> <?=t('participants')?></div>
+                <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> <span class="<?=($v['teamsCount']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span> <?=t('participants')?></div>
             </div>
             
             <div class="right-part">
