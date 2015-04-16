@@ -43,14 +43,6 @@ class smite extends System
 
         include_once _cfg('pages').'/'.get_class().'/team.tpl';
     }
-    
-    public function fightPage() {
-        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/smite/'.$this->server);
-		}
-        
-        include_once _cfg('pages').'/'.get_class().'/fight.tpl';
-    }
 	
 	public function participantPage() {
 		$verified = 0;
@@ -96,7 +88,7 @@ class smite extends System
 		);
 		
 		if ($row && $row->approved == 0) {
-			//Not approved, registration open, approving and adding to brackets
+			//Not approved, registration open, approving
 			$this->approveRegisterPlayer($row);
 			$verified = 1;
 			$regged = 1;
@@ -242,7 +234,7 @@ class smite extends System
                     $startTime = strtotime($v->dates_start.' '.$v->time);
                     $regTime = strtotime($v->dates_registration.' '.$v->time);
                     
-                    if ($this->data->settings['tournament-checkin-smite-'.$this->server] == 1) {
+                    if ($this->data->settings['tournament-checkin-smite-'.$this->server] == 1 && $this->currentTournament == $v->name) {
                         $v->status = 'Check in';
                     }
                     else if (time() > $startTime) {
@@ -318,10 +310,7 @@ class smite extends System
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val4']) && $_GET['val4'] == 'fight') {
-			$this->fightPage();
-		}
-        else if (isset($_GET['val4']) && $_GET['val4'] == 'team') {
+		if (isset($_GET['val4']) && $_GET['val4'] == 'team') {
 			$this->teamEditPage();
 		}
 		else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
@@ -399,15 +388,24 @@ class smite extends System
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
-        
-        $apiArray = array(
-            '_method' => 'delete',
+
+        $row = Db::fetchRow('SELECT `challonge_id` '.
+            'FROM `participants` '.
+            'WHERE `game` = "lol" AND '.
+            '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
         );
-        if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-smite'.$this->server.(int)$this->currentTournament.'/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
-        }
-        else {
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.$_SESSION['participant']->challonge_id.'.post', $apiArray);
+
+        if ($row->challonge_id != 0) {
+            $apiArray = array(
+                '_method' => 'delete',
+            );
+            if (_cfg('env') == 'prod') {
+                $this->runChallongeAPI('tournaments/pentaclick-smite'.$this->server.(int)$this->currentTournament.'/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
+            else {
+                $this->runChallongeAPI('tournaments/pentaclick-test1/participants/'.(int)$row->challonge_id.'.post', $apiArray);
+            }
         }
         
         unset($_SESSION['participant']);

@@ -43,14 +43,6 @@ class leagueoflegends extends System
 
         include_once _cfg('pages').'/'.get_class().'/team.tpl';
     }
-    
-    public function fightPage() {
-        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-			go(_cfg('href').'/leagueoflegends/'.$this->server);
-		}
-        
-        include_once _cfg('pages').'/'.get_class().'/fight.tpl';
-    }
 	
 	public function participantPage() {
 		$verified = 0;
@@ -318,10 +310,7 @@ class leagueoflegends extends System
 	}
 	
 	public function showTemplate() {
-		if (isset($_GET['val4']) && $_GET['val4'] == 'fight') {
-			$this->fightPage();
-		}
-        else if (isset($_GET['val4']) && $_GET['val4'] == 'team') {
+        if (isset($_GET['val4']) && $_GET['val4'] == 'team') {
 			$this->teamEditPage();
 		}
 		else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
