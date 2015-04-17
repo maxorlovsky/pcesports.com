@@ -111,9 +111,6 @@ class hearthstone extends System
 			$verified = 1;
 		}
         $paymentVerified = $row->verified;
-        if (isset($paymentVerified)) {
-            $_SESSION['participant']->verified = $paymentVerified;
-        }
         
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
@@ -129,6 +126,10 @@ class hearthstone extends System
 		
 		if ($verified == 1) {
 			$_SESSION['participant'] = $row;
+
+            if (isset($paymentVerified)) {
+                $_SESSION['participant']->verified = $paymentVerified;
+            }
 			
 			include_once _cfg('pages').'/'.get_class().'/participant-page.tpl';
 		}

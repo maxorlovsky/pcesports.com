@@ -577,7 +577,7 @@ class System
     //@file['name'] - name of the file with extension
     //@file['content'] - plain text or plain html, it will be converted into attachment
     public function sendMail($email, $subject, $msg, $files = array()) {
-    	if(!_cfg('smtpMailName') || !_cfg('smtpMailPass')) {
+    	if(!_cfg('smtpMailName') || !_cfg('smtpMailPass') || _cfg('env') == 'dev') {
             return false;
         }
         

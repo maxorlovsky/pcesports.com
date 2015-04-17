@@ -1,4 +1,22 @@
 //Visual things
+$('.opponent-info .player-heroes').on('mouseover', 'div', function() {
+    if (!$(this).parent().hasClass('bans')) {
+        return false;
+    }
+    $(this).addClass('banned');
+}).on('mouseout', 'div', function() {
+    if (!$(this).parent().hasClass('bans')) {
+        return false;
+    }
+    $(this).removeClass('banned');
+}).on('click', 'div', function() {
+    if (!$(this).parent().hasClass('bans')) {
+        return false;
+    }
+    if(confirm('Are you sure you want to ban hero "'+$(this).attr('attr-msg')+'"?')) {
+        profiler.ban($(this).attr('attr-msg'), $(this));
+    }
+});
 
 $('#tournamentCode').on('click', function() {
     $(this).select();
@@ -85,6 +103,24 @@ var profiler = {
     checkTimer: 15,
     chatStart: 0,
     
+    ban: function(hero, element) {
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'banHS',
+                hero: hero,
+            },
+            success: function(answer) {
+                answer = answer.split(';');
+                if (answer[0] == 1) {
+                    $('.opponent-info .pick-ban').removeClass('red').hide();
+                    $('.opponent-info .player-heroes').removeClass('bans');
+                    element.addClass('banned');
+                }
+            }
+        }
+        PC.ajax(query);
+    },
     sound: function(element) {
         if (element.hasClass('on')) {
             element.removeClass('on').addClass('off');
@@ -171,6 +207,20 @@ var profiler = {
                     });
                     
                     $('.opponent-info .player-heroes').html(returnHtml);
+
+                    if (answer[4] == 'none' || answer[4] == '') {
+                        $('.opponent-info .pick-ban').addClass('red').show();
+                        $('.opponent-info .player-heroes').addClass('bans');
+                    }
+                    else {
+                        $('.opponent-info .player-heroes div').each(function(k,v) {
+                            if ($(this).hasClass(answer[4])) {
+                                $(this).addClass('banned');
+                            }
+                        });
+                        $('.opponent-info .pick-ban').removeClass('red').hide();
+                        $('.opponent-info .player-heroes').removeClass('bans');
+                    }
                 }
             }
         }

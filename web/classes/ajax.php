@@ -865,6 +865,72 @@ class Ajax extends System
             }
         }
     }
+
+    protected function banHS($data) {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return false;
+        }
+
+        $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+
+        $player = 0;
+        if ($row->id1 == $_SESSION['participant']->id) {
+            $player = 1;
+        }
+        else if ($row->id2 == $_SESSION['participant']->id) {
+            $player = 2;
+        }
+
+        $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+        if (!$gameRow) {
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' picked his ban. Awaiting enemy ban.</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+
+            Db::query('INSERT INTO `hs_games` SET '.
+                '`match_id` = '.(int)$row->match_id.', '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '
+            );
+        }
+        else {
+            Db::query('UPDATE `hs_games` SET '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '.
+                'WHERE `match_id` = '.(int)$row->match_id
+            );
+
+            $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name1.' banned "'.$gameRow->player1_ban.'"</b></p>';
+            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name2.' banned "'.$gameRow->player2_ban.'"</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+        }
+
+        return '1;1';
+
+        //dump($player);
+        //ddump($row);
+        
+        /*$enemyRow = Db::fetchRow('SELECT `id`, `name`, `online`, `server` '.
+            'FROM `participants` '.
+            'WHERE '.
+            '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );*/
+    }
     
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
@@ -932,6 +998,7 @@ class Ajax extends System
                 }
                 
                 $code = '';
+                $banStatus = '';
                 if ($_SESSION['participant']->game == 'lol') {
                     if (_cfg('env') == 'prod') {
                         $reportTo = 'http://www.pcesports.com/run/riotcode/';
@@ -970,7 +1037,6 @@ class Ajax extends System
                     );
                     
                     $row->contact_info = json_decode($row->contact_info);
-                    //{"hero1":"1","hero2":"4","hero3":"3","hero4":"2","phone":null,"place":0}
                     $heroes = array(
                         1 => 'warrior',
                         2 => 'hunter',
@@ -990,9 +1056,22 @@ class Ajax extends System
                         }
                     }
                     $code = json_encode($code);
+
+                    if ($_SESSION['participant']->challonge_id == $playersRow->player1_id) {
+                        $player = 1;
+                    }
+                    else {
+                        $player = 2;
+                    }
+
+                    $banStatus = 'none';
+                    $hsGamesRow = Db::fetchRow('SELECT `player'.$player.'_ban` AS `ban` FROM `hs_games` WHERE `match_id` = '.(int)$playersRow->match_id.' LIMIT 1');
+                    if ($hsGamesRow) {
+                        $banStatus = strtolower($hsGamesRow->ban);
+                    }
                 }
 
-                return '1;'.$enemyRow->name.';'.$status.';'.$code;
+                return '1;'.$enemyRow->name.';'.$status.';'.$code.';'.$banStatus;
             }
             
             return '0;'.t('none').';'.t('offline').';'.t('none');

@@ -1149,6 +1149,11 @@ footer .partners .aimskillz {
     padding: 0; }
     .player-heroes div:nth-child(4n) {
       margin: 0; }
+    .player-heroes div.banned {
+      outline: 2px solid red; }
+  .player-heroes.bans .banned {
+    cursor: pointer;
+    outline: 2px solid red; }
 
 .reg-completed {
   display: none;

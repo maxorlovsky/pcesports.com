@@ -65,7 +65,8 @@
                 <label><?=t('opponent')?></label>: <span id="opponentName"></span><br />
                 <label><?=t('status')?></label>: <span id="opponentStatus"></span> (<span id="opponentSec"></span> sec)<br />
                 <label><?=t('enemy_heroes')?></label>
-                <div class="player-heroes"></div>
+                <div class="pick-ban red hidden"><?=t('pick_your_ban')?></div>
+                <div class="player-heroes bans"></div>
                 <div class="clear"></div>
             </div>
         </div>

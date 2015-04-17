@@ -81,7 +81,12 @@ class Cron extends System {
     
     public function updateChallongeMatches() {
         if ($this->data->settings['tournament-start-hs-s1'] == 1) {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-hss1'.$this->data->settings['hs-current-number-s1'].'/matches.json', array(), 'state=open');
+            if (_cfg('env') == 'prod') {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-hss1'.$this->data->settings['hs-current-number-s1'].'/matches.json', array(), 'state=open');
+            }
+            else {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+            }
 
             foreach($answer as $v) {
                 //Checking if match is already registered
