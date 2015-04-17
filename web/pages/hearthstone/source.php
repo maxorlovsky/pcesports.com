@@ -111,6 +111,9 @@ class hearthstone extends System
 			$verified = 1;
 		}
         $paymentVerified = $row->verified;
+        if (isset($paymentVerified)) {
+            $_SESSION['participant']->verified = $paymentVerified;
+        }
         
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
