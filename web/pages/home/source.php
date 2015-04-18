@@ -108,16 +108,24 @@ class home extends System
                         $name = 'Europe West';
                     }
                     $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 2;
+                    $v->priority = 1;
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League';
+                    $v->priority = 2;
+                }
+                else if ($v->game == 'smite') {
+                    $link = 'smite/'.$v->server.'/'.$v->name;
+                    if ($v->server == 'eu') {
+                        $name = 'Europe';
+                    }
+                    else {
+                        $name = 'North America';
+                    }
+                    $additionalWhere = '`approved` = 1 AND ';
                     $v->priority = 1;
                 }
-                //else if ($v->game == 'smite') {
-                //    $link = 'smite/'.$v->server.'/'.$v->name;
-                //}
 
                 //Fetching number of players for each tournament
                 $row = Db::fetchRow('SELECT COUNT(`tournament_id`) AS `value`'.
