@@ -961,6 +961,7 @@ class Cron extends System {
                     $this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
+                    ddump($v);
                     $v->template = 1;
                     $v->data = $row;
                     $this->checkInProcess($v);

@@ -250,7 +250,7 @@ class DBV
                 }
 
                 try {
-                    $this->_getAdapter()->query($content);
+                    $this->_getAdapter()->multi_query($content);
                     return true;
                 } catch (DBV_Exception $e) {
                     $this->error("[{$e->getCode()}] {$e->getMessage()} in <strong>$file</strong>");

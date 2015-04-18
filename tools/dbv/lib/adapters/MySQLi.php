@@ -22,6 +22,15 @@ class DBV_Adapter_MySQLi implements DBV_Adapter_Interface
         }
     }
 
+    public function multi_query($sql)
+    {
+        try {
+            return $this->_connection->multi_query($sql);
+        } catch (PDOException $e) {
+            throw new DBV_Exception($e->getMessage(), (int) $e->getCode());
+        }
+    }
+
     public function query($sql)
     {
         try {
