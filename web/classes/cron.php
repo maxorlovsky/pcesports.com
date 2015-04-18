@@ -950,7 +950,7 @@ class Cron extends System {
                     'AND `tournament_name` = "'.Db::escape($v->name).'" '
                     //'AND `delivered` != 1 '
                 );
-                dump($row);
+                dump($v);
                 
                 $time = array();
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
@@ -995,7 +995,7 @@ class Cron extends System {
         else {
             $text = Template::getMailTemplate($tournament->game.'-reminder-24');
         }
-        
+        echo $tournament->template;
         /*if ($rows) {
             $i = 0;
             foreach($rows as $v) {
