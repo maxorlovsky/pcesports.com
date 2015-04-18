@@ -950,7 +950,6 @@ class Cron extends System {
                     'AND `tournament_name` = "'.Db::escape($v->name).'" '
                     //'AND `delivered` != 1 '
                 );
-                dump($v);
                 
                 $time = array();
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
@@ -987,7 +986,6 @@ class Cron extends System {
             '`deleted` = 0 AND '.
             '`ended` = 0'
         );
-        dump($tournament);
         
         if ($tournament->template == 1) {
             $text = Template::getMailTemplate($tournament->game.'-reminder-1');
@@ -995,8 +993,8 @@ class Cron extends System {
         else {
             $text = Template::getMailTemplate($tournament->game.'-reminder-24');
         }
-        echo $tournament->template;
-        /*if ($rows) {
+
+        if ($rows) {
             $i = 0;
             foreach($rows as $v) {
                 if ($v->game == 'lol') {
@@ -1036,16 +1034,13 @@ class Cron extends System {
                     $i = 0;
                 }
             }
-        }*/
+        }
         
         if ($tournament->template == 1 && $tournament->data) {
             Db::query('UPDATE `notifications` SET '.
                 '`delivered` = 1 '.
                 'WHERE `id` = '.(int)$tournament->data->id
             );
-            echo 'UPDATE `notifications` SET '.
-                '`delivered` = 1 '.
-                'WHERE `id` = '.(int)$tournament->data->id;
         }
         else {
             Db::query('INSERT INTO `notifications` SET '.
