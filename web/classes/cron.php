@@ -956,17 +956,17 @@ class Cron extends System {
                 $time['24'] = $time['0'] - 86400;
                 $time['1'] = $time['0'] - 3600;
                 dump($v);
-                ddump($row);
+                dump($row);
+                echo '---';
                 if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
-                    $this->sendReminders($v);
+                    //$this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
-                    ddump($v);
                     $v->template = 1;
                     $v->data = $row;
                     $this->checkInProcess($v);
-                    $this->sendReminders($v);
+                    //$this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 1 && $time['0'] <= time()) {
                     $v->data = $row;
