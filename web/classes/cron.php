@@ -1084,14 +1084,7 @@ class Cron extends System {
             '`setting` = "tournament-start-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
         );
         
-        $challongeTournament = $tournament->game;
-        if ($tournament->game == 'hs') {
-            //$challongeTournament = $this->data->settings['hs-current-number-s1'];
-            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['hs-current-number-'.$tournament->server];
-        }
-        else {
-            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
-        }
+        $challongeTournament = $tournament->game.$tournament->server.$this->data->settings[$tournament->game'-current-number-'.$tournament->server];
         
         //Reshuffle tournament
         if (_cfg('env') == 'prod') {

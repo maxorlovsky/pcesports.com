@@ -128,7 +128,7 @@
                 <? if ($v->game != 'other') { ?>
                     <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <? } ?>
-                <label class="streamer-name"><?=$v->display_name?></label>
+                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
                 <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
             </a>
         <?

@@ -26,8 +26,7 @@ class streams extends System
             $eventStreams = Db::fetchRows(
                 'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
                 'FROM `streams_events` '.
-                'WHERE `online` != 0 AND '.
-                $where.
+                'WHERE '.$where.
                 'ORDER BY `viewers` DESC '
             );
         }
