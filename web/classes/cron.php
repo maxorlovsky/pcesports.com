@@ -897,18 +897,17 @@ class Cron extends System {
             $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/participants.json');
             if ($answer) {
                 foreach($answer as $v) {
-                    //Ending participants and settings places
+                    //Settings places for participants
                     Db::query('UPDATE `participants` SET '.
                         '`place` = '.(int)$v->participant->final_rank.', '.
-                        '`seed_number` = '.(int)$v->participant->seed.', '.
-                        '`ended` = 1 '.
+                        '`seed_number` = '.(int)$v->participant->seed.' '.
                         'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
                         '`game` = "'.$row->game.'" AND '.
                         '`approved` = 1 AND '.
                         '`checked_in` = 1 AND '.
-                        '`server` = "'.Db::escape($row->server).'" AND '.
+                        '`server` = "'.$row->server.'" AND '.
                         '`deleted` = 0 AND '.
-                        '`tournament_id` = "'.Db::escape($row->name).'" '
+                        '`tournament_id` = "'.$row->name.'" '
                     );
                 }
             }
@@ -921,13 +920,24 @@ class Cron extends System {
             );
             
             //Removing tournament start
-            Db::query('UPDATE `tm_settings` SET '.
+            Db::query(
+                'UPDATE `tm_settings` SET '.
                 '`value` = 0 '.
                 'WHERE `setting` = "tournament-start-'.$row->game.'-'.$row->server.'" '
             );
 
+            //Ending participants
+            Db::query(
+                'UPDATE `participants` SET '.
+                '`ended` = 1 '.
+                'WHERE `game` = "'.$row->game.'" AND '.
+                '`server` = "'.$row->server.'" AND '.
+                '`tournament_id` = "'.$row->name.'" '
+            );
+
             //Registering that tournament is finalized
-            Db::query('UPDATE `tournaments` SET '.
+            Db::query(
+                'UPDATE `tournaments` SET '.
                 '`finalized` = 1 '.
                 'WHERE `id` = '.(int)$row->id
             );
