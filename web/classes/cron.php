@@ -986,8 +986,7 @@ class Cron extends System {
             '`deleted` = 0 AND '.
             '`ended` = 0'
         );
-        dump($rows);
-        return false;
+        dump($tournament);
         
         if ($tournament->template == 1) {
             $text = Template::getMailTemplate($tournament->game.'-reminder-1');
@@ -996,7 +995,7 @@ class Cron extends System {
             $text = Template::getMailTemplate($tournament->game.'-reminder-24');
         }
         
-        if ($rows) {
+        /*if ($rows) {
             $i = 0;
             foreach($rows as $v) {
                 if ($v->game == 'lol') {
@@ -1036,7 +1035,7 @@ class Cron extends System {
                     $i = 0;
                 }
             }
-        }
+        }*/
         
         if ($tournament->template == 1 && $tournament->data) {
             Db::query('UPDATE `notifications` SET '.
