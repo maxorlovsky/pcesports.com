@@ -955,18 +955,16 @@ class Cron extends System {
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
                 $time['24'] = $time['0'] - 86400;
                 $time['1'] = $time['0'] - 3600;
-                dump($v);
-                dump($row);
-                echo '---';
+                
                 if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
-                    //$this->sendReminders($v);
+                    $this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 24 && $time['1'] <= time()) {
                     $v->template = 1;
                     $v->data = $row;
                     $this->checkInProcess($v);
-                    //$this->sendReminders($v);
+                    $this->sendReminders($v);
                 }
                 else if ($row && $row->delivered == 1 && $time['0'] <= time()) {
                     $v->data = $row;
@@ -988,6 +986,8 @@ class Cron extends System {
             '`deleted` = 0 AND '.
             '`ended` = 0'
         );
+        dump($rows);
+        return false;
         
         if ($tournament->template == 1) {
             $text = Template::getMailTemplate($tournament->game.'-reminder-1');
