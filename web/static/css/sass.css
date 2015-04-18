@@ -340,15 +340,21 @@ footer {
   .home-tournaments .loleune {
     background-image: url("../images/home-eune-bg.jpg");
     float: right; }
-  .home-tournaments .loleuw, .home-tournaments .loleune, .home-tournaments .hss1 {
+  .home-tournaments .smitena {
+    background-image: url("../images/home-na-bg.jpg");
+    float: left; }
+  .home-tournaments .smiteeu {
+    background-image: url("../images/home-eu-bg.jpg");
+    float: right; }
+  .home-tournaments .loleuw, .home-tournaments .loleune, .home-tournaments .hss1, .home-tournaments .smitena, .home-tournaments .smiteeu {
     width: 380px;
     min-height: 580px;
     cursor: pointer;
     margin-bottom: 20px; }
-    .home-tournaments .loleuw .inner, .home-tournaments .loleune .inner, .home-tournaments .hss1 .inner {
+    .home-tournaments .loleuw .inner, .home-tournaments .loleune .inner, .home-tournaments .hss1 .inner, .home-tournaments .smitena .inner, .home-tournaments .smiteeu .inner {
       display: block;
       padding-top: 175px; }
-      .home-tournaments .loleuw .inner h1, .home-tournaments .loleune .inner h1, .home-tournaments .hss1 .inner h1 {
+      .home-tournaments .loleuw .inner h1, .home-tournaments .loleune .inner h1, .home-tournaments .hss1 .inner h1, .home-tournaments .smitena .inner h1, .home-tournaments .smiteeu .inner h1 {
         margin: 0;
         padding: 0;
         color: #fff;
@@ -356,7 +362,7 @@ footer {
         font-size: 35px;
         text-shadow: 2px 2px #111;
         text-transform: uppercase; }
-      .home-tournaments .loleuw .inner .status, .home-tournaments .loleune .inner .status, .home-tournaments .hss1 .inner .status {
+      .home-tournaments .loleuw .inner .status, .home-tournaments .loleune .inner .status, .home-tournaments .hss1 .inner .status, .home-tournaments .smitena .inner .status, .home-tournaments .smiteeu .inner .status {
         background-color: rgba(22, 151, 225, 0.8);
         width: 100%;
         padding: 0;
@@ -365,45 +371,45 @@ footer {
         padding: 10px 0;
         margin-top: 20px;
         float: none; }
-        .home-tournaments .loleuw .inner .status label, .home-tournaments .loleune .inner .status label, .home-tournaments .hss1 .inner .status label {
+        .home-tournaments .loleuw .inner .status label, .home-tournaments .loleune .inner .status label, .home-tournaments .hss1 .inner .status label, .home-tournaments .smitena .inner .status label, .home-tournaments .smiteeu .inner .status label {
           color: #fff;
           text-transform: uppercase;
           cursor: pointer;
           font-size: 30px; }
-      .home-tournaments .loleuw .inner .prize-pool, .home-tournaments .loleune .inner .prize-pool, .home-tournaments .hss1 .inner .prize-pool {
+      .home-tournaments .loleuw .inner .prize-pool, .home-tournaments .loleune .inner .prize-pool, .home-tournaments .hss1 .inner .prize-pool, .home-tournaments .smitena .inner .prize-pool, .home-tournaments .smiteeu .inner .prize-pool {
         margin-top: 20px; }
-        .home-tournaments .loleuw .inner .prize-pool h4, .home-tournaments .loleune .inner .prize-pool h4, .home-tournaments .hss1 .inner .prize-pool h4 {
+        .home-tournaments .loleuw .inner .prize-pool h4, .home-tournaments .loleune .inner .prize-pool h4, .home-tournaments .hss1 .inner .prize-pool h4, .home-tournaments .smitena .inner .prize-pool h4, .home-tournaments .smiteeu .inner .prize-pool h4 {
           padding: 0;
           margin: 0;
           color: #fff;
           text-align: center;
           font-size: 28px;
           text-shadow: 2px 2px #111; }
-        .home-tournaments .loleuw .inner .prize-pool div, .home-tournaments .loleune .inner .prize-pool div, .home-tournaments .hss1 .inner .prize-pool div {
+        .home-tournaments .loleuw .inner .prize-pool div, .home-tournaments .loleune .inner .prize-pool div, .home-tournaments .hss1 .inner .prize-pool div, .home-tournaments .smitena .inner .prize-pool div, .home-tournaments .smiteeu .inner .prize-pool div {
           padding: 0;
           margin: 0;
           color: #fff;
           text-align: center;
           font-size: 22px;
           text-shadow: 2px 2px #111; }
-      .home-tournaments .loleuw .inner .timing, .home-tournaments .loleune .inner .timing, .home-tournaments .hss1 .inner .timing {
+      .home-tournaments .loleuw .inner .timing, .home-tournaments .loleune .inner .timing, .home-tournaments .hss1 .inner .timing, .home-tournaments .smitena .inner .timing, .home-tournaments .smiteeu .inner .timing {
         width: 100%;
         text-align: center;
         color: #fff;
         text-shadow: 1px 1px #222;
         font-size: 24px;
         background-color: rgba(255, 215, 57, 0.9); }
-        .home-tournaments .loleuw .inner .timing .timer, .home-tournaments .loleune .inner .timing .timer, .home-tournaments .hss1 .inner .timing .timer {
+        .home-tournaments .loleuw .inner .timing .timer, .home-tournaments .loleune .inner .timing .timer, .home-tournaments .hss1 .inner .timing .timer, .home-tournaments .smitena .inner .timing .timer, .home-tournaments .smiteeu .inner .timing .timer {
           cursor: pointer; }
-      .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now {
+      .home-tournaments .loleuw .inner .registered-now, .home-tournaments .loleune .inner .registered-now, .home-tournaments .hss1 .inner .registered-now, .home-tournaments .smitena .inner .registered-now, .home-tournaments .smiteeu .inner .registered-now {
         color: #fff;
         text-align: center;
         font-size: 35px;
         text-shadow: 2px 2px #111;
         margin-bottom: 10px; }
-    .home-tournaments .loleuw.ended .status, .home-tournaments .loleune.ended .status, .home-tournaments .hss1.ended .status {
+    .home-tournaments .loleuw.ended .status, .home-tournaments .loleune.ended .status, .home-tournaments .hss1.ended .status, .home-tournaments .smitena.ended .status, .home-tournaments .smiteeu.ended .status {
       background-color: rgba(151, 22, 0, 0.8); }
-    .home-tournaments .loleuw.ended:after, .home-tournaments .loleune.ended:after, .home-tournaments .hss1.ended:after {
+    .home-tournaments .loleuw.ended:after, .home-tournaments .loleune.ended:after, .home-tournaments .hss1.ended:after, .home-tournaments .smitena.ended:after, .home-tournaments .smiteeu.ended:after {
       content: " (" attr(href) ")";
       position: absolute;
       top: 0;
@@ -413,9 +419,9 @@ footer {
       opacity: 0.7;
       background-color: #111;
       transition: .5s; }
-    .home-tournaments .loleuw.ended .timing, .home-tournaments .loleune.ended .timing, .home-tournaments .hss1.ended .timing {
+    .home-tournaments .loleuw.ended .timing, .home-tournaments .loleune.ended .timing, .home-tournaments .hss1.ended .timing, .home-tournaments .smitena.ended .timing, .home-tournaments .smiteeu.ended .timing {
       visibility: hidden; }
-    .home-tournaments .loleuw:hover:after, .home-tournaments .loleune:hover:after, .home-tournaments .hss1:hover:after {
+    .home-tournaments .loleuw:hover:after, .home-tournaments .loleune:hover:after, .home-tournaments .hss1:hover:after, .home-tournaments .smitena:hover:after, .home-tournaments .smiteeu:hover:after {
       opacity: 0.1;
       z-index: -1; }
   .home-tournaments .hss1 {

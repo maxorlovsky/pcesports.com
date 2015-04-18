@@ -59,8 +59,8 @@ class home extends System
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na" AND `status` = "Start") OR '.
-            //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu" AND `status` = "Start") OR '.
+            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
+            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
             '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].') '
         );
         
@@ -108,12 +108,12 @@ class home extends System
                         $name = 'Europe West';
                     }
                     $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 1;
+                    $v->priority = 2;
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League';
-                    $v->priority = 2;
+                    $v->priority = 3;
                 }
                 else if ($v->game == 'smite') {
                     $link = 'smite/'.$v->server.'/'.$v->name;

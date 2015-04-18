@@ -422,7 +422,15 @@ footer {
         background-image: url('../images/home-eune-bg.jpg');
         float: right;
     }
-    .loleuw, .loleune, .hss1 {
+    .smitena {
+        background-image: url('../images/home-na-bg.jpg');
+        float: left;
+    }
+    .smiteeu {
+        background-image: url('../images/home-eu-bg.jpg');
+        float: right;
+    }
+    .loleuw, .loleune, .hss1, .smitena, .smiteeu {
         width: 380px;
         min-height: 580px;
         cursor: pointer;
