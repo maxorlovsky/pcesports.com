@@ -955,7 +955,8 @@ class Cron extends System {
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
                 $time['24'] = $time['0'] - 86400;
                 $time['1'] = $time['0'] - 3600;
-                
+                dump($v);
+                ddump($row);
                 if (!$row && $time['24'] <= time()) {
                     $v->template = 0;
                     $this->sendReminders($v);
