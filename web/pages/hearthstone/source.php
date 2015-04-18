@@ -345,11 +345,11 @@ class hearthstone extends System
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$row->match_id.'.put', $apiArray);
         }
         
-        Db::query('UPDATE `participants` SET `ended` = 1 '.
+        /*Db::query('UPDATE `participants` SET `ended` = 1 '.
             'WHERE `game` = "hs" AND '.
             '`id` = '.(int)$_SESSION['participant']->id.' AND '. 
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '
-        );
+        );*/
         
         Db::query('UPDATE `fights` SET `done` = 1 '.
             'WHERE `match_id` = '.(int)$row->match_id.' '
