@@ -950,6 +950,7 @@ class Cron extends System {
                     'AND `tournament_name` = "'.Db::escape($v->name).'" '
                     //'AND `delivered` != 1 '
                 );
+                dump($row);
                 
                 $time = array();
                 $time['0'] = strtotime($v->dates_start.' '.$v->time);
@@ -1042,6 +1043,9 @@ class Cron extends System {
                 '`delivered` = 1 '.
                 'WHERE `id` = '.(int)$tournament->data->id
             );
+            echo 'UPDATE `notifications` SET '.
+                '`delivered` = 1 '.
+                'WHERE `id` = '.(int)$tournament->data->id;
         }
         else {
             Db::query('INSERT INTO `notifications` SET '.
