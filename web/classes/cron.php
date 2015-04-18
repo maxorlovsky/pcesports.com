@@ -1086,7 +1086,8 @@ class Cron extends System {
         
         $challongeTournament = $tournament->game;
         if ($tournament->game == 'hs') {
-            $challongeTournament = $this->data->settings['hs-current-number-s1'];
+            //$challongeTournament = $this->data->settings['hs-current-number-s1'];
+            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['hs-current-number-'.$tournament->server];
         }
         else {
             $challongeTournament = $tournament->game.$tournament->server.$this->data->settings['lol-current-number-'.$tournament->server];
