@@ -69,7 +69,7 @@ class Cron extends System {
             
             if ($twitch['stream'] != NULL) {
                 Db::query(
-                    'UPDATE `streams` '.
+                    'UPDATE `streams_events` '.
                     'SET `online` = '.time().', '.
                     '`viewers` = '.(int)$twitch['stream']['viewers'].', '.
                     '`display_name` = "'.Db::escape($twitch['stream']['channel']['display_name']).'" '.
