@@ -32,9 +32,9 @@
             <div class="block-content">
                 <p><?=t('check_in_will_apear_in')?></p>
                 
-                <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {?>
+                <? if ($this->data->settings['tournament-checkin-smite-'.$this->server] == 1) {?>
                 <div class="check-in-holder">
-                    <div class="button checkIn" id="checkInLol"><?=t('check_in')?></div>
+                    <div class="button checkIn" id="checkInSmite"><?=t('check_in')?></div>
                 </div>
                 <? } else { ?>
                 <div class="check-in-holder">
