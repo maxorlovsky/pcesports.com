@@ -59,8 +59,8 @@ class home extends System
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
-            '(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
+            //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
+            //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
             '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].') '
         );
         
@@ -115,7 +115,7 @@ class home extends System
                     $name = 'Hearthstone League';
                     $v->priority = 2;
                 }
-                else if ($v->game == 'smite') {
+                /*else if ($v->game == 'smite') {
                     $link = 'smite/'.$v->server.'/'.$v->name;
                     if ($v->server == 'eu') {
                         $name = 'Europe';
@@ -125,7 +125,7 @@ class home extends System
                     }
                     $additionalWhere = '`approved` = 1 AND ';
                     $v->priority = 3;
-                }
+                }*/
 
                 //Fetching number of players for each tournament
                 $row = Db::fetchRow('SELECT COUNT(`tournament_id`) AS `value`'.
