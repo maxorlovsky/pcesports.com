@@ -662,7 +662,7 @@ class System
         return $text;
     }
     
-    public function convertTime($date, $format = 'd M Y, H:i') {
+    public function convertTime($date, $format = 'd M Y, H:i A') {
         if (!is_numeric($date)) {
             $date = strtotime($date) + _cfg('timeDifference');
         }
