@@ -556,19 +556,19 @@ footer {
 
 .page {
     min-width: 1130px;
-    width: 85%;
+    width: 1130px; /*85%*/
     background-color: #f1f1f1;
     padding: 20px;
     z-index: 10;
 }
 .left-containers {
     min-width: 790px;
-    width: 70%;
+    width: 790px; /*70%*/
     float: left;
 }
 .right-containers {
     min-width: 316px;
-    width: 28%;
+    width: 316px; /*28%*/
     float: right;
 }
 .right-containers .block {
