@@ -12,7 +12,8 @@ class team
         $rows = Db::fetchRows(
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 760 OR '. //Veipper
-            ' `id` = 762 ' //Zabtra
+            ' `id` = 762 OR '. //Zabtra
+            ' `id` = 765 ' //HotBlaze
         );
         
         $this->team = array(
@@ -26,6 +27,12 @@ class team
             ),
             762 => array(
                 'role' => 'Support',
+                'socials' => array(
+                    
+                )
+            ),
+            765 => array(
+                'role' => 'Jungler',
                 'socials' => array(
                     
                 )

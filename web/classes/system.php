@@ -854,6 +854,11 @@ class System
                     $cronClass = new Cron();
                     $cronClass->updateChallongeMatches();
                 }
+                else if ($_GET['val1'] == 'summoners' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(60);
+                    $cronClass = new Cron();
+                    $cronClass->updateSummoners();
+                }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
                     

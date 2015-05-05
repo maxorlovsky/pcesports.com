@@ -44,6 +44,76 @@ class Cron extends System {
         }
         closedir($handler);
     }
+
+    public function updateSummoners() {
+        $limit = 10;
+
+        $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `summoners`');
+        $currentCount = $row->count;
+
+        foreach(_cfg('lolRegions') as $server => $v) {
+            $rows = Db::fetchRows(
+                'SELECT * FROM `summoners` '.
+                'WHERE `region` = "'.$server.'" AND '.
+                '`approved` = 1 '.
+                'LIMIT '.(int)$this->data->settings['latest-summoner'].', 10'
+            );
+            
+            if ($rows) {
+                $summonersIds = array();
+                $summonersIdsString = '';
+                foreach($rows as $v) {
+                    $summonersIds[$v->summoner_id] = $v->id;
+                    $summonersIdsString .= $v->summoner_id.',';
+                }
+                $summonersIdsString = substr($summonersIdsString, 0, -1);
+
+                $response = $this->runAPI('/'.$server.'/v2.5/league/by-summoner/'.$summonersIdsString.'/entry', $server, true);
+                
+                foreach($response as $k => $v) {
+                    $dbId = $summonersIds[$k];
+                    $v = (array)$v;
+
+                    $arrayNum = null;
+                    if ($v[0]->queue == 'RANKED_SOLO_5x5') {
+                        $arrayNum = 0;
+                    }
+                    else if ($v[1]->queue == 'RANKED_SOLO_5x5') {
+                        $arrayNum = 1;
+                    }
+                    else if ($v[2]->queue == 'RANKED_SOLO_5x5') {
+                        $arrayNum = 2;
+                    }
+                    else {
+                        break;
+                    }
+
+                    //$v[$arrayNum]->entries[0] //probably there are more entries, check required
+                    Db::query(
+                        'UPDATE `summoners` '.
+                        'SET `league` = "'.Db::escape($v[$arrayNum]->tier).'", '.
+                        '`division` = "'.Db::escape($v[$arrayNum]->entries[0]->division).'", '.
+                        '`name` = "'.Db::escape($v[$arrayNum]->entries[0]->playerOrTeamName).'", '.
+                        '`last_update` = NOW() '.
+                        'WHERE `id` = '.(int)$dbId
+                    );
+                }
+            }
+        }
+
+        if ($this->data->settings['latest-summoner'] > $currentCount) {
+            $this->data->settings['latest-summoner'] = 0;
+        }
+        else {
+            $this->data->settings['latest-summoner'] = $this->data->settings['latest-summoner'] + $limit;
+        }
+
+        Db::query(
+            'UPDATE `tm_settings` '.
+            'SET `value` = '.$this->data->settings['latest-summoner'].' '.
+            'WHERE `setting` = "latest-summoner" '
+        );
+    }
     
     public function updateStreamers() {
         $rows = Db::fetchRows('SELECT * FROM `streams`');
