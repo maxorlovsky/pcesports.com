@@ -1037,11 +1037,13 @@ var PC = {
         },
     },
     openPopup: function(name) {
+        //If content block is too big, we lowering it height to normal window view and add scrollbar
         if ($('#'+name).height() > $(window).height()) {
             var minus = $(window).height() * 0.1;
             $('#'+name).height(parseInt($(window).height()) - minus);
             $('#'+name).css('overflow-y', 'scroll');
         }
+
         $('html, body').css('overflow', 'hidden');
         $('#fader').fadeIn('fast');
         $('#'+name).css('top', -$('#'+name).height());

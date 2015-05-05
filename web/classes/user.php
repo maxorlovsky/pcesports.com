@@ -305,6 +305,9 @@ class User extends System
             if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
                 return '0;'.t('field_battletag_incorrect');
             }
+            else {
+                $form['battletag'] = trim($battleTagBreakdown[0]).'#'.trim($battleTagBreakdown[1]);
+            }
         }
         
         if (!is_numeric($form['avatar']) || $form['avatar'] > 30 || $form['avatar'] < 1) {
@@ -317,12 +320,20 @@ class User extends System
         else {
             $form['https'] = 0;
         }
+
+        if (isset($form['timestyle']) && $form['timestyle'] == 1) {
+            $form['timestyle'] = 1;
+        }
+        else {
+            $form['timestyle'] = 0;
+        }
         
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
             '`timezone` = "'.Db::escape($timezone).'", '.
+            '`timestyle` = '.(int)$form['timestyle'].', '.
             '`avatar` = '.(int)$form['avatar'].', '.
             '`battletag` = "'.Db::escape($form['battletag']).'", '.
             '`https` = '.(int)$form['https'].' '.

@@ -442,17 +442,20 @@ footer {
         margin-bottom: 0; }
 
 .page {
-  width: 1130px;
+  min-width: 1130px;
+  width: 85%;
   background-color: #f1f1f1;
   padding: 20px;
   z-index: 10; }
 
 .left-containers {
-  width: 790px;
+  min-width: 790px;
+  width: 70%;
   float: left; }
 
 .right-containers {
-  width: 316px;
+  min-width: 316px;
+  width: 28%;
   float: right; }
 
 .right-containers .block {
@@ -2410,13 +2413,13 @@ footer .games img {
 
 .twitch #player {
   float: left;
-  width: 590px; }
+  width: 75%; }
 .twitch .featured-list {
   float: right;
   border: 1px solid #32333b;
   background-color: #252525;
   height: 398px;
-  width: 198px;
+  width: 24.7%;
   overflow-y: auto; }
   .twitch .featured-list .event {
     position: relative;
@@ -2472,29 +2475,10 @@ footer .games img {
 
 /* Landscape phone to portrait tablet */
 /* Galaxy tab */
-/* Portrait tablet to landscape and desktop */
-/* Landscape phones and down */
-@media (max-width: 480px) {
+/* Site specific, menu breaks if less */
+@media (max-width: 860px) {
   body {
-    background: none;
     margin: 0; }
-
-  #head-line {
-    min-height: 0; }
-
-  .container {
-    width: 480px; }
-
-  .page {
-    padding: 20px 0; }
-
-  .home {
-    padding: 0; }
-
-  .home-tournaments .parent {
-    width: 380px;
-    margin: 0 auto;
-    float: none; }
 
   .burger {
     display: block !important;
@@ -2563,6 +2547,56 @@ footer .games img {
     header .login {
       line-height: 55px; }
 
+  .page {
+    min-width: inherit;
+    padding: 20px 0; }
+
+  .container {
+    max-width: 860px;
+    width: 100%; }
+
+  .left-containers, .right-containers {
+    float: none;
+    min-width: inherit;
+    width: auto;
+    max-width: 860px; }
+
+  .right-containers {
+    margin-top: 10px; }
+
+  .donate a {
+    width: 96%; }
+  .donate .arrow-down {
+    top: 195px;
+    left: 50%; }
+  .donate .list {
+    top: 207px;
+    width: 100%; }
+  .donate .separator {
+    top: 206px;
+    width: 100%; } }
+@media (max-width: 859px) {
+  .twitch {
+    display: none; } }
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  body {
+    background: none; }
+
+  #head-line {
+    min-height: 0; }
+
+  .container {
+    width: 480px; }
+
+  .home {
+    padding: 0; }
+
+  .home-tournaments .parent {
+    width: 380px;
+    margin: 0 auto;
+    float: none; }
+
   .home-tournaments .parent {
     width: 380px;
     background-size: cover;
@@ -2593,13 +2627,6 @@ footer .games img {
 
   .navbar .nav .nav-link a {
     padding: 5px 0 10px 10px; }
-
-  .left-containers, .right-containers {
-    float: none;
-    width: auto; }
-
-  .right-containers {
-    margin-top: 10px; }
 
   .promo {
     display: none; }

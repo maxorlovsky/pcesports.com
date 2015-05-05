@@ -75,7 +75,7 @@
         foreach($this->serverTimes as $v) {
             $live = (intval($v['time'] - time() + _cfg('timeDifference'))<0?'live':'');
         ?>
-        <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i')?>">
+        <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i'.($this->data->user->timestyle!=1?' A':null))?>">
             <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?>
                 <br /><?=t($v['status'])?>
             </div>
@@ -91,34 +91,6 @@
         ?>
     </div>
     <? } ?>
-    
-    <div class="block donate">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('donations')?></h1>
-        </div>
-		<div class="block-content">
-            <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="750" attr-current="50.61">
-                <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
-                <div><span></span></div>
-            </div>
-			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
-		</div>
-        <div class="separator"></div>
-        <div class="arrow-down hint" attr-msg="Show donators"></div>
-        <div class="list">
-            <ul>
-                <li><span class="person">Martin</span><span class="price">2€</span></li>
-                <li><span class="person">Michael S.</span><span class="price">14.43€</span></li>
-                <li><span class="person">Hearthstone League 7</span><span class="price">3€</span></li>
-                <li><span class="person annon">Anonymous</span><span class="price">7.08€</span></li>
-                <li><span class="person">Hearthstone League 6</span><span class="price">2€</span></li>
-                <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
-                <li><span class="person annon">Anonymous</span><span class="price">16.10€</span></li>
-            </ul>
-            <div class="clear"></div>
-        </div>
-    </div>
     
     <div class="block streamers">
         <div class="block-header-wrapper">
@@ -147,17 +119,6 @@
         }
         ?>
     </div>
-	
-	<? if (_cfg('env') != 'dev') { ?>    
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('like_us')?>!</h1>
-        </div>
-        <div class="facebook-holder block-content">
-            <div class="fb-like-box" data-href="https://www.facebook.com/pentaclickesports" data-colorscheme="light" data-width="100%" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
-        </div>
-    </div>
-    <? } ?>
     
     <? if (_cfg('env') == 'prod') { ?>
 	<div class="block adsense">
@@ -178,6 +139,34 @@
 		</div>
     </div>
     <? } ?>
+
+    <div class="block donate">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('donations')?></h1>
+        </div>
+        <div class="block-content">
+            <p><?=t('donate_text')?></p>
+            <div class="donate-bar" attr-goal="750" attr-current="50.61">
+                <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
+                <div><span></span></div>
+            </div>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
+        </div>
+        <div class="separator"></div>
+        <div class="arrow-down hint" attr-msg="Show donators"></div>
+        <div class="list">
+            <ul>
+                <li><span class="person">Martin</span><span class="price">2€</span></li>
+                <li><span class="person">Michael S.</span><span class="price">14.43€</span></li>
+                <li><span class="person">Hearthstone League 7</span><span class="price">3€</span></li>
+                <li><span class="person annon">Anonymous</span><span class="price">7.08€</span></li>
+                <li><span class="person">Hearthstone League 6</span><span class="price">2€</span></li>
+                <li><span class="person">Hearthstone League 5</span><span class="price">6€</span></li>
+                <li><span class="person annon">Anonymous</span><span class="price">16.10€</span></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
 </div>
 
 <div class="clear"></div>

@@ -12,7 +12,7 @@
             </div>
             <? foreach($this->streams as $v) { ?>
                 <div id="player" attr-current="<?=$v->name?>">
-                    <object type="application/x-shockwave-flash" height="400" width="590" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>">
+                    <object type="application/x-shockwave-flash" height="400" width="100%" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>">
                         <param name="allowFullScreen" value="true" />
                         <param name="allowScriptAccess" value="always" />
                         <param name="allowNetworking" value="all" />
@@ -70,7 +70,7 @@
                         <div><?=$v['prize']?></div>
                     </div>
                     <div class="timing">
-                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time())?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i')?>" <?=($k=='hss1'?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
+                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time())?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i'.($this->data->user->timestyle!=1?' A':null))?>" <?=($k=='hss1'?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
                     </div>
                     <div class="registered-now">
                         <div><?=$v['teams']?> / <span class="<?=($v['teams']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span></div>

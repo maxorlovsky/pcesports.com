@@ -663,6 +663,10 @@ class System
     }
     
     public function convertTime($date, $format = 'd M Y, H:i A') {
+        if ($this->data->user->timestyle==1) {
+            $format = 'd M Y, H:i';
+        }
+
         if (!is_numeric($date)) {
             $date = strtotime($date) + _cfg('timeDifference');
         }

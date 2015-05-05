@@ -88,18 +88,6 @@
 <script src="<?=_cfg('static')?>/js/combined.js"></script>
 <? } ?>
 
-<? if (_cfg('language') == 'ru') { ?>
-<script type="text/javascript" src="//vk.com/js/api/openapi.js?113"></script>
-<? } ?>
-
-<script type="text/javascript">
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
-<? if (_cfg('language') == 'ru') { ?>
-VK.Widgets.Group("vk_groups", {mode: 0, width: "310", height: "260", color1: 'ffffff', color2: '888888', color3: '5B7FA6'}, 64250147);
-<? } ?>
-</script>
-
 </section>
 
 </body>

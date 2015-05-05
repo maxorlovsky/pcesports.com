@@ -58,6 +58,14 @@
                     <? } ?>
                 </select>
             </div>
+
+            <div class="fields">
+                <label for="timestyle"><?=t('timestyle')?></label>
+                <select name="timestyle" id="timestyle">
+                    <option value="0">12:00 AM/PM</option>
+                    <option value="1" <?=($this->data->user->timestyle==1?'selected':null)?>>24:00</option>
+                </select>
+            </div>
             
             <div class="fields">
                 <label for="subscribe"><?=t('receive_emails')?></label>
