@@ -27,9 +27,8 @@ class team
             762 => array(
                 'role' => 'Support',
                 'socials' => array(
-                    'fb' => 'http://www.facebook.com/Veipper',
-                    'tw' => 'http://twitter.com/Ve1pper',
-                    'tv' => 'http://www.twitch.tv/ve1pper',
+                    'fb' => 'http://www.facebook.com/',
+                    'tw' => 'http://twitter.com/'
                 )
             ),
         );
@@ -41,7 +40,7 @@ class team
             }
         }
         
-        include_once _cfg('pages').'/'.get_class().'/hearthstone.tpl';
+        include_once _cfg('pages').'/'.get_class().'/leagueoflegends.tpl';
     }
     
     public function getHearthstone() {
