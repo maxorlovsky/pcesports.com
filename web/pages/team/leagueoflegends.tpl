@@ -8,7 +8,7 @@
 
         <div class="block-content team-list">
             <? foreach($this->team as $k => $v) { ?>
-                <div class="team-user leagueoflegends">
+                <div class="team-user hearthstone">
                     <? if ($v['avatar']) { ?>
                         <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
                     <? } ?>
