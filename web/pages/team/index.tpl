@@ -19,6 +19,9 @@
         </div>
 
         <div class="block-content team-list">
+            <a class="team-division leagueoflegends" href="<?=_cfg('href')?>/team/leagueoflegends">
+                <div class="name">League of Legends <?=t('division')?></div>
+            </a>
             <a class="team-division hearthstone" href="<?=_cfg('href')?>/team/hearthstone">
                 <div class="name">Hearthstone <?=t('division')?></div>
             </a>

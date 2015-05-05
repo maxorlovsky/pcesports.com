@@ -1020,9 +1020,14 @@ footer .partners .aimskillz {
             background-position: top center;
             background-repeat: no-repeat;
         }
+        &.leagueoflegends {
+            background-image: url('../images/footer-lol-logo.png');
+            background-position: center 10px;
+            background-repeat: no-repeat;
+        }
         &.staff {
             background-image: url('../images/logo.png');
-            background-position: top center;
+            background-position: center 10px;
             background-repeat: no-repeat;
         }
         &:hover {
@@ -1033,7 +1038,7 @@ footer .partners .aimskillz {
         }
         .name {
             margin-top: 100px;
-            font-size: 30px;
+            font-size: 26px;
             font-weight: bold;
             color: #555;
             text-align: center;

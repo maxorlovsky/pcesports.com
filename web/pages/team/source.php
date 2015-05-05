@@ -7,6 +7,42 @@ class team
 	public function __construct($params = array()) {
         
 	}
+
+    public function getLol() {
+        $rows = Db::fetchRows(
+            'SELECT `id`, `name`, `avatar` FROM `users` '.
+            'WHERE `id` = 760 OR '. //Veipper
+            ' `id` = 762 ' //Zabtra
+        );
+        
+        $this->team = array(
+            760 => array(
+                'role' => 'Team Captain (Mid laner)',
+                'socials' => array(
+                    'fb' => 'http://www.facebook.com/Veipper',
+                    'tw' => 'http://twitter.com/Ve1pper',
+                    'tv' => 'http://www.twitch.tv/ve1pper',
+                )
+            ),
+            762 => array(
+                'role' => 'Support',
+                'socials' => array(
+                    'fb' => 'http://www.facebook.com/Veipper',
+                    'tw' => 'http://twitter.com/Ve1pper',
+                    'tv' => 'http://www.twitch.tv/ve1pper',
+                )
+            ),
+        );
+        
+        if ($rows) {
+            foreach($rows as $v) {
+                $this->team[$v->id]['name'] = $v->name;
+                $this->team[$v->id]['avatar'] = $v->avatar;
+            }
+        }
+        
+        include_once _cfg('pages').'/'.get_class().'/hearthstone.tpl';
+    }
     
     public function getHearthstone() {
         $rows = Db::fetchRows(
@@ -113,7 +149,10 @@ class team
     }
 	
 	public function showTemplate() {
-        if (isset($_GET['val2']) && $_GET['val2'] == 'hearthstone') {
+        if (isset($_GET['val2']) && $_GET['val2'] == 'leagueoflegends') {
+            $this->getLol();
+        }
+        else if (isset($_GET['val2']) && $_GET['val2'] == 'hearthstone') {
 			$this->getHearthstone();
 		}
         else if (isset($_GET['val2']) && $_GET['val2'] == 'staff') {
