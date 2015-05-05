@@ -1475,26 +1475,43 @@ footer .games img {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 1px 1px #43CDEF;
   background-color: #fff;
   border-radius: 8px; }
+  #login-window .login-inside {
+    padding: 15px; }
+    #login-window .login-inside h1 {
+      margin: 0; }
+    #login-window .login-inside h2 {
+      color: #888;
+      font-size: 16px; }
+    #login-window .login-inside .information {
+      font-style: italic;
+      color: #555;
+      font-size: 14px;
+      margin-top: 10px; }
+    #login-window .login-inside a:hover img {
+      opacity: 0.6;
+      transition: .5s; }
 
-#login-window .login-inside {
-  padding: 15px; }
-
-#login-window .login-inside h1 {
-  margin: 0; }
-
-#login-window .login-inside h2 {
-  color: #888;
-  font-size: 16px; }
-
-#login-window .login-inside .information {
-  font-style: italic;
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px; }
-
-#login-window .login-inside a:hover img {
-  opacity: 0.6;
-  transition: .5s; }
+#rules-window {
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 1px 1px #43CDEF;
+  background-color: #fff;
+  border-radius: 8px; }
+  #rules-window .rules-inside {
+    padding: 15px; }
+    #rules-window .rules-inside h1 {
+      margin: 0; }
+    #rules-window .rules-inside h2 {
+      color: #888;
+      font-size: 16px; }
+    #rules-window .rules-inside .information {
+      font-style: italic;
+      color: #555;
+      font-size: 14px;
+      margin-top: 10px; }
+    #rules-window .rules-inside a:hover img {
+      opacity: 0.6;
+      transition: .5s; }
 
 .profile .fields label {
   width: 140px !important; }

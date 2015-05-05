@@ -1,3 +1,10 @@
+<div class="hidden popup" id="rules-window">
+    <div class="rules-inside">
+        <h1>League of legends rules</h1>
+        <?=t('lol_tournament_rules')?>
+    </div>
+</div>
+
 <section class="container page lol <?=$this->server?>">
 
 <div class="left-containers">
@@ -64,7 +71,8 @@
                 array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
-            <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>"><?=t('global_tournament_rules')?></a>
+
+            <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
             
             <div class="share-tournament">
                 <h2><?=t('share_this_tournament')?></h2>

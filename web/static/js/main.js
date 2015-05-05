@@ -192,6 +192,10 @@ $('.formbut').on('click', function() {
     });
 });
 
+$('.rules').on('click', function() {
+    PC.openPopup('rules-window');
+});
+
 $('.login, .must-login').on('click', function() {
     PC.openPopup('login-window');
 });
@@ -1033,6 +1037,11 @@ var PC = {
         },
     },
     openPopup: function(name) {
+        if ($('#'+name).height() > $(window).height()) {
+            var minus = $(window).height() * 0.1;
+            $('#'+name).height(parseInt($(window).height()) - minus);
+            $('#'+name).css('overflow-y', 'scroll');
+        }
         $('html, body').css('overflow', 'hidden');
         $('#fader').fadeIn('fast');
         $('#'+name).css('top', -$('#'+name).height());

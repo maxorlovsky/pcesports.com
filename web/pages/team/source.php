@@ -27,8 +27,7 @@ class team
             762 => array(
                 'role' => 'Support',
                 'socials' => array(
-                    'fb' => 'http://www.facebook.com/',
-                    'tw' => 'http://twitter.com/'
+                    
                 )
             ),
         );

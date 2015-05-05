@@ -1,3 +1,10 @@
+<div class="hidden popup" id="rules-window">
+    <div class="rules-inside">
+        <h1>Hearthstone rules</h1>
+        <?=t('hearthstone_tournament_rules')?>
+    </div>
+</div>
+
 <section class="container page lol">
 
 <div class="left-containers">
@@ -75,8 +82,7 @@
                 array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                 t('hs_tournament_information')
             )?>
-            <br />
-            <a href="<?=_cfg('href')?>/hearthstone"><?=t('tournament_rules')?></a>
+            <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
             
             <div class="share-tournament">
                 <h2><?=t('share_this_tournament')?></h2>

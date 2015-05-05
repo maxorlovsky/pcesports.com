@@ -98,7 +98,7 @@
         </div>
 		<div class="block-content">
             <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="900" attr-current="48.61">
+            <div class="donate-bar" attr-goal="750" attr-current="50.61">
                 <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>
@@ -108,6 +108,7 @@
         <div class="arrow-down hint" attr-msg="Show donators"></div>
         <div class="list">
             <ul>
+                <li><span class="person">Martin</span><span class="price">2€</span></li>
                 <li><span class="person">Michael S.</span><span class="price">14.43€</span></li>
                 <li><span class="person">Hearthstone League 7</span><span class="price">3€</span></li>
                 <li><span class="person annon">Anonymous</span><span class="price">7.08€</span></li>
