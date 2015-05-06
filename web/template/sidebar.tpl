@@ -31,7 +31,7 @@
 
 
             <? if ($_SESSION['participant']->game == 'smite') { ?>
-            <ul class="panel-links">
+            <ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <? if ($this->data->settings['tournament-start-smite-'.$_SESSION['participant']->server] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
@@ -48,7 +48,7 @@
 			<? } ?>
 
             <? if ($_SESSION['participant']->game == 'lol') { ?>
-			<ul class="panel-links">
+			<ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
                 <? if ($this->data->settings['tournament-start-lol-'.$_SESSION['participant']->server] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
@@ -167,21 +167,6 @@
             <div class="clear"></div>
         </div>
     </div>
-
-    <!--<div class="block subscribe">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('subscribe')?></h1>
-        </div>
-        
-        <div class="block-content">
-            <p><?=t('subscribe_text')?></p>
-            <div class="donate-form">
-                <div class="error"></div>
-                <input type="text" name="subscriptionEmail" />
-                <a href="javascript:;" target="_blank" class="button"><?=t('subscribe')?></a>
-            </div>
-        </div>
-    </div>-->
 </div>
 
 <div class="clear"></div>

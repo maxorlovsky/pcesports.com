@@ -1295,6 +1295,8 @@ footer .games img {
       cursor: default; }
   .block .panel-links.hs {
     border: 1px solid #E5DC2D; }
+  .block .panel-links.lol {
+    border: 1px solid #E5DC2D; }
 
 #toTop {
   position: fixed;
