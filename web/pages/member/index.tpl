@@ -26,8 +26,12 @@
             <h1 class="bordered"><?=t('summoners_accounts')?></h1>
         </div>
         <? foreach ($this->member->summoners as $v) { ?>
-        <a href="http://www.lolking.net/summoner/<?=$v->region?>/<?=$v->summoner_id?>" target="_blank" class="block-content summoner">
-            <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
+        <a href="http://<?=$v->region?>.op.gg/summoner/?userName=<?=$v->name?>" target="_blank" class="block-content summoner">
+            <? if ($v->league) { ?>
+                <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
+            <? } else { ?>
+                <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />
+            <? } ?>
             <label class="summoner-name"><?=$v->name?></label>
             <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
             <div class="clear"></div>

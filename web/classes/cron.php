@@ -56,7 +56,7 @@ class Cron extends System {
                 'SELECT * FROM `summoners` '.
                 'WHERE `region` = "'.$server.'" AND '.
                 '`approved` = 1 '.
-                'LIMIT '.(int)$this->data->settings['latest-summoner'].', 10'
+                'LIMIT '.(int)$this->data->settings['latest-summoner'].', '.$limit
             );
             
             if ($rows) {

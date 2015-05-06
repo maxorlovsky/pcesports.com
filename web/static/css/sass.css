@@ -1523,13 +1523,10 @@ footer .games img {
 
 .profile .fields label {
   width: 140px !important; }
-
 .profile .fields input, .profile .fields p {
   width: 595px !important; }
-
 .profile .fields select {
   width: 605px !important; }
-
 .profile .fields p {
   display: inline-block;
   border: 1px solid #999;
@@ -1540,7 +1537,6 @@ footer .games img {
   height: 40px;
   background-color: #eee;
   line-height: 40px; }
-
 .profile .fields .check_holder {
   width: 602px;
   background-color: #fff;
@@ -1548,57 +1544,49 @@ footer .games img {
   border-radius: 0 4px 4px 0;
   margin-left: 142px;
   height: 40px; }
-
 .profile .fields input[type="checkbox"] {
   height: 35px;
   margin-top: 3px;
   box-shadow: none; }
-
 .profile .button {
-  margin-left: 140px !important;
-  margin-bottom: 30px; }
+  width: 95%;
+  margin-left: 0;
+  text-align: center;
+  font-size: 17px; }
 
 .connections {
   margin-top: 20px; }
-
-.connections .status-holder {
-  width: 500px;
-  margin: 0 auto;
-  position: relative; }
-
-.connections .connect-line {
-  position: absolute;
-  border-bottom: 1px solid #999;
-  width: 255px;
-  top: 20px;
-  left: 125px; }
-
-.connections .connect-line.dashed {
-  border-bottom: 1px dashed #999; }
-
-.connections .status {
-  float: right; }
-
-.connections .status a {
-  display: block;
-  border-radius: 8px;
-  padding: 5px 0;
-  height: 30px;
-  width: 120px;
-  text-align: center;
-  line-height: 30px;
-  cursor: pointer;
-  color: #fff;
-  transition: .5s; }
-
-.connections .status a.connected {
-  background-color: #081; }
-
-.connections .status a.disconnected {
-  background-color: #811; }
-
-.connections .status a.connected:hover, .connections .status a.disconnected:hover {
-  background-color: #1697e1; }
+  .connections .status-holder {
+    width: 500px;
+    margin: 0 auto;
+    position: relative; }
+  .connections .connect-line {
+    position: absolute;
+    border-bottom: 1px solid #999;
+    width: 255px;
+    top: 20px;
+    left: 125px; }
+    .connections .connect-line.dashed {
+      border-bottom: 1px dashed #999; }
+  .connections .status {
+    float: right; }
+    .connections .status a {
+      display: block;
+      border-radius: 8px;
+      padding: 5px 0;
+      height: 30px;
+      width: 120px;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
+      color: #fff;
+      transition: .5s; }
+      .connections .status a.connected {
+        background-color: #081; }
+      .connections .status a.disconnected {
+        background-color: #811; }
+      .connections .status a.connected:hover, .connections .status a.disconnected:hover {
+        background-color: #1697e1; }
 
 .registration-complete {
   margin-bottom: 20px; }
@@ -2166,6 +2154,10 @@ footer .games img {
   .users-list .block-content .user-name {
     margin-left: 10px;
     font-weight: bold; }
+  .users-list .block-content .user-summoner .game-logo {
+    float: left;
+    height: 30px;
+    padding: 4px 0 0 5px; }
   .users-list .block-content:hover {
     background-color: #eee; }
   .users-list .block-content .date {

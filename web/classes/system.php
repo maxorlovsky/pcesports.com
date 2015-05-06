@@ -695,6 +695,14 @@ class System
         else if ($interval->i) return $interval->i.' '.t('minutes_ago');
         else return $interval->s.' '.t('seconds_ago');
     }
+
+    public function convertDivision($division) {
+        if ($division == 'I') return 1;
+        else if ($division == 'II') return 2;
+        else if ($division == 'III') return 3;
+        else if ($division == 'IV') return 4;
+        return 5;
+    }
     
     public function getCache($key) {
         if ($this->apcEnabled === false) {

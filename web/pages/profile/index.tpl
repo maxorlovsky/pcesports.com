@@ -84,15 +84,6 @@
             </div>
             
             <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>
-            
-            <div class="fields">
-                <label><?=t('registration_date')?></label>
-                <p><?=date('d.m.Y H:i', strtotime($this->data->user->registration_date) + $this->data->user->timezone)?></p>
-            </div>
-            <!--<div class="fields">
-                <label><?=t('team_name')?></label>
-                <p><i><?=t('none')?></i></p>
-            </div>-->
         </form>
     </div>
     

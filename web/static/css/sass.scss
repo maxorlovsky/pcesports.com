@@ -1737,86 +1737,91 @@ footer .games img {
     }
 }
 
-.profile .fields label {
-	width: 140px !important;
-}
-.profile .fields input, .profile .fields p {
-    width: 595px !important;
-}
-.profile .fields select {
-    width: 605px !important;
-}
-.profile .fields p {
-    display: inline-block;
-	border: 1px solid #999;
-	margin: 0 0 0 -1px;
-	border-radius: 0 4px 4px 0;
-	padding-left: 10px;
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-    height: 40px;
-    background-color: #eee;
-    line-height: 40px;
-}
-.profile .fields .check_holder {
-    width: 602px;
-    background-color: #fff;
-    border: 1px solid #999;
-    border-radius: 0 4px 4px 0;
-    margin-left: 142px;
-    height: 40px;
-}
-.profile .fields input[type="checkbox"] {
-    height: 35px;
-    margin-top: 3px;
-    box-shadow: none;
-}
-
-.profile .button {
-	margin-left: 140px !important;
-    margin-bottom: 30px;
+.profile {
+    .fields {
+        label {
+	       width: 140px !important;
+        }
+        input, p {
+            width: 595px !important;
+        }
+        select {
+            width: 605px !important;
+        }
+        p {
+            display: inline-block;
+            border: 1px solid #999;
+            margin: 0 0 0 -1px;
+            border-radius: 0 4px 4px 0;
+            padding-left: 10px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+            height: 40px;
+            background-color: #eee;
+            line-height: 40px;
+        }
+        .check_holder {
+            width: 602px;
+            background-color: #fff;
+            border: 1px solid #999;
+            border-radius: 0 4px 4px 0;
+            margin-left: 142px;
+            height: 40px;
+        }
+        input[type="checkbox"] {
+            height: 35px;
+            margin-top: 3px;
+            box-shadow: none;
+        }
+    }
+    .button {
+        width: 95%;
+        margin-left: 0;
+        text-align: center;
+        font-size: 17px;
+    }
 }
 
 .connections {
     margin-top: 20px;
-}
-.connections .status-holder {
-    width: 500px;
-    margin: 0 auto;
-    position: relative;
-}
-.connections .connect-line {
-    position: absolute;
-    border-bottom: 1px solid #999;
-    width: 255px;
-    top: 20px;
-    left: 125px;
-}
-.connections .connect-line.dashed {
-    border-bottom: 1px dashed #999;
-}
-.connections .status {
-    float: right;
-}
-.connections .status a {
-    display: block;
-    border-radius: $defaultBorderRadius;
-    padding: 5px 0;
-    height: 30px;
-    width: 120px;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-    color: #fff;
-    transition: .5s;
-}
-.connections .status a.connected {
-    background-color: #081;
-}
-.connections .status a.disconnected {
-    background-color: #811;
-}
-.connections .status a.connected:hover, .connections .status a.disconnected:hover {
-    background-color: #1697e1;
+    .status-holder {
+        width: 500px;
+        margin: 0 auto;
+        position: relative;
+    }
+    .connect-line {
+        position: absolute;
+        border-bottom: 1px solid #999;
+        width: 255px;
+        top: 20px;
+        left: 125px;
+        &.dashed {
+            border-bottom: 1px dashed #999;
+        }
+    }
+    .status {
+        float: right;
+        a {
+            display: block;
+            border-radius: $defaultBorderRadius;
+            padding: 5px 0;
+            height: 30px;
+            width: 120px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+            color: #fff;
+            transition: .5s;
+            &.connected {
+                background-color: #081;
+            }
+            &.disconnected {
+                background-color: #811;
+            }
+            &.connected:hover, &.disconnected:hover {
+                background-color: #1697e1;
+            }
+        }
+    }
 }
 
 .registration-complete {
@@ -2410,7 +2415,11 @@ footer .games img {
             font-weight: bold;
         }
         .user-summoner {
-            
+            .game-logo {
+                float: left;
+                height: 30px;
+                padding: 4px 0 0 5px;
+            }
         }
         .user-battle-tag {
             

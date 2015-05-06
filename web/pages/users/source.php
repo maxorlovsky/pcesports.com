@@ -18,7 +18,7 @@ class users extends System
         $this->pages = pages($pagesData);
         
         $this->users = Db::fetchRows(
-            'SELECT `u`.*, `s`.`name` AS `summoner` '.
+            'SELECT `u`.*, `s`.`name` AS `summoner`, `s`.`division`, `s`.`league` '.
             'FROM `users` AS `u` '.
             'LEFT JOIN `summoners` AS `s` ON `u`.`id` = `s`.`user_id` '.
             'GROUP BY `u`.`id` '.

@@ -8,31 +8,24 @@
         <?
 		if ($this->additional->summoners) {
         	foreach($this->additional->summoners as $v) {
-                //Better to split, or code is too messy
-                if ($v->approved == 1) {
-                    ?>
-                    <div class="block-content summoner approved" attr-id="<?=$v->id?>">
-                        <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
-                        <label class="summoner-name"><?=$v->name?></label>
-                        <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+                ?>
+                <div class="block-content summoner <?=($v->approved==1?'approved':'notApproved')?>" <?=($v->approved==1?'attr-id="'.$v->id.'"':'attr-masteries="'.$v->masteries.'"')?>>
+                    <? if ($v->league && $v->approved == 1) { ?>
+                        <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
+                    <? } else { ?>
+                        <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />
+                    <? } ?>
+                    <label class="summoner-name"><?=$v->name?></label>
+                    <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+                    <? if ($v->approved == 1) { ?>
                         <a href="javascript:void(0);" class="status"><?=t('approved')?></a>
-                        <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
-                        <div class="clear"></div>
-                    </div>
-                    <?
-                }
-                else {
-                    ?>
-                    <div class="block-content summoner notApproved" attr-id="<?=$v->id?>" attr-masteries="<?=$v->masteries?>">
-                        <img class="game-logo" src="http://avatar.leagueoflegends.com/<?=$v->region?>/<?=$v->name?>.png" />
-                        <label class="summoner-name"><?=$v->name?></label>
-                        <a href="javascript:void(0);" class="removeSummoner right"><?=t('remove')?></a>
+                    <? } else { ?>
                         <a href="javascript:void(0);" class="status hint" attr-msg="<?=t('click_to_see_instructions')?>"><?=t('approval_required')?></a>
-                        <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
-                        <div class="clear"></div>
-                    </div>
-                    <?
-                }
+                    <? } ?>
+                    <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+                    <div class="clear"></div>
+                </div>
+                <?
         	}
         }
         else {

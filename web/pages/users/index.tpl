@@ -29,7 +29,14 @@
                     <img src="<?=_cfg('img')?>/avatar/<?=$v->avatar?>.jpg" />
                 </div>
                 <label class="user-name cell1"><?=$v->name?></label>
-                <label class="user-summoner cell2"><?=$v->summoner?></label>
+                <label class="user-summoner cell2 summoner">
+                    <? if ($v->summoner && $v->league) { ?>
+                        <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
+                    <? } else if ($v->summoner) { ?>
+                        <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />
+                    <? } ?>
+                    <?=$v->summoner?>
+                </label>
                 <label class="user-battle-tag cell3"><?=$v->battletag?></label>
                 <!--<label class="user-tournaments cell4"><?=$v->name?></label>-->
                 <span href="javascript:void(0);" class="date cell5"><?=date('d.m.Y', strtotime($v->registration_date))?></span>

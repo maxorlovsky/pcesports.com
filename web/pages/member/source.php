@@ -30,49 +30,48 @@ class member extends System
             );
             
             if ($row) {
-                $rows = Db::fetchRows(
-                    'SELECT `region`, `summoner_id`, `name` FROM `summoners` '.
-                    'WHERE `user_id` = '.(int)$row->id.' AND '.
-                    '`approved` = 1 '
-                );
-                
-                if ($rows) {
-                    $row->summoners = $rows;
-                    
-                    foreach($row->summoners as &$v) {
-                        foreach(_cfg('lolRegions') as $k => $lr) {
-                            if ($k == $v->region) {
-                                $v->regionName = $lr;
-                            }
-                        }
-                    }
-                    unset($v);
-                }
-                else {
-                    $row->summoners = array();
-                }
-                
-                $rows = Db::fetchRows(
-                    'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
-                    'FROM `participants` '.
-                    'WHERE `user_id` = '.(int)$row->id.' '//.AND
-                    //'`approved` = 1 AND '.
-                    //'`deleted` = 0 '
-                );
-                if ($rows) {
-                    $row->tournaments = $rows;
-                }
-                else {
-                    $row->tournaments = array();
-                }
-                
-                
                 $this->member = $row;
             }
         }
 	}
     
 	public function getMember() {
+        $rows = Db::fetchRows(
+            'SELECT `region`, `summoner_id`, `name`, `league`, `division` FROM `summoners` '.
+            'WHERE `user_id` = '.(int)$this->member->id.' AND '.
+            '`approved` = 1 '
+        );
+        
+        if ($rows) {
+            $this->member->summoners = $rows;
+            
+            foreach($this->member->summoners as &$v) {
+                foreach(_cfg('lolRegions') as $k => $lr) {
+                    if ($k == $v->region) {
+                        $v->regionName = $lr;
+                    }
+                }
+            }
+            unset($v);
+        }
+        else {
+            $this->member->summoners = array();
+        }
+        
+        $rows = Db::fetchRows(
+            'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
+            'FROM `participants` '.
+            'WHERE `user_id` = '.(int)$this->member->id.' '//.AND
+            //'`approved` = 1 AND '.
+            //'`deleted` = 0 '
+        );
+        if ($rows) {
+            $this->member->tournaments = $rows;
+        }
+        else {
+            $this->member->tournaments = array();
+        }
+
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
