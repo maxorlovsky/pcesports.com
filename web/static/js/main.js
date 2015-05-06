@@ -1533,6 +1533,7 @@ var PC = {
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
+                    $('#register-in-tournament').fadeOut();
                     $('#da-form').slideUp(1000, function() {
                         $('.reg-completed').slideDown(1000);
                     });
@@ -1544,7 +1545,6 @@ var PC = {
                         $('[data-label="'+k+'"] .message').show();
                         if (answ[0] == 1) {
                             $('[data-label="'+k+'"]').addClass('success');
-                            $('#register-in-tournament').fadeOut();
                         }
                         else {
                             $('[data-label="'+k+'"]').addClass('error');
