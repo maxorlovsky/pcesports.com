@@ -1,4 +1,4 @@
-<section class="container page lol">
+<section class="container page tournament">
 
 <div class="left-containers">
 	<div class="block">
@@ -11,21 +11,22 @@
 			<div id="join-form">
 				<form id="da-form" method="post">
                     <? for($i=1;$i<=7;++$i) { ?>
-					<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" value="<?=$players[$i]?>" />
-					<div id="mem<?=$i?>-msg" class="message hidden"></div>
-					<div class="clear"></div>
+                    <div class="form-item" data-label="mem<?=$i?>">
+						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" value="<?=$players[$i]?>" />
+						<div class="message hidden"></div>
+					</div>
                     <? } ?>
                     <input type="hidden" name="server" value="<?=$this->server?>" />
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="edit-team"><?=t('edit_team')?></a>
+				<a href="javascript:void(0);" class="button" id="edit-in-tournament"><?=t('edit_team')?></a>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-$('#edit-team').on('click', function() {
-    PC.editTeam($(this));
+$('#edit-in-tournament').on('click', function() {
+    PC.editParticipant('LoL');
 });
 </script>

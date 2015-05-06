@@ -1,4 +1,4 @@
-<section class="container page lol">
+<section class="container page tournament">
 
 <div class="left-containers">
     <? if ($_SESSION['participant']->checked_in != 1) { ?>
