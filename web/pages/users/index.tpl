@@ -30,7 +30,7 @@
                 </div>
                 <label class="user-name cell1"><?=$v->name?></label>
                 <label class="user-summoner cell2 summoner">
-                    <? if ($v->summoner && $v->league) { ?>
+                    <? if ($v->summoner && $v->league && $v->summonerApproved == 1) { ?>
                         <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
                     <? } else if ($v->summoner) { ?>
                         <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />

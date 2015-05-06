@@ -1,85 +1,3 @@
-$mainColor: #1697e1;
-$defaultBorderRadius: 8px;
-
-/* Reset like things */
-img,p,td{border: 0;margin: 0;padding: 0;}
-a{text-decoration: none;color: #1697e1;transition: .5s;}
-a:hover{color: #555; }
-.clear {clear:both;}
-.fright {float:right;}
-a img {border: 0;}
-
-@font-face {
-    font-family: 'entyporegular';
-    src: url('Entypo-webfont.eot');
-    src: url('Entypo-webfont.eot?#iefix') format('embedded-opentype'),
-         url('Entypo-webfont.woff') format('woff'),
-         url('Entypo-webfont.ttf') format('truetype'),
-         url('Entypo-webfont.svg#entyporegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    margin: 81px 0 0 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Open Sans;
-    background-image:url(../images/bg2.jpg);
-    background-color: #000;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: 0px -100px;
-}
-
-#full-site-wrapper {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.hidden {
-    display: none;
-}
-
-.button {
-    color: #eee;
-    display: inline-block;
-    background-color: #1697e1;
-    padding: 10px 15px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .3s;
-    &.tournamentOff {
-        background-color: #900;
-        box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2), inset 0 0 10px 8px rgba(0,0,0,0.2);
-        margin-top: 10px;
-        cursor: default;
-        &:hover {
-            background-color: #b00;
-        }
-    }
-    &.checkIn {
-        margin-top: 15px;
-        font-size: 20px;
-        background-color: #0a0;
-        box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2), inset 0 0 10px 8px rgba(0,0,0,0.2);
-    }
-    &.loading {
-        background-image:url(../images/loading.gif);
-        background-position: 50%;
-        background-repeat: no-repeat;
-    }
-    &:hover {
-        color: #fff;
-        background-color: #2878d1;
-    }
-}
-
 .centered {
     text-align: center;
 }
@@ -1043,7 +961,7 @@ footer .partners .aimskillz {
         }
         .name {
             margin-top: 100px;
-            font-size: 26px;
+            font-size: 30px;
             font-weight: bold;
             color: #555;
             text-align: center;
@@ -1178,99 +1096,159 @@ footer .partners .aimskillz {
 	padding: 0;
 }
 
-.lol .block {
-	margin-bottom: 40px;
+.tournament {
+    .block {
+    	margin-bottom: 40px;
+    }
+    .active-tournament {
+        &:hover {
+            background-color: #1697E1;
+            color: #fff;
+            .right-part {
+                color: #fff;
+            }
+        }
+        .status {
+            background-color: #1697E1;
+            color: #fff;
+        }
+    }
+    .ended-tournament {
+        &:hover {
+            background-color: #bbb;
+            color: #000;
+            .status {
+                color: #fff;
+            }
+        }
+        .status {
+            background-color: #444;
+        }
+    }
+    .left-part {
+        float: left;
+    }
+    .right-part {
+        float: right;
+        font-size: 14px;
+        min-width: 225px;
+        .status {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+    .mid-part {
+        width: 280px;
+        margin: 0 auto;
+        color: #000;
+        div {
+            height: 30px;
+            &.clear {
+                height: 0;
+            }
+        }
+        img {
+            float: left;
+            margin: 4px 10px 0 0;
+        }
+        span {
+            line-height: 30px;
+            display: block;
+            font-size: 16px;
+        }
+    }
+    .title {
+        font-size: 21px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 285px;
+        white-space: nowrap;
+        img {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+    .participant_count {
+        margin-top: 0;
+    }
+    .status {
+        display: block;
+        padding: 5px 8px;
+        border-radius: 4px;
+        float: right;
+    }
+    .success-add, .error-add, .info-add {
+        margin-top: 0;
+    }
+    .check-in-holder {
+        text-align: center;
+    }
+    .connect-team {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .left-containers .block .tournament-list {
+        padding: 10px;
+        position: relative;
+    }
+    &.hs .left-containers .block .tournament-list, .left-containers .block .tournament-list.hs {
+        &::after {
+            content: "";
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            position: absolute;
+            z-index: 0;
+            background-image: url('../images/footer-hs-logo.png');
+        }
+    }
+    &.lol .left-containers .block .tournament-list, .left-containers .block .tournament-list.lol {
+        &::after {
+            content: "";
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            position: absolute;
+            z-index: 0;
+            background-image: url('../images/footer-lol-logo.png');
+        }
+    }
+
+    .block-content.signup {
+        padding: 0;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            border-left: 1px solid #888;
+            top: 0;
+            left: 49%;
+            height: 100%;
+        }
+    }
 }
 
-.lol .active-tournament:hover {
-	background-color: #1697E1;
-}
-.lol .ended-tournament:hover {
-	background-color: #bbb;
-}
-.lol .active-tournament:hover, .lol .active-tournament:hover .right-part {
-	color: #fff;
-}
-.lol .ended-tournament:hover {
-	color: #000;
-} 
-
-.lol .active-tournament .status {
-	background-color: #1697E1;
-	color: #fff;
-}
-.lol .ended-tournament .status {
-	background-color: #444;
-}
-
-.lol .ended-tournament:hover .status {
-	color: #fff;
-}
-
-.lol .left-part {
-    float: left;
-}
-.lol .right-part {
-    float: right;
-    font-size: 14px;
-}
-.lol .right-part .event-date span {
-	
-}
-.lol  .right-part .status {
-    text-transform: uppercase;
-    font-weight: bold;
-}
-.lol .mid-part {
-    width: 280px;
-    margin: 0 auto;
-    color: #000;
-}
-.lol .title {
-    font-size: 21px;
-    font-weight: bold;
-    text-transform: uppercase;
-    width: 285px;
-    white-space: nowrap;
-}
-.lol .title img {
-    float: left;
-    margin-right: 10px;
-}
-.lol .participant_count {
-    margin-top: 15px;
-}
-.lol .status {
-    display: block;
-    padding: 5px 8px;
-    border-radius: 4px;
-    float: right;
-}
-
-.lol .mid-part div {
-    height: 30px;
-}
-.lol .mid-part div.clear {
-    height: 0;
-}
-.lol .mid-part img {
-    float: left;
-    margin: 4px 10px 0 0;
-}
-.lol .mid-part span {
-    line-height: 30px;
-    display: block;
-    font-size: 16px;
-}
-.lol .success-add, .lol .error-add, .lol .info-add {
-    margin-top: 0;
-}
-.lol .check-in-holder {
-    text-align: center;
-}
-.lol .connect-team {
-    text-align: center;
-    margin-bottom: 20px;
+.tournament .registration {
+    #join-form {
+        width: 49%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .tournament-rules {
+        width: 49%;
+        float: left;
+        padding: 10px;
+        box-sizing: border-box;
+    }
 }
 
 .participants .block {
@@ -1366,33 +1344,56 @@ footer .partners .aimskillz {
 .alpha {
 	opacity: 0.5;
 }
-#join-form input[type='text'], #join-form textarea, #join-form input[type='text'], #join-form select {
-    width: 40%;
-    float: left;
-    margin-bottom: 10px;
-    font-size: 16px;
-    padding: 5px;
+#join-form {
+    .form-item {
+        margin-bottom: 10px;
+    }
+    input[type="text"], textarea, select {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        padding: 5px;
+    }
+    input[type="checkbox"] {
+        float: left;
+    }
+    label {
+        font-size: 14px;
+        cursor: pointer;
+    }
+    select {
+        margin-right: 15px;
+    }
+
+    .form-item {
+        &.error {
+            input[type="text"] {
+                border-bottom: 1px solid red;
+                margin-bottom: 5px;
+            }
+            select {
+                border: 1px solid red;
+                margin-bottom: 5px;
+            }
+            .message {
+                color: #ea6b6b;
+            }
+        }
+        &.success {
+            .message {
+                color: #32b229;
+            }
+        }
+    }
+    .button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 18px;
+    }
 }
-#join-form input[type='checkbox'] {
-    float: left;
-    display: block;
-    margin: 14px 5px 0 0;
-}
-#join-form label {
-    float: left;
-    font-size: 14px;
-    width: 40%;
-    cursor: pointer;
-    display: block;
-    margin-bottom: 10px;
-}
-#join-form select {
-    margin-right: 15px;
-}
-#join-form .message {
-	width: 50%;
-}
-.form .message, #join-form .message {
+
+.form .message {
     float: left;
     height: 29px;
     min-width: 29px;
@@ -1401,11 +1402,11 @@ footer .partners .aimskillz {
     margin-left: 10px;
     margin-top: 2px;
 }
-.form .error, #join-form .error {
+.form .error {
     background: url('../images/error.png') no-repeat left center;
     color: #ea6b6b;
 }
-.form .success, #join-form .success {
+.form .success {
     background: url('../images/success.png') no-repeat left center;
     color: #32b229;
 }
@@ -2105,7 +2106,7 @@ footer .games img {
 }
 
 .heroes-images {
-    margin: 10px 0 30px 0;
+    margin: 10px 0;
 }
 .heroes-images h6 {
     margin: 0;
@@ -2117,39 +2118,39 @@ footer .games img {
     margin-bottom: 15px;
 }
 .hsicons {
-    background-image: url('../images/hs_icons_by_mgbeach.png');
+    background-image: url('../images/hs_icons_by_mgbeach_50.png');
     background-repeat: no-repeat;
 }
 .hsicons.active {
-    width: 200px;
-    height: 185px;
+    width: 100px;
+    height: 90px;
 }
 .hsicons.druid {
     background-position: 0 0;
 }
 .hsicons.hunter {
-    background-position: -200px 0;
+    background-position: -100px 0;
 }
 .hsicons.mage {
-    background-position: -400px 0;
+    background-position: -200px 0;
 }
 .hsicons.paladin {
-    background-position: -600px 0;
+    background-position: -300px 0;
 }
 .hsicons.priest {
-    background-position: -800px 0;
+    background-position: -400px 0;
 }
 .hsicons.rogue {
-    background-position: 0 -188px;
+    background-position: 0 -94px;
 }
 .hsicons.shaman {
-    background-position: -200px -188px;
+    background-position: -100px -94px;
 }
 .hsicons.warlock {
-    background-position: -400px -188px;
+    background-position: -200px -94px;
 }
 .hsicons.warrior {
-    background-position: -600px -188px;
+    background-position: -300px -94px;
 }
 
 .hsicons-small {

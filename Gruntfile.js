@@ -11,11 +11,18 @@ module.exports = function(grunt) {
         sass: {
 			dist: {
 				files: {
-					'<%= dirs.css %>/sass.css' : '<%= dirs.css %>/sass.scss'
+					'<%= dirs.css %>/sass.css': '<%= dirs.css %>/combined.scss'
 				}
 			}
 		},
         concat: {
+            sass: {
+                src: [
+                    '<%= dirs.css %>/globals.scss',
+                    '<%= dirs.css %>/sass.scss'
+                ],
+                dest: '<%= dirs.css %>/combined.scss'
+            },
             css: {
                 src: [
                     '<%= dirs.css %>/slider.css',
@@ -59,8 +66,8 @@ module.exports = function(grunt) {
         },
         watch: {
             css: {
-				files: '<%= dirs.css %>/sass.scss',
-				tasks: ['sass']
+				files: ['<%= dirs.css %>/globals.scss', '<%= dirs.css %>/sass.scss'],
+				tasks: ['concat:sass', 'sass']
 			}
         },
         imagemin: {
@@ -82,7 +89,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.registerTask('default', [ 'sass', 'jshint', 'concat:css', 'cssmin:css', 'concat:js', 'uglify:js' ]);
+    grunt.registerTask('default', [ 'concat:sass', 'sass', 'jshint', 'concat:css', 'cssmin:css', 'concat:js', 'uglify:js' ]);
     grunt.registerTask('imagemin', ['imagemin']);
     grunt.registerTask('dev', [ 'watch' ]);
 };

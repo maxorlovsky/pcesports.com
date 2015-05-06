@@ -18,9 +18,9 @@ class users extends System
         $this->pages = pages($pagesData);
         
         $this->users = Db::fetchRows(
-            'SELECT `u`.*, `s`.`name` AS `summoner`, `s`.`division`, `s`.`league` '.
+            'SELECT `u`.*, `s`.`name` AS `summoner`, `s`.`division`, `s`.`league`, `s`.`approved` AS `summonerApproved` '.
             'FROM `users` AS `u` '.
-            'LEFT JOIN `summoners` AS `s` ON `u`.`id` = `s`.`user_id` '.
+            'LEFT JOIN `summoners` AS `s` ON `u`.`id` = `s`.`user_id` AND `s`.`approved` = 1 '.
             'GROUP BY `u`.`id` '.
             'ORDER BY `registration_date` DESC '.
             'LIMIT '.(int)$this->pages->start.', '.(int)$this->pages->countPerPage

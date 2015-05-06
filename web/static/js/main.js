@@ -1319,60 +1319,6 @@ var PC = {
             PC.ajax(query);
         },
     },
-    addTeam: function(game) {
-        if (!game) {
-            game = 'registerInLoL';
-        }
-        
-        if (this.formInProgress == 1) {
-            return false;
-        }
-        
-        this.formInProgress = 1;
-        $('#da-form .message').hide();
-        $('#da-form .message').removeClass('error success');
-        $('#add-team').addClass('alpha');
-        
-        var query = {
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                ajax: game,
-                form: $('#da-form').serialize()
-            },
-            success: function(answer) {
-                $('#add-team').removeClass('alpha');
-                PC.formInProgress = 0;
-                
-                if (answer.ok == 1) {
-                    $('#register-url a').trigger('click');
-                    $('#join-form').slideUp(1000, function() {
-                        $('.reg-completed').slideDown(1000);
-                    });
-                }
-                else {
-                    $.each(answer.err, function(k, v) {
-                        answ = v.split(';');
-                        $('#'+k+'-msg').html(answ[1]);
-                        $('#'+k+'-msg').show();
-                        if (answ[0] == 1) {
-                            $('#'+k+'-msg').addClass('success');
-                        }
-                        else {
-                            $('#'+k+'-msg').addClass('error');
-                        }
-                    });
-                }
-            },
-            error: function() {
-                $('#add-team').removeClass('alpha');
-                PC.formInProgress = 0;
-                
-                alert('Something went wrong... Contact admin at info@pcesports.com');
-            }
-        };
-        this.ajax(query);
-    },
     editSmiteTeam: function(element) {
         if (this.formInProgress == 1) {
             return false;
@@ -1564,49 +1510,49 @@ var PC = {
         };
         this.ajax(query);
     },
-    addPlayer: function() {
+    addParticipant: function(game) {
         if (this.formInProgress == 1) {
             return false;
         }
         
         this.formInProgress = 1;
-        $('#da-form .message').hide();
-        $('#da-form .message').removeClass('error success');
-        $('#add-player').addClass('alpha');
+        $('#da-form .form-item').removeClass('error success');
+        $('#da-form .form-item .message').hide();
+        $('#register-in-tournament').addClass('alpha');
         
         var query = {
             type: 'POST',
             dataType: 'json',
             data: {
-                ajax: 'registerInHS',
+                ajax: 'registerIn'+game,
                 form: $('#da-form').serialize()
             },
             success: function(answer) {
-                $('#add-player').removeClass('alpha');
+                $('#register-in-tournament').removeClass('alpha');
                 PC.formInProgress = 0;
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
-                    $('#join-form').slideUp(1000, function() {
+                    $('#da-form').slideUp(1000, function() {
                         $('.reg-completed').slideDown(1000);
                     });
                 }
                 else {
                     $.each(answer.err, function(k, v) {
                         answ = v.split(';');
-                        $('#'+k+'-msg').html(answ[1]);
-                        $('#'+k+'-msg').show();
+                        $('[data-label="'+k+'"] .message').html(answ[1]);
+                        $('[data-label="'+k+'"] .message').show();
                         if (answ[0] == 1) {
-                            $('#'+k+'-msg').addClass('success');
+                            $('[data-label="'+k+'"]').addClass('success');
                         }
                         else {
-                            $('#'+k+'-msg').addClass('error');
+                            $('[data-label="'+k+'"]').addClass('error');
                         }
                     });
                 }
             },
             error: function() {
-                $('#add-player').removeClass('alpha');
+                $('#register-in-tournament').removeClass('alpha');
                 PC.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@pcesports.com');

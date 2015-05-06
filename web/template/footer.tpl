@@ -58,7 +58,7 @@
     <div class="clear"></div>
     
     <div class="copyrights">
-        <p class="rights">© <?=date('Y', time())?> Pentaclick eSports. All Rights Reserved.</p>
+        <p class="rights">© <?=date('Y', time())?> Pentaclick eSports.</p>
         <a href="http://www.maxorlovsky.net" target="_blank" class="devs"><?=t('made_by')?> Max & Anya Orlovsky</a>
         <div class="clear"></div>
     </div>

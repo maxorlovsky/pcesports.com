@@ -5,7 +5,7 @@
     </div>
 </div>
 
-<section class="container page lol <?=$this->server?>">
+<section class="container page tournament lol <?=$this->server?>">
 
 <div class="left-containers">
 	<? if (t('lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) != 'lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) { ?>
@@ -21,43 +21,76 @@
     <? } ?>
 	
 	<? if ($this->data->settings['tournament-reg-lol-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
-	<div class="block">
+	<div class="block registration">
 		<div class="block-header-wrapper">
-			<h1 class="bordered"><?=t('join_tournament')?> #<?=$this->currentTournament?></h1>
+			<h1 class="bordered"><?=t('sign_up')?></h1>
 		</div>
 		
-		<div class="block-content">
-			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+		<div class="block-content signup">
 			<div id="join-form">
+                <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+
 				<form id="da-form" method="post">
-					<input type="text" name="team" placeholder="<?=t('team_name')?>*" />
-					<div id="team-msg" class="message hidden"></div>
-					<div class="clear"></div>
-					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
-					<div id="email-msg" class="message hidden"></div>
-					<div class="clear"></div>
-					<input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)*" value="<?=$pickedSummoner?>" />
-					<div id="mem1-msg" class="message hidden"></div>
-					<div class="clear"></div>
+                    <div class="form-item" data-label="team">
+					    <input type="text" name="team" placeholder="<?=t('team_name')?>*" />
+					    <div class="message hidden"></div>
+                    </div>
+					
+                    <div class="form-item" data-label="email">
+                        <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
+					    <div class="message hidden"></div>
+                    </div>
+
+					<div class="form-item" data-label="mem1">
+                        <input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)*" value="<?=$pickedSummoner?>" />
+					    <div class="message hidden"></div>
+                    </div>
+
+					
 					<? for($i=2;$i<=7;++$i) { ?>
-						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" />
-						<div id="mem<?=$i?>-msg" class="message hidden"></div>
-						<div class="clear"></div>
+                        <div class="form-item" data-label="mem<?=$i?>">
+    						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" />
+    						<div class="message hidden"></div>
+                        </div>
 					<? } ?>
-                    <input class="hint" attr-msg="<?=t('stream_tournament_hint_lol')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
-					<div id="stream-msg" class="message hidden"></div>
-					<div class="clear"></div>
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
-					<div id="agree-msg" class="message hidden"></div>
-                    <div class="clear"></div>
+
+                    <div class="form-item" data-label="stream">
+                        <input class="hint" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_lol')?>" />
+    					<div class="message hidden"></div>
+					</div>
+
+                    <div class="form-item" data-label="agree">
+                        <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
+					   <div class="message hidden"></div>
+                    </div>
+
                     <input type="hidden" name="server" value="<?=$this->server?>" />
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="add-team"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
+				<a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
 			</div>
+
+            <div class="tournament-rules">
+                <h1><?=t('specific_tournament_rules')?></h1>
+                <?=str_replace(
+                    array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
+                    t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
+                )?>
+                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+                
+                <div class="share-tournament">
+                    <h2><?=t('share_this_tournament')?></h2>
+                    <div class="addthis_sharing_toolbox"></div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
 		</div>
 	</div>
-	<? } ?>
+
+	<? } else { ?>
     
     <div class="block">
         <div class="block-header-wrapper">
@@ -80,6 +113,7 @@
             </div>
         </div>
     </div>
+    <? } ?>
     
     <div class="block">
         <div class="block-header-wrapper">
@@ -204,8 +238,8 @@
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 
 <script>
-$('#add-team').on('click', function() {
-    PC.addTeam();
+$('#register-in-tournament').on('click', function() {
+    PC.addParticipant('Lol');
 });
 
 participantsNumber = <?=$this->participantsCount?>;

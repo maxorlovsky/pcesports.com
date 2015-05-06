@@ -5,42 +5,52 @@
     </div>
 </div>
 
-<section class="container page lol">
+<section class="container page tournament hs">
 
 <div class="left-containers">
 	<? if ($this->data->settings['tournament-reg-hs-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
-	<div class="block">
+	<div class="block registration">
 		<div class="block-header-wrapper">
-			<h1 class="bordered"><?=t('signin_league')?></h1>
+			<h1>Season <?=$this->server?> Tournament #<?=$this->currentTournament?> <?=t('sign_up')?></h1>
 		</div>
 		
-		<div class="block-content">
-            <?/*<p class="info-add"><?=t('this_is_lan_event')?></p>*/?>
-			<p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+		<div class="block-content signup">
 			<div id="join-form">
+                <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+
 				<form id="da-form" method="post">
-					<input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
-					<div id="battletag-msg" class="message hidden"></div>
-					<div class="clear"></div>
-					<input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
-					<div id="email-msg" class="message hidden"></div>
-                    <div class="clear"></div>
-                    <!--<input type="text" name="phone" placeholder="<?=t('phone_number')?>" />
-					<div id="phone-msg" class="message hidden"></div>-->
-                    <input class="hint" attr-msg="<?=t('stream_tournament_hint_hs')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
-					<div id="stream-msg" class="message hidden"></div>
-					<div class="clear"></div>
-                    <div class="clear"></div>
+                    <div class="form-item" data-label="battletag">
+                        <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
+                        <div class="message hidden"></div>
+                    </div>
+
+                    <div class="form-item" data-label="email">
+                        <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
+                        <div class="message hidden"></div>
+                    </div>
+
+                    <div class="form-item" data-label="stream">
+                        <input type="text" name="stream" class="hint" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_hs')?>" />
+					    <div class="message hidden"></div>
+					</div>
+
+                    
                     <? for ($i=1;$i<=4;++$i) { ?>
-                    <select class="hero<?=$i?>" name="hero<?=$i?>">
-                        <option value="0"><?=t('pick_hero')?></option>
-                        <? foreach($this->heroes as $k => $v) { ?>
-                            <option value="<?=$k?>"><?=ucfirst($v)?></option>
-                        <? } ?>
-                    </select>
-                    <div id="hero<?=$i?>-msg" class="message hidden"></div>
-                    <div class="clear"></div>
+                    <div class="form-item" data-label="hero<?=$i?>">
+                        <select class="hero<?=$i?>" name="hero<?=$i?>">
+                            <option value="0"><?=t('pick_hero')?></option>
+                            <? foreach($this->heroes as $k => $v) { ?>
+                                <option value="<?=$k?>"><?=ucfirst($v)?></option>
+                            <? } ?>
+                        </select>
+                        <div class="message hidden"></div>
+                    </div>
                     <? } ?>
+
+                    <div class="form-item" data-label="agree">
+                        <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs')?></label>
+                        <div class="message hidden"></div>
+                    </div>
                     
                     <div class="heroes-images">
                         <h6><?=t('your_classes')?></h6>
@@ -49,28 +59,31 @@
                         <? } ?>
                     </div>
                     <div class="clear"></div>
-                    
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs')?></label>
-					<div id="agree-msg" class="message hidden"></div>
-                    <div class="clear"></div>
 				</form>
 				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="add-player"><?=t('join_tournament')?></a>
+				<a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?></a>
 			</div>
-		</div>
+
+            <div class="tournament-rules">
+                <?=str_replace(
+                    array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
+                    t('hs_tournament_information')
+                )?>
+                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+                
+                <div class="share-tournament">
+                    <h2><?=t('share_this_tournament')?></h2>
+                    <div class="addthis_sharing_toolbox"></div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
 	</div>
-	<? } ?>
-    
-    <?/*<div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('tournament_rules')?></h1>
-        </div>
-        
-        <div class="block-content">
-            <?=t('hearthstone_lan_tournament_information')?>
-        </div>
-    </div>*/?>
-    
+
+	<? } else { ?>
+
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('information')?></h1>
@@ -90,16 +103,8 @@
             </div>
         </div>
     </div>
-    
-    <?/*<div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('schedule')?></h1>
-        </div>
-        
-        <div class="block-content tournament-rules">
-            <?=t('hearthstone_lan_schedule_information_'.$this->pickedTournament)?>
-        </div>
-    </div>*/?>
+
+    <? } ?>
     
     <?
     //Deprecated groups
@@ -391,8 +396,8 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     });
 });
 
-$('#add-player').on('click', function() {
-    PC.addPlayer();
+$('#register-in-tournament').on('click', function() {
+    PC.addParticipant('HS');
 });
 
 challongeHeight = 550;

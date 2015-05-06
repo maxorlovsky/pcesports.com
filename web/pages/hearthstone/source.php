@@ -114,7 +114,7 @@ class hearthstone extends System
         
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
-            'WHERE `game` = "lol" AND '.
+            'WHERE `game` = "hs" AND '.
             '`server` = "'.Db::escape($this->server).'" AND' .
             '`approved` = 1 AND '.
             '`checked_in` = 1 AND '.
@@ -260,7 +260,7 @@ class hearthstone extends System
         
             $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
                 'FROM `participants` '.
-                'WHERE `game` = "lol" AND '.
+                'WHERE `game` = "hs" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
                 '`place` != 0 '.
                 'ORDER BY `tournament_id`, `place`'

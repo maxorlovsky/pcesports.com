@@ -1,4 +1,4 @@
-<section class="container page lol">
+<section class="container page tournament hs">
 
 <div class="left-containers">
     <div class="block">
@@ -8,9 +8,9 @@
         
 		<? if ($this->tournamentData) {
             foreach($this->tournamentData as $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$v['name']?>">
+        <a class="block-content tournament-list <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
-                <div class="title"><img src="<?=_cfg('img')?>/hs-logo-small.png" /><?=t('tournament')?> #<?=$v['name']?></div>
+                <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> <span class="<?=($v['teamsCount']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span> <?=t('participants')?></div>
             </div>
             

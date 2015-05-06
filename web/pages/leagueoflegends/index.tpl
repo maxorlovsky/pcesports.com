@@ -1,4 +1,4 @@
-<section class="container page lol">
+<section class="container page tournament lol">
 
 <div class="left-containers">
     <div class="block">
@@ -8,9 +8,9 @@
         
 		<? if ($this->tournamentData) {
             foreach($this->tournamentData as $v) { ?>
-        <a class="block-content <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$v['name']?>">
+        <a class="block-content tournament-list <?=(strtolower($v['status'])=='ended'?'ended-tournament':'active-tournament')?>" href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$v['name']?>">
             <div class="left-part">
-                <div class="title"><img src="<?=_cfg('img')?>/lol-logo-small.png" /><?=t('tournament')?> #<?=$v['name']?></div>
+                <div class="title"><?=t('tournament')?> #<?=$v['name']?></div>
                 <div class="participant_count"><?=(isset($v['teamsCount'])?$v['teamsCount']:0)?> <?=t('of')?> <span class="<?=($v['teamsCount']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span> <?=t('participants')?></div>
             </div>
             
@@ -21,13 +21,7 @@
             </div>
             
             <div class="mid-part">
-                <? if (strtolower($v['status'])=='ended') { ?>
-                    <div><img src="<?=_cfg('img')?>/gold-cup.png" /> <span class="first-place"><?=(isset($v['places'][1])?$v['places'][1]:null)?></span></div>
-                    <div><img src="<?=_cfg('img')?>/silver-cup.png" /> <span class="second-place"><?=(isset($v['places'][2])?$v['places'][2]:null)?></span></div>
-                    <div><img src="<?=_cfg('img')?>/bronze-cup.png" /> <span class="third-place"><?=(isset($v['places'][3])?$v['places'][3]:null)?></span></div>
-                <? } else { ?>
-                    <div class="clear"></div>
-                <? } ?>
+                <div class="clear"></div>
             </div>
         </a>
         <?

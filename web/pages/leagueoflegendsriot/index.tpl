@@ -1,4 +1,4 @@
-<section class="container page lol <?=$this->server?>">
+<section class="container page tournament <?=$this->server?>">
 
 <div class="left-containers">
     <div class="block">
