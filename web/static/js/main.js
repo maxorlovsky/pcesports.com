@@ -1544,6 +1544,7 @@ var PC = {
                         $('[data-label="'+k+'"] .message').show();
                         if (answ[0] == 1) {
                             $('[data-label="'+k+'"]').addClass('success');
+                            $('#register-in-tournament').fadeOut();
                         }
                         else {
                             $('[data-label="'+k+'"]').addClass('error');

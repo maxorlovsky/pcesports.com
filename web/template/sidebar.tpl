@@ -167,6 +167,21 @@
             <div class="clear"></div>
         </div>
     </div>
+
+    <!--<div class="block subscribe">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('subscribe')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <p><?=t('subscribe_text')?></p>
+            <div class="donate-form">
+                <div class="error"></div>
+                <input type="text" name="subscriptionEmail" />
+                <a href="javascript:;" target="_blank" class="button"><?=t('subscribe')?></a>
+            </div>
+        </div>
+    </div>-->
 </div>
 
 <div class="clear"></div>
