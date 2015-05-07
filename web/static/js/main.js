@@ -1059,7 +1059,9 @@ var PC = {
     closePopup: function() {
         $('html, body').css('overflow', '');
         $('#fader').fadeOut('fast');
-        $('.popup:visible').stop().animate({top: -$('.popup:visible').height()});
+        $('.popup:visible').stop().animate({top: -$('.popup:visible').height()}, function() {
+            $('.popup:visible').hide();
+        });
     },
     timers: [],
     secs: 0,
