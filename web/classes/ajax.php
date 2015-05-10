@@ -1136,6 +1136,16 @@ class Ajax extends System
     	parse_str($data['form'], $post);
         
         $server = 's1';
+
+        if ($this->logged_in) {
+            if ($this->data->user->battletag) {
+                $post['battletag'] = $this->data->user->battletag;
+            }
+
+            if ($this->data->user->email) {
+                $post['email'] = $this->data->user->email;
+            }
+        }
     	
     	$battleTagBreakdown = explode('#', $post['battletag']);
     	
@@ -1146,6 +1156,7 @@ class Ajax extends System
     		//'`approved` = 1 AND '.
     		'`deleted` = 0 '
     	);
+
 
     	if (!$post['battletag']) {
     		$err['battletag'] = '0;'.t('field_empty');
@@ -1240,6 +1251,7 @@ class Ajax extends System
 	    		'`name` = "'.Db::escape($post['battletag']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
+                ($this->logged_in?'`approved` = "1", `user_id` = '.(int)$this->data->user->id.', ':null).
 	    		'`link` = "'.$code.'"'
     		);
     	
@@ -1265,15 +1277,21 @@ class Ajax extends System
                 );
             }
     		
-    		$text = Template::getMailTemplate('reg-hs-player');
-    	
-    		$text = str_replace(
-    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone/'.$server, _cfg('site')),
-    			$text
-    		);
-    	
-    		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
+            //Only sending email to not reggistered user
+            if (!$this->logged_in) {
+        		$text = Template::getMailTemplate('reg-hs-player');
+        	
+        		$text = str_replace(
+        			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
+        			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone/'.$server, _cfg('site')),
+        			$text
+        		);
+        	
+        		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
+            }
+            else {
+                $answer['ok'] = 2;
+            }
     	}
     	 
     	return json_encode($answer);

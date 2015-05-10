@@ -3,6 +3,16 @@
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('partner')?></h1>
+        </div>
+        
+        <div class="block-content sponsor">
+            <a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-header-wrapper">
             <h1 class="bordered">Hearthstone <?=$this->server?> <?=t('tournament_list')?></h1>
         </div>
         

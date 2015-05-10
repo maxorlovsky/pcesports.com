@@ -8,6 +8,16 @@
 <section class="container page tournament hs">
 
 <div class="left-containers">
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('partner')?></h1>
+        </div>
+        
+        <div class="block-content sponsor">
+            <a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a>
+        </div>
+    </div>
+
 	<? if ($this->data->settings['tournament-reg-hs-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block registration">
 		<div class="block-header-wrapper">
@@ -19,15 +29,24 @@
                 <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 
 				<form id="da-form" method="post">
-                    <div class="form-item" data-label="battletag">
-                        <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
-                        <div class="message hidden"></div>
-                    </div>
+                    <? if ($this->data->user->battletag) { ?>
+                        <div class="form-item" data-label="battletag">
+                            Battle Tag: <strong><?=$this->data->user->battletag?></strong>
+                            <div class="message hidden"></div>
+                        </div>
+                    <? } else { ?>
+                        <div class="form-item" data-label="battletag">
+                            <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
+                            <div class="message hidden"></div>
+                        </div>
+                    <? } ?>
 
-                    <div class="form-item" data-label="email">
-                        <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
-                        <div class="message hidden"></div>
-                    </div>
+                    <? if (!isset($this->data->user) && !$this->data->user) { ?>
+                        <div class="form-item" data-label="email">
+                            <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
+                            <div class="message hidden"></div>
+                        </div>
+                    <? } ?>
 
                     <div class="form-item" data-label="stream">
                         <input type="text" name="stream" class="hint" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_hs')?>" />

@@ -1349,6 +1349,13 @@ var PC = {
                         $('.reg-completed').slideDown(1000);
                     });
                 }
+                else if (answer.ok == 2) {
+                    var link = '';
+                    if (game == 'HS') {
+                        link = 'hearthstone/s1/participant/';
+                    }
+                    location.href = g.site+'/en/'+link;
+                }
                 else {
                     $.each(answer.err, function(k, v) {
                         answ = v.split(';');

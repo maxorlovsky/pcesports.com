@@ -208,24 +208,6 @@ class System
                 'LIMIT 5'
             );
         }
-        
-        if ($this->logged_in == 1 && !isset($_SESSION['participant'])) {
-            //Check if user is participant
-            $row = Db::fetchRow(
-                'SELECT * '.
-                'FROM `participants` '.
-                'WHERE '.
-                '`user_id` = '.(int)$this->data->user->id.' AND '.
-                '`ended` = 0 AND ' .
-                '`deleted` = 0 AND '.
-                '`approved` = 1 '.
-                'LIMIT 1 '
-            );
-            
-            if ($row) {
-                $_SESSION['participant'] = $row;
-            }
-        }
     }
     
     public function ajax($data) {

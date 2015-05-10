@@ -1089,6 +1089,8 @@ footer .partners .aimskillz {
 .tournament .left-containers .block .tournament-list {
   padding: 10px;
   position: relative; }
+.tournament.hs .sponsor {
+  text-align: center; }
 .tournament.hs .left-containers .block .tournament-list::after, .tournament .left-containers .block .tournament-list.hs::after {
   content: "";
   opacity: 0.1;
@@ -1271,6 +1273,7 @@ footer .games img {
   margin-right: 20px; }
 
 .block .panel-links {
+  position: relative;
   display: block;
   background-color: #fff;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
@@ -1285,7 +1288,8 @@ footer .games img {
     transition: .5s;
     cursor: pointer;
     font-size: 16px;
-    font-weight: bold; }
+    font-weight: bold;
+    z-index: 2; }
     .block .panel-links li a:hover {
       background-color: #1697e1;
       color: #eee; }
@@ -1294,9 +1298,17 @@ footer .games img {
       color: #eee;
       cursor: default; }
   .block .panel-links.hs {
-    border: 1px solid #E5DC2D; }
+    border: 1px solid #E5DC2D;
+    background-repeat: no-repeat;
+    background-position: 96% bottom;
+    background-size: 120px;
+    background-image: url("../images/footer-hs-logo.png"); }
   .block .panel-links.lol {
-    border: 1px solid #E5DC2D; }
+    border: 1px solid #E5DC2D;
+    background-repeat: no-repeat;
+    background-position: 96% bottom;
+    background-size: 120px;
+    background-image: url("../images/footer-lol-logo.png"); }
 
 #toTop {
   position: fixed;
@@ -1916,70 +1928,51 @@ footer .games img {
 .hsicons {
   background-image: url("../images/hs_icons_by_mgbeach_50.png");
   background-repeat: no-repeat; }
-
-.hsicons.active {
-  width: 100px;
-  height: 90px; }
-
-.hsicons.druid {
-  background-position: 0 0; }
-
-.hsicons.hunter {
-  background-position: -100px 0; }
-
-.hsicons.mage {
-  background-position: -200px 0; }
-
-.hsicons.paladin {
-  background-position: -300px 0; }
-
-.hsicons.priest {
-  background-position: -400px 0; }
-
-.hsicons.rogue {
-  background-position: 0 -94px; }
-
-.hsicons.shaman {
-  background-position: -100px -94px; }
-
-.hsicons.warlock {
-  background-position: -200px -94px; }
-
-.hsicons.warrior {
-  background-position: -300px -94px; }
+  .hsicons.active {
+    width: 100px;
+    height: 90px; }
+  .hsicons.druid {
+    background-position: 0 0; }
+  .hsicons.hunter {
+    background-position: -100px 0; }
+  .hsicons.mage {
+    background-position: -200px 0; }
+  .hsicons.paladin {
+    background-position: -300px 0; }
+  .hsicons.priest {
+    background-position: -400px 0; }
+  .hsicons.rogue {
+    background-position: 0 -94px; }
+  .hsicons.shaman {
+    background-position: -100px -94px; }
+  .hsicons.warlock {
+    background-position: -200px -94px; }
+  .hsicons.warrior {
+    background-position: -300px -94px; }
 
 .hsicons-small {
   background-image: url("../images/hs-small-icons.png");
   background-repeat: no-repeat;
   width: 36px;
   height: 18px; }
-
-.hsicons-small.druid {
-  background-position: 0 0; }
-
-.hsicons-small.hunter {
-  background-position: 0 -18px; }
-
-.hsicons-small.mage {
-  background-position: 0 -36px; }
-
-.hsicons-small.paladin {
-  background-position: 0 -54px; }
-
-.hsicons-small.priest {
-  background-position: 0 -72px; }
-
-.hsicons-small.rogue {
-  background-position: 0 -90px; }
-
-.hsicons-small.shaman {
-  background-position: 0 -108px; }
-
-.hsicons-small.warlock {
-  background-position: 0 -126px; }
-
-.hsicons-small.warrior {
-  background-position: 0 -144px; }
+  .hsicons-small.druid {
+    background-position: 0 0; }
+  .hsicons-small.hunter {
+    background-position: 0 -18px; }
+  .hsicons-small.mage {
+    background-position: 0 -36px; }
+  .hsicons-small.paladin {
+    background-position: 0 -54px; }
+  .hsicons-small.priest {
+    background-position: 0 -72px; }
+  .hsicons-small.rogue {
+    background-position: 0 -90px; }
+  .hsicons-small.shaman {
+    background-position: 0 -108px; }
+  .hsicons-small.warlock {
+    background-position: 0 -126px; }
+  .hsicons-small.warrior {
+    background-position: 0 -144px; }
 
 .groups .group {
   float: left;

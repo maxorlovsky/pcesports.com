@@ -1200,6 +1200,18 @@ class Cron extends System {
             
             $this->runChallongeAPI('tournaments/pentaclick-test1/start.post', $apiArray);
         }
+
+        //Cleaning up not checked in participants. So they would see "check in" button.
+        Db::query(
+            'UPDATE `participants` SET '.
+            '`ended` = 1 '.
+            'WHERE `game` = "'.$tournament->game.'" AND '.
+            '`server` = "'.$tournament->server.'" AND '.
+            '`tournament_id` = "'.$this->data->settings[$tournament->game.'-current-number-'.$tournament->server].'" AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 AND '.
+            '`checked_in` = 0 '
+        );
         
         Db::query('UPDATE `notifications` SET '.
             '`delivered` = 0 '.

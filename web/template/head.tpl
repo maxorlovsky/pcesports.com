@@ -153,7 +153,7 @@ hs.dimmingOpacity = 0.8;
         </div>
     </nav>
     
-    <div class="header-middle"><a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a></div>
+    <!--<div class="header-middle"><a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a></div>-->
     
     
     <div class="clear"></div>

@@ -219,6 +219,25 @@ class User extends System
         );
         
         $userRow->timezone = $userRow->timezone * 60;
+
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']) {
+            //Check if user is participant
+            $row = Db::fetchRow(
+                'SELECT * '.
+                'FROM `participants` '.
+                'WHERE '.
+                '`user_id` = '.$userRow->id.' AND '.
+                '`ended` = 0 AND ' .
+                '`deleted` = 0 AND '.
+                '`approved` = 1 '.
+                'LIMIT 1 '
+            );
+                
+            if ($row) {
+                $_SESSION['participant'] = $row;
+                $userRow->participant = $row;
+            }
+        }
         
         return $userRow;
     }
