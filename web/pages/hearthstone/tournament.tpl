@@ -46,6 +46,11 @@
                             <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
                             <div class="message hidden"></div>
                         </div>
+                    <? } else { ?>
+                        <div class="form-item" data-label="email">
+                            <input type="text" name="email" placeholder="Email*" value="" />
+                            <div class="message hidden"></div>
+                        </div>
                     <? } ?>
 
                     <div class="form-item" data-label="stream">
