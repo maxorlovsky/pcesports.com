@@ -11,10 +11,12 @@
 			<div id="join-form">
 				<form id="da-form" method="post">
 
-                    <div class="form-item" data-label="email">
-					    <input type="text" name="email" placeholder="Email*" value="<?=$editData->email?>" />
-					    <div class="message hidden"></div>
-                    </div>
+                    <? if (!$this->logged_in) { ?>
+                        <div class="form-item" data-label="email">
+                            <input type="text" name="email" placeholder="Email*" value="<?=$editData->email?>" />
+                            <div class="message hidden"></div>
+                        </div>
+                    <? } ?>
                     
                     <? for ($i=1;$i<=4;++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">

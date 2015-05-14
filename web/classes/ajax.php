@@ -1302,6 +1302,10 @@ class Ajax extends System
     	$suc = array();
     	parse_str($data['form'], $post);
         
+        if ($this->logged_in) {
+            $post['email'] = Db::escape($this->data->user->email);
+        }
+
         if (!$post['email']) {
     		$err['email'] = '0;'.t('field_empty');
     	}
