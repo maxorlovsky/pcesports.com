@@ -4,6 +4,76 @@ class Cron extends System {
     public function __construct() {
         parent::__construct();
     }
+
+    public function emailSender() {
+        $limit = 400;
+
+        $row = Db::fetchRow(
+            'SELECT * FROM `subscribe_sender` '.
+            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 HOUR ) OR `timestamp` IS NULL) '.
+            'ORDER BY `id` ASC '.
+            'LIMIT 1'
+        );
+
+        if (!$row) {
+            return false;
+        }
+
+        $query = 'SELECT * FROM `subscribe` WHERE '.$row->type.' AND `removed` = 0 LIMIT '.$row->emails.','.$limit;
+
+        $rows = Db::fetchRows($query);
+
+        $i = 0;
+        $j = 0;
+        foreach($rows as $v) {
+            $text = str_replace(
+                array(
+                    '%url%',
+                    '%unsublink%',
+                ),
+                array(
+                    _cfg('site'),
+                    _cfg('href').'unsubscribe/'.$v->unsublink,
+                ),
+                $row->text
+            );
+
+            $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
+            $transport->setUsername('pentaclickesports@gmail.com');
+            $transport->setPassword('zwAt!&JfA!MU!YE&gArw');
+            
+            $message = Swift_Message::newInstance()
+            ->setSubject($row->subject)
+            ->setFrom(array('pentaclickesports@gmail.com' => 'Pentaclick eSports'))
+            ->setTo(array($email))
+            ->setBody($text, 'text/html');
+
+            //Sending message
+            $mailer = Swift_Mailer::newInstance($transport);
+            $mailer->send($message, $fails);
+            
+            ++$i;
+            ++$j;
+            if ($i >= 5) {
+                sleep(3);
+                $i = 0;
+            }
+        }
+
+        if ($j < $limit) {
+            //If number of sent mails are less then limit, then we probably sent all of them
+            Db::query('DELETE FROM `subscribe_sender` WHERE `id` = '.$row->id);
+        }
+        else {
+            //Not all sent, adding timestamp and email limit
+            Db::query(
+                'UPDATE `subscribe_sender` SET '.
+                '`emails` = '.($row->emails + $limit).', '.
+                '`timestamp` = NOW() '.
+                'WHERE `id` = '.$row->id
+            );
+        }
+    }
     
     public function sqlCleanUp() {
         Db::multi_query('CALL cleanupOldData()');
@@ -1090,7 +1160,7 @@ class Cron extends System {
                     return 'Game not found';
                 }
                 
-                $message = str_replace(
+                $body = str_replace(
                     array(
                         '%url%',
                         '%code%',
@@ -1105,8 +1175,20 @@ class Cron extends System {
                     ),
                     $text
                 );
+
+                $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
+                $transport->setUsername('pentaclickesports@gmail.com');
+                $transport->setPassword('zwAt!&JfA!MU!YE&gArw');
                 
-                $this->sendMail($v->email, 'Pentaclick tournament reminder', $message);
+                $message = Swift_Message::newInstance()
+                ->setSubject('Pentaclick tournament reminder')
+                ->setFrom(array('pentaclickesports@gmail.com' => 'Pentaclick eSports'))
+                ->setTo(array($v->email))
+                ->setBody($body, 'text/html');
+
+                //Sending message
+                $mailer = Swift_Mailer::newInstance($transport);
+                $mailer->send($message, $fails);
                 
                 ++$i;
                 if ($i >= 3) {

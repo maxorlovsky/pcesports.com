@@ -18,9 +18,12 @@
     <tr>
         <td class="b">Query</td>
         <td>
-            <textarea id="query" class="noEditor" style="width: 98%; resize: vertical; height: 120px;"><?=$module->query?></textarea>
-            <br />
-            Themes = "all", "lol", "hs", "smite"
+            <select id="query" class="chosen" style="min-width: 250px">
+                <? foreach($module->types as $v) { ?>
+                <option value="<?=$v?>"><?=$v?></option>
+                <? } ?>
+            </select>
+            <input type="checkbox" name="all" id="all" checked="checked" /> <label for="all">Include "All"</label>
         </td>
     </tr>
     <tr>

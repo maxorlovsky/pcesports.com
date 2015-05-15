@@ -2,18 +2,15 @@
 class Emails extends System
 {
     public $system;
-    public $emails;
     public $templates;
     public $directory;
-    public $query;
+    public $types;
     
 	function __construct($params = array()) {
 		$this->system = $params['system'];
         $this->directory = _cfg('dir').'/template/mails';
-        $this->emails = array();
         $this->templates = $this->fetchEmailTemplates();
-        
-        $this->query = 'SELECT * FROM `subscribe` WHERE (`theme` = "all" OR `theme` = "lol") AND `removed` = 0;';
+        $this->types = array('none', 'hs', 'lol', 'smite');
         
         return $this;
 	}
@@ -28,56 +25,35 @@ class Emails extends System
     }
 
 	public function send($form) {
-        set_time_limit(600);
-        
-        $rows = Db::fetchRows($form['query']);
-        
-        if (!$rows) {
-			$this->system->log('Sending email <b>No emails to send</b>', array('module'=>get_class(), 'type'=>'send'));
-			return '0;No emails to send';
-		}
-        
-        $i = 0;
-        foreach($rows as $v) {
-            $text = str_replace(
-    			array(
-                    '%unsublink%',
-                    '%url%',
-                    '%hsurl%',
-                    '%lolurl%',
-                    '%code%',
-                    '%teamId%',
-                    '%name%',
-                ),
-    			array(
-                    _cfg('href').'unsubscribe/'.$v->unsublink,
-                    _cfg('site'),
-                    _cfg('site').'/en/hearthstone',
-                    _cfg('site').'/en/leagueoflegends',
-                    $v->code,
-                    $v->teamId,
-                    $v->name,
-                ),
-    			$form['text']
-    		);
-            
-            $answer = $this->sendMail($v->email, $form['title'], $text);
-            
-            if (!$answer) {
-                $this->system->log('Sending email <b>Error</b> '.$answer, array('module'=>get_class(), 'type'=>'error'));
-                return '0;Error sending emails, check Logs';
-            }
-            
-            ++$i;
-            if ($i >= 5) {
-                sleep(3);
-                $i = 0;
-            }
+        if (!$form['title']) {
+            $this->system->log('Adding subscribing list <b>Title is empty</b>', array('module'=>get_class(), 'type'=>'send'));
+            return '0;Title is empty';
         }
-
-		$this->system->log('Sending email <b>Emails sent</b>', array('module'=>get_class(), 'type'=>'send'));
+        if (!$form['text']) {
+            $this->system->log('Adding subscribing list <b>Text is empty</b>', array('module'=>get_class(), 'type'=>'send'));
+            return '0;Text is empty';
+        }
         
-        return '1;Emails sent';
+        $type = '(';
+        if ($form['query']) {
+            $type .= Db::escape('`theme` = "'.$form['query'].'" OR ');
+        }
+        if ($form['all']) {
+            $type .= Db::escape('`theme` = "all" OR ');
+        }
+        $type = substr($type, 0, -3);
+        $type .= ')';
+
+        Db::query(
+            'INSERT INTO `subscribe_sender` SET '.
+            '`type` = "'.$type.'", '.
+            '`subject` = "'.Db::escape($form['title']).'", '.
+            '`text` = "'.Db::escape($form['text']).'" '
+        );
+
+		$this->system->log('Adding subscribing list <b>success</b>', array('module'=>get_class(), 'type'=>'send'));
+        
+        return '1;Adding subscribing list';
 	}
 
 	protected function fetchEmailTemplates() {
