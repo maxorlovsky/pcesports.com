@@ -4,7 +4,7 @@
 		foreach($module->chats as $v) {
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>" attr-challoge-team1="<?=$v->challongeTeam1?>" attr-challoge-team2="<?=$v->challongeTeam2?>" attr-name-team1="<?=$v->name1?>" attr-name-team2="<?=$v->name2?>">
-        <h4><?=$v->name1?> VS <?=$v->name2?></h4>
+        <h4><a href="javascript:;" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="javascript:;" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
         <? if (strtolower($module->system->user->login) != 'ggfwoofus') { ?><div class="finish-match hint" name="Finish match">[End]</div><? } ?>
         <div class="close-chat hint" name="Hide chat">[X]</div>
 		<div class="chat-content"></div>
@@ -156,7 +156,7 @@ profiler = {
 				action: 'fetchChat',
 				form: arrayElements
             },
-            timeout: 5000,
+            timeout: 10000,
             success: function(answer) {
 				$.each($.parseJSON(answer), function(k, v) {
 					$('#'+k+' .chat-content').html(v);
@@ -243,6 +243,15 @@ $(document).ready(function() {
 .chat .chat-content #notice {
     font-size: 13px;
     color: #999;
+}
+.chat .chat-content .player1 {
+    color: #FF0A0A;
+}
+.chat .chat-content .player2 {
+    color: #0070DE;
+}
+.chat .chat-content .manager {
+    color: #9200B7;
 }
 .chat .close-chat {
     position: absolute;

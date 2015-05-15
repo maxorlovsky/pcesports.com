@@ -1607,60 +1607,71 @@ footer .games img {
     width: 100%;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
     border-radius: $defaultBorderRadius;
-}
-.chat .chat-content {
-    padding: 5px 10px;
-    font-size: 13px;
-    min-height: 200px;
-    height: 300px;
-    max-height: 500px;
-    border-bottom: 1px solid #000;
-    border-radius: 4px 4px 0 0;
-    background-color: #dedede;
-    font-size: 15px;
-    overflow-y: auto;
-    resize: vertical;
-}
-.chat .chat-content #notice {
-    font-size: 12px;
-    color: #999;
-}
-.chat .chat-input {
-    padding: 0 5px;
-    height: 30px;
-    background-color: #efefef;
-    border-radius: 0 0 4px 4px;
-}
-.chat .chat-input input[type="text"] {
-    width: 90%;
-    padding: 6px 0;
-    border: 0;
-    background: none;
-    outline: none;
-}
-.chat .chat-input div {
-    background-repeat: no-repeat;
-    background-color: #ddd;
-    background-position: center center;
-    height: 25px;
-    width: 25px;
-    float: right;
-    margin-top: 1px;
-    margin-left: 3px;
-    border: 1px solid #777;
-    cursor: pointer;
-}
-.chat .chat-input div:hover {
-    background-color: #eee;
-}
-.chat .attach-file {
-    background-image: url('../images/attach-file.png');
-}
-.chat .chat-sound.on {
-    background-image: url('../images/volume-on.png');
-}
-.chat .chat-sound.off {
-    background-image: url('../images/volume-off.png');
+    .chat-content {
+        padding: 5px 10px;
+        font-size: 13px;
+        min-height: 200px;
+        height: 300px;
+        max-height: 500px;
+        border-bottom: 1px solid #000;
+        border-radius: 4px 4px 0 0;
+        background-color: #dedede;
+        font-size: 15px;
+        overflow-y: auto;
+        resize: vertical;
+        #notice {
+            font-size: 12px;
+            color: #999;
+        }
+        .player1 {
+            color: #FF0A0A;
+        }
+        .player2 {
+            color: #0070DE;
+        }
+        .manager {
+            color: #9200B7;
+        }
+    }
+    .chat-input {
+        padding: 0 5px;
+        height: 30px;
+        background-color: #efefef;
+        border-radius: 0 0 4px 4px;
+        input[type="text"] {
+            width: 90%;
+            padding: 6px 0;
+            border: 0;
+            background: none;
+            outline: none;
+        }
+        div {
+            background-repeat: no-repeat;
+            background-color: #ddd;
+            background-position: center center;
+            height: 25px;
+            width: 25px;
+            float: right;
+            margin-top: 1px;
+            margin-left: 3px;
+            border: 1px solid #777;
+            cursor: pointer;
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+    .attach-file {
+        background-image: url('../images/attach-file.png');
+    }
+    .chat-sound {
+        &.on {
+            background-image: url('../images/volume-on.png');
+        }
+        &.off {
+            background-image: url('../images/volume-off.png');
+        }
+    }
 }
 
 #fightStatus.online {

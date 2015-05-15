@@ -53,7 +53,7 @@ class TournamentHs
 		$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$form[1].'.txt';
         $file = fopen($fileName, 'a');
         $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> ';
-        $content .= '&#60;<u>'.$this->system->user->login.' (Manager)</u>&#62; - ';
+        $content .= '&#60;<u class="manager">'.$this->system->user->login.' (Manager)</u>&#62; - ';
         $content .= $form[0];
         $content .= '</p>';
         fwrite($file, htmlspecialchars($content));

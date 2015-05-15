@@ -851,7 +851,7 @@ class Ajax extends System
                     $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
                 
                     $file = fopen($fileName, 'a');
-                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($_SESSION['participant']->id==$row->id1?$row->name1:$row->name2).' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
+                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($_SESSION['participant']->id==$row->id1?'<span class="player1">'.$row->name1.'</span>':'<span class="player2">'.$row->name2.'</span>').' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
                     fwrite($file, htmlspecialchars($content));
                     fclose($file);
                     
@@ -892,7 +892,7 @@ class Ajax extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' picked his ban. Awaiting enemy ban.</b></p>';
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player'.($player==1?'1':'2').'">'.$_SESSION['participant']->name.'</span> picked his ban. Awaiting enemy ban.</b></p>';
             fwrite($file, htmlspecialchars($content));
             fclose($file);
 
@@ -912,24 +912,13 @@ class Ajax extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name1.' banned "'.$gameRow->player1_ban.'"</b></p>';
-            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name2.' banned "'.$gameRow->player2_ban.'"</b></p>';
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player1">'.$row->name1.'</span> banned "'.$gameRow->player1_ban.'"</b></p>';
+            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player2">'.$row->name2.'</span> banned "'.$gameRow->player2_ban.'"</b></p>';
             fwrite($file, htmlspecialchars($content));
             fclose($file);
         }
 
         return '1;1';
-
-        //dump($player);
-        //ddump($row);
-        
-        /*$enemyRow = Db::fetchRow('SELECT `id`, `name`, `online`, `server` '.
-            'FROM `participants` '.
-            'WHERE '.
-            '`challonge_id` = '.(int)($_SESSION['participant']->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
-            '`deleted` = 0 AND '.
-            '`ended` = 0 '
-        );*/
     }
     
     protected function statusCheck($data) {
@@ -1110,7 +1099,7 @@ class Ajax extends System
             
             $file = fopen($fileName, 'a');
             if ($data['action'] == 'send') {
-                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;'.($_SESSION['participant']->id==$playersRow->id1?$playersRow->name1:$playersRow->name2).'&#62; - '.$data['text'].'</p>';
+                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;'.($_SESSION['participant']->id==$playersRow->id1?'<span class="player1">'.$playersRow->name1.'</span>':'<span class="player2">'.$playersRow->name2.'</span>').'&#62; - '.$data['text'].'</p>';
                 fwrite($file, htmlspecialchars($content));
             }
             fclose($file);
