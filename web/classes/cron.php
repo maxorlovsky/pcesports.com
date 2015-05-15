@@ -45,7 +45,7 @@ class Cron extends System {
             $message = Swift_Message::newInstance()
             ->setSubject($row->subject)
             ->setFrom(array('pentaclickesports@gmail.com' => 'Pentaclick eSports'))
-            ->setTo(array($email))
+            ->setTo(array($v->email))
             ->setBody($text, 'text/html');
 
             //Sending message
