@@ -303,6 +303,9 @@ class User extends System
         else if (strlen(trim($form['name'])) > 20) {
             return '0;'.t('name_too_long');
         }
+        else if (!preg_match('/^[a-zA-Z0-9-_]+$/', $form['name'])) {
+            return '0;'.t('name_have_forbidden_chars');
+        }
         
         $row = Db::fetchRow('SELECT `email` FROM `users` WHERE `email` = "'.Db::escape($form['email']).'" LIMIT 1');
         if ($row && $row->email != $user->email) {

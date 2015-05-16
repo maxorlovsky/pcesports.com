@@ -24,8 +24,7 @@ class member extends System
             $row = Db::fetchRow(
                 'SELECT `id`, `name`, `avatar`, `registration_date`, `battletag` '.
                 'FROM `users` '.
-                'WHERE `id` = "'.(int)$_GET['val2'].'" OR '.
-                '`name` = "'.Db::escape($_GET['val2']).'" '.
+                'WHERE `name` = "'.Db::escape($_GET['val2']).'" '.
                 'LIMIT 1'
             );
             
@@ -36,6 +35,7 @@ class member extends System
 	}
     
 	public function getMember() {
+        //Summoners list
         $rows = Db::fetchRows(
             'SELECT `region`, `summoner_id`, `name`, `league`, `division` FROM `summoners` '.
             'WHERE `user_id` = '.(int)$this->member->id.' AND '.
@@ -58,6 +58,7 @@ class member extends System
             $this->member->summoners = array();
         }
         
+        //Tournaments list
         $rows = Db::fetchRows(
             'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
             'FROM `participants` '.
