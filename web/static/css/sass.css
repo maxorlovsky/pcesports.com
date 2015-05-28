@@ -30,10 +30,11 @@ a img {
 
 @font-face {
   font-family: 'entyporegular';
-  src: url("Entypo-webfont.eot");
-  src: url("Entypo-webfont.eot?#iefix") format("embedded-opentype"), url("Entypo-webfont.woff") format("woff"), url("Entypo-webfont.ttf") format("truetype"), url("Entypo-webfont.svg#entyporegular") format("svg");
+  src: url("font/Entypo-webfont.eot");
+  src: url("font/Entypo-webfont.eot?#iefix") format("embedded-opentype"), url("font/Entypo-webfont.woff") format("woff"), url("font/Entypo-webfont.ttf") format("truetype"), url("font/Entypo-webfont.svg#entyporegular") format("svg");
   font-weight: normal;
   font-style: normal; }
+
 body {
   margin: 81px 0 0 0;
   padding: 0;
@@ -264,11 +265,13 @@ header {
 @media (max-width: 1300px) {
   header .header-middle {
     display: none; } }
+
 @media (min-width: 1600px) {
   header nav {
     margin-left: 10%; }
   header .header-middle {
     margin-left: 10%; } }
+
 .separate {
   margin-top: 20px; }
 
@@ -817,11 +820,13 @@ footer .partners .aimskillz {
 
 .team .block {
   margin-bottom: 40px; }
+
 .team .team-list .game-logo {
   text-align: center;
   display: block;
   width: 100%;
   margin-bottom: 20px; }
+
 .team .team-user {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.35);
   margin-bottom: 20px;
@@ -865,6 +870,7 @@ footer .partners .aimskillz {
     padding: 5px 0 10px 15px;
     font-size: 13px;
     font-style: italic; }
+
 .team .team-division {
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.35);
   margin-bottom: 20px;
@@ -932,7 +938,7 @@ footer .partners .aimskillz {
 .contact-form .fields select:focus,
 .contact-form .fields textarea:focus {
   border-color: #1697e1;
-  transition: linear .3s;
+  transition: linear 0.3s;
   outline: 0; }
 
 .contact-form .fields input {
@@ -1024,23 +1030,29 @@ footer .partners .aimskillz {
 
 .tournament .block {
   margin-bottom: 40px; }
+
 .tournament .active-tournament:hover {
   background-color: #1697E1;
   color: #fff; }
   .tournament .active-tournament:hover .right-part {
     color: #fff; }
+
 .tournament .active-tournament .status {
   background-color: #1697E1;
   color: #fff; }
+
 .tournament .ended-tournament:hover {
   background-color: #bbb;
   color: #000; }
   .tournament .ended-tournament:hover .status {
     color: #fff; }
+
 .tournament .ended-tournament .status {
   background-color: #444; }
+
 .tournament .left-part {
   float: left; }
+
 .tournament .right-part {
   float: right;
   font-size: 14px;
@@ -1048,6 +1060,7 @@ footer .partners .aimskillz {
   .tournament .right-part .status {
     text-transform: uppercase;
     font-weight: bold; }
+
 .tournament .mid-part {
   width: 280px;
   margin: 0 auto;
@@ -1063,6 +1076,7 @@ footer .partners .aimskillz {
     line-height: 30px;
     display: block;
     font-size: 16px; }
+
 .tournament .title {
   font-size: 21px;
   font-weight: bold;
@@ -1072,25 +1086,33 @@ footer .partners .aimskillz {
   .tournament .title img {
     float: left;
     margin-right: 10px; }
+
 .tournament .participant_count {
   margin-top: 0; }
+
 .tournament .status {
   display: block;
   padding: 5px 8px;
   border-radius: 4px;
   float: right; }
+
 .tournament .success-add, .tournament .error-add, .tournament .info-add {
   margin-top: 0; }
+
 .tournament .check-in-holder {
   text-align: center; }
+
 .tournament .connect-team {
   text-align: center;
   margin-bottom: 20px; }
+
 .tournament .left-containers .block .tournament-list {
   padding: 10px;
   position: relative; }
+
 .tournament.hs .sponsor {
   text-align: center; }
+
 .tournament.hs .left-containers .block .tournament-list::after, .tournament .left-containers .block .tournament-list.hs::after {
   content: "";
   opacity: 0.1;
@@ -1103,6 +1125,7 @@ footer .partners .aimskillz {
   position: absolute;
   z-index: 0;
   background-image: url("../images/footer-hs-logo.png"); }
+
 .tournament.lol .left-containers .block .tournament-list::after, .tournament .left-containers .block .tournament-list.lol::after {
   content: "";
   opacity: 0.1;
@@ -1115,6 +1138,7 @@ footer .partners .aimskillz {
   position: absolute;
   z-index: 0;
   background-image: url("../images/footer-lol-logo.png"); }
+
 .tournament .block-content.signup {
   padding: 0;
   position: relative; }
@@ -1131,6 +1155,7 @@ footer .partners .aimskillz {
   float: left;
   padding: 10px;
   box-sizing: border-box; }
+
 .tournament .registration .tournament-rules {
   width: 49%;
   float: left;
@@ -1224,28 +1249,37 @@ footer .partners .aimskillz {
 
 #join-form .form-item {
   margin-bottom: 10px; }
+
 #join-form input[type="text"], #join-form textarea, #join-form select {
   width: 100%;
   box-sizing: border-box;
   font-size: 16px;
   padding: 5px; }
+
 #join-form input[type="checkbox"] {
   float: left; }
+
 #join-form label {
   font-size: 14px;
   cursor: pointer; }
+
 #join-form select {
   margin-right: 15px; }
+
 #join-form .form-item.error input[type="text"] {
   border-bottom: 1px solid red;
   margin-bottom: 5px; }
+
 #join-form .form-item.error select {
   border: 1px solid red;
   margin-bottom: 5px; }
+
 #join-form .form-item.error .message {
   color: #ea6b6b; }
+
 #join-form .form-item.success .message {
   color: #32b229; }
+
 #join-form .button {
   width: 100%;
   box-sizing: border-box;
@@ -1572,10 +1606,13 @@ footer .games img {
 
 .profile .fields label {
   width: 140px !important; }
+
 .profile .fields input, .profile .fields p {
   width: 595px !important; }
+
 .profile .fields select {
   width: 605px !important; }
+
 .profile .fields p {
   display: inline-block;
   border: 1px solid #999;
@@ -1586,6 +1623,7 @@ footer .games img {
   height: 40px;
   background-color: #eee;
   line-height: 40px; }
+
 .profile .fields .check_holder {
   width: 602px;
   background-color: #fff;
@@ -1593,10 +1631,12 @@ footer .games img {
   border-radius: 0 4px 4px 0;
   margin-left: 142px;
   height: 40px; }
+
 .profile .fields input[type="checkbox"] {
   height: 35px;
   margin-top: 3px;
   box-shadow: none; }
+
 .profile .button {
   width: 95%;
   margin-left: 0;
@@ -1681,7 +1721,7 @@ footer .games img {
 
 .leave-comment .fields textarea:focus {
   border-color: #1697e1;
-  transition: linear .3s;
+  transition: linear 0.3s;
   outline: 0; }
 
 .leave-comment .button {
@@ -2192,6 +2232,7 @@ footer .games img {
     background-color: #eee; }
   .users-list .block-content .date {
     display: inline-block; }
+
 .users-list .headers {
   font-size: 15px;
   font-weight: bold;
@@ -2203,16 +2244,21 @@ footer .games img {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
+
 .users-list .cell1 {
   width: 150px; }
+
 .users-list .cell2 {
   width: 235px;
   /*170*/ }
+
 .users-list .cell3 {
   width: 200px;
   /*170*/ }
+
 .users-list .cell4 {
   width: 130px; }
+
 .users-list .cell5 {
   width: 135px;
   text-align: right; }
@@ -2385,7 +2431,7 @@ footer .games img {
 
 .submitBoard #title:focus {
   border-color: #1697e1;
-  transition: linear .3s;
+  transition: linear 0.3s;
   outline: 0; }
 
 .submitBoard .categories div {
@@ -2441,6 +2487,7 @@ footer .games img {
 .twitch #player {
   float: left;
   width: 75%; }
+
 .twitch .featured-list {
   float: right;
   border: 1px solid #32333b;
@@ -2500,13 +2547,11 @@ footer .games img {
     .twitch .featured-list .featured-streamer:hover, .twitch .featured-list .featured-streamer .active {
       background-color: #32333b; }
 
-/* Landscape phone to portrait tablet */
 /* Galaxy tab */
 /* Site specific, menu breaks if less */
 @media (max-width: 860px) {
   body {
     margin: 0; }
-
   .burger {
     display: block !important;
     font: 80px 'EntypoRegular';
@@ -2518,7 +2563,6 @@ footer .games img {
       content: "\0069"; }
     .burger.active {
       transform: rotate(90deg); }
-
   header {
     position: relative !important;
     padding: 5px 0;
@@ -2573,24 +2617,19 @@ footer .games img {
         left: -68px; }
     header .login {
       line-height: 55px; }
-
   .page {
     min-width: inherit;
     padding: 20px 0; }
-
   .container {
     max-width: 860px;
     width: 100%; }
-
   .left-containers, .right-containers {
     float: none;
     min-width: inherit;
     width: auto;
     max-width: 860px; }
-
   .right-containers {
     margin-top: 10px; }
-
   .donate a {
     width: 96%; }
   .donate .arrow-down {
@@ -2602,28 +2641,25 @@ footer .games img {
   .donate .separator {
     top: 206px;
     width: 100%; } }
+
 @media (max-width: 859px) {
   .twitch {
     display: none; } }
+
 /* Landscape phones and down */
 @media (max-width: 480px) {
   body {
     background: none; }
-
   #head-line {
     min-height: 0; }
-
   .container {
     width: 480px; }
-
   .home {
     padding: 0; }
-
   .home-tournaments .parent {
     width: 380px;
     margin: 0 auto;
     float: none; }
-
   .home-tournaments .parent {
     width: 380px;
     background-size: cover;
@@ -2645,170 +2681,124 @@ footer .games img {
     background-position: center center; }
     .home-tournaments .hss1 h1 {
       visibility: hidden; }
-
   .navbar {
     height: auto; }
-
   .navbar .nav .nav-link {
     float: none; }
-
   .navbar .nav .nav-link a {
     padding: 5px 0 10px 10px; }
-
   .promo {
     display: none; }
-
   .block .block-header-wrapper {
     background: none;
     min-height: 31px; }
     .block .block-header-wrapper h1 {
       padding: 5px; }
-
   .big-block .image-holder {
     max-width: 480px;
     max-height: 140px; }
-
   .big-block .image-holder img {
     max-width: 320px; }
-
   .big-block .add-box {
     display: none; }
-
   .big-block.readmore {
     padding: 2px !important; }
-
   .readmore .news-info {
     margin-left: 20px; }
   .readmore .button {
     margin: 0 10px 0 0; }
-
   .news .small-block {
     float: none;
     width: auto;
     margin-right: 0; }
-
   .news .small-block .image-holder {
     width: 225px;
     margin: 0 auto; }
-
   #toTop, #hint-helper {
     display: none !important; }
-
   .block .block-header-wrapper h1.bordered {
     float: none; }
-
   .right-containers .block {
     margin-bottom: 10px; }
-
   footer .separator {
     width: 100% !important;
     margin: 0 0 10px 0;
     float: none; }
-
   footer .partners a {
     position: initial !important;
     left: initial !important; }
-
   footer .copyrights {
     margin: 0;
     padding: 0; }
-
   footer .copyrights .rights, footer .copyrights .devs {
     margin: 3px 0 0 5px;
     float: none; }
-
   #login-window {
     width: 420px; }
-
   .contact-form .fields input {
     width: 335px; }
-
   .contact-form .fields select {
     width: 345px; }
-
   .contact-form .fields textarea {
     width: 325px;
     height: 150px; }
-
   .lol .title {
     width: auto;
     white-space: initial; }
-
   .lol .title img {
     display: none; }
-
   .lol .right-part, .lol .left-part, .lol .mid-part {
     float: none;
     font-size: 15px; }
-
   .lol .mid-part {
     display: none; }
-
   .ended-tournament, .active-tournament {
     position: relative;
     padding: 5px !important; }
-
   .lol .right-part .status {
     position: absolute;
     top: 5px;
     right: 5px; }
-
   .navbar .nav-sub {
     display: block !important;
     position: initial;
     left: initial;
     top: initial;
     background: 0; }
-
   .navbar .nav-sub .nav-sublink {
     border-bottom: 0; }
-
   .comments {
     margin: 0 10px; }
-
   .profile .fields label {
     width: 100px !important; }
-
   .profile .fields input, .profile .fields p {
     width: 165px !important; }
-
   .profile .fields select {
     width: 175px !important; }
-
   .profile .button {
     margin-left: 90px !important; }
-
   .connections .status-holder {
     width: 275px; }
-
   .connections .connect-line {
     width: 30px; }
-
   .readmore .news-share {
     float: none;
     margin-left: 5px; }
-
   .leave-comment .formatting {
     width: 300px; }
-
   .leave-comment .fields textarea {
     width: 280px; }
-
   .chat .chat-input input[type="text"] {
     width: 365px; }
-
   #tournamentCode {
     width: 315px; }
-
   .fields .holder {
     width: 180px;
     margin: 0 0 0 101px; }
-
   .avatars-list {
     padding: 5px 0;
     max-height: 200px;
     overflow-y: auto; }
-
   .donate a {
     width: 93%; }
   .donate .arrow-down {
@@ -2820,30 +2810,26 @@ footer .games img {
   .donate .separator {
     top: 223px;
     width: 100%; }
-
   .participants .block {
     margin: 20px 30px 0 0; }
     .participants .block:nth-child(2n) {
       margin-right: 0 !important; }
     .participants .block:nth-of-type(-n+2) {
       margin-top: 0 !important; }
-
   .boards .submit {
     width: 450px; }
-
   .submitBoard #title {
     width: 420px; } }
+
 /* Smallest phones */
 @media (max-width: 320px) {
   body {
     margin: 0; }
-
   .container {
     width: 320px;
     position: relative !important;
     padding: 0;
     margin: 0; }
-
   header nav {
     margin-top: 0;
     float: initial;
@@ -2868,18 +2854,14 @@ footer .games img {
             border: 0; }
         header nav .nav .nav-link:before {
           top: 5px; }
-
   .home-tournaments .parent {
     width: 320px; }
-
   .boards .board .thread {
     max-width: 215px; }
-
   .block .block-header-wrapper {
     min-height: 30px; }
     .block .block-header-wrapper h1 {
       padding: 5px; }
-
   .donate .arrow-down {
     top: 220px;
     left: 160px; }
@@ -2887,168 +2869,121 @@ footer .games img {
     top: 232px; }
   .donate .separator {
     top: 231px; }
-
   .big-block .image-holder {
     max-width: 320px;
     max-height: 140px; }
-
   .big-block .image-holder img {
     max-width: 320px; }
-
   .big-block .add-box {
     display: none; }
-
   .big-block.readmore {
     padding: 2px !important; }
-
   .readmore .news-info {
     float: none;
     text-align: center; }
-
   .readmore .button {
     float: none;
     margin: 0 0 10px 100px; }
-
   .news .small-block {
     float: none;
     width: auto;
     margin-right: 0; }
-
   .news .small-block .image-holder {
     width: 225px;
     margin: 0 auto; }
-
   #toTop, #hint-helper {
     display: none !important; }
-
   .block .block-header-wrapper h1.bordered {
     line-height: 29px;
     float: none; }
-
   .right-containers .block {
     margin-bottom: 10px; }
-
   footer .separator {
     width: 100% !important;
     margin: 0 0 10px 0;
     float: none; }
-
   footer .partners a {
     position: initial !important;
     left: initial !important; }
-
   footer .copyrights {
     margin: 0;
     padding: 0; }
-
   footer .copyrights .rights, footer .copyrights .devs {
     margin: 3px 0 0 5px;
     float: none; }
-
   #login-window {
     width: 300px; }
-
   .contact-form .fields input {
     width: 165px; }
-
   .contact-form .fields select {
     width: 175px; }
-
   .contact-form .fields textarea {
     width: 155px;
     height: 150px; }
-
   .lol .title {
     width: auto;
     white-space: initial; }
-
   .lol .title img {
     display: none; }
-
   .lol .right-part, .lol .left-part, .lol .mid-part {
     float: none;
     font-size: 15px; }
-
   .lol .mid-part {
     display: none; }
-
   .ended-tournament, .active-tournament {
     position: relative;
     padding: 5px !important; }
-
   .lol .right-part .status {
     position: absolute;
     top: 5px;
     right: 5px; }
-
   .navbar .nav-sub {
     display: block !important;
     position: initial;
     left: initial;
     top: initial;
     background: 0; }
-
   .navbar .nav-sub .nav-sublink {
     border-bottom: 0; }
-
   .comments {
     margin: 0 10px; }
-
   .profile .fields label {
     width: 100px !important; }
-
   .profile .fields input, .profile .fields p {
     width: 165px !important; }
-
   .profile .fields select {
     width: 175px !important; }
-
   .profile .button {
     margin-left: 90px !important; }
-
   .connections .status-holder {
     width: 275px; }
-
   .connections .connect-line {
     width: 30px; }
-
   .readmore .news-share {
     float: none;
     margin-left: 5px; }
-
   .leave-comment .formatting {
     width: 300px; }
-
   .leave-comment .fields textarea {
     width: 280px; }
-
   .chat .chat-input input[type="text"] {
     width: 200px; }
-
   #tournamentCode {
     width: 155px; }
-
   .fields .holder {
     width: 180px;
     margin: 0 0 0 101px; }
-
   .avatars-list {
     padding: 5px 0;
     max-height: 200px;
     overflow-y: auto; }
-
   .participants .block {
     margin: 20px 30px 0 40px; }
-
   .team .team-division {
     width: 280px; }
-
   .boards .submit {
     width: 290px; }
-
   .submitBoard #title {
     width: 250px; }
   .submitBoard .categories div {
     margin-right: 5px; } }
-
-/*# sourceMappingURL=sass.css.map */

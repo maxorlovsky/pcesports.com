@@ -32,6 +32,8 @@
                 $('.social a').css('transition', '.5s');
                 </script>
             </div>
+            <div class="block-content subscribe">
+            </div>
         </div>
     </div>
     

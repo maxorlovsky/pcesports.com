@@ -18,14 +18,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <? if (_cfg('env') == 'dev') { ?>
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/slider.css" />
-	<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/highslide.css" />
-    <!--<link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/style.css" />-->
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/sass.css" />
-    <? } else { ?>
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css" />
-    <? } ?>
 </head>
 <body>
 

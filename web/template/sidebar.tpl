@@ -142,11 +142,11 @@
 
     <div class="block donate">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('donations')?></h1>
+            <h1 class="bordered"><?=t('donations_goal')?></h1>
         </div>
         <div class="block-content">
             <p><?=t('donate_text')?></p>
-            <div class="donate-bar" attr-goal="750" attr-current="50.61">
+            <div class="donate-bar" attr-goal="50" attr-current="0">
                 <p><span id="gathered"></span>€ <?=t('out_of')?> <span id="goal"></span>€</p>
                 <div><span></span></div>
             </div>

@@ -1,36 +1,42 @@
 module.exports = function(grunt) {
-    var mozjpeg = require('imagemin-mozjpeg');
-
     grunt.initConfig({
         dirs: {
             css: 'web/static/css',
+            sass: 'web/static/css/sass',
             js: 'web/static/js',
             images: 'web/static/images'
         },
+
         pkg: grunt.file.readJSON('package.json'),
+
+        /*Converting scss into css*/
         sass: {
-			dist: {
-				files: {
-					'<%= dirs.css %>/sass.css': '<%= dirs.css %>/combined.scss'
-				}
-			}
-		},
+            dist: {
+                files: {
+                    '<%= dirs.css %>/combined-sass': '<%= dirs.css %>/combined-sass'
+                }
+            }
+        },
+
         concat: {
+            /* Gathering all scss files together for easier sass conversion */
             sass: {
                 src: [
-                    '<%= dirs.css %>/globals.scss',
-                    '<%= dirs.css %>/sass.scss'
+                    '<%= dirs.sass %>/*.scss',
                 ],
-                dest: '<%= dirs.css %>/combined.scss'
+                dest: '<%= dirs.css %>/combined-sass'
             },
+
+            /* Gathering all css external files and project combined sass file together */
             css: {
                 src: [
                     '<%= dirs.css %>/slider.css',
                     '<%= dirs.css %>/highslide.css',
-                    '<%= dirs.css %>/sass.css'
+                    '<%= dirs.css %>/combined-sass'
                 ],
                 dest: '<%= dirs.css %>/combined.css'
             },
+
             js : {
                 src : [
                     //'<%= dirs.js %>/*.js',
@@ -39,12 +45,14 @@ module.exports = function(grunt) {
                 dest : '<%= dirs.js %>/combined.js'
             }
         },
+
         cssmin: {
             css:{
                 src: '<%= dirs.css %>/combined.css',
                 dest: '<%= dirs.css %>/combined.css'
             }
         },
+
         uglify: {
             js:{
                 files: {
@@ -52,6 +60,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+        
         jshint: {
             files: ['Gruntfile.js', '<%= dirs.js %>/main.js'],
             options: {
@@ -64,19 +73,21 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         watch: {
-            css: {
-				files: ['<%= dirs.css %>/globals.scss', '<%= dirs.css %>/sass.scss'],
+            default: {
+				files: ['Gruntfile.js', '<%= dirs.css %>/*.scss'],
 				tasks: ['concat:sass', 'sass']
 			}
         },
+
         imagemin: {
-            dynamic: {                         // Another target
+            dynamic: {                               // Another target
                 files: [{
-                    expand: true,                  // Enable dynamic expansion
-                    cwd: '<%= dirs.images %>',                   // Src matches are relative to this path
-                    src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
-                    dest: '<%= dirs.images %>/dist/'                  // Destination path prefix
+                    expand: true,                   // Enable dynamic expansion
+                    cwd: '<%= dirs.images %>',      // Src matches are relative to this path
+                    src: ['**/*.{png,jpg,gif}'],    // Actual patterns to match
+                    dest: '<%= dirs.images %>/dist/'// Destination path prefix
                 }]
             }
         }
@@ -87,9 +98,25 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.registerTask('default', [ 'concat:sass', 'sass', 'jshint', 'concat:css', 'cssmin:css', 'concat:js', 'uglify:js' ]);
+
+    /* Main task*/
+    grunt.registerTask('default', [
+        'concat:sass',
+        'sass',
+        'jshint',
+        'concat:css',
+        'cssmin:css',
+        'concat:js',
+        'uglify:js'
+    ]);
+
+    /* Task used when developing */
+    grunt.registerTask('dev', [
+        'default',
+        'watch'
+    ]);
+
     grunt.registerTask('imagemin', ['imagemin']);
-    grunt.registerTask('dev', [ 'watch' ]);
 };
