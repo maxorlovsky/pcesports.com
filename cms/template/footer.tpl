@@ -6,7 +6,8 @@
 <div id="asucmsg"></div>
 <div id="amsg"></div>
 
-<script src="<?=_cfg('cmsstatic')?>/js/tinymce/tiny_mce.js"></script>
+<script src="<?=_cfg('cmsstatic')?>/js/jquery-ui.min.js"></script>
+<script src="../cms/vendor/tinymce/tinymce/tinymce.min.js"></script>
 <? if (_cfg('env') == 'dev') { ?>
 <script src="<?=_cfg('cmsstatic')?>/js/ajaxupload.js"></script>
 <script src="<?=_cfg('cmsstatic')?>/js/main.js"></script>

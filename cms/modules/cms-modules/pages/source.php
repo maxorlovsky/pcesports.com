@@ -83,18 +83,19 @@ class Pages
     	$pageId = (int)$form['page_id'];
     	$oldValue = Db::escape_tags($form['page_link']);
         
-        if (!$form['title']) {
-        	$this->system->log('Editing page <b>'.at('title_err').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+        if (!$title) {
+        	$this->system->log('Editing page <b>'.at('title_err').'</b> ('.$title.')', array('module'=>get_class(), 'type'=>'edit'));
 			return '0;'.at('title_err');
 		}
-        else if (strpos($form['title'], ' ')) {
-    		$this->system->log('Editing page <b>'.at('title_have_spaces').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+        else if (strpos($title, ' ')) {
+    		$this->system->log('Editing page <b>'.at('title_have_spaces').'</b> ('.$title.')', array('module'=>get_class(), 'type'=>'edit'));
     		return '0;'.at('title_have_spaces');
     	}
         else if ($oldValue != $title) {
-    		$q = Db::query('SELECT * FROM `tm_pages` WHERE `link` = "'.$title.'" LIMIT 1');
-    		if ($q->num_rows != 0) {
-    			$this->system->log('Editing page <b>'.at('page_exist').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    		$row = Db::fetchRow('SELECT `link` FROM `tm_pages` WHERE `link` = "'.$title.'" LIMIT 1');
+            
+    		if ($row && $row->link == $title) { //require this check for upper/lower case specifics
+    			$this->system->log('Editing page <b>'.at('page_exist').'</b> ('.$title.')', array('module'=>get_class(), 'type'=>'edit'));
     			return '0;'.at('page_exist');
     		}
     		else {
@@ -127,7 +128,7 @@ class Pages
 					}
 				}
     			
-    			$this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+    			$this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$title.')', array('module'=>get_class(), 'type'=>'edit'));
     			
     			return '1;'.at('page_updated');
     		}
@@ -157,7 +158,7 @@ class Pages
                 }
             }
             
-            $this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$form['title'].')', array('module'=>get_class(), 'type'=>'edit'));
+            $this->system->log('Editing page <b>'.at('page_updated').'</b> ('.$title.')', array('module'=>get_class(), 'type'=>'edit'));
             
             return '1;'.at('page_updated');
 		}

@@ -18,6 +18,11 @@ class Settings
 		
 		$i = 0;
 		foreach($this->settings as $v) {
+            //If ssl is not enabled, not displaying this options or it will just break the website
+            if($v->setting == 'https' && !extension_loaded('openssl')) {
+                break;
+            }
+            
             $this->siteSettings[$i]['type'] = $v->type;
             $this->siteSettings[$i]['position'] = $v->position;
             

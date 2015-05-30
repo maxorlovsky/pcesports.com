@@ -13,4 +13,16 @@ class Cron extends System
 		
 		return (file_put_contents($file_tmp, $data) !== FALSE) && rename($file_tmp, $file);
     }
+    
+    public function sqlCleanUp() {
+        Db::multi_query('CALL cleanupCmsData()');
+        
+        do 
+        {
+            $r = Db::store_result();
+        }
+        while ( Db::more_results() && Db::next_result() );
+        
+        return true;
+    }
 }

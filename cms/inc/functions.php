@@ -65,6 +65,16 @@ function pages($data) {
     else if ($data['cms'] == 1) {
         $link .= '/'.$_POST['page'].$data['additionalLink'];
     }
+
+    $link .= '/page/%page%';
+
+    if ($_POST) {
+    	foreach($_POST as $k => $v) {
+    		if ((int)substr($k, -1) > 3) {
+    			$link .= '/'.$v;
+    		}
+    	}
+    }
     
     $return->countPerPage = $data['countPerPage'];
 
@@ -86,7 +96,7 @@ function pages($data) {
 		for ($i=1;$i<=$lastp;++$i) {
 			if ($data['pageNum'] != 1 && $i == 1) {
 				$bl = $data['pageNum'] - 1;
-				$html .= '<a href="'.$link.'/page/'.$bl.'" class="inpage"><<</a>';
+				$html .= '<a href="'.str_replace('%page%', $bl, $link).'" class="inpage"><<</a>';
 			}
 			
 			if ($data['pageNum'] == $i) {
@@ -94,7 +104,7 @@ function pages($data) {
 			}
 			
 			if ($data['pageNum'] > $st && $i == 1) {
-				$html .= '<a href="'.$link.'/page/1" class="inpage">1</a> ... ';
+				$html .= '<a href="'.str_replace('%page%', '1', $link).'" class="inpage">1</a> ... ';
 			}
 			
 			for ($j=1;$j<=$data['maxNumShow'];++$j) {
@@ -103,7 +113,7 @@ function pages($data) {
 						//Drat those 2 and last piece
 					}
 					else {
-						$html .= '<a href="'.$link.'/page/'.$i.'" class="inpage">'.$i.'</a>';
+						$html .= '<a href="'.str_replace('%page%', $i, $link).'" class="inpage">'.$i.'</a>';
 					}
 					break;
 				}
@@ -115,7 +125,7 @@ function pages($data) {
 			
 			if (round($so) == $i && $data['pageNum'] != round($lastp)) {
 				$fl = $data['pageNum'] + 1;
-				$html .= '<a href="'.$link.'/page/'.$fl.'" class="inpage">>></a>';
+				$html .= '<a href="'.str_replace('%page%', $fl, $link).'" class="inpage">>></a>';
 			}
 		}
 		$html .= '</div>';

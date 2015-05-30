@@ -56,6 +56,7 @@ $cfg['availableLoginAttempts'] = 5;
 $cfg['recaptchaSiteKey'] = '';
 $cfg['recaptchaSecretKey'] = '';
 $cfg['demo'] = 0;
+$cfg['allowUpload'] = 1;
 
 // Needed for Language functionality (to add/delete)
 // Add new language table fields here
@@ -65,7 +66,13 @@ $cfg['ud_alter'] = array(
 );
 
 // Adding site config
-require_once $cfg['dir'].'/inc/config.php';
+if (!file_exists($cfg['dir'].'/inc/config.php')) {
+    exit('Config file not exist, please create '.$cfg['dir'].'/inc/config.php file from '.$cfg['dir'].'/inc/config.sample.php');
+}
+else {
+    require_once $cfg['dir'].'/inc/config.php';
+}
+
 
 //=====================================================
 // Making some defines for easyer coding (directories)

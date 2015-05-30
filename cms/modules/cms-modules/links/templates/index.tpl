@@ -1,94 +1,127 @@
 <h1><?=at('links')?></h1>
 
 <table class="table links">
-    <td colspan="6" id="buttons" class="hint" name="Add">
-        <a href="<?=_cfg('cmssite').'/#links/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=strtolower(at('link'))?></a>
-    </td>
 	<tr>
-        <td width="40%" class="b"><?=at('link')?></td>
-        <td width="40%" class="b"><?=at('sublink')?></td>
-        <td width="10%" class="centered b"><?=at('only_for_logged_in')?></td>
-        <td width="1" class="b"><?=at('updown')?></td>
-        <td width="1" class="b"><?=at('enaldisabl')?></td>
+    	<td colspan="6" id="buttons" class="hint" name="Add">
+        	<a href="<?=_cfg('cmssite').'/#links/add'?>"><div class="add-image"></div><?=at('add_new')?> <?=strtolower(at('link'))?></a>
+    	</td>
+	</tr>
+
+	<tr>
+        <td width="30%" class="b"><?=at('link')?></td>
+        <td width="30%" class="b"><?=at('sublink')?></td>
+        <td width="20%" class="centered b"><?=at('only_for_logged_in')?></td>
+        <td width="10%" class="b"><?=at('enaldisabl')?></td>
         <td width="10%" class="centered b"><?=at('actions')?></td>
     </tr>
-	<?
+
+	<tr>
+		<td colspan="6" class="sortable">
+		<?
 		if ($module->links) {
 			foreach($module->links as $v) {
-				/*if (is_array($module->positions) && $module->positions) { ?>
-				    <tr>
-				        <td width="300" class="b" colspan="5"><?=dump($module->positions[0])?></td>
-				    </tr>
-				<?
-				}*/
 				?>
-                <tr>
-					<td><a href="<?=_cfg('cmssite').'/#links/edit/'.$v->id?>"><?=str_replace('web-link-','',$v->value)?></a></td>
-					<td></td>
-                    <td class="centered">
+				<ul class="link" attr-id="<?=$v->id?>">
+					<li class="col1"><a href="<?=_cfg('cmssite').'/#links/edit/'.$v->id?>"><?=str_replace('web-link-','',$v->value)?></a></li>
+					<li class="col2"></li>
+                    <li class="col3 centered">
                         <?=($v->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
-                    </td>
-                    <td class="centered">
-                        <span class="big">
-                            <a href="<?=_cfg('cmssite').'/#links/moveup/'.$v->id?>" class="hint" name="Move UP"><img src="<?=_cfg('cmsimg')?>/arrow_up.png" /></a>
-                        </span>
-                        <span class="big">
-                            <a href="<?=_cfg('cmssite').'/#links/movedown/'.$v->id?>" class="hint" name="Move DOWN"><img src="<?=_cfg('cmsimg')?>/arrow_down.png" /></a>
-                        </span>
-                    </td>
-                    <td class="centered">
+                    </li>
+                    <li class="col4 centered">
                         <a href="<?=_cfg('cmssite').'/#links/able/'.$v->id?>">
                             <?=($v->able == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Disable"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Enable"/>')?>
                             
                         </a>
-                    </td>
-					<td class="centered">
+                    </li>
+					<li class="col5 centered">
 						<a href="<?=_cfg('cmssite').'/#links/edit/'.$v->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
 						<a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#links/delete/'.$v->id?>'); return false;">
                             <img src="<?=_cfg('cmsimg')?>/cancel.png" />
                         </a>
-					</td>
-				</tr>
+					</li>
+
+	                <?
+	                if ($module->sublinks) {
+	            	?>
+	            	<ul class="sublinks">
+	            	<?
+		                foreach($module->sublinks as $vs) {
+		                    if ($v->id == $vs->main_link) {
+		                        ?>
+		                        <li attr-id="<?=$vs->id?>">
+									<div class="col1 centered"><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>">=></a></div>
+									<div class="col2"><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>"><?=str_replace('web-link-','',$vs->value)?></a></div>
+		                            <div class="col3 centered">
+		                                <?=($vs->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
+		                            </div>
+				                    <div class="col4 centered">
+				                        <a href="<?=_cfg('cmssite').'/#links/able/'.$vs->id?>">
+				                            <?=($vs->able == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Disable"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Enable"/>')?>
+				                        </a>
+				                    </div>
+									<div class="col5 centered">
+										<a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
+										<a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#links/delete/'.$vs->id?>'); return false;">
+				                            <img src="<?=_cfg('cmsimg')?>/cancel.png" />
+				                        </a>
+									</div>
+								</li>
+		                        <?
+		                    }
+		                }
+            		?>
+            		</ul>
+            		<? 
+            		}
+            		?>
+                </ul>
                 <?
-                if ($module->sublinks) {
-                foreach($module->sublinks as $vs) {
-                    if ($v->id == $vs->main_link) {
-                        ?>
-                        <tr>
-							<td class="centered"><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>">=></a></td>
-							<td><a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>"><?=str_replace('web-link-','',$vs->value)?></a></td>
-                            <td class="centered">
-                                <?=($vs->logged_in == 1 ? '<img src='._cfg('cmsimg').'/tick-small.png  class="hint" name="Page available only for logged in users"/>' : '')?>
-                            </td>
-		                    <td class="centered">
-		                        <span class="big">
-		                            <a href="<?=_cfg('cmssite').'/#links/moveup/'.$vs->id?>">
-		                                <img src="<?=_cfg('cmsimg')?>/arrow_up.png" />
-		                            </a>
-		                        </span>
-		                        <span class="big">
-		                            <a href="<?=_cfg('cmssite').'/#links/movedown/'.$vs->id?>">
-		                                <img src="<?=_cfg('cmsimg')?>/arrow_down.png" />
-		                            </a>
-		                        </span>
-		                    </td>
-		                    <td class="centered">
-		                        <a href="<?=_cfg('cmssite').'/#links/able/'.$vs->id?>">
-		                            <?=($vs->able == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Disable"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Enable"/>')?>
-		                        </a>
-		                    </td>
-							<td class="centered">
-								<a href="<?=_cfg('cmssite').'/#links/edit/'.$vs->id?>" class="hint" name="Edit"><img src="<?=_cfg('cmsimg')?>/edit.png" /></a> 
-								<a href="javascript:void(0);" class="hint" name="Delete" onclick="TM.deletion('<?=_cfg('cmssite').'/#links/delete/'.$vs->id?>'); return false;">
-		                            <img src="<?=_cfg('cmsimg')?>/cancel.png" />
-		                        </a>
-							</td>
-						</tr>
-                        <?
-                    }
-                }
-                }
 			}
 		}
-	?>
+		?>
+		</td>
+	</tr>
 </table>
+
+<script>
+	$(function() {
+		$('.sortable').sortable({
+			cancel: '.sublinks',
+			placeholder: 'sortable-highlight',
+			distance: 10,
+			opacity: 0.7,
+			item: '> ul.link',
+			start: function(e, ui) {
+		        ui.placeholder.height(ui.item.height());
+		    },
+			update: function() {
+				var ids = [];
+				$(this).find('ul').each(function() {
+					ids.push($(this).attr('attr-id'));
+				});
+				TM.changeOrder('links', ids);
+			}
+		});
+
+		$('.sublinks').sortable({
+
+			axis: 'y',
+			placeholder: 'sortable-highlight',
+			distance: 5,
+			opacity: 0.7,
+			cursorAt: { bottom: 1 },
+			item: '> li',
+			start: function(e, ui) {
+		        ui.placeholder.height(ui.item.height());
+		    },
+			update: function() {
+				var ids = [];
+				$(this).find('li').each(function() {
+					ids.push($(this).attr('attr-id'));
+				});
+
+				TM.changeOrder('links', ids);
+			}
+		}).disableSelection();
+	});
+</script>

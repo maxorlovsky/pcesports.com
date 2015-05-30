@@ -7,6 +7,7 @@ class Ajax extends System
     
     private $allowed_ajax_methods = array(
 		'showPage',
+        'saveOrder',
     	'exit',
     	'submitForm',
     	'saveSetting',
@@ -37,6 +38,24 @@ class Ajax extends System
         else {
             echo '0;'.at('controller_not_exists');
             return false;
+        }
+    }
+
+    protected function saveOrder($data) {
+        if ($data['page'] == 'links') {
+            //Reorder array
+            $position = 0;
+            foreach($data['ids'] as $v) {
+                Db::query('UPDATE `tm_links` '.
+                    'SET `position` = '.$position.' '.
+                    'WHERE `id` = '.(int)$v
+                );
+                ++$position;
+            }
+            return '1;Sort order updated';
+        }
+        else {
+            return '0;<p>Page not found</p>';
         }
     }
     

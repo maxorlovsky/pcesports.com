@@ -112,7 +112,7 @@ class User
     
     public static function logout() {
         unset($_SESSION['token'], $_SESSION['recaptcha_login']);
-        session_destroy();
+        
         go(_cfg('site').'/admin');
         
         die;

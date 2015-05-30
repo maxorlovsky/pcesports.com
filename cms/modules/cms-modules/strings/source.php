@@ -115,7 +115,7 @@ class Strings
 				
 				foreach ($form as $k => $v) {
 					$string = explode('_', $k);
-					if ($string[0] == 'string') {
+					if ($string[0] == 'string' && $k != 'string_old_key') {
 						Db::query('UPDATE `tm_strings` '.
 							'SET `'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
 							'WHERE `key` = "'.$title.'"'
@@ -131,7 +131,7 @@ class Strings
 		else {
 			foreach ($form as $k => $v) {
 				$string = explode('_', $k);
-				if ($string[0] == 'string') {
+				if ($string[0] == 'string' && $k != 'string_old_key') {
 					Db::query('UPDATE `tm_strings` '.
 						'SET `'.Db::escape($string[1]).'` = "'.Db::escape($v).'" '.
 						'WHERE `key` = "'.$title.'"'
