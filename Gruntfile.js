@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 
         watch: {
             default: {
-				files: ['Gruntfile.js', '<%= dirs.css %>/*.scss'],
+				files: ['Gruntfile.js', '<%= dirs.scss %>/*.scss'],
 				tasks: ['concat:sass', 'sass']
 			}
         },

@@ -1176,19 +1176,7 @@ class Cron extends System {
                     $text
                 );
 
-                $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
-                $transport->setUsername('pentaclickesports@gmail.com');
-                $transport->setPassword('zwAt!&JfA!MU!YE&gArw');
-                
-                $message = Swift_Message::newInstance()
-                ->setSubject('Pentaclick tournament reminder')
-                ->setFrom(array('pentaclickesports@gmail.com' => 'Pentaclick eSports'))
-                ->setTo(array($v->email))
-                ->setBody($body, 'text/html');
-
-                //Sending message
-                $mailer = Swift_Mailer::newInstance($transport);
-                $mailer->send($message, $fails);
+                $this->sendMail($v->email, 'Pentaclick tournament reminder', $body);
                 
                 ++$i;
                 if ($i >= 3) {
