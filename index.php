@@ -1,20 +1,35 @@
 <?php
-//CMS TheMages v3.12
-//Credits (dev): MaxOrlovsky
-//Credits (design): MaxOrlovsky, AnyaOrlovsky
+/* 
+ * CMS TheMages v3.13
+ * http://www.themages.net
+ * Credits (dev): Maxtream
+ * Credits (design): Maxtream, AnyaTheEagle
+ * Github: https://github.com/Maxtream/themages-cms
+ */
 
 // Maintenance check
 if (file_exists('../maint_mode')) {
 	die('This site is on maintenance');
 }
 
-if (file_exists('vendor/autoload.php')) {
-    require_once 'vendor/autoload.php';
+if (file_exists('../cms/vendor/autoload.php')) {
+    require_once '../cms/vendor/autoload.php';
 }
 
 session_start();
 global $cfg;
 global $astr;
+
+if (isset($_GET['params']) && $_GET['params']) {
+    $breakdown = explode('/', $_GET['params']);
+    if ($breakdown) {
+        $i = 0;
+        foreach($breakdown as $f) {
+            $_GET[($i==0?'language':'val'.$i)] = $f;
+            ++$i;
+        }
+    }
+}
 
 $cfg['root'] = str_replace('\\', '/', __DIR__);
 

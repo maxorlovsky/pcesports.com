@@ -80,17 +80,6 @@ module.exports = function(grunt) {
 				tasks: ['concat:sass', 'sass']
 			}
         },
-
-        imagemin: {
-            dynamic: {                               // Another target
-                files: [{
-                    expand: true,                   // Enable dynamic expansion
-                    cwd: '<%= dirs.images %>',      // Src matches are relative to this path
-                    src: ['**/*.{png,jpg,gif}'],    // Actual patterns to match
-                    dest: '<%= dirs.images %>/dist/'// Destination path prefix
-                }]
-            }
-        }
     });
     
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -99,7 +88,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
 
     /* Main task*/
     grunt.registerTask('default', [
