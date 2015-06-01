@@ -12,9 +12,7 @@ if (file_exists('../maint_mode')) {
 	die('This site is on maintenance');
 }
 
-if (file_exists('../cms/vendor/autoload.php')) {
-    require_once '../cms/vendor/autoload.php';
-}
+require_once dirname(__FILE__).'/cms/vendor/autoload.php';
 
 session_start();
 global $cfg;
