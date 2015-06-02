@@ -41,12 +41,7 @@
                         </div>
                     <? } ?>
 
-                    <? if (!isset($this->data->user) && !$this->data->user) { ?>
-                        <div class="form-item" data-label="email">
-                            <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
-                            <div class="message hidden"></div>
-                        </div>
-                    <? } else { ?>
+                    <? if (!isset($this->data->user->email) && !$this->data->user->email) { ?>
                         <div class="form-item" data-label="email">
                             <input type="text" name="email" placeholder="Email*" value="" />
                             <div class="message hidden"></div>
