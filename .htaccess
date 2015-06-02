@@ -28,7 +28,7 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 
 # fetching all links params in one variable and breaking it down in index.php
-RewriteRule (.*) /index.php?params=$1 [L]
+RewriteRule (.*) /index.php?params=$1 [L,QSA]
 
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin http://www.pcesports.com
