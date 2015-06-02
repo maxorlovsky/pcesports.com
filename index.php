@@ -29,6 +29,9 @@ if (isset($_GET['params']) && $_GET['params']) {
     }
 }
 
+print_r($_GET);
+exit();
+
 $cfg['root'] = str_replace('\\', '/', __DIR__);
 
 date_default_timezone_set('UTC');
