@@ -465,7 +465,7 @@ class System
     	return $response;
     }
 	
-	public function runAPI($apiAdditionalData, $server, $fullReturn = false) {
+	public function runRiotAPI($apiAdditionalData, $server, $fullReturn = false) {
         if (!$apiAdditionalData || !in_array($server, array_keys(_cfg('lolRegions')))) {
             return false;
         }
@@ -551,6 +551,97 @@ class System
 		
 		return (object)$response;
 	}
+
+    public function paypalAPI($apiAdditionalData) {
+        $startTime = microtime(true);
+        
+        /*if (_cfg('env') == 'dev') {
+            $apiUrl = 'https://';
+        }
+        else {
+            $apiUrl = 'https://';
+        }*/
+        $apiAdditionalData = 'oauth2/token';
+
+        $apiUrl = 'https://api.sandbox.paypal.com/v1/';
+        $apiUrl .= $apiAdditionalData; //payments/payment
+        
+        Db::query('INSERT INTO `paypal_requests` SET '.
+            '`timestamp` = NOW(), '.
+            '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+            '`data` = "'.$apiUrl.'"'
+        );
+        
+        $lastId = Db::lastId();
+        
+        $ch = curl_init();
+        
+        $curlOptions = array (
+            CURLOPT_URL => $apiUrl,
+            CURLOPT_FAILONERROR => 1,
+            CURLOPT_SSL_VERIFYPEER => 1,
+            CURLOPT_SSL_VERIFYHOST => true,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CONNECTTIMEOUT => 30,
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => array(
+                'USER' => 'max.orlovsky-facilitator_api1.gmail.com',
+                'PWD' => '1362986413',
+                'SIGNATURE' => 'At39XbOSsGMwp5m60oESMpE0iOJ4A86HKcWlXKX4PAhhC7EAvBS3oWJQ',
+            ),
+        );
+
+        curl_setopt_array($ch,$curlOptions);        
+        $response = curl_exec($ch); // run the whole process 
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        //$error = curl_error($ch);
+        curl_close($ch);
+
+        dump($http_status);
+        ddump($response);
+        
+        if ($http_status == 400) {
+            //$error = curl_error($ch);
+            $error = 'Bad request';
+        }
+        else if ($http_status == 503) {
+            $error = 'Service unavailable';
+        }
+        else if ($http_status == 500) {
+            $error = 'Internal server error';
+        }
+        else if ($http_status == 401) {
+            $error = 'Unauthorized';
+        }
+        else if ($http_status == 404) {
+            $error = 'Not found';
+        }
+        
+        $endTime = microtime(true);
+        $duration = $endTime - $startTime; //calculates total time taken
+        
+        Db::query('UPDATE `riot_requests` SET '.
+            '`response` = "'.($error?$error:Db::escape($response)).'", '.
+            '`time` = "'.(float)$duration.'" '.
+            'WHERE `id` = '.$lastId.' '
+        );
+        
+        if ( $error ) {
+            return false;
+        }
+        
+        if ($fullReturn === false) {
+            $response = (array)json_decode($response);
+            $response = array_values($response);
+            $response = $response[0];
+        }
+        else {
+            $response = json_decode($response);
+        }
+        
+        return (object)$response;
+    }
     
     //@email - Send TO
     //@subject - Subject of email

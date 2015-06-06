@@ -85,6 +85,7 @@
 <div id="fader"></div>
 
 <? if (_cfg('env') == 'dev') { ?>
+<script src="<?=_cfg('static')?>/js/pc.js"></script>
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 <? } else { ?>
 <script src="<?=_cfg('static')?>/js/combined.js"></script>

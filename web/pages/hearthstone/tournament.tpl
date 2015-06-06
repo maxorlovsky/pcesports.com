@@ -32,7 +32,6 @@
                     <? if ($this->data->user->battletag) { ?>
                         <div class="form-item" data-label="battletag">
                             Battle Tag: <strong><?=$this->data->user->battletag?></strong>
-                            <div class="message hidden"></div>
                         </div>
                     <? } else { ?>
                         <div class="form-item" data-label="battletag">

@@ -138,7 +138,7 @@ class Cron extends System {
                 }
                 $summonersIdsString = substr($summonersIdsString, 0, -1);
 
-                $response = $this->runAPI('/'.$server.'/v2.5/league/by-summoner/'.$summonersIdsString.'/entry', $server, true);
+                $response = $this->runRiotAPI('/'.$server.'/v2.5/league/by-summoner/'.$summonersIdsString.'/entry', $server, true);
                 
                 foreach($response as $k => $v) {
                     $dbId = $summonersIds[$k];
@@ -437,7 +437,7 @@ class Cron extends System {
                     $i = 0;
                     foreach($insideRows as $vPlayer) {
                         //Getting player recent games
-                        $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
+                        $answer = $this->runRiotAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
                         $game = $answer->games[0]; //We're interested only in last game
                         
                         //Do not check ranked and solo games
@@ -864,7 +864,7 @@ class Cron extends System {
                 $i = 0;
                 foreach($insideRows as $vPlayer) {
                     //Getting player recent games
-                    $answer = $this->runAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
+                    $answer = $this->runRiotAPI('/'.$server.'/v1.3/game/by-summoner/'.$vPlayer->player_id.'/recent', $server, true);
                     $game = $answer->games[0]; //We're interested only in last game
                     
                     //Do not check ranked and solo games

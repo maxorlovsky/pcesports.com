@@ -2,6 +2,11 @@
 
 <div class="left-containers">
     <? if ($_SESSION['participant']->checked_in != 1) { ?>
+        <? if ($_GET['val4'] == 'verify') { ?>
+            <p class="success-add"><?=t('hs_verify_in_progress')?></p>
+            <br />
+        <? } ?>
+
         <? if ($regged == 1) { ?>
             <p class="success-add"><?=t('registered_successfully')?></p>
             <br />
@@ -110,8 +115,24 @@
             <h1 class="bordered"><?=t('verification')?></h1>
         </div>
         
-        <div class="block-content">
+        <div class="block-content verification-pay">
             <?=t('hs_verification_txt')?>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_xclick">
+                <input type="hidden" name="business" value="max.orlovsky@gmail.com"> <!--max.orlovsky@gmail.com-->
+                <input type="hidden" name="lc" value="LV">
+                <input type="hidden" name="item_name" value="Pentaclick HS Participation - <?=$_SESSION['participant']->name?>">
+                <input type="hidden" name="amount" value="3.50">
+                <input type="hidden" name="currency_code" value="EUR">
+                <input type="hidden" name="button_subtype" value="services">
+                <input type="hidden" name="no_note" value="1">
+                <input type="hidden" name="no_shipping" value="1">
+                <input type="hidden" name="rm" value="1">
+                <input type="hidden" name="return" value="<?=_cfg('site')?>/en/hearthstone/s1/participant/verify/">
+                <input type="hidden" name="cancel_return" value="<?=_cfg('site')?>/en/hearthstone/s1/participant/">
+                <input type="hidden" name="battletag" value="<?=$_SESSION['participant']->name?>">
+                <button class="button">Pay for participation</button>
+            </form>
         </div>
     </div>
     <? } ?>

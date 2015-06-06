@@ -254,7 +254,7 @@ class Ajax extends System
             return '0;'.t('summoner_not_found');
         }
         
-        $response = $this->runAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
+        $response = $this->runRiotAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
         foreach($response->pages as $v) {
             if (trim($v->name) == trim($row->masteries)) {
                 Db::fetchRow(
@@ -312,7 +312,7 @@ class Ajax extends System
         else if (!$region) {
             return '0;Set region';
         }
-        $response = $this->runAPI('/'.$region.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($name)), $region);
+        $response = $this->runRiotAPI('/'.$region.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($name)), $region);
         
         if ($response == 404 || !$response) {
             return '0;'.t('summoner_not_found').$response;
@@ -1431,7 +1431,7 @@ class Ajax extends System
         
         if (!$err) {
     		$summonersNames = implode(',', $summonersNames);
-            $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
+            $response = $this->runRiotAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
             for($i=1;$i<=7;++$i) {
                 $name = str_replace(' ', '', mb_strtolower($post['mem'.$i]));
                 
@@ -1855,7 +1855,7 @@ class Ajax extends System
         
         if (!$err) {
             $summonersNames = implode(',', $summonersNames);
-            $response = $this->runAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
+            $response = $this->runRiotAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
             for($i=1;$i<=7;++$i) {
                 $name = str_replace(' ', '', mb_strtolower($post['mem'.$i]));
                 if (isset($response->$name) && $response->$name) {

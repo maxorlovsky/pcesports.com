@@ -102,7 +102,7 @@ class team
                 )
             ),
             44 => array(
-                'role' => 'General Manager',
+                'role' => 'Godly Manager',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/grobovsky',
                 )
@@ -112,31 +112,7 @@ class team
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/anya.orlovsky',
                 )
-            ),
-            132 => array(
-                'role' => 'Graphic designer',
-                'socials' => array(
-                    'fb' => 'https://www.facebook.com/artursofc',
-                )
-            ),
-            126 => array(
-                'role' => 'Community manager (VK)',
-                'socials' => array(
-                    'vk' => 'https://vk.com/victor.morozovvv',
-                )
-            ),
-            213 => array(
-                'role' => 'Community manager (FB)',
-                'socials' => array(
-                    'fb' => 'https://www.facebook.com/martin.petkevich',
-                )
-            ),
-            491 => array(
-                'role' => 'Smite tournament manager',
-                'socials' => array(
-                    'tw' => 'https://twitter.com/vanngarrd',
-                )
-            ),
+            )
         );
         
         if ($rows) {

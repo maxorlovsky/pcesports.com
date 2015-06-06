@@ -62,9 +62,9 @@ class member extends System
         $rows = Db::fetchRows(
             'SELECT `game`, `server`, `tournament_id`, `timestamp`, `name`, `contact_info`, `seed_number`, `place`, `checked_in` '.
             'FROM `participants` '.
-            'WHERE `user_id` = '.(int)$this->member->id.' '//.AND
-            //'`approved` = 1 AND '.
-            //'`deleted` = 0 '
+            'WHERE `user_id` = '.(int)$this->member->id.' AND '.
+            '`approved` = 1 AND '.
+            '`deleted` = 0 '
         );
         if ($rows) {
             $this->member->tournaments = $rows;

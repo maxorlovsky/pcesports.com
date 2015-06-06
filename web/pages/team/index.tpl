@@ -13,6 +13,18 @@
         </div>
     </div>
 
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('join_us')?></h1>
+        </div>
+
+        <div class="block-content about-us">
+            <div class="text">
+                <?=t('join_us_text')?>
+            </div>
+        </div>
+    </div>
+
 	<div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('team')?></h1>
