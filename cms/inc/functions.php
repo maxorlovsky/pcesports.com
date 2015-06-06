@@ -120,7 +120,7 @@ function pages($data) {
 			}
             
 			if ($data['pageNum'] <= ($lastp - $lt) && $i == $lastp) {
-				$html .= ' ... <a href="'.$link.'/page/'.$lastp.'" class="inpage">'.$lastp.'</a>';
+				$html .= ' ... <a href="'.str_replace('%page%', $lastp, $link).'" class="inpage">'.$lastp.'</a>';
 			}
 			
 			if (round($so) == $i && $data['pageNum'] != round($lastp)) {

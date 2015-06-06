@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 
             js : {
                 src : [
-                    //'<%= dirs.js %>/*.js',
+                    '<%= dirs.js %>/pc.js',
                     '<%= dirs.js %>/main.js'
                 ],
                 dest : '<%= dirs.js %>/combined.js'
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
         },
         
         jshint: {
-            files: ['Gruntfile.js', '<%= dirs.js %>/main.js'],
+            files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js'],
             options: {
                 ignores: ['<%= dirs.js %>/combined.js'],
                 globals: {
@@ -76,8 +76,8 @@ module.exports = function(grunt) {
 
         watch: {
             default: {
-				files: ['Gruntfile.js', '<%= dirs.scss %>/*.scss'],
-				tasks: ['concat:sass', 'sass']
+				files: ['Gruntfile.js', '<%= dirs.sass %>/*.scss'],
+				tasks: ['concat:css', 'concat:sass', 'sass']
 			}
         },
     });
