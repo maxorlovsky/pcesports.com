@@ -268,7 +268,7 @@
             <h1 class="bordered"><?=t('verified_participants')?></h1>
         </div>
         
-        <div class="block-content participants isotope-participants">
+        <div class="block-content participants isotope-participants-verified">
         <?
         $participantsCount = 0;
         if ($this->participants) {
