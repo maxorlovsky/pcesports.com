@@ -235,7 +235,7 @@ class hearthstone extends System
                         $v->status = t('ended');
                     }
                     else {
-                        $v->status = t('active');
+                        $v->status = t('upcoming');
                     }
                 }
                 $this->tournamentData[$v->name] = (array)$v;

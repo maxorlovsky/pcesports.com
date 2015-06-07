@@ -51,7 +51,7 @@ class tournaments extends System
                     $v->status = t('ended');
                 }
                 else {
-                    $v->status = t('active');
+                    $v->status = t('upcoming');
                 }
                 
                 if ($v->game == 'lol') {

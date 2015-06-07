@@ -94,7 +94,7 @@ class home extends System
                     $time = $startTime;
                 }
                 else if (strtolower($v->status) == 'start') {
-                    $v->status = t('active');
+                    $v->status = t('upcoming');
                 }
                 
                 $additionalWhere = '';
