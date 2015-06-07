@@ -17,6 +17,11 @@ class Ajax extends System
             return false;
         }
     }
+
+    protected function checkAchievements() {
+        $achievements = new Achievements();
+        $achievements->init();
+    }
     
     protected function boardVote($data) {
         if (!$this->logged_in) {

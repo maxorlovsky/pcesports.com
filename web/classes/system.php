@@ -806,6 +806,7 @@ class System
     /*Protected functions*/
     protected function loadClasses() {
     	require_once _cfg('cmsclasses').'/db.php';
+        require_once _cfg('classes').'/achievements.php';
     	require_once _cfg('classes').'/ajax.php';
         require_once _cfg('classes').'/cron.php';
     	require_once _cfg('classes').'/template.php';

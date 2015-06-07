@@ -17,7 +17,7 @@
             <label class="cell1"><?=t('name')?></label>
             <label class="cell2"><?=t('summoner_account')?></label>
             <label class="cell3"><?=t('battle_tag')?></label>
-            <!--<label class="cell4"><?=t('cups_won')?></label>-->
+            <label class="cell4"><?=t('points')?></label>
             <label class="cell5"><?=t('registration_date')?></label>
         </div>
         <?
@@ -38,7 +38,7 @@
                     <?=$v->summoner?>
                 </label>
                 <label class="user-battle-tag cell3"><?=$v->battletag?></label>
-                <!--<label class="user-tournaments cell4"><?=$v->name?></label>-->
+                <label class="user-points cell4"><?=$v->experience?></label>
                 <span href="javascript:void(0);" class="date cell5"><?=date('d.m.Y', strtotime($v->registration_date))?></span>
                 <div class="clear"></div>
             </a>

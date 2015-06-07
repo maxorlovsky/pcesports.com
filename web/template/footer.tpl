@@ -80,6 +80,16 @@
     </div>
 </div>
 
+<? if ($this->logged_in == 1) { ?>
+<a class="achievements" href="">
+    <div class="image">No image</div>
+    <div class="points"></div>
+    <div class="title">Achievement unlocked</div>
+    <div class="name"></div>
+    <div class="text"></div>
+    <div class="close"></div>
+</a>
+<? } ?>
 <div id="hint-helper"><p></p></div>
 <div id="toTop"></div>
 <div id="fader"></div>

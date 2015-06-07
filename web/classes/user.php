@@ -238,6 +238,9 @@ class User extends System
                 $userRow->participant = $row;
             }
         }
+
+        //Fetching all available achievements
+        $userRow->achievements = Db::fetchRows('SELECT * FROM `users_achievements` WHERE `user_id` = '.$userRow->id);
         
         return $userRow;
     }

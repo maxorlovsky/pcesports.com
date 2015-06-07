@@ -15,6 +15,7 @@
                 <p><label>Battle Tag</label> <?=$this->member->battletag?></p>
                 <? } ?>
                 <p><label><?=t('registration_date')?></label> <?=date('d.m.Y', strtotime($this->member->registration_date))?></p>
+                <p><label><?=t('achievements_points')?></label> <?=$this->member->experience?></p>
             </div>
             <div class="clear"></div>
         </div>
@@ -61,8 +62,33 @@
             </span>
             <div class="clear"></div>
         </a>
-        <?//=dump($v)?>
         <? } ?>
     </div>
     <? } ?>
+
+    <div class="block member-achievements">
+        <a name="achievements"></a>
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=$this->member->name?>'s <?=t('achievements')?></h1>
+        </div>
+
+        <div class="block-content">
+            <? foreach ($this->member->achievements as $v) { ?>
+                <div class="achievement <?=($v->locked!==0?'locked':'hint')?>" attr-msg="Unlocked on <?=date('d M @ H:i', strtotime($v->date))?>">
+                    <div class="image">
+                        <? if ($v->image) { ?>
+                            <img src="<?=_cfg('img').'/achievements/'.$v->image?>" />
+                        <? } else { ?>
+                            No image
+                        <? } ?>
+                    </div>
+                    <div class="points"><?=$v->points?></div>
+                    <div class="name"><?=$v->name?></div>
+                    <div class="text"><?=$v->description?></div>
+                    <div class="date"></div>
+                </div>
+            <? } ?>
+        </div>
+    </div>
+
 </div>

@@ -1053,7 +1053,7 @@ footer .partners .aimskillz {
 	margin-bottom: 20px;
 }
 .info-add {
-	border: 1px solid #E5DC2D;
+	border: 1px solid $secondaryColor;
 	background-color: #F7EF85;
 	color: #555;
 	padding: 10px;
@@ -1453,14 +1453,14 @@ footer .games img {
             }
         }
         &.hs {
-            border: 1px solid #E5DC2D;
+            border: 1px solid $secondaryColor;
             background-repeat: no-repeat;
             background-position: 96% bottom;
             background-size: 120px;
             background-image: url('../images/footer-hs-logo.png');
         }
         &.lol {
-            border: 1px solid #E5DC2D;
+            border: 1px solid $secondaryColor;
             background-repeat: no-repeat;
             background-position: 96% bottom;
             background-size: 120px;
@@ -2386,28 +2386,36 @@ footer .games img {
     margin-top: 20px;
 }
 
-.member .avatar {
-    border: 1px solid #fff;
-    outline: 1px solid #555;
-    height: 150px;
-    float: left;
-    margin: 0 10px 10px 0;
-}
-.member .avatar img {
-    height: 150px;
-}
-.member .information label {
-    display: inline-block;
-    font-weight: bold;
-    min-width: 130px;
-}
-.member .information p {
-    margin-top: 0;
+.members {
+    .member {
+        .avatar {
+            border: 1px solid #fff;
+            outline: 1px solid #555;
+            height: 150px;
+            float: left;
+            margin: 0 10px 10px 0;
+            img {
+                height: 150px;
+            }
+        }
+        .information {
+            label {
+                display: inline-block;
+                font-weight: bold;
+                min-width: 160px;
+            }
+            p {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .member-summoners, .member-tournaments, .member-achievements {
+        margin-top: 20px;
+    }
 }
 
-.member-summoners, .member-tournaments {
-    margin-top: 20px;
-}
+
 
 .users-list {
     .block-content {
@@ -2469,13 +2477,14 @@ footer .games img {
         width: 150px;
     }
     .cell2 {
-        width: 235px;/*170*/
+        width: 200px;
     }
     .cell3 {
-        width: 200px;/*170*/
+        width: 170px;
     }
     .cell4 {
-        width: 130px;
+        width: 65px;
+        text-align: center;
     }
     .cell5 {
         width: 135px;
@@ -2799,5 +2808,128 @@ footer .games img {
         width: 100%;
         font-size: 17px;
         margin-top: 20px;
+    }
+}
+
+.achievements {
+    display: block;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    width: 450px;
+    height: 100px;
+    background-color: #191919;
+    border: 2px solid $mainColor;
+    border-radius: $defaultBorderRadius;
+    z-index: 20;
+    color: #eee;
+    font-size: 14px;
+    opacity: 0;
+    transition: 1s;
+    .image {
+        float: left;
+        margin: 9px;
+        border: 1px solid #fff;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        font-size: 26px;
+        img {
+            height: 80px;
+        }
+    }
+    .title {
+        margin-top: 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .name {
+        margin-top: 10px;
+        width: 350px;
+    }
+    .text {
+        font-size: 12px;
+        width: 250px;
+        height: 40px;
+        overflow: hidden;
+    }
+    .points {
+        float: right;
+        margin: 9px;
+        border: 1px solid $secondaryColor;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        font-size: 55px;
+    }
+    .close {
+        background-image: url('../images/graphics/close.png');
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: -10px;
+        right: -15px;
+        cursor: pointer;
+    }
+    &:hover {
+        background-color: #2a2a2a;
+        color: #fff;
+    }
+}
+
+.member-achievements {
+    .block-content {
+        .achievement {
+            float: left;
+            width: 100%;
+            margin-bottom: 10px;
+            height: 100px;
+            background-color: #191919;
+            border: 1px solid $mainColor;
+            color: #fff;
+            font-size: 14px;
+            .image {
+                float: left;
+                margin: 9px;
+                border: 1px solid #fff;
+                width: 80px;
+                height: 80px;
+                text-align: center;
+                font-size: 26px;
+                img {
+                    height: 80px;
+                }
+            }
+            .name {
+                margin-top: 10px;
+                width: 650px;
+                font-weight: bold;
+            }
+            .text {
+                font-size: 12px;
+                width: 550px;
+                height: 70px;
+                overflow: hidden;
+            }
+            .points {
+                float: right;
+                margin: 9px;
+                border: 1px solid $secondaryColor;
+                width: 80px;
+                height: 80px;
+                text-align: center;
+                font-size: 55px;
+            }
+
+            &.locked {
+                opacity: 0.8;
+            }
+        }
+
+        &:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
     }
 }

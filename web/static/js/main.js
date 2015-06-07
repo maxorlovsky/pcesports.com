@@ -310,9 +310,15 @@ $(document).on('mousemove', '.hint', function(event) {
 	$('#hint-helper').css('display', 'none');
 });
 
+$('.achievements').on('click', '.close', function() {
+    $(this).closest('.achievements').fadeOut();
+    return false;
+});
+
 if (typeof requireStatus != 'undefined' && requireStatus == 1) {
 	PC.statusCheck();
 	setInterval(function () { PC.statusCheck(); }, 15000);
 }
 
 PC.runTimers();
+PC.checkAchievements();

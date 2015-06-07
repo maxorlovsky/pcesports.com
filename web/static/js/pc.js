@@ -4,6 +4,28 @@ var PC = {
     formInProgress: 0, //used when required to check if form is still in progress
     
     //functions
+    checkAchievements: function() {
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'checkAchievements'
+            },
+            success: function(data) {
+                if (data) {
+                    data = $.parseJSON(data);
+                    if (data.image) {
+                        $('.achievements').find('.image').html('<img src="'+data.image+'" />');
+                    }
+                    $('.achievements').find('.points').html(data.points);
+                    $('.achievements').find('.name').html(data.name);
+                    $('.achievements').find('.text').html(data.description);
+
+                    $('.achievements').css('opacity', 1);
+                }
+            }
+        };
+        this.ajax(query);
+    },
     deleteBoardComment: function(element) {
         if (this.formInProgress == 1) {
             return false;

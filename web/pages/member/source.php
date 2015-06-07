@@ -3,6 +3,7 @@
 class member extends System
 {
     public $member;
+    public $achievements;
     public $fullGameName = array();
     public $places = array();
     
@@ -22,7 +23,7 @@ class member extends System
         
         if (isset($_GET['val2']) && $_GET['val2'] && !$this->member) {
             $row = Db::fetchRow(
-                'SELECT `id`, `name`, `avatar`, `registration_date`, `battletag` '.
+                'SELECT `id`, `name`, `avatar`, `registration_date`, `battletag`, `experience` '.
                 'FROM `users` '.
                 'WHERE `name` = "'.Db::escape($_GET['val2']).'" '.
                 'LIMIT 1'
@@ -72,6 +73,32 @@ class member extends System
         else {
             $this->member->tournaments = array();
         }
+
+        //Achievements list
+        $rows = Db::fetchRows(
+            'SELECT `ua`.`achievement_id`, `ua`.`date`, `a`.* '.
+            'FROM `users_achievements` AS `ua` '.
+            'LEFT JOIN `achievements` AS `a` ON `ua`.`achievement_id` = `a`.`id` '.
+            'WHERE `ua`.`done` = 1 AND `ua`.`user_id` = '.(int)$this->member->id
+        );
+
+        $this->member->achievements = (array)$rows; //putting in array for merge
+
+        foreach($this->member->achievements as &$v) {
+            $memberAchievements[] = $v->achievement_id;
+            $v->locked = 0;
+        }
+        unset($v);
+
+        $rows = (array)Db::fetchRows('SELECT * FROM `achievements`');
+        foreach($rows as $k => &$v) {
+            if (in_array($v->id, $memberAchievements)) {
+                unset($rows[$k]);
+            }
+        }
+        unset($v);
+        
+        $this->member->achievements = (object)array_merge($this->member->achievements, $rows);
 
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
