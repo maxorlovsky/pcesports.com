@@ -82,10 +82,15 @@
                             No image
                         <? } ?>
                     </div>
-                    <div class="points"><?=$v->points?></div>
+                    <div class="points"><span class="achievementsPoints"><?=$v->points?></span></div>
                     <div class="name"><?=$v->name?></div>
                     <div class="text"><?=$v->description?></div>
-                    <div class="date"></div>
+                    <? if ($v->locked !== 0 && $v->requirement != 1) { ?>
+                        <div class="line-bar" attr-goal="<?=$v->requirement?>" attr-current="<?=$v->current?>">
+                            <div><span></span></div>
+                            <span id="gathered"></span>
+                        </div>
+                    <? } ?>
                 </div>
             <? } ?>
         </div>

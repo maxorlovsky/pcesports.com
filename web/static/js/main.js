@@ -36,6 +36,18 @@ $('.donate-bar').ready(function() {
     $('.donate-bar div span').css('width', percentage);
 });
 
+$('.line-bar').each(function() {
+    var current = $(this).attr('attr-current');
+    var goal = $(this).attr('attr-goal');
+    
+    percentage = ((current / goal) * 100);
+
+    $(this).find('#gathered').text(percentage+'%');
+    
+    $(this).find('div span').css('width', 0);
+    $(this).find('div span').animate({'width': percentage+'%'}, 500);
+});
+
 $('.user-comments').on('click', '.edit', function() {
     var element = $(this).closest('.actions').find('.edit-text');
     element.stop().slideToggle();

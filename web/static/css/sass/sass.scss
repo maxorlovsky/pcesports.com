@@ -2424,9 +2424,30 @@ footer .games img {
     .member-summoners, .member-tournaments, .member-achievements {
         margin-top: 20px;
     }
+
+    .line-bar {
+        width: 500px;
+        margin: 10px auto;
+        text-align: center;
+        span {
+            display: inline-block;
+        }
+        > div {
+            display: inline-block;
+            margin-top: 2px;
+            border: 1px solid #1697e1;
+            border-radius: 15px;
+            width: 400px;
+            height: 10px;
+            span {
+                display: block;
+                background-color: #1697e1;
+                border-radius: 15px;
+                height: 10px;
+            }
+        }
+    }
 }
-
-
 
 .users-list {
     .block-content {
@@ -2715,23 +2736,23 @@ footer .games img {
     width: 200px;
     margin: 10px auto;
     text-align: center;
-}
-.donate-bar > p {
-    display: block;
-}
-.donate-bar > p span {
-    font-weight: bold;
-}
-.donate-bar > div {
-    border: 1px solid #1697e1;
-    border-radius: 15px;
-    height: 10px;
-}
-.donate-bar > div span {
-    display: block;
-    background-color: #1697e1;
-    border-radius: 15px;
-    height: 10px;
+    > p {
+        display: block;
+        span {
+            font-weight: bold;
+        }
+    }
+    > div {
+        border: 1px solid #1697e1;
+        border-radius: 15px;
+        height: 10px;
+        span {
+            display: block;
+            background-color: #1697e1;
+            border-radius: 15px;
+            height: 10px;
+        }
+    }
 }
 
 .twitch {
@@ -2924,6 +2945,9 @@ footer .games img {
 
             &.locked {
                 opacity: 0.8;
+                .text {
+                    height: 20px;
+                }
             }
         }
 
