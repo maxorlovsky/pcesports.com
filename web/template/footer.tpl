@@ -87,7 +87,7 @@
     <div class="title">Achievement unlocked</div>
     <div class="name"></div>
     <div class="text"></div>
-    <div class="close"></div>
+    <audio id="achievement-ping" src="<?=_cfg('static')?>/achievement.ogg"></audio>
 </a>
 <? } ?>
 <div id="hint-helper"><p></p></div>

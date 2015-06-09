@@ -310,8 +310,8 @@ $(document).on('mousemove', '.hint', function(event) {
 	$('#hint-helper').css('display', 'none');
 });
 
-$('.achievements').on('click', '.close', function() {
-    $(this).closest('.achievements').fadeOut();
+$('.achievements').on('click', this, function() {
+    $(this).fadeOut('slow');
     return false;
 });
 

@@ -218,6 +218,10 @@
         if ($this->participants) {
             foreach($this->participants as $v) {
                 if ($v->checked_in == 1 && $v->verified == 1) {
+
+                    //This must be here
+                    ++$participantsCount;
+
                     if ($v->user_id != 0) {
                     ?>
                     <div class="block hoverable" title="<?=$v->battletag?>">
@@ -250,7 +254,6 @@
                     </div>
                     <?
                     }
-                    ++$participantsCount;
                     ++$i;
                 }
             }
@@ -274,6 +277,10 @@
         if ($this->participants) {
             foreach($this->participants as $v) {
                 if ($v->verified == 1 && $v->checked_in != 1) {
+
+                    //This must be here
+                    ++$participantsCount;
+
                     if ($v->user_id != 0) {
                     ?>
                     <div class="block hoverable" title="<?=$v->battletag?>">
@@ -306,8 +313,6 @@
                     </div>
                     <?
                     }
-
-                    ++$participantsCount;
                 }
             }
         }

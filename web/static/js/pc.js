@@ -5,6 +5,7 @@ var PC = {
     
     //functions
     checkAchievements: function() {
+        document.getElementById('achievement-ping').volume = 0.2;
         var query = {
             type: 'POST',
             data: {
@@ -21,6 +22,12 @@ var PC = {
                     $('.achievements').find('.text').html(data.description);
 
                     $('.achievements').css('opacity', 1);
+
+                    document.getElementById('achievement-ping').play();
+
+                    $('.achievementsPoints').text(parseInt($('.achievementsPoints').text())+parseInt(data.points));
+
+                    setTimeout(function () { $('.achievements').trigger('click'); }, 20000); //hide in 20 sec
                 }
             }
         };

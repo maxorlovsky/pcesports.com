@@ -82,13 +82,17 @@ class member extends System
             'WHERE `ua`.`done` = 1 AND `ua`.`user_id` = '.(int)$this->member->id
         );
 
-        $this->member->achievements = (array)$rows; //putting in array for merge
+        $this->member->achievements = array();
+        $memberAchievements = array();
+        if ($rows) {
+            $this->member->achievements = (array)$rows; //putting in array for merge
 
-        foreach($this->member->achievements as &$v) {
-            $memberAchievements[] = $v->achievement_id;
-            $v->locked = 0;
+            foreach($this->member->achievements as &$v) {
+                $memberAchievements[] = $v->achievement_id;
+                $v->locked = 0;
+            }
+            unset($v);
         }
-        unset($v);
 
         $rows = (array)Db::fetchRows('SELECT * FROM `achievements`');
         foreach($rows as $k => &$v) {
