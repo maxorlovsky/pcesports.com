@@ -43,6 +43,9 @@ class User extends System
             else {
                 $_SESSION['user'] = (array)$row;
                 self::token();
+                if ($_SESSION['user']['id']) {
+                    Achievements::giveLogin($_SESSION['user']['id']);//I see you for *th time!
+                }
             }
         }
         
@@ -53,7 +56,7 @@ class User extends System
         if (!$_SESSION['user'] || !$_SESSION['user']['id']) {
             return false;
         }
-        
+
         $_SESSION['user']['token'] = sha1(rand(0,9999).time());
         Db::query('DELETE FROM `users_auth` WHERE `user_id` = '.(int)$_SESSION['user']['id'].' LIMIT 1');
         Db::query('INSERT IGNORE INTO `users_auth` '.
@@ -260,6 +263,22 @@ class User extends System
             `social_uid` = "'.Db::escape($data['social_uid']).'",
             `user_id` = '.(int)$_SESSION['user']['id']
         );
+
+        $socialAchievements = array(
+            'fb' => 2, //Facebook connection achievement
+            'tw' => 3, //Twitter achievement
+            'vk' => 4, //VK achievement
+            'gp' => 5, //Google+ achievement
+            'tc' => 6, //Twitch achievement
+            'bn' => 7, //Battle.Net achievement
+        );
+
+        Achievements::give($socialAchievements[$data['social']]); //Connect social network
+
+        $count = Db::fetchRow('SELECT COUNT(*) AS `count` FROM `users_social` WHERE `user_id` = '.(int)$_SESSION['user']['id']);
+        if ($count->count == count($socialAchievements)) {
+            Achievements::give(8);//I am very social now!
+        }
         
         exit('<script>window.opener.location = "'.str_replace('https', 'http', _cfg('href')).'/profile"; window.close()</script>');
         
@@ -284,6 +303,8 @@ class User extends System
             '`social` = "'.Db::escape($data['provider']).'" AND '.
             '`user_id` = '.(int)$user->id
         );
+
+        Achievements::give(11); //Don't spy me!
         
         return true;
     }
@@ -333,14 +354,19 @@ class User extends System
             else {
                 $form['battletag'] = trim($battleTagBreakdown[0]).'#'.trim($battleTagBreakdown[1]);
             }
+            Achievements::give(31);//The winter is comming.. I mean Blizzard!
         }
         
         if (!is_numeric($form['avatar']) || $form['avatar'] > 30 || $form['avatar'] < 1) {
             $form['avatar'] = 1;
         }
+        else {
+            Achievements::give(9);//I have a face now!
+        }
         
         if (isset($form['https']) && $form['https'] == 1) {
             $form['https'] = 1;
+            Achievements::give(10);//007 is my way!
         }
         else {
             $form['https'] = 0;

@@ -76,10 +76,10 @@ class member extends System
 
         //Achievements list
         $rows = Db::fetchRows(
-            'SELECT `ua`.`achievement_id`, `ua`.`current`, `ua`.`date`, `a`.* '.
+            'SELECT `ua`.`achievement_id`, `ua`.`current`, `ua`.`date`, `ua`.`done`, `a`.* '.
             'FROM `users_achievements` AS `ua` '.
             'LEFT JOIN `achievements` AS `a` ON `ua`.`achievement_id` = `a`.`id` '.
-            'WHERE (`ua`.`done` = 1 OR `ua`.`current` >= 1) AND `ua`.`user_id` = '.(int)$this->member->id
+            'WHERE `ua`.`user_id` = '.(int)$this->member->id
         );
 
         $this->member->achievements = array();
@@ -88,10 +88,16 @@ class member extends System
         if ($rows) {
             $this->member->achievements = (array)$rows; //putting in array for merge
 
-            foreach($this->member->achievements as &$v) {
-                $memberAchievements[] = $v->achievement_id;
-                $achievementsCurrent[$v->id] = $v->current;
-                $v->locked = 0;
+            foreach($this->member->achievements as $k => &$v) {
+                if ($v->done == 1) {
+                    $memberAchievements[] = $v->achievement_id;
+                    $v->locked = 0;
+                }
+                else {
+                    $memberCurrents[] = $v->achievement_id;
+                    $achievementsCurrent[$v->achievement_id] = $v->current;
+                    unset($this->member->achievements[$k]);
+                }
             }
             unset($v);
         }
@@ -99,17 +105,19 @@ class member extends System
         $rows = (array)Db::fetchRows('SELECT * FROM `achievements`');
         $achievementGroups = 0;
         foreach($rows as $k => &$v) {
-            if (in_array($v->id, $memberAchievements)) {
-                unset($rows[$k]);
+            if ($v->requirement != 1 && in_array($v->id, $memberCurrents) && $achievementGroups != $v->group_id) {
+                $v->current = $achievementsCurrent[$v->id];
             }
             else if ($achievementGroups != 0 && $achievementGroups == $v->group_id) {
                 unset($rows[$k]);
             }
-            else if ($v->requirement != 1 && $achievementsCurrent) {
-                $v->current = $achievementsCurrent[$k];
+            else if (in_array($v->id, $memberAchievements)) {
+                unset($rows[$k]);
             }
-
-            $achievementGroups = $v->group_id;
+            
+            if (!in_array($v->id, $memberAchievements)) {
+                $achievementGroups = $v->group_id;
+            }
         }
         unset($v);
         

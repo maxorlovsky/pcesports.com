@@ -42,6 +42,10 @@ $('.line-bar').each(function() {
     
     percentage = ((current / goal) * 100);
 
+    if (percentage > 100) {
+        percentage = 100;
+    }
+
     $(this).find('#gathered').text(percentage+'%');
     
     $(this).find('div span').css('width', 0);

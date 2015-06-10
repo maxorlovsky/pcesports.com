@@ -104,6 +104,7 @@ class hearthstone extends System
 		if ($row && $row->approved == 0) {
 			//Not approved, registration open, approving
 			$this->approveRegisterPlayer($row);
+            Achievements::give(array(21,22,23));//I am preparing my cards. (Register on Hearthstone tournament.)
 			$verified = 1;
 			$regged = 1;
 		}

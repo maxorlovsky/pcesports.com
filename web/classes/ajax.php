@@ -104,6 +104,8 @@ class Ajax extends System
                 '`activity` = '.time()
             );
             $id = Db::lastId();
+
+            Achievements::give(array(27,28,29));//I'm afraid of people (Post * comments on boards or articles).
             
             return '1;'._cfg('href').'/boards/'.$id;
         }
@@ -202,6 +204,8 @@ class Ajax extends System
                                 '</div>'.
                         '</div>'.
                     '</div>';
+
+            Achievements::give(array(27,28,29));//I'm afraid of people (Post * comments on boards or articles).
             
             return '1;'.$html;
         }
@@ -270,6 +274,7 @@ class Ajax extends System
                     '`user_id`  = '.(int)$this->data->user->id.' '.
                     'LIMIT 1 '
                 );
+                Achievements::give(30);//Summoner of Legends (Add summoner account to your profile)
                 return '1;'.$row->id;
             }
         }
@@ -419,6 +424,8 @@ class Ajax extends System
 				break;
 			}
 		}
+
+        Achievements::give(array(24,25,26));//Cards means random! (Participate in Hearthstone tournament.)
         
         return '1;1';
     }
@@ -545,6 +552,8 @@ class Ajax extends System
 				break;
 			}
 		}
+
+        Achievements::give(array(18,19,20));//I am experienced! (Participate in League of Legends tournament.)
         
         return '1;1';
     }
@@ -726,6 +735,8 @@ class Ajax extends System
                 'UPDATE `blog` SET `comments` = `comments` + 1 '.
                 'WHERE `id` = '.(int)$data['id'].' '
             );
+
+            Achievements::give(array(27,28,29));//I'm afraid of people (Post * comments on boards or articles).
             
             return '1;1';
         }

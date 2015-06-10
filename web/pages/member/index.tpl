@@ -82,7 +82,7 @@
                             No image
                         <? } ?>
                     </div>
-                    <div class="points"><span class="achievementsPoints"><?=$v->points?></span></div>
+                    <div class="points"><?=$v->points?></div>
                     <div class="name"><?=$v->name?></div>
                     <div class="text"><?=$v->description?></div>
                     <? if ($v->locked !== 0 && $v->requirement != 1) { ?>

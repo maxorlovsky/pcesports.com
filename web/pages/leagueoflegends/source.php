@@ -90,6 +90,7 @@ class leagueoflegends extends System
 		if ($row && $row->approved == 0) {
 			//Not approved, registration open, approving
 			$this->approveRegisterPlayer($row);
+            Achievements::give(array(15,16,17));//Let's try to beat'em! (Register on League of Legends tournament.)
 			$verified = 1;
 			$regged = 1;
 		}

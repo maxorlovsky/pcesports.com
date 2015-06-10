@@ -5,6 +5,8 @@ class Achievements extends System
         parent::__construct();
     }
 
+    // Initiate class, adding first achievements to user
+    // If it was initiated, just checking achievement and confirming them
     public function init() {
     	//Achievement not initiated, initiating on the first run
     	if ($this->data->user->achievements_initiate == 0) {
@@ -21,16 +23,109 @@ class Achievements extends System
 		return false;
     }
 
-    public function addAchievement($achievementId) {
-    	if (!$achievementId) {
+    public static function give($achievementId) {
+    	$achievement = new Achievements();
+    	return $achievement->addAchievementTick($achievementId);
+    }
+
+    // Adding +1 tick to specific achievement to logged in user
+    public function addAchievementTick($achievementId) {
+    	if (!$achievementId || !$this->data->user->id) {
     		return false;
     	}
 
-    	$row = Db::fetchRow(
-    		'SELECT `requirement`, `points` '.
-    		'FROM `achievements` '.
-    		'WHERE `id` = '.(int)$achievementId.' AND `ua`.`done` = 0 '
-		);
+    	if (is_array($achievementId)) {
+    		foreach($achievementId as $v) {
+    			$row = Db::fetchRow(
+		    		'SELECT * '.
+		    		'FROM `users_achievements` '.
+		    		'WHERE `achievement_id` = '.(int)$v.' AND '.
+		    		'`user_id` = '.(int)$this->data->user->id.' AND  '.
+		    		'`done` = 0 '
+				);
+
+				if ($row) {
+					Db::query(
+						'UPDATE `users_achievements` '.
+						'SET `current` = `current` + 1 '.
+						'WHERE `achievement_id` = '.(int)$v.' AND '.
+						'`user_id` = '.(int)$this->data->user->id.' AND '.
+						'`done` = 0 '
+					);
+				}
+				else {
+					Db::query(
+						'INSERT INTO `users_achievements` '.
+						'SET `achievement_id` = '.(int)$v.', '.
+						'`current` = 1, '.
+						'`user_id` = '.(int)$this->data->user->id
+					);
+				}
+    		}
+    	}
+    	else {
+	    	$row = Db::fetchRow(
+	    		'SELECT * '.
+	    		'FROM `users_achievements` '.
+	    		'WHERE `achievement_id` = '.(int)$achievementId.' AND '.
+	    		'`user_id` = '.(int)$this->data->user->id.' AND  '.
+	    		'`done` = 0 '
+			);
+
+			if ($row) {
+				Db::query(
+					'UPDATE `users_achievements` '.
+					'SET `current` = `current` + 1 '.
+					'WHERE `achievement_id` = '.(int)$achievementId.' AND '.
+					'`user_id` = '.(int)$this->data->user->id.' AND '.
+					'`done` = 0 '
+				);
+			}
+			else {
+				Db::query(
+					'INSERT INTO `users_achievements` '.
+					'SET `achievement_id` = '.(int)$achievementId.', '.
+					'`current` = 1, '.
+					'`user_id` = '.(int)$this->data->user->id
+				);
+			}
+		}
+
+		return true;
+    }
+
+    public static function giveLogin($uid) {
+		$achievementId = array(12,13,14);
+
+		foreach($achievementId as $v) {
+			$row = Db::fetchRow(
+	    		'SELECT * '.
+	    		'FROM `users_achievements` '.
+	    		'WHERE `achievement_id` = '.(int)$v.' AND '.
+	    		'`user_id` = '.(int)$uid.' AND  '.
+	    		'`done` = 0 '
+			);
+
+			if ($row) {
+				Db::query(
+					'UPDATE `users_achievements` '.
+					'SET `current` = `current` + 1 '.
+					'WHERE `achievement_id` = '.(int)$v.' AND '.
+					'`user_id` = '.(int)$uid.' AND '.
+					'`done` = 0 '
+				);
+			}
+			else {
+				Db::query(
+					'INSERT INTO `users_achievements` '.
+					'SET `achievement_id` = '.(int)$v.', '.
+					'`current` = 1, '.
+					'`user_id` = '.(int)$uid
+				);
+			}
+		}
+
+		return true;
     }
 
     // This function just check current "non-closed" achievements of user
@@ -56,7 +151,8 @@ class Achievements extends System
 				//Closing achievement
 				Db::query(
 					'UPDATE `users_achievements` '.
-					'SET `done` = 1 '.
+					'SET `done` = 1, '.
+					'`date` = NOW() '.
 					'WHERE `achievement_id` = '.(int)$f->id.' AND '.
 					'`user_id` = '.(int)$this->data->user->id.' AND '.
 					'`done` = 0 '
