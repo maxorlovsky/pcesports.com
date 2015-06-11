@@ -40,8 +40,7 @@ class Achievements extends System
 		    		'SELECT * '.
 		    		'FROM `users_achievements` '.
 		    		'WHERE `achievement_id` = '.(int)$v.' AND '.
-		    		'`user_id` = '.(int)$this->data->user->id.' AND  '.
-		    		'`done` = 0 '
+		    		'`user_id` = '.(int)$this->data->user->id
 				);
 
 				if ($row) {
@@ -68,8 +67,7 @@ class Achievements extends System
 	    		'SELECT * '.
 	    		'FROM `users_achievements` '.
 	    		'WHERE `achievement_id` = '.(int)$achievementId.' AND '.
-	    		'`user_id` = '.(int)$this->data->user->id.' AND  '.
-	    		'`done` = 0 '
+	    		'`user_id` = '.(int)$this->data->user->id
 			);
 
 			if ($row) {
