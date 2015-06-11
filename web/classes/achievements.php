@@ -13,14 +13,19 @@ class Achievements extends System
     		$this->fetchNewAchievements();
     		return true;
 		}
-
+        else {
+            echo $this->confirmingAchievements();
+        }
+        
+        return true;
+        
 		// Checking timestamp, running check every hour
-		if ($this->data->user->achievements_initiate < time()) {
+		/*if ($this->data->user->achievements_initiate < time()) {
 			echo $this->confirmingAchievements();
 			return true;
-		}
+		}*/
 
-		return false;
+		//return false;
     }
 
     public static function give($achievementId) {
