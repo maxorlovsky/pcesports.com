@@ -1295,6 +1295,7 @@ class Ajax extends System
         		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
             }
             else {
+                Achievements::give(array(21,22,23));//I am preparing my cards. (Register on Hearthstone tournament.)
                 $answer['ok'] = 2;
             }
     	}
