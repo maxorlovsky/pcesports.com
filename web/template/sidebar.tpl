@@ -152,6 +152,7 @@
         <div class="arrow-down hint" attr-msg="Show donators"></div>
         <div class="list">
             <ul>
+                <li><span class="person">Victor Morozov</span><span class="price">5€</span></li>
                 <li><span class="person">Martin</span><span class="price">2€</span></li>
                 <li><span class="person">Michael S.</span><span class="price">14.43€</span></li>
                 <li><span class="person">Hearthstone League 7</span><span class="price">3€</span></li>
