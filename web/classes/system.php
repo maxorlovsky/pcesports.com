@@ -31,7 +31,12 @@ class System
         $this->checkGetData();
         
         $template = new Template();
-        $template->parse();
+        if (isset($_GET['language']) && $_GET['language'] == 'widget') { //Special widget command
+            $template->parseWidget();
+        }
+        else {
+            $template->parse();
+        }        
     }
     
     public function fetchParams() {
@@ -974,7 +979,7 @@ class System
             }
             
             exit();
-        }
+        }z
 
         return true;
     }

@@ -23,6 +23,14 @@ class Template extends System
         return true;
     }
     
+    public function parseWidget() {
+    	$this->getWidgetTemplate('head');
+		$this->loadPage($this);
+        $this->getWidgetTemplate('footer');
+        
+        return true;
+    }
+    
     public function getSeo() {
         $this->seoData = array();
         
@@ -122,6 +130,15 @@ class Template extends System
     	}
     	
     	return false;
+    }
+    
+    public function getWidgetTemplate($page) {
+    	if (file_exists(_cfg('template').'/widget/'.$page.'.tpl')) {
+        	include _cfg('template').'/widget/'.$page.'.tpl';
+    	}
+    	else {
+    		echo '<br />Widget template '.$page.' not found<br />';
+    	}
     }
     
     public function getMainTemplate($page) {
