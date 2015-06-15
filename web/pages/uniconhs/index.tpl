@@ -34,14 +34,8 @@
                         <div class="message hidden"></div>
                     </div>
                 <? } ?>
-
-                <div class="form-item" data-label="stream">
-                    <input type="text" name="stream" class="hint" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_hs')?>" />
-				    <div class="message hidden"></div>
-				</div>
-
                 
-                <? for ($i=1;$i<=4;++$i) { ?>
+                <? for ($i=1;$i<=3;++$i) { ?>
                 <div class="form-item" data-label="hero<?=$i?>">
                     <select class="hero<?=$i?>" name="hero<?=$i?>">
                         <option value="0"><?=t('pick_hero')?></option>
@@ -54,7 +48,7 @@
                 <? } ?>
 
                 <div class="form-item" data-label="agree">
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs')?></label>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs_unicon')?></label>
                     <div class="message hidden"></div>
                 </div>
                 
@@ -84,11 +78,10 @@
 var heroes = {
     1: 0,
     2: 0,
-    3: 0,
-    4: 0    
+    3: 0 
 };
 
-$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
+$('.hero1, .hero2, .hero3').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
@@ -114,7 +107,7 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     
     $.each(heroes, function(k, v) {
         if (v != 0) {
-            for (i=1;i<=4;++i) {
+            for (i=1;i<=3;++i) {
                 if (i != k) {
                     $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
                 }

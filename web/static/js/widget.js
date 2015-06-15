@@ -14,7 +14,7 @@ $('#pce-widget').ready(function() {
 		margin: '0 auto'
 	});
 
-	widget.html('<iframe src="http://test.pcesports.com/widget/uniconhs" style="width: 830px; border: 0; height: 2155px; margin: 0 auto;" />');
+	widget.html('<iframe src="http://test.pcesports.com/widget/uniconhs" style="width: 830px; border: 0; height: 2075px; margin: 0 auto;" />');
 });
 
 $('#register-in-tournament').on('click', function() {
