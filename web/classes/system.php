@@ -979,7 +979,7 @@ class System
             }
             
             exit();
-        }z
+        }
 
         return true;
     }
