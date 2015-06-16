@@ -2,8 +2,15 @@ var UC = {
     //global insides
     site: g.site,
     formInProgress: 0, //used when required to check if form is still in progress
+    prevHeight: 0,
     
     //functions
+    sendFrameMessage: function(height) {
+        if ($('body').height() != prevHeight) {
+            prevHeight = height;
+            window.parent.postMessage('height='+height, "*");
+        }
+    },
     addParticipant: function() {
         if (this.formInProgress == 1) {
             return false;
@@ -117,3 +124,5 @@ var UC = {
 $('#register-in-tournament').on('click', function() {
     UC.addParticipant();
 });
+
+setInterval(function(){UC.sendFrameMessage($('body').height());}, 500);

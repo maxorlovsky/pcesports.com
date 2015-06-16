@@ -25,13 +25,19 @@ $('#pce-widget').ready(function() {
 	});
 	iframe.attr('src', parentUrl);
     
-    iframe.ready(function() {
-        console.log(iframe.contentWindow.document.body.scrollHeight);
-    });
-    iframe.on('resize', function() {
-        console.log(iframe.contentWindow.document.body.scrollHeight);
-    });
+    if (window.addEventListener) {
+        window.addEventListener("message", fetchFrameMessage, false);
+    } else {
+        window.attachEvent("onmessage", fetchFrameMessage);
+    }
 });
+
+function fetchFrameMessage(event) {
+    data = event.data.split('=');
+    if (data[0] == 'height') {
+        iframe.height(data[1]);
+    }
+};
 
 }
 else {
