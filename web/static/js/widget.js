@@ -35,7 +35,7 @@ $('#pce-widget').ready(function() {
 function fetchFrameMessage(event) {
     data = event.data.split('=');
     if (data[0] == 'height') {
-        widget.find('iframe').height(data[1]);
+        $('#pce-widget').find('iframe').height(data[1]);
     }
 };
 
