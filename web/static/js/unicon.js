@@ -6,8 +6,8 @@ var UC = {
     
     //functions
     sendFrameMessage: function(height) {
-        if ($('body').height() != prevHeight) {
-            prevHeight = height;
+        if ($('body').height() != this.prevHeight) {
+            this.prevHeight = height;
             window.parent.postMessage('height='+height, "*");
         }
     },
