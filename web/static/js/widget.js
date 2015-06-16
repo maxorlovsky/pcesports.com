@@ -2,6 +2,7 @@ if (window.jQuery) {
 
 $('#pce-widget').ready(function() {
 	var widget = $('#pce-widget');
+    var iframe;
 	var parentUrl = 'https://www.pcesports.com/widget/uniconhs?system='+window.location.hostname;
 
 	if (widget.length <= 0) {
@@ -16,14 +17,20 @@ $('#pce-widget').ready(function() {
 	});
 
 	widget.html('<iframe />');
-	widget.find('iframe').css({
-		width: '830px',
+    
+    iframe = widget.find('iframe');
+	iframe.css({
+		width: '100%',
 		border: '0',
-		height: '100%',
-		minHeight: '100%'
 	});
-
-	widget.find('iframe').attr('src', parentUrl);
+	iframe.attr('src', parentUrl);
+    
+    iframe.ready(function() {
+        console.log(iframe.contentWindow.document.body.scrollHeight);
+    });
+    iframe.on('resize', function() {
+        console.log(iframe.contentWindow.document.body.scrollHeight);
+    });
 });
 
 }
