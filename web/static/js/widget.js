@@ -27,3 +27,6 @@ $('#pce-widget').ready(function() {
 });
 
 }
+else {
+    console.log('jQuery not found, shutting down');
+}
