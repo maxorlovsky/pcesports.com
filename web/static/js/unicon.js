@@ -129,3 +129,5 @@ $('body').on('resize', function() {
     UC.sendFrameMessage($('body').height());
 });
 
+UC.sendFrameMessage($('body').height());
+
