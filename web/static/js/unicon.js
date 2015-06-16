@@ -125,7 +125,7 @@ $('#register-in-tournament').on('click', function() {
     UC.addParticipant();
 });
 
-$('body').on('resize', function() {
+$(window).on('resize', function() {
     UC.sendFrameMessage($('body').height());
 });
 
