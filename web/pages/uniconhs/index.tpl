@@ -14,26 +14,23 @@
 	
 	<div class="block-content signup">
 		<div id="join-form">
-            <p class="reg-completed success-add"><?=t('unicon_join_tournament_almost_done')?></p>
+            <p class="reg-completed success-add"><?=t('unicon_join_tournament_complete')?></p>
 
 			<form id="da-form" method="post">
-                <? if ($this->data->user->battletag) { ?>
-                    <div class="form-item" data-label="battletag">
-                        Battle Tag: <strong><?=$this->data->user->battletag?></strong>
-                    </div>
-                <? } else { ?>
-                    <div class="form-item" data-label="battletag">
-                        <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
-                        <div class="message hidden"></div>
-                    </div>
-                <? } ?>
+                <div class="form-item" data-label="battletag">
+                    <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="" />
+                    <div class="message hidden"></div>
+                </div>
 
-                <? if (!isset($this->data->user->email) && !$this->data->user->email) { ?>
-                    <div class="form-item" data-label="email">
-                        <input type="text" name="email" placeholder="Email*" value="" />
-                        <div class="message hidden"></div>
-                    </div>
-                <? } ?>
+                <div class="form-item" data-label="email">
+                    <input type="text" name="email" placeholder="Email*" value="" />
+                    <div class="message hidden"></div>
+                </div>
+
+                <div class="form-item" data-label="phone">
+                    <input type="text" name="phone" placeholder="Phone number" value="" />
+                    <div class="message hidden"></div>
+                </div>
                 
                 <? for ($i=1;$i<=3;++$i) { ?>
                 <div class="form-item" data-label="hero<?=$i?>">
@@ -63,12 +60,6 @@
 			<div class="clear"></div>
 			<a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?></a>
 		</div>
-
-        <div class="tournament-rules">
-            <?=t('unicon_hs_tournament_information')?>
-        </div>
-
-        <div class="clear"></div>
     </div>
 </div>
 

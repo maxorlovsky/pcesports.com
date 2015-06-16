@@ -13,7 +13,12 @@
 
 <script src="<?=_cfg('static')?>/js/scripts.js"></script>
 
-<section id="full-site-wrapper">
+<script>
+var g = {
+    site: '<?=_cfg('site')?>'
+};
+</script>
+
 
 <? if (_cfg('env') == 'prod') { ?>
 <script>

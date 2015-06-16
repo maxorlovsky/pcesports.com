@@ -1,22 +1,29 @@
+if (window.jQuery) {
+
 $('#pce-widget').ready(function() {
 	var widget = $('#pce-widget');
+	var parentUrl = 'http://dev.pcesports.com/widget/uniconhs?system='+window.location.href;
 
-	if (widget.length < 0) {
+	if (widget.length <= 0) {
 		console.log('Widget frame not found, shutting down');
 		return false;
 	}
 
 	//widget-css
 	widget.css({
-		width: '830px',
-		height: '100%',
-		minHeight: '100%',
+		width: '100%',
 		margin: '0 auto'
 	});
 
-	widget.html('<iframe src="http://test.pcesports.com/widget/uniconhs" style="width: 830px; border: 0; height: 2075px; margin: 0 auto;" />');
+	widget.html('<iframe />');
+	widget.find('iframe').css({
+		width: '830px',
+		border: '0',
+		height: '100%',
+		minHeight: '100%'
+	});
+
+	widget.find('iframe').attr('src', parentUrl);
 });
 
-$('#register-in-tournament').on('click', function() {
-    PC.addParticipantWidget('HS');
-});
+}

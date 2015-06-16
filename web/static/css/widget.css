@@ -3,7 +3,7 @@ input[type="text"] {
   border: 1px solid #aaa;
   transition: .5s; }
   input[type="text"]:focus {
-	border-bottom: 1px inset #1697e1; }
+	border-bottom: 1px inset #888FD0; }
 
 /* Reset like things */
 img, p, td {
@@ -13,7 +13,7 @@ img, p, td {
 
 a {
   text-decoration: none;
-  color: #1697e1;
+  color: #888FD0;
   transition: .5s; }
 
 a:hover {
@@ -42,6 +42,7 @@ body {
   height: 100%;
   font-family: Open Sans;
   background: transparent;
+  overflow: hidden;
 }
 
 #full-site-wrapper {
@@ -56,7 +57,7 @@ body {
 .button {
   color: #eee;
   display: inline-block;
-  background-color: #1697e1;
+  background-color: #888FD0;
   padding: 10px 15px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -81,7 +82,7 @@ body {
 	background-repeat: no-repeat; }
   .button:hover {
 	color: #fff;
-	background-color: #2878d1; }
+	background-color: #6828d1; }
 
 .container {
 	position: relative;
@@ -110,8 +111,8 @@ footer {
   min-height: 41px; }
 
 .block .block-header-wrapper h1 {
-  background: linear-gradient(to bottom, #27c6d0 0%, #217fbb 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 1px 1px #43CDEF;
+  background: linear-gradient(to bottom, #8e27d0 0%, #7821bb 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 1px 1px #b443ef;
   margin: 0;
   padding: 10px;
   font-size: 15px;
@@ -126,7 +127,6 @@ footer {
 
 .block .block-content {
   display: block;
-  background-color: #fff;
   padding: 20px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
   font-size: 13px; }
@@ -219,13 +219,13 @@ footer {
   padding: 0; }
 
 .tournament .active-tournament:hover {
-  background-color: #1697E1;
+  background-color: #888FD0;
   color: #fff; }
   .tournament .active-tournament:hover .right-part {
 	color: #fff; }
 
 .tournament .active-tournament .status {
-  background-color: #1697E1;
+  background-color: #888FD0;
   color: #fff; }
 
 .tournament .ended-tournament:hover {
@@ -357,7 +357,7 @@ footer {
 
 .participants .block.hoverable .team-name {
   transition: .3s;
-  color: #1697e1; }
+  color: #888FD0; }
 
 .participants .block.hoverable:hover .team-name {
   color: #444; }
@@ -480,70 +480,6 @@ footer {
 .form .success {
   background: url("../images/success.png") no-repeat left center;
   color: #32b229; }
-
-footer .games img {
-  margin-right: 20px; }
-
-#fader {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  z-index: 10;
-  display: none;
-  background-color: #fff;
-  opacity: 0.7;
-  overflow: hidden; }
-
-.popup {
-  position: fixed;
-  z-index: 60; }
-
-#login-window {
-  width: 425px;
-  margin: 0 auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 1px 1px #43CDEF;
-  background-color: #fff;
-  border-radius: 8px; }
-  #login-window .login-inside {
-	padding: 15px; }
-	#login-window .login-inside h1 {
-	  margin: 0; }
-	#login-window .login-inside h2 {
-	  color: #888;
-	  font-size: 16px; }
-	#login-window .login-inside .information {
-	  font-style: italic;
-	  color: #555;
-	  font-size: 14px;
-	  margin-top: 10px; }
-	#login-window .login-inside a:hover img {
-	  opacity: 0.6;
-	  transition: .5s; }
-
-#rules-window {
-  width: 80%;
-  margin: 0 auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), inset 0 1px 1px 1px #43CDEF;
-  background-color: #fff;
-  border-radius: 8px; }
-  #rules-window .rules-inside {
-	padding: 15px; }
-	#rules-window .rules-inside h1 {
-	  margin: 0; }
-	#rules-window .rules-inside h2 {
-	  color: #888;
-	  font-size: 16px; }
-	#rules-window .rules-inside .information {
-	  font-style: italic;
-	  color: #555;
-	  font-size: 14px;
-	  margin-top: 10px; }
-	#rules-window .rules-inside a:hover img {
-	  opacity: 0.6;
-	  transition: .5s; }
 
 .heroes-images {
   margin: 10px 0; }
