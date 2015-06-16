@@ -3,7 +3,7 @@ if (window.jQuery) {
 $('#pce-widget').ready(function() {
 	var widget = $('#pce-widget');
     var iframe;
-	var parentUrl = 'https://www.pcesports.com/widget/uniconhs?system='+window.location.hostname;
+	var parentUrl = 'https://test.pcesports.com/widget/uniconhs?system='+window.location.hostname;
 
 	if (widget.length <= 0) {
 		console.log('Widget frame not found, shutting down');
