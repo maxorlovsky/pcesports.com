@@ -61,8 +61,6 @@ class News
 	}
 	
 	public function uploadImage($data) {
-		require_once _cfg('cmslib').'/phpthumb/start.php';
-		
 		if (!file_exists(_cfg('uploads').'/news')) {
 			mkdir(_cfg('uploads').'/news');
 		}
@@ -76,14 +74,14 @@ class News
 		
 		if (move_uploaded_file($_FILES['upload']['tmp_name'], _cfg('uploads').'/news/original-'.$file)) {
 			list($width, $height) = getimagesize(_cfg('uploads').'/news/original-'.$file);
-			
+
 			//Line
-			$thumb = PhpThumbFactory::create(_cfg('uploads').'/news/original-'.$file);
+			$thumb = PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
 			$thumb->adaptiveResize(790, 370);
 			$thumb->save(_cfg('uploads').'/news/big-'.$file);
 			
 			//Square
-			$thumb = PhpThumbFactory::create(_cfg('uploads').'/news/original-'.$file);
+			$thumb = PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
 			$thumb->adaptiveResize(225, 170);
 			$thumb->save(_cfg('uploads').'/news/small-'.$file);
 			
