@@ -76,12 +76,12 @@ class News
 			list($width, $height) = getimagesize(_cfg('uploads').'/news/original-'.$file);
 
 			//Line
-			$thumb = PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
+			$thumb = new PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
 			$thumb->adaptiveResize(790, 370);
 			$thumb->save(_cfg('uploads').'/news/big-'.$file);
 			
 			//Square
-			$thumb = PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
+			$thumb = new PHPThumb\GD(_cfg('uploads').'/news/original-'.$file);
 			$thumb->adaptiveResize(225, 170);
 			$thumb->save(_cfg('uploads').'/news/small-'.$file);
 			
