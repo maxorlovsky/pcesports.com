@@ -78,7 +78,6 @@ class Winners extends System
                     '%prize%',
                     '%server%',
                     '%playerList%',
-                    '%subscriptionNumber%',
                     '%additionalPrice%',
                 ),
     			array(
@@ -87,7 +86,6 @@ class Winners extends System
                     $v->prizes,
                     strtoupper($v->server),
                     $v->playersList,
-                    $form['subscription_number'],
                     $additionalPrice,
                 ),
     			$emailText

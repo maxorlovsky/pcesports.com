@@ -2,10 +2,6 @@
 
 <table class="table emails" id="send" name="winners">
     <tr>
-        <td width="20%"><b>Riot tournament number</b></td>
-        <td><input type="text" id="subscription_number" size="50" value="" /></td>
-    </tr>
-    <tr>
         <td width="20%"><b>Server</b></td>
         <td><select id="server"><option value="euw">EUW</option><option value="eune">EUNE</option></select></td>
     </tr>
