@@ -29,13 +29,6 @@ class ParticipantsHs
             '`ended` = 0 '.
             'ORDER BY `verified` ASC'
         );
-        
-        if ($this->participants) {
-            foreach($this->participants as &$v) {
-                $v->contact_info = json_decode($v->contact_info);
-            }
-            unset($v);
-        }
 
 		return $this;
 	}
