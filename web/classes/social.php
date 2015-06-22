@@ -1,7 +1,6 @@
 <?php
 class Social
 {
-    public $callbackUrl = 'https://www.pcesports.com';
     private $config;
     
     function __construct($social = '') {
@@ -575,7 +574,7 @@ class Social
         }
 		$params = array(
             'url'	=> 'https://api.twitter.com/oauth/access_token',
-            'callback' => urlencode($this->callbackUrl.'/run/social/tw'),
+            'callback' => urlencode(_cfg('site').'/run/social/tw'),
             'id'    => $this->config['id'],
             'secret'=> $this->config['private'],
             'token'=> $_GET['oauth_token'],
@@ -673,7 +672,7 @@ class Social
 		
 		$params = array(
 			'url'	=> 'https://api.twitter.com/oauth/request_token',
-			'callback' => urlencode($this->callbackUrl.'/run/social/tw'),		
+			'callback' => urlencode(_cfg('site').'/run/social/tw'),		
 			'id'    => $this->config['id'],
 			'secret'=> $this->config['private'],
 			'nonce' =>	md5(uniqid(rand(), true)),
