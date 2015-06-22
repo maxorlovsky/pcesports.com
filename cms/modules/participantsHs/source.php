@@ -16,7 +16,7 @@ class ParticipantsHs
         	go(_cfg('cmssite').'/#participantsHs');
         }
         
-        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hs-current-number"');
+        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hs-current-number-s1"');
         $this->currentTournament = $row->value;
         
 		$this->participants = Db::fetchRows(
