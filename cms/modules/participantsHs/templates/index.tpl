@@ -15,7 +15,7 @@
                     <td><?=$v->email?></td>
                     <td class="centered">
                         <a href="<?=_cfg('cmssite').'/#participantsHs/able/'.$v->id?>">
-                            <?=($v->approved == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Verified"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Not verified"/>')?>
+                            <?=($v->verified == 1 ? '<img src='._cfg('cmsimg').'/enabled.png  class="hint" name="Verified"/>' : '<img src='._cfg('cmsimg').'/disabled.png  class="hint" name="Not verified"/>')?>
                             
                         </a>
                     </td>

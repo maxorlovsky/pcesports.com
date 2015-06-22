@@ -20,7 +20,7 @@ class ParticipantsHs
         $this->currentTournament = $row->value;
         
 		$this->participants = Db::fetchRows(
-            'SELECT `id`, `name`, `email`, `approved` '.
+            'SELECT `id`, `name`, `email`, `verified` '.
             'FROM `participants` '.
             'WHERE `game` = "hs" AND '.
             '`server` = "s1" AND '.
