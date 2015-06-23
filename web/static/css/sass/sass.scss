@@ -900,7 +900,10 @@ footer .partners .aimskillz {
         &.hearthstone {
             width: 100%;
             height: auto;
-            padding-bottom: 15px;
+            padding-bottom: 0;
+            .name {
+                padding: 5px 0 0 15px;
+            }
         }
         .social {
             padding: 5px 0 0 15px;
@@ -937,6 +940,11 @@ footer .partners .aimskillz {
             padding: 5px 0 10px 15px;
             font-size: 13px;
             font-style: italic;
+        }
+        .summoner-icon {
+            float: right;
+            width: 100px;
+            height: 100px;
         }
     }
     .team-division {

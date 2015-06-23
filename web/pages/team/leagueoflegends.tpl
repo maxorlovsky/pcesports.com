@@ -9,6 +9,11 @@
         <div class="block-content team-list">
             <? foreach($this->team as $k => $v) { ?>
                 <div class="team-user hearthstone">
+                    <? if ($v['summonerName']) { ?>
+                        <a href="http://eune.op.gg/summoner/?userName=<?=$v['summonerName']?>" class="summoner-icon hint" attr-msg="Summoner: <?=$v['summonerName']?>">
+                            <img class="game-logo" src="<?=_cfg('img')?>/leagues_big/<?=strtolower($v['league'])?>_<?=$this->convertDivision($v['division'])?>.png" />
+                        </a>
+                    <? } ?>
                     <? if ($v['avatar']) { ?>
                         <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
                     <? } ?>
@@ -21,9 +26,6 @@
                             <? } ?>
                         </div>
                     <? } ?>
-                    <div class="social">
-                        <?=$v['achievements']?>
-                    </div>
                 </div>
             <? } ?>
             <div class="clear"></div>

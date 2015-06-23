@@ -1,6 +1,6 @@
 <?php
 
-class team
+class team extends system
 {
     public $team;
     
@@ -10,11 +10,13 @@ class team
 
     public function getLol() {
         $rows = Db::fetchRows(
-            'SELECT `id`, `name`, `avatar` FROM `users` '.
-            'WHERE `id` = 760 OR '. //Veipper
-            ' `id` = 862 OR '. //AnOldEnemy
-            ' `id` = 811 OR '. //Cake
-            ' `id` = 863 ' //Knight
+            'SELECT `u`.`id`, `u`.`name`, `u`.`avatar`, `s`.`name` AS `summonerName`, `s`.`league`, `s`.`division` '.
+            'FROM `users` AS `u` '.
+            'LEFT JOIN `summoners` AS `s` ON (`u`.`id` = `s`.`user_id` AND `s`.`approved` = 1 AND `s`.`region` = "eune")'.
+            'WHERE `u`.`id` = 760 OR '. //Veipper
+            '`u`.`id` = 862 OR '. //AnOldEnemy
+            '`u`.`id` = 811 OR '. //Cake
+            '`u`.`id` = 863 ' //Knight
         );
         
         $this->team = array(
@@ -50,6 +52,9 @@ class team
             foreach($rows as $v) {
                 $this->team[$v->id]['name'] = $v->name;
                 $this->team[$v->id]['avatar'] = $v->avatar;
+                $this->team[$v->id]['summonerName'] = $v->summonerName;
+                $this->team[$v->id]['league'] = $v->league;
+                $this->team[$v->id]['division'] = $v->division;
             }
         }
         
