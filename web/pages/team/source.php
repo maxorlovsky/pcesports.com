@@ -13,6 +13,7 @@ class team
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 760 OR '. //Veipper
             ' `id` = 862 OR '. //AnOldEnemy
+            ' `id` = 811 OR '. //Cake
             ' `id` = 863 ' //Knight
         );
         
@@ -29,6 +30,12 @@ class team
                 'role' => 'Top laner',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/mihael.krpan',
+                )
+            ),
+            811 => array(
+                'role' => 'AD Carry',
+                'socials' => array(
+                    
                 )
             ),
             863 => array(
