@@ -12,7 +12,8 @@ class team
         $rows = Db::fetchRows(
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 760 OR '. //Veipper
-            ' `id` = 862 ' //AnOldEnemy
+            ' `id` = 862 OR '. //AnOldEnemy
+            ' `id` = 863 ' //Knight
         );
         
         $this->team = array(
@@ -28,6 +29,12 @@ class team
                 'role' => 'Top laner',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/mihael.krpan',
+                )
+            ),
+            863 => array(
+                'role' => 'Support',
+                'socials' => array(
+                    
                 )
             ),
         );
@@ -78,7 +85,8 @@ class team
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
-            '`id` = 112 ' //anya
+            '`id` = 112 OR '. //anya
+            '`id` = 864 ' //ovy
         );
         
         $this->team = array(
@@ -100,6 +108,12 @@ class team
                 'role' => 'Creativity generator',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/anya.orlovsky',
+                )
+            ),
+            864 => array(
+                'role' => 'League of Legends Admin & Coach',
+                'socials' => array(
+                    'fb' => 'https://www.facebook.com/ovidijus.parsiunas',
                 )
             )
         );
