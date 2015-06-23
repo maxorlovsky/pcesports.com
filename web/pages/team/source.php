@@ -111,7 +111,7 @@ class team
                 )
             ),
             864 => array(
-                'role' => 'League of Legends Admin & Coach',
+                'role' => 'LoL Admin & Coach',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/ovidijus.parsiunas',
                 )
