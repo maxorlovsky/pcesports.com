@@ -20,18 +20,18 @@ class team extends system
         );
         
         $this->team = array(
+            862 => array(
+                'role' => 'Top laner',
+                'socials' => array(
+                    'fb' => 'https://www.facebook.com/mihael.krpan',
+                )
+            ),
             760 => array(
                 'role' => 'Team Captain (Mid laner)',
                 'socials' => array(
                     'fb' => 'http://www.facebook.com/Veipper',
                     'tw' => 'http://twitter.com/Ve1pper',
                     'tv' => 'http://www.twitch.tv/ve1pper',
-                )
-            ),
-            862 => array(
-                'role' => 'Top laner',
-                'socials' => array(
-                    'fb' => 'https://www.facebook.com/mihael.krpan',
                 )
             ),
             811 => array(
