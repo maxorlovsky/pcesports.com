@@ -85,6 +85,7 @@ class member extends System
         $this->member->achievements = array();
         $memberAchievements = array();
         $achievementsCurrent = array();
+        $memberCurrents = array();
         if ($rows) {
             $this->member->achievements = (array)$rows; //putting in array for merge
 

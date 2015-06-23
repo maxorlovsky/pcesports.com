@@ -8,7 +8,7 @@ class profile extends System
 		parent::__construct();
         
         if ($this->logged_in == 0 && $_GET['val2'] != 'error') {
-            header('Location: '._cfg('site'));
+            go(_cfg('site'));
             exit();
         }
 	}
@@ -118,14 +118,16 @@ class profile extends System
             'ORDER BY `id`, `approved` '
         );
         
-        foreach($return->summoners as &$v) {
-            foreach(_cfg('lolRegions') as $k => $lr) {
-                if ($k == $v->region) {
-                    $v->regionName = $lr;
+        if ($return->summoners) {
+            foreach($return->summoners as &$v) {
+                foreach(_cfg('lolRegions') as $k => $lr) {
+                    if ($k == $v->region) {
+                        $v->regionName = $lr;
+                    }
                 }
             }
+            unset($v);
         }
-        unset($v);
         
         return $return;
     }

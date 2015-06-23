@@ -12,8 +12,7 @@ class team
         $rows = Db::fetchRows(
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 760 OR '. //Veipper
-            ' `id` = 762 OR '. //Zabtra
-            ' `id` = 765 ' //HotBlaze
+            ' `id` = 862 ' //AnOldEnemy
         );
         
         $this->team = array(
@@ -25,16 +24,10 @@ class team
                     'tv' => 'http://www.twitch.tv/ve1pper',
                 )
             ),
-            762 => array(
-                'role' => 'Support',
+            862 => array(
+                'role' => 'Top laner',
                 'socials' => array(
-                    
-                )
-            ),
-            765 => array(
-                'role' => 'Jungler',
-                'socials' => array(
-                    
+                    'fb' => 'https://www.facebook.com/mihael.krpan',
                 )
             ),
         );
@@ -85,11 +78,7 @@ class team
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
-            '`id` = 112 OR '. //anya
-            '`id` = 132 OR '. //arturs
-            '`id` = 213 OR '. //aven
-            '`id` = 126 OR '. //angel-ada
-            '`id` = 491 ' //vanngarrd
+            '`id` = 112 ' //anya
         );
         
         $this->team = array(
