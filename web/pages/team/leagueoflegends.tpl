@@ -10,8 +10,12 @@
             <? foreach($this->team as $k => $v) { ?>
                 <div class="team-user hearthstone">
                     <? if ($v['summonerName']) { ?>
-                        <a href="http://eune.op.gg/summoner/?userName=<?=$v['summonerName']?>" class="summoner-icon hint" attr-msg="Summoner: <?=$v['summonerName']?>">
+                        <a href="http://eune.op.gg/summoner/?userName=<?=$v['summonerName']?>" target="_blank" class="summoner-icon hint" attr-msg="Summoner: <?=$v['summonerName']?>">
+                        <? if ($v['league'] && $v['division']) { ?>
                             <img class="game-logo" src="<?=_cfg('img')?>/leagues_big/<?=strtolower($v['league'])?>_<?=$this->convertDivision($v['division'])?>.png" />
+                        <? } else { ?>
+                            <img class="game-logo" src="<?=_cfg('img')?>/leagues_big/unranked.png" />
+                        <? } ?>
                         </a>
                     <? } ?>
                     <? if ($v['avatar']) { ?>
