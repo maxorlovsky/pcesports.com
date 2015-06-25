@@ -1,0 +1,558 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #wrap {
+            min-height: 100%;
+            height: auto;
+        }
+        
+        .bracket-holder {
+            cursor: move;
+            overflow: none;
+            width: 100%;
+            text-align: center;
+            outline: 0;
+        }
+        .brackets {
+            overflow: auto;
+        }
+        .brackets .round, .brackets .directions {
+            float: left;
+        }
+        .brackets .round {
+            width: 280px;
+        }
+        .brackets .round-header {
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .brackets .match {
+            position: relative;
+            border: 1px solid transparent;
+        }
+        .brackets .match .view-report {
+            display: none;
+        }
+        
+        .brackets .one .match {
+            margin-bottom: 29.5px;
+        }
+        .brackets .one .direction {
+            margin-top: 88px;
+            margin-bottom: 131px;
+        }
+        .brackets .two {
+            margin-top: 68px;
+        }
+        .brackets .two .match {
+            margin-bottom: 160px;
+        }
+        .brackets .two .direction {
+            margin-top: 86px;
+            margin-bottom: 259px;
+            height: 262px;
+        }
+        .brackets .three {
+            margin-top: 201px;
+        }
+        .brackets .three .match {
+            margin-bottom: 421px;
+        }
+        .brackets .three .direction {
+            margin-top: 86px;
+            height: 523px;
+        }
+        .brackets .four {
+            margin-top: 461px;
+        }
+        
+        .brackets .match .team {
+            background-color: #aaa;
+            height: 48px;
+            line-height: 48px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .brackets .match .team.entry-top {
+            border: 1px solid #000;
+            border-radius: 3px 3px 0 0;
+        }
+        .brackets .match .team.entry-bottom {
+            border: 1px solid #000;
+            border-radius: 0 0 3px 3px;
+            border-top: 0;
+        }
+        .brackets .match .team a {
+            display: block;
+            line-height: 48px;
+            font-weight: 500;
+            color: #444;
+            padding: 0 10px;
+        }
+        .brackets .match .team .name {
+            float: left;
+        }
+        .brackets .match .team .seed {
+            font-size: 12px;
+            color: #777;
+            margin-left: 5px;
+        }
+        .brackets .match .team .score {
+            float: right;
+            position: absolute;
+            right: 10px;
+            top: 9px;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 3px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            background-color: #333;
+            color: #fff;
+        }
+        .brackets .match .team.active .score {
+            background-color: #111;
+            color: #fff;
+        }
+        .brackets .match .team .absent {
+            padding: 0 10px;
+        }
+        
+        .brackets .directions {
+            width: 32px;
+        }
+        .brackets .directions .direction:last-child {
+            margin-bottom: 0;
+        }
+        
+        .brackets .direction {
+            background-color: #999;
+            width: 2px;
+            height: 130px;
+            margin-left: 15px;
+        }
+        .brackets .direction .top,
+        .brackets .direction .middle, 
+        .brackets .direction .bottom {
+            background-color: #999;
+            width: 8px;
+            height: 2px;
+            position: relative;
+        }
+        .brackets .direction .top {
+            left: -8px;
+            top: 0;
+        }
+        .brackets .direction .middle {
+            left: 2px;
+            top: 63px;
+        } 
+        .brackets .direction .bottom {
+            left: -8px;
+            top: 124px;
+        }
+        .brackets .two .direction .middle {
+            top: 131px;
+        }
+        .brackets .two .direction .bottom {
+            top: 256px;
+        }
+        .brackets .three .direction .middle {
+            top: 258px;
+        }
+        .brackets .three .direction .bottom {
+            top: 517px;
+        }
+    </style>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<div id="wrap">
+
+<div class="bracket-holder">
+
+<div class="brackets" style="width: 1216px;">
+
+    <!-- Round One -->
+    <div class="round one">
+        <div class="round-header">Round One</div>
+
+        <div class="match">
+            <div class="team entry-top" data-entry-id="4186">
+                <a href="http://egl.tv/team/captain-black">
+                    <span class="name">Captain Black</span>
+                    <span class="seed">(1)</span>
+                </a>
+            </div>
+            <div class="view-report">
+                <a href="http://egl.tv/tournament/294/matches/view/10317">View Details</a>
+            </div>
+            <div class="team entry-bottom" data-entry-id="">
+                <span class="absent">-</span>
+            </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="3305">
+        <a href="http://egl.tv/team/gim-white">
+        <span class="name">GiM White</span>
+        <span class="seed">(8)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10318">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="4414">
+        <a href="http://egl.tv/team/oxidus">
+        <span class="name">Oxidus</span>
+        <span class="seed">(9)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="4413">
+        <a href="http://egl.tv/team/tossthegreeksalad">
+        <span class="name">TossTheGreekSalad</span>
+        <span class="seed">(4)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10319">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="3243">
+        <a href="http://egl.tv/team/kek-tops">
+        <span class="name">kek tops</span>
+        <span class="seed">(13)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="4410">
+        <a href="http://egl.tv/team/we-bring-the-heat">
+        <span class="name">We Bring The Heat</span>
+        <span class="seed">(5)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10320">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="4409">
+        <a href="http://egl.tv/team/pussypatrolwest">
+        <span class="name">PussyPatrolWest</span>
+        <span class="seed">(12)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="4404">
+        <a href="http://egl.tv/team/cursed2win">
+        <span class="name">Cursed2Win</span>
+        <span class="seed">(2)</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10321">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="">
+        <span class="absent">-</span>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="4419">
+        <a href="http://egl.tv/team/mortality-esports">
+        <span class="name">Mortality eSports</span>
+        <span class="seed">(7)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10322">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="4400">
+        <a href="http://egl.tv/team/on-marked">
+        <span class="name">On Marked</span>
+        <span class="seed">(10)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="3449">
+        <a href="http://egl.tv/team/ecliptic-gaming">
+        <span class="name">Ecliptic Gaming</span>
+        <span class="seed">(3)</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10323">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="">
+        <span class="absent">-</span>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="3130">
+        <a href="http://egl.tv/team/team-sweatski">
+        <span class="name">Team Sweatski</span>
+        <span class="seed">(6)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10324">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="420">
+        <a href="http://egl.tv/team/retards-united">
+        <span class="name">Retards United</span>
+        <span class="seed">(11)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        </div>
+
+    </div>
+
+    <div class="directions one">
+        <div class="direction">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+
+        <div class="direction">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+
+        <div class="direction">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+
+        <div class="direction">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+    </div>
+
+    <!-- Round Two -->
+    <div class="round two">
+        <div class="round-header">Quarter Finals</div>
+
+        <div class="match">
+            <div class="team entry-top" data-entry-id="4186">
+            <a href="http://egl.tv/team/captain-black">
+            <span class="name">Captain Black</span>
+            <span class="seed">(1)</span>
+            <span class="score">0</span>
+            </a>
+            </div>
+            <div class="view-report">
+            <a href="http://egl.tv/tournament/294/matches/view/10325">View Details</a>
+            </div>
+            <div class="team entry-bottom" data-entry-id="3305">
+            <a href="http://egl.tv/team/gim-white">
+            <span class="name">GiM White</span>
+            <span class="seed">(8)</span>
+            <span class="score">1</span>
+            </a>
+            </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="3243">
+        <a href="http://egl.tv/team/kek-tops">
+        <span class="name">kek tops</span>
+        <span class="seed">(13)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10326">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="4410">
+        <a href="http://egl.tv/team/we-bring-the-heat">
+        <span class="name">We Bring The Heat</span>
+        <span class="seed">(5)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="4404">
+        <a href="http://egl.tv/team/cursed2win">
+        <span class="name">Cursed2Win</span>
+        <span class="seed">(2)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10327">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="4419">
+        <a href="http://egl.tv/team/mortality-esports">
+        <span class="name">Mortality eSports</span>
+        <span class="seed">(7)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        </div>
+
+        <div class="match">
+        <div class="team entry-top" data-entry-id="3449">
+        <a href="http://egl.tv/team/ecliptic-gaming">
+        <span class="name">Ecliptic Gaming</span>
+        <span class="seed">(3)</span>
+        <span class="score">0</span>
+        </a>
+        </div>
+        <div class="view-report">
+        <a href="http://egl.tv/tournament/294/matches/view/10328">View Details</a>
+        </div>
+        <div class="team entry-bottom" data-entry-id="420">
+        <a href="http://egl.tv/team/retards-united">
+        <span class="name">Retards United</span>
+        <span class="seed">(11)</span>
+        <span class="score">1</span>
+        </a>
+        </div>
+        </div>
+
+    </div>
+
+    <div class="directions two">
+    <div class="direction">
+    <div class="top"></div>
+    <div class="middle"></div>
+    <div class="bottom"></div>
+    </div>
+
+    <div class="direction">
+    <div class="top"></div>
+    <div class="middle"></div>
+    <div class="bottom"></div>
+    </div>
+    </div>
+
+    <!-- Round Three -->
+    <div class="round three">
+    <div class="round-header">Semi Finals</div>
+
+
+    <div class="match">
+    <div class="team entry-top" data-entry-id="3305">
+    <a href="http://egl.tv/team/gim-white">
+    <span class="name">GiM White</span>
+    <span class="seed">(8)</span>
+    <span class="score">0</span>
+    </a>
+    </div>
+    <div class="view-report">
+    <a href="http://egl.tv/tournament/294/matches/view/10329">View Details</a>
+    </div>
+    <div class="team entry-bottom" data-entry-id="3243">
+    <a href="http://egl.tv/team/kek-tops">
+    <span class="name">kek tops</span>
+    <span class="seed">(13)</span>
+    <span class="score">1</span>
+    </a>
+    </div>
+    </div>
+
+
+    <div class="match">
+    <div class="team entry-top" data-entry-id="4419">
+    <a href="http://egl.tv/team/mortality-esports">
+    <span class="name">Mortality eSports</span>
+    <span class="seed">(7)</span>
+    <span class="score">1</span>
+    </a>
+    </div>
+    <div class="view-report">
+    <a href="http://egl.tv/tournament/294/matches/view/10330">View Details</a>
+    </div>
+    <div class="team entry-bottom" data-entry-id="420">
+    <a href="http://egl.tv/team/retards-united">
+    <span class="name">Retards United</span>
+    <span class="seed">(11)</span>
+    <span class="score">0</span>
+    </a>
+    </div>
+    </div>
+
+    </div>
+
+    <div class="directions three">
+    <div class="direction">
+    <div class="top"></div>
+    <div class="middle"></div>
+    <div class="bottom"></div>
+    </div>
+    </div>
+
+    <!-- Round Four -->
+    <div class="round four">
+    <div class="round-header">Final</div>
+
+
+    <div class="match">
+    <div class="team entry-top" data-entry-id="3243">
+    <a href="http://egl.tv/team/kek-tops">
+    <span class="name">kek tops</span>
+    <span class="seed">(13)</span>
+    <span class="score">2</span>
+    </a>
+    </div>
+    <div class="view-report">
+    <a href="http://egl.tv/tournament/294/matches/view/10331">View Details</a>
+    </div>
+    <div class="team entry-bottom" data-entry-id="4419">
+    <a href="http://egl.tv/team/mortality-esports">
+    <span class="name">Mortality eSports</span>
+    <span class="seed">(7)</span>
+    <span class="score">0</span>
+    </a>
+    </div>
+    </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+</script>
+
+</body>
+</html>

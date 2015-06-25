@@ -6,4 +6,4 @@ Allow: /
 Disallow: /screenshots/
 
 #Sitemap Reference
-Sitemap:http://www.example.com/sitemap.xml
+Sitemap: http://www.pcesports.com/sitemap.xml
