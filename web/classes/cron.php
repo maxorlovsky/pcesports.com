@@ -33,7 +33,7 @@ class Cron extends System {
                 ),
                 array(
                     _cfg('site'),
-                    _cfg('href').'unsubscribe/'.$v->unsublink,
+                    _cfg('href').'/unsubscribe/'.$v->unsublink,
                 ),
                 $row->text
             );
