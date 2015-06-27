@@ -48,7 +48,12 @@ class Winners extends System
         
         $places = array(1 => 'first', 2 => 'second', 3 => 'third', 4 => 'fourth');
         $placesNum = array(1 => '1st', 2 => '2nd', 3 => '3rd', 4 => '4th');
-        $prizes = array(1 => '3200 RP + Triumphant Ryze skin', 2 => '2400 RP', 3 => '1600 RP', 4 => '800 RP');
+        $prizes = array(
+            1 => '1600 RP + Triumphant Ryze skin + 4-Win IP boost', 
+            2 => '1200 RP + 4win IP boost', 
+            3 => '800 RP + 4win IP boost', 
+            4 => '400 RP + 4win IP boost'
+        );
         $i = 1;
         foreach($rows as &$v) {
             if ($v->place == $i) {
