@@ -1,11 +1,13 @@
 <?php
 class Social
 {
+	public $secureSite;
     private $config;
     
     function __construct($social = '') {
 		$this->config = _cfg('social');
         $this->allowedProviders = array('fb', 'vk', 'gp', 'tw', 'sm', 'tc', 'bn');
+        $this->secureSite = str_replace('http', 'https', _cfg('site'));
 	}
 	
 	public function Verify($provider) {
@@ -185,11 +187,11 @@ class Social
 		$cfg = array(
             'url'=>'https://api.twitch.tv/kraken/oauth2/token',
             'post'=>array(
-                'client_id'=>$this->config['id'],
-                'client_secret'=>$this->config['private'],
-                'grant_type'=>'authorization_code',
-                'redirect_uri'=>_cfg('site').'/run/social/tc',
-                'code'=>$_GET['code'],
+                'client_id'		=> $this->config['id'],
+                'client_secret'	=> $this->config['private'],
+                'grant_type'	=> 'authorization_code',
+                'redirect_uri'	=> $this->secureSite.'/run/social/tc',
+                'code'			=> $_GET['code'],
             ),
 		);
         
@@ -243,7 +245,7 @@ class Social
         
 		$url = 'https://api.twitch.tv/kraken/oauth2/authorize'
 				.'?client_id='.$this->config['id']
-				.'&redirect_uri='._cfg('site').'/run/social/tc'
+				.'&redirect_uri='.$this->secureSite.'/run/social/tc'
 				.'&scope=user_read'
 				.'&response_type=code';
 
