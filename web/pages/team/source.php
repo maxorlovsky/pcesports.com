@@ -13,10 +13,10 @@ class team extends system
             'SELECT `u`.`id`, `u`.`name`, `u`.`avatar`, `s`.`name` AS `summonerName`, `s`.`league`, `s`.`division` '.
             'FROM `users` AS `u` '.
             'LEFT JOIN `summoners` AS `s` ON (`u`.`id` = `s`.`user_id` AND `s`.`approved` = 1 AND `s`.`region` = "eune")'.
-            'WHERE `u`.`id` = 760 OR '. //Veipper
+            'WHERE `u`.`id` = 863 OR '. //Knight
             '`u`.`id` = 862 OR '. //AnOldEnemy
-            '`u`.`id` = 811 OR '. //Cake
-            '`u`.`id` = 863 ' //Knight
+            '`u`.`id` = 811 ' //Cake
+
         );
         
         $this->team = array(
@@ -26,14 +26,6 @@ class team extends system
                     'fb' => 'https://www.facebook.com/mihael.krpan',
                 )
             ),
-            760 => array(
-                'role' => 'Team Captain (Mid laner)',
-                'socials' => array(
-                    'fb' => 'http://www.facebook.com/Veipper',
-                    'tw' => 'http://twitter.com/Ve1pper',
-                    'tv' => 'http://www.twitch.tv/ve1pper',
-                )
-            ),
             811 => array(
                 'role' => 'AD Carry',
                 'socials' => array(
@@ -41,7 +33,7 @@ class team extends system
                 )
             ),
             863 => array(
-                'role' => 'Support',
+                'role' => 'Support (Team Captain)',
                 'socials' => array(
                     
                 )
@@ -98,7 +90,8 @@ class team extends system
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
-            '`id` = 864 ' //ovy
+            '`id` = 864 OR '. //ovy
+            '`id` = 760 ' //Veipper
         );
         
         $this->team = array(
@@ -127,7 +120,15 @@ class team extends system
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/ovidijus.parsiunas',
                 )
-            )
+            ),
+            760 => array(
+                'role' => 'CS:GO Admin',
+                'socials' => array(
+                    'fb' => 'http://www.facebook.com/Veipper',
+                    'tw' => 'http://twitter.com/Ve1pper',
+                    'tv' => 'http://www.twitch.tv/ve1pper',
+                )
+            ),
         );
         
         if ($rows) {

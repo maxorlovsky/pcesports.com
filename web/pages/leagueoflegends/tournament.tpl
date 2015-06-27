@@ -105,7 +105,9 @@
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
 
-            <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+            <div>
+                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+            </div>
             
             <div class="share-tournament">
                 <h2><?=t('share_this_tournament')?></h2>
