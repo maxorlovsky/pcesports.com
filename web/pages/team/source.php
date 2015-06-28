@@ -54,9 +54,9 @@ class team extends system
     }
     
     public function getHearthstone() {
-        go(_cfg('site').'/team');
+        go(_cfg('href').'/team');
         exit();
-        
+
         $rows = Db::fetchRows(
             'SELECT `id`, `name`, `avatar` FROM `users` '.
             'WHERE `id` = 490 ' //Frosten
