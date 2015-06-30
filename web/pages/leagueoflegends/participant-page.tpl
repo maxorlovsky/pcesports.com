@@ -83,8 +83,17 @@
         </div>
         
         <div class="block-content">
-            <p><?=t('brackets')?>: <a href="http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->data->settings['lol-current-number-'.$this->server]?>/" target="_blank">http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->data->settings['lol-current-number-'.$this->server]?>/</a></p>
-            <?=t('participant_information_txt')?>
+            <?=str_replace(
+                array(
+                    '%brackets%',
+                    '%eventPage%',
+                ),
+                array(
+                    '<a href="http://pentaclick.challonge.com/lol'.$this->server.$this->data->settings['lol-current-number-'.$this->server].'/" target="_blank">http://pentaclick.challonge.com/lol'.$this->server.$this->data->settings['lol-current-number-'.$this->server].'/</a>',
+                    '<a href="http://events.euw.leagueoflegends.com/en/events/'.$this->eventInfo.'" target="_blank">http://events.euw.leagueoflegends.com/en/events/'.$this->eventInfo.'</a>'
+                ),
+                t('participant_information_txt')
+            )?>
         </div>
     </div>
 </div>
