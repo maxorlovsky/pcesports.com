@@ -45,6 +45,12 @@
         <td><input type="text" id="time" size="50" value="<?=$module->editData->time?>" /></td>
     </tr>
     <tr>
+        <td width="20%">
+            <b>Ext. Event ID</b><br />
+        </td>
+        <td><input type="text" id="eventId" size="20" value="<?=$module->editData->event_id?>" /></td>
+    </tr>
+    <tr>
         <td width="20%"><b>Prize <span class="red">*</span></b></td>
         <td><input type="text" id="prize" size="50" value="<?=$module->editData->prize?>" /></td>
     </tr>

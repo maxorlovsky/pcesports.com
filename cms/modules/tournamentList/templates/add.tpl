@@ -45,12 +45,18 @@
         <td><input type="text" id="time" size="50" value="" /></td>
     </tr>
     <tr>
+        <td width="20%">
+            <b>Ext. Event ID</b><br />
+        </td>
+        <td><input type="text" id="eventId" size="20" value="" /></td>
+    </tr>
+    <tr>
         <td width="20%"><b>Prize <span class="red">*</span></b></td>
         <td><input type="text" id="prize" size="50" value="" /></td>
     </tr>
     <tr>
         <td width="20%"><b>Maximum participants count</b></td>
-        <td><input type="text" id="maxNum" size="50" value="128" /></td>
+        <td><input type="text" id="maxNum" size="50" value="64" /></td>
     </tr>
     <tr>
         <td width="20%"><b>Status <span class="red">*</span></b></td>

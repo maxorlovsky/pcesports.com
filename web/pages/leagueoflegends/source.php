@@ -9,6 +9,7 @@ class leagueoflegends extends System
     public $participantsCount = 0;
     public $pickedTournament;
     public $server;
+    public $eventId;
 	
 	public function __construct($params = array()) {
 		parent::__construct();
@@ -101,12 +102,21 @@ class leagueoflegends extends System
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
             'WHERE `game` = "lol" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND' .
+            '`server` = "'.Db::escape($this->server).'" AND '.
             '`approved` = 1 AND '.
             '`checked_in` = 1 AND '.
             '`tournament_id` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
             '`deleted` = 0 '
         );
+        
+        $eventId = Db::fetchRow(
+            'SELECT `event_id` FROM `tournaments` '.
+            'WHERE `name` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
+            '`server` = "'.Db::escape($this->server).'" AND '.
+            '`game` = "lol" '.
+            'LIMIT 1'
+        );
+        $this->eventId = $eventId->event_id;
         
         $this->participantsCount = $rows->count;
 		

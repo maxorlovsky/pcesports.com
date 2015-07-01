@@ -65,6 +65,7 @@ class TournamentList
                 '`dates_registration` = "'.Db::escape($form['datesRegistration']).'", '.
                 '`dates_start` = "'.Db::escape($form['datesStart']).'", '.
                 '`time` = "'.Db::escape($form['time']).'", '.
+                '`event_id` = '.(int)$form['eventId'].', '.
                 '`prize` = "'.Db::escape($form['prize']).'", '.
                 '`max_num` = "'.Db::escape($form['maxNum']).'", '.
                 '`status` = "'.Db::escape($form['status']).'" '
@@ -115,6 +116,7 @@ class TournamentList
                 '`dates_registration` = "'.Db::escape($form['datesRegistration']).'", '.
                 '`dates_start` = "'.Db::escape($form['datesStart']).'", '.
                 '`time` = "'.Db::escape($form['time']).'", '.
+                '`event_id` = '.(int)$form['eventId'].', '.
                 '`prize` = "'.Db::escape($form['prize']).'", '.
                 '`max_num` = "'.Db::escape($form['maxNum']).'", '.
                 '`status` = "'.Db::escape($form['status']).'" '.

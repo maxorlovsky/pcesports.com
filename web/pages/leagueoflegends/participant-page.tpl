@@ -90,7 +90,7 @@
                 ),
                 array(
                     '<a href="http://pentaclick.challonge.com/lol'.$this->server.$this->data->settings['lol-current-number-'.$this->server].'/" target="_blank">http://pentaclick.challonge.com/lol'.$this->server.$this->data->settings['lol-current-number-'.$this->server].'/</a>',
-                    '<a href="http://events.euw.leagueoflegends.com/en/events/'.$this->eventInfo.'" target="_blank">http://events.euw.leagueoflegends.com/en/events/'.$this->eventInfo.'</a>'
+                    '<a href="http://events.euw.leagueoflegends.com/en/events/'.$this->eventId.'" target="_blank">http://events.euw.leagueoflegends.com/en/events/'.$this->eventId.'</a>'
                 ),
                 t('participant_information_txt')
             )?>
