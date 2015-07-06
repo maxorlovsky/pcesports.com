@@ -222,6 +222,19 @@ class leagueoflegends extends System
                     }
                 }
             }
+
+            $eventId = Db::fetchRow(
+                'SELECT `event_id` FROM `tournaments` '.
+                'WHERE `name` = '.(int)$this->pickedTournament.' AND '.
+                '`server` = "'.Db::escape($this->server).'" AND '.
+                '`game` = "lol" '.
+                'LIMIT 1'
+            );
+            $this->eventId = $eventId->event_id;
+            $this->eventPage = '';
+            if ($this->eventId != 0) {
+                $this->eventPage = '<a href="http://events.'.$this->server.'.leagueoflegends.com/en/events/'.$this->eventId.'" target="_blank">http://events.'.$this->server.'.leagueoflegends.com/en/events/'.$this->eventId.'</a>';
+            }
 			
 			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 		}

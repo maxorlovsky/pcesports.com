@@ -73,8 +73,8 @@
             <div class="tournament-rules">
                 <h1><?=t('specific_tournament_rules')?></h1>
                 <?=str_replace(
-                    array('%startTime%', '%registrationTime%', '%checkInTime%'),
-                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
+                    array('%startTime%', '%registrationTime%', '%checkInTime%', '%eventPage%'),
+                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage),
                     t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
                 )?>
                 <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
@@ -100,8 +100,8 @@
         <div class="block-content tournament-rules">
 			<h1><?=t('specific_tournament_rules')?></h1>
 			<?=str_replace(
-                array('%startTime%', '%registrationTime%', '%checkInTime%'),
-                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
+                array('%startTime%', '%registrationTime%', '%checkInTime%', '%eventPage%'),
+                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage),
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
 
