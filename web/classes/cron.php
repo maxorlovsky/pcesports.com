@@ -195,6 +195,7 @@ class Cron extends System {
                 Db::query(
                     'UPDATE `streams` '.
                     'SET `online` = '.time().', '.
+                    '`game` = "'.$this->convertGame($twitch['stream']['game']).'", '.
                     '`viewers` = '.(int)$twitch['stream']['viewers'].', '.
                     '`display_name` = "'.Db::escape($twitch['stream']['channel']['display_name']).'" '.
                     'WHERE `id` = '.(int)$v->id
@@ -217,6 +218,25 @@ class Cron extends System {
                 );
             }
         }
+    }
+
+    private function convertGame($game) {
+        $array = array(
+            'Hearthstone: Heroes of Warcraft'   => 'hs',
+            'League of Legends'                 => 'lol',
+            'Counter-Strike: Global Offensive'  => 'cs',
+            'Dota 2'                            => 'dota',
+            'Smite'                             => 'smite',
+        );
+
+        if (isset($array[$game]) && $array[$game]) {
+            $answer = $array[$game];
+        }
+        else {
+            $answer = 'other';
+        }
+
+        return $answer;
     }
     
     public function updateChallongeMatches() {
