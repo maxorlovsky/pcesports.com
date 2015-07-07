@@ -70,7 +70,7 @@
                         <div><?=$v['prize']?></div>
                     </div>
                     <div class="timing">
-                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time())?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - '.($this->data->user->timestyle!=1?'H':'h').':i'.($this->data->user->timestyle!=1?' A':null))?>" <?=($k=='hss1'?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
+                        <h4 class="timer hint" attr-time="<?=intval($v['time'] - time())?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - '.($this->data->user->timestyle==1?'H':'h').':i'.($this->data->user->timestyle!=1?' A':null))?>" <?=($k=='hss1'?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
                     </div>
                     <div class="registered-now">
                         <div><?=$v['teams']?> / <span class="<?=($v['teams']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span></div>
