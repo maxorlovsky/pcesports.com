@@ -116,7 +116,7 @@ class Cron extends System {
     }
 
     public function updateSummoners() {
-        $limit = 10;
+        $limit = 20;
 
         $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `summoners`');
         $currentCount = $row->count;

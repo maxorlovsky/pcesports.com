@@ -9,7 +9,7 @@ class leagueoflegends extends System
     public $participantsCount = 0;
     public $pickedTournament;
     public $server;
-    public $eventId;
+    public $eventId = 0;
 	
 	public function __construct($params = array()) {
 		parent::__construct();
@@ -231,10 +231,6 @@ class leagueoflegends extends System
                 'LIMIT 1'
             );
             $this->eventId = $eventId->event_id;
-            $this->eventPage = '';
-            if ($this->eventId != 0) {
-                $this->eventPage = '<a href="http://events.'.$this->server.'.leagueoflegends.com/en/events/'.$this->eventId.'" target="_blank">http://events.'.$this->server.'.leagueoflegends.com/en/events/'.$this->eventId.'</a>';
-            }
 			
 			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
 		}

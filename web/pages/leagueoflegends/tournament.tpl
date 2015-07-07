@@ -73,11 +73,16 @@
             <div class="tournament-rules">
                 <h1><?=t('specific_tournament_rules')?></h1>
                 <?=str_replace(
-                    array('%startTime%', '%registrationTime%', '%checkInTime%', '%eventPage%'),
-                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage),
+                    array('%startTime%', '%registrationTime%', '%checkInTime%'),
+                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                     t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
                 )?>
-                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+                
+                <? if ($this->eventId) { ?>
+                    <p><?=t('eventpage_link_text')?>: <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
+                <? } ?>
+                    
+                <p><a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a></p>
                 
                 <div class="share-tournament">
                     <h2><?=t('share_this_tournament')?></h2>

@@ -88,7 +88,7 @@
                     array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
                     t('hs_tournament_information')
                 )?>
-                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+                <p><a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a></p>
                 
                 <div class="share-tournament">
                     <h2><?=t('share_this_tournament')?></h2>
