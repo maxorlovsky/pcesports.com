@@ -82,7 +82,9 @@
                     <p><?=t('eventpage_link_text')?>: <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
                 <? } ?>
                     
-                <p><a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a></p>
+                <div>
+                    <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
+                </div>
                 
                 <div class="share-tournament">
                     <h2><?=t('share_this_tournament')?></h2>
@@ -109,6 +111,10 @@
                 array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage),
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
+            
+            <? if ($this->eventId) { ?>
+                <p><?=t('eventpage_link_text')?>: <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
+            <? } ?>
 
             <div>
                 <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
