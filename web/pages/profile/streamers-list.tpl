@@ -16,11 +16,6 @@
                 <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
                 
                 <span class="viewers editStreamerAction">
-                    <select class="change_game">
-                        <? foreach(_cfg('streamGames') as $k2 => $v2) { ?>
-                        <option value="<?=$k2?>" <?=($v->game==$k2?'selected="selected"':null)?>><?=t($v2)?></option>
-                        <? } ?>
-                    </select>
                     <a href="javascript:void(0);" id="removeStreamer"><?=t('remove')?></a>
                 </span>
             </div>

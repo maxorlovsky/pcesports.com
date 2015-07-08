@@ -390,8 +390,6 @@ var PC = {
         }
         
         streamerId = $(element).closest('.streamer').attr('attr-id');
-        valueGame = $(element).closest('.editStreamerAction').find('.change_game').val();
-        valueLanguage = $(element).closest('.editStreamerAction').find('.change_languages').val();
         this.formInProgress = 1;
         $(element).closest('.streamer').addClass('alpha');
         
@@ -399,9 +397,7 @@ var PC = {
             type: 'POST',
             data: {
                 ajax: 'editStreamer',
-                id: streamerId,
-                game: valueGame,
-                language: valueLanguage
+                id: streamerId
             },
             success: function(data) {
                 PC.formInProgress = 0;

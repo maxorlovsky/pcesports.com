@@ -564,7 +564,6 @@ class Ajax extends System
         }
         
         $id = (int)$data['id'];
-        $game = Db::escape($data['game']);
         
         $row = Db::fetchRow(
             'SELECT * FROM `streams` '.
@@ -578,7 +577,6 @@ class Ajax extends System
         
         Db::query(
             'UPDATE `streams` SET '.
-            '`game` = "'.$game.'" '.
             'WHERE `id` = '.$id.' '.
             'LIMIT 1 '
         );
@@ -622,9 +620,6 @@ class Ajax extends System
         if (!isset($post['name']) || !$post['name']) {
             return '0;'.t('input_name');
         }
-        else if (!$post['game']) {
-            return '0;Error';
-        }
         $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
         
         $twitch = $this->runTwitchAPI($post['name']);
@@ -642,7 +637,7 @@ class Ajax extends System
             'INSERT INTO `streams` SET '.
             '`user_id`  = '.(int)$this->data->user->id.', '.
             '`name` = "'.Db::escape($post['name']).'", '.
-            '`game` = "'.Db::escape($post['game']).'", '.
+            '`game` = "other", '.
             '`approved` = 1 '
         );
         

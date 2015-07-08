@@ -41,14 +41,6 @@
                         <label for="name"><?=t('name')?></label>
                         <input name="name" id="name" type="text" placeholder="<?=t('name_or_link_on')?> Twitch.tv*" />
                     </div>
-                    <div class="fields">
-                        <label for="game"><?=t('game')?></label>
-                        <select name="game" id="game">
-                            <? foreach(_cfg('streamGames') as $k => $v) { ?>
-                            <option value="<?=$k?>"><?=t($v)?></option>
-                            <? } ?>
-                        </select>
-                    </div>
                     
                     <a href="javascript:void(0);" class="button" id="submitStreamer"><?=t('send_form')?></a>
                 </form>
