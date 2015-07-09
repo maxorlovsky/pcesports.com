@@ -69,4 +69,93 @@ class streams extends System
 			$this->getStreamList();
 		//}
 	}
+
+    /*
+    Function from AJAX class
+    */
+    public function editStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $id = (int)$data['id'];
+        
+        $row = Db::fetchRow(
+            'SELECT * FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'AND `user_id` = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        if (!$row) {
+            return '0;'.t('error');
+        }
+        
+        Db::query(
+            'UPDATE `streams` SET '.
+            'WHERE `id` = '.$id.' '.
+            'LIMIT 1 '
+        );
+        
+        return '1;1';
+    }
+    
+    public function removeStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $id = (int)$data['id'];
+        
+        $row = Db::fetchRow(
+            'SELECT * FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'AND `user_id` = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        if (!$row) {
+            return '0;'.t('error');
+        }
+        
+        Db::query(
+            'DELETE FROM `streams` '.
+            'WHERE `id` = '.$id.' '.
+            'LIMIT 1 '
+        );
+        
+        return '1;1';
+    }
+    
+    public function submitStreamer($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        parse_str($data['form'], $post);
+        
+        if (!isset($post['name']) || !$post['name']) {
+            return '0;'.t('input_name');
+        }
+        $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
+        
+        $twitch = $this->runTwitchAPI($post['name']);
+        
+        if (!$twitch) {
+            return '0;'.t('channel_not_found');
+        }
+        
+        $row = Db::fetchRow('SELECT * FROM `streams` WHERE `name` = "'.Db::escape($post['name']).'" LIMIT 1');
+        if ($row) {
+            return '0;'.t('stream_already_registered');
+        }
+        
+        Db::query(
+            'INSERT INTO `streams` SET '.
+            '`user_id`  = '.(int)$this->data->user->id.', '.
+            '`name` = "'.Db::escape($post['name']).'", '.
+            '`game` = "other", '.
+            '`approved` = 1 '
+        );
+        
+        return '1;'.t('stream_added');
+    }
 }

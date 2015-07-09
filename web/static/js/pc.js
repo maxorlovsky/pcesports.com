@@ -48,7 +48,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'submitBoard',
+                ajax: 'boardSubmit',
                 module: 'delete',
                 type: type,
                 id: parseInt(element.closest('.master').attr('attr-id'))
@@ -76,7 +76,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'submitBoard',
+                ajax: 'boardSubmit',
                 module: 'delete',
                 type: 'board',
                 id: id
@@ -157,7 +157,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'submitBoard',
+                ajax: 'boardSubmit',
                 module: $('.leave-comment #module').val(),
                 text: $('.leave-comment #msg').val(),
                 id: $('.leave-comment #id').val()
@@ -193,7 +193,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'submitBoard',
+                ajax: 'boardSubmit',
                 module: $('.submitBoard #module').val(),
                 title: $('.submitBoard #title').val(),
                 text: $('.submitBoard #msg').val(),
@@ -229,7 +229,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'verifySummoner',
+                ajax: 'summonerVerify',
                 id: parseInt($('#summonerVerifyId').val()),
             },
             success: function(data) {
@@ -266,7 +266,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'removeSummoner',
+                ajax: 'summonerRemove',
                 id: parseInt(element.attr('attr-id')),
             },
             success: function(data) {
@@ -303,7 +303,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'addSummoner',
+                ajax: 'summonerAdd',
                 name: $('.summoner-form #name').val(),
                 region: $('.summoner-form #region').val()
             },
@@ -396,7 +396,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'editStreamer',
+                ajax: 'streamerEdit',
                 id: streamerId
             },
             success: function(data) {
@@ -428,7 +428,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'removeStreamer',
+                ajax: 'streamerRemove',
                 id: streamerId
             },
             success: function(data) {
@@ -460,7 +460,7 @@ var PC = {
         var query = {
             type: 'POST',
             data: {
-                ajax: 'submitStreamer',
+                ajax: 'streamerSubmit',
                 form: $('.streamer-form').serialize()
             },
             success: function(data) {

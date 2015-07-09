@@ -23,123 +23,65 @@ class Ajax extends System
         $achievements->init();
     }
     
+
+    /*
+     * Boards functions
+     * Vote/Submit(edit/delete/add)
+    */
     protected function boardVote($data) {
         require_once _cfg('pages').'/boards/source.php';
         $board = new boards();
         return $board->vote($data);
     }
     
-    protected function submitBoard($data) {
+    protected function boardSubmit($data) {
         require_once _cfg('pages').'/boards/source.php';
         $board = new boards();
         return $board->submit($data);
     }
     
-    protected function verifySummoner($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('error');
-        }
-        
-        $row = Db::fetchRow(
-            'SELECT `id`, `region`, `summoner_id`, `masteries` FROM `summoners` WHERE '.
-            '`id` = '.(int)$data['id'].' AND '.
-            '`user_id`  = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        
-        if ($row == false) {
-            return '0;'.t('summoner_not_found');
-        }
-        
-        $response = $this->runRiotAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
-        foreach($response->pages as $v) {
-            if (trim($v->name) == trim($row->masteries)) {
-                Db::fetchRow(
-                    'UPDATE `summoners` SET '.
-                    '`approved` = 1, '.
-                    '`masteries` = "" '.
-                    'WHERE `id` = '.(int)$row->id.' AND '.
-                    '`user_id`  = '.(int)$this->data->user->id.' '.
-                    'LIMIT 1 '
-                );
-                Achievements::give(30);//Summoner of Legends (Add summoner account to your profile)
-                return '1;'.$row->id;
-            }
-        }
-        
-        return '0;'.str_replace('%code%', $row->masteries, t('mastery_page_not_found'));
+    /*
+     * Profile functions
+     * Add/Remove/Verify
+    */
+    protected function summonerVerify($data) {
+        require_once _cfg('pages').'/profile/source.php';
+        $profile = new profile();
+        return $profile->verifySummoner($data);
     }
     
-    protected function removeSummoner($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $q = Db::query(
-            'SELECT * FROM `summoners` WHERE '.
-            '`id` = '.(int)$data['id'].' AND '.
-            '`user_id`  = '.(int)$this->data->user->id.' '
-        );
-        
-        if ($q->num_rows == 0) {
-            return '0;Error';
-        }
-        
-        Db::query(
-            'DELETE FROM `summoners` WHERE '.
-            '`id` = '.(int)$data['id'].' AND '.
-            '`user_id`  = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        
-        return '1;1';
+    protected function summonerRemove($data) {
+        require_once _cfg('pages').'/profile/source.php';
+        $profile = new profile();
+        return $profile->removeSummoner($data);
     }
     
-    protected function addSummoner($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $summoner = new stdClass();
-        $name = $data['name'];
-        $region = $data['region'];
-        
-        if (!$name) {
-            return '0;'.t('input_name');
-        }
-        else if (!$region) {
-            return '0;Set region';
-        }
-        $response = $this->runRiotAPI('/'.$region.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($name)), $region);
-        
-        if ($response == 404 || !$response) {
-            return '0;'.t('summoner_not_found').$response;
-        }
-        
-        $summoner->summoner_id = (int)$response->id;
-        $summoner->name = Db::escape($response->name);
-        $summoner->region = Db::escape($region);
-        
-        $summoner->verificationCode = 'PC'.strtoupper(substr(md5(time().$response->name.$response->id), 1, 8));
-        
-        Db::query(
-            'INSERT INTO `summoners` SET '.
-            '`user_id`  = '.(int)$this->data->user->id.', '.
-            '`region` = "'.$summoner->region.'", '.
-            '`summoner_id` = '.$summoner->summoner_id.', '.
-            '`name` = "'.$summoner->name.'", '.
-            '`masteries` = "'.$summoner->verificationCode.'" '
-        );
-        
-        $summoner->id = Db::lastId();
-        
-        foreach(_cfg('lolRegions') as $k => $v) {
-            if ($k == $region) {
-                $summoner->regionName = $v;
-            }
-        }
-        
-        return '1;'.json_encode($summoner);
+    protected function summonerAdd($data) {
+        require_once _cfg('pages').'/profile/source.php';
+        $profile = new profile();
+        return $profile->addSummoner($data);
+    }
+
+    /*
+     * Streamers functions
+     * Add/Edit/Remove
+    */
+    protected function streamerEdit($data) {
+        require_once _cfg('pages').'/streams/source.php';
+        $streams = new streams();
+        return $streams->editStreamer($data);
+    }
+    
+    protected function streamerRemove($data) {
+        require_once _cfg('pages').'/streams/source.php';
+        $streams = new streams();
+        return $streams->removeStreamer($data);
+    }
+    
+    protected function streamerSubmit($data) {
+        require_once _cfg('pages').'/streams/source.php';
+        $streams = new streams();
+        return $streams->submitStreamer($data);
     }
     
     protected function checkInHs() {
@@ -344,92 +286,6 @@ class Ajax extends System
         Achievements::give(array(18,19,20));//I am experienced! (Participate in League of Legends tournament.)
         
         return '1;1';
-    }
-    
-    protected function editStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $id = (int)$data['id'];
-        
-        $row = Db::fetchRow(
-            'SELECT * FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'AND `user_id` = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        if (!$row) {
-            return '0;'.t('error');
-        }
-        
-        Db::query(
-            'UPDATE `streams` SET '.
-            'WHERE `id` = '.$id.' '.
-            'LIMIT 1 '
-        );
-        
-        return '1;1';
-    }
-    
-    protected function removeStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $id = (int)$data['id'];
-        
-        $row = Db::fetchRow(
-            'SELECT * FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'AND `user_id` = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        if (!$row) {
-            return '0;'.t('error');
-        }
-        
-        Db::query(
-            'DELETE FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'LIMIT 1 '
-        );
-        
-        return '1;1';
-    }
-    
-    protected function submitStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        parse_str($data['form'], $post);
-        
-        if (!isset($post['name']) || !$post['name']) {
-            return '0;'.t('input_name');
-        }
-        $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
-        
-        $twitch = $this->runTwitchAPI($post['name']);
-        
-        if (!$twitch) {
-            return '0;'.t('channel_not_found');
-        }
-        
-        $row = Db::fetchRow('SELECT * FROM `streams` WHERE `name` = "'.Db::escape($post['name']).'" LIMIT 1');
-        if ($row) {
-            return '0;'.t('stream_already_registered');
-        }
-        
-        Db::query(
-            'INSERT INTO `streams` SET '.
-            '`user_id`  = '.(int)$this->data->user->id.', '.
-            '`name` = "'.Db::escape($post['name']).'", '.
-            '`game` = "other", '.
-            '`approved` = 1 '
-        );
-        
-        return '1;'.t('stream_added');
     }
     
     protected function connectTeamToAccount() {
@@ -798,17 +654,12 @@ class Ajax extends System
                     $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
                 
                     $file = fopen($fileName, 'a');
-                    
-                    $content = '<p>';
-                    $content .= '<a href="'.$fileUrl.'" target="_blank">Uploaded the file</a>';
-                    if ($_SESSION['participant']->id == $row->id1) {
-                        $content .= '<span class="player1">'.$row->name1.'</span>';
-                    }
-                    else {
-                        $content .= '<span class="player2">'.$row->name2.'</span>';
-                    }
+
+                    $content = '<div class="'.($_SESSION['participant']->id==$row->id1?'player1':'player2').'">';
+                    $content .= '<div class="message"><a href="'.$fileUrl.'" target="_blank">Uploaded the file</a></div>';
+                    $content .= '<span>'.($_SESSION['participant']->id==$row->id1?$row->name1:$row->name2).'</span>';
                     $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
-                    $content .= '</p>';
+                    $content .= '</div>';
                     
                     fwrite($file, htmlspecialchars($content));
                     fclose($file);
@@ -850,7 +701,13 @@ class Ajax extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player'.($player==1?'1':'2').'">'.$_SESSION['participant']->name.'</span> picked his ban. Awaiting enemy ban.</b></p>';
+
+            $content = '<div class="'.($player==1?'player1':'player2').'">';
+            $content .= '<div class="message"><u>Picked his ban. Awaiting enemy ban</u></div>';
+            $content .= '<span>'.$_SESSION['participant']->name.'</span>';
+            $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+            $content .= '</div>';
+
             fwrite($file, htmlspecialchars($content));
             fclose($file);
 
@@ -870,8 +727,17 @@ class Ajax extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player1">'.$row->name1.'</span> banned "'.$gameRow->player1_ban.'"</b></p>';
-            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player2">'.$row->name2.'</span> banned "'.$gameRow->player2_ban.'"</b></p>';
+
+            $content = '<div class="manager">';
+            $content .= '<div class="message">';
+            $content .= '<p><b>'.$row->name1.'</b> banned <b>'.$gameRow->player1_ban.'</b></p>';
+            $content .= '<p><b>'.$row->name2.'</b> banned <b>'.$gameRow->player2_ban.'</b></p>';
+            $content .= '</div>';
+            $content .= '<span>System message</span>';
+            $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+            $content .= '</div>';
+
+
             fwrite($file, htmlspecialchars($content));
             fclose($file);
         }
@@ -909,12 +775,17 @@ class Ajax extends System
             
             $file = fopen($fileName, 'a');
             if ($data['action'] == 'send') {
-                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> &#60;'.($_SESSION['participant']->id==$playersRow->id1?'<span class="player1">'.$playersRow->name1.'</span>':'<span class="player2">'.$playersRow->name2.'</span>').'&#62; - '.$data['text'].'</p>';
+                $content = '<div class="'.($_SESSION['participant']->id==$playersRow->id1?'player1':'player2').'">';
+                $content .= '<div class="message">'.$data['text'].'</div>';
+                $content .= '<span>'.($_SESSION['participant']->id==$playersRow->id1?$playersRow->name1:$playersRow->name2).'</span>';
+                $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+                $content .= '</div>';
+
                 fwrite($file, htmlspecialchars($content));
             }
             fclose($file);
             
-            $chat = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>');
+            $chat = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<div><p><b><a><u><span>');
             
             if (!$chat) {
                 $chat = '<p id="notice">'.t('chat_active_can_start').'</p>';

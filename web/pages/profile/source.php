@@ -167,4 +167,114 @@ class profile extends System
         
         return $return;
     }
+
+    /*
+    Function from AJAX class
+    */
+    public function verifySummoner($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('error');
+        }
+        
+        $row = Db::fetchRow(
+            'SELECT `id`, `region`, `summoner_id`, `masteries` FROM `summoners` WHERE '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`user_id`  = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        
+        if ($row == false) {
+            return '0;'.t('summoner_not_found');
+        }
+        
+        $response = $this->runRiotAPI('/'.$row->region.'/v1.4/summoner/'.(int)$row->summoner_id.'/masteries', $row->region);
+        foreach($response->pages as $v) {
+            if (trim($v->name) == trim($row->masteries)) {
+                Db::fetchRow(
+                    'UPDATE `summoners` SET '.
+                    '`approved` = 1, '.
+                    '`masteries` = "" '.
+                    'WHERE `id` = '.(int)$row->id.' AND '.
+                    '`user_id`  = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1 '
+                );
+                Achievements::give(30);//Summoner of Legends (Add summoner account to your profile)
+                return '1;'.$row->id;
+            }
+        }
+        
+        return '0;'.str_replace('%code%', $row->masteries, t('mastery_page_not_found'));
+    }
+
+    public function removeSummoner($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $q = Db::query(
+            'SELECT * FROM `summoners` WHERE '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`user_id`  = '.(int)$this->data->user->id.' '
+        );
+        
+        if ($q->num_rows == 0) {
+            return '0;Error';
+        }
+        
+        Db::query(
+            'DELETE FROM `summoners` WHERE '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`user_id`  = '.(int)$this->data->user->id.' '.
+            'LIMIT 1 '
+        );
+        
+        return '1;1';
+    }
+
+    public function addSummoner($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $summoner = new stdClass();
+        $name = $data['name'];
+        $region = $data['region'];
+        
+        if (!$name) {
+            return '0;'.t('input_name');
+        }
+        else if (!$region) {
+            return '0;Set region';
+        }
+        $response = $this->runRiotAPI('/'.$region.'/v1.4/summoner/by-name/'.rawurlencode(htmlspecialchars($name)), $region);
+        
+        if ($response == 404 || !$response) {
+            return '0;'.t('summoner_not_found').$response;
+        }
+        
+        $summoner->summoner_id = (int)$response->id;
+        $summoner->name = Db::escape($response->name);
+        $summoner->region = Db::escape($region);
+        
+        $summoner->verificationCode = 'PC'.strtoupper(substr(md5(time().$response->name.$response->id), 1, 8));
+        
+        Db::query(
+            'INSERT INTO `summoners` SET '.
+            '`user_id`  = '.(int)$this->data->user->id.', '.
+            '`region` = "'.$summoner->region.'", '.
+            '`summoner_id` = '.$summoner->summoner_id.', '.
+            '`name` = "'.$summoner->name.'", '.
+            '`masteries` = "'.$summoner->verificationCode.'" '
+        );
+        
+        $summoner->id = Db::lastId();
+        
+        foreach(_cfg('lolRegions') as $k => $v) {
+            if ($k == $region) {
+                $summoner->regionName = $v;
+            }
+        }
+        
+        return '1;'.json_encode($summoner);
+    }
 }

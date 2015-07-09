@@ -996,11 +996,17 @@ class Cron extends System {
                                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$whoWon.'_vs_'.$loserId.'.txt';
                                 
                                 $file = fopen($fileName, 'a');
-                                $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>Team '.$team[$whoWon]['name'].' won</b>';
+
+                                $content = '<div class="manager">';
+                                $content .= '<div class="message">';
+                                $content .= 'Team <b>'.$team[$whoWon]['name'].'</b> won';
                                 if ($this->data->settings['tournament-auto-lol-'.$server] == 0) {
                                     $content .= ' (automatic advancement disabled, manual check required) ';
                                 }
-                                $content .= '</p>';
+                                $content .= '</div>';
+                                $content .= '<span>System message</span>';
+                                $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+                                $content .= '</div>';
                                 
                                 fwrite($file, htmlspecialchars($content));
                                 fclose($file);

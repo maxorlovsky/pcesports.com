@@ -46,7 +46,7 @@ class TournamentLolEuw
                 $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$v[1].'.txt';
                 $return[$v[0]] = '<p id="notice">Chat is empty</p>';
                 if (file_exists($fileName)) {
-                    $return[$v[0]] = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<p><b><a><u><span>');
+                    $return[$v[0]] = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<div><p><b><a><u><span>');
                 }
             }
         }
@@ -57,10 +57,13 @@ class TournamentLolEuw
 	public function sendChat($form) {
 		$fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$form[1].'.txt';
         $file = fopen($fileName, 'a');
-        $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> ';
-        $content .= '&#60;<u>'.$this->system->user->login.' (Manager)</u>&#62; - ';
-        $content .= $form[0];
-        $content .= '</p>';
+        
+        $content = '<div class="manager">';
+        $content .= '<div class="message">'.$form[0].'</div>';
+        $content .= '<span>'.$this->system->user->login.'</span>';
+        $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+        $content .= '</div>';
+        
         fwrite($file, htmlspecialchars($content));
         fclose($file);
 		

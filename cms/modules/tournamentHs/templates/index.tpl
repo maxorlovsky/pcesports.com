@@ -159,12 +159,12 @@ profiler = {
             timeout: 10000,
             success: function(answer) {
 				$.each($.parseJSON(answer), function(k, v) {
-					$('#'+k+' .chat-content').html(v);
-					
-					checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
+                    checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
-					
-					if (checkTop != checkHeight) {
+                    
+                    currentContent = $('#'+k+' .chat-content').html();
+                    if (escape(currentContent) != escape(v)) {
+                        $('.chat-content').html(v);
                         $('#'+k+' .chat-content').scrollTop($('#'+k+' .chat-content').prop('scrollHeight'));
                     }
 				});
@@ -211,6 +211,7 @@ $(document).ready(function() {
 
 <style>
 .chat {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
     border: 1px solid #333;
     border-radius: 8px;
     float: left;
@@ -236,22 +237,48 @@ $(document).ready(function() {
     height: 300px;
     border-bottom: 1px solid #000;
     background-color: #eee;
-    font-size: 15px;
+    font-size: 14px;
     overflow-y: auto;
+    font-family: arial;
+}
+.chat .chat-content .message {
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 8px;
     word-break: break-all;
 }
+.chat .chat-content span {
+    font-size: 11px;
+    margin-left: 5px;
+}
 .chat .chat-content #notice {
-    font-size: 13px;
-    color: #999;
+    font-size: 10px;
+    color: #777;
+    margin: 0;
 }
 .chat .chat-content .player1 {
-    color: #FF0A0A;
+    float: left;
+    clear: both;
+}
+.chat .chat-content .player1 .message {
+    background-color: #c7edfc;
 }
 .chat .chat-content .player2 {
-    color: #0070DE;
+    float: right;
+    clear: both;
+}
+.chat .chat-content .player2 .message {
+   background-color: #fcc7c7;
 }
 .chat .chat-content .manager {
-    color: #9200B7;
+    clear: both;
+}
+.chat .chat-content .manager span {
+    color: #0018a9;
+}
+.chat .chat-content .manager .message {
+    background-color: #85ff8b;
+    color: #0019b4;
 }
 .chat .close-chat {
     position: absolute;

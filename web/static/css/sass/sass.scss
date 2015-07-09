@@ -1539,28 +1539,54 @@ footer .games img {
     border-radius: $defaultBorderRadius;
     .chat-content {
         padding: 5px 10px;
-        font-size: 13px;
+        font-size: 14px;
         min-height: 200px;
         height: 300px;
         max-height: 500px;
         border-bottom: 1px solid #000;
         border-radius: 4px 4px 0 0;
         background-color: #dedede;
-        font-size: 15px;
         overflow-y: auto;
+        font-family: arial;
         resize: vertical;
+        .message {
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: $defaultBorderRadius;
+            word-break: break-all;
+        }
+        span {
+            font-size: 11px;
+            margin-left: 5px;
+        }
         #notice {
-            font-size: 12px;
-            color: #999;
+            font-size: 10px;
+            color: #777;
+            margin: 0;
         }
         .player1 {
-            color: #FF0A0A;
+            float: left;
+            clear: both;
+            .message {
+                background-color: #c7edfc;
+            }
         }
         .player2 {
-            color: #0070DE;
+            float: right;
+            clear: both;
+            .message {
+                background-color: #fcc7c7;
+            }
         }
         .manager {
-            color: #9200B7;
+            clear: both;
+            span {
+                color: #0018a9;
+            }
+            .message {
+                background-color: #85ff8b;
+                color: #0019b4;
+            }
         }
     }
     .chat-input {
