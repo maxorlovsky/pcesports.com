@@ -980,6 +980,7 @@ class Ajax extends System
                     $content .= '<a href="'.$fileUrl.'" target="_blank">Uploaded the file</a>';
                     if ($_SESSION['participant']->id == $row->id1) {
                         $content .= '<span class="player1">'.$row->name1.'</span>';
+                    }
                     else {
                         $content .= '<span class="player2">'.$row->name2.'</span>';
                     }
