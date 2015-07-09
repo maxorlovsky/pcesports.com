@@ -3,7 +3,7 @@
 class donation extends system
 {
     public function __construct($params = array()) {
-        
+        //
 	}
 
 	public function showTemplate() {
