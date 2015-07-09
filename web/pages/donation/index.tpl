@@ -6,7 +6,7 @@
             <h1 class="bordered"><?=t('donate')?></h1>
         </div>
 
-        <div class="block-content">
+        <div class="block-content donate">
             <div class="text">
 				<p><?=t('donate_text')?></p>
                 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8PATMT2V6LJW" target="_blank" class="button"><?=t('donate')?></a>
