@@ -279,6 +279,15 @@ $(document).ready(function() {
     overflow-y: auto;
     word-break: break-all;
 }
+.chat .chat-content .player1 {
+    color: #FF0A0A;
+}
+.chat .chat-content .player2 {
+    color: #0070DE;
+}
+.chat .chat-content .manager {
+    color: #9200B7;
+}
 .chat .chat-content #notice {
     font-size: 13px;
     color: #999;

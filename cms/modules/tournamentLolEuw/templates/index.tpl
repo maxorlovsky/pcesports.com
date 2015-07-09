@@ -283,6 +283,15 @@ $(document).ready(function() {
     font-size: 13px;
     color: #999;
 }
+.chat .chat-content .player1 {
+    color: #FF0A0A;
+}
+.chat .chat-content .player2 {
+    color: #0070DE;
+}
+.chat .chat-content .manager {
+    color: #9200B7;
+}
 .chat .close-chat {
     position: absolute;
     top: 1px;
