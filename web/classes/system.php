@@ -14,6 +14,11 @@ class System
     protected $userClass;
     
     public function __construct() {
+        if (isset($this->data->settings) && is_array($this->data->settings)) {
+            //Parent class already initialized, data storred, ignoring
+            return true;
+        }
+        
     	if (!$this->data) {
     		$this->data = new stdClass();
     	}

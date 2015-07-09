@@ -24,44 +24,9 @@ class Ajax extends System
     }
     
     protected function boardVote($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('error');
-        }
-        
-        if ($data['type'] == 'board') {
-            $row = Db::fetchRow('SELECT * FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
-            if ($row && (($row->direction == 'plus' && $data['status'] == 'plus') || ($row->direction == 'minus' && $data['status'] == 'minus'))) {
-                Db::query('DELETE FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
-                if ($data['status'] == 'plus') {
-                    Db::query('UPDATE `boards` SET `votes` = `votes` - 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
-                }
-                else {
-                    Db::query('UPDATE `boards` SET `votes` = `votes` + 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
-                }
-                return '2;1';
-            }
-            else if ($row) {
-                return '3;1';
-            }
-            
-            Db::query(
-                'INSERT INTO `boards_votes` SET '.
-                '`board_id` = '.(int)$data['id'].', '.
-                '`user_id` = '.(int)$this->data->user->id.', '.
-                '`direction` = "'.Db::escape_tags($data['status']).'" '
-            );
-            if ($data['status'] == 'plus') {
-                Db::query('UPDATE `boards` SET `votes` = `votes` + 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
-            }
-            else {
-                Db::query('UPDATE `boards` SET `votes` = `votes` - 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
-            }
-            
-            return '1;1';
-        }
-        else {
-            return '0;'.t('error');
-        }
+        require_once _cfg('pages').'/boards/source.php';
+        $board = new boards();
+        return $board->vote($data);
     }
     
     protected function submitBoard($data) {
@@ -810,128 +775,6 @@ class Ajax extends System
         return $social->getToken($data['provider']);
     }
     
-    protected function uploadScreenshot() {
-        $mb = 5;
-        
-        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `participants` '.
-            'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
-            '`deleted` = 0 AND '.
-            '`ended` = 0'
-        );
-        if (!$playersRow) {
-            return '0;No fight registered';
-        }
-
-        if ($_FILES['upload']['size'] > ($mb * 1048576)) { //1024*1024
-            return '0;File size is too big, allowed only: '.$mb.' MB';
-        }
-        else {
-            $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`screenshots` '.
-                'FROM `fights` AS `f` '.
-                'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-                'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-                'WHERE (`f`.`player1_id` = '.$playersRow->challonge_id.' OR `f`.`player2_id` = '.$playersRow->challonge_id.') AND '.
-                '`f`.`done` = 0'
-            );
-            
-            if (!$row) {
-                return '0;'.t('error');
-            }
-            else {
-                $name = $_FILES['upload']['name'];
-				$breakdown = explode('.', $name);
-                $end = end($breakdown);
-                
-                $fileName = $_SERVER['DOCUMENT_ROOT'].'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
-                $fileUrl = _cfg('site').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
-
-                if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
-                    return '0;'.t('file_is_not_image').': '.$end;
-                }            
-                else if (!copy($_FILES['upload']['tmp_name'], $fileName)) {
-                    return '0;'.t('move_file_error');
-                }
-                else if ($row->screenshots > 10) {
-                    return '0;'.t('screenshot_limit_block');
-                }
-                else {
-                    $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
-                
-                    $file = fopen($fileName, 'a');
-                    $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> '.($_SESSION['participant']->id==$row->id1?'<span class="player1">'.$row->name1.'</span>':'<span class="player2">'.$row->name2.'</span>').' <a href="'.$fileUrl.'" target="_blank">uploaded the file</a></p>';
-                    fwrite($file, htmlspecialchars($content));
-                    fclose($file);
-                    
-                    Db::query('UPDATE `fights` '.
-                        'SET `screenshots` = `screenshots` + 1 '.
-                        'WHERE `player1_id` = '.$playersRow->challonge_id.' OR `player2_id` = '.$playersRow->challonge_id
-                    );
-                    
-                    return '1;Ok';
-                }
-            }
-        }
-    }
-
-    protected function banHS($data) {
-        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
-            return false;
-        }
-
-        $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
-            'FROM `fights` AS `f` '.
-            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
-            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
-            'AND`f`.`done` = 0'
-        );
-
-        $player = 0;
-        if ($row->id1 == $_SESSION['participant']->id) {
-            $player = 1;
-        }
-        else if ($row->id2 == $_SESSION['participant']->id) {
-            $player = 2;
-        }
-
-        $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
-        if (!$gameRow) {
-            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
-            
-            $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player'.($player==1?'1':'2').'">'.$_SESSION['participant']->name.'</span> picked his ban. Awaiting enemy ban.</b></p>';
-            fwrite($file, htmlspecialchars($content));
-            fclose($file);
-
-            Db::query('INSERT INTO `hs_games` SET '.
-                '`match_id` = '.(int)$row->match_id.', '.
-                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '
-            );
-        }
-        else {
-            Db::query('UPDATE `hs_games` SET '.
-                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '.
-                'WHERE `match_id` = '.(int)$row->match_id
-            );
-
-            $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
-
-            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
-            
-            $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player1">'.$row->name1.'</span> banned "'.$gameRow->player1_ban.'"</b></p>';
-            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player2">'.$row->name2.'</span> banned "'.$gameRow->player2_ban.'"</b></p>';
-            fwrite($file, htmlspecialchars($content));
-            fclose($file);
-        }
-
-        return '1;1';
-    }
-    
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
             $challonge_id = (int)$_SESSION['participant']->challonge_id;
@@ -1078,6 +921,138 @@ class Ajax extends System
         }
         
         return '0;'.t('none').';'.t('no_opponent').';'.t('none');
+    }
+    
+    protected function uploadScreenshot() {
+        $mb = 5;
+        
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `challonge_id` FROM `participants` '.
+            'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0'
+        );
+        if (!$playersRow) {
+            return '0;No fight registered';
+        }
+
+        if ($_FILES['upload']['size'] > ($mb * 1048576)) { //1024*1024
+            return '0;File size is too big, allowed only: '.$mb.' MB';
+        }
+        else {
+            $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`screenshots` '.
+                'FROM `fights` AS `f` '.
+                'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+                'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+                'WHERE (`f`.`player1_id` = '.$playersRow->challonge_id.' OR `f`.`player2_id` = '.$playersRow->challonge_id.') AND '.
+                '`f`.`done` = 0'
+            );
+            
+            if (!$row) {
+                return '0;'.t('error');
+            }
+            else {
+                $name = $_FILES['upload']['name'];
+				$breakdown = explode('.', $name);
+                $end = end($breakdown);
+                
+                $fileName = $_SERVER['DOCUMENT_ROOT'].'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
+                $fileUrl = _cfg('site').'/screenshots/'.$row->id1.'_vs_'.$row->id2.'_'.time().'.'.$end;
+
+                if ($end != 'png' && $end != 'jpg' && $end != 'jpeg') {
+                    return '0;'.t('file_is_not_image').': '.$end;
+                }            
+                else if (!copy($_FILES['upload']['tmp_name'], $fileName)) {
+                    return '0;'.t('move_file_error');
+                }
+                else if ($row->screenshots > 10) {
+                    return '0;'.t('screenshot_limit_block');
+                }
+                else {
+                    $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+                
+                    $file = fopen($fileName, 'a');
+                    
+                    $content = '<p>';
+                    $content .= '<a href="'.$fileUrl.'" target="_blank">Uploaded the file</a>';
+                    if ($_SESSION['participant']->id == $row->id1) {
+                        $content .= '<span class="player1">'.$row->name1.'</span>';
+                    else {
+                        $content .= '<span class="player2">'.$row->name2.'</span>';
+                    }
+                    $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+                    $content .= '</p>';
+                    
+                    fwrite($file, htmlspecialchars($content));
+                    fclose($file);
+                    
+                    Db::query('UPDATE `fights` '.
+                        'SET `screenshots` = `screenshots` + 1 '.
+                        'WHERE `player1_id` = '.$playersRow->challonge_id.' OR `player2_id` = '.$playersRow->challonge_id
+                    );
+                    
+                    return '1;Ok';
+                }
+            }
+        }
+    }
+
+    protected function banHS($data) {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return false;
+        }
+
+        $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+
+        $player = 0;
+        if ($row->id1 == $_SESSION['participant']->id) {
+            $player = 1;
+        }
+        else if ($row->id2 == $_SESSION['participant']->id) {
+            $player = 2;
+        }
+
+        $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+        if (!$gameRow) {
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player'.($player==1?'1':'2').'">'.$_SESSION['participant']->name.'</span> picked his ban. Awaiting enemy ban.</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+
+            Db::query('INSERT INTO `hs_games` SET '.
+                '`match_id` = '.(int)$row->match_id.', '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '
+            );
+        }
+        else {
+            Db::query('UPDATE `hs_games` SET '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '.
+                'WHERE `match_id` = '.(int)$row->match_id
+            );
+
+            $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player1">'.$row->name1.'</span> banned "'.$gameRow->player1_ban.'"</b></p>';
+            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b><span class="player2">'.$row->name2.'</span> banned "'.$gameRow->player2_ban.'"</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+        }
+
+        return '1;1';
     }
     
     protected function chat($data) {
