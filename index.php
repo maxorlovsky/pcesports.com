@@ -8,7 +8,7 @@
  */
 
 // Maintenance check
-if (file_exists('../maint_mode')) {
+if (file_exists('maint_mode')) {
 	die('This site is on maintenance');
 }
 
