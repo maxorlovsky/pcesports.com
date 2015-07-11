@@ -178,26 +178,26 @@ $('.chat-submit').on('keyup', function(e) {
 //Main things
 profiler = {
     fetchChat: function() {
-		var i = 0;
-		var arrayElements = [];
-		$.each($('.chat'), function(k, v) {
-			arrayElements[i] = [];
-			arrayElements[i][0] = $(this).closest('.chat').attr('id');
-			arrayElements[i][1] = $(this).closest('.chat').attr('attr-file');
-			i++;
-		});
-		
+        var i = 0;
+        var arrayElements = [];
+        $.each($('.chat'), function(k, v) {
+            arrayElements[i] = [];
+            arrayElements[i][0] = $(this).closest('.chat').attr('id');
+            arrayElements[i][1] = $(this).closest('.chat').attr('attr-file');
+            i++;
+        });
+        
         var query = {
             type: 'POST',
             data: {
                 control: 'submitForm',
                 module: 'tournamentLolEuw',
-				action: 'fetchChat',
-				form: arrayElements
+                action: 'fetchChat',
+                form: arrayElements
             },
-            timeout: 5000,
+            timeout: 10000,
             success: function(answer) {
-				$.each($.parseJSON(answer), function(k, v) {
+                $.each($.parseJSON(answer), function(k, v) {
                     checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
                     
