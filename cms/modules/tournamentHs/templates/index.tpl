@@ -164,7 +164,7 @@ profiler = {
                     
                     currentContent = $('#'+k+' .chat-content').html();
                     if (escape(currentContent) != escape(v)) {
-                        $('.chat-content').html(v);
+                        $('#'+k+' .chat-content').html(v);
                         $('#'+k+' .chat-content').scrollTop($('#'+k+' .chat-content').prop('scrollHeight'));
                     }
 				});
