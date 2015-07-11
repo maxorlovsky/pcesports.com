@@ -178,36 +178,34 @@ $('.chat-submit').on('keyup', function(e) {
 //Main things
 profiler = {
     fetchChat: function() {
-        var i = 0;
-        var arrayElements = [];
-        $.each($('.chat'), function(k, v) {
-            arrayElements[i] = [];
-            arrayElements[i][0] = $(this).closest('.chat').attr('id');
-            arrayElements[i][1] = $(this).closest('.chat').attr('attr-file');
-            i++;
-        });
-        
+		var i = 0;
+		var arrayElements = [];
+		$.each($('.chat'), function(k, v) {
+			arrayElements[i] = [];
+			arrayElements[i][0] = $(this).closest('.chat').attr('id');
+			arrayElements[i][1] = $(this).closest('.chat').attr('attr-file');
+			i++;
+		});
+		
         var query = {
             type: 'POST',
             data: {
                 control: 'submitForm',
                 module: 'tournamentLolEuw',
-                action: 'fetchChat',
-                form: arrayElements
+				action: 'fetchChat',
+				form: arrayElements
             },
-            timeout: 10000,
+            timeout: 5000,
             success: function(answer) {
-                console.log('run1');
-                $.each($.parseJSON(answer), function(k, v) {
-                    console.log('run2: '+k);
+				$.each($.parseJSON(answer), function(k, v) {
                     checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
                     
                     currentContent = $('#'+k+' .chat-content').html();
-                    //if (escape(currentContent) != escape(v)) {
-                        $('.chat-content').html(v);
+                    if (escape(currentContent) != escape(v)) {
+                        $('#'+k+' .chat-content').html(v);
                         $('#'+k+' .chat-content').scrollTop($('#'+k+' .chat-content').prop('scrollHeight'));
-                    //}
+                    }
                 });
             }
         }
