@@ -359,7 +359,15 @@ class hearthstone extends System
         $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
         $file = fopen($fileName, 'a');
-        $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' surrendered</b></p>';
+
+        $content = '<div class="manager">';
+        $content .= '<div class="message">';
+        $content .= '<b>'.$_SESSION['participant']->name.'</b> surrendered';
+        $content .= '</div>';
+        $content .= '<span>System message</span>';
+        $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+        $content .= '</div>';
+
         fwrite($file, htmlspecialchars($content));
         fclose($file);
         
