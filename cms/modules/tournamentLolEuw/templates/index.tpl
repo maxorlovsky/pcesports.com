@@ -197,7 +197,9 @@ profiler = {
             },
             timeout: 10000,
             success: function(answer) {
+                console.log('run1');
                 $.each($.parseJSON(answer), function(k, v) {
+                    console.log('run2: '+k);
                     checkTop = parseInt($('#'+k+' .chat-content').prop('scrollTop')) + parseInt($('#'+k+' .chat-content').height()) + 10;
                     checkHeight = parseInt($('#'+k+' .chat-content').prop('scrollHeight'));
                     
