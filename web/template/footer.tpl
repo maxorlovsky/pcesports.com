@@ -98,7 +98,7 @@
 <script src="<?=_cfg('static')?>/js/pc.js"></script>
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 <? } else { ?>
-<script src="<?=_cfg('static')?>/js/combined.js?v=1.1"></script>
+<script src="<?=_cfg('static')?>/js/combined.js?v=1.2"></script>
 <? } ?>
 
 </section>
