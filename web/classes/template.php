@@ -97,8 +97,8 @@ class Template extends System
    			$page = new $data->page($data);
    			$page->showTemplate();
    		}
-        else if (file_exists(_cfg('pages').'/widgets/'.$data->page.'/source.php') && $this->widgetTemplate == 1) {
-   			require_once _cfg('pages').'/widgets/'.$data->page.'/source.php';
+        else if (file_exists(_cfg('widgets').'/'.$data->page.'/source.php') && $this->widgetTemplate == 1) {
+   			require_once _cfg('widgets').'/'.$data->page.'/source.php';
    			
    			$page = new $data->page($data);
    			$page->showTemplate();
