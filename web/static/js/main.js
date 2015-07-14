@@ -306,7 +306,6 @@ $(document).on('mousemove', '.hint', function(event) {
 		$('#hint-helper').css('display', 'inline-block');
 	}
 }).on('mouseout', '.hint', function(){
-	$('#hint-helper').offset({ top: 0, left: 0 });
 	$('#hint-helper').css('display', 'none');
 });
 
