@@ -20,5 +20,9 @@ body {
 }
 
 .participants .block {
-    background-color: #7821bb;
+    background-color: #858dd6;
+}
+
+#hint-helper {
+    color: #000;
 }
