@@ -338,6 +338,7 @@ footer {
   border: 1px solid #fff;
   background-color: #32333b;
   width: 150px;
+  margin: 5px 5px 0 0;
   min-height: 0;
   cursor: pointer; }
 
