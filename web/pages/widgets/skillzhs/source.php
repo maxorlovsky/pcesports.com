@@ -117,7 +117,7 @@ class skillzhs extends System
                 '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
                 '`name` = "'.Db::escape($post['battletag']).'", '.
                 '`email` = "'.Db::escape($post['email']).'", '.
-                '`contact_info` = "'.Db::escape($contact_info).'" '.
+                '`contact_info` = "'.Db::escape($contact_info).'", '.
                 '`project` = "skillz" '
             );
 
