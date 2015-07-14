@@ -8,7 +8,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/widget.css" />
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/widget-<?=$this->page?>.css?v=0.3" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/widget-<?=$this->page?>.css?v=0.4" />
 </head>
 <body>
 

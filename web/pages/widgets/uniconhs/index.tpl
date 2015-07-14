@@ -64,7 +64,7 @@
 </div>
 
 <? if ($this->participants) { ?>
-<div class="block">
+<div class="block participants">
     <div class="block-header-wrapper">
         <h1><?=t('participants')?></h1>
     </div>

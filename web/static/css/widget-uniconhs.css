@@ -24,6 +24,10 @@ body {
     border: 1px solid #b443ef;
 }
 
+.block.participants {
+    margin-top: 20px;
+}
+
 #hint-helper {
     color: #000;
 }
