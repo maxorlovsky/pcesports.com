@@ -109,7 +109,7 @@ $cfg['img'] = $cfg['static'].'/images';
 $cfg['uploads'] = $cfg['dir'].'/uploads';
 $cfg['imgu'] = $cfg['site'].'/web/uploads';
 $cfg['avatars'] = $cfg['img'].'/avatar';
-$cfg['widgets'] = $cfg['pages'].'/widgets';
+$cfg['widgets'] = $cfg['dir'].'/pages/widgets';
 
 $cfg['timeDifference'] = 3600; //in seconds (-60m/-1h)
 

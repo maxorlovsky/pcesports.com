@@ -80,7 +80,7 @@ class Template extends System
     
     public function loadPage($data) {
         $pagesList = $this->getTxtPages();
-		echo _cfg('widgets').'/'.$data->page.'/source.php';
+		
 		if ($this->data->settings['maintenance'] == 1 && file_exists(_cfg('pages').'/maintenance/source.php')) {
 			require_once _cfg('pages').'/maintenance/source.php';
    			
