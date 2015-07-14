@@ -3,7 +3,29 @@ if (window.jQuery) {
 $('#pce-widget').ready(function() {
 	var widget = $('#pce-widget');
     var iframe;
-	var parentUrl = 'https://www.pcesports.com/widget/'+g.system;//+'?system='+window.location.hostname;
+    var platform;
+    var parentUrl;
+    
+    if (window.location.href.indexOf('test')) {
+        var platform = 'http://test.';
+    }
+    else {
+        var platform = 'https://www.';
+    }
+    
+    if (window.location.hostname == 'www.skillz.lv') {
+        parentUrl = platform+'pcesports.com/widget/skillzhs';
+    }
+    else if (window.location.hostname == 'www.unicon.lv') {
+        parentUrl = platform+'pcesports.com/widget/uniconhs';
+    }
+    else if (window.location.hostname == 'test.pcesports.com') {
+        parentUrl = platform+'pcesports.com/widget/skillzhs';
+    }
+    else {
+        console.log('Your website is not allowed to use Pentaclick eSports widget');
+		return false;
+    }
 
 	if (widget.length <= 0) {
 		console.log('Widget frame not found, shutting down');
