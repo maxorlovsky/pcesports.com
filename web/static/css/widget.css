@@ -355,11 +355,7 @@ footer {
 .participants .block.hoverable:hover .team-name {
   color: #444; }
 
-.participants .block:nth-child(3n) {
-  margin-right: 0 !important; }
 
-.participants .block:nth-of-type(-n+3) {
-  margin-top: 0 !important; }
 
 .participants .block .team-name {
   margin-bottom: 0;
