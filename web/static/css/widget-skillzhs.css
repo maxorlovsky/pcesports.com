@@ -1,5 +1,5 @@
 .button {
-  background-color: #888FD0;
+  background-color: #cf8889;
 }
 
 .block .block-header-wrapper {
@@ -7,5 +7,5 @@
 }
 
 .block .block-header-wrapper h1 {
-  background: linear-gradient(to bottom, #8e27d0 0%, #7821bb 100%);
+  background: linear-gradient(to bottom, #cf2732 0%, #ba222c 100%);
 }
