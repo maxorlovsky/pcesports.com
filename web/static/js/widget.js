@@ -49,13 +49,6 @@ $('#pce-widget').ready(function() {
     } else {
         window.attachEvent("onmessage", fetchFrameMessage);
     }
-    
-    if ($('.participants.isotope-participants .block').length > 0) {
-        $('.participants.isotope-participants').isotope({
-            itemSelector : '.block',
-            layoutMode : 'fitRows'
-        });
-    }
 });
 
 function fetchFrameMessage(event) {

@@ -126,3 +126,10 @@ $('#register-in-tournament').on('click', function() {
 });
 
 setInterval(function(){SZ.sendFrameMessage($('body').height());}, 200);
+
+if ($('.participants.isotope-participants .block').length > 0) {
+    $('.participants.isotope-participants').isotope({
+        itemSelector : '.block',
+        layoutMode : 'fitRows'
+    });
+}
