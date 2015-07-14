@@ -69,7 +69,7 @@ class skillzhs extends System
             $suc['agree'] = '1;'.t('approved');
         }
         
-        if (!$post['country'] || $post['country'] == 0) {
+        if (!$post['country']) {
             $err['country'] = '0;'.t('please_pick_country');
         }
         else {
