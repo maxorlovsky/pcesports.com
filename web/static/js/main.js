@@ -320,4 +320,7 @@ if (typeof requireStatus != 'undefined' && requireStatus == 1) {
 }
 
 PC.runTimers();
-PC.checkAchievements();
+
+if (g.logged_in == 1) {
+    PC.checkAchievements();
+}
