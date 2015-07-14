@@ -1,3 +1,5 @@
+<div id="hint-helper"><p></p></div>
+
 <!--<footer>
     <p>Pentaclick Widget.</p>
 </footer>-->
