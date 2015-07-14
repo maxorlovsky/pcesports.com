@@ -134,7 +134,9 @@ footer {
   background-color: #fff;
   border-radius: 4px;
   display: none;
-  z-index: 99; }
+  z-index: 99;
+  position: absolute;
+}
 
 #hint-helper p {
   padding: 10px;
