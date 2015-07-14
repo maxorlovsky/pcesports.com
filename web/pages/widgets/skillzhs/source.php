@@ -20,7 +20,7 @@ class skillzhs extends System
 	
 	public function showTemplate() {
         $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
-            'FROM `participants_external` '.
+            'FROM `participants` '.
             //'WHERE `project` = "skillz" '.
             'WHERE `tournament_id` = 10 '.
             'ORDER BY `id` ASC'
