@@ -22,7 +22,7 @@ class skillzhs extends System
         $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
             'FROM `participants` '.
             //'WHERE `project` = "skillz" '.
-            'WHERE `tournament_id` = 10 '.
+            'WHERE `game` = "hs" AND `tournament_id` = 8 '.
             'ORDER BY `id` ASC'
         );
         if ($rows) {
