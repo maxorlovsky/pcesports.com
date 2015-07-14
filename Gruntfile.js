@@ -37,6 +37,13 @@ module.exports = function(grunt) {
                 dest: '<%= dirs.css %>/combined.css'
             },
 
+            scriptsJs : {
+                src : [
+                    '<%= dirs.js %>/jquery.js',
+                    '<%= dirs.js %>/externals.js'
+                ],
+                dest : '<%= dirs.js %>/scripts.js'
+            },
             js : {
                 src : [
                     '<%= dirs.js %>/pc.js',
@@ -54,7 +61,12 @@ module.exports = function(grunt) {
         },
 
         uglify: {
-            js:{
+            scriptsJs: {
+                files: {
+                    '<%= dirs.js %>/scripts.js': ['<%= dirs.js %>/scripts.js']
+                }
+            },
+            js: {
                 files: {
                     '<%= dirs.js %>/combined.js': ['<%= dirs.js %>/combined.js']
                 }
@@ -62,7 +74,11 @@ module.exports = function(grunt) {
         },
         
         jshint: {
-            files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js'],
+            files: [
+                'Gruntfile.js',
+                '<%= dirs.js %>/pc.js',
+                '<%= dirs.js %>/main.js'
+            ],
             options: {
                 ignores: ['<%= dirs.js %>/combined.js'],
                 globals: {
@@ -96,6 +112,8 @@ module.exports = function(grunt) {
         'jshint',
         'concat:css',
         'cssmin:css',
+        'concat:scriptsJs',
+        'uglify:scriptsJs',
         'concat:js',
         'uglify:js'
     ]);

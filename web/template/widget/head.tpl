@@ -12,8 +12,6 @@
 </head>
 <body>
 
-<script src="<?=_cfg('static')?>/js/scripts.js"></script>
-
 <script>
 var g = {
     site: '<?=_cfg('site')?>',
