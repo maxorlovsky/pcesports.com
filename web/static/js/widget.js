@@ -7,10 +7,10 @@ $('#pce-widget').ready(function() {
     var parentUrl;
     
     if (window.location.href.indexOf('test')) {
-        var platform = 'http://test.';
+        platform = 'http://test.';
     }
     else {
-        var platform = 'https://www.';
+        platform = 'https://www.';
     }
     
     if (window.location.hostname == 'www.skillz.lv') {
