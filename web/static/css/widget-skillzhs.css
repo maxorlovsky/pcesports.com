@@ -1,0 +1,11 @@
+.button {
+  background-color: #888FD0;
+}
+
+.block .block-header-wrapper {
+  background-color: #32333b;
+}
+
+.block .block-header-wrapper h1 {
+  background: linear-gradient(to bottom, #8e27d0 0%, #7821bb 100%);
+}
