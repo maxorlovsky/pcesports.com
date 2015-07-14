@@ -73,8 +73,41 @@
     </div>
 </div>
 
+<? if ($this->participants) { ?>
+<div class="block">
+    <div class="block-header-wrapper">
+        <h1><?=t('participants')?></h1>
+    </div>
+    
+    <div class="block-content participants isotope-participants">
+    <?
+    $i = 1;
+    if ($this->participants) {
+        foreach($this->participants as $v) {
+            ?>
+            <div class="block" title="<?=$v->battletag?>">
+                <div class="team-name"><?=$v->battletag?></div>
+                <span class="team-num">#<?=$i?></span>
+                <div class="clear"></div>
+                <div class="player-heroes">
+                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
+                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
+                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
+                </div>
+            </div>
+            <?
+            
+            ++$i;
+        }
+    }
+?>
+    </div>
+</div>
+<? } ?>
+
 </section>
 
+<script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
 var heroes = {
     1: 0,
