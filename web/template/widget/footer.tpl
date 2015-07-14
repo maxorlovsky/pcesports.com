@@ -4,7 +4,7 @@
     <p>Pentaclick Widget.</p>
 </footer>-->
 
-<script src="<?=_cfg('static')?>/js/<?=$this->page?>.js?v=0.4"></script>
+<script src="<?=_cfg('static')?>/js/<?=$this->page?>.js?v=0.5"></script>
 
 </body>
 </html>
