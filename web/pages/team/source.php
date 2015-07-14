@@ -15,6 +15,7 @@ class team extends system
             'LEFT JOIN `summoners` AS `s` ON (`u`.`id` = `s`.`user_id` AND `s`.`approved` = 1 AND `s`.`region` = "eune")'.
             'WHERE `u`.`id` = 863 OR '. //Knight
             '`u`.`id` = 862 OR '. //AnOldEnemy
+            '`u`.`id` = 902 OR '. //Comi
             '`u`.`id` = 811 ' //Cake
 
         );
@@ -24,6 +25,12 @@ class team extends system
                 'role' => 'Top laner',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/mihael.krpan',
+                )
+            ),
+            902 => array(
+                'role' => 'Mid laner',
+                'socials' => array(
+                    
                 )
             ),
             811 => array(
