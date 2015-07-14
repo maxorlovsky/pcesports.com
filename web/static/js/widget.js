@@ -6,7 +6,7 @@ $('#pce-widget').ready(function() {
     var platform;
     var parentUrl;
     
-    if (window.location.href.indexOf('test')) {
+    if (window.location.href.indexOf('test') != -1) {
         platform = 'http://test.';
     }
     else {
