@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<script src="<?=_cfg('static')?>/js/jquery.js"></script>
 <script>
 var g = {
     site: '<?=_cfg('site')?>',
