@@ -32,6 +32,16 @@
                     <div class="message hidden"></div>
                 </div>
                 
+                <div class="form-item" data-label="country">
+                    <select class="hero<?=$i?>" name="country">
+                        <option value="0"><?=t('pick_country')?></option>
+                        <option value="es">Estonia</option>
+                        <option value="lv">Latvia</option>
+                        <option value="lt">Lithuania</option>
+                    </select>
+                    <div class="message hidden"></div>
+                </div>
+                
                 <? for ($i=1;$i<=3;++$i) { ?>
                 <div class="form-item" data-label="hero<?=$i?>">
                     <select class="hero<?=$i?>" name="hero<?=$i?>">

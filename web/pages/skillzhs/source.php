@@ -1,6 +1,6 @@
 <?php
 
-class skillhs extends System
+class skillzhs extends System
 {	
 	public function __construct($params = array()) {
         parent::__construct();
