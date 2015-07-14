@@ -17,7 +17,7 @@
 <script>
 var g = {
     site: '<?=_cfg('site')?>',
-    system: '<?=$this->page?>
+    system: '<?=$this->page?>'
 };
 </script>
 
