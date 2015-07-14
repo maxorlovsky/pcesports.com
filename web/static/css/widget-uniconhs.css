@@ -22,6 +22,7 @@ body {
 .participants .block {
     background-color: #6e78c4;
     border: 1px solid #b443ef;
+    margin: 5px 4px 0 0;
 }
 
 .block.participants {
