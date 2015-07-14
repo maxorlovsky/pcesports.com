@@ -14,7 +14,7 @@
 	
 	<div class="block-content signup">
 		<div id="join-form">
-            <p class="reg-completed success-add"><?=t('mcs_join_tournament_complete')?></p>
+            <div class="reg-completed success-add"><?=t('mcs_join_tournament_complete')?></div>
 
 			<form id="da-form" method="post">
                 <div class="form-item" data-label="battletag">
