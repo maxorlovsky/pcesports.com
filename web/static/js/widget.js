@@ -13,10 +13,10 @@ $('#pce-widget').ready(function() {
         platform = 'https://www.';
     }
     
-    if (window.location.hostname == 'www.skillz.lv') {
+    if (window.location.hostname.indexOf('skillz') != -1) {
         parentUrl = platform+'pcesports.com/widget/skillzhs';
     }
-    else if (window.location.hostname == 'www.unicon.lv') {
+    else if (window.location.hostname.indexOf('unicon') != -1) {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
     else {
