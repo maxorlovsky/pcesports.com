@@ -55,7 +55,7 @@
                 <? } ?>
 
                 <div class="form-item" data-label="agree">
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs_unicon')?></label>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs_mcs')?></label>
                     <div class="message hidden"></div>
                 </div>
                 
