@@ -126,3 +126,28 @@ $('#register-in-tournament').on('click', function() {
 });
 
 setInterval(function(){UC.sendFrameMessage($('body').height());}, 200);
+
+if ($('.participants.isotope-participants .block').length > 0) {
+    $('.participants.isotope-participants').isotope({
+        itemSelector : '.block',
+        layoutMode : 'fitRows'
+    });
+}
+
+$(document).on('mousemove', '.hint', function(event) {
+	$('#hint-helper').offset({ top: event.pageY-30, left: event.pageX+10 });
+	
+	if ($('#hint-helper').is(':visible')) {
+		return false;
+	}
+	
+	msg = $(this).attr("attr-msg");
+	if ($('#hint-helper p').html != msg) {
+		$('#hint-helper p').html(msg);
+	}
+	if ($('#hint-helper').is(':hidden')) {
+		$('#hint-helper').css('display', 'inline-block');
+	}
+}).on('mouseout', '.hint', function(){
+	$('#hint-helper').css('display', 'none');
+});

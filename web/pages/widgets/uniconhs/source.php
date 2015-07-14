@@ -19,6 +19,19 @@ class uniconhs extends System
 	}
 	
 	public function showTemplate() {
+        $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
+            'FROM `participants_external` '.
+            'WHERE `project` = "unicon" '.
+            'ORDER BY `id` ASC'
+        );
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
+        }
+        $this->participants = $rows;
+        unset($v);
+        
         include_once _cfg('widgets').'/'.get_class().'/index.tpl';
 	}
     
