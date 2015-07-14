@@ -96,7 +96,8 @@ class skillzhs extends System
                 'hero1' => $post['hero1'],
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
-                'phone' => $post['phone']
+                'phone' => Db::escape($post['phone']),
+                'country' => Db::escape($post['country']),
             ));
         
             Db::query('INSERT INTO `participants_external` SET '.
