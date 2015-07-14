@@ -3,6 +3,7 @@ class Template extends System
 {
     public $title = '';
     public $seoData;
+    public $widgetTemplate = 0;
     
     public function __construct() {
         parent::__construct();
@@ -24,6 +25,8 @@ class Template extends System
     }
     
     public function parseWidget() {
+        $this->widgetTemplate = 1;
+        
     	$this->getWidgetTemplate('head');
 		$this->loadPage($this);
         $this->getWidgetTemplate('footer');
@@ -88,8 +91,14 @@ class Template extends System
             
             $page = new stdClass();
         }
-   		else if (file_exists(_cfg('pages').'/'.$data->page.'/source.php')) {
+   		else if (file_exists(_cfg('pages').'/'.$data->page.'/source.php') && $this->widgetTemplate == 0) {
    			require_once _cfg('pages').'/'.$data->page.'/source.php';
+   			
+   			$page = new $data->page($data);
+   			$page->showTemplate();
+   		}
+        else if (file_exists(_cfg('pages').'/widgets/'.$data->page.'/source.php') && $this->widgetTemplate == 1) {
+   			require_once _cfg('pages').'/widgets/'.$data->page.'/source.php';
    			
    			$page = new $data->page($data);
    			$page->showTemplate();
