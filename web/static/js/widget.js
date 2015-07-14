@@ -19,9 +19,6 @@ $('#pce-widget').ready(function() {
     else if (window.location.hostname == 'www.unicon.lv') {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
-    else if (window.location.hostname == 'test.pcesports.com') {
-        parentUrl = platform+'pcesports.com/widget/skillzhs';
-    }
     else {
         console.log('Your website is not allowed to use Pentaclick eSports widget');
 		return false;
