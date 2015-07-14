@@ -80,9 +80,6 @@ body {
 	background-image: url(../images/loading.gif);
 	background-position: 50%;
 	background-repeat: no-repeat; }
-  .button:hover {
-	color: #fff;
-	background-color: #6828d1; }
 
 .container {
 	position: relative;

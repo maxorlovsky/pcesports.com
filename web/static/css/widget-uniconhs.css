@@ -1,6 +1,10 @@
 .button {
     background-color: #888FD0;
 }
+.button:hover {
+    color: #fff;
+    background-color: #6828d1;
+}
 
 .block .block-header-wrapper {
     background-color: #32333b;
