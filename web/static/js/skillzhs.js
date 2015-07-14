@@ -30,7 +30,7 @@ var SZ = {
             },
             success: function(answer) {
                 $('#register-in-tournament').removeClass('alpha');
-                UC.formInProgress = 0;
+                SZ.formInProgress = 0;
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
@@ -55,7 +55,7 @@ var SZ = {
             },
             error: function() {
                 $('#register-in-tournament').removeClass('alpha');
-                UC.formInProgress = 0;
+                SZ.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@unicon.lv');
             }
