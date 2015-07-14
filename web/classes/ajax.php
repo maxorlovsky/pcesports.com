@@ -88,13 +88,13 @@ class Ajax extends System
      * Widgets functions
     */
     protected function registerInUnicon($data) {
-        require_once _cfg('pages').'/uniconhs/source.php';
+        require_once _cfg('pages').'/widgets/uniconhs/source.php';
         $unicon = new uniconhs();
         return $unicon->registerInTournament($data);
     }
     
     protected function registerInSkillz($data) {
-        require_once _cfg('pages').'/skillzhs/source.php';
+        require_once _cfg('pages').'/widgets/skillzhs/source.php';
         $skillz = new skillzhs();
         return $skillz->registerInTournament($data);
     }
