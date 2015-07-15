@@ -57,9 +57,11 @@ function fetchFrameMessage(event) {
         return false;
     }
     
-    data = event.data.split('=');
-    if (data[0] == 'height') {
-        $('#pce-widget').find('iframe').height(data[1]);
+    if (event.data) {
+        data = event.data.split('=');
+        if (data[0] == 'height') {
+            $('#pce-widget').find('iframe').height(data[1]);
+        }
     }
 };
 
