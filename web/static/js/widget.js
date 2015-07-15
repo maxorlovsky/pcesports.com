@@ -52,6 +52,11 @@ $('#pce-widget').ready(function() {
 });
 
 function fetchFrameMessage(event) {
+    if (!event) {
+        console.log('No event data sent');
+        return false;
+    }
+    
     data = event.data.split('=');
     if (data[0] == 'height') {
         $('#pce-widget').find('iframe').height(data[1]);
