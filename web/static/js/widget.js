@@ -19,7 +19,7 @@ $('#pce-widget').ready(function() {
     else if (window.location.hostname.indexOf('unicon') != -1) {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
-    else if (window.location.hostname.indexOf('test') != -1) {
+    else if (window.location.hostname.indexOf('pcesports') != -1) {
         parentUrl = platform+'pcesports.com/widget/skillzhs';
     }
     else {
@@ -59,8 +59,8 @@ function fetchFrameMessage(event) {
         console.log('No event data sent');
         return false;
     }
-    console.log(event.data);
-    if (event.data) {
+    
+    if (event && event.data) {
         data = event.data.split('=');
         if (data[0] == 'height') {
             $('#pce-widget').find('iframe').height(data[1]);
