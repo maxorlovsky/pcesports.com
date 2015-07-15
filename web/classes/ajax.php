@@ -832,8 +832,6 @@ class Ajax extends System
             }
         }
     	
-    	$battleTagBreakdown = explode('#', $post['battletag']);
-    	
     	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
     		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
@@ -842,7 +840,7 @@ class Ajax extends System
     		'`deleted` = 0 '
     	);
 
-
+        $battleTagBreakdown = explode('#', $post['battletag']);
     	if (!$post['battletag']) {
     		$err['battletag'] = '0;'.t('field_empty');
     	}
@@ -853,6 +851,7 @@ class Ajax extends System
     		$err['battletag'] = '0;'.t('field_battletag_incorrect');
     	}
     	else {
+            $post['battletag'] = trim($battleTagBreakdown[0]).'#'.trim($battleTagBreakdown[1]);
     		$suc['battletag'] = '1;'.t('approved');
     	}
     	

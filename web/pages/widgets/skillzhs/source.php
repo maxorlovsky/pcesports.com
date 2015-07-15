@@ -49,6 +49,7 @@ class skillzhs extends System
             $err['battletag'] = '0;'.t('field_battletag_incorrect');
         }
         else {
+            $post['battletag'] = trim($battleTagBreakdown[0]).'#'.trim($battleTagBreakdown[1]);
             $suc['battletag'] = '1;'.t('approved');
         }
         
