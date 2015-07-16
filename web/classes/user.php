@@ -17,10 +17,6 @@ class User extends System
             '`s`.`social_uid` = "'.Db::escape($user['social_uid']).'" '
         );
         
-        if ($_SERVER['REMOTE_ADDR'] == '213.129.231.37') {
-            ddump($user);
-        }
-        
         if($err = Db::error()) {
             $_SESSION['errors'][] = 'DB error ('.__LINE__.')';
             return false;

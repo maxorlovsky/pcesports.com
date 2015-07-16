@@ -52,7 +52,7 @@ class Social
     private function bnComplete($data = array()) {
         $user = $_POST;
         $user['social'] = 'bn';
-    ddump($data);
+    
         if(empty($data)) {
             if(!isset($_SESSION['social']) || !isset($_SESSION['social']['bn'])) {
                 $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
@@ -66,9 +66,7 @@ class Social
             $user['email'] = $data['email'];
         }
         $user['social_uid'] = $data['accountId'];
-        //if ($_SERVER['REMOTE_ADDR'] == '213.129.231.37') {
-            ddump($user);
-        //}
+        
         $user = User::socialLogin($user);
         if($user !== true) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
