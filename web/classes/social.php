@@ -52,7 +52,7 @@ class Social
     private function bnComplete($data = array()) {
         $user = $_POST;
         $user['social'] = 'bn';
-    
+    ddump($data);
         if(empty($data)) {
             if(!isset($_SESSION['social']) || !isset($_SESSION['social']['bn'])) {
                 $_SESSION['errors'][] = 'Authorization error. Already inside! ('.__LINE__.')';
