@@ -129,7 +129,7 @@ class Social
             ),
         );
         $bnf = $this->oAuthRequest($cfg);
-        ddump(json_decode($bnf));
+        ddump($bnf);
         //$f['accountId'] = $bnf->json_decode($f);
     
         $_SESSION['social']['bn'] = $f;
