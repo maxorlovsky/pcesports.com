@@ -102,8 +102,7 @@ class Social
             'post'=>array(
                 'code'=>$_GET['code'],
                 'redirect_uri'=>str_replace('http://','https://',_cfg('site')).'/run/social/bn',
-                'grant_type'=>'authorization_code',
-                'scope'=>'wow.profile+sc2.profile',
+                'grant_type'=>'authorization_code'
             ),
             'get'=>array(
                 'client_id'=>$this->config['id'],
@@ -112,18 +111,26 @@ class Social
         );
     
         $f = $this->oAuthRequest($cfg);
-        
         if($f === false) {
-            $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
+            $_SESSION['errors'][] = 'Authorization error, broken on Blizzard side, please contact us ('.__LINE__.')';
             return false;
         }
-    
         $f = (array)json_decode($f);
         
         if(!isset($f['access_token'])) {
             $_SESSION['errors'][] = 'Access token error ('.__LINE__.')';
             return false;
         }
+
+        $cfg = array(
+            'url'=>'https://'.$region.'.battle.net/account/user',
+            'get'=>array(
+                'access_token' => $f['access_token'],
+            ),
+        );
+        $bnf = $this->oAuthRequest($cfg);
+        ddump(json_decode($bnf));
+        //$f['accountId'] = $bnf->json_decode($f);
     
         $_SESSION['social']['bn'] = $f;
     
