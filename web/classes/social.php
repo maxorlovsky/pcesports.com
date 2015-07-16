@@ -112,7 +112,7 @@ class Social
         );
     
         $f = $this->oAuthRequest($cfg);
-        ddump($f);
+        
         if($f === false) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
             return false;
