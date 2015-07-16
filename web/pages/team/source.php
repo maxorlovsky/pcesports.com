@@ -16,6 +16,7 @@ class team extends system
             'WHERE `u`.`id` = 863 OR '. //Knight
             '`u`.`id` = 862 OR '. //AnOldEnemy
             '`u`.`id` = 902 OR '. //Comi
+            '`u`.`id` = 764 OR '. //Shinobi
             '`u`.`id` = 811 ' //Cake
 
         );

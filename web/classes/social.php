@@ -102,7 +102,8 @@ class Social
             'post'=>array(
                 'code'=>$_GET['code'],
                 'redirect_uri'=>str_replace('http://','https://',_cfg('site')).'/run/social/bn',
-                'grant_type'=>'authorization_code'
+                'grant_type'=>'authorization_code',
+                'scope'=>'wow.profile+sc2.profile',
             ),
             'get'=>array(
                 'client_id'=>$this->config['id'],
@@ -111,7 +112,7 @@ class Social
         );
     
         $f = $this->oAuthRequest($cfg);
-        
+        ddump($f);
         if($f === false) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
             return false;
