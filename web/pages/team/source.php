@@ -27,6 +27,12 @@ class team extends system
                     'fb' => 'https://www.facebook.com/mihael.krpan',
                 )
             ),
+            764 => array(
+                'role' => 'Jungler',
+                'socials' => array(
+                
+                )
+            ),
             902 => array(
                 'role' => 'Mid laner',
                 'socials' => array(
