@@ -66,9 +66,9 @@ class Social
             $user['email'] = $data['email'];
         }
         $user['social_uid'] = $data['accountId'];
-        if ($_SERVER['REMOTE_ADDR'] == '213.129.231.37') {
+        //if ($_SERVER['REMOTE_ADDR'] == '213.129.231.37') {
             ddump($user);
-        }
+        //}
         $user = User::socialLogin($user);
         if($user !== true) {
             $_SESSION['errors'][] = 'Authorization error ('.__LINE__.')';
