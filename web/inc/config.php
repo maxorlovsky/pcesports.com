@@ -124,6 +124,10 @@ $cfg['social'] = array(
     'bn'    => array('id' => 'gv3s76c5mk8brmhwkg7q7qagt7w3ds48', 'private'=>'j5WkZNXDkSY6eVNyGtgzyfEVs2MTasJN'),
 );
 
+if ($cfg['env'] != 'prod') {
+    $cfg['social']['bn'] = array('id' => 'tc4wkndnd8gm8d4k8ahmtgt4qk6z7n4q', 'private'=> 'EqXz2CgX3Am2BgNtjzb62NYF7qWMzuBD');
+}
+
 $cfg['streamGames'] = array(
     'lol'   => 'league_of_legends',
     'hs'    => 'hearthstone',

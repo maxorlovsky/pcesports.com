@@ -123,15 +123,17 @@ class Social
         }
 
         $cfg = array(
-            'url'=>'https://'.$region.'.battle.net/account/user',
+            'url'=>'https://'.$region.'.api.battle.net/account/user',
             'get'=>array(
                 'access_token' => $f['access_token'],
             ),
         );
-        $bnf = $this->oAuthRequest($cfg);
-        ddump($bnf);
-        //$f['accountId'] = $bnf->json_decode($f);
-    
+
+        $bnf = json_decode($this->oAuthRequest($cfg));
+        
+        $f['accountId'] = $bnf->id;
+        $f['battleTag'] = $bnf->battletag;
+
         $_SESSION['social']['bn'] = $f;
     
         return $this->bnComplete($f);
