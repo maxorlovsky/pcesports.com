@@ -26,6 +26,10 @@ $('#pce-widget').ready(function() {
         console.log('Your website is not allowed to use Pentaclick eSports widget');
 		return false;
     }
+    
+    if (window.location.hostname.indexOf('participant') != -1) {
+        parentUrl += '/participant/%id%/%link%';
+    }
 
 	if (widget.length <= 0) {
 		console.log('Widget frame not found, shutting down');
@@ -60,7 +64,7 @@ function fetchFrameMessage(event) {
         return false;
     }
     
-    if (event && event.data) {
+    if (event.data) {
         data = event.data.split('=');
         if (data[0] == 'height') {
             $('#pce-widget').find('iframe').height(data[1]);
