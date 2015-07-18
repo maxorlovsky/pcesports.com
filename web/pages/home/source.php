@@ -16,8 +16,8 @@ class home extends System
         }
 		
 		$this->slider = array(
-			//array(_cfg('href').'/leagueoflegends/eune', _cfg('img').'/poster-eune.jpg'),
-            //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-hl.jpg'),
+			array('https://www.facebook.com/pentaclickesports/photos/pb.521490341298749.-2207520000.1437224399./833727596741687/', _cfg('img').'/poster-vacation.jpg'),
+            //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-grandfinals.jpg'),
 		);
 
         $where = '';

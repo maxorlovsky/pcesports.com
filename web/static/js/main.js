@@ -238,7 +238,7 @@ $('.bx-wrapper').bxSlider({
     autoHover: true,
     mode: 'fade',
     speed: 2000,
-    pause: 4000
+    pause: 5000
 });
 
 $('.languages a').on('click', function() {
