@@ -6,7 +6,7 @@
             <p class="success-add"><?=t('participation_verified')?></p>
         <? } ?>
 
-        <p class="error-add">Please don't forget, you must register on LoL event page 30 minutes BEFORE tournament start!!! Or you won't receive any prizes in case you win. <b>EVERY TEAM MEMBER INCLUDING SUBS</b> <b style="font-size: 16px;">MUST</b> register and not only team captain!!! <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
+        <p class="error-add">Please don't forget, you must register on LoL event page 30 minutes BEFORE tournament start!!! Or you won't receive any prizes in case you win. <b>EVERY TEAM MEMBER INCLUDING SUBS</b> <b style="font-size: 26px;">MUST(!!!)</b> register and not only team captain - <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
         
         <? if (!$this->logged_in) { ?>
             <p class="info-add"><?=t('participant_not_user')?></p>
