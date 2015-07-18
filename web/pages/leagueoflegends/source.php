@@ -99,26 +99,14 @@ class leagueoflegends extends System
 			$verified = 1;
 		}
         
-        $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
-            'FROM `participants` '.
-            'WHERE `game` = "lol" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND '.
-            '`approved` = 1 AND '.
-            '`checked_in` = 1 AND '.
-            '`tournament_id` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
-            '`deleted` = 0 '
-        );
-        
         $eventId = Db::fetchRow(
             'SELECT `event_id` FROM `tournaments` '.
-            'WHERE `name` = '.(int)$_SESSION['participant']->tournament_id.' AND '.
+            'WHERE `name` = '.(int)$this->currentTournament.' AND '.
             '`server` = "'.Db::escape($this->server).'" AND '.
             '`game` = "lol" '.
             'LIMIT 1'
         );
         $this->eventId = $eventId->event_id;
-        
-        $this->participantsCount = $rows->count;
 		
 		if ($verified == 1) {
 			$_SESSION['participant'] = $row;
