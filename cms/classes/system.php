@@ -23,7 +23,7 @@ class System
             $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "https" LIMIT 1');
             //Checking if https always enabled and if user is on http, then redirecting to https
             if ( $row->value == 1 && extension_loaded('openssl') &&
-                ( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') )
+                ( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on') && (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') )
                ) {
                 dump('trying to redirect');
                 go(str_replace('http', 'https', _cfg('cmssite')));
@@ -325,22 +325,6 @@ class System
             }
         }
         closedir($handler);
-    }
-    
-    protected function serverParse($socket, $response, $line = __LINE__) {
-        while (substr($server_response, 3, 1) != ' ') {
-            if (!($server_response = fgets($socket, 256))) {
-                echo 'Error: '.$server_response.', '. $line;
-                return false;
-            }
-        }
-        
-        if (!(substr($server_response, 0, 3) == $response)) {
-            echo 'Error: '.$server_response.', '. $line;
-            return false;
-        }
-        
-        return true;
     }
     
     protected function getStrings() {

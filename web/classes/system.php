@@ -824,23 +824,6 @@ class System
         require_once _cfg('classes').'/user.php';
     }
     
-    protected function serverParse($socket, $response, $line = __LINE__) {
-    	$server_response = '';
-        while (substr($server_response, 3, 1) != ' ') {
-            if (!($server_response = fgets($socket, 256))) {
-                echo 'Error: '.$server_response.', '. $line;
-                return false;
-            }
-        }
-        
-        if (!(substr($server_response, 0, 3) == $response)) {
-            echo 'Error: '.$server_response.', '. $line;
-            return false;
-        }
-        
-        return true;
-    }
-    
     protected function getStrings() {
         global $str;
         
