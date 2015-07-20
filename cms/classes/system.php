@@ -55,7 +55,8 @@ class System
         $this->data->settings = array();
         $this->data->pages = array();
         $this->data->subpages = array();
-        
+        echo 2222;
+        dump($this->data);
         $data = array_merge($_GET, $_POST, $_SESSION);
          
         if (!isset($data['val1'])) {
