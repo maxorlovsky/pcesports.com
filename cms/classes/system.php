@@ -29,7 +29,7 @@ class System
             }
             //If not cloudflare, use default PHP check
             else if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-                http$httpsOn = 1;
+                $httpsOn = 1;
             }
             
             //Checking if https always enabled and if user is on http, then redirecting to https
