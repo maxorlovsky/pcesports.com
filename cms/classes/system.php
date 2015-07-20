@@ -23,7 +23,9 @@ class System
         //As soon as DB class is enabled, checking https staru
         $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "https" LIMIT 1');
         //Checking if https always enabled and if user is on http, then redirecting to https
-    
+        dump($row->value);
+        dump(extension_loaded('openssl'));
+        dump($_SERVER);
         if ($row->value == 1 && extension_loaded('openssl')
             && ( (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') || (!isset($_SERVER['HTTP_X_FORWARDED_PROTO']) || $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') )
             ) {
