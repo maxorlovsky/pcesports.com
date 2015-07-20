@@ -33,8 +33,7 @@ class System
             }
             
             //Checking if https always enabled and if user is on http, then redirecting to https
-            if ( $row->value == 1 && extension_loaded('openssl') && $httpsOn === 1) {
-                dump('trying to redirect');
+            if ( $row->value == 1 && extension_loaded('openssl') && $httpsOn === 0) {
                 go(str_replace('http', 'https', _cfg('cmssite')));
             }
     	}
@@ -61,8 +60,7 @@ class System
         $this->data->settings = array();
         $this->data->pages = array();
         $this->data->subpages = array();
-        echo 2222;
-        dump($this->data);
+        
         $data = array_merge($_GET, $_POST, $_SESSION);
          
         if (!isset($data['val1'])) {
