@@ -22,16 +22,11 @@ class System
             //As soon as DB class is enabled, checking https status
             $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "https" LIMIT 1');
             //Checking if https always enabled and if user is on http, then redirecting to https
-            if ( $row->value == 1 && extension_loaded('openssl') &&
-                ( (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on') && (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') )
-               ) {
+            if ( $row->value == 1 && extension_loaded('openssl') && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https') ) {
                 dump('trying to redirect');
                 go(str_replace('http', 'https', _cfg('cmssite')));
             }
     	}
-        
-        echo 'rawr';
-        dump($this->data);
 
         if (!$this->data) {
             $this->data = new stdClass();
