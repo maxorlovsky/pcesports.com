@@ -10,6 +10,7 @@ class leagueoflegends extends System
     public $pickedTournament;
     public $server;
     public $eventId = 0;
+    public $winners;
 	
 	public function __construct($params = array()) {
 		parent::__construct();
@@ -196,6 +197,10 @@ class leagueoflegends extends System
 					$participants[$v->id][$i]['player'] = $v->player;
 					$participants[$v->id][$i]['player_id'] = $v->player_id;
 					++$i;
+                    
+                    if ($v->place >= 1 || $v->place <= 3) {
+                        $winners[$v->place] = $v->name;
+                    }
 				}
 			}
 

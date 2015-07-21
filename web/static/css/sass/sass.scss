@@ -1264,6 +1264,19 @@ footer .partners .aimskillz {
             height: 100%;
         }
     }
+    
+    .block-content.places {
+        padding: 0;
+        position: relative;
+        .first {
+        }
+        .second {
+            float: left;
+        }
+        .third {
+            float: right;
+        }
+    }
 }
 
 .tournament .registration {

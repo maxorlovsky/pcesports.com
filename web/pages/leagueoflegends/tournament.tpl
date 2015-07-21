@@ -19,6 +19,20 @@
         </div>
     </div>
     <? } ?>
+    
+    <? if ($this->winners) { ?>
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('winners')?></h1>
+        </div>
+        
+        <div class="block-content places">
+            <div class="third"></div>
+            <div class="second"></div>
+            <div class="first"></div>
+        </div>
+    </div>
+    <? } ?>
 	
 	<? if ($this->data->settings['tournament-reg-lol-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block registration">
