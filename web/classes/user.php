@@ -24,6 +24,7 @@ class User extends System
         
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
+            dump($_SESSION);
             $u = new self;
             if ($_SESSION['user'] && $_SESSION['user']['id']) {
                 return $u->socialConnect($user);
