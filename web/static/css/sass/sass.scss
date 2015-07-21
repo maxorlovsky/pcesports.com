@@ -1266,7 +1266,7 @@ footer .partners .aimskillz {
     }
     
     .block-content.places {
-        padding: 0;
+        padding: 20px 0 0 0;
         position: relative;
         height: 300px;
         .first {
@@ -1330,7 +1330,7 @@ footer .partners .aimskillz {
             text-align: center;
             box-sizing: border-box;
             background-color: rgba(0,0,0,0.7);
-            cursor: pointer;
+            cursor: default;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
