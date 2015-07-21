@@ -195,7 +195,7 @@ class hearthstone extends System
                 $v->contact_info = json_decode($v->contact_info);
 
                 if ($v->place >= 1 && $v->place <= 3) {
-                    $this->winners[$v->place] = $v->name;
+                    $this->winners[$v->place] = ($v->name?$v->name:$v->battletag);
                 }
             }
         }
