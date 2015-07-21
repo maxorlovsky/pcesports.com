@@ -24,7 +24,6 @@ class User extends System
         
         //Not reggistered, registering
         if ($row === false || !isset($row->id)) {
-            dump($_SESSION);
             $u = new self;
             if ($_SESSION['user'] && $_SESSION['user']['id']) {
                 return $u->socialConnect($user);
@@ -241,6 +240,17 @@ class User extends System
                 $_SESSION['participant'] = $row;
                 $userRow->participant = $row;
             }
+        }
+        
+        if (!isset($_SESSION['user'] || !$_SESSION['user'])) {
+            //Getting fresh updated data (stupid way, but must do it)
+            $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
+                'FROM `users` AS `u` '.
+                'LEFT JOIN `users_social` AS `us` ON `us`.`user_id` = `u`.`id` '.
+                'WHERE `u`.`id` = '.(int)$userRow->id.' '
+            );
+            
+            $_SESSION['user'] = (array)$row;
         }
 
         //Fetching all available achievements
