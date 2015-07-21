@@ -116,7 +116,7 @@ class Cron extends System {
     }
 
     public function updateSummoners() {
-        $limit = 20;
+        $limit = 10; //Maximum 10, limit by Riot
 
         $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `summoners`');
         $currentCount = $row->count;
