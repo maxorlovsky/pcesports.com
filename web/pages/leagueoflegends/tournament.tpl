@@ -27,9 +27,9 @@
         </div>
         
         <div class="block-content places">
-            <div class="third"></div>
-            <div class="second"></div>
-            <div class="first"></div>
+            <div class="third hint" attr-msg="<?=$this->winners[3]?>"><p><?=$this->winners[3]?></p></div>
+            <div class="second hint" attr-msg="<?=$this->winners[2]?>"><p><?=$this->winners[2]?></p></div>
+            <div class="first hint" attr-msg="<?=$this->winners[1]?>"><p><?=$this->winners[1]?></p></div>
         </div>
     </div>
     <? } ?>

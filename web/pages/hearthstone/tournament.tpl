@@ -8,15 +8,31 @@
 <section class="container page tournament hs">
 
 <div class="left-containers">
+    <? if (t('hs_tournament_vod_'.$this->server.'_'.$this->pickedTournament) != 'hs_tournament_vod_'.$this->server.'_'.$this->pickedTournament) { ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('partner')?></h1>
+            <h1 class="bordered"><?=t('broadcast_vod')?></h1>
         </div>
         
-        <div class="block-content sponsor">
-            <a href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a-top.jpg" /></a>
+        <div class="block-content vods">
+            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('hs_tournament_vod_'.$this->server.'_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
+    <? } ?>
+
+    <? if ($this->winners) { ?>
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('winners')?></h1>
+        </div>
+        
+        <div class="block-content places">
+            <div class="third hint" attr-msg="<?=$this->winners[3]?>"><p><?=$this->winners[3]?></p></div>
+            <div class="second hint" attr-msg="<?=$this->winners[2]?>"><p><?=$this->winners[2]?></p></div>
+            <div class="first hint" attr-msg="<?=$this->winners[1]?>"><p><?=$this->winners[1]?></p></div>
+        </div>
+    </div>
+    <? } ?>
 
 	<? if ($this->data->settings['tournament-reg-hs-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block registration">

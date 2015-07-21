@@ -177,7 +177,7 @@ class leagueoflegends extends System
                 $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
             }
             
-			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `p`.`name` AS `player`, `p`.`player_id` '.
+			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `t`.`place`, `p`.`name` AS `player`, `p`.`player_id` '.
                 'FROM `participants` AS `t` '.
 				'JOIN  `players` AS  `p` ON  `p`.`participant_id` =  `t`.`id` '.
 				'WHERE `t`.`game` = "lol" AND '.
@@ -198,8 +198,8 @@ class leagueoflegends extends System
 					$participants[$v->id][$i]['player_id'] = $v->player_id;
 					++$i;
                     
-                    if ($v->place >= 1 || $v->place <= 3) {
-                        $winners[$v->place] = $v->name;
+                    if ($v->place >= 1 && $v->place <= 3) {
+                        $this->winners[$v->place] = $v->name;
                     }
 				}
 			}

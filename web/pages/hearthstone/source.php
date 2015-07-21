@@ -9,6 +9,7 @@ class hearthstone extends System
     public $pickedTournament;
     public $groups;
     public $server;
+    public $winners;
 	
 	public function __construct($params = array()) {
         parent::__construct();
@@ -183,7 +184,7 @@ class hearthstone extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified` '.
+        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `p`.`place`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
             'WHERE `p`.`game` = "hs" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
@@ -192,6 +193,10 @@ class hearthstone extends System
         if ($rows) {
             foreach($rows as &$v) {
                 $v->contact_info = json_decode($v->contact_info);
+
+                if ($v->place >= 1 && $v->place <= 3) {
+                    $this->winners[$v->place] = $v->name;
+                }
             }
         }
         $this->participants = $rows;

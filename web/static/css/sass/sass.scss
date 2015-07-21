@@ -1268,13 +1268,81 @@ footer .partners .aimskillz {
     .block-content.places {
         padding: 0;
         position: relative;
+        height: 300px;
         .first {
+            padding-top: 20px;
+            margin: 0 auto;
+            width: 310px;
+            height: 274px;
+            background-image: url(../images/cups.png);
+            background-position: 0 0;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 4;
+            p {
+                margin: 200px auto 0 auto;
+                text-align: center;
+                color: #f8ec82;
+                font-size: 20px;
+                text-shadow: 1px 1px #d09e26;
+                max-width: 260px;
+                box-sizing: border-box;
+                padding: 10px;
+                background-color: rgba(0,0,0,0.7);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
         .second {
-            float: left;
+            position: absolute;
+            left: 25px;
+            top: 40px;
+            width: 242px;
+            height: 213px;
+            background-image: url(../images/cups.png);
+            background-position: -310px 0;
+            background-repeat: no-repeat;
+            z-index: 3;
+            p {
+                margin: 160px auto 0 auto;
+                text-align: center;
+                color: #d1d3d6;
+                font-size: 17px;
+                text-shadow: 1px 1px #77828a;
+                max-width: 170px;
+                box-sizing: border-box;
+                padding: 7px;
+                background-color: rgba(0,0,0,0.7);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
         .third {
-            float: right;
+            position: absolute;
+            right: 62px;
+            top: 60px;
+            width: 185px;
+            height: 163px;
+            background-image: url(../images/cups.png);
+            background-position: -551px 0;
+            background-repeat: no-repeat;
+            z-index: 2;
+            p {
+                margin: 125px auto 0 auto;
+                text-align: center;
+                color: #da9928;
+                font-size: 14px;
+                text-shadow: 1px 1px #b45e29;
+                max-width: 130px;
+                box-sizing: border-box;
+                padding: 5px;
+                background-color: rgba(0,0,0,0.7);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
     }
 }
