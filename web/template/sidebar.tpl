@@ -72,21 +72,30 @@
             <h1 class="bordered"><?=t('next_tournament')?></h1>
         </div>
         <?
-        foreach($this->serverTimes as $v) {
-            $live = (intval($v['time'] - time() + _cfg('timeDifference'))<0?'live':'');
-        ?>
-        <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i'.($this->data->user->timestyle!=1?' A':null))?>">
-            <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?>
-                <br /><?=t($v['status'])?>
+        if ($this->serverTimes) {
+            foreach($this->serverTimes as $v) {
+                $live = (intval($v['time'] - time() + _cfg('timeDifference'))<0?'live':'');
+            ?>
+            <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'] + _cfg('timeDifference'), 'j M - H:i'.($this->data->user->timestyle!=1?' A':null))?>">
+                <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?>
+                    <br /><?=t($v['status'])?>
+                </div>
+                
+                <div class="timer" attr-time="<?=intval($v['time'] - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
+                <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button">
+                    <?=t('join')?>
+                </a>
+                <div class="clear"></div>
             </div>
-            
-            <div class="timer" attr-time="<?=intval($v['time'] - time())?>"><img src="<?=_cfg('img')?>/bx_loader.gif" /></div>
-            <a href="<?=_cfg('href')?>/<?=str_replace(' ', '', strtolower($v['name']))?>/<?=($v['server']?$v['server'].'/':'')?><?=$v['id']?>" class="button">
-                <?=t('join')?>
-            </a>
-            <div class="clear"></div>
-        </div>
-        <?
+            <?
+            }
+        }
+        else {
+            ?>
+            <div class="block-content">
+                No tournaments registered
+            </div>
+            <?
         }
         ?>
     </div>
