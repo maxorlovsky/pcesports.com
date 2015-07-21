@@ -18,6 +18,7 @@ class team extends system
             '`u`.`id` = 902 OR '. //Comi
             '`u`.`id` = 764 OR '. //Shinobi
             '`u`.`id` = 997 OR '. //NoBueno
+            '`u`.`id` = 998 OR '. //Endrigran
             '`u`.`id` = 811 ' //Cake
 
         );
@@ -49,6 +50,12 @@ class team extends system
             ),
             863 => array(
                 'role' => 'Support (Team Captain)',
+                'socials' => array(
+                    
+                )
+            ),
+            998 => array(
+                'role' => 'AD Carry (Sub)',
                 'socials' => array(
                     
                 )
