@@ -242,7 +242,7 @@ class User extends System
             }
         }
         
-        if (!isset($_SESSION['user'] || !$_SESSION['user'])) {
+        if (!isset($_SESSION['user']) || !$_SESSION['user']) {
             //Getting fresh updated data (stupid way, but must do it)
             $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
                 'FROM `users` AS `u` '.
