@@ -16,8 +16,8 @@ class home extends System
         }
 		
 		$this->slider = array(
-			array('https://www.facebook.com/pentaclickesports/photos/pb.521490341298749.-2207520000.1437224399./833727596741687/', _cfg('img').'/poster-vacation.jpg'),
-            //array(_cfg('href').'/hearthstone', _cfg('img').'/poster-grandfinals.jpg'),
+            array('http://www.pcesports.com/en/blog/29', _cfg('img').'/poster-grandfinals.jpg'),
+			array('http://www.pcesports.com/en/blog/27', _cfg('img').'/poster-vacation.jpg'),
 		);
 
         $where = '';
