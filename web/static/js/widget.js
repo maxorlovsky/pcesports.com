@@ -5,6 +5,7 @@ $('#pce-widget').ready(function() {
     var iframe;
     var platform;
     var parentUrl;
+    var get;
     
     if (window.location.href.indexOf('test') != -1) {
         platform = 'http://test.';
@@ -28,14 +29,17 @@ $('#pce-widget').ready(function() {
     }
     
     if (window.location.hostname.indexOf('participant') != -1) {
-        breakdownGlobal = window.location.hostname.split('&');
+        breakdownGlobal = window.location.href.split('&');
         delete breakdownGlobal[0];
-        $.each(breakdownGlobal, function(k,v) {
-            console.log(k);
-            console.log(v);
-            console.log('--');
+        $.each(breakdownGlobal, function(k, v) {
+            if (v != undefined) {
+                breakdown = v.split('=');
+                if (breakdown[1] != undefined) {
+                    get[breakdown[0]] = breakdown[1];
+                }
+            }
         });
-        parentUrl += '/participant/%id%/%link%';
+        parentUrl += '/participant/'+get.participant+'/'+get.link;
     }
 
 	if (widget.length <= 0) {
