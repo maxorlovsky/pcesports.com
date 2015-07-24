@@ -20,7 +20,7 @@ $('#pce-widget').ready(function() {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
     else if (window.location.hostname.indexOf('pcesports') != -1) {
-        parentUrl = platform+'pcesports.com/widget/skillzhs';
+        parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
     else {
         console.log('Your website is not allowed to use Pentaclick eSports widget');
@@ -28,6 +28,13 @@ $('#pce-widget').ready(function() {
     }
     
     if (window.location.hostname.indexOf('participant') != -1) {
+        breakdownGlobal = window.location.hostname.split('&');
+        delete breakdownGlobal[0];
+        $.each(breakdownGlobal, function(k,v) {
+            console.log(k);
+            console.log(v);
+            console.log('--');
+        });
         parentUrl += '/participant/%id%/%link%';
     }
 
