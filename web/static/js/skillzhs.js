@@ -11,6 +11,53 @@ var SZ = {
             window.parent.postMessage('height='+height, "*");
         }
     },
+    editParticipant: function(game) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('.team-edit-completed').hide();
+        $('#da-form .form-item').removeClass('error success');
+        $('#da-form .form-item .message').hide();
+        $('#edit-in-tournament').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                ajax: 'editInSkillz',
+                form: $('#da-form').serialize()
+            },
+            success: function(answer) {
+                $('#edit-in-tournament').removeClass('alpha');
+                UC.formInProgress = 0;
+                
+                $.each(answer.err, function(k, v) {
+                    answ = v.split(';');
+                    $('[data-label="'+k+'"] .message').html(answ[1]);
+                    $('[data-label="'+k+'"] .message').show();
+                    if (answ[0] == 1) {
+                        $('[data-label="'+k+'"]').addClass('success');
+                    }
+                    else {
+                        $('[data-label="'+k+'"]').addClass('error');
+                    }
+                });
+                
+                if (answer.ok == 1) {
+                    $('.team-edit-completed').slideDown(1000);
+                }
+            },
+            error: function() {
+                $('#edit-in-tournament').removeClass('alpha');
+                UC.formInProgress = 0;
+                
+                alert('Something went wrong... Contact admin at info@unicon.lv');
+            }
+        };
+        this.ajax(query);
+    },
     addParticipant: function() {
         if (this.formInProgress == 1) {
             return false;
@@ -123,6 +170,15 @@ var SZ = {
 
 $('#register-in-tournament').on('click', function() {
     SZ.addParticipant();
+});
+$('#edit-in-tournament').on('click', function() {
+    SZ.editParticipant();
+});
+$('.confirm').on('click', function() {
+    if(confirm($(this).attr('attr-msg'))) {
+        location.href = $(this).attr('href');
+    }
+    return false;
 });
 
 setInterval(function(){SZ.sendFrameMessage($('body').height());}, 200);

@@ -41,6 +41,8 @@
                 </form>
                 <div class="clear"></div>
                 <a href="javascript:void(0);" class="button" id="edit-in-tournament"><?=t('edit_information')?></a>
+
+                <a href="<?=$_SERVER['REQUEST_URI']?>/leave" class="button confirm" id="leave-tournament" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a>
             </div>
         </div>
     </div>

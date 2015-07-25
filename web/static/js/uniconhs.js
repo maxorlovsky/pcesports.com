@@ -174,6 +174,12 @@ $('#register-in-tournament').on('click', function() {
 $('#edit-in-tournament').on('click', function() {
     UC.editParticipant();
 });
+$('.confirm').on('click', function() {
+    if(confirm($(this).attr('attr-msg'))) {
+        location.href = $(this).attr('href');
+    }
+    return false;
+});
 
 setInterval(function(){UC.sendFrameMessage($('body').height());}, 200);
 

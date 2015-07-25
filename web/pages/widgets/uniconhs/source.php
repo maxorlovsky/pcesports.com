@@ -44,8 +44,16 @@ class uniconhs extends System
                 'LIMIT 1'
             );
             if ($row) {
-                $this->participant = $row;
-                $this->participant->contact_info = json_decode($this->participant->contact_info);
+                if (isset($_GET['val5']) && $_GET['val5'] == 'leave') {
+                    Db::query('DELETE FROM `participants_external` '.
+                        'WHERE `id` = '.(int)$row->id.' AND '.
+                        '`project` = "unicon" '
+                    );
+                }
+                else {
+                    $this->participant = $row;
+                    $this->participant->contact_info = json_decode($this->participant->contact_info);
+                }
             }
         }
         
@@ -54,6 +62,27 @@ class uniconhs extends System
         }
         include_once _cfg('widgets').'/'.get_class().'/index.tpl';
 	}
+
+    protected function leaveTournament($data) {
+
+       $row = Db::fetchRow(
+            'SELECT * FROM `participants_external` '.
+            'WHERE `id` = '.(int)$_GET['val3'].' AND '.
+            '`link` = "'.Db::escape($_GET['val4']).'" '.
+            'LIMIT 1'
+        );
+
+        if ($row) {
+             Db::query('DELETE FROM `participants_external` '.
+                'WHERE `project` = "unicon" AND '.
+                '`id` = '.(int)$post['id'].' AND '.
+                '`link` = "'.Db::escape($post['link']).'" '
+            );
+            
+        }
+
+        return true;
+    }
 
     public function editInTournament($data) {
         $err = array();

@@ -32,3 +32,11 @@ body {
 #hint-helper {
     color: #000;
 }
+
+#leave-tournament {
+    background-color: #ea6b6b;
+    margin-top: 10px;
+}
+#leave-tournament:hover {
+    background-color: #900;
+}
