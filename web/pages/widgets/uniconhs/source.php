@@ -230,8 +230,7 @@ class uniconhs extends System
                 $text
             );
         
-            //$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
-            $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $text);
+            $this->sendMail($post['email'], $tournamentName.' participation', $text);
 
             $answer['ok'] = 1;
         }
