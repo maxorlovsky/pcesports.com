@@ -206,14 +206,32 @@ class uniconhs extends System
                 'hero3' => $post['hero3'],
                 'phone' => Db::escape($post['phone'])
             ));
-        
+
+            $code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
             Db::query('INSERT INTO `participants_external` SET '.
                 '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
                 '`name` = "'.Db::escape($post['battletag']).'", '.
                 '`email` = "'.Db::escape($post['email']).'", '.
                 '`contact_info` = "'.Db::escape($contact_info).'", '.
+                '`link` = "'.$code.'", '.
                 '`project` = "unicon" '
             );
+
+            $lastId = Db::lastId();
+            $tournamentName = 'UniCon 2015 Hearthstone BYOD';
+            $url = 'http://www.unicon.lv/pc15&participant='.$lastId.'&link='.$code.'&.html';
+            $additionalText = 'Because there are more participants than we imagined. We decide to add "check in" right on UniCon.<br />There are only 32 slots available for tournament, so the first people who will come to event, find Pentaclick eSports booth and register, will be fully checked in and registered.';
+
+            $text = Template::getMailTemplate('reg-player-widget');
+
+            $text = str_replace(
+                array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
+                array($post['battletag'], $tournamentName.' tournament', $url, $additionalText, 'UniCon Latvia and Pentaclick eSports'),
+                $text
+            );
+        
+            //$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
+            $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $text);
 
             $answer['ok'] = 1;
         }
