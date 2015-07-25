@@ -7,6 +7,7 @@
 
 <section class="container tournament hs">
 
+<? if (!$this->participant) { ?>
 <div class="block registration">
 	<div class="block-header-wrapper">
 		<h1>UniCon Latvia 2015 Tournament</h1>
@@ -51,7 +52,7 @@
                 
                 <div class="heroes-images">
                     <h6><?=t('your_classes')?></h6>
-                    <? for ($i=1;$i<=4;++$i) { ?>
+                    <? for ($i=1;$i<=3;++$i) { ?>
                     <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
                     <? } ?>
                 </div>
@@ -62,6 +63,7 @@
 		</div>
     </div>
 </div>
+<? } ?>
 
 <? if ($this->participants) { ?>
 <div class="block participants">
@@ -139,4 +141,8 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
         }
     });
 });
+
+<? if ($this->participant) { ?>
+$('.hero1, .hero2, .hero3').trigger('change');
+<? } ?>
 </script>

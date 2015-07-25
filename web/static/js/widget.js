@@ -5,9 +5,12 @@ $('#pce-widget').ready(function() {
     var iframe;
     var platform;
     var parentUrl;
-    var get;
+    var get = {};
     
-    if (window.location.href.indexOf('test') != -1) {
+    if (window.location.href.indexOf('dev') != -1) {
+        platform = 'http://dev.';
+    }
+    else if (window.location.href.indexOf('test') != -1) {
         platform = 'http://test.';
     }
     else {

@@ -92,6 +92,11 @@ class Ajax extends System
         $unicon = new uniconhs();
         return $unicon->registerInTournament($data);
     }
+    protected function editInUnicon($data) {
+        require_once _cfg('pages').'/widgets/uniconhs/source.php';
+        $unicon = new uniconhs();
+        return $unicon->editInTournament($data);
+    }
     
     protected function registerInSkillz($data) {
         require_once _cfg('pages').'/widgets/skillzhs/source.php';

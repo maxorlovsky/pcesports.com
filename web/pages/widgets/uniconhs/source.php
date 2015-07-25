@@ -2,6 +2,9 @@
 
 class uniconhs extends System
 {	
+    public $participant;
+    public $participants;
+
 	public function __construct($params = array()) {
         parent::__construct();
 
@@ -31,9 +34,78 @@ class uniconhs extends System
         }
         $this->participants = $rows;
         unset($v);
+
+        if (isset($_GET['val3']) && $_GET['val3'] && isset($_GET['val4']) && $_GET['val4']) {
+            //Might be a participant
+            $row = Db::fetchRow(
+                'SELECT * FROM `participants_external` '.
+                'WHERE `id` = '.(int)$_GET['val3'].' AND '.
+                '`link` = "'.Db::escape($_GET['val4']).'" '.
+                'LIMIT 1'
+            );
+            if ($row) {
+                $this->participant = $row;
+                $this->participant->contact_info = json_decode($this->participant->contact_info);
+            }
+        }
         
+        if ($this->participant) {
+            include_once _cfg('widgets').'/'.get_class().'/participant.tpl';
+        }
         include_once _cfg('widgets').'/'.get_class().'/index.tpl';
 	}
+
+    public function editInTournament($data) {
+        $err = array();
+        $suc = array();
+        parse_str($data['form'], $post);
+        
+        $heroesPicked = array();
+        for($i=1;$i<=3;++$i) {
+            if (!$post['hero'.$i]) {
+                $err['hero'.$i] = '0;'.t('pick_hero');
+            }
+            
+            if (in_array($post['hero'.$i], $heroesPicked)) {
+                $err['hero'.$i] = '0;'.t('same_hero_picked');
+            }
+            
+            if ($post['hero'.$i]) {
+                $heroesPicked[] = $post['hero'.$i];
+            }
+        }
+        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
+            $err['hero2'] = '0;'.t('same_hero_picked');
+        }
+        
+        if ($err) {
+            $answer['ok'] = 0;
+            if ($suc) {
+                $err = array_merge($err, $suc);
+            }
+            $answer['err'] = $err;
+        }
+        else {
+            $answer['ok'] = 1;
+            $answer['err'] = $suc;
+            
+            $contact_info = json_encode(array(
+                'hero1' => $post['hero1'],
+                'hero2' => $post['hero2'],
+                'hero3' => $post['hero3'],
+                'phone' => Db::escape($post['phone']),
+            ));
+            
+            Db::query('UPDATE `participants_external` SET '.
+                '`contact_info` = "'.Db::escape($contact_info).'" '.
+                'WHERE `id` = '.(int)$post['participant'].' AND '.
+                '`link` = "'.Db::escape($post['link']).'" AND '.
+                '`project` = "unicon" '
+            );
+        }
+        
+        return json_encode($answer);
+    }
     
     public function registerInTournament($data) {
         $err = array();
