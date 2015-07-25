@@ -28,7 +28,7 @@ $('#pce-widget').ready(function() {
 		return false;
     }
     
-    if (window.location.hostname.indexOf('participant') != -1) {
+    if (window.location.href.indexOf('participant') != -1) {
         breakdownGlobal = window.location.href.split('&');
         delete breakdownGlobal[0];
         $.each(breakdownGlobal, function(k, v) {
