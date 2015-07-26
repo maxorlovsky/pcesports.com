@@ -939,6 +939,11 @@ class System
                     $cronClass = new Cron();
                     $cronClass->emailSender();
                 }
+                else if ($_GET['val1'] == 'connectlinks' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(120);
+                    $cronClass = new Cron();
+                    $cronClass->createLinks();
+                }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
                     

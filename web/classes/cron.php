@@ -5,6 +5,34 @@ class Cron extends System {
         parent::__construct();
     }
 
+    public function createLinks() {
+        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "unicon" AND `link` IS NULL');
+
+        $text = Template::getMailTemplate('reg-player-widget');
+
+        foreach($rows as $v) {
+            $code = substr(sha1(time().rand(0,9999)).$v->name, 0, 32);
+            $tournamentName = 'UniCon 2015 Hearthstone BYOD';
+            $url = 'http://www.unicon.lv/pc15&participant='.$v->id.'&link='.$code.'&.html';
+            $additionalText = 'Because there are more participants than we imagined. We decide to add "check in" right on UniCon.<br />There are only 32 slots available for tournament, so the first people who will come to event, find Pentaclick eSports booth and register, will be fully checked in and registered.';
+
+            $mailText = str_replace(
+                array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
+                array($v->name, $tournamentName.' tournament', $url, $additionalText, 'UniCon Latvia and Pentaclick eSports'),
+                $text
+            );
+
+            Db::query(
+                'UPDATE `participants_external` '.
+                'SET `link` = "'.$code'" '.
+                'WHERE `project` = "unicon" AND `id` = '.$v->id
+            );
+            
+            $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $mailText);
+            //$this->sendMail($v->email, $tournamentName.' participation', $mailText);
+        }
+    }
+
     public function emailSender() {
         $limit = 500;
 
