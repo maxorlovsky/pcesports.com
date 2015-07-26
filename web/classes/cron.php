@@ -24,8 +24,9 @@ class Cron extends System {
 
             Db::query(
                 'UPDATE `participants_external` '.
-                'SET `link` = "'.$code'" '.
-                'WHERE `project` = "unicon" AND `id` = '.$v->id
+                'SET `link` = "'.$code.'" '.
+                'WHERE `project` = "unicon" [
+                AND `id` = '.$v->id
             );
             
             $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $mailText);
