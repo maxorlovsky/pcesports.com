@@ -6,7 +6,7 @@ class Cron extends System {
     }
 
     public function createLinks() {
-        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "unicon" AND `link` IS NULL');
+        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "unicon" AND `link` IS NULL LIMIT 10');
 
         $text = Template::getMailTemplate('reg-player-widget');
 
@@ -28,8 +28,7 @@ class Cron extends System {
                 'WHERE `project` = "unicon" AND `id` = '.$v->id
             );
             
-            $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $mailText);
-            //$this->sendMail($v->email, $tournamentName.' participation', $mailText);
+            $this->sendMail($v->email, $tournamentName.' participation', $mailText);
         }
     }
 
