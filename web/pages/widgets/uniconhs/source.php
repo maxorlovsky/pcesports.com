@@ -22,9 +22,11 @@ class uniconhs extends System
 	}
 	
 	public function showTemplate() {
-        $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
+        $rows = Db::fetchRows(
+            'SELECT `name` AS `battletag`, `contact_info` '.
             'FROM `participants_external` '.
-            'WHERE `project` = "unicon" '.
+            'WHERE `project` = "unicon" AND '.
+            '`deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
         if ($rows) {
@@ -40,13 +42,18 @@ class uniconhs extends System
             $row = Db::fetchRow(
                 'SELECT * FROM `participants_external` '.
                 'WHERE `id` = '.(int)$_GET['val3'].' AND '.
-                '`link` = "'.Db::escape($_GET['val4']).'" '.
+                '`link` = "'.Db::escape($_GET['val4']).'" AND '.
+                '`deleted` = 0 '.
                 'LIMIT 1'
             );
             if ($row) {
                 if (isset($_GET['val5']) && $_GET['val5'] == 'leave') {
-                    Db::query('DELETE FROM `participants_external` '.
+                    Db::query(
+                        'UPDATE `participants_external` SET '.
+                        '`deleted` = 1, '.
+                        '`update_timestamp` = NOW() '.
                         'WHERE `id` = '.(int)$row->id.' AND '.
+                        '`deleted` = 0 AND '.
                         '`project` = "unicon" '
                     );
                 }
@@ -62,27 +69,6 @@ class uniconhs extends System
         }
         include_once _cfg('widgets').'/'.get_class().'/index.tpl';
 	}
-
-    protected function leaveTournament($data) {
-
-       $row = Db::fetchRow(
-            'SELECT * FROM `participants_external` '.
-            'WHERE `id` = '.(int)$_GET['val3'].' AND '.
-            '`link` = "'.Db::escape($_GET['val4']).'" '.
-            'LIMIT 1'
-        );
-
-        if ($row) {
-             Db::query('DELETE FROM `participants_external` '.
-                'WHERE `project` = "unicon" AND '.
-                '`id` = '.(int)$post['id'].' AND '.
-                '`link` = "'.Db::escape($post['link']).'" '
-            );
-            
-        }
-
-        return true;
-    }
 
     public function editInTournament($data) {
         $err = array();
@@ -125,10 +111,13 @@ class uniconhs extends System
                 'phone' => Db::escape($post['phone']),
             ));
             
-            Db::query('UPDATE `participants_external` SET '.
-                '`contact_info` = "'.Db::escape($contact_info).'" '.
+            Db::query(
+                'UPDATE `participants_external` SET '.
+                '`contact_info` = "'.Db::escape($contact_info).'", '.
+                '`update_timestamp` = NOW() '.
                 'WHERE `id` = '.(int)$post['participant'].' AND '.
                 '`link` = "'.Db::escape($post['link']).'" AND '.
+                '`deleted` = 0 AND '.
                 '`project` = "unicon" '
             );
         }
@@ -208,7 +197,8 @@ class uniconhs extends System
             ));
 
             $code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
-            Db::query('INSERT INTO `participants_external` SET '.
+            Db::query(
+                'INSERT INTO `participants_external` SET '.
                 '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
                 '`name` = "'.Db::escape($post['battletag']).'", '.
                 '`email` = "'.Db::escape($post['email']).'", '.

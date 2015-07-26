@@ -24,7 +24,16 @@ $('#pce-widget').ready(function() {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
     else if (window.location.hostname.indexOf('pcesports') != -1) {
-        parentUrl = platform+'pcesports.com/widget/uniconhs';
+        if (window.location.href.indexOf('skillz') != -1) {
+            parentUrl = platform+'pcesports.com/widget/skillzhs';
+        }
+        else if (window.location.href.indexOf('unicon') != -1) {
+            parentUrl = platform+'pcesports.com/widget/uniconhs';
+        }
+        else {
+            console.log('Please specify platform');
+            return false;
+        }
     }
     else {
         console.log('Your website is not allowed to use Pentaclick eSports widget');
