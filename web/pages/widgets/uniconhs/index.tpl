@@ -66,7 +66,7 @@
 <? } ?>
 
 <? if ($this->participants) { ?>
-<div class="block participants">
+<div class="block participants <?=($this->regIsOpen==0?'nomargin':null)?>">
     <div class="block-header-wrapper">
         <h1><?=t('participants')?></h1>
     </div>

@@ -40,3 +40,7 @@ body {
 #leave-tournament:hover {
     background-color: #900;
 }
+
+.nomargin {
+    margin-top: 0;
+}
