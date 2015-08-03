@@ -7,7 +7,7 @@
 
 <section class="container tournament hs">
 
-<? if (!$this->participant) { ?>
+<? if (!$this->participant && $this->regIsOpen == 1) { ?>
 <div class="block registration">
 	<div class="block-header-wrapper">
 		<h1>UniCon Latvia 2015 Tournament</h1>

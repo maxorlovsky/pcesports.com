@@ -4,6 +4,7 @@ class uniconhs extends System
 {	
     public $participant;
     public $participants;
+    public $regIsOpen = 0;
 
 	public function __construct($params = array()) {
         parent::__construct();
