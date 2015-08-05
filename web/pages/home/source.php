@@ -16,8 +16,8 @@ class home extends System
         }
 		
 		$this->slider = array(
-            array('http://www.pcesports.com/en/blog/29', _cfg('img').'/poster-grandfinals.jpg'),
-			array('http://www.pcesports.com/en/blog/27', _cfg('img').'/poster-vacation.jpg'),
+            //array('http://www.pcesports.com/en/blog/29', _cfg('img').'/poster-grandfinals.jpg'),
+			//array('http://www.pcesports.com/en/blog/27', _cfg('img').'/poster-vacation.jpg'),
 		);
 
         $where = '';
