@@ -6,26 +6,19 @@ class Cron extends System {
     }
 
     public function createLinks() {
-        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "skillz" AND `link` IS NULL LIMIT 10');
+        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "skillz" AND `deleted` = 0');
 
         $text = Template::getMailTemplate('reg-player-widget');
 
         foreach($rows as $v) {
-            $code = substr(sha1(time().rand(0,9999)).$v->name, 0, 32);
-            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
-            $url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
+            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier (SORRY, LINK IN PREVIOUS INCORRECT)';
+            $url = 'http://skillz.lv/ru/news/2046?&participant='.$v->id.'&link='.$v->code.'&';
             $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets.';
 
             $mailText = str_replace(
                 array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
                 array($v->name, $tournamentName.' tournament', $url, $additionalText, 'Skillz.lv and Pentaclick eSports'),
                 $text
-            );
-
-            Db::query(
-                'UPDATE `participants_external` '.
-                'SET `link` = "'.$code.'" '.
-                'WHERE `project` = "skillz" AND `id` = '.$v->id
             );
             
             $this->sendMail($v->email, $tournamentName.' participation', $mailText);
