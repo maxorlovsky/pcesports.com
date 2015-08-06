@@ -6,26 +6,26 @@ class Cron extends System {
     }
 
     public function createLinks() {
-        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "unicon" AND `link` IS NULL LIMIT 10');
+        $rows = Db::fetchRows('SELECT * FROM `participants_external` WHERE `project` = "skillz" AND `link` IS NULL LIMIT 10');
 
         $text = Template::getMailTemplate('reg-player-widget');
 
         foreach($rows as $v) {
             $code = substr(sha1(time().rand(0,9999)).$v->name, 0, 32);
-            $tournamentName = 'UniCon 2015 Hearthstone BYOD';
-            $url = 'http://www.unicon.lv/pc15&participant='.$v->id.'&link='.$code.'&.html';
-            $additionalText = 'Because there are more participants than we imagined. We decide to add "check in" right on UniCon.<br />There are only 32 slots available for tournament, so the first people who will come to event, find Pentaclick eSports booth and register, will be fully checked in and registered.';
+            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
+            $url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
+            $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets.';
 
             $mailText = str_replace(
                 array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
-                array($v->name, $tournamentName.' tournament', $url, $additionalText, 'UniCon Latvia and Pentaclick eSports'),
+                array($v->name, $tournamentName.' tournament', $url, $additionalText, 'Skillz.lv and Pentaclick eSports'),
                 $text
             );
 
             Db::query(
                 'UPDATE `participants_external` '.
                 'SET `link` = "'.$code.'" '.
-                'WHERE `project` = "unicon" AND `id` = '.$v->id
+                'WHERE `project` = "skillz" AND `id` = '.$v->id
             );
             
             $this->sendMail($v->email, $tournamentName.' participation', $mailText);
