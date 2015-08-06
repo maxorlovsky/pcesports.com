@@ -151,4 +151,8 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
         }
     });
 });
+
+<? if ($this->participant) { ?>
+$('.hero1, .hero2, .hero3').trigger('change');
+<? } ?>
 </script>
