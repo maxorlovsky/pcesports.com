@@ -4,7 +4,7 @@ class skillzhs extends System
 {
     public $participant;
     public $participants;
-    public $regIsOpen = 0;
+    public $regIsOpen = 1;
     public $project = 'skillz';
     
 	public function __construct($params = array()) {
@@ -226,7 +226,7 @@ class skillzhs extends System
             
             $lastId = Db::lastId();
             $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
-            $url = 'http://http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
+            $url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
             $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets.';
 
             $text = Template::getMailTemplate('reg-player-widget');
