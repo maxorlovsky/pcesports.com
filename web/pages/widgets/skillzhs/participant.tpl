@@ -9,8 +9,7 @@
         
         <div class="block-content">
             <? if ($this->participant->verified != 1) { ?>
-                <p class="error-add"><?=t('participation_in_tournament_not_verified')?></p>
-                <p class="error-add"><?=t('skillz_payment_info')?></p>
+                <p class="error-add"><?=t('participation_in_tournament_not_verified')?><br /><br /><?=t('skillz_payment_info')?></p>
             <? } else { ?>
                 <p class="success-add"><?=t('participation_in_tournament_verified')?></p>
                 <br />
