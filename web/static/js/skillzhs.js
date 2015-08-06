@@ -31,7 +31,7 @@ var SZ = {
             },
             success: function(answer) {
                 $('#edit-in-tournament').removeClass('alpha');
-                UC.formInProgress = 0;
+                SZ.formInProgress = 0;
                 
                 $.each(answer.err, function(k, v) {
                     answ = v.split(';');
@@ -51,7 +51,7 @@ var SZ = {
             },
             error: function() {
                 $('#edit-in-tournament').removeClass('alpha');
-                UC.formInProgress = 0;
+                SZ.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@unicon.lv');
             }

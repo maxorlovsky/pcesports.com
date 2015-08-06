@@ -16,11 +16,10 @@
                     </div>
                     
                     <div class="form-item" data-label="country">
-                        <select class="hero<?=$i?>" name="country">
-                            <option value="0"><?=t('pick_country')?></option>
-                            <option value="es">Estonia</option>
-                            <option value="lv">Latvia</option>
-                            <option value="lt">Lithuania</option>
+                        <select name="country">
+                            <option value="es" <?=($this->participant->contact_info->country=='es'?selected="selected":null)?>>Estonia</option>
+                            <option value="lv" <?=($this->participant->contact_info->country=='lv'?selected="selected":null)?>>Latvia</option>
+                            <option value="lt" <?=($this->participant->contact_info->country=='lt'?selected="selected":null)?>>Lithuania</option>
                         </select>
                         <div class="message hidden"></div>
                     </div>

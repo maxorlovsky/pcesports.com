@@ -26,3 +26,15 @@ body {
 .block.participants {
     margin-top: 50px;
 }
+
+#leave-tournament {
+    background-color: #ea6b6b;
+    margin-top: 10px;
+}
+#leave-tournament:hover {
+    background-color: #900;
+}
+
+.nomargin {
+    margin-top: 0 !important;
+}
