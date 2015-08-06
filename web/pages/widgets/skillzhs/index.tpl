@@ -7,9 +7,10 @@
 
 <section class="container tournament hs">
 
+<? if (!$this->participant && $this->regIsOpen == 1) { ?>
 <div class="block registration">
 	<div class="block-header-wrapper">
-		<h1> MSI MCS Open Season 3 HearthStone Baltic Qualifier</h1>
+		<h1>MSI MCS Open Season 3 HearthStone Baltic Qualifier</h1>
 	</div>
 	
 	<div class="block-content signup">
@@ -72,6 +73,7 @@
 		</div>
     </div>
 </div>
+<? } ?>
 
 <? if ($this->participants) { ?>
 <div class="block participants">
