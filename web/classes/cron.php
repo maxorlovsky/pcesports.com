@@ -11,9 +11,9 @@ class Cron extends System {
         $text = Template::getMailTemplate('reg-player-widget');
 
         foreach($rows as $v) {
-            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier (SORRY, LINK IN PREVIOUS INCORRECT)';
+            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
             $url = 'http://skillz.lv/ru/news/2046?&participant='.$v->id.'&link='.$v->link.'&';
-            $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets.';
+            $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets. (Terribly sorry for spaming)';
 
             $mailText = str_replace(
                 array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
@@ -21,9 +21,7 @@ class Cron extends System {
                 $text
             );
             
-            //$this->sendMail($v->email, $tournamentName.' participation', $mailText);
-            $this->sendMail('max.orlovsky@gmail.com', $tournamentName.' participation', $mailText);
-            exit();
+            $this->sendMail($v->email, $tournamentName.' participation', $mailText);
         }
     }
 
