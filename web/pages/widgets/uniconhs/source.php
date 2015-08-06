@@ -5,6 +5,7 @@ class uniconhs extends System
     public $participant;
     public $participants;
     public $regIsOpen = 0;
+    public $project = 'unicon';
 
 	public function __construct($params = array()) {
         parent::__construct();
@@ -26,7 +27,7 @@ class uniconhs extends System
         $rows = Db::fetchRows(
             'SELECT `name` AS `battletag`, `contact_info` '.
             'FROM `participants_external` '.
-            'WHERE `project` = "unicon" AND '.
+            'WHERE `project` = "'.$this->project.'" AND '.
             '`deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
@@ -55,7 +56,7 @@ class uniconhs extends System
                         '`update_timestamp` = NOW() '.
                         'WHERE `id` = '.(int)$row->id.' AND '.
                         '`deleted` = 0 AND '.
-                        '`project` = "unicon" '
+                        '`project` = "'.$this->project.'" '
                     );
                 }
                 else {
@@ -65,7 +66,7 @@ class uniconhs extends System
             }
         }
         
-        if ($this->participant) {
+        if ($this->participant && $this->regIsOpen == 1) {
             include_once _cfg('widgets').'/'.get_class().'/participant.tpl';
         }
         include_once _cfg('widgets').'/'.get_class().'/index.tpl';
@@ -119,7 +120,7 @@ class uniconhs extends System
                 'WHERE `id` = '.(int)$post['participant'].' AND '.
                 '`link` = "'.Db::escape($post['link']).'" AND '.
                 '`deleted` = 0 AND '.
-                '`project` = "unicon" '
+                '`project` = "'.$this->project.'" '
             );
         }
         
@@ -205,7 +206,7 @@ class uniconhs extends System
                 '`email` = "'.Db::escape($post['email']).'", '.
                 '`contact_info` = "'.Db::escape($contact_info).'", '.
                 '`link` = "'.$code.'", '.
-                '`project` = "unicon" '
+                '`project` = "'.$this->project.'" '
             );
 
             $lastId = Db::lastId();
