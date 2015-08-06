@@ -53,7 +53,7 @@ var SZ = {
                 $('#edit-in-tournament').removeClass('alpha');
                 SZ.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@unicon.lv');
+                alert('Something went wrong... Contact admin at info@skillz.lv');
             }
         };
         this.ajax(query);
@@ -104,7 +104,7 @@ var SZ = {
                 $('#register-in-tournament').removeClass('alpha');
                 SZ.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@unicon.lv');
+                alert('Something went wrong... Contact admin at info@skillz.lv');
             }
         };
         this.ajax(query);

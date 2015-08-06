@@ -103,6 +103,11 @@ class Ajax extends System
         $skillz = new skillzhs();
         return $skillz->registerInTournament($data);
     }
+    protected function editInSkillz($data) {
+        require_once _cfg('pages').'/widgets/skillzhs/source.php';
+        $skillz = new skillzhs();
+        return $skillz->editInTournament($data);
+    }
     
     protected function checkInHs() {
         if (!$_SESSION['participant']) {
