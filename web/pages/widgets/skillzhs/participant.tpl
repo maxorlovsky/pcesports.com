@@ -1,6 +1,23 @@
 <section class="container page tournament">
 
 <div class="left-containers">
+    <? if ($this->paymentNeeded == 1) { ?>
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('payment_status')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <? if ($this->participant->verified != 1) { ?>
+                <p class="error-add"><?=t('participation_hsleague_not_verified')?></p>
+            <? } else { ?>
+                <p class="success-add"><?=t('participation_hsleague_verified')?></p>
+                <br />
+            <? } ?>
+        </div>
+    </div>
+    <? } ?>
+    
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('edit_information')?> "<?=$this->participant->name?>"</h1>
