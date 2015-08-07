@@ -38,3 +38,7 @@ body {
 .nomargin {
     margin-top: 0 !important;
 }
+
+.check-in {
+    margin-bottom: 20px;
+}

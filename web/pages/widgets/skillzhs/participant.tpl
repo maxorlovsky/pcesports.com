@@ -36,7 +36,7 @@
             </div>
             <? } else { ?>
             <div class="check-in-holder">
-                <div class="button tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
+                <div class="button tournamentOff" id="fightStatus"><?=t('tournament_not_started_yet')?></div>
             </div>
             <? } ?>
         </div>
