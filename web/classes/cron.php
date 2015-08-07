@@ -1145,7 +1145,7 @@ class Cron extends System {
             '`ended` = 0'
         );
         
-        $text = Template::getMailTemplate('widget-reminder-24');
+        $text = Template::getMailTemplate('widget-reminder-1');
         
         if ($rows) {
             $i = 0;
