@@ -1138,7 +1138,7 @@ class Cron extends System {
     }
     
     public function sendNotificationsSkillz() {
-        $rows = Db::fetchRows('SELECT `name`, `server`, `email`, `id`, `link`, `server`, `game` '.
+        $rows = Db::fetchRows('SELECT `id`, `name`, `email`, `link` '.
             'FROM `participants_external` '.
             'WHERE `project` = "skillz" AND '.
             '`deleted` = 0 AND '.
