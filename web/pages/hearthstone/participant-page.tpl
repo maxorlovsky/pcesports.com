@@ -48,7 +48,7 @@
                 <? if ($this->data->settings['tournament-checkin-hs-'.$this->server] == 1) {?>
                 <div class="check-in-holder">
                     <? if ($paymentVerified != 1) { ?>
-                        <div class="button tournamentOff">Check in in progress, but you're not verified, sorry</div>
+                        <div class="button tournamentOff">Check in is progress, but you're not verified, sorry</div>
                     <? } else { ?>
                         <div class="button checkIn" id="checkInHs"><?=t('check_in')?></div>
                     <? } ?>

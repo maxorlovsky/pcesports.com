@@ -482,14 +482,7 @@ class System
         
 		$startTime = microtime(true);
 		
-        /*if (_cfg('env') == 'dev') {
-            $apiUrl = 'https://';
-        }
-        else {*/
-            $apiUrl = 'https://';
-        //}
-        
-		$apiUrl .= $server.'.api.pvp.net/api/lol';
+		$apiUrl = 'https://'.$server.'.api.pvp.net/api/lol';
 		$apiUrl .= $apiAdditionalData;
 		$apiUrl .= '?api_key=d8339ebc-91ea-49d3-809d-abcb42df872a';
 		
@@ -656,10 +649,7 @@ class System
     //@email - Send TO
     //@subject - Subject of email
     //@msg - Body of message (can be html)
-    //@file - array, optional, attachment to email, required full link, data in array
-    //@file['name'] - name of the file with extension
-    //@file['content'] - plain text or plain html, it will be converted into attachment
-    public function sendMail($email, $subject, $msg, $files = array()) {
+    public function sendMail($email, $subject, $msg) {
     	if(!_cfg('smtpMailName') || !_cfg('smtpMailPass') || _cfg('env') == 'dev') {
             return false;
         }
@@ -684,19 +674,6 @@ class System
         //Sending message
         $mailer = Swift_Mailer::newInstance($transport);
         $mailer->send($message, $fails);
-        
-        /*if ($files) {
-            foreach($files as $k => $v) {
-                if ($v['content']) {
-                    $mailData .= 'Content-Type: application/octet-stream; name='.$v['name'].''."\r\n";
-                    $mailData .= 'Content-Transfer-Encoding: base64 '."\r\n";
-                    $mailData .= 'Content-Disposition: attachment; filename="'.$v['name'].'" '."\r\n";
-                    $mailData .= "\r\n".base64_encode($v['content'])."\r\n\r\n";
-                    
-                    $mailData .= '--'.$mime_boundary."\r\n";
-                }
-            }
-        }*/
         
         if($fails) {
             $_SESSION['mailError'] = $fails;
@@ -893,6 +870,12 @@ class System
                     
                     //Others functions without SQL
                     $cronClass->cleanImagesTmp();
+                }
+                //skillz specific notifications
+                else if ($_GET['val1'] == 'notificationzskillz' && $_GET['val2'] === _cfg('cronjob')) {
+                    set_time_limit(300);
+                    $cronClass = new Cron();
+                    $cronClass->sendNotificationsSkillz();
                 }
                 else if ($_GET['val1'] == 'euw' && $_GET['val2'] === _cfg('cronjob')) {
                     set_time_limit(300);

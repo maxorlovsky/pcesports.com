@@ -18,6 +18,30 @@
     </div>
     <? } ?>
     
+    <div class="block check-in">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('check_in')?></h1>
+        </div>
+        
+        <div class="block-content">
+            <p><?=t('check_in_will_apear_in')?></p>
+            
+            <? if ($this->data->settings['tournament-checkin-hs-widget'] == 1) {?>
+            <div class="check-in-holder">
+                <? if ($this->paymentNeeded != 1) { ?>
+                    <div class="button tournamentOff">Check in is progress, but you're not verified, sorry</div>
+                <? } else { ?>
+                    <div class="button checkIn" id="check-in-hs"><?=t('check_in')?></div>
+                <? } ?>
+            </div>
+            <? } else { ?>
+            <div class="check-in-holder">
+                <div class="button tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
+            </div>
+            <? } ?>
+        </div>
+    </div>
+    
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('edit_information')?> "<?=$this->participant->name?>"</h1>

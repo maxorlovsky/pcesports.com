@@ -240,6 +240,31 @@ class Cron extends System {
     }
     
     public function updateChallongeMatches() {
+        if ($this->data->settings['tournament-start-hs-widget'] == 1) {
+            if (_cfg('env') == 'prod') {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-exths1/matches.json', array(), 'state=open');
+            }
+            else {
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+            }
+
+            foreach($answer as $v) {
+                //Checking if match is already registered
+                $row = Db::fetchRow('SELECT `match_id` '.
+                    'FROM `fights` '.
+                    'WHERE `match_id` = '.(int)$v->match->id
+                );
+                if (!$row) {
+                    //Registering match, if still not yet registered
+                    Db::query('INSERT INTO `fights` SET '.
+                        '`match_id` = '.(int)$v->match->id.', '.
+                        '`player1_id` = '.(int)$v->match->player1_id.', '.
+                        '`player2_id` = '.(int)$v->match->player2_id
+                    );
+                }
+            }
+        }
+        
         if ($this->data->settings['tournament-start-hs-s1'] == 1) {
             if (_cfg('env') == 'prod') {
                 $answer = $this->runChallongeAPI('tournaments/pentaclick-hss1'.$this->data->settings['hs-current-number-s1'].'/matches.json', array(), 'state=open');
@@ -1110,6 +1135,40 @@ class Cron extends System {
         }
         
         return true;
+    }
+    
+    public function sendNotificationsSkillz() {
+        $rows = Db::fetchRows('SELECT `name`, `server`, `email`, `id`, `link`, `server`, `game` '.
+            'FROM `participants_external` '.
+            'WHERE `project` = "skillz" AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0'
+        );
+        
+        $text = Template::getMailTemplate('widget-reminder-24');
+        
+        if ($rows) {
+            $i = 0;
+            foreach($rows as $v) {
+                $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
+                $url = 'http://skillz.lv/ru/news/2046?&participant='.$v->id.'&link='.$v->link.'&';
+                $additionalText = '';
+                
+                $mailText = str_replace(
+                    array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
+                    array($v->name, $tournamentName, $url, $additionalText, 'Skillz.lv and Pentaclick eSports'),
+                    $text
+                );
+
+                $this->sendMail($v->email, $tournamentName.' - reminder', $mailText);
+                
+                ++$i;
+                if ($i >= 3) {
+                    sleep(1);
+                    $i = 0;
+                }
+            }
+        }
     }
     
     public function sendNotifications() {
