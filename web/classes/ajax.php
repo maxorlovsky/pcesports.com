@@ -108,6 +108,85 @@ class Ajax extends System
         $skillz = new skillzhs();
         return $skillz->editInTournament($data);
     }
+    protected function checkInHsSkillz($data) {
+        $row = Db::fetchRow('SELECT * '.
+            'FROM `participants_external` '.
+            'WHERE '.
+            '`project` = "skillz" AND '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`link` = "'.Db::escape($data['link']).'" AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+        if (!$row) {
+            return '0;'.t('not_logged_in');
+        }
+        
+        $tournamentName = 'exths1';
+        
+        if ($this->data->settings['tournament-checkin-hs-widget'] != 1) {
+            return '0;Check in is not in progress';
+        }
+
+        if ($row->verified != 1) {
+            return '0;Sorry, your participation was not verified, your payment was not received';
+        }
+        
+        //Generating other IDs for different environment
+        if (_cfg('env') == 'prod') {
+            $participant_id = $row->id + 100000;
+        }
+        else {
+            $participant_id = $row->id;
+        }
+        
+        $apiArray = array(
+            'participant_id' => $participant_id,
+            'participant[name]' => $row->name,
+        );
+        
+        //Adding team to Challonge bracket
+        if (_cfg('env') == 'prod') {
+            $this->runChallongeAPI('tournaments/pentaclick-'.$tournamentName.'/participants.post', $apiArray);
+        }
+        else {
+            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
+        }
+        
+        //Registering ID, because Challonge idiots not giving an answer with ID
+        if (_cfg('env') == 'prod') {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$tournamentName.'/participants.json');
+        }
+        else {
+            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
+        }
+        
+        array_reverse($answer, true);
+        
+        foreach($answer as $f) {
+            if ($f->participant->name == $row->name) {
+                $participantRow = Db::fetchRow('SELECT * FROM `participants_external` '.
+                    'WHERE `project` = "skillz" AND '.
+                    '`id` = '.(int)$row->id.' AND '.
+                    '`verified` = 1 AND '.
+                    '`checked_in` = 0 '
+                );
+                if ($participantRow != 0) {
+                    Db::query('UPDATE `participants_external` '.
+                        'SET `challonge_id` = '.(int)$f->participant->id.', '.
+                        '`checked_in` = 1 '.
+                        'WHERE `project` = "skillz" AND '.
+                        '`id` = '.(int)$row->id.' AND '.
+                        '`verified` = 1 '
+                    );
+                }
+                
+                break;
+            }
+        }
+        
+        return '1;1';
+    }
     
     protected function checkInHs() {
         if (!$_SESSION['participant']) {
@@ -478,6 +557,116 @@ class Ajax extends System
         $social = new Social();
         return $social->getToken($data['provider']);
     }
+
+    protected function statusCheckExternal($data) {
+        if (!$data['id']) {
+            return false;
+        }
+
+        $participant = Db::fetchRow('SELECT * '.
+            'FROM `participants_external` '.
+            'WHERE '.
+            '`project` = "skillz" AND '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`link` = "'.Db::escape($data['link']).'" AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+        if ($participant) {
+            $challonge_id = $participant->challonge_id;
+            Db::query('UPDATE `participants_external` SET `online` = '.time().' '.
+                'WHERE `id` = '.(int)$participant->id.' AND '.
+                '`project` = "skillz" '
+            );
+        }
+
+        if ($participant->checked_in == 0) {
+            if ($this->data->settings['tournament-checkin-hs-widget'] != 1)
+            {
+                return '3;'.t('none').';'.t('tournament_not_started_yet').';'.t('none');
+            }
+            
+            return '2;'.t('none').';'.t('check_in_required').';'.t('none');
+        }
+        
+        $row = Db::fetchRow('SELECT * FROM `fights` '.
+            'WHERE (`player1_id` = '.$challonge_id.' OR `player2_id` = '.$challonge_id.') AND '.
+            '`done` = 0'
+        );
+        
+        if (!$row) {
+            return '0;'.t('none').';'.t('waiting_for_opponent').';'.t('none');
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants_external` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants_external` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$participant->challonge_id.' OR `f`.`player2_id` = '.(int)$participant->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+        
+        if ($playersRow) {
+            $enemyRow = Db::fetchRow('SELECT `id`, `name`, `online` '.
+                'FROM `participants_external` '.
+                'WHERE '.
+                '`challonge_id` = '.(int)($participant->challonge_id==$playersRow->player1_id?$playersRow->player2_id:$playersRow->player1_id).' AND '.
+                '`deleted` = 0 AND '.
+                '`ended` = 0 '
+            );
+            
+            if ($enemyRow) {
+                if ($enemyRow->online+30 >= time()) {
+                    $status = t('online');
+                }
+                else {
+                    $status = t('offline');
+                }
+                
+                $code = '';
+                
+                $row = Db::fetchRow(
+                    'SELECT `contact_info` FROM `participants_external` '.
+                    'WHERE `project` = "skillz" AND '.
+                    '`id` = '.(int)$enemyRow->id
+                );
+                
+                $row->contact_info = json_decode($row->contact_info);
+                $heroes = array(
+                    1 => 'warrior',
+                    2 => 'hunter',
+                    3 => 'mage',
+                    4 => 'warlock',
+                    5 => 'shaman',
+                    6 => 'rogue',
+                    7 => 'druid',
+                    8 => 'paladin',
+                    9 => 'priest',
+                );
+                
+                $code = '';
+                foreach($row->contact_info as $k => $v) {
+                    if (substr($k, 0, 4) == 'hero') {
+                        $code[$k] = $heroes[$v];
+                    }
+                }
+                $code = json_encode($code);
+
+                if ($participant->challonge_id == $playersRow->player1_id) {
+                    $player = 1;
+                }
+                else {
+                    $player = 2;
+                }
+
+                return '1;'.$enemyRow->name.';'.$status.';'.$code;
+            }
+            
+            return '0;'.t('none').';'.t('offline').';'.t('none');
+        }
+        
+        return '0;'.t('none').';'.t('no_opponent').';'.t('none');
+    }
     
     protected function statusCheck($data) {
         if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
@@ -768,6 +957,71 @@ class Ajax extends System
         }
 
         return '1;1';
+    }
+
+    protected function chatExternal($data) {
+        if (!$data['id']) {
+            return false;
+        }
+
+        $participant = Db::fetchRow('SELECT * '.
+            'FROM `participants_external` '.
+            'WHERE '.
+            '`project` = "skillz" AND '.
+            '`id` = '.(int)$data['id'].' AND '.
+            '`link` = "'.Db::escape($data['link']).'" AND '.
+            '`deleted` = 0 AND '.
+            '`ended` = 0 '
+        );
+        if ($participant) {
+            $challonge_id = $participant->challonge_id;
+        }
+
+        $row = Db::fetchRow('SELECT * FROM `fights` '.
+            'WHERE (`player1_id` = '.$challonge_id.' OR `player2_id` = '.$challonge_id.') AND '.
+            '`done` = 0'
+        );
+        
+        if (!$row) {
+            return '1;;<p id="notice">'.t('chat_disabled_no_opp').'</p>';
+        }
+        
+        $playersRow = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants_external` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants_external` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$participant->challonge_id.' OR `f`.`player2_id` = '.(int)$participant->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+        
+        if ($playersRow) {
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/ext_'.(int)$playersRow->id1.'_vs_'.(int)$playersRow->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            if ($data['action'] == 'send') {
+                $content = '<div class="'.($participant->id==$playersRow->id1?'player1':'player2').'">';
+                $content .= '<div class="message">'.$data['text'].'</div>';
+                $content .= '<span>'.($participant->id==$playersRow->id1?$playersRow->name1:$playersRow->name2).'</span>';
+                $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+                $content .= '</div>';
+
+                fwrite($file, htmlspecialchars($content));
+            }
+            fclose($file);
+            
+            $chat = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<div><p><b><a><u><span>');
+            
+            if (!$chat) {
+                $chat = '<p id="notice">'.t('chat_active_can_start').'</p>';
+            }
+            
+            return '1;;'.$chat;
+        }
+        else {
+            return '0;;'.t('error');
+        }
+        
+        return '0;'.t('error');
     }
     
     protected function chat($data) {

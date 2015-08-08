@@ -75,7 +75,7 @@
 </div>
 <? } ?>
 
-<? if ($this->participants) { ?>
+<? if ($this->participants && $this->participant->checked_in != 1) { ?>
 <div class="block participants">
     <div class="block-header-wrapper">
         <h1><?=t('participants')?></h1>
@@ -154,5 +154,6 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
 
 <? if ($this->participant) { ?>
 $('.hero1, .hero2, .hero3').trigger('change');
+var participant = 1;
 <? } ?>
 </script>

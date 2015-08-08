@@ -1,6 +1,8 @@
 <section class="container page tournament">
 
 <div class="left-containers">
+    <? if ($this->participant->checked_in != 1) { ?>
+
     <? if ($this->paymentNeeded == 1) { ?>
     <div class="block">
         <div class="block-header-wrapper">
@@ -31,12 +33,12 @@
                 <? if ($this->paymentNeeded != 1) { ?>
                     <div class="button tournamentOff">Check in is progress, but you're not verified, sorry</div>
                 <? } else { ?>
-                    <div class="button checkIn" id="check-in-hs"><?=t('check_in')?></div>
+                    <div class="button checkIn" id="check-in-tournament"><?=t('check_in')?></div>
                 <? } ?>
             </div>
             <? } else { ?>
             <div class="check-in-holder">
-                <div class="button tournamentOff" id="fightStatus"><?=t('tournament_not_started_yet')?></div>
+                <div class="button tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
             </div>
             <? } ?>
         </div>
@@ -86,8 +88,8 @@
                     </div>
                     <div class="clear"></div>
 
-                    <input type="hidden" name="participant" value="<?=$_GET['val3']?>" />
-                    <input type="hidden" name="link" value="<?=$_GET['val4']?>" />
+                    <input type="hidden" name="participant" id="participant" value="<?=$_GET['val3']?>" />
+                    <input type="hidden" name="link" id="link" value="<?=$_GET['val4']?>" />
                 </form>
                 <div class="clear"></div>
                 <a href="javascript:void(0);" class="button" id="edit-in-tournament"><?=t('edit_information')?></a>
@@ -98,4 +100,55 @@
             </div>
         </div>
     </div>
+    <? } else { ?>
+        <div class="block">
+            <div class="block-header-wrapper">
+                <h1 class="bordered"><?=t('opponent_info')?></h1>
+            </div>
+            
+            <div class="block-content opponent-info">
+                <label><?=t('opponent')?></label>: <span id="opponentName"></span><br />
+                <label><?=t('status')?></label>: <span id="opponentStatus"></span> (<span id="opponentSec"></span> sec)<br />
+                <label><?=t('enemy_heroes')?></label>
+                <div class="pick-ban red hidden"><?=t('pick_your_ban')?></div>
+                <div class="player-heroes bans"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <div class="block">
+            <div class="block-header-wrapper">
+                <h1 class="bordered"><?=t('battle_chat')?></h1>
+            </div>
+            
+            <div class="block-content">
+                <div class="notification"><?=t('battle_chat_notif1')?></div>
+                <div class="chat">
+                    <div class="chat-content"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-input" placeholder="<?=t('enter_text')?>" />
+                        <div id="chatSound" class="chat-sound hint on" attr-msg="<?=t('turn_off_sound')?>"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <input type="hidden" name="participant" id="participant" value="<?=$_GET['val3']?>" />
+        <input type="hidden" name="link" id="link" value="<?=$_GET['val4']?>" />
+        <audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
+
+        <div class="block" style="margin-top: 20px;">
+            <div class="block-header-wrapper">
+                <h1 class="bordered"><?=t('brackets')?></h1>
+            </div>
+
+            <div class="block-content participants">
+                Available by link: <a href="http://pentaclick.challonge.com/exths1" target="_blank">http://pentaclick.challonge.com/exths1</a>
+            </div>
+        </div>
+
+        <div style="display: none;" id="hsicons-holder">
+            <div class="hsicons-small %hero% hint" attr-msg="%heroName%"></div>
+        </div>
+    <? } ?>
 </div>

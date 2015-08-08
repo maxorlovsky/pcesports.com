@@ -42,3 +42,113 @@ body {
 .check-in {
     margin-bottom: 20px;
 }
+
+.block .block-content {
+    box-shadow: initial;
+}
+
+.notification {
+  margin-bottom: 20px;
+  font-size: 16px; }
+
+.opponent-info {
+  font-size: 17px !important; }
+
+.opponent-info label {
+  text-transform: uppercase;
+  display: inline-block;
+  width: 140px; }
+
+.opponent-info .online {
+  font-weight: bold;
+  color: #0f750d; }
+
+.opponent-info .offline {
+  color: #5e0909; }
+
+.opponent-info .not-none {
+  font-weight: bold; }
+
+.chat {
+  width: 100%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+  border-radius: 8px; }
+  .chat .chat-content {
+    padding: 5px 10px;
+    font-size: 14px;
+    min-height: 200px;
+    height: 300px;
+    max-height: 500px;
+    border-bottom: 1px solid #000;
+    border-radius: 4px 4px 0 0;
+    background-color: #dedede;
+    overflow-y: auto;
+    font-family: arial;
+    resize: vertical; }
+    .chat .chat-content .message {
+      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+      padding: 5px 10px;
+      border-radius: 8px;
+      word-break: break-all; }
+    .chat .chat-content span {
+      font-size: 11px;
+      margin-left: 5px; }
+    .chat .chat-content #notice {
+      font-size: 10px;
+      color: #777;
+      margin: 0; }
+    .chat .chat-content .player1 {
+      float: left;
+      clear: both; }
+      .chat .chat-content .player1 .message {
+        background-color: #c7edfc; }
+    .chat .chat-content .player2 {
+      float: right;
+      clear: both; }
+      .chat .chat-content .player2 .message {
+        background-color: #fcc7c7; }
+    .chat .chat-content .manager {
+      clear: both; }
+      .chat .chat-content .manager span {
+        color: #0018a9; }
+      .chat .chat-content .manager .message {
+        background-color: #85ff8b;
+        color: #0019b4; }
+  .chat .chat-input {
+    padding: 0 5px;
+    height: 30px;
+    background-color: #efefef;
+    border-radius: 0 0 4px 4px; }
+    .chat .chat-input input[type="text"] {
+      width: 85%;
+      padding: 6px 0;
+      border: 0;
+      background: none;
+      outline: none; }
+    .chat .chat-input div {
+      background-repeat: no-repeat;
+      background-color: #ddd;
+      background-position: center center;
+      height: 25px;
+      width: 25px;
+      float: right;
+      margin-top: 1px;
+      margin-left: 3px;
+      border: 1px solid #777;
+      cursor: pointer; }
+      .chat .chat-input div:hover {
+        background-color: #eee; }
+  .chat .attach-file {
+    background-image: url("../images/attach-file.png"); }
+  .chat .chat-sound.on {
+    background-image: url("../images/volume-on.png"); }
+  .chat .chat-sound.off {
+    background-image: url("../images/volume-off.png"); }
+
+#fightStatus.online {
+  color: #090;
+}
+
+.player-heroes {
+    display: inline-block;
+}
