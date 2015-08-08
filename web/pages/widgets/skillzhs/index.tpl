@@ -76,7 +76,7 @@
 <? } ?>
 
 <? if ($this->participants && $this->participant->checked_in != 1) { ?>
-<div class="block participants">
+<div class="block participants nomargin">
     <div class="block-header-wrapper">
         <h1><?=t('participants')?></h1>
     </div>
