@@ -367,8 +367,6 @@ $('#chat-input').on('keyup', function(e) {
     }
 });
 
-document.getElementById('ping').volume = 0.2;
-
 $('#register-in-tournament').on('click', function() {
     SZ.addParticipant();
 });
@@ -413,6 +411,7 @@ $(document).on('mousemove', '.hint', function(event) {
 });
 
 if (participant == 1) {
+    document.getElementById('ping').volume = 0.2;
     SZ.fetchChat();
     SZ.statusCheck();
     setInterval(function () { SZ.fetchChat(); }, 5000);
