@@ -15,7 +15,7 @@ class TournamentHsSkillz
 			'FROM `fights` AS `f` '.
 			'LEFT JOIN `participants_external` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
 			'LEFT JOIN `participants_external` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
-			'WHERE `f`.`done` = 0 '.
+			'WHERE `f`.`done` = 0 '
 		);
 
 		return $this;
