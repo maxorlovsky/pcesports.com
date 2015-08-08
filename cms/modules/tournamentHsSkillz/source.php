@@ -89,10 +89,6 @@ class TournamentHsSkillz
             return '0;Match already ended';
         }
         
-        if (!in_array($server, array('s1'))) {
-            return '0;Server error';
-        }
-        
         $apiArray = array(
             '_method' => 'put',
             'match_id' => $matchId,
