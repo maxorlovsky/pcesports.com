@@ -4,7 +4,7 @@ class skillzhs extends System
 {
     public $participant;
     public $participants;
-    public $regIsOpen = 1;
+    public $regIsOpen = 0;
     public $paymentNeeded = 1;
     public $project = 'skillz';
     
