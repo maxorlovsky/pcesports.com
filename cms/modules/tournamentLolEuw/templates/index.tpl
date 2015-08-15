@@ -36,7 +36,7 @@
     <div class="">
         <input type="text" readonly="readonly" value="" id="teamName1" />
         <input type="text" readonly="readonly" value="" id="teamName2" />
-        <textarea rows="10" cols="20" readonly="readonly" id="tournamentCode"></textarea>
+        <textarea rows="10" cols="20" readonly="readonly" id="tournamentCode" class="noEditor"></textarea>
     </div>
 </div>
 
