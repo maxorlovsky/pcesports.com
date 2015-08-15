@@ -841,7 +841,7 @@ class Cron extends System {
     }
     
     public function checkLolGames($server) {
-        if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
+        if ($this->data->settings['tournament-start-lol-'.$server] == 1 && $this->data->settings['tournament-supress-lol-'.$server] != 1) {
             $this->checkLolGamesByServer($server);
         }
         
