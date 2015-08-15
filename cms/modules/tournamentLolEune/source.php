@@ -93,6 +93,28 @@ class TournamentLolEune
 		
 		return json_encode($playersStatus);
 	}
+
+    public function streamData($form) {
+        $matchId = (int)$form[0];
+        $teamName1 = $form[1];
+        $teamName2 = $form[2];
+
+        if (!$matchId || !$teamName1 || !$teamName2) {
+            return '0;Values missing';
+        }
+
+        $array = array(
+            'name'      => 'Pentaclick#'.(int)$this->config['lol-current-number-'.$this->server].' - '.$teamName1.' vs '.$teamName2,
+            'extra'     => $matchId,
+            'password'  => md5($matchId),
+            'report'    => 'http://test.pcesports.com/run/riotcode/',
+        );
+        
+        $code = 'pvpnet://lol/customgame/joinorcreate/map11/pick6/team5/specALL/';
+        $code .= trim(base64_encode(json_encode($array)));
+
+        return '1;'.$code;
+    }
     
     public function finishMatch($form) {
         $matchId = (int)$form[0]; //match id

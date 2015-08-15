@@ -6,7 +6,7 @@ class Cron extends System {
     }
 
     public function emailSender() {
-        $limit = 500;
+        $limit = 400;
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.

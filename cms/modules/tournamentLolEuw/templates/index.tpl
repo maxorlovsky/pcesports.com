@@ -13,6 +13,7 @@
 	?>
 	<div class="chat" id="<?=$v->match_id?>" attr-file="<?=$v->id1?>_vs_<?=$v->id2?>" attr-challoge-team1="<?=$v->challongeTeam1?>" attr-challoge-team2="<?=$v->challongeTeam2?>" attr-name-team1="<?=$v->name1?>" attr-name-team2="<?=$v->name2?>">
         <h4><a href="http://euw.op.gg/summoner/userName=<?=$v->playerName1?>" target="_blank" class="player" id="player_<?=$v->id1?>"><?=$v->name1?></a> VS <a href="http://euw.op.gg/summoner/userName=<?=$v->playerName2?>" target="_blank" class="player" id="player_<?=$v->id2?>"><?=$v->name2?></a></h4>
+        <div class="stream-data hint" name="Get stream data">[V]</div>
         <div class="finish-match hint" name="Finish match">[End]</div>
         <div class="close-chat hint" name="Hide chat">[X]</div>
 		<div class="chat-content"></div>
@@ -29,6 +30,16 @@
 	?>
 </td></tr></table>
 
+<div class="stream-popup">
+    <h4>Stream data info</h4>
+    <div class="close">[X]</div>
+    <div class="">
+        <input type="text" readonly="readonly" value="" id="teamName1" />
+        <input type="text" readonly="readonly" value="" id="teamName2" />
+        <textarea rows="10" cols="20" readonly="readonly" id="tournamentCode"></textarea>
+    </div>
+</div>
+
 <div class="finish-popup">
     <h4>Select the winner</h4>
     <div class="close">[X]</div>
@@ -39,6 +50,43 @@
 </div>
 
 <script>
+$('.stream-data').on('click', function() {
+    var form = [];
+    form[0] = $(this).parent().attr('id');
+    form[1] = $(this).parent().attr('attr-name-team1');
+    form[2] = $(this).parent().attr('attr-name-team2');
+
+    $('.stream-popup').show();
+    $('.stream-popup').find('#teamName1').val(form[1]);
+    $('.stream-popup').find('#teamName2').val(form[2]);
+
+    TM.fadeScr();
+    
+    var query = {
+        type: 'POST',
+        data: {
+            control: 'submitForm',
+            module: 'tournamentLolEuw',
+            action: 'streamData',
+            form: form
+        },
+        success: function(answer) {
+            answer = answer.split(';');
+            if (answer[0] == '1') {
+                $('.stream-popup').find('#tournamentCode').val(answer[1]);
+                return false;
+            }
+            
+            alert('Error: '+answer[1]);
+        }
+    }
+    TM.ajax(query);
+});
+
+$('.stream-popup').find('#tournamentCode, input[type="text"]').on('click', function() {
+    $(this).select();
+});
+
 $('.finish-match').on('click', function() {
     var teamChallogeIds = [$(this).parent().attr('attr-challoge-team1'), $(this).parent().attr('attr-challoge-team2')];
     var teamNames = [$(this).parent().attr('attr-name-team1'), $(this).parent().attr('attr-name-team2')];
@@ -92,9 +140,10 @@ $('.finish-popup button.team1, .finish-popup button.team2').on('click', function
     TM.ajax(query);
 });
 
-$('.finish-popup .close, #fader').on('click', function() {
+$('.finish-popup .close, .stream-popup .close, #fader').on('click', function() {
     $('#fader').hide();
     $('.finish-popup').hide();
+    $('.stream-popup').hide();
 });
 
 $('#auto-advance').on('click', function() {
@@ -319,23 +368,25 @@ $(document).ready(function() {
     background-color: #85ff8b;
     color: #0019b4;
 }
-.chat .close-chat {
+.chat .close-chat,
+.chat .finish-match,
+.chat .stream-data {
     position: absolute;
     top: 1px;
-    right: 5px;
     cursor: pointer;
     transition: .3s;
 }
-.chat .close-chat:hover {
-    color: blue;
+.chat .close-chat {
+    right: 5px;
 }
 .chat .finish-match {
-    position: absolute;
-    top: 1px;
     right: 30px;
-    cursor: pointer;
-    transition: .3s;
 }
+.chat .stream-data {
+    right: 75px;
+}
+.chat .close-chat:hover,
+.chat .stream-data:hover,
 .chat .finish-match:hover {
     color: blue;
 }
@@ -404,5 +455,41 @@ $(document).ready(function() {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.stream-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -212px;
+    margin-top: -135px;
+    width: 424px;
+    height: 270px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 8px;
+    z-index: 200;
+}
+.stream-popup h4 {
+    padding: 3px 0 0 10px;
+    margin: 0;
+}
+.stream-popup input[type="text"] {
+    width: 380px;
+    margin-left: 10px;
+}
+.stream-popup textarea {
+    width: 396px;
+    margin-left: 10px;
+}
+.stream-popup .close {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    transition: .3s;
+    cursor: pointer;
+}
+.stream-popup .close:hover {
+    color: blue;
 }
 </style>

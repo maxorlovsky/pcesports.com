@@ -750,7 +750,7 @@ class Ajax extends System
 						'report'    => $reportTo,
 					);
 					$code = 'pvpnet://lol/customgame/joinorcreate/map11/pick6/team5/specALL/';
-					$code .= base64_encode(json_encode($array));
+					$code .= trim(base64_encode(json_encode($array)));
                 }
                 else if ($_SESSION['participant']->game == 'smite') {
                     $rows = Db::fetchRows(
