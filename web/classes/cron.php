@@ -6,11 +6,11 @@ class Cron extends System {
     }
 
     public function emailSender() {
-        $limit = 200;
+        $limit = 5;
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.
-            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 HOUR ) OR `timestamp` IS NULL) '.
+            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 5 MINUTE ) OR `timestamp` IS NULL) '.
             'ORDER BY `id` ASC '.
             'LIMIT 1'
         );
@@ -19,18 +19,11 @@ class Cron extends System {
             return false;
         }
 
-        Db::query(
-            'UPDATE `subscribe_sender` SET '.
-            '`timestamp` = NOW() '.
-            'WHERE `id` = '.$row->id
-        );
-
         $query = 'SELECT `email`, `unsublink` FROM `subscribe` WHERE '.$row->type.' AND `removed` = 0 LIMIT '.$row->emails.','.$limit;
 
         $rows = Db::fetchRows($query);
 
         $i = 0;
-        $j = 0;
         foreach($rows as $v) {
             $text = str_replace(
                 array(
@@ -59,14 +52,9 @@ class Cron extends System {
             $mailer->send($message, $fails);
             
             ++$i;
-            ++$j;
-            if ($i >= 5) {
-                sleep(3);
-                $i = 0;
-            }
         }
 
-        if ($j < $limit) {
+        if ($i < $limit) {
             //If number of sent mails are less then limit, then we probably sent all of them
             Db::query('DELETE FROM `subscribe_sender` WHERE `id` = '.$row->id);
         }
