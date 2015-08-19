@@ -17,10 +17,10 @@ app.controller('Team', ['$scope', 'query', function ($scope, query) {
         	form: $('form').serialize()
     	},
     	function() {
-
+    		$scope.button = '';
     	},
     	function() {
-
+    		$scope.button = '';
     	});
 	};
 }]);

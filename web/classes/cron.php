@@ -38,7 +38,7 @@ class Cron extends System {
                 $row->text
             );
 
-            $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
+            /*$transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
             $transport->setUsername('pentaclickesports@gmail.com');
             $transport->setPassword('zwAt!&JfA!MU!YE&gArw');
             
@@ -50,7 +50,8 @@ class Cron extends System {
 
             //Sending message
             $mailer = Swift_Mailer::newInstance($transport);
-            $mailer->send($message, $fails);
+            $mailer->send($message, $fails);*/
+            dump($v);
             
             ++$i;
             ++$j;
