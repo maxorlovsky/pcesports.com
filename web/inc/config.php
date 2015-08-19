@@ -154,4 +154,4 @@ $cfg['lolRegions'] = array(
     'oce' => 'Oceania',
 );
 
-$cfg['boardGames'] = array('lol', 'hs', 'dota', 'smite', 'csgo');
+$cfg['boardGames'] = array('lol', 'hs', 'csgo');

@@ -993,67 +993,74 @@ footer .partners .aimskillz {
     }
 }
 
-.contact-form .fields {
-	margin-bottom: 15px;
-	white-space: nowrap;
-	clear: both;
-}
-.contact-form .fields label {
-	display: block;
-	border: 1px solid #999;
-	border-radius: 4px 0 0 4px;
-	background-color: #ccc;
-	padding: 0;
-	margin: 0;
-	width: 90px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	text-transform: uppercase;
-	float: left;
-}
-.contact-form .fields input,
-.contact-form .fields select,
-.contact-form .fields textarea {
-	width: 645px;
-	border: 1px solid #999;
-	margin: 0 0 0 -1px;
-	border-radius: 0 4px 4px 0;
-	padding-left: 10px;
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-}
-.contact-form .fields input:focus,
-.contact-form .fields select:focus,
-.contact-form .fields textarea:focus {
-	border-color: #1697e1;
-	transition: linear .3s;
-	outline: 0;
-}
-.contact-form .fields input {
-	height: 38px;
-}
-.contact-form .fields select {
-	width: 655px;
-	vertical-align: middle;
-	padding: 11px 5px;
-	display: block;
-	height: 42px;
-}
-.contact-form .fields textarea {
-	padding: 10px;
-	width: 635px;
-	height: 300px;
-}
-.fields .holder {
-    width: 605px;
-    min-height: 40px;
-	border: 1px solid #999;
-	margin: 0 0 0 141px;
-	border-radius: 0 4px 4px 3px;
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-}
-.contact-form .button {
-	margin-left: 90px;
+.contact-form {
+    .fields {
+    	margin-bottom: 15px;
+    	white-space: nowrap;
+    	clear: both;
+        label {
+            display: block;
+            border: 1px solid #999;
+            border-radius: 4px 0 0 4px;
+            background-color: #ccc;
+            padding: 0;
+            margin: 0;
+            width: 90px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            float: left;
+        }
+        input, select, textarea {
+            width: 645px;
+            border: 1px solid #999;
+            margin: 0 0 0 -1px;
+            border-radius: 0 4px 4px 0;
+            padding-left: 10px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+            &:focus {
+                border-color: #1697e1;
+                transition: linear .3s;
+                outline: 0;
+            }
+        }
+        input {
+            height: 38px;
+        }
+        select {
+            width: 655px;
+            vertical-align: middle;
+            padding: 11px 5px;
+            display: block;
+            height: 42px;
+        }
+        textarea {
+            padding: 10px;
+            width: 635px;
+            height: 300px;
+        }
+        input[type="file"] {
+            padding: 10px 0 9px 10px;
+            height: auto;
+        }
+
+        .holder {
+            width: 605px;
+            min-height: 40px;
+            border: 1px solid #999;
+            margin: 0 0 0 141px;
+            border-radius: 0 4px 4px 3px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+        }
+    }
+    .button {
+        margin-left: 90px;
+    }
+    .small {
+        color: #555;
+        font-style: italic;
+    }
 }
 
 #success {
@@ -1065,6 +1072,15 @@ footer .partners .aimskillz {
 	color: #fff;
 	margin-bottom: 20px;
 	display: none;
+    p {
+        padding: 10px;
+        margin: 0;
+        font-size: 16px;
+    }
+}
+#ngError {
+    @extend #error;
+    display: inherit;
 }
 .red {
     color: #CE2929;
@@ -1083,7 +1099,7 @@ footer .partners .aimskillz {
 	padding: 10px;
 	margin-bottom: 20px;
 }
-.success-sent p, #error p {
+.success-sent p {
 	padding: 10px;
 	margin: 0;
 	font-size: 16px;
@@ -1731,11 +1747,6 @@ footer .games img {
 .ad-holder {
 	padding: 6px !important
 }
-.block .ad-blocked {
-    display: none;
-    background-color: #a00;
-    color: #fff;
-}
 
 .maintenance {
 	font-size: 25px;
@@ -1927,7 +1938,7 @@ footer .games img {
         }
     }
     .button {
-        width: 95%;
+        width: 95.6%;
         margin-left: 0;
         text-align: center;
         font-size: 17px;
@@ -2368,8 +2379,8 @@ footer .games img {
     font-size: 15px;
 }
 .groups .group .group-list .holder.player-won,
-.groups .group .group-list .holder.player-won  .player-num,
-.groups .group .group-list .holder.player-won  .player-score {
+.groups .group .group-list .holder.player-won .player-num,
+.groups .group .group-list .holder.player-won .player-score {
     background-color: #FFD700;
     color: #333;
 }
@@ -3034,5 +3045,11 @@ footer .games img {
             display: block;
             clear: both;
         }
+    }
+}
+
+.team-page {
+    .block {
+        margin-bottom: 20px;
     }
 }

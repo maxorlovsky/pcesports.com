@@ -9,8 +9,6 @@
             <div class="block-content games">
                 <a href="http://www.leagueoflegends.com" target="_blank"><img src="<?=_cfg('img')?>/footer-lol-logo.png" /></a>
                 <a href="http://eu.battle.net/hearthstone/" target="_blank"><img src="<?=_cfg('img')?>/footer-hs-logo.png" /></a>
-                <!--<a href="http://www.dota2.com" target="_blank"><img src="<?=_cfg('img')?>/footer-dota-logo.png" /></a>-->
-                <!--<a href="http://www.smitegame.com" target="_blank"><img src="<?=_cfg('img')?>/footer-smite-logo.png" /></a>-->
             </div>
         </div>
     </div>
@@ -23,9 +21,7 @@
             <div class="block-content social">
                 <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
                 <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
-                <!--<a class="gp" href="https://plus.google.com/u/0/communities/106917438189046033786" target="_blank"></a>-->
                 <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
-                <a class="vk" href="https://vk.com/pentaclickesports" target="_blank"></a>
                 <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
                 <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
                 <script>
@@ -45,13 +41,9 @@
                 <h1 class="bordered"><?=t('partners')?></h1>
             </div>
             <div class="block-content partners">
-                <!--<a class="a" href="http://www.1a.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/1a.png" /></a>-->
                 <a class="unicon" href="http://www.unicon.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/unicon.png" /></a>
                 <a class="lesf" href="http://lesf.lv/" target="_blank"><img src="<?=_cfg('img')?>/partners/lesf.png" /></a>
                 <a class="skillz" href="http://www.skillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/skillz.png" /></a>
-                <div class="clear"></div>
-                <!--<a class="dreamforge" href="https://www.facebook.com/DreamforgeLatvia" target="_blank"><img src="<?=_cfg('img')?>/partners/dreamforge.png" /></a>-->
-                <!--<a class="aimskillz" href="http://www.aimskillz.lv" target="_blank"><img src="<?=_cfg('img')?>/partners/aimskillz.png" /></a>-->
                 <div class="clear"></div>
             </div>
         </div>

@@ -6,11 +6,11 @@ class Cron extends System {
     }
 
     public function emailSender() {
-        $limit = 400;
+        $limit = 500;
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.
-            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 2 HOUR ) OR `timestamp` IS NULL) '.
+            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 HOUR ) OR `timestamp` IS NULL) '.
             'ORDER BY `id` ASC '.
             'LIMIT 1'
         );

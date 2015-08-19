@@ -37,19 +37,27 @@ module.exports = function(grunt) {
                 dest: '<%= dirs.css %>/combined.css'
             },
 
-            scriptsJs : {
+            scriptsJs: {
                 src : [
                     '<%= dirs.js %>/jquery.js',
                     '<%= dirs.js %>/externals.js'
                 ],
                 dest : '<%= dirs.js %>/scripts.js'
             },
-            js : {
+            js: {
                 src : [
                     '<%= dirs.js %>/pc.js',
                     '<%= dirs.js %>/main.js'
                 ],
                 dest : '<%= dirs.js %>/combined.js'
+            },
+            app: {
+                src : [
+                    '<%= dirs.js %>/app/app.js',
+                    '<%= dirs.js %>/app/**/services/*.js',
+                    '<%= dirs.js %>/app/**/controllers/*.js'
+                ],
+                dest : '<%= dirs.js %>/angular-combined.js'
             }
         },
 
@@ -69,6 +77,11 @@ module.exports = function(grunt) {
             js: {
                 files: {
                     '<%= dirs.js %>/combined.js': ['<%= dirs.js %>/combined.js']
+                }
+            },
+            app: {
+                files: {
+                    '<%= dirs.js %>/angular-combined.js': ['<%= dirs.js %>/angular-combined.js']
                 }
             }
         },
@@ -94,7 +107,11 @@ module.exports = function(grunt) {
             default: {
 				files: ['Gruntfile.js', '<%= dirs.sass %>/*.scss'],
 				tasks: ['concat:sass', 'sass', 'concat:css']
-			}
+			},
+            app: {
+                files: ['Gruntfile.js', '<%= dirs.js %>/app/**'],
+                tasks: ['concat:app']
+            }
         },
     });
     
@@ -115,7 +132,9 @@ module.exports = function(grunt) {
         'concat:scriptsJs',
         'uglify:scriptsJs',
         'concat:js',
-        'uglify:js'
+        'uglify:js',
+        'concat:app',
+        'uglify:app',
     ]);
 
     /* Task used when developing */

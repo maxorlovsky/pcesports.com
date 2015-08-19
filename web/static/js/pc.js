@@ -1170,9 +1170,6 @@ var PC = {
                         $('#email_not_set').slideUp('fast');
                     }
                 }
-            },
-            error: function() {
-                alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         };
         this.ajax(query);
@@ -1212,6 +1209,7 @@ var PC = {
         }
         if (!object.error) {
             object.error = function(xhr, ajaxOptions, thrownError) {
+                alert('Something went wrong... Contact admin at info@pcesports.com');
                 console.log(object.url);
                 console.log(xhr);
                 console.log(ajaxOptions);

@@ -34,6 +34,9 @@ class profile extends System
         else if ($page == 'summoners') {
             $this->additional = $this->summonersList();
         }
+        else if ($page == 'team') {
+            $this->additional = $this->teamList();
+        }
         
         include_once _cfg('pages').'/'.get_class().'/'.$page.'.tpl';
         
@@ -108,6 +111,102 @@ class profile extends System
             $this->getProfilePage();
 		}
 	}
+
+    public function addTeam($data) {
+        if (!$this->logged_in) {
+            return '0;'.t('error');
+        }
+
+        $error = '';
+
+        $row = Db::fetchRow(
+            'SELECT `id` FROM `teams` '.
+            'WHERE LOWER(`name`) = "'.trim(strtolower(Db::escape_tags($data['name']))).'" '.
+            'LIMIT 1'
+        );
+
+        if (!$data['name']) {
+            $error = t('team_name_is_empty');
+        }
+        else if (preg_match('/[^0-9a-z\s-_]/i', $data['name'])) {
+            $error = t('team_name_have_forbidden_letters');
+        }
+        else if (strlen($data['name']) > 60 || strlen($data['name']) < 3) {
+            $error = t('team_name_is_too_small_or_big');
+        }
+        else if ($row) {
+            $error = t('team_name_is_taken');
+        }
+
+        if (!$data['tag']) {
+            $error = t('team_tag_is_empty');
+        }
+        else if (preg_match('/[^A-Z0-9]/', $data['tag'])) {
+            $error = t('team_tag_have_forbidden_letters');
+        }
+        else if (strlen($data['tag']) > 5 || strlen($data['tag']) < 2) {
+            $error = t('team_tag_is_too_small_or_big');
+        }
+
+        if ($data['description'] && strlen($data['description']) > 500) {
+            $error = t('team_description_is_too_big');
+        }
+
+        if (!$data['password']) {
+            $error = t('team_password_is_empty');
+        }
+        else if (trim(strlen($data['password'])) < 3) {
+            $error = t('team_password_is_too_small');
+        }
+
+        if ($error) {
+            $answer = '0;'.$error;
+        }
+        else {
+            Db::query(
+                'INSERT INTO `teams` SET '.
+                '`user_id_captain` = '.(int)$this->data->user->id.', '.
+                '`name` = "'.trim(Db::escape_tags($data['name'])).'", '.
+                '`tag` = "'.trim(strtoupper(Db::escape_tags($data['tag']))).'", '.
+                '`description` = "'.trim(Db::escape_tags($data['description'])).'", '.
+                '`password` = "'.md5(Db::escape_tags($data['password'])).'" '
+            );
+            $lastId = Db::lastId();
+            Db::query(
+                'INSERT INTO `teams2users` SET '.
+                '`team_id` = '.(int)$lastId.', '.
+                '`user_id` = '.(int)$this->data->user->id.', '.
+                '`title` = "Captain" '
+            );
+
+            $answer = '1;'._cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
+        }
+
+        return $answer;
+    }
+
+    protected function teamList() {
+        $return = new stdClass();
+        
+        /*$return->summoners = Db::fetchRows(
+            'SELECT * FROM `summoners` '.
+            'WHERE `user_id` = '.(int)$this->data->user->id.' '.
+            'ORDER BY `id`, `approved` '
+        );
+        
+        if ($return->summoners) {
+            foreach($return->summoners as &$v) {
+                foreach(_cfg('lolRegions') as $k => $lr) {
+                    if ($k == $v->region) {
+                        $v->regionName = $lr;
+                    }
+                }
+            }
+            unset($v);
+        }*/
+        
+        return $return;
+    }
     
     protected function summonersList() {
         $return = new stdClass();
