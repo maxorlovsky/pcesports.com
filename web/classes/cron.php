@@ -10,7 +10,7 @@ class Cron extends System {
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.
-            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 5 MINUTE ) OR `timestamp` IS NULL) '.
+            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 MINUTE ) OR `timestamp` IS NULL) '.
             'ORDER BY `id` ASC '.
             'LIMIT 1'
         );
