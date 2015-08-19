@@ -6,7 +6,7 @@ class Cron extends System {
     }
 
     public function emailSender() {
-        $limit = 500;
+        $limit = 200;
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.
@@ -19,7 +19,13 @@ class Cron extends System {
             return false;
         }
 
-        $query = 'SELECT * FROM `subscribe` WHERE '.$row->type.' AND `removed` = 0 LIMIT '.$row->emails.','.$limit;
+        Db::query(
+            'UPDATE `subscribe_sender` SET '.
+            '`timestamp` = NOW() '.
+            'WHERE `id` = '.$row->id
+        );
+
+        $query = 'SELECT `email`, `unsublink` FROM `subscribe` WHERE '.$row->type.' AND `removed` = 0 LIMIT '.$row->emails.','.$limit;
 
         $rows = Db::fetchRows($query);
 
@@ -38,7 +44,7 @@ class Cron extends System {
                 $row->text
             );
 
-            /*$transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
+            $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465);
             $transport->setUsername('pentaclickesports@gmail.com');
             $transport->setPassword('zwAt!&JfA!MU!YE&gArw');
             
@@ -50,8 +56,7 @@ class Cron extends System {
 
             //Sending message
             $mailer = Swift_Mailer::newInstance($transport);
-            $mailer->send($message, $fails);*/
-            dump($v);
+            $mailer->send($message, $fails);
             
             ++$i;
             ++$j;
