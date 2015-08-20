@@ -1,7 +1,9 @@
+var app;
+
 (function(){
 	'use strict';
 
-	var app = angular.module('pcesports', ['ngResource']);
+	app = angular.module('pcesports', ['ngResource']);
 })();
 
 /*app.constant('config', {

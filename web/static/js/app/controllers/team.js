@@ -1,27 +1,27 @@
 app.controller('Team', ['$scope', 'query', function ($scope, query) {
-	$scope.formInProgress = 0;
 	$scope.error = '';
 	$scope.button = '';
 
 	$scope.addTeam = function() {
-		if ($scope.formInProgress == 1) {
+		if ($scope.button) {
             return false;
         }
 
-        $scope.formInProgress = 1;
         $scope.error = '';
         $scope.button = 'alpha';
         
-        query.post({
-			ajax: 'addTeam',
+        query.save({
+			ajax: 'addTeamz',
 			form: $('form').serialize()
 		},
 		function(data) {
+            console.log(data);
 			$scope.button = '';
 		},
 		function(answer) {
 			$scope.button = '';
-            $scope.error = notification.error(answer);
+            console.log(answer.data);
+            $scope.error = answer.message;
 		});
 	};
 }]);
@@ -33,7 +33,6 @@ app.controller('Team', ['$scope', 'query', function ($scope, query) {
         form: $('.profile').serialize()
     },
     success: function(answer) {
-        $('#addTeam').removeClass('alpha');
         PC.formInProgress = 0;
         data = answer.split(';');
         

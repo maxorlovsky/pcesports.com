@@ -5,15 +5,27 @@ class Ajax extends System
         parent::__construct();
     }
 	
-    public function ajaxRun($data) {
+    public function ajaxRun($data, $type) {
     	$controller = $data['ajax'];
         
         if (method_exists($this, $controller)) {
-            echo $this->$controller($data);
+            if ($type == 'json') {
+                echo json_encode($this->$controller($data));
+            }
+            else {
+                echo $this->$controller($data);
+            }
             return true;
         }
         else {
-            echo '0;'.t('controller_not_exist');
+            if ($type == 'json') {
+                header('HTTP/1.1 400 Bad request', true, 400);
+                $array = array('message' => t('controller_not_exist'));
+                echo json_encode($array);
+            }
+            else {
+                echo '0;'.t('controller_not_exist');
+            }
             return false;
         }
     }

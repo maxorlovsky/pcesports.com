@@ -224,11 +224,11 @@ class System
         }
     }
     
-    public function ajax($data) {
+    public function ajax($data, $type = '') {
     	$this->checkGetData();
     	
         $ajax = new Ajax();
-        $ajax->ajaxRun($data);
+        $ajax->ajaxRun($data, $type);
     }
     
     public function cleanData() {

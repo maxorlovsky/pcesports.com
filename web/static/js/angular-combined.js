@@ -1,6 +1,10 @@
-'use strict';
+var app;
 
-var app = angular.module('pcesports', ['ngResource']);
+(function(){
+	'use strict';
+
+	app = angular.module('pcesports', ['ngResource']);
+})();
 
 /*app.constant('config', {
     site: site,
@@ -37,45 +41,78 @@ app.config(['$routeProvider', function($routeProvider) {
         redirectTo: '/trade'
     });
 }]);*/
-app.factory('query', ['$resource', function($resource){
-	return $resource(
-		g.site,// /:id
+app.factory('notification', function notificationFactory() {
+	'use strict';
+
+	return {
+		error: function(object) {
+			var message = '';
+
+			if (object.status === 400) {
+				if (object.data.errors) {
+					angular.forEach(object.data.errors, function(value, key) {
+						if (value[0]) {
+							message = value[0];
+							return;
+						}
+						else {
+							message = GT.vars.lngs.errorMessage;
+						}
+					});
+				}
+			}
+			else if (object.status === 403) {
+				message = object.data.message;
+			}
+			else if (object.status === 401) {
+				message = object.data.message;
+			}
+			else {
+				message = GT.vars.lngs.errorMessage;
+			}
+
+			return message;
+		}
+	}
+});
+
+app.factory('query', ['$resource', function query($resource) {
+	return $resource(g.site, {},
 		{
-			id: '@id'
-		},
-		{
-			post: {
+			save: {
 				method: 'POST',
-				params: { phoneId:'phones' },
-				isArray: true
+				params: {
+					//ajax: '@ajax'
+				}
 			}
 		}
 	);
 }]);
 app.controller('Team', ['$scope', 'query', function ($scope, query) {
-	$scope.formInProgress = 0;
 	$scope.error = '';
 	$scope.button = '';
 
 	$scope.addTeam = function() {
-		if ($scope.formInProgress == 1) {
+		if ($scope.button) {
             return false;
         }
 
-        $scope.formInProgress = 1;
         $scope.error = '';
         $scope.button = 'alpha';
         
-        query.post({
-        	ajax: 'addTeam',
-        	form: $('form').serialize()
-    	},
-    	function() {
-    		$scope.button = '';
-    	},
-    	function() {
-    		$scope.button = '';
-    	});
+        query.save({
+			ajax: 'addTeamz',
+			form: $('form').serialize()
+		},
+		function(data) {
+            console.log(data);
+			$scope.button = '';
+		},
+		function(answer) {
+			$scope.button = '';
+            console.log(answer.data);
+            $scope.error = answer.message;
+		});
 	};
 }]);
 
@@ -86,7 +123,6 @@ app.controller('Team', ['$scope', 'query', function ($scope, query) {
         form: $('.profile').serialize()
     },
     success: function(answer) {
-        $('#addTeam').removeClass('alpha');
         PC.formInProgress = 0;
         data = answer.split(';');
         
