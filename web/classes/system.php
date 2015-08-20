@@ -69,7 +69,7 @@ class System
             dump($this->data->user->https);
             dump($cfg['site']);
             dump(strpos($cfg['site'], 'http://'));
-            if ($this->data->user->https == 1 && strpos($cfg['site'], 'http://') === false) {
+            if ($this->data->user->https == 1 && strpos($cfg['site'], 'http://') === true) {
                 go(str_replace('http://', 'https://', $cfg['site'].$_SERVER['REDIRECT_URL']));
                 exit();
             }
