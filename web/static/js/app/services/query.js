@@ -1,14 +1,24 @@
-app.factory('query', ['$resource', function($resource){
-	return $resource(
-		g.site,// /:id
+app.factory('query', ['$resource', function query($resource) {
+	'use strict';
+
+	return $resource(g.site, //'/nrgs/:language/api/:category/:subquery/:query-:version/:type/',
 		{
-			id: '@id'
+			ajax: '@ajax'
 		},
 		{
+			get: {
+				method: 'GET',
+				/*params: {
+					version: 'v1'
+				}*/
+			},
 			post: {
 				method: 'POST',
-				params: { phoneId:'phones' },
-				isArray: true
+				/*params: {
+					category: '@category',
+					subquery: '@subquery',
+					version: 'v1'
+				}*/
 			}
 		}
 	);

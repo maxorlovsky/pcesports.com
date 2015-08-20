@@ -13,15 +13,16 @@ app.controller('Team', ['$scope', 'query', function ($scope, query) {
         $scope.button = 'alpha';
         
         query.post({
-        	ajax: 'addTeam',
-        	form: $('form').serialize()
-    	},
-    	function() {
-    		$scope.button = '';
-    	},
-    	function() {
-    		$scope.button = '';
-    	});
+			ajax: 'addTeam',
+			form: $('form').serialize()
+		},
+		function(data) {
+			$scope.button = '';
+		},
+		function(answer) {
+			$scope.button = '';
+            $scope.error = notification.error(answer);
+		});
 	};
 }]);
 
