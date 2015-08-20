@@ -66,7 +66,7 @@ class System
         if ($checkUser) {
             $this->logged_in = 1;
             $this->data->user = $checkUser;
-            if ($this->data->user->https == 1 && strpos($cfg['site'], 'http://') === false)
+            if ($this->data->user->https == 1 && strpos($cfg['site'], 'http://') === false) {
                 go(str_replace('http://', 'https://', $cfg['site'].$_SERVER['REDIRECT_URL']));
                 exit();
             }
