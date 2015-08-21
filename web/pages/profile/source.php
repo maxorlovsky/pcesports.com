@@ -163,7 +163,7 @@ class profile extends System
             return $this->errorMessage($error);
         }
         
-        /*Db::query(
+        Db::query(
             'INSERT INTO `teams` SET '.
             '`user_id_captain` = '.(int)$this->data->user->id.', '.
             '`name` = "'.trim(Db::escape_tags($data['name'])).'", '.
@@ -177,7 +177,7 @@ class profile extends System
             '`team_id` = '.(int)$lastId.', '.
             '`user_id` = '.(int)$this->data->user->id.', '.
             '`title` = "Captain" '
-        );*/
+        );
 
         $answer->url = _cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
 
