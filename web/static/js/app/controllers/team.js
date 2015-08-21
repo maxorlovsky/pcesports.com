@@ -15,7 +15,6 @@ app.controller('Team', ['$scope', 'query', 'notification', function ($scope, que
 			form: $('form').serialize()
 		},
 		function(answer) {
-            console.log(answer.url);
             window.location.href = answer.url;
 		},
 		function(answer) {
