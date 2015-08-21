@@ -117,7 +117,7 @@ class profile extends System
             return $this->errorLogin();
         }
 
-        $error = '';
+        $error = array();
 
         $row = Db::fetchRow(
             'SELECT `id` FROM `teams` '.
@@ -126,37 +126,37 @@ class profile extends System
         );
 
         if (!$data['name']) {
-            $error = t('team_name_is_empty');
+            $error['name'] = t('team_name_is_empty');
         }
         else if (preg_match('/[^0-9a-z\s-_]/i', $data['name'])) {
-            $error = t('team_name_have_forbidden_letters');
+            $error['name'] = t('team_name_have_forbidden_letters');
         }
         else if (strlen($data['name']) > 60 || strlen($data['name']) < 3) {
-            $error = t('team_name_is_too_small_or_big');
+            $error['name'] = t('team_name_is_too_small_or_big');
         }
         else if ($row) {
-            $error = t('team_name_is_taken');
+            $error['name'] = t('team_name_is_taken');
         }
 
         if (!$data['tag']) {
-            $error = t('team_tag_is_empty');
+            $error['tag'] = t('team_tag_is_empty');
         }
         else if (preg_match('/[^A-Z0-9]/', $data['tag'])) {
-            $error = t('team_tag_have_forbidden_letters');
+            $error['tag'] = t('team_tag_have_forbidden_letters');
         }
         else if (strlen($data['tag']) > 5 || strlen($data['tag']) < 2) {
-            $error = t('team_tag_is_too_small_or_big');
+            $error['tag'] = t('team_tag_is_too_small_or_big');
         }
 
         if ($data['description'] && strlen($data['description']) > 500) {
-            $error = t('team_description_is_too_big');
+            $error['description'] = t('team_description_is_too_big');
         }
 
         if (!$data['password']) {
-            $error = t('team_password_is_empty');
+            $error['password'] = t('team_password_is_empty');
         }
         else if (trim(strlen($data['password'])) < 3) {
-            $error = t('team_password_is_too_small');
+            $error['password'] = t('team_password_is_too_small');
         }
 
         if ($error) {
