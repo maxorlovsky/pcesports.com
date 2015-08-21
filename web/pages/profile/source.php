@@ -114,7 +114,7 @@ class profile extends System
 
     public function addTeam($data) {
         if (!$this->logged_in) {
-            return '0;'.t('error');
+            return $this->errorLogin();
         }
 
         $error = '';

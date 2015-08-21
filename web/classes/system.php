@@ -238,110 +238,6 @@ class System
     	go(_cfg('site'));
     }
     
-    public function runDotaAPI($params = array()) {
-    	$startTime = microtime(true);
-        
-        $apiUrl = 'https://api.steampowered.com/'.$params['module'].'/';
-        $apiUrl .= '?key=B562BDCF6768E330A9B01B1A016E82E0&';
-        $apiUrl .= $params['get'];
-        
-        Db::query(
-    		'INSERT INTO `dota_requests` SET '.
-    		' `timestamp` = NOW(), '.
-    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
-    		' `data` = "'.Db::escape($apiUrl).'" '
-		);
-        
-        $lastId = Db::lastId();
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
-        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // times out after 2s
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch, CURLOPT_POST, 0); // set POST method
-        $response = curl_exec($ch); // run the whole process 
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-    	$endTime = microtime(true);
-    	$duration = $endTime - $startTime; //calculates total time taken
-    
-    	Db::query(
-	    	'UPDATE `dota_requests` SET '.
-	    	' `response` = "'.Db::escape($response).'", '.
-	    	' `time` = "'.(float)$duration.'" '.
-	    	' WHERE id='.$lastId
-    	);
-    
-    	$response = json_decode($response, true);
-    
-    	return $response;
-    }
-    
-    public function runSmiteAPI($params = array()) {
-    	$startTime = microtime(true);
-        
-        $apiUrl = 'http://api.smitegame.com/smiteapi.svc/'.$params['module'].'json';
-        
-        //ping command not require any other data, not even developerId and signature
-        if ($params['module'] != 'ping') {
-            $apiUrl .= '/1307/';
-            $signature = md5('1307'.$params['module'].'1148AB9B457A47A8BABF4F41D10C2213'.date('YmdHis'));
-            $apiUrl .= $signature;
-        }
-        
-        //create session require timestamp in another place, after signature, in other cases it's goes after signature
-        if ($params['module'] == 'createsession') {
-            $apiUrl .= '/'.date('YmdHis');
-        }
-        
-        //Adding "main" and additional parameters, to fetch required data
-        if (isset($params['command'])) {
-            $apiUrl .= '/'.$params['session'].'/'.date('YmdHis');
-            $apiUrl .= '/'.$params['command'];
-        }
-        
-        Db::query(
-    		'INSERT INTO `smite_requests` SET '.
-    		' `timestamp` = NOW(), '.
-    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
-    		' `data` = "'.Db::escape($apiUrl).'" '
-		);
-        
-        $lastId = Db::lastId();
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
-        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // times out after 2s
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch, CURLOPT_POST, 0); // set POST method
-        $response = curl_exec($ch); // run the whole process 
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        
-    	$endTime = microtime(true);
-    	$duration = $endTime - $startTime; //calculates total time taken
-    
-    	Db::query(
-	    	'UPDATE `smite_requests` SET '.
-	    	' `response` = "'.Db::escape($response).'", '.
-	    	' `time` = "'.(float)$duration.'" '.
-	    	' WHERE id='.$lastId
-    	);
-    
-    	$response = json_decode($response, true);
-        
-    	return $response;
-    }
-    
     public function runTwitchAPI($channelName) {
     	$startTime = microtime(true);
         $channelName = strtolower(htmlspecialchars($channelName, ENT_QUOTES));
@@ -792,6 +688,11 @@ class System
         }
         
         return (apc_exists($key)) ? apc_delete($key) : true;
+    }
+    
+    public function errorLogin() {
+        header('HTTP/1.1 401 '.t('authorization_error'), true, 401);
+        return array('status' == 401, 'message' => t('authorization_error'));
     }
     
     /*Protected functions*/

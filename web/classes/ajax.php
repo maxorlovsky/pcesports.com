@@ -10,7 +10,8 @@ class Ajax extends System
         
         if (method_exists($this, $controller)) {
             if ($type == 'json') {
-                echo json_encode($this->$controller($data));
+                $answer = $this->$controller($data);
+                echo json_encode($answer);
             }
             else {
                 echo $this->$controller($data);
@@ -19,7 +20,7 @@ class Ajax extends System
         }
         else {
             if ($type == 'json') {
-                header('HTTP/1.1 400 Bad request', true, 400);
+                header('HTTP/1.1 404 '.t('controller_not_exist'), true, 404);
                 $array = array('message' => t('controller_not_exist'));
                 echo json_encode($array);
             }
