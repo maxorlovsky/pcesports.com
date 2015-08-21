@@ -13,8 +13,8 @@
                 <input name="name" id="name" ng-model="name" type="text" value="" placeholder="<?=t('team_name')?>*" ng-minlength="3" ng-maxlength="60" ng-pattern="/^[a-z0-9\s-_]+$/i" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" required />
             </div>
             <div id="ngError" ng-show="form.name.$error.required && form.name.$touched"><p><?=t('team_name_is_empty')?></p></div>
-            <div id="ngError" ng-show="form.name.$error.minlength"><p><?=t('team_name_is_too_small_or_big')?></p></div>
-            <div id="ngError" ng-show="form.name.$error.maxlength"><p><?=t('team_name_is_too_small_or_big')?></p></div>
+            <div id="ngError" ng-show="form.name.$error.minlength"><p><?=t('team_name_is_too_small')?></p></div>
+            <div id="ngError" ng-show="form.name.$error.maxlength"><p><?=t('team_name_is_too_big')?></p></div>
             <div id="ngError" ng-show="form.name.$error.pattern"><p><?=t('team_name_have_forbidden_letters')?></p></div>
 
             <div class="fields">
@@ -30,7 +30,6 @@
             <div class="fields">
                 <label for="description"><?=t('team_description')?></label>
                 <input name="description" id="description" ng-model="description" type="text" value="" placeholder="<?=t('team_description')?>" ng-maxlength="500" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" />
-                <div class="small"><?=t('team_description_explanation')?></div>
             </div>
             <div id="ngError" ng-show="form.description.$error.maxlength"><p><?=t('team_description_is_too_big')?></p></div>
 
