@@ -9,7 +9,7 @@ app.factory('notification', function notificationFactory() {
             var message = '';
             
             angular.forEach(object.data, function (value, key) {
-				message += value+'<br />';
+				message += value+"\n";
 			});
             
             return message;
