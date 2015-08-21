@@ -19,7 +19,7 @@ app.controller('Team', ['$scope', 'query', 'notification', function ($scope, que
 		},
 		function(answer) {
 			$scope.button = '';
-            $scope.error = notification.error(answer);
+            $scope.error = notification.form(answer);
 		});
 	};
 }]);

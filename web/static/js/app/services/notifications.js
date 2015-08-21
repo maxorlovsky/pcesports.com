@@ -3,9 +3,16 @@ app.factory('notification', function notificationFactory() {
 
 	return {
 		error: function(object) {
-			var message = '';
-            
             return object.data.message;
-		}
+		},
+        form: function(object) {
+            var message = '';
+            
+            angular.forEach(object.data, function (value, key) {
+				message += value+'<br />';
+			});
+            
+            return message;
+        }
 	}
 });

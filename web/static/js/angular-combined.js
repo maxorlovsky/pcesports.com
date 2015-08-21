@@ -46,10 +46,17 @@ app.factory('notification', function notificationFactory() {
 
 	return {
 		error: function(object) {
-			var message = '';
-            
             return object.data.message;
-		}
+		},
+        form: function(object) {
+            var message = '';
+            
+            angular.forEach(object.data, function (value, key) {
+				message += value+'<br />';
+			});
+            
+            return message;
+        }
 	}
 });
 
@@ -86,7 +93,7 @@ app.controller('Team', ['$scope', 'query', 'notification', function ($scope, que
 		},
 		function(answer) {
 			$scope.button = '';
-            $scope.error = notification.error(answer);
+            $scope.error = notification.form(answer);
 		});
 	};
 }]);
