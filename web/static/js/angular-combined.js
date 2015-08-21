@@ -89,7 +89,7 @@ app.controller('Team', ['$scope', 'query', 'notification', function ($scope, que
 			form: $('form').serialize()
 		},
 		function(answer) {
-            console.log(answer.data);
+            console.log(answer);
             window.location.href = answer.data.url;
 		},
 		function(answer) {
