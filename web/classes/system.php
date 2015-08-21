@@ -690,6 +690,10 @@ class System
         return (apc_exists($key)) ? apc_delete($key) : true;
     }
     
+    public function errorMessage($error) {
+        header('HTTP/1.1 400 '.$error, true, 400);
+        return array('message' => $error);
+    }
     public function errorLogin() {
         header('HTTP/1.1 401 '.t('authorization_error'), true, 401);
         return array('status' == 401, 'message' => t('authorization_error'));

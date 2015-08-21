@@ -160,27 +160,26 @@ class profile extends System
         }
 
         if ($error) {
-            $answer = '0;'.$error;
+            return $this->errorMessage($error);
         }
-        else {
-            Db::query(
-                'INSERT INTO `teams` SET '.
-                '`user_id_captain` = '.(int)$this->data->user->id.', '.
-                '`name` = "'.trim(Db::escape_tags($data['name'])).'", '.
-                '`tag` = "'.trim(strtoupper(Db::escape_tags($data['tag']))).'", '.
-                '`description` = "'.trim(Db::escape_tags($data['description'])).'", '.
-                '`password` = "'.md5(Db::escape_tags($data['password'])).'" '
-            );
-            $lastId = Db::lastId();
-            Db::query(
-                'INSERT INTO `teams2users` SET '.
-                '`team_id` = '.(int)$lastId.', '.
-                '`user_id` = '.(int)$this->data->user->id.', '.
-                '`title` = "Captain" '
-            );
+        
+        /*Db::query(
+            'INSERT INTO `teams` SET '.
+            '`user_id_captain` = '.(int)$this->data->user->id.', '.
+            '`name` = "'.trim(Db::escape_tags($data['name'])).'", '.
+            '`tag` = "'.trim(strtoupper(Db::escape_tags($data['tag']))).'", '.
+            '`description` = "'.trim(Db::escape_tags($data['description'])).'", '.
+            '`password` = "'.md5(Db::escape_tags($data['password'])).'" '
+        );
+        $lastId = Db::lastId();
+        Db::query(
+            'INSERT INTO `teams2users` SET '.
+            '`team_id` = '.(int)$lastId.', '.
+            '`user_id` = '.(int)$this->data->user->id.', '.
+            '`title` = "Captain" '
+        );*/
 
-            $answer = '1;'._cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
-        }
+        $answer->url = _cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
 
         return $answer;
     }
