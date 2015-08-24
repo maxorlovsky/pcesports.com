@@ -76,7 +76,7 @@
             foreach($this->serverTimes as $v) {
                 $live = (intval($v['time'] - time())<0?'live':'');
             ?>
-            <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i'.($this->data->user->timestyle!=1?' A':null))?>">
+            <div class="block-content incoming-tournament hint <?=$v['game']?> <?=$live?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - H:i'.($this->data->user->timestyle!=1?' A':null), 1)?>">
                 <div class="tourn-name"><?=$v['name']?> <?=($v['server']?'('.strtoupper($v['server']).')':'')?> #<?=$v['id']?>
                     <br /><?=t($v['status'])?>
                 </div>

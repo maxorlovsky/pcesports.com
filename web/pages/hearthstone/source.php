@@ -210,7 +210,7 @@ class hearthstone extends System
         if ($tournamentRows) {
             foreach($tournamentRows as $v) {
                 $tournamentTime['registration'] = $this->convertTime($v->dates_registration.' '.$v->time);
-                $tournamentTime['checkin'] = $this->convertTime(strtotime($v->dates_start.' '.$v->time) - 3600 + _cfg('timeDifference'));
+                $tournamentTime['checkin'] = $this->convertTime(strtotime($v->dates_start.' '.$v->time) - 3600);
                 $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
             }
         }

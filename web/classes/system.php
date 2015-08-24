@@ -622,31 +622,25 @@ class System
         return $text;
     }
     
-    public function convertTime($date, $format = 'd M Y, h:i A') {
+    public function convertTime($date, $format = 'd M Y, h:i A', $hint = 0) {
         if ($this->data->user->timestyle == 1) {
             $format = 'd M Y, H:i';
         }
 
         if (!is_numeric($date)) {
-            if (isset($this->data->user->timezone) && $this->data->user->timezone) {
-                $date = strtotime($date) + _cfg('timeDifference');
-            }
-            else {
-                $date = strtotime($date);
-            }
+            $date = strtotime($date);
         }
         
-        if (isset($this->data->user->timezone) && $this->data->user->timezone) {
-            if (intval($this->data->user->timezone) > 0) {
-                $sign = '+';
-            }
-            else {
-                $timezone = str_replace('-', '', $timezone);
-            }
-            $return = date($format, $date + $this->data->user->timezone).' (GMT'.$sign.($this->data->user->timezone/3600).')';
+        $message = date($format, $date).' (in UK/Portugal)'."\n";
+        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)'."\n";
+        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)'."\n";
+        
+        $return = date($format, $date).' (UTC)';
+        if ($hint == 1) {
+            $return = "\n".$message;
         }
         else {
-            $return = date($format, $date).' (UTC)';
+            $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">[?]</span>';
         }
         
         return $return;
