@@ -130,7 +130,7 @@ class pentaclick extends system
                 'role' => 'Pentaclick Creator',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/MaxOrlovsky',
-                    'tw' => 'https://twitter.com/MaxOrlovsky',
+                    'tw' => 'https://twitter.com/PCEMaxtream',
                     'tv' => 'http://www.twitch.tv/pentaclick_tv',
                 )
             ),
