@@ -631,13 +631,13 @@ class System
             $date = strtotime($date);
         }
         
-        $message = date($format, $date).' (in UK/Portugal)'."\n";
-        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)'."\n";
-        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)'."\n";
+        $message = date($format, $date).' (in UK/Portugal)'.PHP_EOL;
+        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)'.PHP_EOL;
+        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)'.PHP_EOL;
         
         $return = date($format, $date).' (UTC)';
         if ($hint == 1) {
-            $return = "\n".$message;
+            $return = PHP_EOL.$message;
         }
         else {
             $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">[?]</span>';
