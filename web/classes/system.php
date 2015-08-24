@@ -633,7 +633,7 @@ class System
         
         $breakdown = explode(',', $format);
         if (isset($breakdown[1]) && $breakdown[1]) {
-            $cuttedFormat = $breakdown;
+            $cuttedFormat = $breakdown[1];
         }
         else {
             $cuttedFormat = $format;
