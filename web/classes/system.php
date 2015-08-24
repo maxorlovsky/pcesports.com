@@ -631,7 +631,7 @@ class System
             $date = strtotime($date);
         }
         
-        $message = date($format, $date).' (in UK/Portugal)'.PHP_EOL;
+        $message = date($format, $date).' (in UK/Portugal)<br />';
         $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)'.PHP_EOL;
         $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)'.PHP_EOL;
         
