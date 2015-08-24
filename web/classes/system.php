@@ -641,7 +641,7 @@ class System
             $return = '<br />'.$message;
         }
         else {
-            $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">[?]</span>';
+            $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">(?)</span>';
         }
         
         return $return;
