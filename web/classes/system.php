@@ -639,7 +639,7 @@ class System
             $message .= '<i>Daylight Summer Time change already included</i>';
         }
         
-        $return = date($format, $date).' (UTC)';
+        $return = date($format, $date).' (UTC/GMT-0)';
         if ($hint == 1) {
             $return = '<br />'.$message;
         }
