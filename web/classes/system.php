@@ -635,6 +635,9 @@ class System
         $message = date(trim($breakdown[1]), $date + _cfg('timeDifference')).' (in UK/Portugal)<br />';
         $message .= date(trim($breakdown[1]), $date + 3600 + _cfg('timeDifference')).' (in Germany/Spain/Poland)<br />';
         $message .= date(trim($breakdown[1]), $date + 7200 + _cfg('timeDifference')).' (in Latvia/Bulgaria)<br />';
+        if (_cfg('timeDifference') !== 0) {
+            $message .= '<span class="small">Daylight Summer Time change already included</span>';
+        }
         
         $return = date($format, $date).' (UTC)';
         if ($hint == 1) {

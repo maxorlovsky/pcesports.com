@@ -873,15 +873,21 @@ footer .partners .aimskillz {
     display: none;
     z-index: 99;
     position: absolute;
-}
-#hint-helper p {
-    padding: 10px;
-    margin: 0;
-    font-size: 13px;
+    p {
+        padding: 10px;
+        margin: 0;
+        font-size: 13px;
+    }
 }
 .timezone-hint {
-    border-bottom: 1px solid #999;
-    color: #a00;
+    border-bottom: 1px dotted #777;
+    color: #c00;
+    cursor: default;
+    .small {
+        color: #777;
+        font-size: 11px;
+        font-style: italic;
+    }
 }
 
 .team {
