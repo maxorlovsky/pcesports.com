@@ -647,7 +647,7 @@ class System
         
         $return = date($format, $date).' (UTC/GMT-0)';
         if ($hint == 1) {
-            $return = '<br />'.$message;
+            $return .= '<br />'.$message;
         }
         else {
             $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">(?)</span>';
