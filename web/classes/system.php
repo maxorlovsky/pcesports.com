@@ -628,7 +628,12 @@ class System
         }
 
         if (!is_numeric($date)) {
-            $date = strtotime($date) + _cfg('timeDifference');
+            if (isset($this->data->user->timezone) && $this->data->user->timezone) {
+                $date = strtotime($date) + _cfg('timeDifference');
+            }
+            else {
+                $date = strtotime($date);
+            }
         }
         
         if (isset($this->data->user->timezone) && $this->data->user->timezone) {
@@ -641,7 +646,7 @@ class System
             $return = date($format, $date + $this->data->user->timezone).' (GMT'.$sign.($this->data->user->timezone/3600).')';
         }
         else {
-            $return = date($format, $date).' (GMT-0)';
+            $return = date($format, $date).' (UTC)';
         }
         
         return $return;
