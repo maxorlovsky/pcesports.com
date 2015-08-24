@@ -1914,14 +1914,14 @@ footer .partners .aimskillz {
     padding: 10px;
     margin: 0;
     font-size: 13px; }
+  #hint-helper i {
+    color: #777;
+    font-size: 10px; }
 
 .timezone-hint {
   border-bottom: 1px dotted #777;
   color: #c00;
   cursor: default; }
-  .timezone-hint i {
-    color: #999;
-    font-size: 10px; }
 
 .team .block {
   margin-bottom: 40px; }
