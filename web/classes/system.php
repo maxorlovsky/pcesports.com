@@ -632,12 +632,12 @@ class System
         }
         
         $message = date($format, $date).' (in UK/Portugal)<br />';
-        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)'.PHP_EOL;
-        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)'.PHP_EOL;
+        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)<br />';
+        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)<br />';
         
         $return = date($format, $date).' (UTC)';
         if ($hint == 1) {
-            $return = PHP_EOL.$message;
+            $return = '<br />'.$message;
         }
         else {
             $return .= ' <span class="hint timezone-hint" attr-msg="'.$message.'">[?]</span>';
