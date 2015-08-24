@@ -631,9 +631,10 @@ class System
             $date = strtotime($date);
         }
         
-        $message = date($format, $date).' (in UK/Portugal)<br />';
-        $message .= date($format, $date).' (in Germany/Spain/Poland/Stockholm)<br />';
-        $message .= date($format, $date).' (in Lithuania/Bulgaria/Russia)<br />';
+        $breakdown = explode(',', $format);
+        $message = date(trim($breakdown[1]), $date).' (in UK/Portugal)<br />';
+        $message .= date(trim($breakdown[1]), $date).' (in Germany/Spain/Poland/Stockholm)<br />';
+        $message .= date(trim($breakdown[1]), $date).' (in Lithuania/Bulgaria/Russia)<br />';
         
         $return = date($format, $date).' (UTC)';
         if ($hint == 1) {
