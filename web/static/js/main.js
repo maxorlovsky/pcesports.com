@@ -24,7 +24,7 @@ $('.line-bar').each(function() {
     var current = $(this).attr('attr-current');
     var goal = $(this).attr('attr-goal');
     
-    percentage = ((current / goal) * 100);
+    percentage = parseInt((current / goal) * 100);
 
     if (percentage > 100) {
         percentage = 100;
