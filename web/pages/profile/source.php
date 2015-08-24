@@ -49,7 +49,7 @@ class profile extends System
             $regComplete = 1;
         }
         
-        $userTimeZone = $this->data->user->timezone / 60;
+        /*$userTimeZone = $this->data->user->timezone / 60;
         if ($this->data->user->timezone && $userTimeZone <= 720 && $userTimeZone >= -720) {
             $pickedTimezone = $userTimeZone;
         }
@@ -83,7 +83,7 @@ class profile extends System
             '600' => 'GMT+10 Brisbane, Melbourne, Sydney, Vladivostok',
             '660' => 'GMT+11 Magadan, New Caledonia',
             '720' => 'GMT+12 Auckland, Wellington',
-        );
+        );*/
         
         $avatars = $this->getAvatarList();
         

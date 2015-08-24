@@ -50,14 +50,14 @@
                 <input name="avatar" id="avatar" type="hidden" value="<?=$this->data->user->avatar?>" />
             </div>
             
-            <div class="fields">
+            <?/*<div class="fields">
                 <label for="timezone"><?=t('timezone')?></label>
                 <select name="timezone" id="timezone">
                     <? foreach($timezoneSelector as $k => $v) { ?>
                         <option value="<?=$k?>" <?=($pickedTimezone==$k?'selected':null)?>><?=$v?></option>
                     <? } ?>
                 </select>
-            </div>
+            </div>*/?>
 
             <div class="fields">
                 <label for="timestyle"><?=t('timestyle')?></label>

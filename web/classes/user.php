@@ -221,7 +221,7 @@ class User extends System
             '`approved` = 1 '
         );
         
-        $userRow->timezone = $userRow->timezone * 60;
+        //$userRow->timezone = $userRow->timezone * 60;
 
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']) {
             //Check if user is participant
@@ -350,12 +350,12 @@ class User extends System
             return '0;'.t('email_invalid');
         }
         
-        if ($form['timezone'] <= 720 && $form['timezone'] >= -720) {
+        /*if ($form['timezone'] <= 720 && $form['timezone'] >= -720) {
             $timezone = $form['timezone'];
         }
         else {
             $timezone = 0;
-        }
+        }*/
         
         if ($form['battletag']) {
             $battleTagBreakdown = explode('#', $form['battletag']);
@@ -394,7 +394,7 @@ class User extends System
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
             '`email` = "'.Db::escape($form['email']).'", '.
-            '`timezone` = "'.Db::escape($timezone).'", '.
+            //'`timezone` = "'.Db::escape($timezone).'", '.
             '`timestyle` = '.(int)$form['timestyle'].', '.
             '`avatar` = '.(int)$form['avatar'].', '.
             '`battletag` = "'.Db::escape($form['battletag']).'", '.
