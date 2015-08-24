@@ -1919,10 +1919,9 @@ footer .partners .aimskillz {
   border-bottom: 1px dotted #777;
   color: #c00;
   cursor: default; }
-  .timezone-hint .small {
+  .timezone-hint i {
     color: #777;
-    font-size: 11px;
-    font-style: italic; }
+    font-size: 11px; }
 
 .team .block {
   margin-bottom: 40px; }
