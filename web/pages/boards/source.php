@@ -216,7 +216,7 @@ class boards extends System
                 '`category` = "'.Db::escape_tags($data['category']).'", '.
                 '`title` = "'.$title.'", '.
                 '`text` = "'.$text.'", '.
-                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+                '`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
                 '`activity` = '.time()
             );
             $id = Db::lastId();
@@ -281,7 +281,7 @@ class boards extends System
                 '`board_id` = '.(int)$data['id'].', '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
                 '`text` = "'.$text.'", '.
-                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
+                '`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'" '
             );
             $id = Db::lastId();
             

@@ -431,7 +431,7 @@ class Ajax extends System
                 '`blog_id` = '.(int)$data['id'].', '.
                 '`user_id` = '.(int)$this->data->user->id.', '.
                 '`text` = "'.$text.'", '.
-                '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" '
+                '`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'" '
             );
             
             Db::query(
@@ -1142,7 +1142,7 @@ class Ajax extends System
                 '`server` = "'.Db::escape($server).'", '.
 	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
 	    		'`timestamp` = NOW(), '.
-	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['battletag']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
@@ -1391,7 +1391,7 @@ class Ajax extends System
                 '`server` = "'.$server.'", '.
 	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
 	    		'`timestamp` = NOW(), '.
-	    		'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+	    		'`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['team']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($team).'", '.
@@ -1539,7 +1539,7 @@ class Ajax extends System
     	parse_str($data['form'], $form);
     	
     	$row = Db::fetchRow('SELECT `timestamp` FROM `contact_form_timeout`'.
-    		'WHERE `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'" AND `timestamp` >= '.time().' '.
+    		'WHERE `ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'" AND `timestamp` >= '.time().' '.
     		'LIMIT 1'
     	);
     	 
@@ -1558,13 +1558,13 @@ class Ajax extends System
     		Name: '.$form['name'].'<br />
     		Email: '.$form['email'].'<br />
     		Subject: '.$form['subject'].'<br />
-    		IP: '.$_SERVER['REMOTE_ADDR'].'<br />
+    		IP: '.$_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR'].'<br />
     		Message: '.nl2br($form['msg']).'
     	';
     	
     	if ($this->sendMail(_cfg('adminEmail'), 'Contact form submit: '.$form['subject'], $txt)) {
     		Db::query('INSERT INTO `contact_form_timeout` SET '.
-    			'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+    			'`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
     			'`timestamp` = '.(time() + 300)
     		);
             
@@ -1576,14 +1576,14 @@ class Ajax extends System
     
     protected function newsVote($data) {
     	$row = Db::fetchRow('SELECT * FROM `blog_likes`'.
-    		'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+    		'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'.
     		'LIMIT 1'
    		);
     	
     	if ($row) {
     		$num = '- 1';
     		Db::query('DELETE FROM `blog_likes`'.
-    			'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'.
+    			'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'.
     			'LIMIT 1'
     		);
     	}
@@ -1591,7 +1591,7 @@ class Ajax extends System
     		$num = '+ 1';
     		Db::query('INSERT INTO `blog_likes` SET '.
     			'`blog_id` = '.(int)$data['id'].', '.
-    			'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'"'
+    			'`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'
     		);
     	}
     	

@@ -249,7 +249,7 @@ class System
         Db::query(
     		'INSERT INTO `twitch_requests` SET '.
     		' `timestamp` = NOW(), '.
-    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+    		' `ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
     		' `data` = "'.Db::escape($apiUrl).'" '
 		);
         
@@ -306,7 +306,7 @@ class System
     	Db::query(
     		'INSERT INTO `challonge_requests` SET '.
     		' `timestamp` = NOW(), '.
-    		' `ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+    		' `ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
     		' `data` = "'.$apiUrlLog.'"'
 		);
     
@@ -389,7 +389,7 @@ class System
 		
 		Db::query('INSERT INTO `riot_requests` SET '.
 			'`timestamp` = NOW(), '.
-			'`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+			'`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
 			'`data` = "'.$apiUrl.'"'
 		);
 		
@@ -471,7 +471,7 @@ class System
         
         Db::query('INSERT INTO `paypal_requests` SET '.
             '`timestamp` = NOW(), '.
-            '`ip` = "'.Db::escape($_SERVER['REMOTE_ADDR']).'", '.
+            '`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
             '`data` = "'.$apiUrl.'"'
         );
         
