@@ -201,7 +201,7 @@ class uniconhs extends System
             $code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
             Db::query(
                 'INSERT INTO `participants_external` SET '.
-                '`ip` = "'.Db::escape($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
+                '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
                 '`name` = "'.Db::escape($post['battletag']).'", '.
                 '`email` = "'.Db::escape($post['email']).'", '.
                 '`contact_info` = "'.Db::escape($contact_info).'", '.
