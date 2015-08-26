@@ -46,7 +46,6 @@
 <script>
 function updateText() {
     var query = {
-        <?if(_cfg('env')=='prod'){?>url: site.replace('www', 'direct'),<?}?>
         type: 'POST',
         timeout: 10000,
         data: {
