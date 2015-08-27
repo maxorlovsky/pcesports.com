@@ -1535,6 +1535,9 @@ class Ajax extends System
     }
     
     protected function submitContactForm($data) {
+        if (!$data) {
+            return '0;'.t('data_empty');
+        }
         dump($data);
     	$form = array();
     	parse_str($data['form'], $form);
