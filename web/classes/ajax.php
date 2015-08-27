@@ -1564,7 +1564,7 @@ class Ajax extends System
     		Subject: '.$form['subject'].'<br />
     		Message: '.nl2br($form['msg']).'
     	';
-        dump($txt);
+        ddump($txt);
     	
     	if ($this->sendMail(_cfg('adminEmail'), 'Contact form submit: '.$form['subject'], $txt)) {
     		Db::query('INSERT INTO `contact_form_timeout` SET '.
