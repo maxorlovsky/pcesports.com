@@ -1558,7 +1558,7 @@ class Ajax extends System
     		Name: '.$form['name'].'<br />
     		Email: '.$form['email'].'<br />
     		Subject: '.$form['subject'].'<br />
-    		IP: '.isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR'].'<br />
+    		IP: '.(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'<br />
     		Message: '.nl2br($form['msg']).'
     	';
     	
