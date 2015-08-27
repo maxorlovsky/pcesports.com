@@ -1535,9 +1535,10 @@ class Ajax extends System
     }
     
     protected function submitContactForm($data) {
+        dump($data);
     	$form = array();
     	parse_str($data['form'], $form);
-    	
+    	dump($form);
     	$row = Db::fetchRow('SELECT `timestamp` FROM `contact_form_timeout`'.
     		'WHERE `ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'" AND `timestamp` >= '.time().' '.
     		'LIMIT 1'
@@ -1560,6 +1561,7 @@ class Ajax extends System
     		Subject: '.$form['subject'].'<br />
     		Message: '.nl2br($form['msg']).'
     	';
+        dump($txt);
     	
     	if ($this->sendMail(_cfg('adminEmail'), 'Contact form submit: '.$form['subject'], $txt)) {
     		Db::query('INSERT INTO `contact_form_timeout` SET '.
