@@ -1136,17 +1136,6 @@ footer .partners .aimskillz {
     font-size: 13px;
 }
 
-.tournament-rules {
-	color: #444;
-}
-.tournament-rules h1 {
-	margin: 5px 0;
-}
-.tournament-rules p {
-	margin: 0;
-	padding: 0;
-}
-
 .tournament {
     .block {
     	margin-bottom: 40px;
@@ -1380,63 +1369,81 @@ footer .partners .aimskillz {
     }
 }
 
-.participants .block {
-    padding: 15px;
-    border: 1px solid #fff;
-    background-color: #32333b;
-    width: 170px;
-    margin: 20px 70px 0 0;
-    min-height: 0;
-    cursor: pointer;
+/* Separated class, must be global */
+.tournament-rules {
+	color: #444;
+    h1 {
+        margin: 5px 0;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
 }
-.participants a.block {
-    transition: none;
-}
-.participants .block.hoverable:hover {
-    background-color: #87888f;
-}
-.participants .block.hoverable .team-name {
-    transition: .3s;
-    color: #1697e1;
-}
-.participants .block.hoverable:hover .team-name {
-    color: #444;
-}
-.participants .block:nth-child(3n) {
-    margin-right: 0 !important;
-}
-.participants .block:nth-of-type(-n+3) {
-    margin-top: 0 !important;
-}
-.participants .block .team-name {
-    margin-bottom: 0;
-    float: left;
-    position: relative;
-    color: #eee;
-    font-size: 16px;
-    width: 135px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-.participants .block ul {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0 0 0;
-    word-break: break-all;
-}
-.participants .block .team-num {
-    float: right;
-    font-size: 14px;
-    color: #bbb;
-    margin-top: 3px;
-    font-family: 'PT Sans', Arial, Helvetica, sans-serif;
-}
-.participants .player-list {
-    display: none;
-}
-.participants .player-list a:hover {
-    color: #fff;
+
+.participants {
+    .block {
+        padding: 15px;
+        border: 1px solid #fff;
+        background-color: #32333b;
+        width: 170px;
+        margin: 20px 70px 0 0;
+        min-height: 0;
+        cursor: pointer;
+        &:nth-child(3n) {
+            margin-right: 0 !important;
+        }
+        &:nth-of-type(-n+3) {
+            margin-top: 0 !important;
+        }
+        a & {
+            transition: none;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 0 0;
+            word-break: break-all;
+        }
+        .team-num {
+            float: right;
+            font-size: 14px;
+            color: #bbb;
+            margin-top: 3px;
+            font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+        }
+    }
+    &.hoverable {
+        .team-name {
+            transition: .3s;
+            color: #1697e1;
+        }
+        &:hover {
+            background-color: #87888f;
+            .team-name {
+                color: #444;
+            }
+        }
+    }
+    .team-name {
+        margin-bottom: 0;
+        float: left;
+        position: relative;
+        color: #eee;
+        font-size: 16px;
+        width: 135px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .player-list {
+        display: none;
+        a {
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
 }
 
 .player-heroes {
@@ -1603,13 +1610,12 @@ footer .games img {
     right: 40px;
     overflow: hidden;
     border: none;
-    
     cursor: pointer;
     display: none;
-}
-#toTop:hover {
-    background-color: #555 !important;
-    opacity: 0.8;
+    &:hover {
+        background-color: #555 !important;
+        opacity: 0.8;
+    }
 }
 
 .notification {
@@ -1767,9 +1773,6 @@ footer .games img {
 .maintenance img {
 	display: block;
 	margin: 20px auto 0 auto;
-}
-.fb-comments-count {
-    display: inline;
 }
 .opponent-info textarea {
     width: 625px;
