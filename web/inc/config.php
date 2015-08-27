@@ -155,3 +155,8 @@ $cfg['lolRegions'] = array(
 );
 
 $cfg['boardGames'] = array('lol', 'hs', 'csgo');
+
+$cfg['https'] = 0;
+if ($cfg['protocol'] == 'https') {
+    $cfg['https'] = 1;
+}
