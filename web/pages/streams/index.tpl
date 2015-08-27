@@ -10,7 +10,7 @@
         	foreach($this->streams as $v) {
                 if (_cfg('https') == 1) {
         ?>
-            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank">
+            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank">
                 <? if ($v->game != 'other') { ?>
                     <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
                 <? } ?>
