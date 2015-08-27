@@ -1535,10 +1535,6 @@ class Ajax extends System
     }
     
     protected function submitContactForm($data) {
-        if (!$data) {
-            return '0;'.t('data_empty');
-        }
-        
     	$form = array();
     	parse_str($data['form'], $form);
     	
@@ -1562,6 +1558,7 @@ class Ajax extends System
     		Name: '.$form['name'].'<br />
     		Email: '.$form['email'].'<br />
     		Subject: '.$form['subject'].'<br />
+    		IP: '.(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'<br />
     		Message: '.nl2br($form['msg']).'
     	';
     	
