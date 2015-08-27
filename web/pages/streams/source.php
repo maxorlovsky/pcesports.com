@@ -33,6 +33,7 @@ class streams extends System
         
         $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `name` AS `link` FROM `streams` '.
             'WHERE `online` != 0 AND '.
+            '`online` > '.(time()-1209600).' AND '.
             '`approved` = 1 '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
         );
