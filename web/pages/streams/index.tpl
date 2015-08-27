@@ -8,18 +8,6 @@
         <?
 		if ($this->streams) {
         	foreach($this->streams as $v) {
-                if (_cfg('https') == 1) {
-        ?>
-            <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank">
-                <? if ($v->game != 'other') { ?>
-                    <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
-                <? } ?>
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label> <?=(isset($v->event)&&$v->event==1?'(Tournament stream)':null)?>
-                <span class="viewers"><?=($v->onlineStatus==0?0:$v->viewers)?> <?=t('viewers')?></span>
-            </div>
-        <?
-                }
-                else {
         ?>
             <div href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=($v->featured==1?'featured':null)?> <?=($v->onlineStatus==0?'alpha':null)?>" target="_blank" attr-id="<?=$v->id?>">
                 <? if ($v->game != 'other') { ?>
@@ -29,12 +17,15 @@
                 <span class="viewers"><?=($v->onlineStatus==0?0:$v->viewers)?> <?=t('viewers')?></span>
             </div>
             <div class="block twitch <?=($this->pickedStream!=$v->id?'hidden_info':null)?>" id="stream_<?=$v->id?>">
+                <? if (_cfg('https') == 1) { ?>
+                    <p>Unfortunately twitch.tv does not support HTTPS connections, please use <a href="http://www.twitch.tv/<?=$v->name?>" target="_blank">direct link to watch <?=($v->display_name?$v->display_name:$v->name)?></a></p>
+                <? } else { ?>
                 <div class="player">
                     <object type="application/x-shockwave-flash" height="600" width="790" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=true&amp;start_volume=25" /></object>
                 </div>
+                <? } ?>
             </div>
         <?
-                }
         	}
         }
         ?>
