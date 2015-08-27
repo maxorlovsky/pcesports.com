@@ -1764,6 +1764,16 @@ footer .games img {
 .ad-holder {
 	padding: 6px !important
 }
+.g2a {
+    .ad-holder {
+        padding: 0 !important;
+        background-color: initial;
+        box-shadow: initial;
+        img {
+            width: 316px;
+        }
+    }
+}
 
 .maintenance {
 	font-size: 25px;

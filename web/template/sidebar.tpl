@@ -141,6 +141,16 @@
         }
         ?>
     </div>
+
+    <div class="block g2a">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Buy games with G2A</h1>
+        </div>
+        
+        <div class="ad-holder block-content">
+            <a href="https://www.g2a.com/r/pentaclick" target="_blank"><img src="<?=_cfg('img')?>/g2a.jpg" /></a>
+        </div>
+    </div>
     
     <? if (_cfg('env') == 'prod') { ?>
 	<div class="block adsense">
