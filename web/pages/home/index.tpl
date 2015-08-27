@@ -3,7 +3,7 @@
 <div class="left-containers">
 
     <?
-    if ($this->streams) {
+    if ($this->streams && _cfg('https') != 1) {
         $i = 0;
     ?>
         <div class="block twitch">
