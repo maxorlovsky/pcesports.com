@@ -542,7 +542,7 @@ tinymce.init({
 	
     width: '99%',
     height : 300,
-    fontsize_formats: "8px 10px 12px 14px 18px 24px 36px"
+    fontsize_formats: '8px 10px 12px 14px 18px 24px 36px',
 
 	forced_root_block : false,
     resize: true,
