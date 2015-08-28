@@ -230,7 +230,8 @@ class hearthstone extends System
     public function getTournamentList() {
 		$rows = Db::fetchRows('SELECT * '.
 			'FROM `tournaments` '.
-			'WHERE `game` = "hs" AND `server` = "'.Db::escape($this->server).'" '.
+			'WHERE `game` = "hs" AND '.
+            '`server` = "'.Db::escape($this->server).'" '.
 			'ORDER BY `id` DESC '.
             'LIMIT 10'
 		);
@@ -261,6 +262,7 @@ class hearthstone extends System
             $rows = Db::fetchRows('SELECT `tournament_id`, COUNT(`tournament_id`) AS `value`'.
                 'FROM `participants` '.
                 'WHERE `game` = "hs" AND '.
+                '`server` = "'.Db::escape($this->server).'" AND '.
                 '`deleted` = 0 '.
                 'GROUP BY `tournament_id` '.
                 'ORDER BY `id` DESC'
