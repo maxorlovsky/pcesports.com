@@ -538,7 +538,7 @@ tinymce.init({
     selector: 'textarea:not(.noEditor)',
     
     plugins: 'advlist autolink link image lists charmap print preview code textcolor '+(allowUpload?'jbimages':null),
-    toolbar: 'code undo redo | styleselect sizeselect fontsizeselect forecolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image '+(allowUpload?'jbimages':null),
+    toolbar: 'code undo redo | styleselect fontsizeselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image '+(allowUpload?'jbimages':null),
 	
     width: '99%',
     height : 300,
