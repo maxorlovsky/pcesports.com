@@ -43,10 +43,11 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <?=t('hl_stats_1')?>
+            <?=t('hs_stats_'.$this->server)?>
         </div>
     </div>
     
+    <? if ($this->server == 's2') { ?>
     <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">
@@ -54,7 +55,7 @@
         </div>
 
         <div class="block-content tournament-rules">
-			<?=t('hearthstone_tournament_rules')?>
+            <?=t('hearthstone_tournament_rules')?>
         </div>
     </div>
     
@@ -65,7 +66,8 @@
         </div>
 
         <div class="block-content tournament-rules">
-			<a href="<?=_cfg('href')?>/hearthstone/s1">Season 1 stats</a>
+            <a href="<?=_cfg('href')?>/hearthstone/s1">Season 1 stats</a>
         </div>
     </div>
+    <? } ?>
 </div>

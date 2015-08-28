@@ -537,11 +537,12 @@ tinymce.init({
 	// General options
     selector: 'textarea:not(.noEditor)',
     
-    plugins: 'advlist autolink link image lists charmap print preview code '+(allowUpload?'jbimages':null),
-    toolbar: 'code undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image '+(allowUpload?'jbimages':null),
+    plugins: 'advlist autolink link image lists charmap print preview code textcolor '+(allowUpload?'jbimages':null),
+    toolbar: 'code undo redo | styleselect sizeselect fontsizeselect forecolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image '+(allowUpload?'jbimages':null),
 	
     width: '99%',
     height : 300,
+    fontsize_formats: "8px 10px 12px 14px 18px 24px 36px"
 
 	forced_root_block : false,
     resize: true,
