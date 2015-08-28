@@ -62,11 +62,11 @@
     <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">
-            <h1 class="bordered">Season legacy</h1>
+            <h1 class="bordered">Seasons legacy</h1>
         </div>
 
         <div class="block-content tournament-rules">
-            <a href="<?=_cfg('href')?>/hearthstone/s1">Season 1 stats</a>
+            <a href="<?=_cfg('href')?>/hearthstone/s1">Season 1 stats and tournaments</a>
         </div>
     </div>
     <? } ?>
