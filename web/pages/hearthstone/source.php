@@ -14,7 +14,12 @@ class hearthstone extends System
 	public function __construct($params = array()) {
         parent::__construct();
         
-        $this->server = 's1';
+        if (in_array($_GET['val2'], array('s1', 's2'))) {
+            $this->server = $_GET['val2'];
+        }
+        else {
+            $this->server = 's2';
+        }
         
         $this->heroes = array(
             1 => 'warrior',
@@ -39,7 +44,7 @@ class hearthstone extends System
             8 => 'H'
         );
     
-		$this->currentTournament = $this->data->settings['hs-current-number-s1'];
+		$this->currentTournament = $this->data->settings['hs-current-number-s2'];
 	}
     
     public function editPage() {
@@ -221,7 +226,7 @@ class hearthstone extends System
     public function getTournamentList() {
 		$rows = Db::fetchRows('SELECT * '.
 			'FROM `tournaments` '.
-			'WHERE `game` = "hs" '.
+			'WHERE `game` = "hs" AND `server` = "'.Db::escape($this->server).'" '.
 			'ORDER BY `id` DESC '.
             'LIMIT 10'
 		);
@@ -287,12 +292,11 @@ class hearthstone extends System
 	
 	public static function getSeo() {
         $seo = new stdClass();
-		$seo->title = 'Hearthstone League | S1';
-        
         $u = new self;
+		$seo->title = 'Hearthstone League | '.strtoupper($u->server);
         
         if (is_numeric($_GET['val2'])) {
-            $seo->title = 'Hearthstone League | S1T'.$_GET['val2'];
+            $seo->title = 'Hearthstone League | '.strtoupper($u->server).'T'.$_GET['val2'];
             $seo->ogDesc = $seo->title;
         }
         

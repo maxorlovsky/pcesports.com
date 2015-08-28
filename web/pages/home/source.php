@@ -21,8 +21,8 @@ class home extends System
 		);
 
         $where = '';
-        if ($this->data->settings['tournament-start-hs-s1'] == 1) {
-            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' ';
+        if ($this->data->settings['tournament-start-hs-s2'] == 1) {
+            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].' ';
         }
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
             $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
@@ -61,7 +61,7 @@ class home extends System
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
             //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
             //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].') '
+            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s2'].') '
         );
         
         if ($rows) {

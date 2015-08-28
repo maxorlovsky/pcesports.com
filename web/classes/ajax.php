@@ -1031,7 +1031,7 @@ class Ajax extends System
     	$suc = array();
     	parse_str($data['form'], $post);
         
-        $server = 's1';
+        $server = 's2';
 
         if ($this->logged_in) {
             if ($this->data->user->battletag) {
@@ -1044,7 +1044,7 @@ class Ajax extends System
         }
     	
     	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].' AND '.
+    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].' AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.
     		//'`approved` = 1 AND '.
@@ -1140,7 +1140,7 @@ class Ajax extends System
     		Db::query('INSERT INTO `participants` SET '.
 	    		'`game` = "hs", '.
                 '`server` = "'.Db::escape($server).'", '.
-	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
+	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].', '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
 	    		'`name` = "'.Db::escape($post['battletag']).'", '.
@@ -1155,7 +1155,7 @@ class Ajax extends System
     		Db::query(
     			'INSERT INTO `players` SET '.
     			' `game` = "hs", '.
-    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
+    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].', '.
     			' `participant_id` = '.(int)$teamId.', '.
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
@@ -1166,7 +1166,7 @@ class Ajax extends System
                     'INSERT INTO `streams_events` SET '.
                     '`user_id`  = '.(int)$this->data->user->id.', '.
                     '`participant_id` = '.(int)$teamId.', '.
-                    ' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s1'].', '.
+                    ' `tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].', '.
                     '`game` = "hs", '.
                     '`name` = "'.Db::escape($post['stream']).'" '
                 );

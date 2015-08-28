@@ -57,4 +57,15 @@
 			<?=t('hearthstone_tournament_rules')?>
         </div>
     </div>
+    
+    <div class="block">
+        <a name="rules"></a>
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Season legacy</h1>
+        </div>
+
+        <div class="block-content tournament-rules">
+			<a href="<?=_cfg('href')?>/hearthstone/s1">Season 1 stats</a>
+        </div>
+    </div>
 </div>

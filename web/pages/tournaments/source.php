@@ -15,7 +15,7 @@ class tournaments extends System
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
             //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-na'].' AND `server` = "na") OR '.
             //'(`game` = "smite" AND `name` = '.(int)$this->data->settings['smite-current-number-eu'].' AND `server` = "eu") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s1'].') '.
+            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number-s2'].') '.
             'ORDER BY `id` DESC '
         );
         

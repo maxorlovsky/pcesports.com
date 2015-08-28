@@ -1086,12 +1086,14 @@ footer .partners .aimskillz {
         padding: 10px;
         margin: 0;
         font-size: 16px;
-        white-space: pre;
     }
 }
 #ngError {
     @extend #error;
     display: inherit;
+    p {
+        white-space: pre;
+    }
 }
 .red {
     color: #CE2929;
