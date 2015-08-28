@@ -210,6 +210,7 @@ class hearthstone extends System
         $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
             'FROM `tournaments` '.
             'WHERE `game` = "hs" AND '.
+            '`server` = "'.$this->server.'" AND '.
             '`name` = '.(int)$this->pickedTournament.' '
         );
         if ($tournamentRows) {
