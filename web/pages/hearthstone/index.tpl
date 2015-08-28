@@ -47,7 +47,7 @@
         </div>
     </div>
     
-    <? if ($this->server == 's2') { ?>
+    <? if ($this->server == $this->data->settings['tournament-season-hs']) { ?>
     <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">

@@ -128,8 +128,8 @@
                 <input type="hidden" name="no_note" value="1">
                 <input type="hidden" name="no_shipping" value="1">
                 <input type="hidden" name="rm" value="1">
-                <input type="hidden" name="return" value="<?=_cfg('site')?>/en/hearthstone/s2/participant/verify/">
-                <input type="hidden" name="cancel_return" value="<?=_cfg('site')?>/en/hearthstone/s2/participant/">
+                <input type="hidden" name="return" value="<?=_cfg('site')?>/en/hearthstone/<?=$_SESSION['participant']->server?>/participant/verify/">
+                <input type="hidden" name="cancel_return" value="<?=_cfg('site')?>/en/hearthstone/<?=$_SESSION['participant']->server?>/participant/">
                 <input type="hidden" name="battletag" value="<?=$_SESSION['participant']->name?>">
                 <button class="button">Pay for participation</button>
             </form>
