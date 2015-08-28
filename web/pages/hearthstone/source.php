@@ -219,9 +219,12 @@ class hearthstone extends System
                 $tournamentTime['checkin'] = $this->convertTime(strtotime($v->dates_start.' '.$v->time) - 3600);
                 $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
             }
+            
+            include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
         }
-        
-        include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
+        else {
+            include_once  _cfg('pages').'/404/error.tpl';
+        }
 	}
     
     public function getTournamentList() {
