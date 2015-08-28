@@ -213,7 +213,7 @@ class System
             $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` FROM `streams` '.
                 'WHERE `online` >= '.(time() - 360).' AND '.
                 '`approved` = 1 AND '.
-                '`game` != "lolcup" AND '.
+                '`game` != "lolcup" '.
                 'ORDER BY `featured` DESC, `viewers` DESC '.
                 'LIMIT 5'
             );
