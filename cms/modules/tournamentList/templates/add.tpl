@@ -21,7 +21,7 @@
                 <option value="eune">EUNE</option>
                 <option value="na">NA</option>
                 <option value="eu">EU</option>
-                <option value="s1">Season 1</option>
+                <option value="s2">Season 2</option>
             </select>
         </td>
     </tr>

@@ -21,7 +21,8 @@
                 <option value="eune" <?=($module->editData->server=='eune'?'selected="selected"':null)?>>EUNE</option>
                 <option value="na" <?=($module->editData->server=='na'?'selected="selected"':null)?>>NA</option>
                 <option value="eu" <?=($module->editData->server=='eu'?'selected="selected"':null)?>>EU</option>
-                <option value="s1" <?=($module->editData->server=='s1'?'selected="selected"':null)?>>Season 1</option>
+                <option value="s2" <?=($module->editData->server=='s2'?'selected="selected"':null)?>>Season 2</option>
+                <option value="s1" <?=($module->editData->server=='s1'?'selected="selected"':null)?> disabled="disabled">Season 1</option>
             </select>
         </td>
     </tr>

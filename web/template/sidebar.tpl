@@ -15,7 +15,7 @@
             <? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-				<? if ($this->data->settings['tournament-start-hs-s2'] == 1) {?>
+				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/edit"><?=t('edit_information')?></a></li>

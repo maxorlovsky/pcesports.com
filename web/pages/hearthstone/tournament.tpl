@@ -34,7 +34,7 @@
     </div>
     <? } ?>
 
-	<? if ($this->data->settings['tournament-reg-hs-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
+	<? if ($this->data->settings['tournament-reg-hs'] == 1 && $this->data->settings['tournament-season-hs'] == $this->server && $this->pickedTournament == $this->currentTournament) { ?>
 	<div class="block registration">
 		<div class="block-header-wrapper">
 			<h1>Season <?=$this->server?> Tournament #<?=$this->currentTournament?> <?=t('sign_up')?></h1>

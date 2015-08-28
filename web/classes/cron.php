@@ -259,9 +259,9 @@ class Cron extends System {
             }
         }
         
-        if ($this->data->settings['tournament-start-hs-s2'] == 1) {
+        if ($this->data->settings['tournament-start-hs'] == 1) {
             if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-hss2'.$this->data->settings['hs-current-number-s2'].'/matches.json', array(), 'state=open');
+                $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->data->settings['tournament-season-hs']$this->data->settings['hs-current-number'].'/matches.json', array(), 'state=open');
             }
             else {
                 $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');

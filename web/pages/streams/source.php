@@ -12,14 +12,11 @@ class streams extends System
 	
 	public function getStreamList() {
         $where = '';
-        if ($this->data->settings['tournament-start-hs-s2'] == 1) {
-            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number-s2'].' ';
+        if ($this->data->settings['tournament-start-hs'] == 1) {
+            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' ';
         }
         if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
             $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
-        }
-        if ($this->data->settings['tournament-start-smite-na'] == 1 || $this->data->settings['tournament-start-smite-eu'] == 1) {
-            $where .= '`game` = "smite" AND (`tournament_id` = '.(int)$this->data->settings['smite-current-number-na'].' OR `tournament_id` = '.(int)$this->data->settings['smite-current-number-eu'].') ';
         }
 
         if ($where) {
