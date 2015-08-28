@@ -192,7 +192,7 @@ class hearthstone extends System
         $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `p`.`place`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
-            'WHERE `p`.`game` = "hs" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
+            'WHERE `p`.`game` = "hs" AND `server` = "'.$this->server.'" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
             'ORDER BY `p`.`id` ASC'
         );
         if ($rows) {

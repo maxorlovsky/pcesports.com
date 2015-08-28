@@ -146,7 +146,7 @@
     
     <?
     //Deprecated groups
-    if ($this->pickedTournament < 6) {
+    if ($this->pickedTournament < 6 && $this->server == 's1') {
     ?>
     <div class="block">
         <div class="block-header-wrapper">
