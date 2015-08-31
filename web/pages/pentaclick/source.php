@@ -153,7 +153,7 @@ class pentaclick extends system
                 )
             ),
             760 => array(
-                'role' => 'CS:GO Admin',
+                'role' => 'LoL EUW Admin',
                 'socials' => array(
                     'fb' => 'http://www.facebook.com/Veipper',
                     'tw' => 'http://twitter.com/Ve1pper',
