@@ -129,7 +129,8 @@ header {
                 &.web-link-home:before {
                     content: '\00EF';
                 }
-                &.web-link-tournaments:before {
+                &.web-link-leagueoflegends:before,
+                &.web-link-hearthstone:before {
                     content: 'B';
                 }
                 &.web-link-pentaclick:before {
