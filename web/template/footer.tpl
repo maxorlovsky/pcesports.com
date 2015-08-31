@@ -59,8 +59,31 @@
 </footer>
 
 <div class="hidden popup" id="login-window">
-    <div class="login-inside">
+    <div class="login-inside" ng-app="pcesports">
         <h1>Pentaclick <?=t('login')?></h1>
+        <form class="form" name="loginForm" ng-controller="Login" ng-cloak>
+            <div id="ngError" ng-show="error"><p>{{error}}</p></div>
+            
+            <div class="fields">
+                <label for="email"><?=t('email')?></label>
+                <input name="email" id="email" ng-model="email" type="text" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" required />
+            </div>
+            <div id="ngError" ng-show="loginForm.email.$error.required && loginForm.email.$touched"><p><?=t('email_is_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
+
+            <div class="fields">
+                <label for="password"><?=t('password')?></label>
+                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" required />
+            </div>
+            <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.password.$error.minlength"><p><?=t('password_too_small')?></p></div>
+
+            <a href="javascript:void(0);" class="button {{button}}" ng-click="login();"><?=t('login')?></a>
+        </form>
+        <div class="pass-reg-links">
+            <a href="" class="password-reset-link"><?=t('forgot_password')?></a>
+            <a href="" class="register-link"><?=t('register')?></a>
+        </div>
         <h2><?=t('sign_in_with')?></h2>
         <a href="javascript:void(0);" class="socialLogin" id="tw"><img src="<?=_cfg('img')?>/tw-login.png" /></a>
         <a href="javascript:void(0);" class="socialLogin" id="fb"><img src="<?=_cfg('img')?>/fb-login.png" /></a>
