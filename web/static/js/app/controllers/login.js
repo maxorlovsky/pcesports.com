@@ -16,7 +16,7 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
             password: $scope.password
 		},
 		function(answer) {
-            window.location.href = answer.url;
+            location.reload();
 		},
 		function(answer) {
 			$scope.button = '';
