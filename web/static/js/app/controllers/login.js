@@ -12,7 +12,7 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
         
         query.save({
 			ajax: 'login',
-			form: $('login-form').serialize()
+			form: $('loginForm').serialize()
 		},
 		function(answer) {
             window.location.href = answer.url;
