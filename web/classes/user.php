@@ -23,7 +23,6 @@ class User extends System
         
         if ($row) {
             $_SESSION['user'] = (array)$row;
-            dump($_SESSION['user']);
             self::token();
             if ($_SESSION['user']['id']) {
                 Achievements::giveLogin($_SESSION['user']['id']);//I see you for *th time!

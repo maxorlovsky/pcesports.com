@@ -102,14 +102,13 @@ class Achievements extends System
 
 		foreach($achievementId as $v) {
 			$row = Db::fetchRow(
-	    		'SELECT * '.
+	    		'SELECT `done` '.
 	    		'FROM `users_achievements` '.
 	    		'WHERE `achievement_id` = '.(int)$v.' AND '.
-	    		'`user_id` = '.(int)$uid.' AND  '.
-	    		'`done` = 0 '
+	    		'`user_id` = '.(int)$uid
 			);
 
-			if ($row) {
+			if ($row && $row->done != 1) {
 				Db::query(
 					'UPDATE `users_achievements` '.
 					'SET `current` = `current` + 1 '.
@@ -118,7 +117,7 @@ class Achievements extends System
 					'`done` = 0 '
 				);
 			}
-			else {
+			else if (!$row) {
 				Db::query(
 					'INSERT INTO `users_achievements` '.
 					'SET `achievement_id` = '.(int)$v.', '.
