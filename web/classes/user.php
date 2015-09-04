@@ -13,11 +13,6 @@ class User extends System
     
     public static function login($email, $password) {
         $error = array();
-        echo 'SELECT * '.
-            'FROM `users` '.
-            'WHERE `email` = "'.Db::escape($email).'" AND '.
-            '`password` = "'.User::passwordConvert($password).'" '.
-            'LIMIT 1';
         
         $row = Db::fetchRow('SELECT * '.
             'FROM `users` '.
