@@ -11,18 +11,18 @@ class User extends System
         return sha1(base64_encode($password.$salt));
     }
     
-    public static function login($data) {
+    public static function login($email, $password) {
         $error = array();
         echo 'SELECT * '.
             'FROM `users` '.
-            'WHERE `email` = "'.Db::escape($data['email']).'" AND '.
-            '`password` = "'.User::passwordConvert($data['password']).'" '.
+            'WHERE `email` = "'.Db::escape($email).'" AND '.
+            '`password` = "'.User::passwordConvert($password).'" '.
             'LIMIT 1';
         
         $row = Db::fetchRow('SELECT * '.
             'FROM `users` '.
-            'WHERE `email` = "'.Db::escape($data['email']).'" AND '.
-            '`password` = "'.User::passwordConvert($data['password']).'" '.
+            'WHERE `email` = "'.Db::escape($email).'" AND '.
+            '`password` = "'.User::passwordConvert($password).'" '.
             'LIMIT 1'
         );
         

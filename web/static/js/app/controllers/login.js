@@ -3,7 +3,7 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
 	$scope.button = '';
 
 	$scope.login = function() {
-		if ($scope.button) {
+		if ($scope.button || $scope.email || $scope.password) {
             return false;
         }
 
@@ -12,7 +12,8 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
         
         query.save({
 			ajax: 'login',
-			form: $('loginForm').serialize()
+			email: $scope.email,
+            password: $scope.password
 		},
 		function(answer) {
             window.location.href = answer.url;

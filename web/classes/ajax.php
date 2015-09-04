@@ -458,8 +458,7 @@ class Ajax extends System
     }
     
     protected function login($data) {
-        parse_str($data['form'], $post);
-        return User::login($post);
+        return User::login($data['email'], $data['password']);
     }
     protected function socialLogin($data) {
         $social = new Social();
