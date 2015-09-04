@@ -3,7 +3,7 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
 	$scope.button = '';
 
 	$scope.login = function() {
-		if ($scope.button || $scope.email || $scope.password) {
+		if ($scope.button) {
             return false;
         }
 

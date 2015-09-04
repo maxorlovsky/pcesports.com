@@ -73,10 +73,9 @@
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
-                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
-            <div id="ngError" ng-show="loginForm.password.$error.minlength"><p><?=t('password_too_small')?></p></div>
 
             <a href="javascript:void(0);" class="button {{button}}" ng-click="login();"><?=t('login')?></a>
         </form>
