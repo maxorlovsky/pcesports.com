@@ -5,6 +5,41 @@ class User extends System
 		
 	}
     
+    public static function passwordConvert($password) {
+        $salt = 'adoj29!@#!1dj019@*&#!2j';
+        
+        return sha1(base64_encode($password.$salt));
+    }
+    
+    public static function login($data) {
+        $error = array();
+        
+        echo 'SELECT * '.
+            'FROM `users` AS '.
+            'WHERE `email` = "'.Db::escape($data['email']).'" AND '.
+            '`password` = "'.User::passwordConvert($data['password']).'" '.
+            'LIMIT 1';
+        
+        $row = Db::fetchRow('SELECT * '.
+            'FROM `users` AS '.
+            'WHERE `email` = "'.Db::escape($data['email']).'" AND '.
+            '`password` = "'.User::passwordConvert($data['password']).'" '.
+            'LIMIT 1'
+        );
+        
+        if ($row) {
+            $_SESSION['user'] = (array)$row;
+            self::token();
+            if ($_SESSION['user']['id']) {
+                Achievements::giveLogin($_SESSION['user']['id']);//I see you for *th time!
+            }
+        }
+        else {
+            $s = new System();
+            return $s->errorLogin();
+        }
+    }
+    
     public static function socialLogin($user) {
         if(!isset($user['social']) || !isset($user['social_uid'])) {
             return false;

@@ -66,14 +66,14 @@
             
             <div class="fields">
                 <label for="email"><?=t('email')?></label>
-                <input name="email" id="email" ng-model="email" type="text" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" required />
+                <input name="email" id="email" ng-model="email" type="text" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="loginForm.email.$error.required && loginForm.email.$touched"><p><?=t('email_is_empty')?></p></div>
             <div id="ngError" ng-show="loginForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
-                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup', debounce: 500 }" required />
+                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
             <div id="ngError" ng-show="loginForm.password.$error.minlength"><p><?=t('password_too_small')?></p></div>

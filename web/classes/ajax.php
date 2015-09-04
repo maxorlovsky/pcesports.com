@@ -457,6 +457,10 @@ class Ajax extends System
         return $answer;
     }
     
+    protected function login($data) {
+        parse_str($data['form'], $post);
+        return User::login($post);
+    }
     protected function socialLogin($data) {
         $social = new Social();
         return $social->getToken($data['provider']);
