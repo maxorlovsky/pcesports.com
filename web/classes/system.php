@@ -870,7 +870,7 @@ class System
                         header('Location: '._cfg('href').'/profile/error');
                         exit();
                     }
-                    exit();
+                    
                     if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
                         header('Location: '.$_SERVER['HTTP_REFERER']);
                     }

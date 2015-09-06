@@ -262,7 +262,7 @@ class User extends System
             );
         }
 
-        //Db::query('DELETE FROM `users_temp` WHERE `code` = "'.Db::escape($code).'" LIMIT 1');
+        Db::query('DELETE FROM `users_temp` WHERE `code` = "'.Db::escape($code).'" LIMIT 1');
         
         return true;
     }
