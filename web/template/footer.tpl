@@ -59,30 +59,56 @@
 </footer>
 
 <div class="hidden popup" id="login-window">
-    <div class="login-inside" ng-app="pcesports">
-        <h1>Pentaclick <?=t('login')?></h1>
-        <form class="form" name="loginForm" ng-controller="Login" ng-cloak>
-            <div id="ngError" ng-show="error"><p>{{error}}</p></div>
+    <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
+        <form class="form" name="loginForm">
+            <h1>Pentaclick <?=t('login')?></h1>
+            <div id="ngError" ng-show="errorLogin"><p>{{errorLogin}}</p></div>
             
             <div class="fields">
                 <label for="email"><?=t('email')?></label>
-                <input name="email" id="email" ng-model="email" type="text" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="email" id="email" ng-model="emailLogin" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="loginForm.email.$error.required && loginForm.email.$touched"><p><?=t('email_is_empty')?></p></div>
-            <div id="ngError" ng-show="loginForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
+            <div id="ngError" ng-show="loginForm.emailLogin.$error.required && loginForm.emailLogin.$touched"><p><?=t('email_is_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.emailLogin.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
-                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="password" id="password" ng-model="passwordLogin" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.passwordLogin.$error.required && loginForm.passwordLogin.$touched"><p><?=t('password_empty')?></p></div>
 
-            <a href="javascript:void(0);" class="button {{button}}" ng-click="login();"><?=t('login')?></a>
+            <button class="button {{buttonLogin}}" ng-click="login();"><?=t('login')?></button>
+
+            <div class="pass-reg-links">
+                <a href="" class="left-part-link"><?=t('forgot_password')?>?</a>
+                <a href="" class="register-link" ng-click="showRegistration();"><?=t('new_user')?></a>
+            </div>
         </form>
-        <div class="pass-reg-links">
-            <a href="" class="password-reset-link"><?=t('forgot_password')?></a>
-            <a href="" class="register-link"><?=t('register')?></a>
-        </div>
+
+        <form class="form" name="registrationForm">
+            <h1>Pentaclick <?=t('registration')?></h1>
+            <div id="ngError" ng-show="errorRegistration"><p>{{errorRegistration}}</p></div>
+            <div class="success-add" ng-show="successRegistration"><p>{{successRegistration}}</p></div>
+            
+            <div class="fields">
+                <label for="email"><?=t('email')?></label>
+                <input name="email" id="email" ng-model="emailRegistration" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+            </div>
+            <div id="ngError" ng-show="registrationForm.emailRegistration.$error.pattern"><p><?=t('email_invalid')?></p></div>
+
+            <div class="fields">
+                <label for="password"><?=t('password')?></label>
+                <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+            </div>
+            <div id="ngError" ng-show="registrationForm.passwordRegistration.$error.required && registrationForm.passwordRegistration.$touched"><p><?=t('password_empty')?></p></div>
+            <div id="ngError" ng-show="registrationForm.passwordRegistration.$error.minlength"><p><?=t('password_too_small')?></p></div>
+
+            <button class="button {{buttonRegistration}}" ng-click="register();"><?=t('register')?></button>
+
+            <div class="pass-reg-links">
+                <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
+            </div>
+        </form>
         <h2><?=t('sign_in_with')?></h2>
         <a href="javascript:void(0);" class="socialLogin" id="tw"><img src="<?=_cfg('img')?>/tw-login.png" /></a>
         <a href="javascript:void(0);" class="socialLogin" id="fb"><img src="<?=_cfg('img')?>/fb-login.png" /></a>

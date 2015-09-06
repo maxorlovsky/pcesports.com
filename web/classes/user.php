@@ -188,6 +188,45 @@ class User extends System
         
         return $this->getUser($uid);
     }
+
+    public static function registerSimple($email, $password) {
+        $object = new stdClass();
+        if (!$email || !$password || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $object->message = 'Field is empty';
+            return $object;
+        }
+
+        $s = new System();
+
+        $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `users_temp`');
+        $count = $row->count;
+        if ($count >= 1000) {
+            //Registration overload, probably spam
+            $object->message = 'Registration overload, please contact admins.';
+            $s->sendMail(_cfg('adminEmail'), 'Registration overload', 'Registration count limit exceted CHECK IMPORTANTLY!');
+            return $object;
+        }
+        
+        $string = sha1($email.$password);
+        Db::query('INSERT INTO `users_temp` SET '.
+            '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
+            '`email` = "'.Db::escape($email).'", '.
+            '`password` = "'.User::passwordConvert($password).'", '.
+            '`string` = "'.$string.'" '
+        );
+
+        $text = Template::getMailTemplate('user-registration');
+        $text = str_replace(
+            array('%url%'),
+            array(_cfg('site').'/run/registration/'.$string),
+            $text
+        );
+        $s->sendMail($email, 'Pentaclick eSports - registration!', $text);
+
+        $object->message = t('success_registration');
+        
+        return $object;
+    }
     
     private function checkRegName($regName, $i = 2) {
         $row = Db::fetchRow('SELECT * FROM `users` WHERE `name` = "'.Db::escape($regName['name']).'"');

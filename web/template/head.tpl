@@ -44,6 +44,8 @@ ga('send', 'pageview');
 <script>
 var g = {
     site: '<?=_cfg('site')?>',
+    siteSecure: '<?=str_replace("http://", "https://", _cfg('site'))?>',
+    env: '<?=_cfg('env')?>',
     logged_in: <?=($this->logged_in?1:0)?>,
     str: {
         days: '<?=t('days')?>',

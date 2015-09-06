@@ -460,6 +460,9 @@ class Ajax extends System
     protected function login($data) {
         return User::login($data['email'], $data['password']);
     }
+    protected function register($data) {
+        return User::registerSimple($data['email'], $data['password']);
+    }
     protected function socialLogin($data) {
         $social = new Social();
         return $social->getToken($data['provider']);

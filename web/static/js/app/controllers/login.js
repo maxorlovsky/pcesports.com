@@ -1,26 +1,73 @@
 app.controller('Login', ['$scope', 'query', 'notification', function ($scope, query, notification) {
-	$scope.error = '';
-	$scope.button = '';
+	$scope.errorLogin = '';
+	$scope.errorRegistration = '';
+	$scope.successRegistration = '';
+	$scope.buttonLogin = '';
+	$scope.buttonRegistration = '';
 
 	$scope.login = function() {
-		if ($scope.button) {
+		if ($scope.buttonLogin) {
             return false;
         }
 
-        $scope.error = '';
-        $scope.button = 'alpha';
+        $scope.errorLogin = '';
+        $scope.buttonLogin = 'alpha';
         
         query.save({
 			ajax: 'login',
-			email: $scope.email,
-            password: $scope.password
+			email: $scope.emailLogin,
+            password: $scope.passwordLogin
 		},
 		function(answer) {
             location.reload();
 		},
 		function(answer) {
-			$scope.button = '';
-            $scope.error = notification.form(answer);
+			$scope.buttonLogin = '';
+            $scope.errorLogin = notification.form(answer);
 		});
+	};
+
+	$scope.register = function() {
+		if ($scope.buttonRegistration || !$scope.emailRegistration || !$scope.passwordRegistration) {
+			console.log('errored');
+			console.log($scope.emailRegistration);
+			console.log($scope.passwordRegistration);
+            return false;
+        }
+
+        $scope.errorRegistration = '';
+        $scope.buttonRegistration = 'alpha';
+        
+        query.save({
+			ajax: 'register',
+			email: $scope.emailRegistration,
+            password: $scope.passwordRegistration
+		},
+		function(answer) {
+			$scope.emailRegistration = '';
+			$scope.passwordRegistration = '';
+			$scope.buttonRegistration = '';
+            $scope.successRegistration = answer.message;
+		},
+		function(answer) {
+			$scope.buttonRegistration = '';
+            $scope.errorRegistration = notification.form(answer);
+		});
+	};
+
+	$scope.showRegistration = function() {
+		jQuery('#login-window .form[name="loginForm"]').slideUp('fast');
+		jQuery('#login-window .form[name="registrationForm"]').slideDown('fast');
+	};
+
+	$scope.showRestore = function() {
+		jQuery('#login-window .form[name="loginForm"]').slideUp('fast');
+		jQuery('#login-window .form[name="restoreForm"]').slideDown('fast');
+	};
+
+	$scope.backStep = function() {
+		jQuery('#login-window .form[name="loginForm"]').slideDown('fast');
+		jQuery('#login-window .form[name="registrationForm"]').slideUp('fast');
+		jQuery('#login-window .form[name="restoreForm"]').slideUp('fast');
 	};
 }]);
