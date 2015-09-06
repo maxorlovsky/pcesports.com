@@ -207,18 +207,18 @@ class User extends System
             return $object;
         }
         
-        $string = sha1($email.$password);
+        $code = substr(sha1($email.$password), 0, 50);
         Db::query('INSERT INTO `users_temp` SET '.
             '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
             '`email` = "'.Db::escape($email).'", '.
             '`password` = "'.User::passwordConvert($password).'", '.
-            '`string` = "'.$string.'" '
+            '`code` = "'.$code.'" '
         );
 
         $text = Template::getMailTemplate('user-registration');
         $text = str_replace(
             array('%url%'),
-            array(_cfg('site').'/run/registration/'.$string),
+            array(_cfg('site').'/run/registration/'.$code),
             $text
         );
         $s->sendMail($email, 'Pentaclick eSports - registration!', $text);
@@ -226,6 +226,45 @@ class User extends System
         $object->message = t('success_registration');
         
         return $object;
+    }
+
+    public function completeRegistration($code) {
+        $_SESSION['errors'] = array();
+        
+        $row = Db::fetchRow('SELECT * FROM `users_temp` WHERE `code` = "'.Db::escape($code).'" LIMIT 1');
+        if (!$row) {
+            $_SESSION['errors'][] = 'Sorry, code expired, please register again.';
+            return false;
+        }
+
+        $name = $this->checkRegName(array('name' => 'Anonymous', 'originalName' => 'Anonymous'));
+
+        Db::query(
+            'INSERT INTO `users` SET '.
+            '`email` = "'.$row->email.'", '.
+            '`password` = "'.$row->password.'", '.
+            '`name` = "'.$name.'" '
+        );
+        $lastId = Db::lastId();
+
+        $_SESSION['user'] = array('id' => $lastId);
+
+        User::token();
+
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($row->email).'" '
+        );
+        if (!$subscribeRow && $row->email) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($row->email).'", '.
+                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
+            );
+        }
+
+        //Db::query('DELETE FROM `users_temp` WHERE `code` = "'.Db::escape($code).'" LIMIT 1');
+        
+        return true;
     }
     
     private function checkRegName($regName, $i = 2) {
@@ -276,11 +315,17 @@ class User extends System
             'SELECT * FROM `users_social` '.
             'WHERE `user_id` = '.$userRow->id
         );
-        $userRow->socials->connected = array();
-        foreach($userRow->socials as $v) {
-            if ($v->social) {
-                $userRow->socials->connected[] = $v->social;
+        if ($userRow->socials) {
+            $userRow->socials->connected = array();
+            foreach($userRow->socials as $v) {
+                if ($v->social) {
+                    $userRow->socials->connected[] = $v->social;
+                }
             }
+        }
+        else {
+            $userRow->socials = new stdClass();
+            $userRow->socials->connected = array();
         }
         
         $userRow->summoners = Db::fetchRows(

@@ -860,6 +860,24 @@ class System
                         header('Location: '._cfg('href').'/profile');
                     }
                 }
+                else if ($_GET['val1'] == 'registration' && $_GET['val2']) {
+                    unset($_SESSION['errors']);
+                    
+                    $user = new User();
+                    $answer = $user->completeRegistration($_GET['val2']);
+                    
+                    if ($answer === false) {
+                        header('Location: '._cfg('href').'/profile/error');
+                        exit();
+                    }
+                    exit();
+                    if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
+                        header('Location: '.$_SERVER['HTTP_REFERER']);
+                    }
+                    else {
+                        header('Location: '._cfg('href').'/profile');
+                    }
+                }
                 else if ($_GET['val1'] == 'logout') {
                     User::logout();
                     header('Location: '._cfg('site'));

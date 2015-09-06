@@ -18,7 +18,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.8" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.9" />
 </head>
 <body>
 
