@@ -30,5 +30,5 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule (.*) /index.php?params=$1 [L,QSA]
 
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin http://www.pcesports.com
+    Header set Access-Control-Allow-Origin *.pcesports.com
 </IfModule>
