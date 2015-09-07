@@ -12,7 +12,7 @@ class Ajax extends System
             if ($type == 'json') {
                 $answer = $this->$controller($data);
                 if (!$answer->status) {
-                    header('HTTP/1.1 200 OK', true, 200);
+                    header('HTTP/1.1 400 Bad request', true, 400);
                 }
                 else {
                     header('HTTP/1.1 '.$answer->status.' '.$answer->message, true, $answer->status);

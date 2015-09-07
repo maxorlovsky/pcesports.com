@@ -78,7 +78,7 @@
             </div>
             <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
 
-            <button class="button {{buttonLogin}}" type="button" ng-click="login();"><?=t('login')?></button>
+            <button class="button {{buttonLogin}}" ng-click="login();"><?=t('login')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link"><?=t('forgot_password')?>?</a>
@@ -108,7 +108,7 @@
                 <div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
             </div>
 
-            <button class="button {{buttonRegistration}}" type="button" ng-click="register();"><?=t('register')?></button>
+            <button class="button {{buttonRegistration}}" ng-click="register();"><?=t('register')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
