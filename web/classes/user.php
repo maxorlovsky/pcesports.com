@@ -35,6 +35,8 @@ class User extends System
         }
         
         $object->status = 200;
+        
+        return $object;
     }
     
     public static function socialLogin($user) {
