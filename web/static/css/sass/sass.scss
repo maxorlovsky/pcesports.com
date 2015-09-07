@@ -1142,6 +1142,22 @@ footer .partners .aimskillz {
     .ng-invalid.ng-dirty {
         border: 1px solid #c00 !important;
     }
+    &.restore-password-form {
+        label {
+            width: 150px;
+        }
+        input {
+            width: 585px;
+        }
+        button {
+            font-size: 18px;
+            width: 750px;
+        }
+        .captcha {
+            width: 305px;
+            margin: 0 auto 10px auto;
+        }
+    }
 }
 
 #success {
@@ -1980,7 +1996,8 @@ footer .games img {
                 width: 280px;
             }
         }
-        &[name='registrationForm'] {
+        &[name='registrationForm'],
+        &[name='restoreForm'] {
             display: none;
         }
         .success-add {
@@ -2014,7 +2031,7 @@ footer .games img {
         .register-link {
             float: right;
             font-size: 20px;
-            margin-right: 20px;
+            margin-right: 18px;
             background-color: #c00;
             color: #fff;
             padding: 5px 10px;

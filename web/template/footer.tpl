@@ -83,7 +83,7 @@
             <button class="button {{buttonLogin}}" ng-click="login();"><?=t('login')?></button>
 
             <div class="pass-reg-links">
-                <a href="" class="left-part-link"><?=t('forgot_password')?>?</a>
+                <a href="" class="left-part-link" ng-click="showRestore();"><?=t('forgot_password')?>?</a>
                 <a href="" class="register-link" ng-click="showRegistration();"><?=t('new_user')?></a>
             </div>
         </form>
@@ -101,7 +101,7 @@
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
-                <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="registrationForm.password.$error.required && registrationForm.password.$touched"><p><?=t('password_empty')?></p></div>
             <div id="ngError" ng-show="registrationForm.password.$error.minlength"><p><?=t('password_too_small')?></p></div>
@@ -111,6 +111,24 @@
             </div>
 
             <button class="button {{buttonRegistration}}" ng-click="register();"><?=t('register')?></button>
+
+            <div class="pass-reg-links">
+                <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
+            </div>
+        </form>
+
+        <form class="form" name="restoreForm">
+            <h1>Pentaclick <?=t('password_restoration')?></h1>
+            <div id="ngError" ng-show="errorRestore"><p>{{errorRestore}}</p></div>
+            <div class="success-add" ng-show="successRestore"><p>{{successRestore}}</p></div>
+            
+            <div class="fields">
+                <label for="email"><?=t('email')?></label>
+                <input name="email" id="email" ng-model="emailRestore" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+            </div>
+            <div id="ngError" ng-show="restoreForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
+
+            <button class="button {{buttonRestore}}" ng-click="restore();"><?=t('restore_password')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>

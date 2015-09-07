@@ -202,18 +202,6 @@ class User extends System
             return $object;
         }
 
-        $row = Db::fetchRow('SELECT `id` FROM `users` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
-        if ($row) {
-            $object->message = 'Sorry, email is already taken';
-            return $object;
-        }
-
-        $row = Db::fetchRow('SELECT `id` FROM `users_temp` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
-        if ($row) {
-            $object->message = 'Sorry, this email is already in validation process, check your spam folder if you did not get our email in your inbox folder';
-            return $object;
-        }
-
         $queryUrl = 'https://www.google.com/recaptcha/api/siteverify';
         $queryUrl .= '?secret='._cfg('recaptchaSecretKey');
         $queryUrl .= '&response='.urlencode($data['captcha']);
@@ -224,11 +212,28 @@ class User extends System
             return $object;
         }
 
+        $row = Db::fetchRow('SELECT `id`, `password` FROM `users` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
+        if ($row) {
+            if ($row->password == 'social') {
+                $object->message = 'Sorry, email is already taken and used with social network, if it is your account, login with social network and add password for future logins';
+            }
+            else {
+                $object->message = 'Sorry, email is already taken';
+            }
+            return $object;
+        }
+
+        $row = Db::fetchRow('SELECT `id` FROM `users_temp` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
+        if ($row) {
+            $object->message = 'Sorry, this email is already in validation process, check your spam folder if you did not get our email in your inbox folder';
+            return $object;
+        }
+
         $s = new System();
 
         $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `users_temp`');
         $count = $row->count;
-        if ($count >= 1000) {
+        if ($count >= 300) {
             //Registration overload, probably spam
             $object->message = 'Registration overload, please contact admins.';
             $s->sendMail(_cfg('adminEmail'), 'Registration overload', 'Registration count limit exceted CHECK IMPORTANTLY!');
@@ -307,6 +312,49 @@ class User extends System
         }
         
         return $returnName;
+    }
+
+    public static function restorePassword($data) {
+        $object = new stdClass();
+        $object->status = '400';
+
+        if (!$data['email'] || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $object->message = 'Field is empty';
+            return $object;
+        }
+
+        $row = Db::fetchRow(
+            'SELECT `id`, `name`, `email`, `registration_date` '.
+            'FROM `users` '.
+            'WHERE `email` = "'.Db::escape($data['email']).'" '.
+            'LIMIT 1'
+        );
+        if (!$row) {
+            $object->message = 'Sorry, there are no existing user with registered email. It is free to register with it.';
+        }
+        else {
+            $code = sha1(substr($row->name.$row->email.$row->registration_date, 0, 50));
+            Db::query(
+                'INSERT INTO `users_links` SET '.
+                '`user_id` = '.(int)$row->id.', '.
+                '`type` = "pw", '.
+                '`code` = "'.$code.'" '
+            );
+
+            $s = new System();
+            $text = Template::getMailTemplate('user-password-restoration');
+            $text = str_replace(
+                array('%name%', '%url%'),
+                array($row->name, _cfg('href').'/restoration/'.$code),
+                $text
+            );
+            $s->sendMail($row->email, 'Pentaclick eSports - password restoration!', $text);
+
+            $object->status = '200';
+            $object->message = 'We sent you an email, with link to restore your password, do not forget to check your spam folder if it taking too long to receive email from us!';
+        }
+
+        return $object;
     }
     
     public function getUser($id) {

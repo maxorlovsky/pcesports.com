@@ -469,6 +469,14 @@ class Ajax extends System
     protected function register($data) {
         return User::registerSimple($data);
     }
+    protected function restorePassword($data) {
+        return User::restorePassword($data);
+    }
+    protected function restorePasswordCode($data) {
+        require_once _cfg('pages').'/restoration/source.php';
+        $restoration = new restoration();
+        return $restoration->restorePassword($data);
+    }
     protected function socialLogin($data) {
         $social = new Social();
         return $social->getToken($data['provider']);

@@ -50,6 +50,31 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
 		function(answer) {
 			$scope.buttonRegistration = '';
             $scope.errorRegistration = notification.form(answer);
+            grecaptcha.reset();
+		});
+	};
+
+	$scope.restore = function() {
+		if ($scope.buttonRestore || !$scope.emailRestore) {
+            return false;
+        }
+
+        $scope.errorRestore = '';
+        $scope.buttonRestore = 'alpha';
+        
+        query.save({
+			ajax: 'restorePassword',
+			email: $scope.emailRestore
+		},
+		function(answer) {
+			$scope.emailRestore = '';
+			$scope.passwordRestore = '';
+			$scope.buttonRestore = '';
+            $scope.successRestore = answer.message;
+		},
+		function(answer) {
+			$scope.buttonRestore = '';
+            $scope.errorRestore = notification.form(answer);
 		});
 	};
 
