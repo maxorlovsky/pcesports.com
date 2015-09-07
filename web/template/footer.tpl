@@ -61,6 +61,8 @@
 <? if ($this->logged_in != 1) { ?>
 <div class="hidden popup" id="login-window">
     <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
+        
+        <? if (_cfg('env') != 'prod') { ?>
         <form class="form" name="loginForm">
             <h1>Pentaclick <?=t('login')?></h1>
             <div id="ngError" ng-show="errorLogin"><p>{{errorLogin}}</p></div>
@@ -114,6 +116,9 @@
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
             </div>
         </form>
+        <? } else { ?>
+            <h1>Pentaclick <?=t('login')?></h1>
+        <? } ?>
         
         <h2><?=t('sign_in_with')?></h2>
         <a href="javascript:void(0);" class="socialLogin" id="tw"><img src="<?=_cfg('img')?>/tw-login.png" /></a>
