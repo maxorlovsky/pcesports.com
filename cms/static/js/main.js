@@ -358,7 +358,7 @@ var TM = {
         
         var query = {
             type: 'POST',
-            timeout: 10000,
+            timeout: 60000,
             data: dataParams,
             success: function(data) {
                 if (param[0] == '#aexit') {
