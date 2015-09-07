@@ -9,7 +9,9 @@ app.factory('notification', function notificationFactory() {
             var message = '';
             
             angular.forEach(object.data, function (value, key) {
-				message += value+"\n";
+            	if (key != 'status') {
+					message += value+"\n";
+				}
 			});
             
             return message;

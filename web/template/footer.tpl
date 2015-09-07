@@ -58,6 +58,7 @@
     </div>
 </footer>
 
+<? if ($this->logged_in != 1) { ?>
 <div class="hidden popup" id="login-window">
     <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
         <form class="form" name="loginForm">
@@ -98,10 +99,14 @@
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
-                <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="registrationForm.passwordRegistration.$error.required && registrationForm.passwordRegistration.$touched"><p><?=t('password_empty')?></p></div>
             <div id="ngError" ng-show="registrationForm.passwordRegistration.$error.minlength"><p><?=t('password_too_small')?></p></div>
+
+            <div class="fields">
+                <div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
+            </div>
 
             <button class="button {{buttonRegistration}}" ng-click="register();"><?=t('register')?></button>
 
@@ -118,7 +123,9 @@
         <a href="javascript:void(0);" class="socialLogin" id="bn"><img src="<?=_cfg('img')?>/bn-login.png" /></a>
         <div class="information"><?=t('penta_sign_info')?></div>
     </div>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </div>
+<? } ?>
 
 <? if ($this->logged_in == 1) { ?>
 <a class="achievements" href="">

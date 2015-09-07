@@ -11,6 +11,12 @@ class Ajax extends System
         if (method_exists($this, $controller)) {
             if ($type == 'json') {
                 $answer = $this->$controller($data);
+                if (!$answer->status) {
+                    header('HTTP/1.1 200 OK', true, 200);
+                }
+                else {
+                    header('HTTP/1.1 '.$answer->status.' '.$answer->message, true, $answer->status);
+                }
                 echo json_encode($answer);
             }
             else {
@@ -461,7 +467,7 @@ class Ajax extends System
         return User::login($data['email'], $data['password']);
     }
     protected function register($data) {
-        return User::registerSimple($data['email'], $data['password']);
+        return User::registerSimple($data);
     }
     protected function socialLogin($data) {
         $social = new Social();

@@ -29,9 +29,6 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
 
 	$scope.register = function() {
 		if ($scope.buttonRegistration || !$scope.emailRegistration || !$scope.passwordRegistration) {
-			console.log('errored');
-			console.log($scope.emailRegistration);
-			console.log($scope.passwordRegistration);
             return false;
         }
 
@@ -41,7 +38,8 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
         query.save({
 			ajax: 'register',
 			email: $scope.emailRegistration,
-            password: $scope.passwordRegistration
+            password: $scope.passwordRegistration,
+            captcha: jQuery('#g-recaptcha-response').val()
 		},
 		function(answer) {
 			$scope.emailRegistration = '';

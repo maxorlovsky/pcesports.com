@@ -1159,9 +1159,9 @@ footer .partners .aimskillz {
 #ngError {
     @extend #error;
     display: inherit;
-    p {
+    /* p {
         white-space: pre;
-    }
+    } */
 }
 .red {
     color: #CE2929;
@@ -1982,6 +1982,10 @@ footer .games img {
         }
         .success-add {
             margin-bottom: 10px;
+        }
+        .g-recaptcha {
+            width: 305px;
+            margin: 0 auto;
         }
     }
     .button {

@@ -189,10 +189,33 @@ class User extends System
         return $this->getUser($uid);
     }
 
-    public static function registerSimple($email, $password) {
+    public static function registerSimple($data) {
         $object = new stdClass();
-        if (!$email || !$password || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $object->status = '400';
+        if (!$data['email'] || !$data['password'] || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $object->message = 'Field is empty';
+            return $object;
+        }
+
+        $row = Db::fetchRow('SELECT `id` FROM `users` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
+        if ($row) {
+            $object->message = 'Sorry, email is already taken';
+            return $object;
+        }
+
+        $row = Db::fetchRow('SELECT `id` FROM `users_temp` WHERE `email` = "'.Db::escape($data['email']).'" LIMIT 1');
+        if ($row) {
+            $object->message = 'Sorry, this email is already in validation process, check your spam folder if you did not get our email in your inbox folder';
+            return $object;
+        }
+
+        $queryUrl = 'https://www.google.com/recaptcha/api/siteverify';
+        $queryUrl .= '?secret='._cfg('recaptchaSecretKey');
+        $queryUrl .= '&response='.urlencode($data['captcha']);
+        $queryUrl .= '&remoteip='.urlencode(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']);
+        $response = json_decode(file_get_contents($queryUrl));
+        if ($response->success != 1) {
+            $object->message = 'Captcha is not set, are you a robot?';
             return $object;
         }
 
@@ -207,11 +230,11 @@ class User extends System
             return $object;
         }
         
-        $code = substr(sha1($email.$password), 0, 50);
+        $code = substr(sha1($data['email'].$data['password']), 0, 50);
         Db::query('INSERT INTO `users_temp` SET '.
             '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
-            '`email` = "'.Db::escape($email).'", '.
-            '`password` = "'.User::passwordConvert($password).'", '.
+            '`email` = "'.Db::escape($data['email']).'", '.
+            '`password` = "'.User::passwordConvert($data['password']).'", '.
             '`code` = "'.$code.'" '
         );
 
@@ -221,8 +244,9 @@ class User extends System
             array(_cfg('site').'/run/registration/'.$code),
             $text
         );
-        $s->sendMail($email, 'Pentaclick eSports - registration!', $text);
+        $s->sendMail($data['email'], 'Pentaclick eSports - registration!', $text);
 
+        $object->status = '200';
         $object->message = t('success_registration');
         
         return $object;
