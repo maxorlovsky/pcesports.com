@@ -23,12 +23,18 @@ $('#pce-widget').ready(function() {
     else if (window.location.hostname.indexOf('unicon') != -1) {
         parentUrl = platform+'pcesports.com/widget/uniconhs';
     }
+    else if (window.location.hostname.indexOf('bnb') != -1) {
+        parentUrl = platform+'pcesports.com/widget/bnb';
+    }
     else if (window.location.hostname.indexOf('pcesports') != -1) {
         if (window.location.href.indexOf('skillz') != -1) {
             parentUrl = platform+'pcesports.com/widget/skillzhs';
         }
         else if (window.location.href.indexOf('unicon') != -1) {
             parentUrl = platform+'pcesports.com/widget/uniconhs';
+        }
+        else if (window.location.href.indexOf('bnb') != -1) {
+            parentUrl = platform+'pcesports.com/widget/bnb';
         }
         else {
             console.log('Please specify platform');

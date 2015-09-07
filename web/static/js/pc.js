@@ -751,6 +751,10 @@ var PC = {
             $('#'+name).height(parseInt($(window).height()) - minus);
             $('#'+name).css('overflow-y', 'scroll');
         }
+        else {
+            $('#'+name).height('auto');
+            $('#'+name).css('overflow-y', 'auto');
+        }
 
         $('html, body').css('overflow', 'hidden');
         $('#fader').fadeIn('fast');

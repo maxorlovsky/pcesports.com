@@ -333,7 +333,7 @@ class User extends System
             $object->message = 'Sorry, there are no existing user with registered email. It is free to register with it.';
         }
         else {
-            $code = sha1(substr($row->name.$row->email.$row->registration_date, 0, 50));
+            $code = sha1(substr($row->name.$row->email.$row->registration_date.time(), 0, 50));
             Db::query(
                 'INSERT INTO `users_links` SET '.
                 '`user_id` = '.(int)$row->id.', '.
