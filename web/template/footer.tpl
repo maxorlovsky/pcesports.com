@@ -67,7 +67,7 @@
             
             <div class="fields">
                 <label for="email"><?=t('email')?></label>
-                <input name="email" id="email" ng-model="emailLogin" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="email" id="email" ng-model="emailLogin" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="loginForm.emailLogin.$error.required && loginForm.emailLogin.$touched"><p><?=t('email_is_empty')?></p></div>
             <div id="ngError" ng-show="loginForm.emailLogin.$error.pattern"><p><?=t('email_invalid')?></p></div>
@@ -93,7 +93,7 @@
             
             <div class="fields">
                 <label for="email"><?=t('email')?></label>
-                <input name="email" id="email" ng-model="emailRegistration" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/\S+@\S+\.\S+/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+                <input name="email" id="email" ng-model="emailRegistration" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
             <div id="ngError" ng-show="registrationForm.emailRegistration.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
