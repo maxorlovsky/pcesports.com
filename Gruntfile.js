@@ -58,6 +58,12 @@ module.exports = function(grunt) {
                     '<%= dirs.js %>/app/**/controllers/*.js'
                 ],
                 dest : '<%= dirs.js %>/angular-combined.js'
+            },
+            widget: {
+                src : [
+                    '<%= dirs.js %>/widget-work.js'
+                ],
+                dest : '<%= dirs.js %>/widget.js'
             }
         },
 
@@ -82,6 +88,11 @@ module.exports = function(grunt) {
             app: {
                 files: {
                     '<%= dirs.js %>/angular-combined.js': ['<%= dirs.js %>/angular-combined.js']
+                }
+            },
+            widget: {
+                files: {
+                    '<%= dirs.js %>/widget.js': ['<%= dirs.js %>/widget.js']
                 }
             }
         },
@@ -111,6 +122,10 @@ module.exports = function(grunt) {
             app: {
                 files: ['Gruntfile.js', '<%= dirs.js %>/app/**'],
                 tasks: ['concat:app']
+            },
+            widget: {
+                files: ['<%= dirs.js %>/app/widget-work.js'],
+                tasks: ['concat:widget']
             }
         },
     });
@@ -135,6 +150,8 @@ module.exports = function(grunt) {
         'uglify:js',
         'concat:app',
         'uglify:app',
+        'concat:widget',
+        'uglify:widget'
     ]);
 
     /* Task used when developing */
