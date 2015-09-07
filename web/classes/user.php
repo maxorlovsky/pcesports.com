@@ -13,6 +13,7 @@ class User extends System
     
     public static function login($email, $password) {
         $error = array();
+        $object = new stdClass();
         
         $row = Db::fetchRow('SELECT * '.
             'FROM `users` '.
@@ -32,6 +33,8 @@ class User extends System
             $s = new System();
             return $s->errorLogin();
         }
+        
+        $object->status = 200;
     }
     
     public static function socialLogin($user) {

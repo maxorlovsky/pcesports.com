@@ -697,17 +697,17 @@ class System
     
     public function errorMessage($error) {
         if (is_array($error)) {
-            header('HTTP/1.1 400 Error messages', true, 400);
+            header('HTTP/1.1 400 Bad request', true, 400);
             return $error;
         }
         else {
-            header('HTTP/1.1 400 '.$error, true, 400);
-            return array('message' => $error);
+            header('HTTP/1.1 400 Bad request('.$error.')', true, 400);
+            return array('status' => 400, 'message' => $error);
         }
     }
     public function errorLogin() {
         header('HTTP/1.1 401 '.t('authorization_error'), true, 401);
-        return array('message' => t('authorization_error'));
+        return array('status' => 401, 'message' => t('authorization_error'));
     }
     
     /*Protected functions*/
