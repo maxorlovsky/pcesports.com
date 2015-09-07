@@ -114,6 +114,7 @@
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
             </div>
         </form>
+        
         <h2><?=t('sign_in_with')?></h2>
         <a href="javascript:void(0);" class="socialLogin" id="tw"><img src="<?=_cfg('img')?>/tw-login.png" /></a>
         <a href="javascript:void(0);" class="socialLogin" id="fb"><img src="<?=_cfg('img')?>/fb-login.png" /></a>

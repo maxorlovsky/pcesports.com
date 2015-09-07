@@ -6,8 +6,7 @@ app.controller('Login', ['$scope', 'query', 'notification', function ($scope, qu
 	$scope.buttonRegistration = '';
 
 	$scope.login = function() {
-        console.log('rawr');
-		if ($scope.buttonLogin) {
+		if ($scope.buttonLogin || !$scope.emailLogin || !$scope.passwordLogin) {
             return false;
         }
 
