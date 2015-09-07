@@ -61,7 +61,7 @@
 <? if ($this->logged_in != 1) { ?>
 <div class="hidden popup" id="login-window">
     <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
-        <form class="form" name="login">
+        <form class="form" name="loginForm">
             <h1>Pentaclick <?=t('login')?></h1>
             <div id="ngError" ng-show="errorLogin"><p>{{errorLogin}}</p></div>
             
@@ -69,14 +69,14 @@
                 <label for="email"><?=t('email')?></label>
                 <input name="email" id="email" ng-model="emailLogin" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="login.emailLogin.$error.required && login.emailLogin.$touched"><p><?=t('email_is_empty')?></p></div>
-            <div id="ngError" ng-show="login.emailLogin.$error.pattern"><p><?=t('email_invalid')?></p></div>
+            <div id="ngError" ng-show="loginForm.email.$error.required && loginForm.email.$touched"><p><?=t('email_is_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
                 <input name="password" id="password" ng-model="passwordLogin" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="login.passwordLogin.$error.required && login.passwordLogin.$touched"><p><?=t('password_empty')?></p></div>
+            <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
 
             <button class="button {{buttonLogin}}" ng-click="login();"><?=t('login')?></button>
 
@@ -86,7 +86,7 @@
             </div>
         </form>
 
-        <form class="form" name="registration">
+        <form class="form" name="registrationForm">
             <h1>Pentaclick <?=t('registration')?></h1>
             <div id="ngError" ng-show="errorRegistration"><p>{{errorRegistration}}</p></div>
             <div class="success-add" ng-show="successRegistration"><p>{{successRegistration}}</p></div>
@@ -95,14 +95,14 @@
                 <label for="email"><?=t('email')?></label>
                 <input name="email" id="email" ng-model="emailRegistration" type="email" value="" placeholder="<?=t('email')?>*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="registration.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
+            <div id="ngError" ng-show="registrationForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
             <div class="fields">
                 <label for="password"><?=t('password')?></label>
                 <input name="password" id="password" ng-model="passwordRegistration" type="password" value="" placeholder="<?=t('password')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
             </div>
-            <div id="ngError" ng-show="registration.passwordRegistration.$error.required && registration.passwordRegistration.$touched"><p><?=t('password_empty')?></p></div>
-            <div id="ngError" ng-show="registration.passwordRegistration.$error.minlength"><p><?=t('password_too_small')?></p></div>
+            <div id="ngError" ng-show="registrationForm.password.$error.required && registrationForm.password.$touched"><p><?=t('password_empty')?></p></div>
+            <div id="ngError" ng-show="registrationForm.password.$error.minlength"><p><?=t('password_too_small')?></p></div>
 
             <div class="fields">
                 <div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
