@@ -6,6 +6,7 @@ class fifa extends System
 	public $participants;
     public $winners;
     public $project;
+    public $regOpen = (isset($_GET['reg'])?1:0);
 	
 	public function __construct($params = array()) {
         parent::__construct();

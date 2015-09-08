@@ -15,10 +15,10 @@
     </div>
     <? } ?>
 
-    <? if ($this->data->settings['tournament-reg-hs'] == 1 && $this->data->settings['tournament-season-hs'] == $this->server && $this->pickedTournament == $this->currentTournament) { ?>
+    <? if ($this->regOpen == 1) { ?>
     <div class="block registration">
         <div class="block-header-wrapper">
-            <h1>Season <?=$this->server?> Tournament #<?=$this->currentTournament?> <?=t('sign_up')?></h1>
+            <h1>FIFA 2015 Tournament <?=t('sign_up')?></h1>
         </div>
         
         <div class="block-content signup">
@@ -26,68 +26,43 @@
                 <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
 
                 <form id="da-form" method="post">
-                    <? if ($this->data->user->battletag) { ?>
-                        <div class="form-item" data-label="battletag">
-                            Battle Tag: <strong><?=$this->data->user->battletag?></strong>
-                        </div>
-                    <? } else { ?>
-                        <div class="form-item" data-label="battletag">
-                            <input type="text" name="battletag" placeholder="<?=t('battle_tag')?>*" value="<?=($this->data->user->battletag?$this->data->user->battletag:null)?>" />
-                            <div class="message hidden"></div>
-                        </div>
-                    <? } ?>
-
-                    <? if (!isset($this->data->user->email) && !$this->data->user->email) { ?>
-                        <div class="form-item" data-label="email">
-                            <input type="text" name="email" placeholder="Email*" value="" />
-                            <div class="message hidden"></div>
-                        </div>
-                    <? } ?>
-
-                    <div class="form-item" data-label="stream">
-                        <input type="text" name="stream" class="hint" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_hs')?>" />
+                    <div class="form-item" data-label="nickname">
+                        <input type="text" name="nickname" placeholder="<?=t('nickname')?>*" value="" />
                         <div class="message hidden"></div>
                     </div>
 
+                    <div class="form-item" data-label="email">
+                        <input type="text" name="email" placeholder="Email*" value="" />
+                        <div class="message hidden"></div>
+                    </div>
                     
-                    <? for ($i=1;$i<=4;++$i) { ?>
-                    <div class="form-item" data-label="hero<?=$i?>">
-                        <select class="hero<?=$i?>" name="hero<?=$i?>">
-                            <option value="0"><?=t('pick_hero')?></option>
-                            <? foreach($this->heroes as $k => $v) { ?>
-                                <option value="<?=$k?>"><?=ucfirst($v)?></option>
-                            <? } ?>
-                        </select>
+                    <div class="form-item" data-label="name">
+                        <input type="text" name="name" placeholder="Vārds un Uzvārds*" value="" />
                         <div class="message hidden"></div>
                     </div>
-                    <? } ?>
-
+                    
                     <div class="form-item" data-label="agree">
-                        <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs')?></label>
+                        <input type="checkbox" name="agree" id="agree" /><label for="agree">Es piekrītu noteikumiem</label>
                         <div class="message hidden"></div>
                     </div>
                     
-                    <div class="heroes-images">
-                        <h6><?=t('your_classes')?></h6>
-                        <? for ($i=1;$i<=4;++$i) { ?>
-                        <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
-                        <? } ?>
-                    </div>
                     <div class="clear"></div>
                 </form>
                 <div class="clear"></div>
                 <a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?></a>
             </div>
-
+            
             <div class="tournament-rules">
-                <?=str_replace(
-                    array('%startTime%', '%registrationTime%', '%checkInTime%'),
-                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
-                    t('hs_tournament_information')
-                )?>
-                <div>
-                    <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
-                </div>
+                <img  src="<?_cfg('img')?>/fifa-2015.jpg" />
+                <p>Spēļes iestatījumi: Periods 6 min.</p>
+                <p>Trāvmas izslēgti.</p>
+                <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
+                <p>Konts reģistrācijas apmaksai: Swedbank LV45HABA0551033763452 Ņikita Mihailovs</p>
+                <p>Apmaksai pievienot sāvu nickname!</p>
+                <p>Formāts: Group + single elimination bo3</p>
+                <p>Kontākts pasts mileit22@gmail.com</p>
+                <p>Adrese: Delisnack Jelgava, Pasta iela 45.  Sākums 13:00 4.oktobrī</p>
+                <p>Regīstrācijas maksa 5 eur.</p>
                 
                 <div class="share-tournament">
                     <h2><?=t('share_this_tournament')?></h2>
@@ -107,11 +82,17 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <?=str_replace(
-                array('%startTime%', '%registrationTime%', '%checkInTime%'),
-                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin']),
-                t('hs_tournament_information')
-            )?>
+            <img  src="<?_cfg('img')?>/fifa-2015.jpg" />
+            <p>Spēļes iestatījumi: Periods 6 min.</p>
+            <p>Trāvmas izslēgti.</p>
+            <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
+            <p>Konts reģistrācijas apmaksai: Swedbank LV45HABA0551033763452 Ņikita Mihailovs</p>
+            <p>Apmaksai pievienot sāvu nickname!</p>
+            <p>Formāts: Group + single elimination bo3</p>
+            <p>Kontākts pasts mileit22@gmail.com</p>
+            <p>Adrese: Delisnack Jelgava, Pasta iela 45.  Sākums 13:00 4.oktobrī</p>
+            <p>Regīstrācijas maksa 5 eur.</p>
+            
             <div>
                 <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
             </div>
@@ -125,88 +106,6 @@
 
     <? } ?>
     
-    <?
-    //Deprecated groups
-    if ($this->pickedTournament < 6 && $this->server == 's1') {
-    ?>
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?></h1>
-        </div>
-
-        <div class="block-content groups">
-            <?
-            $j = 0;
-            foreach($this->groups as $k => $v) {
-            ?>
-                <div class="group">
-                    <div class="header">
-                        <h3><?=t('group')?> <?=$v?></h3>
-                        <span class="place"><?=t('place_in_group')?></span>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="group-list">
-                        <?
-                        if ($this->participants) {
-                            $i = 1;
-                            foreach($this->participants as $p) {
-                                if ($p->seed_number == $k && $p->approved == 1) {
-                                    $wonClass = '';
-                                    if ( ($this->pickedTournament == 1 && isset($p->contact_info->place) && $p->contact_info->place == 1) ||
-                                         ($this->pickedTournament >= 2 && isset($p->contact_info->place) && $p->contact_info->place >= 2)
-                                       ){
-                                        //$wonClass = 'player-won';
-                                    }
-                                ?>
-                                <div class="holder <?=$wonClass?>">
-                                    <span class="player-num"><?=$i?></span>
-                                    <? if ($p->user_id != 0) { ?>
-                                        <a class="player-name" href="<?=_cfg('href')?>/member/<?=$p->name?>" title="<?=$p->battletag?>">
-                                            <?=$p->name?>
-                                        </a>
-                                    <? } else { ?>
-                                        <span class="player-name">
-                                            <?=$p->battletag?>
-                                        </span>
-                                    <? } ?>
-                                    <div class="player-heroes">
-                                        <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero1])?>"></div>
-                                        <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero2])?>"></div>
-                                        <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero3])?>"></div>
-                                        <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero4])?>"></div>
-                                    </div>
-                                    <span class="player-score">
-                                        <?=(isset($p->contact_info->place)&&$p->contact_info->place?$p->contact_info->place:0)?>
-                                    </span>
-                                    <div class="clear"></div>
-                                </div>
-                                <?
-                                ++$i;
-                                }
-                            }
-                            
-                            if ($i == 1) {
-                                ?><div class="holder empty"><?=t('group_empty')?></div><?
-                            }
-                        }
-                        else {
-                            ?><div class="holder empty"><?=t('group_empty')?></div><?
-                        }
-                        ?>
-                    </div>
-                </div>
-            <?
-                if ($j%2 == 1) {
-                    echo '<div class="clear"></div>';
-                }
-                
-                ++$j;
-            }
-            ?>
-            <div class="clear"></div>
-        </div>
-    </div>
-    <? } else { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('participants')?></h1>
@@ -222,39 +121,13 @@
 
                     //This must be here
                     ++$participantsCount;
-
-                    if ($v->user_id != 0) {
                     ?>
-                    <div class="block hoverable" title="<?=$v->battletag?>">
-                        <a href="<?=_cfg('href').'/member/'.$v->name?>">
-                            <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
-                            <span class="team-num">#<?=$participantsCount?></span>
-                            <div class="clear"></div>
-                            <div class="player-heroes">
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <?
-                    }
-                    else {
-                    ?>
-                    <div class="block" title="<?=$v->battletag?>">
-                        <div class="team-name"><?=$v->battletag?></div>
+                    <div class="block" title="<?=$v->name?>">
+                        <div class="team-name"><?=$v->name?></div>
                         <span class="team-num">#<?=$participantsCount?></span>
                         <div class="clear"></div>
-                        <div class="player-heroes">
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                        </div>
                     </div>
                     <?
-                    }
                     ++$i;
                 }
             }
@@ -282,38 +155,13 @@
                     //This must be here
                     ++$participantsCount;
 
-                    if ($v->user_id != 0) {
                     ?>
-                    <div class="block hoverable" title="<?=$v->battletag?>">
-                        <a href="<?=_cfg('href').'/member/'.$v->name?>">
-                            <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
-                            <span class="team-num">#<?=$participantsCount?></span>
-                            <div class="clear"></div>
-                            <div class="player-heroes">
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <?
-                    }
-                    else {
-                    ?>
-                    <div class="block" title="<?=$v->battletag?>">
-                        <div class="team-name"><?=$v->battletag?></div>
+                    <div class="block" title="<?=$v->name?>">
+                        <div class="team-name"><?=$v->name?></div>
                         <span class="team-num">#<?=$participantsCount?></span>
                         <div class="clear"></div>
-                        <div class="player-heroes">
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                        </div>
                     </div>
                     <?
-                    }
                 }
             }
         }
@@ -324,9 +172,7 @@
     ?>
         </div>
     </div>
-    <? } ?>
     
-    <? if ($this->participants) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('pending_participants')?></h1>
@@ -339,38 +185,13 @@
             foreach($this->participants as $v) {
                 if ($v->verified == 0) {
                 ++$participantsCount;
-                    if ($v->user_id != 0) {
                     ?>
-                    <div class="block hoverable" title="<?=$v->battletag?>">
-                        <a href="<?=_cfg('href').'/member/'.$v->name?>">
-                            <div class="team-name" title="<?=$v->battletag?>"><?=$v->name?></div>
-                            <span class="team-num">#<?=$participantsCount?></span>
-                            <div class="clear"></div>
-                            <div class="player-heroes">
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <?
-                    }
-                    else {
-                    ?>
-                    <div class="block" title="<?=$v->battletag?>">
-                        <div class="team-name"><?=$v->battletag?></div>
+                    <div class="block" title="<?=$v->name?>">
+                        <div class="team-name"><?=$v->name?></div>
                         <span class="team-num">#<?=$participantsCount?></span>
                         <div class="clear"></div>
-                        <div class="player-heroes">
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
-                        </div>
                     </div>
                     <?
-                    }
                 }
             }
         }
@@ -381,92 +202,13 @@
     ?>
         </div>
     </div>
-    <? } ?>
-    
-    <? if ($i >= 2) { ?>
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('brackets')?></h1>
-        </div>
-
-        <? if (_cfg('https') == 1) { ?>
-        <div class="block-content participants">
-            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?></a>
-        </div>
-        <? } else { ?>
-        <div class="block-content challonge-brackets">
-            <div id="challonge"></div>
-        </div>
-        <? } ?>
-    </div>
-    <? } ?>
 </div>
 
-<script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
-var heroes = {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0    
-};
-
-$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
-    var getClass = $(this).attr('class');
-    var name = $(this).find(':selected').text();
-    var id = $(this).find(':selected').val();
-    var num = getClass.substr(-1);
-    
-    var picked = $('#'+getClass+'img').attr('attr-picked');
-    $('#'+getClass+'img').removeClass(picked);
-    
-    if (id == 0) {
-        $('#'+getClass+'img').removeClass('active');
-    }
-    else {
-        $('#'+getClass+'img').addClass(name.toLowerCase());
-        $('#'+getClass+'img').addClass('active');
-        $('#'+getClass+'img').attr('attr-picked', name.toLowerCase());
-    }
-    
-    heroes[num] = id;
-    
-    $.each($('#da-form select'), function(k, v) {
-        $(this).find('option').attr('disabled', false);
-    });
-    
-    $.each(heroes, function(k, v) {
-        if (v != 0) {
-            for (i=1;i<=4;++i) {
-                if (i != k) {
-                    $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
-                }
-            }
-        }
-    });
-});
-
 $('#register-in-tournament').on('click', function() {
-    PC.addParticipant('HS');
+    PC.addParticipant('fifa');
 });
-
-challongeHeight = 550;
-
-if ($('#challonge').length) {
-    $('#challonge').height(challongeHeight);
-    
-        
-    $('#challonge').challonge('<?=($this->pickedTournament<6?'hl1_'.$this->pickedTournament:'hs'.$this->server.$this->pickedTournament)?>', {
-        subdomain: 'pentaclick',
-        theme: '1',
-        multiplier: '1.0',
-        match_width_multiplier: '0.7',
-        show_final_results: '0',
-        show_standings: '0',
-        overflow: '0'
-    });
-}
 </script>
 
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4dfdc8015d8f785b"></script>
