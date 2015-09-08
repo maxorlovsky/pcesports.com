@@ -53,7 +53,7 @@
             </div>
             
             <div class="tournament-rules">
-                <img src="<?_cfg('img')?>/fifa-2015.jpg" />
+                <img src="<?=_cfg('img')?>/fifa-2015.jpg" />
                 <p>Spēļes iestatījumi: Periods 6 min.</p>
                 <p>Trāvmas izslēgti.</p>
                 <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
@@ -82,7 +82,7 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <img src="<?_cfg('img')?>/fifa-2015.jpg" />
+            <img src="<?=_cfg('img')?>/fifa-2015.jpg" />
             <p>Spēļes iestatījumi: Periods 6 min.</p>
             <p>Trāvmas izslēgti.</p>
             <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
