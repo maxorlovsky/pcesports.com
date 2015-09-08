@@ -24,7 +24,7 @@
 
 <script src="<?=_cfg('static')?>/js/angular.js"></script>
 <script src="<?=_cfg('static')?>/js/angular-resource.min.js"></script>
-<script src="<?=_cfg('static')?>/js/angular-combined.js"></script>
+<script src="<?=_cfg('static')?>/js/angular-combined.js?v=1.1"></script>
 <script src="<?=_cfg('static')?>/js/scripts.js"></script>
 
 <section id="full-site-wrapper">
