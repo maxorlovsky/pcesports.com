@@ -6,10 +6,12 @@ class fifa extends System
 	public $participants;
     public $winners;
     public $project;
-    public $regOpen = (isset($_GET['reg'])?1:0);
+    public $regOpen;
 	
 	public function __construct($params = array()) {
         parent::__construct();
+        
+        $this->regOpen = (isset($_GET['reg'])?1:0);
 
         $this->project = 'jelgava-fifa';
 	}
