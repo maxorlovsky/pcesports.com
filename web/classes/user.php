@@ -305,7 +305,7 @@ class User extends System
         $row = Db::fetchRow('SELECT * FROM `users` WHERE `name` = "'.Db::escape($regName['name']).'"');
         if ($row) {
             $regName['name'] = $regName['originalName'].$i;
-            $returnName = $this->checkRegName($regName, $i+1);
+            $returnName = $this->checkRegName($regName, rand(0, 99999));
         }
         else {
             $returnName = $regName['name'];

@@ -21,14 +21,6 @@
                 <input name="name" id="name" type="text" value="<?=$this->data->user->name?>" placeholder="<?=t('name')?>*" />
             </div>
             
-            <? if (!$this->data->user->email) { ?>
-                <p class="error-add" id="email_not_set"><?=t('email_not_set_add')?></p>
-            <? } ?>
-            <div class="fields">
-                <label for="email">Email</label>
-                <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
-            </div>
-            
             <div class="fields">
                 <label for="battletag">Battle Tag</label>
                 <input name="battletag" id="battletag" type="text" value="<?=$this->data->user->battletag?>" placeholder="Battle Tag" />
@@ -86,6 +78,60 @@
             <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>
         </form>
     </div>
+    
+    <div class="block half">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('update_email')?></h1>
+        </div>
+        <form class="block-content contact-form profile">
+            <div id="success"><p></p></div>
+            <div id="error"><p></p></div>
+            
+            <? if (!$this->data->user->email) { ?>
+                <p class="error-add" id="email_not_set"><?=t('email_not_set_add')?></p>
+            <? } ?>
+            <div class="fields">
+                <label for="email">Email</label>
+                <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
+            </div>
+            
+            <div class="fields">
+                <label for="password">Current password</label>
+                <input name="password" id="password" type="password" value="" placeholder="Current password" />
+            </div>
+            
+            <a href="javascript:void(0);" class="button" id="updateEmail"><?=t('update_email')?></a>
+        </form>
+    </div>
+    
+    <div class="block half">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('update_password')?></h1>
+        </div>
+        <form class="block-content contact-form profile">
+            <div id="success"><p></p></div>
+            <div id="error"><p></p></div>
+            
+            <div class="fields">
+                <label for="password">Current password</label>
+                <input name="password" id="password" type="password" value="" placeholder="Current password" />
+            </div>
+            
+            <div class="fields">
+                <label for="new_password">New password</label>
+                <input name="new_password" id="new_password" type="password" value="" placeholder="New password" />
+            </div>
+            
+            <div class="fields">
+                <label for="new_repeat_password">Repeat new password</label>
+                <input name="new_repeat_password" id="new_repeat_password" type="password" value="" placeholder="Repeat new password" />
+            </div>
+            
+            <a href="javascript:void(0);" class="button" id="updatePassword"><?=t('update_password')?></a>
+        </form>
+    </div>
+    
+    <div class="clear"></div>
     
     <div class="block connections">
         <div class="block-header-wrapper">
