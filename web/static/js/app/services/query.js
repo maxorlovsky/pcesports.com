@@ -1,5 +1,5 @@
 app.factory('query', ['$resource', function query($resource) {
-	return $resource((g.env=='prod'?g.siteSecure:g.site), {},
+	return $resource(g.site, {},
 		{
 			save: {
 				method: 'POST',
