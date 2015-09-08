@@ -532,14 +532,6 @@ class User extends System
             return '0;'.t('name_have_forbidden_chars');
         }
         
-        $row = Db::fetchRow('SELECT `email` FROM `users` WHERE `email` = "'.Db::escape($form['email']).'" LIMIT 1');
-        if ($row && $row->email != $user->email) {
-            return '0;'.t('email_taken');
-        }
-        else if(!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
-            return '0;'.t('email_invalid');
-        }
-        
         /*if ($form['timezone'] <= 720 && $form['timezone'] >= -720) {
             $timezone = $form['timezone'];
         }
@@ -583,7 +575,6 @@ class User extends System
         Db::query(
             'UPDATE `users` SET '.
             '`name` = "'.Db::escape($form['name']).'", '.
-            '`email` = "'.Db::escape($form['email']).'", '.
             //'`timezone` = "'.Db::escape($timezone).'", '.
             '`timestyle` = '.(int)$form['timestyle'].', '.
             '`avatar` = '.(int)$form['avatar'].', '.
@@ -592,7 +583,7 @@ class User extends System
             'WHERE `id` = '.(int)$user->id
         );
         
-        $subscribeRow = Db::fetchRow(
+        /*$subscribeRow = Db::fetchRow(
             'SELECT * FROM `subscribe` WHERE '.
             '`email` = "'.Db::escape($form['email']).'" '
         );
@@ -619,7 +610,7 @@ class User extends System
                 'WHERE `email` = "'.Db::escape($form['email']).'" '.
                 'LIMIT 1'
             );
-        }
+        }*/
         
         //Getting fresh updated data
         $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
