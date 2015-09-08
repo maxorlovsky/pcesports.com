@@ -116,6 +116,12 @@ class Ajax extends System
     /*
      * Widgets functions
     */
+    protected function registerInFifa($data) {
+        require_once _cfg('pages').'/fifa/source.php';
+        $fifa = new fifa();
+        return $fifa->register($data);
+    }
+    
     protected function registerInUnicon($data) {
         require_once _cfg('pages').'/widgets/uniconhs/source.php';
         $unicon = new uniconhs();

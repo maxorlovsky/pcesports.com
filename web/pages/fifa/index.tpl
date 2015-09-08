@@ -27,12 +27,12 @@
 
                 <form id="da-form" method="post">
                     <div class="form-item" data-label="nickname">
-                        <input type="text" name="nickname" placeholder="<?=t('nickname')?>*" value="" />
+                        <input type="text" name="nickname" placeholder="Nickname*" value="" />
                         <div class="message hidden"></div>
                     </div>
 
                     <div class="form-item" data-label="email">
-                        <input type="text" name="email" placeholder="Email*" value="" />
+                        <input type="text" name="email" placeholder="E-Pasts*" value="" />
                         <div class="message hidden"></div>
                     </div>
                     
@@ -53,7 +53,7 @@
             </div>
             
             <div class="tournament-rules">
-                <img  src="<?_cfg('img')?>/fifa-2015.jpg" />
+                <img src="<?_cfg('img')?>/fifa-2015.jpg" />
                 <p>Spēļes iestatījumi: Periods 6 min.</p>
                 <p>Trāvmas izslēgti.</p>
                 <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
@@ -82,7 +82,7 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <img  src="<?_cfg('img')?>/fifa-2015.jpg" />
+            <img src="<?_cfg('img')?>/fifa-2015.jpg" />
             <p>Spēļes iestatījumi: Periods 6 min.</p>
             <p>Trāvmas izslēgti.</p>
             <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
@@ -92,10 +92,6 @@
             <p>Kontākts pasts mileit22@gmail.com</p>
             <p>Adrese: Delisnack Jelgava, Pasta iela 45.  Sākums 13:00 4.oktobrī</p>
             <p>Regīstrācijas maksa 5 eur.</p>
-            
-            <div>
-                <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
-            </div>
             
             <div class="share-tournament">
                 <h2><?=t('share_this_tournament')?></h2>
@@ -207,7 +203,7 @@
 <script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
 <script>
 $('#register-in-tournament').on('click', function() {
-    PC.addParticipant('fifa');
+    PC.addParticipant('Fifa');
 });
 </script>
 

@@ -6,12 +6,10 @@ class fifa extends System
 	public $participants;
     public $winners;
     public $project;
-    public $regOpen;
+    public $regOpen = 1;
 	
 	public function __construct($params = array()) {
         parent::__construct();
-        
-        $this->regOpen = (isset($_GET['reg'])?1:0);
 
         $this->project = 'jelgava-fifa';
 	}
@@ -87,93 +85,38 @@ class fifa extends System
     	$suc = array();
     	parse_str($data['form'], $post);
         
-        if ($this->data->settings['tournament-reg-hs'] != 1) {
-            return '0;Server error!';
-        }
-        
-        $server = $this->data->settings['tournament-season-hs'];
-
-        if ($this->logged_in) {
-            if ($this->data->user->battletag) {
-                $post['battletag'] = $this->data->user->battletag;
-            }
-
-            if ($this->data->user->email) {
-                $post['email'] = $this->data->user->email;
-            }
+        if ($this->regOpen != 1) {
+            return '0;Registration is closed';
         }
     	
-    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].' AND '.
-            '`server` = "'.Db::escape($server).'" AND '.
-    		'`name` = "'.Db::escape($post['battletag']).'" AND '.
-    		'`game` = "hs" AND '.
+    	$row = Db::fetchRow('SELECT * FROM `participants_external` WHERE '.
+    		'`project` = "'.$this->project.'" AND '.
+            '`name` = "'.Db::escape($post['nickname']).'" AND '.
     		'`deleted` = 0 '
     	);
 
-        $battleTagBreakdown = explode('#', $post['battletag']);
-    	if (!$post['battletag']) {
-    		$err['battletag'] = '0;'.t('field_empty');
-    	}
-    	else if ($row) {
-    		$err['battletag'] = '0;'.t('field_battletag_error');
-    	}
-    	else if (!isset($battleTagBreakdown[0]) || !$battleTagBreakdown[0] || !isset($battleTagBreakdown[1]) || !is_numeric($battleTagBreakdown[1])) {
-    		$err['battletag'] = '0;'.t('field_battletag_incorrect');
+    	if (!$post['nickname']) {
+    		$err['nickname'] = '0;Nickname ir tukšs';
     	}
     	else {
-            $post['battletag'] = trim($battleTagBreakdown[0]).'#'.trim($battleTagBreakdown[1]);
-    		$suc['battletag'] = '1;'.t('approved');
+    		$suc['nickname'] = '1;Apstiprināta';
     	}
     	
     	if (!$post['email']) {
-    		$err['email'] = '0;'.t('field_empty');
+    		$err['email'] = '0;E-pasts ir tukšs';
     	}
     	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-    		$err['email'] = '0;'.t('email_invalid');
+    		$err['email'] = '0;E-pasts nederīgs';
     	}
     	else {
-    		$suc['email'] = '1;'.t('approved');
+    		$suc['email'] = '1;Apstiprināta';
     	}
         
         if (!$post['agree']) {
-    		$err['agree'] = '0;'.t('must_agree_with_rules');
+    		$err['agree'] = '0;Jāvienojas ar noteikumiem';
     	}
         else {
-            $suc['agree'] = '1;'.t('approved');
-        }
-        
-        $heroesPicked = array();
-        for($i=1;$i<=3;++$i) {
-            if (!$post['hero'.$i]) {
-                $err['hero'.$i] = '0;'.t('pick_hero');
-            }
-            
-            if (in_array($post['hero'.$i], $heroesPicked)) {
-                $err['hero'.$i] = '0;'.t('same_hero_picked');
-            }
-            
-            if ($post['hero'.$i]) {
-                $heroesPicked[] = $post['hero'.$i];
-            }
-        }
-        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
-            $err['hero2'] = '0;'.t('same_hero_picked');
-        }
-        
-        $addStream = 0;
-        if ($post['stream']) {
-            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
-            
-            $twitch = $this->runTwitchAPI($post['stream']);
-            
-            if (!$twitch) {
-                $err['stream'] = '0;'.t('channel_not_found');
-            }
-            else {
-                $addStream = 1;
-                $suc['stream'] = '1;'.t('approved');
-            }
+            $suc['agree'] = '1;Apstiprināta';
         }
     	
     	if ($err) {
@@ -188,64 +131,30 @@ class fifa extends System
     		$answer['err'] = $suc;
             
             $contact_info = json_encode(array(
-                'hero1' => $post['hero1'],
-                'hero2' => $post['hero2'],
-                'hero3' => $post['hero3'],
+                'name' => $post['name'],
                 'place' => 0,
             ));
     	
-    		$code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
-    		Db::query('INSERT INTO `participants` SET '.
-	    		'`game` = "hs", '.
-                '`server` = "'.Db::escape($server).'", '.
-	    		'`tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
+    		$code = substr(sha1(time().rand(0,9999)).$post['nickname'], 0, 32);
+    		Db::query('INSERT INTO `participants_externals` SET '.
+	    		'`project` = "'.$this->project.'", '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
-	    		'`name` = "'.Db::escape($post['battletag']).'", '.
+	    		'`name` = "'.Db::escape($post['nickname']).'", '.
 	    		'`email` = "'.Db::escape($post['email']).'", '.
 	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
-                ($this->logged_in?'`approved` = "1", `user_id` = '.(int)$this->data->user->id.', ':null).
 	    		'`link` = "'.$code.'"'
     		);
-    	
-    		$teamId = Db::lastId();
-    	
-    		Db::query(
-    			'INSERT INTO `players` SET '.
-    			' `game` = "hs", '.
-    			' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
-    			' `participant_id` = '.(int)$teamId.', '.
-    			' `name` = "'.Db::escape($post['battletag']).'", '.
-    			' `player_num` = 1'
-    		);
-            
-            if ($addStream == 1) {
-                Db::query(
-                    'INSERT INTO `streams_events` SET '.
-                    '`user_id`  = '.(int)$this->data->user->id.', '.
-                    '`participant_id` = '.(int)$teamId.', '.
-                    ' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
-                    '`game` = "hs", '.
-                    '`name` = "'.Db::escape($post['stream']).'" '
-                );
-            }
     		
-            //Only sending email to not reggistered user
-            if (!$this->logged_in) {
-        		$text = Template::getMailTemplate('reg-hs-player');
-        	
-        		$text = str_replace(
-        			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-        			array($post['battletag'], $teamId, $code, _cfg('href').'/hearthstone/'.$server, _cfg('site')),
-        			$text
-        		);
-        	
-        		$this->sendMail($post['email'], 'Pentaclick Hearthstone tournament participation', $text);
-            }
-            else {
-                Achievements::give(array(21,22,23));//I am preparing my cards. (Register on Hearthstone tournament.)
-                $answer['ok'] = 2;
-            }
+            $text = Template::getMailTemplate('reg-fifa-player');
+        
+            $text = str_replace(
+                array('%name%', '%url%'),
+                array(($post['name']?$post['name']:$post['nickname']), _cfg('href').'/fifa/'.$code),
+                $text
+            );
+        
+            $this->sendMail($post['email'], 'Jelgava FIFA 2015 tournament participation', $text);
     	}
 
     	return json_encode($answer);
