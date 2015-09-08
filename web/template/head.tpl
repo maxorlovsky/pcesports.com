@@ -114,7 +114,7 @@ hs.dimmingOpacity = 0.8;
         </ul>
         
     <? } else { ?>
-        <div class="login"><?=t('login')?><div class="usericon"></div></div>
+        <div class="login"><?=t('login_register')?><div class="usericon"></div></div>
     <? } ?>
     
     <nav>
