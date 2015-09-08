@@ -632,4 +632,114 @@ class User extends System
         
         return '1;'.t('success_profile_update');
     }
+
+    public static function updateEmail($form) {
+        $user = self::checkUser($_SESSION['user']);
+        
+        if (!$user->id) {
+            return t('not_logged_in');
+        }
+        
+        if ($user->email && !trim($form['email'])) {
+            return '0;'.t('email_is_empty');
+        }
+        else if ($user->email == trim($form['email'])) {
+            return '0;'.t('why_change_same_mail');
+        }
+
+        $password = User::passwordConvert($form['password']);
+        if ($user->password != 'social' && $user->password != $password) {
+            return '0;'.t('current_password_is_incorrect');
+        }
+
+        $code = substr(sha1($form['email'].$user->password.time()), 0, 50);        
+        Db::query(
+            'INSERT INTO `users_links` SET '.
+            '`user_id` = '.(int)$user->id.', '.
+            '`type` = "email", '.
+            '`code` = "'.$code.'", '.
+            '`additional` = "'.Db::escape($form['email']).'" '
+        );
+
+        $text = Template::getMailTemplate('change-email');
+        $text = str_replace(
+            array('%name%', '%url%'),
+            array($user->name, _cfg('site').'/run/email-change/'.$code),
+            $text
+        );
+        $s = new System();
+        $s->sendMail($form['email'], 'Pentaclick eSports - email change', $text);
+        
+        return '1;'.t('success_email_update');
+    }
+
+    public function completeMailChange($code) {
+        $user = self::checkUser($_SESSION['user']);
+
+        $row = Db::fetchRow(
+            'SELECT * FROM `users_links` '.
+            'WHERE `type` = "email" AND '.
+            '`code` = "'.Db::escape($code).'" AND '.
+            '`user_id` = '.(int)$user->id
+        );
+
+        if (!$row) {
+            $_SESSION['error'][] = t('code_incorrect_or_user_logged_out');
+            return false;
+        }
+
+        $_SESSION['mailChange'] = 1;
+
+        Db::query(
+            'UPDATE `users` '.
+            'SET `email` = "'.Db::escape($row->additional).'" '.
+            'WHERE `id` = '.$user->id.' '.
+            'LIMIT 1'
+        );
+        Db::query('DELETE FROM `users_links` WHERE `id` = '.(int)$row->id.' LIMIT 1');
+
+        return true;
+    }
+
+    public static function updatePassword($form) {
+        $user = self::checkUser($_SESSION['user']);
+        
+        if (!$user->id) {
+            return t('not_logged_in');
+        }
+        
+        if ($user->password != 'social' && !trim($form['password'])) {
+            return '0;'.t('current_password_is_empty');
+        }
+
+        if (strlen(trim($form['new_password'])) < 6) {
+            return '0;'.t('password_too_small');
+        }
+        else if (trim($form['new_password']) != trim($form['new_repeat_password'])) {
+            return '0;'.t('password_not_match');
+        }
+
+        $password = User::passwordConvert($form['password']);
+
+        if ($user->password != 'social' && $user->password != $password) {
+            return '0;'.t('current_password_is_incorrect');
+        }
+        
+        Db::query(
+            'UPDATE `users` SET '.
+            '`password` = "'.User::passwordConvert(trim($form['new_password'])).'" '.
+            'WHERE `id` = '.(int)$user->id
+        );
+        
+        //Getting fresh updated data
+        $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
+            'FROM `users` AS `u` '.
+            'LEFT JOIN `users_social` AS `us` ON `us`.`user_id` = `u`.`id` '.
+            'WHERE `u`.`id` = '.(int)$user->id.' '
+        );
+        
+        $_SESSION['user'] = (array)$row;
+        
+        return '1;'.t('success_password_update');
+    }
 }

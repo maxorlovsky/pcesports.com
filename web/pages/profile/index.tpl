@@ -8,6 +8,8 @@
         <form class="block-content contact-form profile">
             <? if ($regComplete == 1) { ?>
                 <div class="success-add registration-complete"><?=t('registration_success')?></div>
+            <? } else if ($mailChange == 1) { ?>
+                <div class="success-add registration-complete"><?=t('mail_verified_and_changed')?></div>
             <? } ?>
             
             <div id="success"><p></p></div>
@@ -81,9 +83,9 @@
     
     <div class="block half">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('update_email')?></h1>
+            <h1><?=t('update_email')?></h1>
         </div>
-        <form class="block-content contact-form profile">
+        <form class="block-content contact-form update-email">
             <div id="success"><p></p></div>
             <div id="error"><p></p></div>
             
@@ -92,13 +94,15 @@
             <? } ?>
             <div class="fields">
                 <label for="email">Email</label>
-                <input name="email" id="email" type="text" value="<?=$this->data->user->email?>" placeholder="Email" />
+                <input name="email" id="email" type="email" value="<?=$this->data->user->email?>" placeholder="Email" />
             </div>
             
-            <div class="fields">
-                <label for="password">Current password</label>
-                <input name="password" id="password" type="password" value="" placeholder="Current password" />
-            </div>
+            <? if ($this->data->user->password != 'social') { ?>
+                <div class="fields">
+                    <label for="password"><?=t('current_password')?></label>
+                    <input name="password" id="password" type="password" value="" placeholder="<?=t('current_password')?>" />
+                </div>
+            <? } ?>
             
             <a href="javascript:void(0);" class="button" id="updateEmail"><?=t('update_email')?></a>
         </form>
@@ -106,25 +110,27 @@
     
     <div class="block half">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('update_password')?></h1>
+            <h1><?=t('update_password')?></h1>
         </div>
-        <form class="block-content contact-form profile">
+        <form class="block-content contact-form update-password">
             <div id="success"><p></p></div>
             <div id="error"><p></p></div>
             
+            <? if ($this->data->user->password != 'social') { ?>
+                <div class="fields">
+                    <label for="password"><?=t('current_password')?></label>
+                    <input name="password" id="password" type="password" value="" placeholder="<?=t('current_password')?>" />
+                </div>
+            <? } ?>
+            
             <div class="fields">
-                <label for="password">Current password</label>
-                <input name="password" id="password" type="password" value="" placeholder="Current password" />
+                <label for="new_password"><?=t('new_password')?></label>
+                <input name="new_password" id="new_password" type="password" value="" placeholder="<?=t('new_password')?>" />
             </div>
             
             <div class="fields">
-                <label for="new_password">New password</label>
-                <input name="new_password" id="new_password" type="password" value="" placeholder="New password" />
-            </div>
-            
-            <div class="fields">
-                <label for="new_repeat_password">Repeat new password</label>
-                <input name="new_repeat_password" id="new_repeat_password" type="password" value="" placeholder="Repeat new password" />
+                <label for="new_repeat_password"><?=t('repeat_password')?></label>
+                <input name="new_repeat_password" id="new_repeat_password" type="password" value="" placeholder="<?=t('repeat_password')?>" />
             </div>
             
             <a href="javascript:void(0);" class="button" id="updatePassword"><?=t('update_password')?></a>

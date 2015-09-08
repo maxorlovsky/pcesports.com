@@ -220,6 +220,13 @@ $('.socialDisconnect').on('click', function() {
 $('#updateProfile').on('click', function() {
     PC.updateProfile();
 });
+$('#updateEmail').on('click', function() {
+    PC.updateEmail();
+});
+$('#updatePassword').on('click', function() {
+    PC.updatePassword();
+});
+
 
 $('.connected').on('mouseover', function() {
     $(this).text(g.str.disconnect);

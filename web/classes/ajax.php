@@ -455,6 +455,14 @@ class Ajax extends System
         parse_str($data['form'], $post);
         return User::updateProfile($post);
     }
+    protected function updateEmail($data) {
+        parse_str($data['form'], $post);
+        return User::updateEmail($post);
+    }
+    protected function updatePassword($data) {
+        parse_str($data['form'], $post);
+        return User::updatePassword($post);
+    }
     
     protected function socialDisconnect($data) {
         $answer = User::socialDisconnect($data);

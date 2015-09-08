@@ -49,6 +49,11 @@ class profile extends System
             $regComplete = 1;
         }
         
+        if ($_SESSION['mailChange'] == 1) {
+            unset($_SESSION['mailChange']);
+            $mailChange = 1;
+        }
+        
         /*$userTimeZone = $this->data->user->timezone / 60;
         if ($this->data->user->timezone && $userTimeZone <= 720 && $userTimeZone >= -720) {
             $pickedTimezone = $userTimeZone;

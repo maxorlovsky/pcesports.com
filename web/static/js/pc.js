@@ -1178,6 +1178,74 @@ var PC = {
         };
         this.ajax(query);
     },
+    updateEmail: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('.update-email #error').hide();
+        $('.update-email #success').hide();
+        $('#updateEmail').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'updateEmail',
+                form: $('.update-email').serialize()
+            },
+            success: function(answer) {
+                $('#updateEmail').removeClass('alpha');
+                PC.formInProgress = 0;
+                data = answer.split(';');
+                
+                if (data[0] != 1) {
+                    $('.update-email #error p').text(data[1]);
+                    $('.update-email #error').slideDown(1000);
+                }
+                else {
+                    $('.update-email #success p').text(data[1]);
+                    $('.update-email #success').slideDown(1000);
+                    $('.update-email input[type="password"]').val();
+                }
+            }
+        };
+        this.ajax(query);
+    },
+    updatePassword: function() {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+        $('.update-password #error').hide();
+        $('.update-password #success').hide();
+        $('#updatePassword').addClass('alpha');
+        
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'updatePassword',
+                form: $('.update-password').serialize()
+            },
+            success: function(answer) {
+                $('#updatePassword').removeClass('alpha');
+                PC.formInProgress = 0;
+                data = answer.split(';');
+                
+                if (data[0] != 1) {
+                    $('.update-password #error p').text(data[1]);
+                    $('.update-password #error').slideDown(1000);
+                }
+                else {
+                    $('.update-password #success p').text(data[1]);
+                    $('.update-password #success').slideDown(1000);
+                    $('.update-password input[type="password"]').val();
+                }
+            }
+        };
+        this.ajax(query);
+    },
     ajax: function(object) {
         if (!object.url) {
             object.url = this.site;

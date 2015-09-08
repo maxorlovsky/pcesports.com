@@ -878,6 +878,19 @@ class System
                         header('Location: '._cfg('href').'/profile');
                     }
                 }
+                else if ($_GET['val1'] == 'email-change' && $_GET['val2']) {
+                    unset($_SESSION['errors']);
+                    
+                    $user = new User();
+                    $answer = $user->completeMailChange($_GET['val2']);
+                    
+                    if ($answer === false) {
+                        header('Location: '._cfg('href').'/profile/error');
+                        exit();
+                    }
+                    
+                    header('Location: '._cfg('href').'/profile');
+                }
                 else if ($_GET['val1'] == 'logout') {
                     User::logout();
                     header('Location: '._cfg('site'));
