@@ -1,10 +1,10 @@
 <?php
 
-class skillzhs extends System
+class bnb extends System
 {
     public $participant;
     public $participants;
-    public $regIsOpen = 0;
+    public $regIsOpen = 1;
     public $paymentNeeded = 1;
     public $project = 'skillz';
     

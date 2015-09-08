@@ -10,7 +10,7 @@
 <? if (!$this->participant && $this->regIsOpen == 1) { ?>
 <div class="block registration">
 	<div class="block-header-wrapper">
-		<h1>MSI MCS Open Season 3 HearthStone Baltic Qualifier</h1>
+		<h1>BNB HearthStone #1</h1>
 	</div>
 	
 	<div class="block-content signup">
@@ -56,7 +56,7 @@
                 <? } ?>
 
                 <div class="form-item" data-label="agree">
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs_mcs')?></label>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules')?></label>
                     <div class="message hidden"></div>
                 </div>
                 
@@ -76,7 +76,7 @@
 <? } ?>
 
 <? if ($this->participants && $this->participant->checked_in != 1) { ?>
-<div class="block participants nomargin">
+<div class="block participants">
     <div class="block-header-wrapper">
         <h1><?=t('participants')?></h1>
     </div>
@@ -154,6 +154,6 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
 
 <? if ($this->participant) { ?>
 $('.hero1, .hero2, .hero3').trigger('change');
-var participant = 1;
+participant = 1;
 <? } ?>
 </script>

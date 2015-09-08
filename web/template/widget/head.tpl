@@ -18,6 +18,7 @@ var g = {
     site: '<?=_cfg('site')?>',
     system: '<?=$this->page?>'
 };
+var participant = 0;
 </script>
 
 

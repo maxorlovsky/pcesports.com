@@ -73,8 +73,10 @@ class restoration extends System
 			);
 			Db::query('DELETE FROM `users_links` WHERE `id` = '.(int)$row->ulid);
 
-			$_SESSION['user'] = array('id' => $row->id);
+			//Just in case
+			User::logOut();
 
+			$_SESSION['user'] = array('id' => $row->id);
         	User::token();
 
     		$object->status = '200';

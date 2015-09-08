@@ -1,3 +1,6 @@
+(function(){
+    'use strict';
+
 if (window.jQuery) {
 
 $('#pce-widget').ready(function() {
@@ -105,3 +108,5 @@ function fetchFrameMessage(event) {
 else {
     console.log('jQuery not found, shutting down');
 }
+
+})();
