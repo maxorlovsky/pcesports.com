@@ -111,9 +111,9 @@
                 <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="title"><?=$v->title?></a>
                 <div class="info">
                     <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
-                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="likes like-icon hint <?=($this->blog->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
+                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments hint" attr-msg="<?=t(($v->comments>1?'comments':'comment'))?>"><?=$v->comments?></a>
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="views hint" attr-msg="<?=t('views')?>"><?=$v->views?></a>
-                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments hint" attr-msg="<?=t(($this->blog->comments>1?'comments':'comment'))?>"><?=$v->comments?></a>
+                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="likes like-icon hint <?=($v->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
                     <div class="clear"></div>
                 </div>
             </div>

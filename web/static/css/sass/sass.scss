@@ -658,6 +658,7 @@ footer {
                 padding: 0 5px;
                 text-align: center;
                 transition: .5s;
+                margin-left: 10px;
             }
             .comments {
                 @extend .views;
@@ -666,11 +667,17 @@ footer {
                 }
             }
             .likes {
-                @extend .views;
-                height: 32px;
+                float: right;
+                color: #fff;
+                padding: 0 5px;
+                text-align: center;
+                transition: .5s;
                 background-image: url('../images/like-gray.png');
                 background-repeat: no-repeat;
-                background-position: top center;
+                background-size: cover;
+                height: 20px;
+                width: 13px;
+                
                 &:hover,
                 &.active {
                     background-image: url('../images/like-active.png');
