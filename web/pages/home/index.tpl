@@ -99,9 +99,9 @@
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>">
                     <? if ($v->extension) { ?>
                         <? if (_cfg('env') != 'prod') { ?>
-                            <img src="http://www.pcesports.com/web/uploads/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                            <img src="http://www.pcesports.com/web/uploads/news/small-<?=$v->id?>.<?=$v->extension?>" />
                         <? } else { ?>
-                            <img src="<?=_cfg('imgu')?>/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                            <img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
                         <? } ?>
                     <? } else { ?>
                         <p><?=t('no_image')?></p>
@@ -117,14 +117,6 @@
                     <div class="clear"></div>
                 </div>
             </div>
-
-        	<!-- <div class="add-box">
-        		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->blog->id?>">
-        			<div class="placeholder">
-        				<div class="like-icon <?=($this->blog->active?'active':null)?>"></div>
-					</div>
-        		</a>
-        	</div> -->
         <?
             }
         }
