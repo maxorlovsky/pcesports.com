@@ -88,9 +88,31 @@
         <div class="block-header-wrapper">
             <h1 class=""><?=t('latest_blog')?></h1>
         </div>
-        <? if ($this->blog) { ?>
-        <div class="block-content news big-block">
-        	<div class="add-box">
+
+        <div class="block-content news">
+        <?
+        if ($this->blog) {
+            foreach($this->blog as $v) {
+        ?>
+            <div class="small-block">
+                <div class="image-holder">
+                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>">
+                    <? if ($v->extension) { ?>
+                        <img src="<?=_cfg('imgu')?>/blog/small-<?=$v->id?>.<?=$v->extension?>" />
+                    <? } else { ?>
+                        <p><?=t('no_image')?></p>
+                    <? } ?>
+                    </a>
+                </div>
+                <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="title"><?=$v->title?></a>
+                <div class="info">
+                    <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
+                    <!-- <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments"><?=$v->comments?></a>-->
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+        	<!-- <div class="add-box">
         		<div class="date"><?=date('M', strtotime($this->blog->added) + $this->timezone)?><br /><?=date('d', strtotime($this->blog->added)+$this->timezone)?></div>
         		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->blog->id?>">
         			<div class="placeholder">
@@ -108,9 +130,8 @@
                 </a>
             <? } ?>
         	<a href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>" class="title"><?=$this->blog->title?></a>
-        	<div class="text"><?=$this->blog->value?></div>
-        </div>
-        <div class="block-content news big-block readmore">
+        	<div class="text"><?=$this->blog->value?></div> -->
+        <!-- <div class="block-content news big-block readmore">
         	<div class="news-info">
 				<?=t('added_by')?> <a href="<?=_cfg('href')?>/member/<?=$this->blog->login?>"><?=$this->blog->login?></a>, 
 				<span id="news-like-<?=$this->blog->id?>"><?=$this->blog->likes?></span> <?=t('likes')?>,
@@ -119,8 +140,13 @@
 			</div>
         	<a class="button" href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>"><?=t('read_more')?></a>
         	<div class="clear"></div>
+        </div> -->
+        <?
+            }
+        }
+        ?>
+            <div class="clear"></div>
         </div>
-        <? } ?>
         
         <div class="block separate">
             <div class="block-header-wrapper">
