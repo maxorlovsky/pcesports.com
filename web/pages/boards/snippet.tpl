@@ -23,7 +23,7 @@
             	<? if ($v->comments == 0) { ?>
                 	<?=t('submitted')?> 
                 <? } else { ?>
-                	<?=t('received_reply')?> 
+                	<?=t('last_reply')?> 
                 <? } ?>
 
                 <?=$v->interval?>
