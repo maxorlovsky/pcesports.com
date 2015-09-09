@@ -86,7 +86,7 @@
     
     <div class="block separate">
         <div class="block-header-wrapper">
-            <h1 class=""><?=t('latest_blog')?></h1>
+            <h1 class=""><?=t('latest_blogs')?></h1>
         </div>
 
         <div class="block-content news">
@@ -98,7 +98,11 @@
                 <div class="image-holder">
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>">
                     <? if ($v->extension) { ?>
-                        <img src="<?=_cfg('imgu')?>/blog/small-<?=$v->id?>.<?=$v->extension?>" />
+                        <? if (_cfg('env') == 'dev') { ?>
+                            <img src="http://www.pcesports.com/web/uploads/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                        <? } else { ?>
+                            <img src="<?=_cfg('imgu')?>/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
+                        <? } ?>
                     <? } else { ?>
                         <p><?=t('no_image')?></p>
                     <? } ?>
@@ -107,40 +111,20 @@
                 <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="title"><?=$v->title?></a>
                 <div class="info">
                     <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
-                    <!-- <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments"><?=$v->comments?></a>-->
+                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="likes like-icon hint <?=($this->blog->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
+                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="views hint" attr-msg="<?=t('views')?>"><?=$v->views?></a>
+                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments hint" attr-msg="<?=t(($this->blog->comments>1?'comments':'comment'))?>"><?=$v->comments?></a>
                     <div class="clear"></div>
                 </div>
             </div>
 
         	<!-- <div class="add-box">
-        		<div class="date"><?=date('M', strtotime($this->blog->added) + $this->timezone)?><br /><?=date('d', strtotime($this->blog->added)+$this->timezone)?></div>
         		<a class="like" href="javascript:void(0);" attr-news-id="<?=$this->blog->id?>">
         			<div class="placeholder">
         				<div class="like-icon <?=($this->blog->active?'active':null)?>"></div>
 					</div>
         		</a>
-        	</div>
-            <? if ($this->blog->extension) { ?>
-                <a class="image-holder" href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>">
-                    <? if (_cfg('env') == 'dev') { ?>
-                        <img src="http://www.pcesports.com/web/uploads/news/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
-                    <? } else { ?>
-                        <img src="<?=_cfg('imgu')?>/news/big-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
-                    <? } ?>
-                </a>
-            <? } ?>
-        	<a href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>" class="title"><?=$this->blog->title?></a>
-        	<div class="text"><?=$this->blog->value?></div> -->
-        <!-- <div class="block-content news big-block readmore">
-        	<div class="news-info">
-				<?=t('added_by')?> <a href="<?=_cfg('href')?>/member/<?=$this->blog->login?>"><?=$this->blog->login?></a>, 
-				<span id="news-like-<?=$this->blog->id?>"><?=$this->blog->likes?></span> <?=t('likes')?>,
-                <span><?=$this->blog->views?></span> <?=t('views')?>, 
-				<span><?=$this->blog->comments?></span> <?=t(($this->blog->comments>1?'comments':'comment'))?>
-			</div>
-        	<a class="button" href="<?=_cfg('href')?>/blog/<?=$this->blog->id?>"><?=t('read_more')?></a>
-        	<div class="clear"></div>
-        </div> -->
+        	</div> -->
         <?
             }
         }

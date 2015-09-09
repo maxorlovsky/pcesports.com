@@ -649,7 +649,7 @@ footer {
             .dates {
                 float: left;
             }
-            .comments {
+            .views {
                 float: right;
                 color: #fff;
                 background-color: #999;
@@ -658,14 +658,30 @@ footer {
                 padding: 0 5px;
                 text-align: center;
                 transition: .5s;
+            }
+            .comments {
+                @extend .views;
                 &:hover {
                     background-color: #1697e1;
+                }
+            }
+            .likes {
+                @extend .views;
+                height: 32px;
+                background-image: url('../images/like-gray.png');
+                background-repeat: no-repeat;
+                background-position: top center;
+                &:hover,
+                &.active {
+                    background-image: url('../images/like-active.png');
                 }
             }
         }
         &:nth-child(3n) {
             margin-right: 0;
         }
+        
+        
     }
 }
 
