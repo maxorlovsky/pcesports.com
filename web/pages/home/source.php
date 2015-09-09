@@ -156,29 +156,6 @@ class home extends System
 			'ORDER BY `id` DESC '.
 			'LIMIT 3'
 		);
-        
-        $additionalSelect = '';
-        $additionalSql = '';
-        if ($this->logged_in) {
-            $additionalSelect .= ', `bv`.`direction`';
-            $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
-        }
-        
-        $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar` '.$additionalSelect.
-			'FROM `boards` AS `b` '.
-            $additionalSql.
-            'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
-			'ORDER BY `activity` DESC '.
-			'LIMIT 3 '
-		);
-        
-        $currDate = new DateTime();
-        
-        foreach($this->boards as &$v) {
-            $dbDate = new DateTime($v->added);
-            $v->interval = $this->getAboutTime($currDate->diff($dbDate));
-        }
-        unset($v);
 	}
 	
 	public function showTemplate() {

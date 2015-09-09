@@ -20,7 +20,7 @@ var PC = {
                     $('.achievements').find('.points').html(data.points);
                     $('.achievements').find('.name').html(data.name);
                     $('.achievements').find('.text').html(data.description);
-
+                    $('.achievements').show();
                     $('.achievements').css('opacity', 1);
 
                     document.getElementById('achievement-ping').play();

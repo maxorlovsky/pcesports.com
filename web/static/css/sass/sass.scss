@@ -255,7 +255,7 @@ header {
 }
 
 .social {
-    margin: 5px 10px 0 0;
+    margin-right: 10px;
     a {
         background-image: url('../images/icons.png');
         height: 30px;
@@ -320,23 +320,137 @@ footer {
         color: #888;
         width: 100%;
         background-color: #333;
-        padding: 10px 0;
+        padding: 5px 0 0 0;
         margin: 20px 0 0 0;
         border-top: 1px solid #484848;
         font-size: 12px;
-        line-height: 20px;
         .rights {
             float: left;
-            margin: 3px 0 0 15px;
+            margin: 6px 0 0 15px;
         }
         .devs {
             float: right;
             color: #888;
-            margin: 3px 15px 0 0;
             &:hover {
                 color: #1697e1;
             }
         }
+    }
+    .block {
+        .block-content {
+            background-color: inherit;
+            box-shadow: none;
+            text-align: center;
+            &.board {
+                text-align: left;
+                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+                &:nth-child(even) {
+                    background-color: #333;
+                }
+                .thread {
+                    .title {
+                        display: inline-block;
+                        max-width: 315px
+                    }
+                    .date-user-box {
+                        color: #aaa;
+                        .deleted {
+                            color: #aaa;
+                        }
+                    }
+                }
+                .count {
+                    color: #eee;
+                }
+            }
+            &.comments {
+                text-align: left;
+                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+                padding: 0;
+                &:nth-child(even) {
+                    background-color: #333;
+                }
+                .thread {
+                    float: left;
+                    padding: 0 0 0 10px;
+                    height: 72px;
+                    display: block;
+                    box-sizing: border-box;
+                    .title {
+                        font-size: 21px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 395px;
+                        display: inline-block;
+                    }
+                    .text {
+                        color: #ccc;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 395px;
+                    }
+                    .date-user-box {
+                        font-size: 11px;
+                        color: #999;
+                        line-height: 20px;
+                        height: 20px;
+                        display: inline-block;
+                        .comment-user img {
+                            float: right;
+                            width: 20px;
+                            margin-left: 5px;
+                        }
+                        .actions a {
+                            font-size: 12px;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+            &.information {
+                background-color: #333;
+                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+                text-align: left;
+                box-sizing: border-box;
+                padding: 10px;
+                color: #ccc;
+                a {
+                    display: block;
+                }
+            }
+        }
+    }
+    .partners {
+        img {
+            max-width: 315px;
+        }
+        .a {
+            float: left;
+        }
+        .unicon {
+            float: left;
+            margin-left: 20px;
+        }
+        .skillz {
+            float: left;
+            margin: 20px 0 0 20px;
+        }
+        .lesf {
+            margin: 30px 0 0 20px;
+            float: left;
+        }
+    }
+    .games {
+        img {
+            max-width: 315px;
+        }
+    }
+    .separator {
+        margin: 20px 1% 0 1%;
+        float: left;
+        width: 31%;
     }
 }
 
@@ -481,6 +595,44 @@ footer {
                 margin-top: 10px;
                 margin-bottom: 0;
             }
+        }
+    }
+}
+
+.partners {
+    .partner {
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+        margin-bottom: 20px;
+        position: relative;
+        .logo {
+            display: block;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+        .text {
+            padding: 5px 10px;
+        }
+        .link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        &:nth-last-child(1) {
+            margin-bottom: 0;
+        }
+        &::after {
+            content: ' ';
+            clear: both;
+            display: block;
+        }
+        &.unicon .logo {
+            width: 97px;
+        }
+        &.skillz .logo {
+            width: 140px;
+        }
+        &.lesf .logo {
+            width: 113px;
         }
     }
 }
@@ -814,51 +966,6 @@ footer {
     overflow: hidden;
 }
 
-footer {
-    .separator {
-        margin: 20px 1% 0 1%;
-        float: left;
-        width: 31%;
-    }
-}
-footer .separator.left {
-    
-}
-footer .separator.right {
-    
-}
-footer .block .block-content {
-    background-color: inherit;
-    box-shadow: none;
-    text-align: center;
-}
-footer .partners img, footer .games img {
-    max-width: 315px;
-}
-footer .partners .a {
-    float: left;
-}
-footer .partners .unicon {
-    float: left;
-    margin-left: 20px;
-}
-footer .partners .skillz {
-    float: left;
-    margin: 20px 0 0 20px;
-}
-footer .partners .dreamforge {
-    float: left;
-    margin: 20px 0 0 0;
-}
-footer .partners .lesf {
-    margin: 30px 0 0 20px;
-    float: left;
-}
-footer .partners .aimskillz {
-    margin: 20px 0 0 20px;
-    float: left;
-}
-
 
 #hint-helper {
     box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #999;
@@ -912,9 +1019,6 @@ footer .partners .aimskillz {
             .name {
                 padding: 5px 0 0 15px;
             }
-        }
-        .social {
-            padding: 5px 0 0 15px;
         }
         &:hover {
             background-color: #eee;
@@ -1736,7 +1840,7 @@ footer .games img {
     border-radius: $defaultBorderRadius;
     width: 30px;
     height: 35px;
-    bottom: 20px;
+    bottom: 50px;
     right: 40px;
     overflow: hidden;
     border: none;
@@ -3154,7 +3258,7 @@ footer .games img {
 }
 
 .achievements {
-    display: block;
+    display: none;
     position: fixed;
     bottom: 5%;
     right: 5%;

@@ -7,10 +7,13 @@ class System
     public $user;
     public $logged_in;
     public $links;
+    public $boards;
+    public $comments;
     public $serverTimes = array();
     public $streams = array();
     public $cacheTtl = 600;
     public $apcEnabled = false;
+
     protected $userClass;
     
     public function __construct() {
@@ -126,7 +129,6 @@ class System
             $this->data->langugePicker = array();
         }
         
-        
         if (!$this->data->langugePicker && _cfg('language') != 'Config not found') {
             $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
             if ($languageRows) {
@@ -172,9 +174,6 @@ class System
                 else if ($v->game == 'lol') {
                     $game = 'League of Legends';
                 }
-                else if ($v->game == 'smite') {
-                    $game = 'Smite';
-                }
                 else {
                     $game = $v->game;
                 }
@@ -217,6 +216,56 @@ class System
                 'ORDER BY `featured` DESC, `viewers` DESC '.
                 'LIMIT 5'
             );
+        }
+
+
+        //Boards
+        if (!$this->boards) {
+            $additionalSelect = '';
+            $additionalSql = '';
+            if ($this->logged_in) {
+                $additionalSelect .= ', `bv`.`direction`';
+                $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
+            }
+            
+            $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
+                'FROM `boards` AS `b` '.
+                $additionalSql.
+                'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
+                'ORDER BY `activity` DESC '.
+                'LIMIT 3 '
+            );
+            
+            $currDate = new DateTime();
+            
+            foreach($this->boards as &$v) {
+                if ($v->comments != 0) {
+                    $conv = date('Y-m-d H:i:s', $v->activity);
+                    $dbDate = new DateTime($conv);
+                }
+                else {
+                    $dbDate = new DateTime($v->added);
+                }
+                $v->interval = $this->getAboutTime($currDate->diff($dbDate));
+            }
+            unset($v);
+        }
+
+        //Comments
+        if (!$this->comments) {
+            $this->comments = Db::fetchRows('SELECT `b`.`title`, `bc`.`blog_id`, `bc`.`text`, `bc`.`added`, `bc`.`user_id`, `bc`.`edited`, `bc`.`status`, `u`.`name`, `u`.`avatar` '.
+                'FROM `blog_comments` AS `bc` '.
+                'LEFT JOIN `blog` AS `b` ON `bc`.`blog_id` = `b`.`id` '.
+                'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
+                'ORDER BY `bc`.`id` DESC '.
+                'LIMIT 3 '
+            );
+
+            foreach($this->comments as &$v) {
+                $dbDate = new DateTime($v->added);
+                $v->interval = $this->getAboutTime($currDate->diff($dbDate));
+            }
+            unset($v);
         }
     }
     
