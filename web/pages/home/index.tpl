@@ -98,7 +98,7 @@
                 <div class="image-holder">
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>">
                     <? if ($v->extension) { ?>
-                        <? if (_cfg('env') == 'dev') { ?>
+                        <? if (_cfg('env') != 'prod') { ?>
                             <img src="http://www.pcesports.com/web/uploads/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
                         <? } else { ?>
                             <img src="<?=_cfg('imgu')?>/news/small-<?=$this->blog->id?>.<?=$this->blog->extension?>" />
@@ -113,7 +113,7 @@
                     <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments hint" attr-msg="<?=t(($v->comments>1?'comments':'comment'))?>"><?=$v->comments?></a>
                     <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="views hint" attr-msg="<?=t('views')?>"><?=$v->views?></a>
-                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="like hint <?=($v->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
+                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="like like-icon hint <?=($v->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
                     <div class="clear"></div>
                 </div>
             </div>
