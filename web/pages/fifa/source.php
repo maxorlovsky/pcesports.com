@@ -13,39 +13,6 @@ class fifa extends System
 
         $this->project = 'jelgava-fifa';
 	}
-    
-    protected function approveRegisterPlayer($row) {
-		Db::query('UPDATE `participants` '.
-			'SET `approved` = 1 '.
-			'WHERE `tournament_id` = '.(int)$this->currentTournament.' '.
-			'AND `game` = "hs" '.
-			'AND `id` = '.$row->id
-		);
-        
-        $subscribeRow = Db::fetchRow(
-            'SELECT * FROM `subscribe` WHERE '.
-            '`email` = "'.Db::escape($row->email).'" '
-        );
-        
-        if (!$subscribeRow) {
-            Db::query('INSERT INTO `subscribe` SET '.
-                '`email` = "'.Db::escape($row->email).'", '.
-                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
-            );
-        }
-        
-        //Cleaning up duplicates
-        Db::query('UPDATE `participants` '.
-            'SET `deleted` = 1 '.
-            'WHERE `tournament_id` = '.(int)$this->currentTournament.' AND '.
-            '`game` = "hs" AND '.
-            '`server` = "'.Db::escape($this->server).'" AND '.
-            '`id` != '.$row->id.' AND '.
-            '`name` = "'.Db::escape($row->name).'" '
-        );
-		
-		return true;
-	}
 	
 	public function getTournamentData() {
         $rows = Db::fetchRows('SELECT * '.
@@ -145,12 +112,24 @@ class fifa extends System
 	    		'`contact_info` = "'.Db::escape($contact_info).'", '.
 	    		'`link` = "'.$code.'"'
     		);
+
+            $subscribeRow = Db::fetchRow(
+                'SELECT * FROM `subscribe` WHERE '.
+                '`email` = "'.Db::escape($post['email']).'" '
+            );
+            
+            if (!$subscribeRow) {
+                Db::query('INSERT INTO `subscribe` SET '.
+                    '`email` = "'.Db::escape($post['email']).'", '.
+                    '`unsublink` = "'.sha1(Db::escape($post['email']).rand(0,9999).time()).'"'
+                );
+            }
     		
-            $text = Template::getMailTemplate('reg-fifa-player');
+            $text = Template::getMailTemplate('reg-player-fifa');
         
             $text = str_replace(
-                array('%name%', '%url%'),
-                array(($post['name']?$post['name']:$post['nickname']), _cfg('href').'/fifa/'.$code),
+                array('%name%'),
+                array($post['name']?$post['name']:$post['nickname']),
                 $text
             );
         

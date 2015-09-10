@@ -23,7 +23,17 @@
         
         <div class="block-content signup">
             <div id="join-form">
-                <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
+                <p class="reg-completed success-add">
+                    Apsveicu, jūs esat reģistrēti Jelgava Fifa Tournament. Jūms vajag apmaksāt piedalījumu līdz 30. septembrim.<br />
+                    Konta informācija:<br />
+                    Swedbank LV45HABA0551033763452<br />
+                    Vārds, Uzvārds: ŅIKITA MIHAILOVS<br />
+                    <br />
+                    Neaizmirstiet pievienot savu Nickname, Vārdu, Uzvārdu apmaksās komentāros.<br />
+                    <br />
+                    Papildinformāciju jūs varat saņemt uzrakstot uz mileit22@gmail.com.<br />
+                    Gaidam jūs mūsu pasākumā!
+                </p>
 
                 <form id="da-form" method="post">
                     <div class="form-item" data-label="nickname">
