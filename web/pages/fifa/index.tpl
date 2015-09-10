@@ -18,7 +18,7 @@
     <? if ($this->regOpen == 1) { ?>
     <div class="block registration">
         <div class="block-header-wrapper">
-            <h1>FIFA 2015 Tournament <?=t('sign_up')?></h1>
+            <h1>FIFA 2015 Tournament pierakstīties</h1>
         </div>
         
         <div class="block-content signup">
@@ -49,7 +49,7 @@
                     <div class="clear"></div>
                 </form>
                 <div class="clear"></div>
-                <a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?></a>
+                <a href="javascript:void(0);" class="button" id="register-in-tournament">Pievienoties turnīra</a>
             </div>
             
             <div class="tournament-rules">
@@ -94,7 +94,7 @@
             <p>Regīstrācijas maksa 5 eur.</p>
             
             <div class="share-tournament">
-                <h2><?=t('share_this_tournament')?></h2>
+                <h2>Dalīties ar šo turnīru</h2>
                 <div class="addthis_sharing_toolbox"></div>
             </div>
         </div>
@@ -104,7 +104,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?></h1>
+            <h1 class="bordered">Dalībnieki</h1>
         </div>
         
         <div class="block-content participants isotope-participants">
@@ -113,7 +113,7 @@
         $i = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-                if ($v->checked_in == 1 && $v->verified == 1) {
+                if ($v->verified == 1) {
 
                     //This must be here
                     ++$participantsCount;
@@ -130,39 +130,6 @@
         }
 
         if ($participantsCount == 0) {
-            ?><p class="empty-list"><?=t('no_checked_in_players')?></p><?
-        }
-    ?>
-        </div>
-    </div>
-    
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('verified_participants')?></h1>
-        </div>
-        
-        <div class="block-content participants isotope-participants-verified">
-        <?
-        $participantsCount = 0;
-        if ($this->participants) {
-            foreach($this->participants as $v) {
-                if ($v->verified == 1 && $v->checked_in != 1) {
-
-                    //This must be here
-                    ++$participantsCount;
-
-                    ?>
-                    <div class="block" title="<?=$v->name?>">
-                        <div class="team-name"><?=$v->name?></div>
-                        <span class="team-num">#<?=$participantsCount?></span>
-                        <div class="clear"></div>
-                    </div>
-                    <?
-                }
-            }
-        }
-
-        if ($participantsCount == 0) {
             ?><p class="empty-list"><?=t('no_verified_players')?></p><?
         }
     ?>
@@ -171,7 +138,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('pending_participants')?></h1>
+            <h1 class="bordered">gaidot dalībnieki</h1>
         </div>
         
         <div class="block-content participants isotope-participants-pending">
