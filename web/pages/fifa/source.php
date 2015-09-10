@@ -103,7 +103,7 @@ class fifa extends System
             ));
     	
     		$code = substr(sha1(time().rand(0,9999)).$post['nickname'], 0, 32);
-    		Db::query('INSERT INTO `participants_externals` SET '.
+    		Db::query('INSERT INTO `participants_external` SET '.
 	    		'`project` = "'.$this->project.'", '.
 	    		'`timestamp` = NOW(), '.
 	    		'`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
