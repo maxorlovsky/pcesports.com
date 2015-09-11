@@ -11,64 +11,39 @@
     }
 
     var widget = {
+        games: ['leagueoflegends', 'hearthstone'],
+        
         initiate: function() {
             var widgetElement = jQuery('#pce-widget');
             var iframe;
-            var platform;
-            var parentUrl;
+            var url;
             var get = {};
+            var game;
+            var project = this.getProject();
             
-            if (window.location.href.indexOf('dev') != -1) {
-                platform = 'http://dev.';
-            }
-            else if (window.location.href.indexOf('test') != -1) {
-                platform = 'http://test.';
-            }
-            else {
-                platform = 'https://www.';
-            }
-            
-            if (window.location.hostname.indexOf('skillz') != -1) {
-                parentUrl = platform+'pcesports.com/widget/skillzhs';
-            }
-            else if (window.location.hostname.indexOf('unicon') != -1) {
-                parentUrl = platform+'pcesports.com/widget/uniconhs';
-            }
-            else if (window.location.hostname.indexOf('bnb') != -1) {
-                parentUrl = platform+'pcesports.com/widget/bnb';
-            }
-            else if (window.location.hostname.indexOf('pcesports') != -1) {
-                if (window.location.href.indexOf('skillz') != -1) {
-                    parentUrl = platform+'pcesports.com/widget/skillzhs';
-                }
-                else if (window.location.href.indexOf('unicon') != -1) {
-                    parentUrl = platform+'pcesports.com/widget/uniconhs';
-                }
-                else if (window.location.href.indexOf('bnb') != -1) {
-                    parentUrl = platform+'pcesports.com/widget/bnb';
-                }
-                else {
-                    console.log('Please specify platform');
-                    return false;
-                }
-            }
-            else {
-                console.log('Your website is not allowed to use Pentaclick eSports widget');
+            if (project === false) {
                 return false;
             }
             
-            if (window.location.href.indexOf('participant') != -1) {
-                breakdownGlobal = window.location.href.split('&');
-                delete breakdownGlobal[0];
-                jQuery.each(breakdownGlobal, function(k, v) {
-                    if (v != undefined) {
-                        breakdown = v.split('=');
-                        if (breakdown[1] != undefined) {
-                            get[breakdown[0]] = breakdown[1];
+            url = this.getPlatform() + 'pcesports.com/widget' + project;
+            
+            var game = this.getGame();
+            if (game !== false) {
+                url += '/' + game;
+                
+                if (window.location.href.indexOf('participant') != -1) {
+                    breakdownGlobal = window.location.href.split('&');
+                    delete breakdownGlobal[0];
+                    jQuery.each(breakdownGlobal, function(k, v) {
+                        if (v != undefined) {
+                            breakdown = v.split('=');
+                            if (breakdown[1] != undefined) {
+                                get[breakdown[0]] = breakdown[1];
+                            }
                         }
-                    }
-                });
-                parentUrl += '/participant/'+get.participant+'/'+get.link;
+                    });
+                    url += '/participant/'+get.participant+'/'+get.link;
+                }
             }
 
             if (widgetElement.length <= 0) {
@@ -89,13 +64,64 @@
                 width: '100%',
                 border: '0',
             });
-            iframe.attr('src', parentUrl);
+            iframe.attr('src', url);
             
             if (window.addEventListener) {
                 window.addEventListener("message", widget.fetchFrameMessage, false);
             } else {
                 window.attachEvent("onmessage", widget.fetchFrameMessage);
             }
+        },
+        getGame: function() {
+            jQuery.each(this.games, function(key, value) {
+                if (window.location.href.indexOf(value) != -1) {
+                    return value;
+                }
+            });
+            
+            return false;
+        },
+        getProject: function() {
+            if (window.location.hostname.indexOf('skillz') != -1) {
+                url = '/skillzhs';
+            }
+            else if (window.location.hostname.indexOf('unicon') != -1) {
+                url = '/uniconhs';
+            }
+            else if (window.location.hostname.indexOf('bnb') != -1) {
+                url = '/bnb';
+            }
+            else if (window.location.hostname.indexOf('pcesports') != -1) {
+                if (window.location.href.indexOf('skillz') != -1) {
+                    url = '/skillzhs';
+                }
+                else if (window.location.href.indexOf('unicon') != -1) {
+                    url = '/uniconhs';
+                }
+                else if (window.location.href.indexOf('bnb') != -1) {
+                    url = '/bnb';
+                }
+            }
+            
+            if (url) {
+                return url;
+            }
+            
+            console.log('Your website is not allowed to use Pentaclick eSports widget');
+            return false;
+        },
+        getPlatform: function() {
+            if (window.location.href.indexOf('dev') != -1) {
+                platform = 'http://dev.';
+            }
+            else if (window.location.href.indexOf('test') != -1) {
+                platform = 'http://test.';
+            }
+            else {
+                platform = 'https://www.';
+            }
+            
+            return platform;
         },
         fetchFrameMessage: function(event) {
             var data = '';

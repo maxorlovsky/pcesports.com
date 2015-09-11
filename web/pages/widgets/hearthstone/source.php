@@ -1,97 +1,75 @@
 <?php
 
-class bnb extends System
+class hearthstone extends System
 {
-    public $tournamentData;
-	public $teamsPlaces;
-    public $allowedGames;
-    public $project = 'bnb';
+    public $participant;
+    public $participants;
+    public $regIsOpen = 0;
+    public $paymentNeeded = 1;
+    public $project = 'skillz';
     
 	public function __construct($params = array()) {
         parent::__construct();
-        
-        $this->allowedGames = array('hearthstone');//leagueoflegends
-	}
-    
-    public function getTournamentList() {
-		/*$rows = Db::fetchRows('SELECT * FROM `tournamentsExternal` WHERE '.
-            '`project` = "'.$this->project.'" '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
-            'ORDER BY `id` DESC '
+
+        $this->heroes = array(
+            1 => 'warrior',
+            2 => 'hunter',
+            3 => 'mage',
+            4 => 'warlock',
+            5 => 'shaman',
+            6 => 'rogue',
+            7 => 'druid',
+            8 => 'paladin',
+            9 => 'priest',
         );
-        
-        if ($rows) {
-            foreach($rows as $v) {
-                $startTime = strtotime($v->dates_start.' '.$v->time);
-                $regTime = strtotime($v->dates_registration.' '.$v->time);
-                $time = $regTime;
-                
-                if ($v->server) {
-                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
-                    $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
-                    $checkReg = $this->data->settings['tournament-reg-'.$v->game.'-'.$v->server];
-                }
-                else {
-                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game];
-                    $checkLive = $this->data->settings['tournament-start-'.$v->game];
-                    $checkReg = $this->data->settings['tournament-reg-'.$v->game];
-                }
-                
-                if ($checkInStatus == 1) {
-                    $v->status = t('check_in');
-                    $time = $startTime;
-                }
-                else if ($checkLive == 1) {
-                    $v->status = t('live');
-                    $time = $startTime;
-                }
-                else if ($checkReg == 1) {
-                    $v->status = t('registration');
-                }
-                else if ($v->status == 'Ended') {
-                    $v->status = t('ended');
-                }
-                else {
-                    $v->status = t('upcoming');
-                }
-                
-                if ($v->game == 'lol') {
-                    $link = 'leagueoflegends/'.$v->server;
-                }
-                else if ($v->game == 'hs') {
-                    $link = 'hearthstone';
-                }
-                else if ($v->game == 'smite') {
-                    $link = 'smite/'.$v->server;
-                }
-                
-                $this->tournamentData[] = array(
-                    'id'	=> $v->name,
-                    'server'=> $v->server,
-                    'game'  => $v->game,
-                    'name' 	=> $v->name,
-                    'status'=> $v->status,
-                    'max_num'=> $v->max_num,
-                    'prize' => $v->prize,
-                    'dates_start'=> $v->dates_start,
-                    'link'  => $link,
-                );
-            }
-        }*/
 	}
 	
 	public function showTemplate() {
-        if (isset($_GET['val2']) && in_array($_GET['val2'], $this->allowedGames)) {
-            include_once _cfg('widgets').'/'.$_GET['val2'].'/source.php';
-            
-            $game = new $_GET['val2'];
-            $game->showTemplate();
+        $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
+            'FROM `participants_external` '.
+            'WHERE `project` = "'.$this->project.'" AND '.
+            '`deleted` = 0 '.
+            'ORDER BY `id` ASC'
+        );
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
         }
-        else {
-            include_once _cfg('widgets').'/'.$this->project.'/index.tpl';
+        $this->participants = $rows;
+        unset($v);
+        
+        if (isset($_GET['val3']) && $_GET['val3'] && isset($_GET['val4']) && $_GET['val4']) {
+            //Might be a participant
+            $row = Db::fetchRow(
+                'SELECT * FROM `participants_external` '.
+                'WHERE `id` = '.(int)$_GET['val3'].' AND '.
+                '`link` = "'.Db::escape($_GET['val4']).'" AND '.
+                '`deleted` = 0 '.
+                'LIMIT 1'
+            );
+            if ($row) {
+                if (isset($_GET['val5']) && $_GET['val5'] == 'leave') {
+                    Db::query(
+                        'UPDATE `participants_external` SET '.
+                        '`deleted` = 1, '.
+                        '`update_timestamp` = NOW() '.
+                        'WHERE `id` = '.(int)$row->id.' AND '.
+                        '`deleted` = 0 AND '.
+                        '`project` = "'.$this->project.'" '
+                    );
+                }
+                else {
+                    $this->participant = $row;
+                    $this->participant->contact_info = json_decode($this->participant->contact_info);
+                }
+            }
         }
+        
+        if ($this->participant && $this->regIsOpen == 1) {
+            include_once _cfg('widgets').'/'.get_class().'/participant.tpl';
+        }
+        include_once _cfg('widgets').'/'.get_class().'/index.tpl';
 	}
     
     public function editInTournament($data) {
