@@ -113,6 +113,8 @@
             return false;
         },
         getPlatform: function() {
+            var platform;
+            
             if (window.location.href.indexOf('dev') != -1) {
                 platform = 'http://dev.';
             }
