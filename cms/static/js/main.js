@@ -433,7 +433,7 @@ var TM = {
         TM.ajax(query);
     },
     checkCustomAccess: function() {
-        if ($('#level').val() === 0) {
+        if ($('#level').val() == '0') {
             $('.customAccess').show();
         }
         else {
