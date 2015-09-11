@@ -97,6 +97,7 @@ $cfg['smtpMailPass'] = 'zwAt!&JfA!MU!YE&gArw';
 $cfg['smtpMailFrom'] = 'Pentaclick eSports';*/
 
 $cfg['href'] = $cfg['site'].'/%lang%';
+$cfg['widget'] = $cfg['site'].'/widget';
 $cfg['hssite'] = '/hearthstone';
 $cfg['lolsite'] = '/league';
 

@@ -14,8 +14,8 @@ class bnb extends System
 	}
     
     public function getTournamentList() {
-		/*$rows = Db::fetchRows('SELECT * FROM `tournamentsExternal` WHERE '.
-            '`project` = "'.$this->project.'" '.
+		$rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
+            //'`project` = "'.$this->project.'" '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
             '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
@@ -63,9 +63,6 @@ class bnb extends System
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone';
                 }
-                else if ($v->game == 'smite') {
-                    $link = 'smite/'.$v->server;
-                }
                 
                 $this->tournamentData[] = array(
                     'id'	=> $v->name,
@@ -79,7 +76,7 @@ class bnb extends System
                     'link'  => $link,
                 );
             }
-        }*/
+        }
 	}
 	
 	public function showTemplate() {
