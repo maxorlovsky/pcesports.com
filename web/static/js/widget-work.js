@@ -28,6 +28,7 @@
             url = this.getPlatform() + 'pcesports.com/widget' + project;
             
             var game = this.getGame();
+            console.log(game);
             if (game !== false) {
                 url += '/' + game;
                 
@@ -74,6 +75,8 @@
         },
         getGame: function() {
             jQuery.each(this.games, function(key, value) {
+                console.log(value);
+                console.log(window.location.href.indexOf(value));
                 if (window.location.href.indexOf(value) != -1) {
                     return value;
                 }
