@@ -16,9 +16,10 @@ class bnb extends System
     public function getTournamentList() {
 		$rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             //'`project` = "'.$this->project.'" '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
-            '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
+            '(`game` = "lol" AND `name` = 1 AND `server` = "euw") OR '.
+            //'(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
+            //'(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
+            '(`game` = "hs" AND `name` = 1 AND `server` = "s1") '.
             'ORDER BY `id` DESC '
         );
         

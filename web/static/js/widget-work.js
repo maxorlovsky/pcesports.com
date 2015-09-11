@@ -28,7 +28,6 @@
             url = this.getPlatform() + 'pcesports.com/widget' + project;
             
             var game = this.getGame();
-            console.log(game);
             if (game !== false) {
                 url += '/' + game;
                 
