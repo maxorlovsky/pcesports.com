@@ -27,23 +27,12 @@
             
             url = this.getPlatform() + 'pcesports.com/widget' + project;
             
-            var game = this.getGame();
+            game = this.getGame();
             if (game !== false) {
                 url += '/' + game;
                 
-                if (window.location.href.indexOf('participant') != -1) {
-                    breakdownGlobal = window.location.href.split('&');
-                    delete breakdownGlobal[0];
-                    jQuery.each(breakdownGlobal, function(k, v) {
-                        if (v != undefined) {
-                            breakdown = v.split('=');
-                            if (breakdown[1] != undefined) {
-                                get[breakdown[0]] = breakdown[1];
-                            }
-                        }
-                    });
-                    url += '/participant/'+get.participant+'/'+get.link;
-                }
+                //var breakdownGlobal = window.location.href.split('&');
+                //this.getAdditionalInformation(breakdownGlobal);
             }
 
             if (widgetElement.length <= 0) {
@@ -71,6 +60,20 @@
             } else {
                 window.attachEvent("onmessage", widget.fetchFrameMessage);
             }
+        },
+        getAdditionalInformation: function(breakdownGlobal) {
+            /*if (window.location.href.indexOf('participant') != -1) {
+                delete breakdownGlobal[0];
+                jQuery.each(breakdownGlobal, function(k, v) {
+                    if (v != undefined) {
+                        breakdown = v.split('=');
+                        if (breakdown[1] != undefined) {
+                            get[breakdown[0]] = breakdown[1];
+                        }
+                    }
+                });
+                url += '/participant/'+get.participant+'/'+get.link;
+            }*/
         },
         getGame: function() {
             var foundGame = false;

@@ -88,6 +88,8 @@ class bnb extends System
             $game->showTemplate();
         }
         else {
+            $this->getTournamentList();
+            
             include_once _cfg('widgets').'/'.$this->project.'/index.tpl';
         }
 	}
