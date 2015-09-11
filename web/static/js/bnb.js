@@ -1,4 +1,4 @@
-var SZ = {
+var BB = {
     //global insides
     site: g.site,
     formInProgress: 0, //used when required to check if form is still in progress
@@ -40,7 +40,7 @@ var SZ = {
                     checkHeight = parseInt($('.chat-content').prop('scrollHeight'));
                     
                     currentContent = $('.chat-content').html().replace(/&lt;/g, '&#60;').replace(/&gt;/g, '&#62;').replace(/&amp;/g, '&');
-                    if (escape(SZ.stripTags(currentContent)) != escape(SZ.stripTags(answer[1])) && SZ.chatStart == 1) {
+                    if (escape(BB.stripTags(currentContent)) != escape(BB.stripTags(answer[1])) && BB.chatStart == 1) {
                         //$('#ping').play();
                         document.getElementById('ping').play();
                         
@@ -51,15 +51,15 @@ var SZ = {
                         }
                     }
 
-                    if (SZ.chatStart != 1) {
-                        SZ.chatStart = 1;
+                    if (BB.chatStart != 1) {
+                        BB.chatStart = 1;
                         $('.chat-content').html(answer[1]);
                         $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
                     }
                 }
             }
         }
-        SZ.ajax(query);
+        BB.ajax(query);
     },
     checkIn: function(game) {
         if (this.formInProgress == 1) {
@@ -79,7 +79,7 @@ var SZ = {
                 link: $('#link').val()
             },
             success: function(data) {
-                SZ.formInProgress = 0;
+                BB.formInProgress = 0;
                 $(this).removeClass('alpha');
                 answer = data.split(';');
                 
@@ -122,7 +122,7 @@ var SZ = {
                     $('#opponentStatus').removeClass('online offline');
                     $('#opponentName').removeClass('not-none');
                     
-                    $('#opponentSec').html(SZ.checkTimer);
+                    $('#opponentSec').html(BB.checkTimer);
                     
                     $('#opponentName').addClass((answer[1]!='none'?'not-none':''));
                     $('#opponentStatus').addClass(answer[2]);
@@ -187,7 +187,7 @@ var SZ = {
             },
             success: function(answer) {
                 $('#edit-in-tournament').removeClass('alpha');
-                SZ.formInProgress = 0;
+                BB.formInProgress = 0;
                 
                 $.each(answer.err, function(k, v) {
                     answ = v.split(';');
@@ -207,7 +207,7 @@ var SZ = {
             },
             error: function() {
                 $('#edit-in-tournament').removeClass('alpha');
-                SZ.formInProgress = 0;
+                BB.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@skillz.lv');
             }
@@ -233,7 +233,7 @@ var SZ = {
             },
             success: function(answer) {
                 $('#register-in-tournament').removeClass('alpha');
-                SZ.formInProgress = 0;
+                BB.formInProgress = 0;
                 
                 if (answer.ok == 1) {
                     $('#register-url a').trigger('click');
@@ -258,7 +258,7 @@ var SZ = {
             },
             error: function() {
                 $('#register-in-tournament').removeClass('alpha');
-                SZ.formInProgress = 0;
+                BB.formInProgress = 0;
                 
                 alert('Something went wrong... Contact admin at info@skillz.lv');
             }
@@ -329,7 +329,7 @@ $('.chat-input').on('click', function() {
 });
 
 $('#chatSound').on('click', function() {
-    SZ.sound($(this));
+    BB.sound($(this));
 });
 
 $('#chat-input').on('keyup', function(e) {
@@ -363,18 +363,18 @@ $('#chat-input').on('keyup', function(e) {
                 }
             }
         }
-        SZ.ajax(query);
+        BB.ajax(query);
     }
 });
 
 $('#register-in-tournament').on('click', function() {
-    SZ.addParticipant();
+    BB.addParticipant();
 });
 $('#edit-in-tournament').on('click', function() {
-    SZ.editParticipant();
+    BB.editParticipant();
 });
 $('#check-in-tournament').on('click', function() {
-    SZ.checkIn();
+    BB.checkIn();
 });
 $('.confirm').on('click', function() {
     if(confirm($(this).attr('attr-msg'))) {
@@ -383,7 +383,7 @@ $('.confirm').on('click', function() {
     return false;
 });
 
-setInterval(function(){SZ.sendFrameMessage($('body').height());}, 200);
+setInterval(function(){BB.sendFrameMessage($('body').height());}, 200);
 
 if ($('.participants.isotope-participants .block').length > 0) {
     $('.participants.isotope-participants').isotope({
@@ -412,9 +412,9 @@ $(document).on('mousemove', '.hint', function(event) {
 
 if (participant == 1) {
     document.getElementById('ping').volume = 0.2;
-    SZ.fetchChat();
-    SZ.statusCheck();
-    setInterval(function () { SZ.fetchChat(); }, 5000);
-    setInterval(function () { SZ.statusCheck(); }, 15000);
-    setInterval(function () { SZ.statusCheckTimer(); }, 1000);
+    BB.fetchChat();
+    BB.statusCheck();
+    setInterval(function () { BB.fetchChat(); }, 5000);
+    setInterval(function () { BB.statusCheck(); }, 15000);
+    setInterval(function () { BB.statusCheckTimer(); }, 1000);
 }
