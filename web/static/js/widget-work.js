@@ -82,6 +82,8 @@
             return false;
         },
         getProject: function() {
+            var url;
+            
             if (window.location.hostname.indexOf('skillz') != -1) {
                 url = '/skillzhs';
             }
