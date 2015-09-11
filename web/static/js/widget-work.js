@@ -98,9 +98,7 @@ if (window.jQuery) {
             return false;
         }
         
-        console.log(event);
         if (event.data) {
-            console.log(event.data);
             data = event.data.split('=');
             if (data[0] == 'height') {
                 $('#pce-widget').find('iframe').height(data[1]);
