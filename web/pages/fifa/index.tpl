@@ -65,6 +65,7 @@
             <div class="tournament-rules">
                 <div style="text-align: center; width: 385px;"><img style="width: 300px;" src="<?=_cfg('img')?>/fifa-2015.jpg" /></div>
                 <p>Spēļes iestatījumi: Periods 6 min.</p>
+                <p>Konsole: PlayStation 3.</p>
                 <p>Trāvmas izslēgti.</p>
                 <p>Prize pool: 1 vieta 50% no iemaksas +20 euro. 2 vieta 30% no iemaksas + 10 euro. 3. vieta 10% no iemaksas + 5 euro.</p>
                 <p>Konts reģistrācijas apmaksai: Swedbank LV45HABA0551033763452 Ņikita Mihailovs</p>
