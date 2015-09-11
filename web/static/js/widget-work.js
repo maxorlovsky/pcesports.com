@@ -91,10 +91,13 @@ if (window.jQuery) {
     });
 
     function fetchFrameMessage(event) {
+        var data = '';
+        
         if (!event) {
             console.log('No event data sent');
             return false;
         }
+        
         console.log(event);
         if (event.data) {
             console.log(event.data);
