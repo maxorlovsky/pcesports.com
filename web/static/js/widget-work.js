@@ -74,15 +74,16 @@
             }
         },
         getGame: function() {
+            var foundGame = false;
+            
             jQuery.each(this.games, function(key, value) {
-                console.log(value);
-                console.log(window.location.href.indexOf(value));
                 if (window.location.href.indexOf(value) != -1) {
-                    return value;
+                    foundGame = value;
+                    return;
                 }
             });
             
-            return false;
+            return foundGame;
         },
         getProject: function() {
             var url;
