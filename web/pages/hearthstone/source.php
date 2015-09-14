@@ -160,18 +160,8 @@ class hearthstone extends System
 			'AND `game` = "hs" '.
 			'AND `id` = '.$row->id
 		);
-        
-        $subscribeRow = Db::fetchRow(
-            'SELECT * FROM `subscribe` WHERE '.
-            '`email` = "'.Db::escape($row->email).'" '
-        );
-        
-        if (!$subscribeRow) {
-            Db::query('INSERT INTO `subscribe` SET '.
-                '`email` = "'.Db::escape($row->email).'", '.
-                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
-            );
-        }
+
+        User::subscribe($data['email']);
         
         //Cleaning up duplicates
         Db::query('UPDATE `participants` '.

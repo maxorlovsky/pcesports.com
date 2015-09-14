@@ -113,17 +113,7 @@ class fifa extends System
 	    		'`link` = "'.$code.'"'
     		);
 
-            $subscribeRow = Db::fetchRow(
-                'SELECT * FROM `subscribe` WHERE '.
-                '`email` = "'.Db::escape($post['email']).'" '
-            );
-            
-            if (!$subscribeRow) {
-                Db::query('INSERT INTO `subscribe` SET '.
-                    '`email` = "'.Db::escape($post['email']).'", '.
-                    '`unsublink` = "'.sha1(Db::escape($post['email']).rand(0,9999).time()).'"'
-                );
-            }
+            User::subscribe($data['email']);
     		
             $text = Template::getMailTemplate('reg-player-fifa');
         

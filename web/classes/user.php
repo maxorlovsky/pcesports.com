@@ -178,18 +178,8 @@ class User extends System
             '`password` = "social" '
         );
         $uid = Db::lastId();
-        
-        $subscribeRow = Db::fetchRow(
-            'SELECT * FROM `subscribe` WHERE '.
-            '`email` = "'.Db::escape($data['email']).'" '
-        );
-        
-        if (!$subscribeRow && $data['email']) {
-            Db::query('INSERT INTO `subscribe` SET '.
-                '`email` = "'.Db::escape($data['email']).'", '.
-                '`unsublink` = "'.sha1(Db::escape($data['email']).rand(0,9999).time()).'"'
-            );
-        }
+
+        User::subscribe($data['email']);
         
         return $this->getUser($uid);
     }
@@ -285,16 +275,7 @@ class User extends System
 
         User::token();
 
-        $subscribeRow = Db::fetchRow(
-            'SELECT * FROM `subscribe` WHERE '.
-            '`email` = "'.Db::escape($row->email).'" '
-        );
-        if (!$subscribeRow && $row->email) {
-            Db::query('INSERT INTO `subscribe` SET '.
-                '`email` = "'.Db::escape($row->email).'", '.
-                '`unsublink` = "'.sha1(Db::escape($row->email).rand(0,9999).time()).'"'
-            );
-        }
+        User::subscribe($row->email);
 
         Db::query('DELETE FROM `users_temp` WHERE `code` = "'.Db::escape($code).'" LIMIT 1');
         
@@ -583,35 +564,6 @@ class User extends System
             'WHERE `id` = '.(int)$user->id
         );
         
-        /*$subscribeRow = Db::fetchRow(
-            'SELECT * FROM `subscribe` WHERE '.
-            '`email` = "'.Db::escape($form['email']).'" '
-        );
-        
-        if (!$subscribeRow && $form['email']) {
-            Db::query('INSERT INTO `subscribe` SET '.
-                '`email` = "'.Db::escape($form['email']).'", '.
-                '`unsublink` = "'.sha1(Db::escape($form['email']).rand(0,9999).time()).'"'
-            );
-        }
-        else if ($form['email'] && !isset($form['subscribe']) || $form['subscribe'] == 'none' || !$form['subscribe']) {
-            Db::query(
-                'UPDATE `subscribe` SET '.
-                '`removed` = 1 '.
-                'WHERE `email` = "'.Db::escape($form['email']).'" '.
-                'LIMIT 1'
-            );
-        }
-        else if ($form['email']) {
-            Db::query(
-                'UPDATE `subscribe` SET '.
-                '`removed` = 0, '.
-                '`theme` = "'.Db::escape($form['subscribe']).'" '.
-                'WHERE `email` = "'.Db::escape($form['email']).'" '.
-                'LIMIT 1'
-            );
-        }*/
-        
         //Getting fresh updated data
         $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
             'FROM `users` AS `u` '.
@@ -620,6 +572,29 @@ class User extends System
         );
     	
     	$_SESSION['user'] = (array)$row;
+
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($_SESSION['user']['email']).'" '
+        );
+        
+        if ($_SESSION['user']['email'] && !isset($form['subscribe']) || $form['subscribe'] == 'none' || !$form['subscribe']) {
+            Db::query(
+                'UPDATE `subscribe` SET '.
+                '`removed` = 1 '.
+                'WHERE `email` = "'.Db::escape($_SESSION['user']['email']).'" '.
+                'LIMIT 1'
+            );
+        }
+        else if ($_SESSION['user']['email']) {
+            Db::query(
+                'UPDATE `subscribe` SET '.
+                '`removed` = 0, '.
+                '`theme` = "'.Db::escape($form['subscribe']).'" '.
+                'WHERE `email` = "'.Db::escape($_SESSION['user']['email']).'" '.
+                'LIMIT 1'
+            );
+        }
         
         return '1;'.t('success_profile_update');
     }
@@ -684,10 +659,26 @@ class User extends System
         Db::query(
             'UPDATE `users` '.
             'SET `email` = "'.Db::escape($row->additional).'" '.
-            'WHERE `id` = '.$user->id.' '.
-            'LIMIT 1'
+            'WHERE `id` = '.(int)$user->id.' '.
+            'LIMIT 1 '
         );
         Db::query('DELETE FROM `users_links` WHERE `id` = '.(int)$row->id.' LIMIT 1');
+
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($user->email).'" '.
+            'LIMIT 1 '
+        );
+
+        if ($subscribeRow) {
+            Db::query('DELETE FROM `subscribe` WHERE `id` = '.(int)$subscribeRow->id.' LIMIT 1');
+        }
+        
+        Db::query('INSERT INTO `subscribe` SET '.
+            '`email` = "'.Db::escape($row->additional).'", '.
+            '`unsublink` = "'.sha1(Db::escape($row->additional).rand(0,9999).time()).'", '.
+            '`theme` = "'.Db::escape($subscribeRow->theme).'" '
+        );
 
         return true;
     }
@@ -732,5 +723,23 @@ class User extends System
         $_SESSION['user'] = (array)$row;
         
         return '1;'.t('success_password_update');
+    }
+
+    public static function subscribe($email) {
+        $subscribeRow = Db::fetchRow(
+            'SELECT * FROM `subscribe` WHERE '.
+            '`email` = "'.Db::escape($email).'" '
+        );
+        
+        if (!$subscribeRow && $email) {
+            Db::query('INSERT INTO `subscribe` SET '.
+                '`email` = "'.Db::escape($email).'", '.
+                '`unsublink` = "'.sha1(Db::escape($email).rand(0,9999).time()).'"'
+            );
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -5,7 +5,7 @@
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('profile')?></h1>
         </div>
-        <form class="block-content contact-form profile">
+        <form class="block-content contact-form profile" name="profile" novalidate>
             <? if ($regComplete == 1) { ?>
                 <div class="success-add registration-complete"><?=t('registration_success')?></div>
             <? } else if ($mailChange == 1) { ?>
@@ -67,7 +67,6 @@
                     <option value="all"><?=t('all')?></option>
                     <option value="lol"><?=t('only_about_lol')?></option>
                     <option value="hs"><?=t('only_about_hs')?></option>
-                    <option value="smite"><?=t('only_about_smite')?></option>
                     <option value="none"><?=t('turn_off')?></option>
                 </select>
             </div>
@@ -85,7 +84,7 @@
         <div class="block-header-wrapper">
             <h1><?=t('update_email')?></h1>
         </div>
-        <form class="block-content contact-form update-email">
+        <form class="block-content contact-form update-email" name="updateEmail" novalidate>
             <div id="success"><p></p></div>
             <div id="error"><p></p></div>
             
@@ -112,7 +111,7 @@
         <div class="block-header-wrapper">
             <h1><?=t('update_password')?></h1>
         </div>
-        <form class="block-content contact-form update-password">
+        <form class="block-content contact-form update-password" name="updatePassword" novalidate>
             <div id="success"><p></p></div>
             <div id="error"><p></p></div>
             
