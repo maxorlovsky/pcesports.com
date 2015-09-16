@@ -35,13 +35,18 @@ class Emails extends System
         }
         
         $type = '(';
-        if ($form['query']) {
+        if ($form['query'] && $form['query'] != 'none') {
             $type .= Db::escape('`theme` = "'.$form['query'].'" OR ');
         }
-        if ($form['all']) {
-            $type .= Db::escape('`theme` = "all" OR ');
+        if ($form['all'] == 1) {
+            $type .= ' '.Db::escape('`theme` = "all" OR ');
         }
+
         $type = substr($type, 0, -3);
+
+        if (!$type) {
+            return '0;Nobody to send to';
+        }
         $type .= ')';
 
         Db::query(

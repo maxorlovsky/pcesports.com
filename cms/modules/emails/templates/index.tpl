@@ -23,7 +23,7 @@
                 <option value="<?=$v?>"><?=$v?></option>
                 <? } ?>
             </select>
-            <input type="checkbox" name="all" id="all" checked="checked" /> <label for="all">Include "All"</label>
+            <input type="checkbox" name="all" id="all" checked="checked" value="1" /> <label for="all">Include "All"</label>
         </td>
     </tr>
     <tr>
@@ -69,6 +69,15 @@ function updateText() {
 
 $('#template').on('change', function() {
     updateText();
+});
+
+$('#all').on('click', function() {
+    if ($(this).is(':checked') === true) {
+        $(this).val(1);
+    }
+    else {
+        $(this).val(0);
+    }
 });
 
 updateText();
