@@ -65,7 +65,7 @@
             </div>
             <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
 
-            <a class="button {{buttonLogin}}" ng-submit="login();"><?=t('login')?></a>
+            <button class="button {{buttonLogin}}" ng-submit="login();"><?=t('login')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="showRestore();"><?=t('forgot_password')?>?</a>
