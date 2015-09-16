@@ -475,8 +475,7 @@ class User extends System
         }
         
         $row = Db::fetchRow('SELECT COUNT(`id`) AS `count` FROM `users_social` WHERE `user_id` = '.(int)$user->id);
-        
-        if ($row->count <= 1) {
+        if ($row->count <= 1 && $user->password == 'social') {
             return t('trying_to_delete_last_social');
         }
         
