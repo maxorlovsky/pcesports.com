@@ -10,7 +10,7 @@
 	        <? if ($this->expired === 1) { ?>
 	        	<div>Sorry, link does not exist or expired. Usually it happens if link wasn't used in 24h, use form again to generate new link.</div>
 	        <? } else { ?>
-	        <form class="form restore-password-form" name="form">
+	        <form class="form restore-password-form" name="form" ng-submit="restore();">
 	            <div id="ngError" ng-show="error"><p>{{error}}</p></div>
 	            
 	            <div class="fields">
@@ -45,7 +45,7 @@
                 	<div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
             	</div>
 
-	            <button class="button {{button}}" ng-click="restore();"><?=t('set_new_password')?></button>
+	            <button class="button {{button}}"><?=t('set_new_password')?></button>
 	        </form>
 	        <? } ?>
         </div>

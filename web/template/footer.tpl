@@ -73,7 +73,7 @@
             </div>
         </form>
 
-        <form class="form" name="registrationForm">
+        <form class="form" name="registrationForm" ng-submit="register();">
             <h1>Pentaclick <?=t('registration')?></h1>
             <div id="ngError" ng-show="errorRegistration"><p>{{errorRegistration}}</p></div>
             <div class="success-add" ng-show="successRegistration"><p>{{successRegistration}}</p></div>
@@ -95,14 +95,14 @@
                 <div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
             </div>
 
-            <button class="button {{buttonRegistration}}" ng-click="register();"><?=t('register')?></button>
+            <button class="button {{buttonRegistration}}"><?=t('register')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
             </div>
         </form>
 
-        <form class="form" name="restoreForm">
+        <form class="form" name="restoreForm" ng-submit="restore();">
             <h1>Pentaclick <?=t('password_restoration')?></h1>
             <div id="ngError" ng-show="errorRestore"><p>{{errorRestore}}</p></div>
             <div class="success-add" ng-show="successRestore"><p>{{successRestore}}</p></div>
@@ -113,7 +113,7 @@
             </div>
             <div id="ngError" ng-show="restoreForm.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
 
-            <button class="button {{buttonRestore}}" ng-click="restore();"><?=t('restore_password')?></button>
+            <button class="button {{buttonRestore}}"><?=t('restore_password')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="backStep();"><?=t('back_to_login')?></a>
