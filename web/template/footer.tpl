@@ -48,7 +48,7 @@
 <div class="hidden popup" id="login-window">
     <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
         
-        <form class="form" name="loginForm">
+        <form class="form" name="loginForm" ng-submit="login();">
             <h1>Pentaclick <?=t('login')?></h1>
             <div id="ngError" ng-show="errorLogin"><p>{{errorLogin}}</p></div>
             
@@ -65,7 +65,7 @@
             </div>
             <div id="ngError" ng-show="loginForm.password.$error.required && loginForm.password.$touched"><p><?=t('password_empty')?></p></div>
 
-            <button class="button {{buttonLogin}}" ng-submit="login();"><?=t('login')?></button>
+            <button class="button {{buttonLogin}}"><?=t('login')?></button>
 
             <div class="pass-reg-links">
                 <a href="" class="left-part-link" ng-click="showRestore();"><?=t('forgot_password')?>?</a>
