@@ -34,20 +34,20 @@ class Emails extends System
             return '0;Text is empty';
         }
         
-        $type = '(';
-        if ($form['query'] && $form['query'] != 'none') {
-            $type .= Db::escape('`theme` = "'.$form['query'].'" OR ');
+        if ($form['query'] != 'none') { 
+            $type = '(';
+            if ($form['query']) {
+                $type .= Db::escape('`theme` = "'.$form['query'].'" OR ');
+            }
+            if ($form['all'] == 1) {
+                $type .= ' '.Db::escape('`theme` = "all" OR ');
+            }
+            $type = substr($type, 0, -3);
+            $type .= ')';
         }
-        if ($form['all'] == 1) {
-            $type .= ' '.Db::escape('`theme` = "all" OR ');
+        else {
+            $type = '';
         }
-
-        $type = substr($type, 0, -3);
-
-        if (!$type) {
-            return '0;Nobody to send to';
-        }
-        $type .= ')';
 
         Db::query(
             'INSERT INTO `subscribe_sender` SET '.

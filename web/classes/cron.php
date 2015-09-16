@@ -19,7 +19,12 @@ class Cron extends System {
             return false;
         }
 
-        $query = 'SELECT `email`, `unsublink` FROM `subscribe` WHERE '.$row->type.' AND `removed` = 0 LIMIT '.$row->emails.','.$limit;
+        $where = '';
+        if ($row->type != '') {
+            $where = $row->type.' AND ';
+        }
+
+        $query = 'SELECT `email`, `unsublink` FROM `subscribe` WHERE '.$where.' `removed` = 0 LIMIT '.$row->emails.','.$limit;
 
         $rows = Db::fetchRows($query);
 
