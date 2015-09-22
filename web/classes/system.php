@@ -190,33 +190,13 @@ class System
             asort($this->serverTimes);
         }
 
-        $where = '';
-        if ($this->data->settings['tournament-start-hs'] == 1) {
-            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' ';
-        }
-        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-            $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
-        }
-
-        if ($where) {
-            $this->streams = Db::fetchRows(
-                'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
-                'FROM `streams_events` '.
-                'WHERE '.
-                $where.
-                'ORDER BY `viewers` DESC '.
-                'LIMIT 5'
-            );
-        }
-        else {
-            $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` FROM `streams` '.
-                'WHERE `online` >= '.(time() - 360).' AND '.
-                '`approved` = 1 AND '.
-                '`game` != "lolcup" '.
-                'ORDER BY `featured` DESC, `viewers` DESC '.
-                'LIMIT 5'
-            );
-        }
+        $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` FROM `streams` '.
+            'WHERE `online` >= '.(time() - 360).' AND '.
+            '`approved` = 1 AND '.
+            '`game` != "lolcup" '.
+            'ORDER BY `featured` DESC, `viewers` DESC '.
+            'LIMIT 5'
+        );
 
 
         //Boards

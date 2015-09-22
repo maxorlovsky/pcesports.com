@@ -201,22 +201,6 @@ class Cron extends System {
                 );
             }
         }
-
-        $rows = Db::fetchRows('SELECT * FROM `streams_events`');
-        
-        foreach($rows as $v) {
-            $twitch = $this->runTwitchAPI($v->name);
-            
-            if ($twitch['stream'] != NULL) {
-                Db::query(
-                    'UPDATE `streams_events` '.
-                    'SET `online` = '.time().', '.
-                    '`viewers` = '.(int)$twitch['stream']['viewers'].', '.
-                    '`display_name` = "'.Db::escape($twitch['stream']['channel']['display_name']).'" '.
-                    'WHERE `id` = '.(int)$v->id
-                );
-            }
-        }
     }
 
     private function convertGame($game) {
@@ -1101,13 +1085,6 @@ class Cron extends System {
                     );
                 }
             }
-
-            //Removing event stream
-            Db::query(
-                'DELETE FROM `streams_events` '.
-                'WHERE `tournament_id` = "'.Db::escape($row->name).'" AND '.
-                '`game` = "'.Db::escape($row->game).'" '
-            );
             
             //Removing tournament start
             Db::query(

@@ -19,24 +19,6 @@ class home extends System
             //array('http://www.pcesports.com/en/blog/29', _cfg('img').'/poster-grandfinals.jpg'),
 			//array('http://www.pcesports.com/en/blog/27', _cfg('img').'/poster-vacation.jpg'),
 		);
-
-        $where = '';
-        if ($this->data->settings['tournament-start-hs'] == 1) {
-            $where .= '`game` = "hs" AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' ';
-        }
-        if ($this->data->settings['tournament-start-lol-euw'] == 1 || $this->data->settings['tournament-start-lol-eune'] == 1) {
-            $where .= '`game` = "lol" AND (`tournament_id` = '.(int)$this->data->settings['lol-current-number-euw'].' OR `tournament_id` = '.(int)$this->data->settings['lol-current-number-eune'].') ';
-        }
-
-        if ($where) {
-            $eventStreams = Db::fetchRows(
-                'SELECT `id`, `name`, `display_name`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, 1 AS `event`, `name` AS `link` '.
-                'FROM `streams_events` '.
-                'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
-                $where.
-                'ORDER BY `viewers` DESC '
-            );
-        }
         
         $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` '.
             'FROM `streams` '.
@@ -46,13 +28,6 @@ class home extends System
             'ORDER BY `viewers` DESC '
         );
 
-        if ($eventStreams && $this->streams) {
-            $this->streams = (object)array_merge((array)$eventStreams, (array)$this->streams);
-        }
-        else if ($eventStreams) {
-            $this->streams = (object)$eventStreams;
-        }
-        
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.

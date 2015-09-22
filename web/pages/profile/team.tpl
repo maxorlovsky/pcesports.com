@@ -23,7 +23,7 @@
                 <div class="small"><?=t('team_tag_explanation')?></div>
             </div>
             <div id="ngError" ng-show="form.tag.$error.required && form.tag.$touched"><p><?=t('team_tag_is_empty')?></p></div>
-            <div id="ngError" ng-show="form.tag.$error.minlength"><p><?=t('team_tag_is_too_small_or_big')?></p></div>
+            <div id="ngError" ng-show="form.tag.$error.minlength"><p><?=t('team_tag_is_too_small_or_big')?></p></div> <!-- stopped here -->
             <div id="ngError" ng-show="form.tag.$error.maxlength"><p><?=t('team_tag_is_too_small_or_big')?></p></div>
             <div id="ngError" ng-show="form.tag.$error.pattern"><p><?=t('team_tag_have_forbidden_letters')?></p></div>
 

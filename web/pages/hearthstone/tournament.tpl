@@ -62,12 +62,6 @@
                             <div class="message hidden"></div>
                         </div>
                     <? } ?>
-
-                    <div class="form-item" data-label="stream">
-                        <input type="text" name="stream" class="hint" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" attr-msg="<?=t('stream_tournament_hint_hs')?>" />
-					    <div class="message hidden"></div>
-					</div>
-
                     
                     <? for ($i=1;$i<=4;++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">

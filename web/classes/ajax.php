@@ -1025,22 +1025,7 @@ class Ajax extends System
                 }
             }
         }
-        
-        $addStream = 0;
-        if ($post['stream']) {
-            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
-            
-            $twitch = $this->runTwitchAPI($post['stream']);
-            
-            if (!$twitch) {
-                $err['stream'] = '0;'.t('channel_not_found');
-            }
-            else {
-                $addStream = 1;
-                $suc['stream'] = '1;'.t('approved');
-            }
-        }
-        
+                
     	if ($err) {
     		$answer['ok'] = 0;
     		if ($suc) {
@@ -1081,17 +1066,6 @@ class Ajax extends System
 				);
 			}
             
-            if ($addStream == 1) {
-                Db::query(
-                    'INSERT INTO `streams_events` SET '.
-                    '`user_id`  = '.(int)$this->data->user->id.', '.
-                    '`participant_id` = '.(int)$teamId.', '.
-                    ' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-                    '`game` = "lol", '.
-                    '`name` = "'.Db::escape($post['stream']).'" '
-                );
-            }
-    		
     		$text = Template::getMailTemplate('reg-lol-team');
     	
     		$text = str_replace(

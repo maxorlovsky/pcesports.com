@@ -394,21 +394,6 @@ class hearthstone extends System
         if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
             $err['hero2'] = '0;'.t('same_hero_picked');
         }
-        
-        $addStream = 0;
-        if ($post['stream']) {
-            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
-            
-            $twitch = $this->runTwitchAPI($post['stream']);
-            
-            if (!$twitch) {
-                $err['stream'] = '0;'.t('channel_not_found');
-            }
-            else {
-                $addStream = 1;
-                $suc['stream'] = '1;'.t('approved');
-            }
-        }
     	
     	if ($err) {
     		$answer['ok'] = 0;
@@ -452,18 +437,7 @@ class hearthstone extends System
     			' `name` = "'.Db::escape($post['battletag']).'", '.
     			' `player_num` = 1'
     		);
-            
-            if ($addStream == 1) {
-                Db::query(
-                    'INSERT INTO `streams_events` SET '.
-                    '`user_id`  = '.(int)$this->data->user->id.', '.
-                    '`participant_id` = '.(int)$teamId.', '.
-                    ' `tournament_id` = '.(int)$this->data->settings['hs-current-number'].', '.
-                    '`game` = "hs", '.
-                    '`name` = "'.Db::escape($post['stream']).'" '
-                );
-            }
-    		
+                		
             //Only sending email to not reggistered user
             if (!$this->logged_in) {
         		$text = Template::getMailTemplate('reg-hs-player');
