@@ -78,12 +78,12 @@ class home extends System
                         $name = 'Europe West';
                     }
                     $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 1;
+                    $v->priority = 2;
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League Season 2';
-                    $v->priority = 2;
+                    $v->priority = 1;
                 }
                 /*else if ($v->game == 'smite') {
                     $link = 'smite/'.$v->server.'/'.$v->name;
