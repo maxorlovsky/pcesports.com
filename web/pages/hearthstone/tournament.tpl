@@ -63,7 +63,7 @@
                         </div>
                     <? } ?>
                     
-                    <? for ($i=1;$i<=4;++$i) { ?>
+                    <? for ($i=1;$i<=3;++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">
                         <select class="hero<?=$i?>" name="hero<?=$i?>">
                             <option value="0"><?=t('pick_hero')?></option>
@@ -421,11 +421,10 @@
 var heroes = {
     1: 0,
     2: 0,
-    3: 0,
-    4: 0    
+    3: 0
 };
 
-$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
+$('.hero1, .hero2, .hero3').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();

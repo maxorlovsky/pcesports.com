@@ -1064,7 +1064,7 @@ var PC = {
                 else if (answer.ok == 2) {
                     var link = '';
                     if (game == 'HS') {
-                        link = 'hearthstone/s1/participant/';
+                        link = 'hearthstone/s2/participant/';
                     }
                     location.href = g.site+'/en/'+link;
                 }

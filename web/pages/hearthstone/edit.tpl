@@ -18,7 +18,7 @@
                         </div>
                     <? } ?>
                     
-                    <? for ($i=1;$i<=4;++$i) { ?>
+                    <? for ($i=1;$i<=3;++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">
                         <select class="hero<?=$i?>" name="hero<?=$i?>">
                             <? foreach($this->heroes as $k => $v) {
@@ -33,7 +33,7 @@
                     
                     <div class="heroes-images">
                         <h6><?=t('your_classes')?></h6>
-                        <? for ($i=1;$i<=4;++$i) { ?>
+                        <? for ($i=1;$i<=3;++$i) { ?>
                         <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
                         <? } ?>
                     </div>
@@ -51,7 +51,7 @@ $('#edit-in-tournament').on('click', function() {
     PC.editParticipant('HS');
 });
 
-$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
+$('.hero1, .hero2, .hero3').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
@@ -69,5 +69,5 @@ $('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     }
 });
 
-$('.hero1, .hero2, .hero3, .hero4').trigger('change');
+$('.hero1, .hero2, .hero3').trigger('change');
 </script>

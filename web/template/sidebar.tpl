@@ -29,24 +29,6 @@
             </ul>
 			<? } ?>
 
-
-            <? if ($_SESSION['participant']->game == 'smite') { ?>
-            <ul class="panel-links <?=$_SESSION['participant']->game?>">
-                <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
-                <? if ($this->data->settings['tournament-start-smite-'.$_SESSION['participant']->server] != 1) {?>
-                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
-                <? } ?>
-				<? if ($this->data->settings['tournament-start-smite-'.$_SESSION['participant']->server] == 1) {?>
-                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
-				<? } else { ?>
-                    <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/leave" class="confirm" attr-msg="<?=t('sure_to_leave')?>"><?=t('leave_tournament')?></a></li>
-				<? } ?>
-                <? if (!$this->logged_in) { ?>
-                <li><a href="<?=_cfg('href')?>/smite/<?=$_SESSION['participant']->server?>/participant/exit"><?=t('exit_panel')?></a></li>
-                <? } ?>
-            </ul>
-			<? } ?>
-
             <? if ($_SESSION['participant']->game == 'lol') { ?>
 			<ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
@@ -100,6 +82,10 @@
         ?>
     </div>
     <? } ?>
+
+    <div class="block">
+        <img style="width: 320px;" src="<?=_cfg('img')?>/fifa-2015.jpg" />
+    </div>
     
     <div class="block streamers">
         <div class="block-header-wrapper">

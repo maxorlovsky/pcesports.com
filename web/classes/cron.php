@@ -1042,11 +1042,29 @@ class Cron extends System {
             foreach($rows as $v) {
                 if (strtotime($v->dates_registration.' '.$v->time) <= time()) {
                     //Opening up registration!
-                    Db::query('UPDATE `tm_settings` SET '.
-                        '`value` = 1 '.
-                        'WHERE '.
-                        '`setting` = "tournament-reg-'.$v->game.($v->server?'-'.Db::escape($v->server):null).'"'
+
+                    $row = Db::fetchRow('SELECT * '.
+                        'FROM `tm_settings` '.
+                        'WHERE `setting` = "tournament-reg-'.$v->game.($v->server?'-'.Db::escape($v->server):null).'" '.
+                        'LIMIT 1 '
                     );
+                    if ($row) {
+                        Db::query('UPDATE `tm_settings` SET '.
+                            '`value` = 1 '.
+                            'WHERE '.
+                            '`setting` = "tournament-reg-'.$v->game.($v->server?'-'.Db::escape($v->server):null).'" '.
+                            'LIMIT 1 '
+                        );
+                    }
+                    else {
+                        Db::query('UPDATE `tm_settings` SET '.
+                            '`value` = 1 '.
+                            'WHERE '.
+                            '`setting` = "tournament-reg-'.$v->game.'" '.
+                            'LIMIT 1 '
+                        );
+                    }
+
                     Db::query('UPDATE `tournaments` SET '.
                         '`reg_activated` = 1 '.
                         'WHERE '.
