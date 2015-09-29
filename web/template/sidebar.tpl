@@ -84,7 +84,9 @@
     <? } ?>
 
     <div class="block">
-        <img style="width: 320px;" src="<?=_cfg('img')?>/fifa-2015.jpg" />
+        <a href="<?=_cfg('href')?>/fifa">
+            <img style="width: 320px;" src="<?=_cfg('img')?>/fifa-2015.jpg" />
+        </a>
     </div>
     
     <div class="block streamers">
