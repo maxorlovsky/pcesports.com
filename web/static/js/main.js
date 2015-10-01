@@ -1,3 +1,7 @@
+if( window.canRunAds === undefined ){
+    $('.survive').show();
+}
+
 $('.burger').on('click', function() {
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');

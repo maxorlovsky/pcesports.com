@@ -28,8 +28,8 @@
     <div class="clear"></div>
     
     <div class="copyrights">
-        <p class="rights">© <?=date('Y', time())?> Pentaclick eSports.</p>
-        <div href="http://www.maxorlovsky.net" target="_blank" class="devs social">
+        <p class="rights">© <?=date('Y', time())?> <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>. All rights reserved.</p>
+        <div class="devs social">
             <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
             <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
             <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>

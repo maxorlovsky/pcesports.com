@@ -186,7 +186,9 @@
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero1])?>"></div>
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero2])?>"></div>
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero3])?>"></div>
+                                        <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
                                         <div class="hsicons-small <?=$this->heroes[$p->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$p->contact_info->hero4])?>"></div>
+                                        <? } ?>
                                     </div>
                                     <span class="player-score">
                                         <?=(isset($p->contact_info->place)&&$p->contact_info->place?$p->contact_info->place:0)?>
@@ -247,7 +249,9 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? } ?>
                             </div>
                         </a>
                     </div>
@@ -263,7 +267,9 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? } ?>
                         </div>
                     </div>
                     <?
@@ -306,7 +312,9 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? } ?>
                             </div>
                         </a>
                     </div>
@@ -322,7 +330,9 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? } ?>
                         </div>
                     </div>
                     <?
@@ -363,7 +373,9 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                    <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                                <? } ?>
                             </div>
                         </a>
                     </div>
@@ -379,7 +391,9 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? if isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
+                            <? } ?>
                         </div>
                     </div>
                     <?

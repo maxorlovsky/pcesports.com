@@ -163,7 +163,7 @@
                                     if (is_int($k2)) {
                                     ?>
                                     <li>
-                                        <a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
+                                        <a href="http://<?=$this->server?>.op.gg/summoner/?userName=<?=$v2['player']?>" target="_blank">
                                             <?=$v2['player']?>
                                         </a>
                                     </li><?
@@ -212,7 +212,7 @@
                                     if (is_int($k2)) {
                                     ?>
                                     <li>
-                                        <a href="http://www.lolking.net/summoner/<?=$this->server?>/<?=$v2['player_id']?>" target="_blank">
+                                        <a href="http://<?=$this->server?>.op.gg/summoner/?userName=<?=$v2['player']?>" target="_blank">
                                             <?=$v2['player']?>
                                         </a>
                                     </li><?

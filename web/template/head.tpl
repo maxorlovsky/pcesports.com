@@ -22,6 +22,8 @@
 </head>
 <body>
 
+<script src="<?=_cfg('static')?>/js/ads.js"></script>
+
 <script src="<?=_cfg('static')?>/js/angular.js"></script>
 <script src="<?=_cfg('static')?>/js/angular-resource.min.js"></script>
 <script src="<?=_cfg('static')?>/js/angular-combined.js?v=1.1"></script>
@@ -114,7 +116,11 @@ hs.dimmingOpacity = 0.8;
         </ul>
         
     <? } else { ?>
-        <div class="login"><?=t('login_register')?><div class="usericon"></div></div>
+        <div class="login">
+            <span><?=t('login_register')?></span>
+            <span class="mobile"><?=t('login')?></span>
+            <div class="usericon"></div>
+        </div>
     <? } ?>
     
     <nav>

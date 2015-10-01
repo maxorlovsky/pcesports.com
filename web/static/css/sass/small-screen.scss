@@ -17,6 +17,7 @@
         color: #fff;
         margin: 9px 10px 0 10px;
         transition: .5s;
+        line-height: 50px;
         &.active {
             transform: rotate(90deg);
         }
@@ -433,11 +434,13 @@
             float: initial;
             padding-top: 55px;
             .nav {
+                width: 100%;
                 margin: 0;
                 .nav-link {
                     float: initial;
                     height: auto;
                     line-height: 35px;
+                    border-top: 1px solid #373737;
                     a {
                         padding: 5px 0 0 35px;
                     }
@@ -457,6 +460,14 @@
                         top: 5px;
                     }
                 }
+            }
+        }
+        .login {
+            span {
+                display: none;
+            }
+            .mobile {
+                display: inline-block;
             }
         }
     }
@@ -537,35 +548,94 @@
     .right-containers .block {
         margin-bottom: 10px;
     }
-    footer .separator {
-        width: 100% !important;
-        margin: 0 0 10px 0;
-        float: none;
-    }
-    footer .partners a {
-        position: initial !important;
-        left: initial !important;
-    }
-    footer .copyrights {
-        margin: 0;
-        padding: 0;
-    }
-    footer .copyrights .rights, footer .copyrights .devs {
-        margin: 3px 0 0 5px;
-        float: none;
+    footer {
+        .separator {
+            width: 100% !important;
+            margin: 0 0 10px 0;
+            float: none;
+        }
+        .partners a {
+            position: initial !important;
+            left: initial !important;
+        }
+        .copyrights {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            .rights,
+            .devs {
+                margin: 3px 0 0 5px;
+                float: none;
+            }
+        }
+        .comments {
+            margin: 0;
+            .thread {
+                max-width: 310px;
+                overflow: hidden;
+            }
+        }
     }
     #login-window {
         width: 300px;
+        .button {
+            width: 273px;
+        }
+        .form {
+            .fields {
+                input {
+                    width: 160px;
+                }
+            }
+        }
+        .pass-reg-links {
+            .register-link {
+                margin-right: 0;
+            }
+        }
+        #ngError {
+            width: 270px;
+        }
     }
-    .contact-form .fields input {
-        width: 165px;
+    .tournament {
+        .block-content {
+            #join-form {
+                width: 100% !important;
+                float: none !important;
+                border-bottom: 1px solid #888;
+            }
+            .tournament-rules {
+                width: 100% !important;
+                float: none !important;
+                img {
+                    display: none;
+                }
+            }
+            &.signup::after {
+                border-left: 0 !important;
+            }
+        }
     }
-    .contact-form .fields select {
-        width: 175px;
-    }
-    .contact-form .fields textarea {
-        width: 155px;
-        height: 150px;
+    .contact-form {
+        .fields {
+            input {
+                width: 165px;
+            }
+            select {
+                width: 175px;
+            }
+            textarea {
+                width: 155px;
+                height: 150px;
+            }
+        }
+        .button {
+            margin-left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 16px;
+        }
     }
     .lol .title {
         width: auto;
@@ -649,7 +719,19 @@
 
     .participants {
         .block {
-            margin: 20px 30px 0 40px;
+            margin: 0 0 10px 0;
+            box-sizing: border-box;
+            width: 280px;
+        }
+        .team-name {
+            width: 220px;
+        }
+    }
+
+    .places {
+        .second,
+        .third {
+            display: none;
         }
     }
 
@@ -663,6 +745,14 @@
         .submit {
             width: 290px;
         }
+        .board {
+            .thread {
+                .text {
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+            }
+        }
     }
 
     .submitBoard {
@@ -671,6 +761,17 @@
         }
         .categories div {
             margin-right: 5px;
+        }
+    }
+
+    .users-list {
+        .cell2,
+        .cell3,
+        .cell4 {
+            display: none !important;
+        }
+        .cell5 {
+            width: 115px;
         }
     }
 }
