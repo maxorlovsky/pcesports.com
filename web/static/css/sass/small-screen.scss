@@ -18,6 +18,9 @@
             transform: rotate(90deg);
         }
     }
+    .twitch {
+        display: none;
+    }
 
     header {
         position: relative !important;
@@ -100,6 +103,20 @@
             line-height: 55px;
         }
     }
+    
+    footer {
+        .boards {
+            .thread {
+                max-width: 230px;
+                overflow: hidden;
+            }
+            .board {
+                .category {
+                    margin: 0 2px 0 0;
+                }
+            }
+        }
+    }
 
     .page {
         min-width: inherit;
@@ -158,11 +175,30 @@
             width: 100%;
         }
     }
-}
-
-@media (max-width: 859px) {
-    .twitch {
-        display: none;
+    
+    .boards,
+    .submitBoard {
+        .leave-comment {
+            .formatting {
+                width: 100%;
+            }
+            textarea {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        #submitBoard {
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 22px;
+        }
+    }
+    
+    .users-list {
+        .cell5 {
+            display: none !important;
+        }
     }
 }
 
