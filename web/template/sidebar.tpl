@@ -158,7 +158,7 @@
             </script>
 		</div>
         <div class="survive block-content">
-            We detected that you might use AdBlock. You might not know, that Pentaclick eSports is running completely out of our pockets and small advertisment revenue that we get. You would be a project saviour and helped us a lot, if you added our website to your adblock whitelist. Thank you.
+            We detected that you might use AdBlock. You might not know, that Pentaclick eSports is running completely out of our pockets and small advertisement revenue that we get. You would be a project savior and helped us a lot, if you added our website to your adblock whitelist. Thank you.
         </div>
     </div>
     <? } ?>
