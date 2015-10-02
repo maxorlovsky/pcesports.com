@@ -105,11 +105,11 @@
     }
     
     footer {
+        .thread {
+            max-width: 230px;
+            overflow: hidden;
+        }
         .boards {
-            .thread {
-                max-width: 230px;
-                overflow: hidden;
-            }
             .board {
                 .category {
                     margin: 0 2px 0 0;
