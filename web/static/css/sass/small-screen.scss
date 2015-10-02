@@ -108,14 +108,23 @@
         width: 100%;
     }
 
-    .left-containers, .right-containers {
+    .left-containers {
         float: none;
         min-width: inherit;
         width: auto;
         max-width: 860px;
     }
     .right-containers {
+        float: none;
         margin-top: 10px;
+        > .block {
+            float: left;
+        }
+        &::after {
+            display: block;
+            content: ' ';
+            clear: both;
+        }
     }
 
     .donate {
