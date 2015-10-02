@@ -5,11 +5,14 @@ class ParticipantsHs
 	public $participants = array();
     public $currentTournament;
     public $groups;
+    public $season;
     
 	function __construct($params = array()) {
 		$this->system = $params['system'];
         
-        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hs-current-number-s1"');
+        $this->season = 's2';
+        
+        $row = Db::fetchRow('SELECT `value` FROM `tm_settings` WHERE `setting` = "hs-current-number"');
         $this->currentTournament = $row->value;
         
         //Enable/disable
@@ -23,7 +26,7 @@ class ParticipantsHs
             'SELECT `id`, `name`, `email`, `verified` '.
             'FROM `participants` '.
             'WHERE `game` = "hs" AND '.
-            '`server` = "s1" AND '.
+            '`server` = "'.$this->season.'" AND '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`deleted` = 0 AND '.
             '`ended` = 0 '.
@@ -38,7 +41,7 @@ class ParticipantsHs
     	$row = Db::fetchRow(
             'SELECT `name`, `verified` FROM `participants` '.
             'WHERE `id` = '.$id.' AND '.
-            '`server` = "s1" AND '.
+            '`server` = "'.$this->season.'" AND '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "hs" '.
             'LIMIT 1'
@@ -53,7 +56,7 @@ class ParticipantsHs
             'UPDATE `participants` '.
             'SET `verified` = '.$enable.' '.
             'WHERE `id` = '.$id.' AND '.
-            '`server` = "s1" AND '.
+            '`server` = "'.$this->season.'" AND '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
             '`game` = "hs" '.
             'LIMIT 1'
