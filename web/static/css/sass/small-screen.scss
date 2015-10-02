@@ -462,6 +462,12 @@
                 }
             }
         }
+        .nav-user {
+            min-height: 50px;
+            li a {
+                padding: 10px 8px;
+            }
+        }
         .login {
             span {
                 display: none;
@@ -603,6 +609,11 @@
                 width: 100% !important;
                 float: none !important;
                 border-bottom: 1px solid #888;
+                input[type="text"],
+                select,
+                textarea {
+                    width: 98%;
+                }
             }
             .tournament-rules {
                 width: 100% !important;
@@ -610,9 +621,23 @@
                 img {
                     display: none;
                 }
+                a {
+                    width: 49%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                }
             }
             &.signup::after {
                 border-left: 0 !important;
+            }
+            &.tournament-rules {
+                a {
+                    width: 98%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                }
             }
         }
     }
