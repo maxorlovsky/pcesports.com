@@ -54,10 +54,12 @@
                 display: none;
             }
             .nav {
+                width: 100%;
                 .nav-link {
                     height: auto;
                     line-height: 50px;
                     float: none;
+                    border-top: 1px solid #373737;
                     &:before {
                         top: 0;
                     }
@@ -76,9 +78,10 @@
         }
 
         .nav-user {
+            min-height: auto;
             margin: 0;
             li a {
-                padding: 20px 8px;
+                padding: 10px 8px;
             }
             .nav-avatar {
                 height: 55px;
