@@ -119,11 +119,21 @@
         margin-top: 10px;
         > .block {
             float: left;
+            width: 316px;
+            margin-right: 15px;
         }
         &::after {
             display: block;
             content: ' ';
             clear: both;
+        }
+    }
+    
+    .home {
+        .home-tournaments {
+            .hss2 {
+                width: 100%;
+            }
         }
     }
 
