@@ -477,6 +477,19 @@
             }
         }
     }
+    
+    .navbar {
+        .nav-sub {
+            display: block !important;
+            position: initial;
+            left: initial;
+            top: initial;
+            background: 0;
+            .nav-sublink {
+                border-bottom: 0;
+            }
+        }
+    }
 
     .home-tournaments {
         .parent {
@@ -497,6 +510,9 @@
             min-height: 30px;
             h1 {
                 padding: 5px;
+                &.bordered {
+                    border-radius: 0;
+                }
             }
         }
     }
@@ -639,6 +655,35 @@
                     display: inline-block;
                 }
             }
+            
+            .title {
+                width: auto;
+                white-space: initial;
+                img {
+                    display: none;
+                }
+            }
+            .right-part,
+            .left-part,
+            .mid-part {
+                float: none;
+                font-size: 15px;
+            }
+            .mid-part {
+                display: none;
+            }
+            .right-part {
+                .status {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                }
+            }
+            &.ended-tournament,
+            &.active-tournament {
+                position: relative;
+                padding: 5px !important;
+            }
         }
     }
     .contact-form {
@@ -662,39 +707,7 @@
             font-size: 16px;
         }
     }
-    .lol .title {
-        width: auto;
-        white-space: initial;
-    }
-    .lol .title img {
-        display: none;
-    }
-    .lol .right-part, .lol .left-part, .lol .mid-part {
-        float: none;
-        font-size: 15px;
-    }
-    .lol .mid-part {
-        display: none;
-    }
-    .ended-tournament, .active-tournament {
-        position: relative;
-        padding: 5px !important;
-    }
-    .lol .right-part .status {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-    }
-    .navbar .nav-sub {
-        display: block !important;
-        position: initial;
-        left: initial;
-        top: initial;
-        background: 0;
-    }
-    .navbar .nav-sub .nav-sublink {
-        border-bottom: 0;
-    }
+
     .comments {
         margin: 0 10px;
     }
