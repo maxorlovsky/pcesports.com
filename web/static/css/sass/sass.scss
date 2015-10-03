@@ -1599,16 +1599,16 @@ footer {
             margin-top: 3px;
             font-family: 'PT Sans', Arial, Helvetica, sans-serif;
         }
-    }
-    &.hoverable {
-        .team-name {
-            transition: .3s;
-            color: #1697e1;
-        }
-        &:hover {
-            background-color: #87888f;
+        &.hoverable {
             .team-name {
-                color: #444;
+                transition: .3s;
+                color: #1697e1;
+            }
+            &:hover {
+                background-color: #87888f;
+                .team-name {
+                    color: #444;
+                }
             }
         }
     }
