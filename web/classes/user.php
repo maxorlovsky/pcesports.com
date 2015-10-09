@@ -5,24 +5,50 @@ class User extends System
 		
 	}
     
-    public static function passwordConvert($password) {
-        $salt = 'adoj29!@#!1dj019@*&#!2j';
+    public static function passwordConvert($password, $old = 0) {
+        //Deprecated method of hash, not safe
+        if ($old === 1) {
+            $salt = 'adoj29!@#!1dj019@*&#!2j';
         
-        return sha1(base64_encode($password.$salt));
+            $returnPassword = sha1(base64_encode($password.$salt));
+        }
+        //By default using modern approach of password encryption
+        else {
+            $returnPassword = password_hash($password, PASSWORD_BCRYPT);
+        }
+        
+        return $returnPassword;
+    }
+    
+    public static function passwordVerify($password, $hash) {
+        if (password_verify($password, $hash)) {
+            return true;
+        }
+        
+        return false;
     }
     
     public static function login($email, $password) {
         $error = array();
         $object = new stdClass();
         
+        //Check for old password first
         $row = Db::fetchRow('SELECT * '.
             'FROM `users` '.
-            'WHERE `email` = "'.Db::escape($email).'" AND '.
-            '`password` = "'.User::passwordConvert($password).'" '.
+            'WHERE `email` = "'.Db::escape($email).'" '.
             'LIMIT 1'
         );
         
+        //Email found, need to do the password checking
         if ($row) {
+            //BCrypt password hash checking
+            //and then old sha1 password check
+            if (User::passwordVerify($password, $row->password) === false && User::passwordConvert($password, 0) != $row->password) {
+                $s = new System();
+                return $s->errorLogin();
+            }
+            
+            //One of authentications worked, logging in user
             $_SESSION['user'] = (array)$row;
             self::token();
             if ($_SESSION['user']['id']) {
@@ -30,6 +56,7 @@ class User extends System
             }
         }
         else {
+            //Add additional layer of bcrypt password check
             $s = new System();
             return $s->errorLogin();
         }
@@ -612,8 +639,7 @@ class User extends System
             return '0;'.t('why_change_same_mail');
         }
 
-        $password = User::passwordConvert($form['password']);
-        if ($user->password != 'social' && $user->password != $password) {
+        if ($user->password != 'social' && ($user->password != User::passwordConvert($form['password'], 1) && User::passwordVerify($form['password'], $user->password) === false) ) {
             return '0;'.t('current_password_is_incorrect');
         }
 
@@ -700,9 +726,7 @@ class User extends System
             return '0;'.t('password_not_match');
         }
 
-        $password = User::passwordConvert($form['password']);
-
-        if ($user->password != 'social' && $user->password != $password) {
+        if ($user->password != 'social' && ( $user->password != User::passwordConvert($form['password'], 1) && User::passwordVerify($form['password'], $user->password) === false ) ) {
             return '0;'.t('current_password_is_incorrect');
         }
         
