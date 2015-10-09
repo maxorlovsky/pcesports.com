@@ -43,7 +43,7 @@ class User extends System
         if ($row) {
             //BCrypt password hash checking
             //and then old sha1 password check
-            if (User::passwordVerify($password, $row->password) === false && User::passwordConvert($password, 0) != $row->password) {
+            if (User::passwordVerify($password, $row->password) === false && User::passwordConvert($password, 1) != $row->password) {
                 $s = new System();
                 return $s->errorLogin();
             }
