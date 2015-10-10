@@ -31,10 +31,10 @@
         </div>
 
         <div class="block-content team-list">
-            <a class="team-division leagueoflegends" href="<?=_cfg('href')?>/pentaclick/leagueoflegends">
+            <?/*<a class="team-division leagueoflegends" href="<?=_cfg('href')?>/pentaclick/leagueoflegends">
                 <div class="name">EUNE <?=t('division')?></div>
             </a>
-            <?/*
+            
             <a class="team-division hearthstone" href="<?=_cfg('href')?>/team/hearthstone">
                 <div class="name"><?=t('division')?></div>
             </a>

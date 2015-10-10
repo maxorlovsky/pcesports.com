@@ -1288,14 +1288,8 @@ class Cron extends System {
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 1 '.
             'WHERE '.
-            '`setting` = "tournament-checkin-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
-        );
-
-        //For HS, no server required
-        Db::query('UPDATE `tm_settings` SET '.
-            '`value` = 1 '.
-            'WHERE '.
-            '`setting` = "tournament-checkin-'.$tournament->game.'"'
+            '`setting` = "tournament-checkin-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
+            '`setting` = "tournament-checkin-'.$tournament->game.'" '
         );
         
         return true;
@@ -1306,24 +1300,32 @@ class Cron extends System {
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 0 '.
             'WHERE '.
-            '`setting` = "tournament-reg-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+            '`setting` = "tournament-reg-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
+            '`setting` = "tournament-reg-'.$tournament->game.'" '
         );
         
         //Disabling check in!
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 0 '.
             'WHERE '.
-            '`setting` = "tournament-checkin-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+            '`setting` = "tournament-checkin-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '
+            '`setting` = "tournament-checkin-'.$tournament->game.'" '
         );
         
         //Starting up tournament
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 1 '.
             'WHERE '.
-            '`setting` = "tournament-start-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
+            '`setting` = "tournament-start-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '
+            '`setting` = "tournament-start-'.$tournament->game.'"'
         );
         
-        $challongeTournament = $tournament->game.$tournament->server.$this->data->settings[$tournament->game.'-current-number-'.$tournament->server];
+        if ($tournament->game == 'hs') {
+            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings[$tournament->game.'-current-number'];
+        }
+        else {
+            $challongeTournament = $tournament->game.$tournament->server.$this->data->settings[$tournament->game.'-current-number-'.$tournament->server];
+        }
         
         
         //Reshuffle tournament
@@ -1360,17 +1362,31 @@ class Cron extends System {
             $this->runChallongeAPI('tournaments/pentaclick-test1/start.post', $apiArray);
         }
 
-        //Cleaning up not checked in participants. So they would see "check in" button.
-        Db::query(
-            'UPDATE `participants` SET '.
-            '`ended` = 1 '.
-            'WHERE `game` = "'.$tournament->game.'" AND '.
-            '`server` = "'.$tournament->server.'" AND '.
-            '`tournament_id` = "'.$this->data->settings[$tournament->game.'-current-number-'.$tournament->server].'" AND '.
-            '`approved` = 1 AND '.
-            '`deleted` = 0 AND '.
-            '`checked_in` = 0 '
-        );
+        //Cleaning up not checked in participants. So they would not see "check in" button.
+        if ($tournament->game == 'hs') {
+            Db::query(
+                'UPDATE `participants` SET '.
+                '`ended` = 1 '.
+                'WHERE `game` = "'.$tournament->game.'" AND '.
+                '`server` = "'.$tournament->server.'" AND '.
+                '`tournament_id` = "'.$this->data->settings[$tournament->game.'-current-number'].'" AND '.
+                '`approved` = 1 AND '.
+                '`deleted` = 0 AND '.
+                '`checked_in` = 0 '
+            );
+        }
+        else {
+            Db::query(
+                'UPDATE `participants` SET '.
+                '`ended` = 1 '.
+                'WHERE `game` = "'.$tournament->game.'" AND '.
+                '`server` = "'.$tournament->server.'" AND '.
+                '`tournament_id` = "'.$this->data->settings[$tournament->game.'-current-number-'.$tournament->server].'" AND '.
+                '`approved` = 1 AND '.
+                '`deleted` = 0 AND '.
+                '`checked_in` = 0 '
+            );
+        }
         
         Db::query('UPDATE `notifications` SET '.
             '`delivered` = 0 '.
