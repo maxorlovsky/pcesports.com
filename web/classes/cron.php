@@ -1043,12 +1043,14 @@ class Cron extends System {
                 if (strtotime($v->dates_registration.' '.$v->time) <= time()) {
                     //Opening up registration!
 
+                    //Checking if setting exist with server
                     $row = Db::fetchRow('SELECT * '.
                         'FROM `tm_settings` '.
-                        'WHERE `setting` = "tournament-reg-'.$v->game.($v->server?'-'.Db::escape($v->server):null).'" '.
+                        'WHERE `setting` = "tournament-reg-'.$v->game.'-'.Db::escape($v->server).'" '.
                         'LIMIT 1 '
                     );
                     if ($row) {
+                        //Have server
                         Db::query('UPDATE `tm_settings` SET '.
                             '`value` = 1 '.
                             'WHERE '.
@@ -1057,6 +1059,7 @@ class Cron extends System {
                         );
                     }
                     else {
+                        //Dont have server
                         Db::query('UPDATE `tm_settings` SET '.
                             '`value` = 1 '.
                             'WHERE '.

@@ -40,17 +40,17 @@ class home extends System
                 $regTime = strtotime($v->dates_registration.' '.$v->time);
                 $time = $regTime;
 
-                if ($v->server) {
-                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
-                    $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
-                    $checkReg = $this->data->settings['tournament-reg-'.$v->game.'-'.$v->server];
-                }
-                else {
+                if ($v->game == 'hs') {
                     $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game];
                     $checkLive = $this->data->settings['tournament-start-'.$v->game];
                     $checkReg = $this->data->settings['tournament-reg-'.$v->game];
                 }
-                
+                else {
+                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
+                    $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
+                    $checkReg = $this->data->settings['tournament-reg-'.$v->game.'-'.$v->server];
+                }
+
                 if ($checkInStatus == 1) {
                     $v->status = t('check_in');
                     $time = $startTime;
