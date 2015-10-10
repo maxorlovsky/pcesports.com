@@ -1308,7 +1308,7 @@ class Cron extends System {
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 0 '.
             'WHERE '.
-            '`setting` = "tournament-checkin-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '
+            '`setting` = "tournament-checkin-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
             '`setting` = "tournament-checkin-'.$tournament->game.'" '
         );
         
@@ -1316,7 +1316,7 @@ class Cron extends System {
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 1 '.
             'WHERE '.
-            '`setting` = "tournament-start-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '
+            '`setting` = "tournament-start-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
             '`setting` = "tournament-start-'.$tournament->game.'"'
         );
         
