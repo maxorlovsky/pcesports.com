@@ -1290,6 +1290,13 @@ class Cron extends System {
             'WHERE '.
             '`setting` = "tournament-checkin-'.$tournament->game.($tournament->server?'-'.Db::escape($tournament->server):null).'"'
         );
+
+        //For HS, no server required
+        Db::query('UPDATE `tm_settings` SET '.
+            '`value` = 1 '.
+            'WHERE '.
+            '`setting` = "tournament-checkin-'.$tournament->game.'"'
+        );
         
         return true;
     }
