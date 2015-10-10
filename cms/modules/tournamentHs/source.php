@@ -11,11 +11,11 @@ class TournamentHs
 	function __construct($params = array()) {
 		$this->system = $params['system'];
         
-        $this->server = 's1';
+        $this->server = 's2';
         
         $rows = Db::fetchRows('SELECT * '.
 			'FROM `tm_settings` '.
-			'WHERE `setting` = "hs-current-number-s1" '
+			'WHERE `setting` = "hs-current-number" '
 		);
         
         foreach($rows as $v) {
@@ -101,7 +101,7 @@ class TournamentHs
             return '0;Match already ended';
         }
         
-        if (!in_array($server, array('s1'))) {
+        if (!in_array($server, array('s1', 's2'))) {
             return '0;Server error';
         }
         
@@ -113,7 +113,7 @@ class TournamentHs
         );
         
         if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-hs'.$server.$this->config['hs-current-number-'.$server].'/matches/'.$matchId.'.put', $apiArray);
+            $this->runChallongeAPI('tournaments/pentaclick-hs'.$server.$this->config['hs-current-number'].'/matches/'.$matchId.'.put', $apiArray);
         }
         else {
             $this->runChallongeAPI('tournaments/pentaclick-test1/matches/'.$matchId.'.put', $apiArray);
