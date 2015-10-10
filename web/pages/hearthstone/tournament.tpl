@@ -482,16 +482,27 @@ challongeHeight = 550;
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
     
-        
-    $('#challonge').challonge('<?=($this->pickedTournament<6?'hl1_'.$this->pickedTournament:'hs'.$this->server.$this->pickedTournament)?>', {
-        subdomain: 'pentaclick',
-        theme: '1',
-        multiplier: '1.0',
-        match_width_multiplier: '0.7',
-        show_final_results: '0',
-        show_standings: '0',
-        overflow: '0'
-    });
+    <? if ($this->server == 's2') { ?>
+        $('#challonge').challonge('hs<?=$this->server.$this->pickedTournament?>', {
+            subdomain: 'pentaclick',
+            theme: '1',
+            multiplier: '1.0',
+            match_width_multiplier: '0.7',
+            show_final_results: '0',
+            show_standings: '0',
+            overflow: '0'
+        });
+    <? } else { ?>
+        $('#challonge').challonge('<?=($this->pickedTournament<6?'hl1_'.$this->pickedTournament:'hs'.$this->server.$this->pickedTournament)?>', {
+            subdomain: 'pentaclick',
+            theme: '1',
+            multiplier: '1.0',
+            match_width_multiplier: '0.7',
+            show_final_results: '0',
+            show_standings: '0',
+            overflow: '0'
+        });
+    <? } ?>
 }
 </script>
 
