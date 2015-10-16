@@ -121,8 +121,7 @@ class pentaclick extends system
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
-            '`id` = 864 OR '. //ovy
-            '`id` = 760 ' //Veipper
+            '`id` = 864 '. //ovy
         );
         
         $this->team = array(
@@ -131,7 +130,7 @@ class pentaclick extends system
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/MaxOrlovsky',
                     'tw' => 'https://twitter.com/PCEMaxtream',
-                    'tv' => 'http://www.twitch.tv/pentaclick_tv',
+                    'tv' => 'http://www.twitch.tv/maxtream',
                 )
             ),
             44 => array(
@@ -151,15 +150,7 @@ class pentaclick extends system
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/ovidijus.parsiunas',
                 )
-            ),
-            760 => array(
-                'role' => 'LoL EUW Admin',
-                'socials' => array(
-                    'fb' => 'http://www.facebook.com/Veipper',
-                    'tw' => 'http://twitter.com/Ve1pper',
-                    'tv' => 'http://www.twitch.tv/ve1pper',
-                )
-            ),
+            )
         );
         
         if ($rows) {
