@@ -208,7 +208,7 @@ class System
                 $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
             }
             
-            $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
+            $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`text`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
                 'FROM `boards` AS `b` '.
                 $additionalSql.
                 'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
