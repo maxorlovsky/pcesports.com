@@ -31,8 +31,8 @@
             if (game !== false) {
                 url += '/' + game;
                 
-                //var breakdownGlobal = window.location.href.split('&');
-                //this.getAdditionalInformation(breakdownGlobal);
+                var breakdownGlobal = window.location.href.split('&');
+                url += this.getAdditionalInformation(breakdownGlobal);
             }
 
             if (widgetElement.length <= 0) {
@@ -62,18 +62,33 @@
             }
         },
         getAdditionalInformation: function(breakdownGlobal) {
-            /*if (window.location.href.indexOf('participant') != -1) {
-                delete breakdownGlobal[0];
-                jQuery.each(breakdownGlobal, function(k, v) {
-                    if (v != undefined) {
-                        breakdown = v.split('=');
-                        if (breakdown[1] != undefined) {
-                            get[breakdown[0]] = breakdown[1];
-                        }
+            var url = '';
+            var breakdown;
+            var get = {};
+            delete breakdownGlobal[0];
+
+            if (!breakdownGlobal[1]) {
+                return '';
+            }
+            
+            jQuery.each(breakdownGlobal, function(k, v) {
+                if (v != undefined) {
+                    breakdown = v.split('=');
+                    if (breakdown[1] != undefined) {
+                        get[breakdown[0]] = breakdown[1];
                     }
-                });
-                url += '/participant/'+get.participant+'/'+get.link;
-            }*/
+                }
+            });
+
+            if (window.location.href.indexOf('tournamentId') != -1) {
+                url += '/'+get.tournamentId;
+            }
+
+            if (window.location.href.indexOf('participant') != -1) {
+                url += '/'+get.participant+'/'+get.link;
+            }
+
+            return url;
         },
         getGame: function() {
             var foundGame = false;

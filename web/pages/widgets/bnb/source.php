@@ -10,7 +10,7 @@ class bnb extends System
 	public function __construct($params = array()) {
         parent::__construct();
         
-        $this->allowedGames = array('leagueoflegends', 'hearthstone');
+        $this->allowedGames = array('hearthstone');//leagueoflegends
 	}
     
     public function getTournamentList() {
