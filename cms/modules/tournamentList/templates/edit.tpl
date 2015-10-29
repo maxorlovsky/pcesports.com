@@ -13,16 +13,16 @@
         </td>
     </tr>
     <tr>
-        <td width="20%"><b>Addition</b></td>
+        <td width="20%">
+            <b>Addition</b><br />
+            <small>Required for LoL tournaments</small>
+        </td>
         <td>
             <select id="server">
                 <option value="">none</option>
-                <option value="euw" <?=($module->editData->server=='euw'?'selected="selected"':null)?>>EUW</option>
-                <option value="eune" <?=($module->editData->server=='eune'?'selected="selected"':null)?>>EUNE</option>
-                <option value="na" <?=($module->editData->server=='na'?'selected="selected"':null)?>>NA</option>
-                <option value="eu" <?=($module->editData->server=='eu'?'selected="selected"':null)?>>EU</option>
-                <option value="s2" <?=($module->editData->server=='s2'?'selected="selected"':null)?>>Season 2</option>
-                <option value="s1" <?=($module->editData->server=='s1'?'selected="selected"':null)?> disabled="disabled">Season 1</option>
+                <? foreach($module->availableServers as $k => $v) { ?>
+                <option value="<?=$k?>" <?=($module->editData->server==$k?'selected="selected"':null)?>><?=$v?></option>
+                <? } ?>
             </select>
         </td>
     </tr>
@@ -32,22 +32,31 @@
     </tr>
     <tr>
         <td width="20%"><b>Dates (registration) <span class="red">*</span></b></td>
-        <td><input type="text" id="datesRegistration" size="50" value="<?=$module->editData->dates_registration?>" /></td>
+        <td><input type="text" id="datesRegistration" size="50" value="<?=$module->editData->dates_registration?>" readonly="" /></td>
     </tr>
     <tr>
         <td width="20%"><b>Dates (start) <span class="red">*</span></b></td>
-        <td><input type="text" id="datesStart" size="50" value="<?=$module->editData->dates_start?>" /></td>
+        <td><input type="text" id="datesStart" size="50" value="<?=$module->editData->dates_start?>" readonly="" /></td>
     </tr>
     <tr>
         <td width="20%">
-            <b>Time</b><br />
-            <small>Only for informational status</small>
+            <b>Time (UTC-0)</b>
         </td>
-        <td><input type="text" id="time" size="50" value="<?=$module->editData->time?>" /></td>
+        <td>
+            <select id="time">
+                <?
+                for($i=0;$i<=23;++$i) {
+                    $time = ($i<10?'0':null).$i.':00';
+                ?>
+                <option value="<?=($i<10?'0':null)?><?=$i?>:00" <?=($module->editData->time==$time?'selected=""':null)?>><?=($i<10?'0':null)?><?=$i?>:00</option>
+                <? } ?>
+            </select>
+        </td>
     </tr>
     <tr>
         <td width="20%">
             <b>Ext. Event ID</b><br />
+            <small>Required for Riot ID</small>
         </td>
         <td><input type="text" id="eventId" size="20" value="<?=$module->editData->event_id?>" /></td>
     </tr>
@@ -57,17 +66,30 @@
     </tr>
     <tr>
         <td width="20%"><b>Maximum participants count</b></td>
-        <td><input type="text" id="maxNum" size="50" value="<?=$module->editData->max_num?>" /></td>
+        <td>
+            <select id="maxNum">
+                <? foreach(array(8,16,32,64,128,256) as $v) { ?>
+                <option value="<?=$v?>" <?=($v==$module->editData->max_num?'selected=""':null)?>><?=$v?></option>
+                <? } ?>
+            </select>
+        </td>
     </tr>
     <tr>
         <td width="20%"><b>Status <span class="red">*</span></b></td>
         <td>
             <select id="status">
-                <option>Ended</option>
-                <option <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start</option>
+                <option>Start</option>
+                <option <?=($module->editData->status=='Ended'?'selected="selected"':null)?>>Ended</option>
             </select>
         </td>
     </tr>
     <tr><td colspan="2"><button class="submitButton"><?=at('change')?> tournament</button></td></tr>
     <input type="hidden" id="id" value="<?=$module->editData->id?>"/>
 </table>
+
+<script>
+$('#datesRegistration, #datesStart').datepicker({
+    dateFormat: 'dd.mm.yy',
+    minDate: 0
+});
+</script>

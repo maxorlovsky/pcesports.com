@@ -13,15 +13,16 @@
         </td>
     </tr>
     <tr>
-        <td width="20%"><b>Addition</b></td>
+        <td width="20%">
+            <b>Addition</b><br />
+            <small>Required for LoL tournaments</small>
+        </td>
         <td>
             <select id="server">
                 <option value="">none</option>
-                <option value="euw">EUW</option>
-                <option value="eune">EUNE</option>
-                <option value="na">NA</option>
-                <option value="eu">EU</option>
-                <option value="s2">Season 2</option>
+                <? foreach($module->availableServers as $k => $v) { ?>
+                <option value="<?=$k?>"><?=$v?></option>
+                <? } ?>
             </select>
         </td>
     </tr>
@@ -31,22 +32,28 @@
     </tr>
     <tr>
         <td width="20%"><b>Dates (registration) <span class="red">*</span></b></td>
-        <td><input type="text" id="datesRegistration" size="50" value="" /></td>
+        <td><input type="text" id="datesRegistration" size="50" value="" readonly="" /></td>
     </tr>
     <tr>
         <td width="20%"><b>Dates (start) <span class="red">*</span></b></td>
-        <td><input type="text" id="datesStart" size="50" value="" /></td>
+        <td><input type="text" id="datesStart" size="50" value="" readonly="" /></td>
     </tr>
     <tr>
         <td width="20%">
-            <b>Time</b><br />
-            <small>Only for informational status</small>
+            <b>Time (UTC-0)</b>
         </td>
-        <td><input type="text" id="time" size="50" value="" /></td>
+        <td>
+            <select id="time">
+                <? for($i=0;$i<=23;++$i) { ?>
+                <option value="<?=($i<10?'0':null)?><?=$i?>:00"><?=($i<10?'0':null)?><?=$i?>:00</option>
+                <? } ?>
+            </select>
+        </td>
     </tr>
     <tr>
         <td width="20%">
             <b>Ext. Event ID</b><br />
+            <small>Required for Riot ID</small>
         </td>
         <td><input type="text" id="eventId" size="20" value="" /></td>
     </tr>
@@ -56,16 +63,20 @@
     </tr>
     <tr>
         <td width="20%"><b>Maximum participants count</b></td>
-        <td><input type="text" id="maxNum" size="50" value="64" /></td>
-    </tr>
-    <tr>
-        <td width="20%"><b>Status <span class="red">*</span></b></td>
         <td>
-            <select id="status">
-                <option>Ended</option>
-                <option>Start</option>
+            <select id="maxNum">
+                <? foreach(array(8,16,32,64,128,256) as $v) { ?>
+                <option value="<?=$v?>" <?=($v==64?'selected=""':null)?>><?=$v?></option>
+                <? } ?>
             </select>
         </td>
     </tr>
     <tr><td colspan="2"><button class="submitButton"><?=at('add_new')?> tournament</button></td></tr>
 </table>
+
+<script>
+$('#datesRegistration, #datesStart').datepicker({
+    dateFormat: 'dd.mm.yy',
+    minDate: 0
+});
+</script>
