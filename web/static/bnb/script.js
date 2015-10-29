@@ -182,7 +182,8 @@ var BB = {
             type: 'POST',
             dataType: 'json',
             data: {
-                ajax: 'editInSkillz',
+                ajax: 'editInExternalHs',
+                project: 'bnb',
                 form: $('#da-form').serialize()
             },
             success: function(answer) {
@@ -209,7 +210,7 @@ var BB = {
                 $('#edit-in-tournament').removeClass('alpha');
                 BB.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@skillz.lv');
+                alert('Something went wrong... Contact admin at info@bnb.gr');
             }
         };
         this.ajax(query);
@@ -228,7 +229,8 @@ var BB = {
             type: 'POST',
             dataType: 'json',
             data: {
-                ajax: 'registerInSkillz',
+                ajax: 'registerInExternalHs',
+                project: 'bnb',
                 form: $('#da-form').serialize()
             },
             success: function(answer) {
@@ -260,7 +262,7 @@ var BB = {
                 $('#register-in-tournament').removeClass('alpha');
                 BB.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@skillz.lv');
+                alert('Something went wrong... Contact admin at info@bnb.gr');
             }
         };
         this.ajax(query);

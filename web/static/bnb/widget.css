@@ -737,3 +737,8 @@ footer {
 .player-heroes {
     display: inline-block;
 }
+
+.participant-block,
+.registration {
+  margin-bottom: 50px;
+}

@@ -1,6 +1,6 @@
 <section class="container page tournament">
 
-<div class="left-containers">
+<div class="left-containers participant-block">
     <? if ($this->participant->checked_in != 1) { ?>
 
     <? if ($this->paymentNeeded == 1) { ?>
@@ -53,20 +53,6 @@
             <p class="team-edit-completed success-add"><?=t('info_edited')?></p>
             <div id="join-form">
                 <form id="da-form" method="post">
-                    <div class="form-item" data-label="phone">
-                        <input type="text" name="phone" placeholder="Phone number" value="<?=$this->participant->contact_info->phone?>" />
-                        <div class="message hidden"></div>
-                    </div>
-                    
-                    <div class="form-item" data-label="country">
-                        <select name="country">
-                            <option value="es" <?=($this->participant->contact_info->country=='es'?'selected="selected"':null)?>>Estonia</option>
-                            <option value="lv" <?=($this->participant->contact_info->country=='lv'?'selected="selected"':null)?>>Latvia</option>
-                            <option value="lt" <?=($this->participant->contact_info->country=='lt'?'selected="selected"':null)?>>Lithuania</option>
-                        </select>
-                        <div class="message hidden"></div>
-                    </div>
-
                     <? for ($i=1;$i<=3;++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">
                         <select class="hero<?=$i?>" name="hero<?=$i?>">
@@ -88,8 +74,8 @@
                     </div>
                     <div class="clear"></div>
 
-                    <input type="hidden" name="participant" id="participant" value="<?=$_GET['val3']?>" />
-                    <input type="hidden" name="link" id="link" value="<?=$_GET['val4']?>" />
+                    <input type="hidden" name="participant" id="participant" value="<?=$_GET['val4']?>" />
+                    <input type="hidden" name="link" id="link" value="<?=$_GET['val5']?>" />
                 </form>
                 <div class="clear"></div>
                 <a href="javascript:void(0);" class="button" id="edit-in-tournament"><?=t('edit_information')?></a>
@@ -135,7 +121,6 @@
         
         <input type="hidden" name="participant" id="participant" value="<?=$_GET['val3']?>" />
         <input type="hidden" name="link" id="link" value="<?=$_GET['val4']?>" />
-        <audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
 
         <div class="block" style="margin-top: 20px;">
             <div class="block-header-wrapper">
@@ -151,4 +136,6 @@
             <div class="hsicons-small %hero% hint" attr-msg="%heroName%"></div>
         </div>
     <? } ?>
+
+    <audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
 </div>

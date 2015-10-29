@@ -1,7 +1,7 @@
 <div class="hidden popup" id="rules-window">
     <div class="rules-inside">
         <h1>Hearthstone rules</h1>
-        <?=t('mcs_hearthstone_tournament_rules')?>
+        <?=t($this->project.'_hearthstone_tournament_rules')?>
     </div>
 </div>
 
@@ -10,12 +10,12 @@
 <? if (!$this->participant && $this->regIsOpen == 1) { ?>
 <div class="block registration">
 	<div class="block-header-wrapper">
-		<h1>MSI MCS Open Season 3 HearthStone Baltic Qualifier</h1>
+		<h1><?=$tournament->name?></h1>
 	</div>
 	
 	<div class="block-content signup">
 		<div id="join-form">
-            <div class="reg-completed success-add"><?=t('mcs_join_tournament_complete')?></div>
+            <div class="reg-completed success-add"><?=t($this->project.'_join_tournament_complete')?></div>
 
 			<form id="da-form" method="post">
                 <div class="form-item" data-label="battletag">
@@ -28,21 +28,6 @@
                     <div class="message hidden"></div>
                 </div>
 
-                <div class="form-item" data-label="phone">
-                    <input type="text" name="phone" placeholder="Phone number" value="" />
-                    <div class="message hidden"></div>
-                </div>
-                
-                <div class="form-item" data-label="country">
-                    <select class="hero<?=$i?>" name="country">
-                        <option value="0"><?=t('pick_country')?></option>
-                        <option value="es">Estonia</option>
-                        <option value="lv">Latvia</option>
-                        <option value="lt">Lithuania</option>
-                    </select>
-                    <div class="message hidden"></div>
-                </div>
-                
                 <? for ($i=1;$i<=3;++$i) { ?>
                 <div class="form-item" data-label="hero<?=$i?>">
                     <select class="hero<?=$i?>" name="hero<?=$i?>">
@@ -56,13 +41,13 @@
                 <? } ?>
 
                 <div class="form-item" data-label="agree">
-                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_hs_mcs')?></label>
+                    <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t($this->project.'_agree_with_rules')?></label>
                     <div class="message hidden"></div>
                 </div>
                 
-                <div class="heroes-images">
+                <div class="heroes-images hidden">
                     <h6><?=t('your_classes')?></h6>
-                    <? for ($i=1;$i<=4;++$i) { ?>
+                    <? for ($i=1;$i<=3;++$i) { ?>
                     <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
                     <? } ?>
                 </div>
@@ -125,6 +110,7 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
     
     var picked = $('#'+getClass+'img').attr('attr-picked');
     $('#'+getClass+'img').removeClass(picked);
+    $('.heroes-images').show();
     
     if (id == 0) {
         $('#'+getClass+'img').removeClass('active');

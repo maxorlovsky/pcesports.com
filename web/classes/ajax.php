@@ -116,6 +116,17 @@ class Ajax extends System
     /*
      * Widgets functions
     */
+    protected function registerInExternalHs($data) {
+        require_once _cfg('pages').'/widgets/hearthstone/source.php';
+        $hearthstoneExternal = new hearthstone($data['project']);
+        return $hearthstoneExternal->registerInTournament($data);
+    }
+    protected function editInExternalHs($data) {
+        require_once _cfg('pages').'/widgets/hearthstone/source.php';
+        $hearthstoneExternal = new hearthstone($data['project']);
+        return $hearthstoneExternal->editInTournament($data);
+    }
+
     protected function registerInFifa($data) {
         require_once _cfg('pages').'/fifa/source.php';
         $fifa = new fifa();
@@ -133,16 +144,6 @@ class Ajax extends System
         return $unicon->editInTournament($data);
     }
     
-    protected function registerInSkillz($data) {
-        require_once _cfg('pages').'/widgets/skillzhs/source.php';
-        $skillz = new skillzhs();
-        return $skillz->registerInTournament($data);
-    }
-    protected function editInSkillz($data) {
-        require_once _cfg('pages').'/widgets/skillzhs/source.php';
-        $skillz = new skillzhs();
-        return $skillz->editInTournament($data);
-    }
     protected function checkInHsSkillz($data) {
         $row = Db::fetchRow('SELECT * '.
             'FROM `participants_external` '.

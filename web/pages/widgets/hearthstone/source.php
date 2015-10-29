@@ -4,12 +4,17 @@ class hearthstone extends System
 {
     public $participant;
     public $participants;
+    public $project;
     public $regIsOpen = 0;
-    public $paymentNeeded = 1;
-    public $project = 'skillz';
     
-	public function __construct($params = array()) {
+	public function __construct($project) {
         parent::__construct();
+
+        if (!in_array($project, array('bnb'))) {
+            exit('Project not registered');
+        }
+
+        $this->project = $project;
 
         $this->heroes = array(
             1 => 'warrior',
@@ -25,9 +30,19 @@ class hearthstone extends System
 	}
 	
 	public function showTemplate() {
+        $tournament = Db::fetchRow('SELECT * FROM `tournaments_external` WHERE '.
+            '`project` = "'.$this->project.'" AND '.
+            '`game` = "hs" AND '.
+            '`id` = "'.(int)$_GET['val3'].'" '.
+            'LIMIT 1 '
+        );
+        if (in_array($tournament->status, array('Registration', 'CheckIn'))) {
+            $this->regIsOpen = 1;
+        }
+
         $rows = Db::fetchRows('SELECT `name` AS `battletag`, `contact_info` '.
             'FROM `participants_external` '.
-            'WHERE `project` = "'.$this->project.'" AND '.
+            'WHERE `tournament_id` = "'.(int)$tournament->id.'" AND '.
             '`deleted` = 0 '.
             'ORDER BY `id` ASC'
         );
@@ -39,22 +54,25 @@ class hearthstone extends System
         $this->participants = $rows;
         unset($v);
         
-        if (isset($_GET['val3']) && $_GET['val3'] && isset($_GET['val4']) && $_GET['val4']) {
+        if (isset($_GET['val4']) && $_GET['val4'] && isset($_GET['val5']) && $_GET['val5']) {
             //Might be a participant
             $row = Db::fetchRow(
                 'SELECT * FROM `participants_external` '.
-                'WHERE `id` = '.(int)$_GET['val3'].' AND '.
-                '`link` = "'.Db::escape($_GET['val4']).'" AND '.
+                'WHERE `id` = '.(int)$_GET['val4'].' AND '.
+                '`link` = "'.Db::escape($_GET['val5']).'" AND '.
+                '`tournament_id` = '.(int)$tournament->id.' AND '.
                 '`deleted` = 0 '.
-                'LIMIT 1'
+                'LIMIT 1 '
             );
+
             if ($row) {
-                if (isset($_GET['val5']) && $_GET['val5'] == 'leave') {
+                if (isset($_GET['val6']) && $_GET['val6'] == 'leave') {
                     Db::query(
                         'UPDATE `participants_external` SET '.
                         '`deleted` = 1, '.
                         '`update_timestamp` = NOW() '.
                         'WHERE `id` = '.(int)$row->id.' AND '.
+                        '`tournament_id` = '.(int)$tournament->id.' AND '.
                         '`deleted` = 0 AND '.
                         '`project` = "'.$this->project.'" '
                     );
@@ -76,6 +94,16 @@ class hearthstone extends System
         $err = array();
         $suc = array();
         parse_str($data['form'], $post);
+
+        $tournament = Db::fetchRow('SELECT * FROM `tournaments_external` WHERE '.
+            '`project` = "'.$this->project.'" AND '.
+            '`game` = "hs" AND '.
+            '`status` != "Ended" '.
+            'LIMIT 1 '
+        );
+        if (!$tournament) {
+            $err['agree'] = '0;'.t('no_registered_tournament');
+        }
         
         $heroesPicked = array();
         for($i=1;$i<=3;++$i) {
@@ -95,13 +123,6 @@ class hearthstone extends System
             $err['hero2'] = '0;'.t('same_hero_picked');
         }
         
-        if (!$post['country']) {
-            $err['country'] = '0;'.t('please_pick_country');
-        }
-        else {
-            $suc['country'] = '1;'.t('approved');
-        }
-        
         if ($err) {
             $answer['ok'] = 0;
             if ($suc) {
@@ -117,8 +138,6 @@ class hearthstone extends System
                 'hero1' => $post['hero1'],
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
-                'phone' => Db::escape($post['phone']),
-                'country' => Db::escape($post['country']),
             ));
             
             Db::query(
@@ -128,7 +147,8 @@ class hearthstone extends System
                 'WHERE `id` = '.(int)$post['participant'].' AND '.
                 '`link` = "'.Db::escape($post['link']).'" AND '.
                 '`deleted` = 0 AND '.
-                '`project` = "'.$this->project.'" '
+                '`project` = "'.$this->project.'" AND '.
+                '`tournament_id` = '.(int)$tournament->id.' '
             );
         }
         
@@ -139,6 +159,16 @@ class hearthstone extends System
         $err = array();
         $suc = array();
         parse_str($data['form'], $post);
+
+        $tournament = Db::fetchRow('SELECT * FROM `tournaments_external` WHERE '.
+            '`project` = "'.$this->project.'" AND '.
+            '`game` = "hs" AND '.
+            '`status` != "Ended" '.
+            'LIMIT 1 '
+        );
+        if (!$tournament) {
+            $err['agree'] = '0;'.t('no_registered_tournament');
+        }
         
         $battleTagBreakdown = explode('#', $post['battletag']);
 
@@ -170,13 +200,6 @@ class hearthstone extends System
             $suc['agree'] = '1;'.t('approved');
         }
         
-        if (!$post['country']) {
-            $err['country'] = '0;'.t('please_pick_country');
-        }
-        else {
-            $suc['country'] = '1;'.t('approved');
-        }
-        
         $heroesPicked = array();
         for($i=1;$i<=3;++$i) {
             if (!$post['hero'.$i]) {
@@ -210,8 +233,6 @@ class hearthstone extends System
                 'hero1' => $post['hero1'],
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
-                'phone' => Db::escape($post['phone']),
-                'country' => Db::escape($post['country']),
             ));
             
             $code = substr(sha1(time().rand(0,9999)).$post['battletag'], 0, 32);
@@ -222,23 +243,25 @@ class hearthstone extends System
                 '`email` = "'.Db::escape($post['email']).'", '.
                 '`contact_info` = "'.Db::escape($contact_info).'", '.
                 '`link` = "'.$code.'", '.
-                '`project` = "'.$this->project.'" '
+                '`project` = "'.$this->project.'", '.
+                '`tournament_id` = '.(int)$tournament->id.' '
             );
             
             $lastId = Db::lastId();
-            $tournamentName = 'MSI MCS Open Season 3 HearthStone Baltic Qualifier';
-            $url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
-            $additionalText = 'Tournament is going to happen only if 8 participants going to register (with payment) in the tournament.<br />Do not forget that tournament starts this Saturday at 12:00. To participate in the tournament, you must log in from 11:00 till 12:00 and "check in" to approve, that you are online. Then you will see a chat with your opponent and brackets.';
+            //$url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
+            $url = 'http://www.bnb.gr/test-tour/?&participant='.$lastId.'&link='.$code.'&';
+            $additionalText = '';
+            $teamName = 'BNB';
 
             $text = Template::getMailTemplate('reg-player-widget');
 
             $text = str_replace(
                 array('%name%', '%tournamentName%', '%url%', '%additionalText%', '%teamName%'),
-                array($post['battletag'], $tournamentName.' tournament', $url, $additionalText, 'Skillz.lv and Pentaclick eSports'),
+                array($post['battletag'], $tournament->name.' tournament', $url, $additionalText, $teamName),
                 $text
             );
         
-            $this->sendMail($post['email'], $tournamentName.' participation', $text);
+            $this->sendMail($post['email'], $tournament->name.' participation', $text);
 
             $answer['ok'] = 1;
         }
