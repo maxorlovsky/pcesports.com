@@ -248,8 +248,7 @@ class hearthstone extends System
             );
             
             $lastId = Db::lastId();
-            //$url = 'http://skillz.lv/ru/news/2046?&participant='.$lastId.'&link='.$code.'&';
-            $url = 'http://www.bnb.gr/test-tour/?&tournamentId='.(int)$tournament->id.'&participant='.$lastId.'&link='.$code.'&';
+            $url = 'http://www.bnb.gr/test-tour/?&game=hearthstone&tournamentId='.(int)$tournament->id.'&participant='.$lastId.'&link='.$code.'&';
             $additionalText = '';
             $teamName = 'BNB';
 
