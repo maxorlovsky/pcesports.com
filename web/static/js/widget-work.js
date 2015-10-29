@@ -20,6 +20,7 @@
             var get = {};
             var game;
             var project = this.getProject();
+            var breakdownGlobal;
             
             if (project === false) {
                 return false;
@@ -31,7 +32,14 @@
             if (game !== false) {
                 url += '/' + game;
                 
-                var breakdownGlobal = window.location.href.split('&');
+                breakdownGlobal = window.location.href.split('?');
+                if (breakdownGlobal[1] == undefined) {
+                    breakdownGlobal = window.location.href.split('&');
+                }
+                else {
+                    breakdownGlobal = breakdownGlobal[1].split('&');
+                }
+                
                 url += this.getAdditionalInformation(breakdownGlobal);
             }
 
@@ -65,8 +73,7 @@
             var url = '';
             var breakdown;
             var get = {};
-            delete breakdownGlobal[0];
-
+            
             if (!breakdownGlobal[1]) {
                 return '';
             }
