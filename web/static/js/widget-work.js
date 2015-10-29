@@ -73,7 +73,8 @@
             var url = '';
             var breakdown;
             var get = {};
-            
+            console.log(breakdownGlobal);
+
             if (!breakdownGlobal[1]) {
                 return '';
             }
