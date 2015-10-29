@@ -6,6 +6,7 @@ class hearthstone extends System
     public $participants;
     public $project;
     public $regIsOpen = 0;
+    public $paymentNeeded = 1;
     
 	public function __construct($project) {
         parent::__construct();
