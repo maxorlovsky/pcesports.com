@@ -21,22 +21,6 @@ class bnb extends System
         
         if ($rows) {
             foreach($rows as $v) {
-                if ($v->status == 'Registration') {
-                    $v->status = t('registration');
-                }
-                else if ($v->status == 'Ended') {
-                    $v->status = t('ended');
-                }
-                else if ($v->status == 'CheckIn') {
-                    $v->status = t('check_in');
-                }
-                else if ($v->status == 'Live') {
-                    $v->status = t('live');
-                }
-                else {
-                    $v->status = t('upcoming');
-                }
-                
                 if ($v->game == 'lol') {
                     $link = 'leagueoflegends/'.$v->server;
                 }
@@ -49,7 +33,7 @@ class bnb extends System
                     'server'=> $v->server,
                     'game'  => $v->game,
                     'name' 	=> $v->name,
-                    'status'=> $v->status,
+                    'status'=> t($v->status),
                     'max_num'=> $v->max_num,
                     'prize' => $v->prize,
                     'dates_start'=> $v->dates_start,

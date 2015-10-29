@@ -5,7 +5,7 @@
     <tr>
         <td width="20%"><b>Game <span class="red">*</span></b></td>
         <td>
-            <select id="game">
+            <select id="game" disabled="disabled">
                 <? foreach($module->availableGames as $k => $v) { ?>
                 <option value="<?=$k?>" <?=($module->editData->game==$k?'selected="selected"':null)?>><?=$v?></option>
                 <? } ?>
@@ -18,7 +18,7 @@
             <small>Required for LoL tournaments</small>
         </td>
         <td>
-            <select id="server">
+            <select id="server" disabled="disabled">
                 <option value="">none</option>
                 <? foreach($module->availableServers as $k => $v) { ?>
                 <option value="<?=$k?>" <?=($module->editData->server==$k?'selected="selected"':null)?>><?=$v?></option>
@@ -75,11 +75,17 @@
         </td>
     </tr>
     <tr>
-        <td width="20%"><b>Status <span class="red">*</span></b></td>
+        <td width="20%">
+            <b>Status <span class="red">*</span></b><br />
+            <small style="color: red">Do not change if you don't know what you're doing</small>
+        </td>
         <td>
             <select id="status">
-                <option>Start</option>
-                <option <?=($module->editData->status=='Ended'?'selected="selected"':null)?>>Ended</option>
+                <option>Upcoming</option>
+                <option <?=($module->editData->status=='registration'?'selected="selected"':null)?>>Registration</option>
+                <option <?=($module->editData->status=='check_in'?'selected="selected"':null)?>>Check In</option>
+                <option <?=($module->editData->status=='live'?'selected="selected"':null)?>>Live</option>
+                <option <?=($module->editData->status=='ended'?'selected="selected"':null)?>>Ended</option>
             </select>
         </td>
     </tr>

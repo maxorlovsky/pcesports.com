@@ -65,7 +65,20 @@ class TournamentList
 	}
     
     public function add($form) {
-        if (!$form['name']) {
+    	$row = Db::fetchRows(
+			'SELECT * FROM `tournaments_external` '.
+			'WHERE `project` = "'.$this->project.'" AND '.
+			'`game` = "'.Db::escape($form['game']).'" AND '. 
+			($form['game']=='lol'?'`server` = "'.Db::escape($form['server']).'" AND ':null).
+            '`status` != "ended" '.
+			'ORDER BY `id` DESC '
+		);
+
+    	if ($row) {
+			$this->system->log('Adding tournament <b>There is already active tournament for this game/server</b>', array('module'=>get_class(), 'type'=>'add'));
+			return '0;There is already active tournament for this game/server';
+		}
+        else if (!$form['name']) {
 			$this->system->log('Adding tournament <b>Name not set</b>', array('module'=>get_class(), 'type'=>'add'));
 			return '0;Name not set';
 		}
@@ -102,7 +115,7 @@ class TournamentList
 	                '`event_id` = '.(int)$form['eventId'].', '.
 	                '`prize` = "'.Db::escape($form['prize']).'", '.
 	                '`max_num` = "'.Db::escape($form['maxNum']).'", '.
-	                '`status` = "Start" '
+	                '`status` = "upcoming" '
 				);
 			}
 			else {
@@ -116,7 +129,7 @@ class TournamentList
 	                '`event_id` = '.(int)$form['eventId'].', '.
 	                '`prize` = "'.Db::escape($form['prize']).'", '.
 	                '`max_num` = "'.Db::escape($form['maxNum']).'", '.
-	                '`status` = "Start" '
+	                '`status` = "upcoming" '
 				);
 			}
             $lastId = Db::lastId();
@@ -135,14 +148,6 @@ class TournamentList
 			$this->system->log('Editing tournament <b>Name not set</b> ('.$id.')', array('module'=>get_class(), 'type'=>'edit'));
 			return '0;Name not set';
 		}
-        else if (!$form['game']) {
-            $this->system->log('Editing tournament <b>Game not picked</b> ('.$id.')', array('module'=>get_class(), 'type'=>'edit'));
-			return '0;Game not picked';
-        }
-        else if ($form['game'] == 'lol' && !$form['server']) {
-        	$this->system->log('Editing tournament <b>Addition/server not picked</b> ('.$id.')', array('module'=>get_class(), 'type'=>'edit'));
-			return '0;Addition/server not picked';
-        }
         else if (!$form['datesRegistration']) {
             $this->system->log('Editing tournament <b>Dates (registration) not set</b> ('.$id.')', array('module'=>get_class(), 'type'=>'edit'));
 			return '0;Dates (registration) not set';
@@ -164,9 +169,7 @@ class TournamentList
 			
 			if ($this->project) {
 				Db::query('UPDATE `tournaments_external` '.
-					'SET `game` = "'.Db::escape($form['game']).'", '. 
-	                '`server` = "'.Db::escape($form['server']).'", '. 
-	                '`name` = "'.Db::escape($form['name']).'", '.
+					'SET `name` = "'.Db::escape($form['name']).'", '.
 	                '`dates_registration` = "'.Db::escape($form['datesRegistration']).'", '.
 	                '`dates_start` = "'.Db::escape($form['datesStart']).'", '.
 	                '`time` = "'.Db::escape($form['time']).'", '.
@@ -180,9 +183,7 @@ class TournamentList
 			}
 			else {
 				Db::query('UPDATE `tournaments` '.
-					'SET `game` = "'.Db::escape($form['game']).'", '. 
-	                '`server` = "'.Db::escape($form['server']).'", '. 
-	                '`name` = "'.Db::escape($form['name']).'", '.
+					'SET `name` = "'.Db::escape($form['name']).'", '.
 	                '`dates_registration` = "'.Db::escape($form['datesRegistration']).'", '.
 	                '`dates_start` = "'.Db::escape($form['datesStart']).'", '.
 	                '`time` = "'.Db::escape($form['time']).'", '.

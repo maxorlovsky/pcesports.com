@@ -36,7 +36,7 @@ class hearthstone extends System
             '`id` = "'.(int)$_GET['val3'].'" '.
             'LIMIT 1 '
         );
-        if (in_array($tournament->status, array('Registration', 'CheckIn'))) {
+        if (in_array($tournament->status, array('registration', 'check_in'))) {
             $this->regIsOpen = 1;
         }
 
@@ -98,7 +98,7 @@ class hearthstone extends System
         $tournament = Db::fetchRow('SELECT * FROM `tournaments_external` WHERE '.
             '`project` = "'.$this->project.'" AND '.
             '`game` = "hs" AND '.
-            '`status` != "Ended" '.
+            '`status` != "ended" '.
             'LIMIT 1 '
         );
         if (!$tournament) {
@@ -163,7 +163,7 @@ class hearthstone extends System
         $tournament = Db::fetchRow('SELECT * FROM `tournaments_external` WHERE '.
             '`project` = "'.$this->project.'" AND '.
             '`game` = "hs" AND '.
-            '`status` != "Ended" '.
+            '`status` != "ended" '.
             'LIMIT 1 '
         );
         if (!$tournament) {
