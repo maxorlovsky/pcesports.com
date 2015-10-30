@@ -14,7 +14,7 @@ class TournamentList
 		$row = Db::fetchRow('SELECT * FROM `projects` WHERE `name` = "'.Db::escape($this->system->user->login).'"');
 
 		if ($row) {
-			if ($row->enabled === 0) {
+			if ($row->enabled == 0) {
 				exit('Project disabled');
 			}
 			$this->project = $row->name;
