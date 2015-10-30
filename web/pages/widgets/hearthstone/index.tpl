@@ -1,10 +1,3 @@
-<div class="hidden popup" id="rules-window">
-    <div class="rules-inside">
-        <h1>Hearthstone rules</h1>
-        <?=t($this->project.'_hearthstone_tournament_rules')?>
-    </div>
-</div>
-
 <section class="container tournament hs">
 
 <? if (!$this->participant && $this->regIsOpen == 1) { ?>

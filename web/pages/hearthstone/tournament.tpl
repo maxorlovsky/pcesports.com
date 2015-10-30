@@ -287,9 +287,10 @@
         </div>
     </div>
     
+    <?/*
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('pending_participants')?></h1><?/*verified_participants*/?>
+            <h1 class="bordered"><?=t('verified_participants')?></h1>
         </div>
         
         <div class="block-content participants isotope-participants-verified">
@@ -347,10 +348,10 @@
         }
     ?>
         </div>
-    </div>
+    </div>*/?>
     <? } ?>
     
-    <? /*if ($this->participants) { ?>
+    <? if ($this->participants) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('pending_participants')?></h1>
@@ -361,7 +362,8 @@
         $participantsCount = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-                if ($v->verified == 0) {
+                //if ($v->verified == 0) {
+                if ($v->checked_in == 0) {
                 ++$participantsCount;
                     if ($v->user_id != 0) {
                     ?>
@@ -409,7 +411,7 @@
     ?>
         </div>
     </div>
-    <? }*/ ?>
+    <? } ?>
     
     <? if ($i >= 2) { ?>
 	<div class="block">

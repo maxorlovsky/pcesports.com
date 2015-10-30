@@ -5,14 +5,19 @@ class TournamentList
 	public $tournaments = array();
     public $availableGames = array();
     public $availableServers = array();
-    public $externalTournaments = array('bnb');
     public $project;
     
 	function __construct($params = array()) {
 		$this->system = $params['system'];
 
-		if (in_array($this->system->user->login, $this->externalTournaments)) {
-			$this->project = $this->system->user->login;
+		//Checking if project specific access
+		$row = Db::fetchRow('SELECT * FROM `projects` WHERE `name` = "'.Db::escape($this->system->user->login).'"');
+
+		if ($row) {
+			if ($row->enabled === 0) {
+				exit('Project disabled');
+			}
+			$this->project = $row->name;
 
 			$this->availableGames = array(
 			    'lol' => 'League of Legends',
