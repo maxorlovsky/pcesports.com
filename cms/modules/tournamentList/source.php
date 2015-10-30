@@ -134,7 +134,7 @@ class TournamentList
 	                '`event_id` = '.(int)$form['eventId'].', '.
 	                '`prize` = "'.Db::escape($form['prize']).'", '.
 	                '`max_num` = "'.Db::escape($form['maxNum']).'", '.
-	                '`status` = "upcoming" '
+	                '`status` = "Start" '
 				);
 			}
             $lastId = Db::lastId();

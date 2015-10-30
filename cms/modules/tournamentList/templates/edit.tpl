@@ -86,6 +86,7 @@
                 <option <?=($module->editData->status=='check_in'?'selected="selected"':null)?>>Check In</option>
                 <option <?=($module->editData->status=='live'?'selected="selected"':null)?>>Live</option>
                 <option <?=($module->editData->status=='ended'?'selected="selected"':null)?>>Ended</option>
+                <option <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start (not for project)</option>
             </select>
         </td>
     </tr>
