@@ -121,7 +121,8 @@ class pentaclick extends system
             'WHERE `id` = 1 OR '. //max
             '`id` = 44 OR '. //serge
             '`id` = 112 OR '. //anya
-            '`id` = 864 '. //ovy
+            '`id` = 864 OR '. //ovy
+            '`id` = 122 ' //dantey
         );
         
         $this->team = array(
@@ -150,7 +151,14 @@ class pentaclick extends system
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/ovidijus.parsiunas',
                 )
-            )
+            ),
+            122 => array(
+                'role' => 'Hearthstone Admin',
+                'socials' => array(
+                    'fb' => 'https://www.facebook.com/andris.krumins.5',
+                    'tw' => 'https://twitter.com/Andris_K',
+                )
+            ),
         );
         
         if ($rows) {
