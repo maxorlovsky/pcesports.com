@@ -289,7 +289,7 @@
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('verified_participants')?></h1>
+            <h1 class="bordered"><?=t('pending_participants')?></h1><?/*verified_participants*/?>
         </div>
         
         <div class="block-content participants isotope-participants-verified">
