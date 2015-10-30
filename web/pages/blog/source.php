@@ -43,7 +43,7 @@ class blog extends System
 	public function getArticle() {
         $row = Db::fetchRow('SELECT `id` FROM `blog` WHERE `able` = 1 AND `id` = '.(int)$_GET['val2'].' LIMIT 1');
         if (!$row) {
-            go(_cfg('href').'/news');
+            go(_cfg('href').'/blog');
         }
         
 		if ($_SESSION['news_views'][$_GET['val2']] != 1) {
@@ -87,7 +87,7 @@ class blog extends System
         
         $seo = array(
             'title' => ($news->title?$news->title.' | ':null).'Blog',
-            'ogImg' => ($news->extension?_cfg('imgu').'/news/small-'.$news->id.'.'.$news->extension:null),
+            'ogImg' => ($news->extension?_cfg('imgu').'/blog/small-'.$news->id.'.'.$news->extension:null),
             'ogDesc' => strip_tags($news->short_english),
         );
         
