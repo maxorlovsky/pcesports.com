@@ -12,12 +12,12 @@
             <br />
         <? } ?>
         
-        <? if ($paymentVerified != 1) { ?>
+        <? /*if ($paymentVerified != 1) { ?>
             <p class="error-add"><?=t('participation_hsleague_not_verified')?></p>
         <? } else { ?>
             <p class="success-add"><?=t('participation_hsleague_verified')?></p>
             <br />
-        <? } ?>
+        <? }*/ ?>
         
         <? if (!$this->logged_in) { ?>
             <p class="info-add"><?=t('participant_not_user')?></p>
@@ -108,7 +108,7 @@
         </div>
     </div>
     
-    <? if ($_SESSION['participant']->checked_in != 1) { ?>
+    <? /*if ($_SESSION['participant']->checked_in != 1) { ?>
     <div class="block">
         <a name="verification"></a>
         <div class="block-header-wrapper">
@@ -135,7 +135,7 @@
             </form>
         </div>
     </div>
-    <? } ?>
+    <? }*/ ?>
 </div>
 
 <div style="display: none;" id="hsicons-holder">

@@ -117,7 +117,8 @@ class hearthstone extends System
 		else if ($row && $row->approved == 1) {
 			$verified = 1;
 		}
-        $paymentVerified = $row->verified;
+        //$paymentVerified = $row->verified;
+        $paymentVerified = 1;
         
         $rows = Db::fetchRow('SELECT COUNT(`id`) AS `count` '.
             'FROM `participants` '.
