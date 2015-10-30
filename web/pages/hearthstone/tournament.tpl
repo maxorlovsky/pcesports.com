@@ -233,7 +233,8 @@
         $i = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-                if ($v->checked_in == 1 && $v->verified == 1) {
+                //if ($v->checked_in == 1 && $v->verified == 1) {
+                if ($v->checked_in == 1) {
 
                     //This must be here
                     ++$participantsCount;
@@ -296,8 +297,8 @@
         $participantsCount = 0;
         if ($this->participants) {
             foreach($this->participants as $v) {
-                if ($v->verified == 1 && $v->checked_in != 1) {
-
+                //if ($v->verified == 1 && $v->checked_in != 1) {
+                if ($v->checked_in != 1) {
                     //This must be here
                     ++$participantsCount;
 
@@ -349,7 +350,7 @@
     </div>
     <? } ?>
     
-    <? if ($this->participants) { ?>
+    <? /*if ($this->participants) { ?>
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('pending_participants')?></h1>
@@ -408,7 +409,7 @@
     ?>
         </div>
     </div>
-    <? } ?>
+    <? }*/ ?>
     
     <? if ($i >= 2) { ?>
 	<div class="block">
