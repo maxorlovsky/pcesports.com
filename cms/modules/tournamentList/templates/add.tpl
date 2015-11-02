@@ -79,4 +79,19 @@ $('#datesRegistration, #datesStart').datepicker({
     dateFormat: 'dd.mm.yy',
     minDate: 0
 });
+
+$('#game').on('change', function() {
+    eventId();
+});
+
+function eventId() {
+    if ($('#game').val() == 'lol') {
+        $('#eventId').closest('tr').show();
+    }
+    else {
+        $('#eventId').closest('tr').hide();
+    }
+}
+
+eventId();
 </script>

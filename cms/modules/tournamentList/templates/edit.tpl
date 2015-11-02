@@ -53,6 +53,7 @@
             </select>
         </td>
     </tr>
+    <? if ($module->editData->game == 'lol') {?>
     <tr>
         <td width="20%">
             <b>Ext. Event ID</b><br />
@@ -60,6 +61,7 @@
         </td>
         <td><input type="text" id="eventId" size="20" value="<?=$module->editData->event_id?>" /></td>
     </tr>
+    <? } ?>
     <tr>
         <td width="20%"><b>Prize <span class="red">*</span></b></td>
         <td><input type="text" id="prize" size="50" value="<?=$module->editData->prize?>" /></td>
@@ -98,5 +100,9 @@
 $('#datesRegistration, #datesStart').datepicker({
     dateFormat: 'dd.mm.yy',
     minDate: 0
+});
+
+$('#game').on('change', function() {
+    eventId();
 });
 </script>

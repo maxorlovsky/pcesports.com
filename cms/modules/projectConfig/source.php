@@ -67,7 +67,7 @@ class projectConfig
 			}
 		}
             
-		$this->system->log('Editing project <b>Project updated</b> ('.$id.')', array('module'=>get_class(), 'type'=>'edit'));
+		$this->system->log('Editing project <b>Project updated</b> ('.$this->system->user->login.')', array('module'=>get_class(), 'type'=>'edit'));
         
 		return '1;Project updated';
 	}
