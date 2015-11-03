@@ -343,7 +343,8 @@ class hearthstone extends System
             '`server` = "'.Db::escape($server).'" AND '.
     		'`name` = "'.Db::escape($post['battletag']).'" AND '.
     		'`game` = "hs" AND '.
-    		'`deleted` = 0 '
+    		'`deleted` = 0 AND '.
+            '`approved` = 1 '
     	);
 
         $battleTagBreakdown = explode('#', $post['battletag']);
