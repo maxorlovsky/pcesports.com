@@ -533,8 +533,23 @@ class hearthstone extends System
         
         $server = $_SESSION['participant']->server;
         $currentTournament = (int)$this->data->settings['hs-current-number'];
-        
-        if ($this->data->settings['tournament-checkin-hs'] != 1) {
+
+        $participantsCount = Db::fetchRow('SELECT COUNT(*) FROM `participants` '.
+            'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+            'AND `game` = "hs" '.
+            'AND `server` = "'.Db::escape($server).'" '.
+            'AND `checked_in` = 1 '
+        );
+        $tournamentRow = Db::fetchRow('SELECT * FROM `tournaments` '.
+            'WHERE `name` = '.(int)$currentTournament.' '.
+            'AND `game` = "hs" '.
+            'AND `server` = "'.Db::escape($server).'" '
+        );
+
+        if ($participantsCount >= $tournamentRow->max_num) {
+            return '0;Maximum number of participants checked in, sorry, try next time';
+        }
+        else if ($this->data->settings['tournament-checkin-hs'] != 1) {
             return '0;Check in is not in progress';
         }
         
