@@ -83,6 +83,7 @@ class home extends System
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League Season 2';
+                    $additionalWhere = '`approved` = 1 AND ';
                     $v->priority = 1;
                 }
                 /*else if ($v->game == 'smite') {

@@ -363,7 +363,7 @@
         if ($this->participants) {
             foreach($this->participants as $v) {
                 //if ($v->verified == 0) {
-                if ($v->checked_in == 0) {
+                if ($v->checked_in == 0 && $v->approved == 1) {
                 ++$participantsCount;
                     if ($v->user_id != 0) {
                     ?>
