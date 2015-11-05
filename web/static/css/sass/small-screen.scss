@@ -11,9 +11,10 @@
         font: 80px 'EntypoRegular';
         float: left;
         color: #fff;
-        margin: 9px 10px 0 10px;
+        margin: 0 10px;
         transition: .5s;
         line-height: 50px;
+        cursor: pointer;
         &.active {
             transform: rotate(90deg);
         }

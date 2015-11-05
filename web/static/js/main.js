@@ -204,7 +204,7 @@ $('.login, .must-login').on('click', function() {
     PC.openPopup('login-window');
 });
 
-$('#fader, #close-popup').on('click', function() {
+$('#fader, #close-popup, .popup .close').on('click', function() {
     PC.closePopup();
 });
 

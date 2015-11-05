@@ -2104,6 +2104,18 @@ footer .games img {
 .popup {
     position: fixed;
     z-index: 60;
+    .close {
+        background-image: url(../images/graphics/closeX.png);
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        cursor: pointer;
+        &:hover {
+            background-position: 0 16px;
+        }
+    }
 }
 
 #login-window {

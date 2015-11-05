@@ -46,6 +46,8 @@
 
 <? if ($this->logged_in != 1) { ?>
 <div class="hidden popup" id="login-window">
+    <div class="close"></div>
+
     <div class="login-inside" ng-app="pcesports" ng-controller="Login" ng-cloak>
         
         <form class="form" name="loginForm" ng-submit="login();">
@@ -151,7 +153,7 @@
 <script src="<?=_cfg('static')?>/js/pc.js"></script>
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 <? } else { ?>
-<script src="<?=_cfg('static')?>/js/combined.js?v=1.8"></script>
+<script src="<?=_cfg('static')?>/js/combined.js?v=1.9"></script>
 <? } ?>
 
 </section>

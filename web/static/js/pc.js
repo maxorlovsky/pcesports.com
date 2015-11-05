@@ -772,7 +772,7 @@ var PC = {
         $('html, body').css('overflow', '');
         $('#fader').fadeOut('fast');
         $('.popup:visible').stop().animate({top: -$('.popup:visible').height()}, function() {
-            $('.popup:visible').hide();
+            $('.popup:visible').attr('style', null);
         });
     },
     timers: [],
