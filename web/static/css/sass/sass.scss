@@ -140,6 +140,9 @@ header {
                 &.web-link-community:before {
                     content: ',';
                 }
+                &.web-link-help:before {
+                    content: '\0061';
+                }
             }
         }
     }
