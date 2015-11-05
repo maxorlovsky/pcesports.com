@@ -3393,3 +3393,27 @@ footer .games img {
         margin-bottom: 20px;
     }
 }
+
+
+.faq {
+    .QnA {
+        box-shadow: 0 1px 5px 1px #ccc;
+        cursor: pointer;
+        margin-bottom: 20px;
+        padding: 10px;
+        &:hover {
+            box-shadow: 0 1px 5px 1px $mainColor;
+        }
+        
+        .question {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .answer {
+            display: none;
+            border-top: 1px dashed #888;
+            padding-left: 20px;
+            padding-top: 5px;
+        }
+    }
+}
