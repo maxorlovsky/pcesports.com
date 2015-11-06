@@ -1246,4 +1246,26 @@ class Ajax extends System
     	
     	return '1;'.$num;
     }
+
+    protected function getHsList() {
+        $rows = Db::fetchRows('SELECT `name`, `contact_info` '.
+            'FROM `participants` '.
+            'WHERE `game` = "hs" '.
+            //'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
+            //'AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' '.
+            'AND `server` = "s1" '.
+            'AND `tournament_id` = 6 '.
+            'AND `deleted` = 0 '.
+            'AND `approved` = 1 '.
+            //'AND `checked_in` = 1 '.
+            'ORDER BY `name` ASC'
+        );
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
+        }
+
+        echo json_encode($rows);
+    }
 }
