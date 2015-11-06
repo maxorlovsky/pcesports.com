@@ -871,6 +871,9 @@ class System
                     $cronClass = new Cron();
                     $cronClass->emailSender();
                 }
+                else if ($_GET['val1'] == 'hslist' && $_GET['val2'] === 'haosdi012') {
+                    $this->getHsList();
+                }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);
                     
@@ -933,5 +936,28 @@ class System
         }
 
         return true;
+    }
+
+    //Move somewhere
+    public function getHsList() {
+        $rows = Db::fetchRows('SELECT `name`, `contact_info` '.
+            'FROM `participants` '.
+            'WHERE `game` = "hs" '.
+            //'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
+            //'AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' '.
+            'AND `server` = "s1" '.
+            'AND `tournament_id` = 6 '.
+            'AND `deleted` = 0 '.
+            'AND `approved` = 1 '.
+            //'AND `checked_in` = 1 '.
+            'ORDER BY `name` ASC'
+        );
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+            }
+        }
+
+        echo json_encode($rows);
     }
 }
