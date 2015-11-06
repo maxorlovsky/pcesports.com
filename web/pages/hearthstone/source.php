@@ -184,7 +184,7 @@ class hearthstone extends System
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
             'WHERE `p`.`game` = "hs" AND `server` = "'.$this->server.'" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
-            'ORDER BY `p`.`id` ASC'
+            'ORDER BY `p`.`user_id` DESC, `p`.`id` ASC'
         );
         if ($rows) {
             foreach($rows as &$v) {
