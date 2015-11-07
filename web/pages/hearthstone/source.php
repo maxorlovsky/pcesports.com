@@ -548,7 +548,7 @@ class hearthstone extends System
         );
 
         if ($participantsCount >= $tournamentRow->max_num) {
-            return '0;Maximum number of participants checked in, sorry, try next time';
+            //return '0;Maximum number of participants checked in, sorry, try next time';
         }
         else if ($this->data->settings['tournament-checkin-hs'] != 1) {
             return '0;Check in is not in progress';
