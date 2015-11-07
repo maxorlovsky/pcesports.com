@@ -593,7 +593,7 @@ class hearthstone extends System
                     'AND `server` = "'.Db::escape($server).'" '.
 					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
                     'AND `approved` = 1 '.
-                    'AND `verified` = 1 '.
+                    //'AND `verified` = 1 '.
                     'AND `checked_in` = 0 '
 				);
                 if ($row != 0) {
@@ -605,6 +605,7 @@ class hearthstone extends System
                         'AND `server` = "'.Db::escape($server).'" '.
                         'AND `id` = '.(int)$_SESSION['participant']->id.' '.
                         'AND `approved` = 1 '
+                        //'AND `verified` = 1 '
                     );
                     
                     $_SESSION['participant']->checked_in = 1;
