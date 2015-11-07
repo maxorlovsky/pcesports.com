@@ -539,7 +539,9 @@ class hearthstone extends System
             'WHERE `tournament_id` = '.(int)$currentTournament.' '.
             'AND `game` = "hs" '.
             'AND `server` = "'.Db::escape($server).'" '.
-            'AND `checked_in` = 1 '
+            'AND `checked_in` = 1 '.
+            'AND `approved` = 1 '.
+            'AND `deleted` = 0 '
         );
         $tournamentRow = Db::fetchRow('SELECT * FROM `tournaments` '.
             'WHERE `name` = '.(int)$currentTournament.' '.
