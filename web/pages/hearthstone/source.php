@@ -604,8 +604,7 @@ class hearthstone extends System
                         'AND `game` = "hs" '.
                         'AND `server` = "'.Db::escape($server).'" '.
                         'AND `id` = '.(int)$_SESSION['participant']->id.' '.
-                        'AND `approved` = 1 '.
-                        'AND `verified` = 1 '
+                        'AND `approved` = 1 '
                     );
                     
                     $_SESSION['participant']->checked_in = 1;
