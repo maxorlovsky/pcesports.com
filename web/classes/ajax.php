@@ -339,7 +339,7 @@ class Ajax extends System
                 $dbDate = new DateTime($v->added);
                 $interval = $this->getAboutTime($currDate->diff($dbDate));
 
-                if ($row->status != 1) {
+                if ($v->status != 1) {
                     $text = $this->parseText($v->text);
                 }
                 else {
