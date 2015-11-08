@@ -169,7 +169,6 @@ var PC = {
                 
                 if (answer[0] == 1) {
                     $('.leave-comment #msg').val('');
-                    console.log(answer[1]);
                     $('.user-comments').prepend(answer[1]);
                 }
                 else {

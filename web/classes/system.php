@@ -59,8 +59,8 @@ class System
         	$data['token'] = false;
         }
         
-        if (isset($_SESSION['user']) || isset($_COOKIE['uid']) && $_COOKIE['uid'] && isset($_COOKIE['token']) && $_COOKIE['token']) {
-            $checkUser = User::checkUser($_SESSION['user']);
+        if (isset($_SESSION['user']['token']) || isset($_COOKIE['uid']) && $_COOKIE['uid'] && isset($_COOKIE['token']) && $_COOKIE['token']) {
+            $checkUser = User::checkUser();
         }
         else {
             $checkUser = false;
@@ -246,6 +246,7 @@ class System
             foreach($this->comments as &$v) {
                 $dbDate = new DateTime($v->added);
                 $v->interval = $this->getAboutTime($currDate->diff($dbDate));
+                $v->text = $this->parseText($v->text);
             }
             unset($v);
         }
@@ -253,7 +254,7 @@ class System
     
     public function ajax($data, $type = '') {
     	$this->checkGetData();
-    	
+
         $ajax = new Ajax();
         $ajax->ajaxRun($data, $type);
     }

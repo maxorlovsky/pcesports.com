@@ -338,8 +338,13 @@ class Ajax extends System
             foreach($rows as $v) {
                 $dbDate = new DateTime($v->added);
                 $interval = $this->getAboutTime($currDate->diff($dbDate));
-                
-                $text = $this->parseText($v->text);
+
+                if ($row->status != 1) {
+                    $text = $this->parseText($v->text);
+                }
+                else {
+                    $text = '<span class="deleted">'.t('deleted').'</span>';
+                }
                 
                 $html .= '<div class="master" attr-id="'.$v->id.'" attr-module="newsComment">'.
                             '<div class="body">'.

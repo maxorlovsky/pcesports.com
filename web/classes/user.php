@@ -376,20 +376,21 @@ class User extends System
         return '0;'.t('user_not_exist');
     }
     
-    public static function checkUser($user) {
-        $q = Db::query(
-            'SELECT * FROM `users_auth` '.
+    public static function checkUser() {
+        $row = Db::fetchRow(
+            'SELECT `user_id` FROM `users_auth` '.
             'WHERE `user_id` = '.(int)$_COOKIE['uid'].' AND '.
             '`token` = "'.Db::escape($_COOKIE['token']).'" '
         );
 
-        if ($q->num_rows == 0) {
+        if (!$row) {
             return false;
         }
         
         $userRow = Db::fetchRow(
             'SELECT * FROM `users` '.
-            'WHERE `id` = '.(int)$_COOKIE['uid'].' '
+            'WHERE `id` = '.(int)$row->user_id.' '.
+            'LIMIT 1 '
         );
         
         if (!$userRow) {
@@ -495,7 +496,7 @@ class User extends System
     }
     
     public static function socialDisconnect($data) {
-        $user = self::checkUser($_SESSION['user']);
+        $user = self::checkUser();
         
         if (!$user->id) {
             return t('not_logged_in');
@@ -518,7 +519,7 @@ class User extends System
     }
     
     public static function updateProfile($form) {
-        $user = self::checkUser($_SESSION['user']);
+        $user = self::checkUser();
         
         if (!$user->id) {
             return t('not_logged_in');
@@ -626,7 +627,7 @@ class User extends System
     }
 
     public static function updateEmail($form) {
-        $user = self::checkUser($_SESSION['user']);
+        $user = self::checkUser();
         
         if (!$user->id) {
             return t('not_logged_in');
@@ -665,7 +666,7 @@ class User extends System
     }
 
     public function completeMailChange($code) {
-        $user = self::checkUser($_SESSION['user']);
+        $user = self::checkUser();
 
         $row = Db::fetchRow(
             'SELECT * FROM `users_links` '.
@@ -709,7 +710,7 @@ class User extends System
     }
 
     public static function updatePassword($form) {
-        $user = self::checkUser($_SESSION['user']);
+        $user = self::checkUser();
         
         if (!$user->id) {
             return t('not_logged_in');
