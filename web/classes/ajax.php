@@ -719,12 +719,12 @@ class Ajax extends System
                     }
                     $code = json_encode($code);
 
-                    if ($_SESSION['participant']->challonge_id == $playersRow->player1_id) {
+                    /*if ($_SESSION['participant']->challonge_id == $playersRow->player1_id) {
                         $player = 1;
                     }
                     else {
                         $player = 2;
-                    }
+                    }*/
                 }
 
                 return '1;'.$enemyRow->name.';'.$status.';'.$code;

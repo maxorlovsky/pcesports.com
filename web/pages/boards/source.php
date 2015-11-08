@@ -145,9 +145,32 @@ class boards extends System
         }
         
         if ($data['type'] == 'board') {
-            $row = Db::fetchRow('SELECT * FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
-            if ($row && (($row->direction == 'plus' && $data['status'] == 'plus') || ($row->direction == 'minus' && $data['status'] == 'minus'))) {
-                Db::query('DELETE FROM `boards_votes` WHERE `board_id` = '.(int)$data['id'].' AND `user_id` = '.(int)$this->data->user->id.' LIMIT 1');
+            $allowedDirection = array('plus', 'minus');
+            //Checking if board even exists
+            $row = Db::fetchRow('SELECT `id` FROM `boards` WHERE `id` = '.(int)$data['id'].' LIMIT 1');
+            if (!$row || !in_array($data['status'], $allowedDirection)) {
+                return '0;'.t('error');
+            }
+
+            //Checking if user already voted on this board
+            $row = Db::fetchRow(
+                'SELECT * FROM `boards_votes` '.
+                'WHERE `board_id` = '.(int)$data['id'].' '.
+                'AND `user_id` = '.(int)$this->data->user->id.' '.
+                'LIMIT 1'
+            );
+
+            if ($row && (
+                ($row->direction == 'plus' && $data['status'] == 'plus') ||
+                ($row->direction == 'minus' && $data['status'] == 'minus'))
+               ) {
+                Db::query(
+                    'DELETE FROM `boards_votes` '.
+                    'WHERE `board_id` = '.(int)$data['id'].' '.
+                    'AND `user_id` = '.(int)$this->data->user->id.' '.
+                    'LIMIT 1'
+                );
+
                 if ($data['status'] == 'plus') {
                     Db::query('UPDATE `boards` SET `votes` = `votes` - 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
                 }
@@ -166,6 +189,7 @@ class boards extends System
                 '`user_id` = '.(int)$this->data->user->id.', '.
                 '`direction` = "'.Db::escape_tags($data['status']).'" '
             );
+            
             if ($data['status'] == 'plus') {
                 Db::query('UPDATE `boards` SET `votes` = `votes` + 1 WHERE `id` = '.(int)$data['id'].' LIMIT 1');
             }
