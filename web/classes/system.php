@@ -212,7 +212,8 @@ class System
                 'FROM `boards` AS `b` '.
                 $additionalSql.
                 'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
-                'ORDER BY `activity` DESC '.
+                'WHERE `b`.`status` != 1 '.
+                'ORDER BY `b`.`activity` DESC '.
                 'LIMIT 3 '
             );
             
@@ -237,6 +238,7 @@ class System
                 'FROM `blog_comments` AS `bc` '.
                 'LEFT JOIN `blog` AS `b` ON `bc`.`blog_id` = `b`.`id` '.
                 'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
+                'WHERE `status` != 1 '.
                 'ORDER BY `bc`.`id` DESC '.
                 'LIMIT 3 '
             );
