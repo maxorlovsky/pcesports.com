@@ -146,7 +146,7 @@
         margin-top: 10px;
         > .block {
             float: left;
-            width: 316px;
+            width: 320px;
             margin-right: 15px;
         }
         &::after {
@@ -209,7 +209,7 @@
 }
 
 /* Smallest phones */
-@media (max-width: 320px) {
+@media (max-width: 767px) {
     body {
         background: none;
         margin: 0;
@@ -420,10 +420,13 @@
     }
     
     footer {
+        margin: 20px 0 0 0 !important;
+        background-color: inherit;
         .separator {
             width: 100% !important;
-            margin: 0 0 10px 0;
+            margin: 20px 0 10px 0;
             float: none;
+            background-color: #1f1f1f;
         }
         .partners a {
             position: initial !important;
