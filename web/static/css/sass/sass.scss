@@ -1542,6 +1542,19 @@ footer {
             overflow: hidden;
         }
     }
+
+    .vods {
+        iframe {
+            width: 750px;
+            height: 505px;
+        }
+    }
+
+    .bracket {
+        .participants {
+            display: hidden;
+        }
+    }
 }
 
 .tournament .registration {

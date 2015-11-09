@@ -1,4 +1,4 @@
-<section class="container page article">
+<section class="container page news article">
 
 <div class="left-containers">
     <div class="block">

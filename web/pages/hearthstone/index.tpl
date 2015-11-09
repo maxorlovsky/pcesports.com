@@ -42,7 +42,7 @@
             <h1 class="bordered"><?=t('season_stats')?></h1>
         </div>
         
-        <div class="block-content tournament-rules">
+        <div class="block-content">
             <?=t('hs_stats_'.$this->server)?>
         </div>
     </div>

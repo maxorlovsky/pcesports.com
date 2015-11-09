@@ -2444,6 +2444,13 @@ footer {
     text-overflow: ellipsis;
     overflow: hidden; }
 
+.tournament .vods iframe {
+  width: 750px;
+  height: 505px; }
+
+.tournament .bracket .participants {
+  display: hidden; }
+
 .tournament .registration #join-form {
   width: 49%;
   float: left;
@@ -4392,6 +4399,11 @@ footer .games img {
   .tournament .block-content.ended-tournament, .tournament .block-content.active-tournament {
     position: relative;
     padding: 5px !important; }
+  .tournament .block-content.challonge-brackets {
+    display: none; }
+  .tournament .vods iframe {
+    width: 280px;
+    height: 170px; }
   .contact-form .fields input {
     width: 165px; }
   .contact-form .fields select {
@@ -4455,6 +4467,8 @@ footer .games img {
     display: none; }
   .team .team-division {
     width: 280px; }
+  .team .team-user {
+    width: 280px; }
   .boards .submit {
     width: 290px; }
   .boards .board .thread {
@@ -4471,4 +4485,8 @@ footer .games img {
   .users-list .cell4 {
     display: none !important; }
   .users-list .cell5 {
-    width: 115px; } }
+    width: 115px; }
+  .partners .partner .logo {
+    margin: 0 0 0 10px; }
+  .achievement .line-bar {
+    display: none; } }

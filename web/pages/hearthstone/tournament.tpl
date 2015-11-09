@@ -15,7 +15,7 @@
         </div>
         
         <div class="block-content vods">
-            <iframe width="750" height="505" src="//www.youtube.com/embed/<?=t('hs_tournament_vod_'.$this->server.'_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
+            <iframe src="//www.youtube.com/embed/<?=t('hs_tournament_vod_'.$this->server.'_'.$this->pickedTournament)?>" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
     <? } ?>
@@ -419,15 +419,12 @@
             <h1 class="bordered"><?=t('brackets')?></h1>
         </div>
 
-        <? if (_cfg('https') == 1) { ?>
-        <div class="block-content participants">
-            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?></a>
+        <div class="block-content participants <? if (_cfg('https') != 1) {?>hidden<?}?>">
+            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->pickedTournament?></a>
         </div>
-        <? } else { ?>
-        <div class="block-content challonge-brackets">
+        <div class="block-content challonge-brackets <? if (_cfg('https') == 1) {?>hidden<?}?>">
             <div id="challonge"></div>
         </div>
-        <? } ?>
     </div>
 	<? } ?>
 </div>
