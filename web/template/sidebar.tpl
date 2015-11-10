@@ -11,10 +11,11 @@
             <div class="block-header-wrapper">
                 <h1 class="bordered"><?=t('panel')?> (<?=(strlen($_SESSION['participant']->name)>10?substr($_SESSION['participant']->name,0,25):$_SESSION['participant']->name)?>)</h1>
             </div>
-            
+
             <? if ($_SESSION['participant']->game == 'hs') { ?>
             <ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
+                <li><a href="http://pentaclick.challonge.com/<?=$_SESSION['participant']->game?><?=$_SESSION['participant']->server?><?=$_SESSION['participant']->tournament_id?>" target="_blank"><?=t('brackets')?></a></li>
 				<? if ($this->data->settings['tournament-start-hs'] == 1) {?>
                 <li><a href="<?=_cfg('href')?>/hearthstone/<?=$_SESSION['participant']->server?>/participant/surrender" class="confirm" id="lostBattle" attr-msg="<?=t('sure_to_surrender')?>"><?=t('i_lost')?></a></li>
 				<? } else { ?>
@@ -32,6 +33,7 @@
             <? if ($_SESSION['participant']->game == 'lol') { ?>
 			<ul class="panel-links <?=$_SESSION['participant']->game?>">
                 <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/"><?=t('information')?></a></li>
+                <li><a href="http://pentaclick.challonge.com/<?=$_SESSION['participant']->game?><?=$_SESSION['participant']->server?><?=$_SESSION['participant']->tournament_id?>" target="_blank"><?=t('brackets')?></a></li>
                 <? if ($this->data->settings['tournament-start-lol-'.$_SESSION['participant']->server] != 1) {?>
                     <li><a href="<?=_cfg('href')?>/leagueoflegends/<?=$_SESSION['participant']->server?>/participant/team"><?=t('edit_team')?></a></li>
                 <? } ?>
