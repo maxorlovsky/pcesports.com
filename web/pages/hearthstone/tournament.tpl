@@ -420,7 +420,7 @@
         </div>
 
         <div class="block-content participants <? if (_cfg('https') != 1) {?>hidden<?}?>">
-            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/lol<?=$this->server?><?=$this->pickedTournament?></a>
+            <?=t('challonge_available_http_only')?> <a href="http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?>" target="_blank">http://pentaclick.challonge.com/hs<?=$this->server?><?=$this->pickedTournament?></a>
         </div>
         <div class="block-content challonge-brackets <? if (_cfg('https') == 1) {?>hidden<?}?>">
             <div id="challonge"></div>
