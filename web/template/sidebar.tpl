@@ -131,7 +131,7 @@
             <h1 class="bordered">Buy games with G2A</h1>
         </div>
         
-        <div class="ad-holder block-content">
+        <div class="block-content">
             <a href="https://www.g2a.com/r/pentaclick" target="_blank"><img src="<?=_cfg('img')?>/g2a.jpg" /></a>
         </div>
     </div>
