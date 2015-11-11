@@ -32,7 +32,7 @@
         <div class="devs social">
             <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
             <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
-            <a class="yt" href="https://www.youtube.com/user/pentaclickesports" target="_blank"></a>
+            <a class="yt" href="https://www.youtube.com/c/pentaclickesports" target="_blank"></a>
             <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
             <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
             <script>
