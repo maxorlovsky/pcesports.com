@@ -39,7 +39,8 @@ module.exports = function(grunt) {
 
             scriptsJs: {
                 src : [
-                    '<%= dirs.js %>/jquery.js',
+                    '<%= dirs.js %>/jquery.js', //jquery is a separate file because it is used by widget and already minified
+                    '<%= dirs.js %>/socket.io.js', //same reason as jquery
                     '<%= dirs.js %>/externals.js'
                 ],
                 dest : '<%= dirs.js %>/scripts.js'

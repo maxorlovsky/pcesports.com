@@ -2,8 +2,54 @@ var PC = {
     //global insides
     site: g.site,
     formInProgress: 0, //used when required to check if form is still in progress
+    socket: io(g.site+':3000'),
     
     //functions
+    socketInitiate: function() {
+        if (g.participant === undefined) {
+            return false;
+        }
+
+        var authData = {
+            id: g.participant.id,
+            link: g.participant.link
+        };
+
+        PC.socket.emit('handshake', authData);
+
+        PC.socket.on('fightStatus', function(answer){
+            console.log(answer);
+            /*$('#fightStatus').removeClass('online').removeClass('red');
+            answer = answer.split(';');
+            if (answer[2] == 'online') {
+                $('#fightStatus').addClass('online');
+            }
+            if (answer[0] == 2) {
+                $('#fightStatus').addClass('red');
+            }
+            $('#fightStatus').html(answer[2]);*/
+        });
+    },
+    statusCheck: function() {
+        $('#fightStatus').removeClass('online').removeClass('red');
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'statusCheck',
+            },
+            success: function(answer) {
+                answer = answer.split(';');
+                if (answer[2] == 'online') {
+                    $('#fightStatus').addClass('online');
+                }
+                if (answer[0] == 2) {
+                    $('#fightStatus').addClass('red');
+                }
+                $('#fightStatus').html(answer[2]);
+            }
+        };
+        this.ajax(query);
+    },
     checkAchievements: function() {
         document.getElementById('achievement-ping').volume = 0.2;
         var query = {
@@ -909,26 +955,6 @@ var PC = {
         };
         this.ajax(query);
     },
-    statusCheck: function() {
-		$('#fightStatus').removeClass('online').removeClass('red');
-		var query = {
-			type: 'POST',
-			data: {
-				ajax: 'statusCheck',
-			},
-			success: function(answer) {
-				answer = answer.split(';');
-				if (answer[2] == 'online') {
-					$('#fightStatus').addClass('online');
-				}
-                if (answer[0] == 2) {
-                    $('#fightStatus').addClass('red');
-                }
-				$('#fightStatus').html(answer[2]);
-			}
-		};
-		this.ajax(query);
-	},
     social: {
         vk: function() {
             this.get_token('vk');
@@ -1302,5 +1328,16 @@ var PC = {
             success: object.success,
             error: object.error
         });
+    },
+    //prototype for cookie reading
+    cookie: function(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
     }
 };

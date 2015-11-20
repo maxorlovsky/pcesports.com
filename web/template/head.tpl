@@ -60,7 +60,13 @@ var g = {
         turn_off_sound: '<?=t('turn_off_sound')?>',
         turn_on_sound: '<?=t('turn_on_sound')?>',
         approved: '<?=t('approved')?>',
+    },
+    <? if (isset($_SESSION['participant'])) { ?>
+    participant: {
+        id: <?=$_SESSION['participant']->id?>,
+        link: "<?=$_SESSION['participant']->link?>"
     }
+    <? } ?>
 };
 
 //Highslide

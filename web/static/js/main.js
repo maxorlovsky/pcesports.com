@@ -332,6 +332,8 @@ if (typeof requireStatus != 'undefined' && requireStatus == 1) {
 
 PC.runTimers();
 
+PC.socketInitiate();
+
 if (g.logged_in == 1) {
     PC.checkAchievements();
 }
