@@ -30,26 +30,6 @@ var PC = {
             $('#fightStatus').html(answer[2]);
         });*/
     },
-    statusCheck: function() {
-        $('#fightStatus').removeClass('online').removeClass('red');
-        var query = {
-            type: 'POST',
-            data: {
-                ajax: 'statusCheck',
-            },
-            success: function(answer) {
-                answer = answer.split(';');
-                if (answer[2] == 'online') {
-                    $('#fightStatus').addClass('online');
-                }
-                if (answer[0] == 2) {
-                    $('#fightStatus').addClass('red');
-                }
-                $('#fightStatus').html(answer[2]);
-            }
-        };
-        this.ajax(query);
-    },
     checkAchievements: function() {
         document.getElementById('achievement-ping').volume = 0.2;
         var query = {

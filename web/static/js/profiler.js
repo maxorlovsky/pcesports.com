@@ -73,8 +73,9 @@ new AjaxUpload(
             if (uploadInProgress == 1) {
                 alert('Upload in progress, wait!');
             }
+
     		if (! (ext && /^(jpg|png|jpeg)$/.test(ext))) {  
-    			alert('Only JPG, PNG files are allowed');  
+    			alert('Only JPG, PNG files are allowed, your is: '+ext);
     			return false; 
     		}
             

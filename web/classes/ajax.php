@@ -699,11 +699,12 @@ class Ajax extends System
                     $row = Db::fetchRow(
                         'SELECT `contact_info` FROM `participants` '.
                         'WHERE `game` = "hs" AND '.
-                        '`server` = "'.Db::escape($_SESSION['participant']->game).'" AND '.
+                        '`server` = "'.Db::escape($_SESSION['participant']->server).'" AND '.
                         '`id` = '.(int)$enemyRow->id
                     );
                     
                     $row->contact_info = json_decode($row->contact_info);
+                    
                     $heroes = array(
                         1 => 'warrior',
                         2 => 'hunter',

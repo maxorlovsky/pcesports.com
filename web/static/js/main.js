@@ -325,11 +325,6 @@ $('.achievements').on('click', this, function() {
     return false;
 });
 
-if (typeof requireStatus != 'undefined' && requireStatus == 1) {
-	PC.statusCheck();
-	setInterval(function () { PC.statusCheck(); }, 15000);
-}
-
 PC.runTimers();
 PC.socketInitiate();
 
