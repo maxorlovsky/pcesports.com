@@ -2,10 +2,10 @@ var PC = {
     //global insides
     site: g.site,
     formInProgress: 0, //used when required to check if form is still in progress
-    socket: io(g.site+':3000'),
+    //socket: io(g.site+':3000'),
     
     //functions
-    socketInitiate: function() {
+    /*socketInitiate: function() {
         if (g.participant === undefined) {
             return false;
         }
@@ -19,7 +19,7 @@ var PC = {
 
         PC.socket.on('fightStatus', function(answer){
             console.log(answer);
-            /*$('#fightStatus').removeClass('online').removeClass('red');
+            $('#fightStatus').removeClass('online').removeClass('red');
             answer = answer.split(';');
             if (answer[2] == 'online') {
                 $('#fightStatus').addClass('online');
@@ -27,9 +27,9 @@ var PC = {
             if (answer[0] == 2) {
                 $('#fightStatus').addClass('red');
             }
-            $('#fightStatus').html(answer[2]);*/
+            $('#fightStatus').html(answer[2]);
         });
-    },
+    },*/
     statusCheck: function() {
         $('#fightStatus').removeClass('online').removeClass('red');
         var query = {
