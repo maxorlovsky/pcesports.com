@@ -5,12 +5,12 @@ var PC = {
     //socket: io(g.site+':3000'),
     
     //functions
-    /*socketInitiate: function() {
+    socketInitiate: function() {
         if (g.participant === undefined) {
             return false;
         }
 
-        var authData = {
+        /*var authData = {
             id: g.participant.id,
             link: g.participant.link
         };
@@ -28,8 +28,8 @@ var PC = {
                 $('#fightStatus').addClass('red');
             }
             $('#fightStatus').html(answer[2]);
-        });
-    },*/
+        });*/
+    },
     statusCheck: function() {
         $('#fightStatus').removeClass('online').removeClass('red');
         var query = {

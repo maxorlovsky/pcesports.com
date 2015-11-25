@@ -31,7 +31,8 @@ class home extends System
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
-            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '
+            '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
+            'ORDER BY STR_TO_DATE(`dates_start`, "%d.%m.%Y") DESC '
         );
         
         if ($rows) {
@@ -78,25 +79,12 @@ class home extends System
                         $name = 'Europe West';
                     }
                     $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 1;
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League Season 2';
                     $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 2;
                 }
-                /*else if ($v->game == 'smite') {
-                    $link = 'smite/'.$v->server.'/'.$v->name;
-                    if ($v->server == 'eu') {
-                        $name = 'Europe';
-                    }
-                    else {
-                        $name = 'North America';
-                    }
-                    $additionalWhere = '`approved` = 1 AND ';
-                    $v->priority = 3;
-                }*/
 
                 //Fetching number of players for each tournament
                 $row = Db::fetchRow('SELECT COUNT(`tournament_id`) AS `value`'.
@@ -110,7 +98,6 @@ class home extends System
                 );
 
                 $this->tournamentData[$v->game.''.$v->server] = array(
-                    'priority'  => $v->priority,
                     'id'	    => $v->name,
                     'name'      => $name,
                     'status'    => $v->status,
@@ -121,7 +108,6 @@ class home extends System
                     'teams'     => $row->value,
                 );
             }
-            asort($this->tournamentData);
         }
 		
 		$this->blog = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`comments`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.

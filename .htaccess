@@ -7,7 +7,7 @@ Options +FollowSymLinks
 Options -MultiViews
 
 # hiding all packages files
-<Files ~ "(.tpl|composer.json|composer.lock|composer.phar|Gruntfile.js|package.json)">
+<Files ~ "(.tpl|composer.json|composer.lock|composer.phar|Gruntfile.js|package.json|server.js)">
     Order allow,deny
     Deny from all
     Require all denied
