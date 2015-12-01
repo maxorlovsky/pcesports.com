@@ -36,6 +36,7 @@ class home extends System
         );
         
         if ($rows) {
+            $i = 0;
             foreach($rows as $v) {
                 $startTime = strtotime($v->dates_start.' '.$v->time);
                 $regTime = strtotime($v->dates_registration.' '.$v->time);
@@ -50,6 +51,9 @@ class home extends System
                     $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
                     $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
                     $checkReg = $this->data->settings['tournament-reg-'.$v->game.'-'.$v->server];
+                    if ($i === 0) {
+                        $lolPriority = 1;
+                    }
                 }
 
                 if ($checkInStatus == 1) {
@@ -98,6 +102,7 @@ class home extends System
                 );
 
                 $this->tournamentData[$v->game.''.$v->server] = array(
+                    'order'     => ($lolPriority==1&&$v->game=='lol'?1:2),
                     'id'	    => $v->name,
                     'name'      => $name,
                     'status'    => $v->status,
@@ -107,6 +112,7 @@ class home extends System
                     'link'      => $link,
                     'teams'     => $row->value,
                 );
+                asort($this->tournamentData);
             }
         }
 		
