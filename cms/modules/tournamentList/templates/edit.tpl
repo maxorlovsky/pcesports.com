@@ -83,12 +83,12 @@
         </td>
         <td>
             <select id="status">
-                <option>Upcoming</option>
-                <option <?=($module->editData->status=='registration'?'selected="selected"':null)?>>Registration</option>
-                <option <?=($module->editData->status=='check_in'?'selected="selected"':null)?>>Check In</option>
-                <option <?=($module->editData->status=='live'?'selected="selected"':null)?>>Live</option>
-                <option <?=($module->editData->status=='ended'?'selected="selected"':null)?>>Ended</option>
-                <option <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start (not for project)</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="registration" <?=($module->editData->status=='registration'?'selected="selected"':null)?>>Registration</option>
+                <option value="check_in" <?=($module->editData->status=='check_in'?'selected="selected"':null)?>>Check In</option>
+                <option value="live" <?=($module->editData->status=='live'?'selected="selected"':null)?>>Live</option>
+                <option value="ended" <?=($module->editData->status=='ended'?'selected="selected"':null)?>>Ended</option>
+                <option value="start" <?=($module->editData->status=='Start'?'selected="selected"':null)?>>Start (not for project)</option>
             </select>
         </td>
     </tr>
