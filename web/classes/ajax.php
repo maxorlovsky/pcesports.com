@@ -1258,7 +1258,8 @@ class Ajax extends System
             'FROM `participants` '.
             'WHERE `game` = "hs" '.
             'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
-            'AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' '.
+            //'AND `tournament_id` = '.(int)$this->data->settings['hs-current-number'].' '.
+            'AND `tournament_id` = 2 '.
             //'AND `server` = "s1" '.
             //'AND `tournament_id` = 6 '.
             'AND `deleted` = 0 '.
