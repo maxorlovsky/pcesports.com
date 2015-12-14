@@ -18,7 +18,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.24" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.25" />
 </head>
 <body>
 
@@ -170,4 +170,11 @@ hs.dimmingOpacity = 0.8;
     
     
     <div class="clear"></div>
+
+    <ul class="snow">
+        <li>Snow Effect 1</li>
+        <li>Snow Effect 2</li>
+        <li>Snow Effect 3</li>
+        <li>Snow Effect 4</li>
+    </ul>
 </header>

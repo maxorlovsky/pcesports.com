@@ -3436,3 +3436,58 @@ footer .games img {
         }
     }
 }
+
+.snow {
+    
+
+    &:last-of-type {
+        width: 100%;
+        height: 80px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+        list-style: none;
+        z-index: -1;
+        perspective: 800px;
+    }
+    &:last-of-type li {
+        display: block;
+        background-image: url('https://b.thumbs.redditmedia.com/ax1NNyADy2HY2jVVEFDPwLerbv-RunRLUfYesXGY-xE.png');
+        height: 1200px;
+        width: 200%;
+        margin-left: -50%;
+        transform: translateY(-600px);
+        transform-origin: 0 0;
+        background-repeat: repeat;
+        animation: snowfall 10s linear infinite;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+    &:last-of-type li:nth-child(2) {
+        animation: snowfallX 10s linear infinite;
+        background-position: 50px 50px;
+        transform: translateY(-600px) translateZ(250px);
+    }
+    &:last-of-type li:nth-child(3) {
+        animation: snowfallZ 10s linear infinite;
+        background-position: 100px 100px;
+        transform: translateY(-600px) translateZ(150px);
+    }
+    &:last-of-type li:nth-child(4) {
+        animation: snowfallY 10s linear infinite;
+        background-position: 150px 150px;
+        transform: translateY(-600px) translateZ(-150px);
+    }
+
+    @keyframes snowfall {to{transform:translateY(0)}}
+    @keyframes snowfallZ{to{transform:translateY(0) translateZ(150px)}}
+    @keyframes snowfallX{to{transform:translateY(0) translateZ(250px)}}
+    @keyframes snowfallY{to{transform:translateY(0) translateZ(-150px)}}
+}
