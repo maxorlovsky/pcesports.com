@@ -3471,17 +3471,17 @@ footer .games img {
         pointer-events: none;
     }
     &:last-of-type li:nth-child(2) {
-        animation: snowfallX 10s linear infinite;
+        animation: snowfallX 20s linear infinite;
         background-position: 50px 50px;
         transform: translateY(-600px) translateZ(250px);
     }
     &:last-of-type li:nth-child(3) {
-        animation: snowfallZ 10s linear infinite;
+        animation: snowfallZ 20s linear infinite;
         background-position: 100px 100px;
         transform: translateY(-600px) translateZ(150px);
     }
     &:last-of-type li:nth-child(4) {
-        animation: snowfallY 10s linear infinite;
+        animation: snowfallY 20s linear infinite;
         background-position: 150px 150px;
         transform: translateY(-600px) translateZ(-150px);
     }
