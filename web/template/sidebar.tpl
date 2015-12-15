@@ -159,6 +159,15 @@
     </div>
     <? } ?>
 
+    <div class="block fb">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">@Tweet</h1>
+        </div>
+        <div class="twitter-holder block-content">
+            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick" data-widget-id="422786485738147841">Tweets by @pentaclick</a>
+        </div>
+    </div>
+
 </div>
 
 <div class="clear"></div>
