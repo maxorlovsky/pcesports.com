@@ -20,7 +20,8 @@
     
     <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.29" />
 </head>
-<body>
+
+<body class="<?=$this->data->mood?>">
 
 <script src="<?=_cfg('static')?>/js/ads.js"></script>
 
@@ -159,10 +160,13 @@ hs.dimmingOpacity = 0.8;
     
     <div class="clear"></div>
 
+    <? if ($this->data->mood == 'winter') { ?>
     <ul class="snow">
         <li>Snow Effect 1</li>
         <li>Snow Effect 2</li>
         <li>Snow Effect 3</li>
         <li>Snow Effect 4</li>
     </ul>
+    <div class="lights"></div>
+    <? } ?>
 </header>

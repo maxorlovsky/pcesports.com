@@ -42,6 +42,9 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0px -100px;
+    &.winter {
+        background-image:url(../images/bg-christmas.jpg);
+    }
 }
 
 #full-site-wrapper {

@@ -250,6 +250,15 @@ class System
             }
             unset($v);
         }
+
+        //Setting class for body for specific mood
+        $this->data->mood = '';
+
+        //Winter/Chrismas/New year mood
+        $month = date('m', time());
+        if ($month == 1 || $month == 12) {
+            $this->data->mood = 'winter';
+        }
     }
     
     public function ajax($data, $type = '') {

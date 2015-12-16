@@ -1,215 +1,225 @@
 /* Site specific, menu breaks if less */
 @media (max-width: 768px) {
-    body {
-        margin: 0;
+
+body {
+    margin: 0;
+}
+.burger {
+    &:before {
+        content: "\0069";
     }
-    .burger {
-        &:before {
-            content: "\0069";
-        }
-        display: block !important;
-        font: 80px 'EntypoRegular';
-        float: left;
-        color: #fff;
-        margin: 0 10px;
-        transition: .5s;
-        line-height: 50px;
-        cursor: pointer;
-        &.active {
-            transform: rotate(90deg);
-        }
+    display: block !important;
+    font: 80px 'EntypoRegular';
+    float: left;
+    color: #fff;
+    margin: 0 10px;
+    transition: .5s;
+    line-height: 50px;
+    cursor: pointer;
+    &.active {
+        transform: rotate(90deg);
     }
-    .twitch {
+}
+.twitch {
+    display: none;
+}
+
+header {
+    position: relative !important;
+    padding: 5px 0;
+    min-height: 0;
+    .header-middle {
         display: none;
     }
-
-    header {
-        position: relative !important;
-        padding: 5px 0;
-        min-height: 0;
-        .header-middle {
+    .logo {
+        margin-left: 10px;
+        img {
+            width: 100px;
+            height: auto;
+        }
+    }
+    .social {
+        margin: 5px 5px 0 0;
+        a {
+            margin-right: 2px;
+            transition: 0 !important;
+        }
+    }
+    .languages {
+        margin: 10px 5px 0 0;
+    }
+    .language-switcher {
+        top: 35px;
+    }
+    nav {
+        margin-left: 0;
+        margin-top: 58px;
+        float: none;
+        .navbar-inner {
             display: none;
         }
-        .logo {
-            margin-left: 10px;
-            img {
-                width: 100px;
+        .nav {
+            width: 100%;
+            .nav-link {
                 height: auto;
-            }
-        }
-        .social {
-            margin: 5px 5px 0 0;
-            a {
-                margin-right: 2px;
-                transition: 0 !important;
-            }
-        }
-        .languages {
-            margin: 10px 5px 0 0;
-        }
-        .language-switcher {
-            top: 35px;
-        }
-        nav {
-            margin-left: 0;
-            margin-top: 58px;
-            float: none;
-            .navbar-inner {
-                display: none;
-            }
-            .nav {
-                width: 100%;
-                .nav-link {
-                    height: auto;
-                    line-height: 50px;
-                    float: none;
-                    border-top: 1px solid #373737;
-                    &:before {
-                        top: 0;
-                    }
-                    a {
-                        padding: 0 0 0 30px;
-                    }
-                    .nav-sub {
-                        display: block !important;
-                        position: initial;
-                        left: initial;
-                        top: initial;
-                        background: 0;
-                    }
+                line-height: 50px;
+                float: none;
+                border-top: 1px solid #373737;
+                &:before {
+                    top: 0;
+                }
+                a {
+                    padding: 0 0 0 30px;
+                }
+                .nav-sub {
+                    display: block !important;
+                    position: initial;
+                    left: initial;
+                    top: initial;
+                    background: 0;
                 }
             }
         }
+    }
 
-        .nav-user {
-            min-height: auto;
-            margin: 0;
-            li a {
-                padding: 10px 8px;
-            }
-            .nav-avatar {
+    .nav-user {
+        min-height: auto;
+        margin: 0;
+        li a {
+            padding: 10px 8px;
+        }
+        .nav-avatar {
+            height: 55px;
+            left: -55px;
+            img {
                 height: 55px;
-                left: -55px;
-                img {
-                    height: 55px;
-                }
-            }
-            .nav-sub {
-                top: 58px;
-                left: -68px;
             }
         }
-
-        .login {
-            line-height: 55px;
+        .nav-sub {
+            top: 58px;
+            left: -68px;
         }
     }
-    
-    footer {
-        .thread {
-            max-width: 230px;
-            overflow: hidden;
-        }
-        .boards {
-            .board {
-                .category {
-                    margin: 0 2px 0 0;
-                }
-                .thread {
-                    .title {
-                        max-width: 140px !important;
-                    }
+
+    .login {
+        line-height: 55px;
+    }
+}
+
+footer {
+    .thread {
+        max-width: 230px;
+        overflow: hidden;
+    }
+    .boards {
+        .board {
+            .category {
+                margin: 0 2px 0 0;
+            }
+            .thread {
+                .title {
+                    max-width: 140px !important;
                 }
             }
         }
     }
+}
 
-    .page {
-        min-width: inherit;
-        padding: 20px 0;
-    }
+.page {
+    min-width: inherit;
+    padding: 20px 0;
+}
 
-    .container {
-        max-width: 860px;
-        width: 100%;
-    }
+.container {
+    max-width: 860px;
+    width: 100%;
+}
 
-    .left-containers {
-        float: none;
-        min-width: inherit;
-        width: auto;
-        max-width: 860px;
+.left-containers {
+    float: none;
+    min-width: inherit;
+    width: auto;
+    max-width: 860px;
+}
+.right-containers {
+    width: 100%;
+    float: none;
+    margin-top: 10px;
+    > .block {
+        float: left;
+        width: 320px;
+        margin-right: 15px;
     }
-    .right-containers {
-        width: 100%;
-        float: none;
-        margin-top: 10px;
-        > .block {
-            float: left;
-            width: 320px;
-            margin-right: 15px;
-        }
-        &::after {
-            display: block;
-            content: ' ';
-            clear: both;
-        }
+    &::after {
+        display: block;
+        content: ' ';
+        clear: both;
     }
-    
-    .home {
-        .home-tournaments {
-            .hss2 {
-                width: 100%;
-            }
-        }
-    }
+}
 
-    .donate {
-        a {
-            width: 96%;
-        }
-        .arrow-down {
-            top: 195px;
-            left: 50%;
-        }
-        .list {
-            top: 207px;
-            width: 100%;
-        }
-        .separator {
-            top: 206px;
+.home {
+    .home-tournaments {
+        .hss2 {
             width: 100%;
         }
     }
-    
-    .boards,
-    .submitBoard {
-        .leave-comment {
-            .formatting {
-                width: 100%;
-            }
-            textarea {
-                width: 100%;
-                box-sizing: border-box;
-            }
+}
+
+.donate {
+    a {
+        width: 96%;
+    }
+    .arrow-down {
+        top: 195px;
+        left: 50%;
+    }
+    .list {
+        top: 207px;
+        width: 100%;
+    }
+    .separator {
+        top: 206px;
+        width: 100%;
+    }
+}
+
+.boards,
+.submitBoard {
+    .leave-comment {
+        .formatting {
+            width: 100%;
         }
-        #submitBoard {
+        textarea {
             width: 100%;
             box-sizing: border-box;
-            text-align: center;
-            font-size: 22px;
         }
     }
-    
-    .users-list {
-        .cell5 {
-            display: none !important;
-        }
+    #submitBoard {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 22px;
     }
+}
 
-.snow {
-    &:last-of-type {
-        height: 70px;
+.users-list {
+    .cell5 {
+        display: none !important;
+    }
+}
+
+.winter {
+    .snow {
+        &:last-of-type {
+            height: 70px;
+        }
+        &:before {
+            height: 71px;
+            background-position: right bottom;
+        }
+    }
+    .lights {
+        top: 50px;
     }
 }
 
@@ -720,9 +730,19 @@ footer {
     }
 }
 
-.snow {
-    &:last-of-type {
-        height: 55px;
+.winter {
+    .snow {
+        &:last-of-type {
+            height: 55px;
+        }
+        &:before {
+            background-position: inherit;
+            height: 56px;
+        }
+    }
+
+    .lights {
+        top: 40px;
     }
 }
 
