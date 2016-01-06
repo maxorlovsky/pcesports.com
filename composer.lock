@@ -58,16 +58,16 @@
         },
         {
             "name": "maxtream/themages",
-            "version": "3.15.1",
+            "version": "3.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maxtream/themages-cms.git",
-                "reference": "fa967cfae3dbd3a759b4039dd91cfbaa164da60b"
+                "reference": "b41f48e438e6ed94a5f734ea89b717c6977ac6e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maxtream/themages-cms/zipball/fa967cfae3dbd3a759b4039dd91cfbaa164da60b",
-                "reference": "fa967cfae3dbd3a759b4039dd91cfbaa164da60b",
+                "url": "https://api.github.com/repos/Maxtream/themages-cms/zipball/b41f48e438e6ed94a5f734ea89b717c6977ac6e9",
+                "reference": "b41f48e438e6ed94a5f734ea89b717c6977ac6e9",
                 "shasum": ""
             },
             "require": {
@@ -107,7 +107,7 @@
                 "cms",
                 "php"
             ],
-            "time": "2015-12-16 15:33:12"
+            "time": "2015-12-18 16:18:05"
         },
         {
             "name": "swiftmailer/swiftmailer",
