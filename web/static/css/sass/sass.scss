@@ -1618,13 +1618,12 @@ footer {
         &.hoverable {
             background-position: center;
             background-size: cover;
-            padding: 10px;
+            padding: 10px 15px;
             a {
                 display: block;
-                background-color: rgba(0,0,0,0.8);
+                background-color: rgba(0,0,0,0.9);
                 border-radius: 4px;
                 padding: 5px;
-
             }
             .team-name {
                 transition: .3s;
