@@ -1636,6 +1636,9 @@ footer {
                     color: #444;
                 }
             }
+            .player-heroes {
+                text-align: center;
+            }
         }
     }
     .team-name {
@@ -1661,7 +1664,6 @@ footer {
 
 .player-heroes {
     margin-top: 5px;
-    text-align: center;
     div {
         display: inline-block;
         margin: 0 4px 0 0;
