@@ -1616,6 +1616,16 @@ footer {
             font-family: 'PT Sans', Arial, Helvetica, sans-serif;
         }
         &.hoverable {
+            background-position: center;
+            background-size: cover;
+            padding: 10px;
+            a {
+                display: block;
+                background-color: rgba(0,0,0,0.8);
+                border-radius: 4px;
+                padding: 5px;
+
+            }
             .team-name {
                 transition: .3s;
                 color: #1697e1;
@@ -1651,6 +1661,7 @@ footer {
 
 .player-heroes {
     margin-top: 5px;
+    text-align: center;
     div {
         display: inline-block;
         margin: 0 4px 0 0;

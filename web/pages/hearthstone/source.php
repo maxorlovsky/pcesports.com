@@ -51,7 +51,7 @@ class hearthstone extends System
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
 			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
-        $row = Db::fetchRow('SELECT `email`, `contact_info` '.
+        $row = Db::fetchRow('SELECT `email`, `contact_info`, `avatar` '.
             'FROM `participants` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
@@ -180,7 +180,7 @@ class hearthstone extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `p`.`place`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified` '.
+        $rows = Db::fetchRows('SELECT `p`.`name` AS `battletag`, `p`.`place`, `u`.`name`, `p`.`user_id`, `p`.`seed_number`, `p`.`place`, `p`.`contact_info`, `p`.`approved`, `p`.`checked_in`, `p`.`verified`, `u`.`avatar` '.
             'FROM `participants` AS `p` '.
             'LEFT JOIN `users` AS `u` ON `p`.`user_id` = `u`.`id` '.
             'WHERE `p`.`game` = "hs" AND `server` = "'.$this->server.'" AND `p`.`tournament_id` = '.(int)$this->pickedTournament.' AND `deleted` = 0 '.
