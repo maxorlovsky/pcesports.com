@@ -56,6 +56,7 @@ module.exports = function(grunt) {
                 src : [
                     '<%= dirs.js %>/app/app.js',
                     '<%= dirs.js %>/app/**/services/*.js',
+                    '<%= dirs.js %>/app/**/directives/*.js',
                     '<%= dirs.js %>/app/**/controllers/*.js'
                 ],
                 dest : '<%= dirs.js %>/angular-combined.js'

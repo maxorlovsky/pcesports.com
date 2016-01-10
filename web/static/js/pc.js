@@ -55,7 +55,9 @@ var PC = {
 
                     setTimeout(function () { $('.achievements').trigger('click'); }, 20000); //hide in 20 sec
                 }
-            }
+            },
+            //Empty error message required
+            error: function() {}
         };
         this.ajax(query);
     },

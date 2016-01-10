@@ -21,6 +21,21 @@
         </div>
     </div>
     
+    <? if ($this->member->teams) { ?>
+    <div class="block teams member-teams">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('teams')?></h1>
+        </div>
+        <? foreach ($this->member->teams as $v) { ?>
+        <a href="<?=_cfg('href')?>/team/<?=strtolower(urlencode($v->name))?>" class="block-content">
+            <label class="team-name"><?=$v->name?></label>
+            <span href="javascript:void(0);" class="title right"><?=$v->title?></span>
+            <div class="clear"></div>
+        </a>
+        <? } ?>
+    </div>
+    <? } ?>
+
     <? if ($this->member->summoners) { ?>
     <div class="block summoners member-summoners">
         <div class="block-header-wrapper">
@@ -74,7 +89,7 @@
 
         <div class="block-content">
             <? foreach ($this->member->achievements as $v) { ?>
-                <div class="achievement <?=($v->locked!==0?'locked':'hint')?>" attr-msg="Unlocked on <?=date('d M @ H:i', strtotime($v->date))?>">
+                <div class="achievement <?=($v->locked!==0?'locked':'hint')?>" attr-msg="Unlocked on <?=date('d M Y @ H:i', strtotime($v->date))?>">
                     <div class="image">
                         <? if ($v->image) { ?>
                             <img src="<?=_cfg('img').'/achievements/'.$v->image?>" />

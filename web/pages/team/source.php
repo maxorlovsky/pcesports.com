@@ -7,16 +7,24 @@ class team extends system
 
 	public function __construct($params = array()) {
         $this->data = $params->data;
+
         $this->team = Db::fetchRow(
-            'SELECT * FROM `teams` '.
-            'WHERE LOWER(`name`) = "'.strtolower(urldecode($_GET['val2'])).'" '.
+            'SELECT `t`.*, COUNT(`tu`.`user_id`) AS `members_count` '.
+            'FROM `teams` AS `t` '.
+            'LEFT JOIN `teams2users` AS `tu` ON `tu`.`team_id` = `t`.`id` '.
+            'WHERE LOWER(`name`) = "'.Db::escape(strtolower(urldecode($_GET['val2']))).'" '.
             'LIMIT 1 '
         );
 
+        if (!$this->team) {
+            go(_cfg('href').'/teams');
+        }
+
         $this->team->members = Db::fetchRows(
-            'SELECT `u`.*, `t2u`.`title` '.
+            'SELECT `u`.*, `t2u`.`title`, `s`.`name` AS `summoner`, `s`.`division`, `s`.`league` '.
             'FROM `teams2users` AS `t2u` '.
             'LEFT JOIN `users` AS `u` ON `t2u`.`user_id` = `u`.`id` '.
+            'LEFT JOIN `summoners` AS `s` ON `u`.`id` = `s`.`user_id` AND `s`.`approved` = 1 '.
             'WHERE `t2u`.`team_id` = '.$this->team->id
         );
 	}
@@ -35,4 +43,20 @@ class team extends system
             }
         }
 	}
+
+    public static function getSeo() {
+        $team = Db::fetchRow(
+            'SELECT * FROM `teams` '.
+            'WHERE LOWER(`name`) = "'.Db::escape(strtolower(urldecode($_GET['val2']))).'" '.
+            'LIMIT 1 '
+        );
+        
+        $seo = array(
+            'title' => $team->name.' | Team profile',
+            //'ogImg' => ($news->extension?_cfg('imgu').'/blog/small-'.$news->id.'.'.$news->extension:null),
+            //'ogDesc' => strip_tags($news->short_english),
+        );
+        
+        return (object)$seo;
+    }
 }

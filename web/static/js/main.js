@@ -2,6 +2,14 @@ if( window.canRunAds === undefined ){
     $('.survive').show();
 }
 
+$('.tabs li').on('click', function() {
+    $('.tabs li').removeClass('active');
+    $('.tabs-content div').removeClass('active');
+    var openTab = $(this).attr('attr-menu');
+    $(this).addClass('active');
+    $('.tabs-content .tab-content-'+openTab).addClass('active');
+});
+
 $('.burger').on('click', function() {
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');

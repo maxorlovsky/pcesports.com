@@ -3,7 +3,7 @@ var app;
 (function(){
 	'use strict';
 
-	app = angular.module('pcesports', ['ngResource']);
+	app = angular.module('pcesports', ['ngResource', 'initialValue']);
 })();
 
 /*app.constant('config', {

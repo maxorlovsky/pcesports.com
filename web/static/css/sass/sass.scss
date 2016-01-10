@@ -1279,9 +1279,11 @@ footer {
 #ngError {
     @extend #error;
     display: inherit;
-    /* p {
-        white-space: pre;
-    } */
+    &.pre {
+        p {
+            white-space: pre;
+        }
+    }
 }
 .red {
     color: #CE2929;
@@ -1773,7 +1775,7 @@ footer .games img {
         background-color: #32333b;
         min-height: 41px;
         h1 {
-            background: linear-gradient(to bottom,  rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
+            background: linear-gradient(to bottom, rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
             box-shadow: 0 1px 2px rgba(0,0,0,.3), inset 0 1px 1px 1px #43CDEF;
             margin: 0;
             padding: 10px;
@@ -3489,6 +3491,7 @@ footer .games img {
             overflow: hidden;
             pointer-events: none;
         }
+        
         &:last-of-type li:nth-child(2) {
             animation: snowfallX 20s linear infinite;
             background-position: 50px 50px;
@@ -3503,6 +3506,15 @@ footer .games img {
             animation: snowfallY 20s linear infinite;
             background-position: 150px 150px;
             transform: translateY(-600px) translateZ(-150px);
+        }
+
+        /* Hiding for computers with probably less CPU power */
+        @media (max-width: 1366px) {
+            &:last-of-type li:nth-child(2),
+            &:last-of-type li:nth-child(3),
+            &:last-of-type li:nth-child(4) {
+                display: none;
+            }
         }
 
         @keyframes snowfall {to{transform:translateY(0)}}
@@ -3521,5 +3533,124 @@ footer .games img {
         background-repeat: repeat-x;
         top: 50px;
         left: 0;
+    }
+}
+
+.member-teams {
+    margin-top: 20px;
+    a {
+        width: 100%;
+        display: block;
+        padding: 0 !important;
+        height: 38px;
+        &:hover {
+            background-color: #eee;
+            transition: .3s;
+        }
+        .game-logo {
+            float: left;
+            height: 30px;
+            padding: 4px 0 0 5px;
+        }
+        label {
+            display: inline-block;
+            height: 30px;
+            margin: 10px 0 0 10px;
+            font-weight: bold;
+            width: 200px;
+            cursor: pointer;
+        }
+        .summoner {
+            display: inline-block;
+            .division-logo {
+                float: left;
+                margin-top: -6px;
+            }
+        }
+        .right {
+            float: right;
+            padding: 10px 10px 0 0;
+        }
+    }
+}
+
+.teams-list {
+    @extend .users-list;
+    
+    .headers,
+    .block-content {
+        padding-left: 48px;
+    }
+    .cell1 {
+        width: 350px;
+    }
+    .cell2 {
+        width: 170px;
+    }
+    .cell3 {
+        width: 200px;
+        text-align: right;
+    }
+}
+
+.team {
+    .member {
+        .avatar {
+            border: 1px solid #fff;
+            outline: 1px solid #555;
+            height: 150px;
+            float: left;
+            margin: 0 10px 10px 0;
+            img {
+                height: 150px;
+            }
+        }
+        .information {
+            width: 570px;
+            label {
+                display: inline-block;
+                font-weight: bold;
+                min-width: 160px;
+            }
+            p {
+                margin-top: 0;
+            }
+        }
+        .buttons {
+            float: right;
+            text-align: right;
+            .small {
+                font-size: 11px;
+                color: #555;
+                width: 145px;
+            }
+        }
+    }
+
+    .member-summoners, .member-tournaments, .member-achievements {
+        margin-top: 20px;
+    }
+
+    .line-bar {
+        width: 500px;
+        margin: 10px auto;
+        text-align: center;
+        span {
+            display: inline-block;
+        }
+        > div {
+            display: inline-block;
+            margin-top: 2px;
+            border: 1px solid #1697e1;
+            border-radius: 15px;
+            width: 400px;
+            height: 10px;
+            span {
+                display: block;
+                background-color: #1697e1;
+                border-radius: 15px;
+                height: 10px;
+            }
+        }
     }
 }

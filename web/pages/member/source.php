@@ -74,6 +74,20 @@ class member extends System
             $this->member->tournaments = array();
         }
 
+        //Teams list
+        $rows = Db::fetchRows(
+            'SELECT `tu`.`title`, `t`.`name` '.
+            'FROM `teams2users` AS `tu` '.
+            'LEFT JOIN `teams` AS `t` on `tu`.`team_id` = `t`.`id` '.
+            'WHERE `tu`.`user_id` = '.(int)$this->member->id.' '
+        );
+        if ($rows) {
+            $this->member->teams = $rows;
+        }
+        else {
+            $this->member->teams = array();
+        }
+
         //Achievements list
         $rows = Db::fetchRows(
             'SELECT `ua`.`achievement_id`, `ua`.`current`, `ua`.`date`, `ua`.`done`, `a`.* '.

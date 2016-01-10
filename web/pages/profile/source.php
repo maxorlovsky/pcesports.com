@@ -123,6 +123,7 @@ class profile extends System
         }
 
         $error = array();
+        $object = new stdClass();
 
         $row = Db::fetchRow(
             'SELECT `id` FROM `teams` '.
@@ -157,13 +158,6 @@ class profile extends System
             $error['description'] = t('team_description_is_too_big');
         }
 
-        if (!$data['password']) {
-            $error['password'] = t('team_password_is_empty');
-        }
-        else if (trim(strlen($data['password'])) < 3) {
-            $error['password'] = t('team_password_is_too_small');
-        }
-
         if ($error) {
             return $this->errorMessage($error);
         }
@@ -173,8 +167,7 @@ class profile extends System
             '`user_id_captain` = '.(int)$this->data->user->id.', '.
             '`name` = "'.trim(Db::escape_tags($data['name'])).'", '.
             '`tag` = "'.trim(strtoupper(Db::escape_tags($data['tag']))).'", '.
-            '`description` = "'.trim(Db::escape_tags($data['description'])).'", '.
-            '`password` = "'.md5(Db::escape_tags($data['password'])).'" '
+            '`description` = "'.trim(Db::escape_tags($data['description'])).'" '
         );
         $lastId = Db::lastId();
         Db::query(
@@ -184,9 +177,10 @@ class profile extends System
             '`title` = "Captain" '
         );
 
-        $answer->url = _cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
+        $object->status = 200;
+        $object->url = _cfg('href').'/team/'.urlencode(strtolower($data['name'])).'/manage/success';
 
-        return $answer;
+        return $object;
     }
 
     protected function teamList() {

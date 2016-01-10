@@ -1,12 +1,12 @@
-<section class="container page contacts" ng-app="pcesports" ng-controller="Team" ng-cloak>
+<section class="container page contacts" ng-app="pcesports" ng-controller="Team">
 
 <div class="left-containers">
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('add_new_team')?></h1>
         </div>
-        <form class="block-content contact-form profile" name="form">
-            <div id="ngError" ng-show="error"><p>{{error}}</p></div>
+        <form class="block-content contact-form profile" name="form" ng-cloak>
+            <div id="ngError" class="pre" ng-show="error"><p>{{error}}</p></div>
             
             <div class="fields">
                 <label for="name"><?=t('team_name')?></label>
@@ -33,16 +33,6 @@
             </div>
             <div id="ngError" ng-show="form.description.$error.maxlength"><p><?=t('team_description_is_too_big')?></p></div>
 
-            <div class="fields">
-                <label for="password"><?=t('team_password')?></label>
-                <input name="password" id="password" ng-model="password" type="text" value="" placeholder="<?=t('team_password')?>*" ng-minlength="3" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
-                <div class="small"><?=t('team_password_explanation')?></div>
-            </div>
-            <div id="ngError" ng-show="form.password.$error.required && form.password.$touched"><p><?=t('team_password_is_empty')?></p></div>
-            <div id="ngError" ng-show="form.password.$error.minlength"><p><?=t('team_password_is_too_small')?></p></div>
-
-            <div class="fields"><?=t('currently_all_team_reg_as_lol')?></div>
-            
             <a href="javascript:void(0);" class="button {{button}}" ng-click="addTeam();"><?=t('add_team')?></a>
         </form>
     </div>
