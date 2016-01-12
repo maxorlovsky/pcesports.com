@@ -15,7 +15,7 @@ class Ajax extends System
                     header('HTTP/1.1 400 Bad request', true, 400);
                 }
                 else {
-                    header('HTTP/1.1 '.$answer->status.' '.$answer->message, true, $answer->status);
+                    header('HTTP/1.1 '.$answer->status.' OK', true, $answer->status);//$answer->message
                 }
                 echo json_encode($answer);
             }
@@ -111,6 +111,12 @@ class Ajax extends System
         $profile = new profile();
         parse_str($data['form'], $post);
         return $profile->addTeam($post);
+    }
+    protected function editTeam($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        parse_str($data['form'], $post);
+        return $team->editTeam($post);
     }
     
     /*

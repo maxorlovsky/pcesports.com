@@ -5,7 +5,7 @@
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('add_new_team')?></h1>
         </div>
-        <form class="block-content contact-form profile" name="form" ng-cloak>
+        <form class="block-content contact-form profile" name="form" ng-submit="addTeam();" ng-cloak>
             <div id="ngError" class="pre" ng-show="error"><p>{{error}}</p></div>
             
             <div class="fields">
@@ -33,7 +33,7 @@
             </div>
             <div id="ngError" ng-show="form.description.$error.maxlength"><p><?=t('team_description_is_too_big')?></p></div>
 
-            <a href="javascript:void(0);" class="button {{button}}" ng-click="addTeam();"><?=t('add_team')?></a>
+            <button href="javascript:void(0);" class="button {{button}}"><?=t('add_team')?></button>
         </form>
     </div>
 </div>

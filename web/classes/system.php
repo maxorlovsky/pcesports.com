@@ -255,8 +255,9 @@ class System
         $this->data->mood = '';
 
         //Winter/Chrismas/New year mood
+        $day = date('d', time());
         $month = date('m', time());
-        if ($month == 1 || $month == 12) {
+        if (($month == 1 && $day <= 15) || ($month == 12 && $day >= 15)) {
             $this->data->mood = 'winter';
         }
     }

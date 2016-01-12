@@ -9,8 +9,8 @@
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('edit_team')?> - <?=$this->team->name?> [<?=$this->team->tag?>]</h1>
         </div>
-        <form class="block-content contact-form profile" ng-cloak>
-
+        <form class="block-content contact-form" name="form" ng-submit="editTeam()" ng-cloak>
+            <div id="ngSuccess" class="pre" ng-show="success"><p>{{success}}</p></div>
             <div id="ngError" class="pre" ng-show="error"><p>{{error}}</p></div>
 
             <div class="fields">
@@ -20,31 +20,37 @@
 
             <div class="fields">
                 <label for="description"><?=t('team_description')?></label>
-                <input name="description" id="description" ng-model="description" type="text" value="" placeholder="<?=t('team_description')?>" ng-maxlength="500" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" value="<?=$this->team->description?>" initial-value />
+                <input name="description" id="description" ng-model="description" type="text" value="<?=$this->team->description?>" placeholder="<?=t('team_description')?>" ng-maxlength="500" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" initial-value />
             </div>
             <div id="ngError" ng-show="form.description.$error.maxlength"><p><?=t('team_description_is_too_big')?></p></div>
 
             <div class="fields">
                 <label for="website"><?=t('team_website')?></label>
-                <input name="website" id="website" type="text" value="<?=$this->team->website?>" placeholder="Example: http://www.pcesports.com" />
+                <input name="website" id="website" ng-model="website" type="url" value="<?=$this->team->website?>" placeholder="Example: http://www.pcesports.com" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" initial-value />
             </div>
+            <div id="ngError" ng-show="!form.website.$pristine && form.website.$error.url"><p><?=t('website_pattern_incorrect')?></p></div>
 
             <div class="fields">
                 <label for="facebook"><?=t('team_facebook')?></label>
-                <input name="facebook" id="facebook" type="text" value="<?=$this->team->facebook?>" placeholder="Example: http://www.facebook.com/pentaclickesports" />
+                <input name="facebook" id="facebook" ng-model="facebook" type="url" value="<?=$this->team->facebook?>" placeholder="Example: http://www.facebook.com/pentaclickesports" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" initial-value/>
             </div>
+            <div id="ngError" ng-show="!form.website.$pristine && form.facebook.$error.url"><p><?=t('website_pattern_incorrect')?></p></div>
 
             <div class="fields">
                 <label for="twitter"><?=t('team_twitter')?></label>
-                <input name="twitter" id="twitter" type="text" value="<?=$this->team->twitter?>" placeholder="Example: http://www.twitter.com/pentaclick" />
+                <input name="twitter" id="twitter" ng-model="twitter" type="url" value="<?=$this->team->twitter?>" placeholder="Example: http://www.twitter.com/pentaclick" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" initial-value />
             </div>
+            <div id="ngError" ng-show="!form.website.$pristine && form.twitter.$error.url"><p><?=t('website_pattern_incorrect')?></p></div>
 
             <div class="fields">
                 <label for="twitch_tv"><?=t('team_twitch_tv')?></label>
-                <input name="twitch_tv" id="twitch_tv" type="text" value="<?=$this->team->twitch_tv?>" placeholder="Example: http://www.twitch.tv/pentaclick_tv" />
+                <input name="twitch_tv" id="twitch_tv" ng-model="twitch_tv" type="url" value="<?=$this->team->twitch_tv?>" placeholder="Example: http://www.twitch.tv/pentaclick_tv" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" initial-value />
             </div>
+            <div id="ngError" ng-show="!form.website.$pristine && form.twitch_tv.$error.url"><p><?=t('website_pattern_incorrect')?></p></div>
 
-            <a href="javascript:void(0);" class="button" id="editTeam"><?=t('edit_team')?></a>
+            <input name="team_id" id="team_id" ng-model="team_id" type="hidden" value="<?=$this->team->id?>" initial-value />
+
+            <button class="button {{button}}" id="editTeam"><?=t('edit_team')?></button>
         </form>
     </div>
     

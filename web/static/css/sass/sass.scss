@@ -1276,6 +1276,15 @@ footer {
         font-size: 16px;
     }
 }
+#ngSuccess {
+    @extend #success;
+    display: inherit;
+    &.pre {
+        p {
+            white-space: pre;
+        }
+    }
+}
 #ngError {
     @extend #error;
     display: inherit;
@@ -3424,6 +3433,48 @@ footer .games img {
 .team-page {
     .block {
         margin-bottom: 20px;
+    }
+
+    .fields {
+        label {
+           width: 140px !important;
+        }
+        input, p {
+            width: 595px !important;
+        }
+        select {
+            width: 605px !important;
+        }
+        p {
+            display: inline-block;
+            border: 1px solid #999;
+            margin: 0 0 0 -1px;
+            border-radius: 0 4px 4px 0;
+            padding-left: 10px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+            height: 40px;
+            background-color: #eee;
+            line-height: 40px;
+        }
+        .check_holder {
+            width: 602px;
+            background-color: #fff;
+            border: 1px solid #999;
+            border-radius: 0 4px 4px 0;
+            margin-left: 142px;
+            height: 40px;
+        }
+        input[type="checkbox"] {
+            height: 35px;
+            margin-top: 3px;
+            box-shadow: none;
+        }
+    }
+    .button {
+        width: 100%;
+        margin-left: 0;
+        text-align: center;
+        font-size: 17px;
     }
 }
 
