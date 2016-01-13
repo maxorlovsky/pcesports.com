@@ -153,19 +153,18 @@ class leagueoflegends extends System
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
         
-        $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
+        $tournamentRow = Db::fetchRow('SELECT `dates_start`, `dates_registration`, `time`, `status`, `prize` '.
             'FROM `tournaments` '.
             'WHERE `game` = "lol" AND '.
             '`server` = "'.Db::escape($this->server).'" AND '.
-            '`name` = '.(int)$this->pickedTournament.' '
+            '`name` = '.(int)$this->pickedTournament.' '.
+            'LIMIT 1'
         );
         
-		if ($tournamentRows) {
-            foreach($tournamentRows as $v) {
-                $tournamentTime['registration'] = $this->convertTime($v->dates_registration.' '.$v->time);
-                $tournamentTime['checkin'] = $this->convertTime(strtotime($v->dates_start.' '.$v->time) - 3600);
-                $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
-            }
+		if ($tournamentRow) {
+            $tournamentTime['registration'] = $this->convertTime($tournamentRow->dates_registration.' '.$tournamentRow->time);
+            $tournamentTime['checkin'] = $this->convertTime(strtotime($tournamentRow->dates_start.' '.$tournamentRow->time) - 3600);
+            $tournamentTime['start'] = $this->convertTime($tournamentRow->dates_start.' '.$tournamentRow->time);
             
 			$rows = Db::fetchRows('SELECT `t`.`id`, `t`.`name`, `t`.`checked_in`, `t`.`place`, `p`.`name` AS `player`, `p`.`player_id` '.
                 'FROM `participants` AS `t` '.

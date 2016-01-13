@@ -198,19 +198,18 @@ class hearthstone extends System
         $this->participants = $rows;
         unset($v);
         
-        $tournamentRows = Db::fetchRows('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
+        $tournamentRow = Db::fetchRow('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
             'FROM `tournaments` '.
             'WHERE `game` = "hs" AND '.
             '`server` = "'.$this->server.'" AND '.
-            '`name` = '.(int)$this->pickedTournament.' '
+            '`name` = '.(int)$this->pickedTournament.' '.
+            'LIMIT 1'
         );
-        if ($tournamentRows) {
-            foreach($tournamentRows as $v) {
-                $tournamentTime['registration'] = $this->convertTime($v->dates_registration.' '.$v->time);
-                $tournamentTime['checkin'] = $this->convertTime(strtotime($v->dates_start.' '.$v->time) - 3600);
-                $tournamentTime['start'] = $this->convertTime($v->dates_start.' '.$v->time);
-            }
-            
+        if ($tournamentRow) {
+            $tournamentTime['registration'] = $this->convertTime($tournamentRow->dates_registration.' '.$tournamentRow->time);
+            $tournamentTime['checkin'] = $this->convertTime(strtotime($tournamentRow->dates_start.' '.$tournamentRow->time) - 3600);
+            $tournamentTime['start'] = $this->convertTime($tournamentRow->dates_start.' '.$tournamentRow->time);
+                        
             include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
         }
         else {
