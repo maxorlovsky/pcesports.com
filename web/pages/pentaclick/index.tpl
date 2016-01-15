@@ -25,23 +25,36 @@
         </div>
     </div>
 
-	<div class="block">
+    <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('team')?></h1>
         </div>
 
         <div class="block-content team-list">
-            <?/*<a class="team-division leagueoflegends" href="<?=_cfg('href')?>/pentaclick/leagueoflegends">
-                <div class="name">EUNE <?=t('division')?></div>
-            </a>
-            
-            <a class="team-division hearthstone" href="<?=_cfg('href')?>/team/hearthstone">
-                <div class="name"><?=t('division')?></div>
-            </a>
-            */?>
-            <a class="team-division staff" href="<?=_cfg('href')?>/pentaclick/staff">
-                <div class="name">Staff</div>
-            </a>
+            <?
+            if ($this->team) {
+                foreach($this->team as $k => $v) {
+                    if ($v['avatar']) {
+            ?>
+                        <div class="team-user">
+                            <? if ($v['avatar']) { ?>
+                                <div class="icon"><img src="<?=_cfg('avatars')?>/<?=$v['avatar']?>.jpg" /></div>
+                            <? } ?>
+                            <a href="<?=_cfg('href')?>/member/<?=$v['name']?>" class="name"><?=$v['name']?></a>
+                            <div class="role"><?=$v['role']?></div>
+                            <? if ($v['socials']) {?>
+                                <div class="social">
+                                    <? foreach ($v['socials'] as $ks => $vs) { ?>
+                                        <a class="<?=$ks?>" href="<?=$vs?>" target="_blank"></a>
+                                    <? } ?>
+                                </div>
+                            <? } ?>
+                        </div>
+            <?
+                    }
+                }
+            }
+            ?>
             <div class="clear"></div>
         </div>
     </div>

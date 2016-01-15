@@ -85,6 +85,51 @@
     </div>
     <? } ?>
     
+    <?
+    if (_cfg('env') == 'prod') {
+        $g2a = 0;
+        if (rand(0,100) <= 30) {
+            $g2a = 1;
+        }
+    ?>
+	<div class="block <?=($g2a===1?'g2a':'sense')?>">
+		<div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('advertising')?></h1>
+        </div>
+		
+        <? if ($g2a === 1) { ?>
+            <div class="block-content">
+                <a href="https://www.g2a.com/r/pentaclick" target="_blank"><img src="<?=_cfg('img')?>/g2a.jpg" /></a>
+            </div>
+        <? } else { ?>
+		<div class="ad-holder block-content">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Right block -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-5398156195893681"
+                 data-ad-slot="6366917450"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+		</div>
+        <? } ?>
+
+        <div class="survive block-content">
+            We detected that you might use AdBlock. You might not know, that Pentaclick eSports is running completely out of our pockets and small advertisement revenue that we get. You would be a project savior and helped us a lot, if you added our website to your adblock whitelist. Thank you.
+        </div>
+    </div>
+    <? } ?>
+
+    <div class="block fb">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">@Tweet</h1>
+        </div>
+        <div class="twitter-holder block-content">
+            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick" data-widget-id="422786485738147841">Tweets by @pentaclick</a>
+        </div>
+    </div>
+
     <div class="block streamers">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('streamers')?></h1>
@@ -124,48 +169,6 @@
         <?
         }
         ?>
-    </div>
-
-    <div class="block g2a">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">Buy games with G2A</h1>
-        </div>
-        
-        <div class="block-content">
-            <a href="https://www.g2a.com/r/pentaclick" target="_blank"><img src="<?=_cfg('img')?>/g2a.jpg" /></a>
-        </div>
-    </div>
-    
-    <? if (_cfg('env') == 'prod') { ?>
-	<div class="block sense">
-		<div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('advertising')?></h1>
-        </div>
-		
-		<div class="ad-holder block-content">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Right block -->
-            <ins class="adsbygoogle"
-                 style="display:inline-block;width:300px;height:250px"
-                 data-ad-client="ca-pub-5398156195893681"
-                 data-ad-slot="6366917450"></ins>
-            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-		</div>
-        <div class="survive block-content">
-            We detected that you might use AdBlock. You might not know, that Pentaclick eSports is running completely out of our pockets and small advertisement revenue that we get. You would be a project savior and helped us a lot, if you added our website to your adblock whitelist. Thank you.
-        </div>
-    </div>
-    <? } ?>
-
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">@Tweet</h1>
-        </div>
-        <div class="twitter-holder block-content">
-            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick" data-widget-id="422786485738147841">Tweets by @pentaclick</a>
-        </div>
     </div>
 
 </div>
