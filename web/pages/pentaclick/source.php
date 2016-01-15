@@ -36,8 +36,8 @@ class pentaclick extends system
                     'tv' => 'http://www.twitch.tv/pentaclick_tv',
                 )
             ),
-            $teamIds['anya'] => array(
-                'role' => 'Hearthstone Admin + Shoutcaster',
+            $teamIds['dantey'] => array(
+                'role' => 'Hearthstone Mastermind',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/andris.krumins.5',
                     'tw' => 'https://twitter.com/Andris_K',
@@ -49,8 +49,8 @@ class pentaclick extends system
                     'fb' => 'https://www.facebook.com/grobovsky',
                 )
             ),
-            $teamIds['dantey'] => array(
-                'role' => 'Creativity generator + Testing + Design',
+            $teamIds['anya'] => array(
+                'role' => 'Creative Generator',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/anya.orlovsky',
                 )
