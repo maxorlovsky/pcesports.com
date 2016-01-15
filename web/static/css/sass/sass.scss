@@ -3548,22 +3548,10 @@ footer .games img {
             background-position: 50px 50px;
             transform: translateY(-600px) translateZ(250px);
         }
-        &:last-of-type li:nth-child(3) {
-            animation: snowfallZ 20s linear infinite;
-            background-position: 100px 100px;
-            transform: translateY(-600px) translateZ(150px);
-        }
-        &:last-of-type li:nth-child(4) {
-            animation: snowfallY 20s linear infinite;
-            background-position: 150px 150px;
-            transform: translateY(-600px) translateZ(-150px);
-        }
 
         /* Hiding for computers with probably less CPU power */
         @media (max-width: 1366px) {
-            &:last-of-type li:nth-child(2),
-            &:last-of-type li:nth-child(3),
-            &:last-of-type li:nth-child(4) {
+            &:last-of-type li:nth-child(2) {
                 display: none;
             }
         }

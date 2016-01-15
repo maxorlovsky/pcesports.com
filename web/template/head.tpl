@@ -18,7 +18,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.35" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.36" />
 </head>
 
 <body class="<?=$this->data->mood?>">
@@ -164,8 +164,6 @@ hs.dimmingOpacity = 0.8;
     <ul class="snow">
         <li>Snow Effect 1</li>
         <li>Snow Effect 2</li>
-        <li>Snow Effect 3</li>
-        <li>Snow Effect 4</li>
     </ul>
     <div class="lights"></div>
     <? } ?>
