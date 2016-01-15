@@ -50,7 +50,7 @@ class pentaclick extends system
                 )
             ),
             $teamIds['anya'] => array(
-                'role' => 'Creative Generator',
+                'role' => 'Creativity Generator',
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/anya.orlovsky',
                 )
