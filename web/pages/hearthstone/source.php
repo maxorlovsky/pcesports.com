@@ -198,7 +198,7 @@ class hearthstone extends System
         $this->participants = $rows;
         unset($v);
         
-        $tournamentRow = Db::fetchRow('SELECT `dates_start`, `dates_registration`, `time`, `status` '.
+        $tournamentRow = Db::fetchRow('SELECT `dates_start`, `dates_registration`, `time`, `status`, `prize`, '.
             'FROM `tournaments` '.
             'WHERE `game` = "hs" AND '.
             '`server` = "'.$this->server.'" AND '.
