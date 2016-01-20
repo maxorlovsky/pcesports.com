@@ -2,6 +2,11 @@ if( window.canRunAds === undefined ){
     $('.survive').show();
 }
 
+$('#requestJoinTeam').on('click', function() {
+    var id = $('.page.team').attr('attr-id');
+    PC.requestJoinTeam(id);
+})
+
 $('.tabs li').on('click', function() {
     $('.tabs li').removeClass('active');
     $('.tabs-content div').removeClass('active');

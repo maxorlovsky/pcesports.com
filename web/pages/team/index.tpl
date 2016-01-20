@@ -1,4 +1,4 @@
-<section class="container page team">
+<section class="container page team" attr-id="<?=$this->team->id?>">
 
 <div class="left-containers">
     <div class="block">
@@ -12,7 +12,7 @@
             <div class="buttons">
         		<? if ($this->team->user_id_captain == $this->data->user->id) { ?>
         			<a class="button" href="<?=_cfg('href')?>/team/<?=strtolower(urlencode($this->team->name))?>/manage"><?=t('manage_team')?></a>
-        			<p class="small"><?=t('requests_to_join_team')?><!-- Requests to join team -->: 0</p>
+        			<p class="small" id="requestJoinTeam"><?=t('requests_to_join_team')?><!-- Requests to join team -->: 0</p>
         		<? } else if (isset($this->data->user->id) && $this->data->user->id) { ?>
         			<a class="button hint" href="javascript:void(0);" attr-msg="Before you will be added to the team, team captain will have to approve you">+ join team</a>
         		<? } else { ?>

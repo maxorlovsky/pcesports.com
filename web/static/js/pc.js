@@ -30,6 +30,37 @@ var PC = {
             $('#fightStatus').html(answer[2]);
         });*/
     },
+    requestJoinTeam: function(id) {
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'requestJoinTeam',
+                id: id
+            },
+            success: function(data) {
+                if (data) {
+                    data = $.parseJSON(data);
+                    if (data.image) {
+                        $('.achievements').find('.image').html('<img src="'+data.image+'" />');
+                    }
+                    $('.achievements').find('.points').html(data.points);
+                    $('.achievements').find('.name').html(data.name);
+                    $('.achievements').find('.text').html(data.description);
+                    $('.achievements').show();
+                    $('.achievements').css('opacity', 1);
+
+                    document.getElementById('achievement-ping').play();
+
+                    $('.achievementsPoints').text(parseInt($('.achievementsPoints').text())+parseInt(data.points));
+
+                    setTimeout(function () { $('.achievements').trigger('click'); }, 20000); //hide in 20 sec
+                }
+            },
+            //Empty error message required
+            error: function() {}
+        };
+        this.ajax(query);
+    },
     checkAchievements: function() {
         document.getElementById('achievement-ping').volume = 0.2;
         var query = {

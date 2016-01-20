@@ -45,13 +45,6 @@
             </div>
             <div class="actions">
                 <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t(($v->comments>1?'comments':'comment'))?></a>
-                <!--<a class="share" href="#"><?=t('share')?></a>-->
-                <? if ($v->user_id == $this->data->user->id && $v->status != 1) { ?>
-                    <a class="edit" href="<?=_cfg('href')?>/boards/submit/<?=$v->id?>"><?=t('edit')?></a>
-                    <a class="delete" href="#" attr-msg="<?=t('sure_to_delete_message')?>"><?=t('delete')?></a>
-                <? } else if ($v->status != 1) { ?>
-                    <a class="report" href="#" attr-msg="<?=t('sure_to_report_message')?>"><?=t('report')?></a>
-                <? } ?>
             </div>
         </div>
         
