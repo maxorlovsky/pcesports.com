@@ -316,7 +316,7 @@ $('#submitContactForm').on('click', function() {
 });
 
 $(document).on('mousemove', '.hint', function(event) {
-	$('#hint-helper').offset({ top: event.pageY-30, left: event.pageX+10 });
+    $('#hint-helper').offset({ left: event.pageX+10, top: event.pageY-30 });
 	
 	if ($('#hint-helper').is(':visible')) {
 		return false;
@@ -329,8 +329,11 @@ $(document).on('mousemove', '.hint', function(event) {
 	if ($('#hint-helper').is(':hidden')) {
 		$('#hint-helper').css('display', 'inline-block');
 	}
+
+    $('body').css('overflow-x', 'hidden');
 }).on('mouseout', '.hint', function(){
 	$('#hint-helper').css('display', 'none');
+    $('body').css('overflow-x', 'default');
 });
 
 $('.achievements').on('click', this, function() {

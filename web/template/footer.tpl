@@ -127,7 +127,7 @@
 <script src="<?=_cfg('static')?>/js/pc.js"></script>
 <script src="<?=_cfg('static')?>/js/main.js"></script>
 <? } else { ?>
-<script src="<?=_cfg('static')?>/js/combined.js?v=1.11"></script>
+<script src="<?=_cfg('static')?>/js/combined.js?v=1.12"></script>
 <? } ?>
 
 <? if (_cfg('env') == 'prod') { ?>

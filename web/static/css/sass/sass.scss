@@ -264,63 +264,65 @@ header {
     text-align: center;
     a {
         background-image: url('../images/icons.png');
-        height: 30px;
+        height: 36px;
         display: inline-block;
         margin-right: 10px;
         &.fb {
             background-position: 0px 0px;
-            width: 30px;
+            width: 39px;
             &:hover {
-                background-position: 0px -36px;
+                background-position: 0px -46px;
             }
         }
         &.tw {
-            background-position: -38px 0px;
-            width: 27px;
+            background-position: -47px 0px;
+            width: 35px;
             &:hover {
-                background-position: -38px -36px;
+                background-position: -47px -46px;
             }
         }
         &.gp {
-            background-position: -74px 0px;
-            width: 29px;
+            background-position: -92px 0px;
+            width: 36px;
             &:hover {
-                background-position: -74px -36px;
+                background-position: -74px -46px;
             }
         }
         &.yt {
-            background-position: -109px 0px;
-            width: 28px;
+            background-position: -136px 0px;
+            width: 36px;
             &:hover {
-                background-position: -109px -36px;
+                background-position: -136px -46px;
             }
         }
         &.tv {
-            background-position: -177px 0px;
-            width: 28px;
+            background-position: -222px 0px;
+            width: 36px;
             &:hover {
-                background-position: -177px -36px;
+                background-position: -222px -46px;
             }
         }
         &.vk {
             background-position: -212px 0px;
             width: 28px;
             &:hover {
-                background-position: -212px -36px;
+                background-position: -212px -46px;
             }
         }
         &.sm {
-            background-position: -143px 0px;
-            width: 28px;
+            background-position: -178px 0px;
+            width: 36px;
             &:hover {
-                background-position: -143px -36px;
+                background-position: -178px -46px;
             }
         }
     }
 }
 
 footer {
-    margin: 0 auto !important;
+    &.container {
+        margin: 2px 0 0 0;
+    }
     background-color: #1f1f1f;
     .copyrights {
         color: #888;
