@@ -1,43 +1,24 @@
 </section>
 
 <footer class="container">
-    <div class="separator left boards">
+    <!--<div class="separator left boards">
         <? include_once _cfg('pages').'/boards/snippet.tpl'; ?>
-    </div>
-    
-    <div class="separator left">
-        <div class="block">
-            <? include_once _cfg('pages').'/blog/snippet.tpl'; ?>
-        </div>
-    </div>
-    
-    <div class="separator right">
-        <div class="block">
-            <div class="block-header-wrapper">
-                <h1 class="bordered"><?=t('information')?></h1>
-            </div>
-            <div class="block-content information">
-                <p>Pentaclick project was created on 10th of January 2014, initially it was founded by 4 persons. Right now Pentaclick trying to bring amature level of eSports to a decent level. While it is a non-profit organization, we're working on to bring sponsorship and partnership between us and other interested parties.</p>
-                <a href="<?=_cfg('href')?>/pentaclick">- Read more</a>
-                <a href="<?=_cfg('href')?>/contacts">- Contact us</a>
-                <a href="<?=_cfg('href')?>/partners">- Our partners</a>
-            </div>
-        </div>
-    </div>
-    
-    <div class="clear"></div>
+    </div>-->
     
     <div class="copyrights">
-        <p class="rights">© <?=date('Y', time())?> <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>. All rights reserved.</p>
-        <div class="devs social">
-            <a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
+        <p class="rights">© <?=date('Y', time())?> Pentaclick eSports / <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>. All rights reserved.</p>
+        <div class="devs">
+            <a href="<?=_cfg('href')?>/pentaclick">About Pentaclick eSports</a> | 
+            <a href="<?=_cfg('href')?>/contacts">Contact us</a> | 
+            <a href="<?=_cfg('href')?>/partners">Partners</a>
+            <?/*<a class="fb" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
             <a class="tw" href="https://twitter.com/pentaclick" target="_blank"></a>
             <a class="yt" href="https://www.youtube.com/c/pentaclickesports" target="_blank"></a>
             <a class="tv" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
             <a class="sm" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
             <script>
             $('.social a').css('transition', '.5s');
-            </script>
+            </script>*/?>
         </div>
         <!-- <a href="http://www.maxorlovsky.net" target="_blank" class="devs"><?=t('made_by')?> Max & Anya Orlovsky</a> -->
         <div class="clear"></div>

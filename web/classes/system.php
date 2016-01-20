@@ -232,25 +232,6 @@ class System
             unset($v);
         }
 
-        //Comments
-        if (!$this->comments) {
-            $this->comments = Db::fetchRows('SELECT `b`.`title`, `bc`.`blog_id`, `bc`.`text`, `bc`.`added`, `bc`.`user_id`, `bc`.`edited`, `bc`.`status`, `u`.`name`, `u`.`avatar` '.
-                'FROM `blog_comments` AS `bc` '.
-                'LEFT JOIN `blog` AS `b` ON `bc`.`blog_id` = `b`.`id` '.
-                'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
-                'WHERE `status` != 1 '.
-                'ORDER BY `bc`.`id` DESC '.
-                'LIMIT 3 '
-            );
-
-            foreach($this->comments as &$v) {
-                $dbDate = new DateTime($v->added);
-                $v->interval = $this->getAboutTime($currDate->diff($dbDate));
-                $v->text = $this->parseText($v->text);
-            }
-            unset($v);
-        }
-
         //Setting class for body for specific mood
         $this->data->mood = '';
 

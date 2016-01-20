@@ -1,6 +1,6 @@
 <div class="block">
     <div class="block-header-wrapper">
-        <h1 class=""><?=t('last_topics_on_boards')?></h1>
+        <h1 class=""><a href="<?=_cfg('href')?>/boards"><?=t('last_topics_on_boards')?></a></h1>
     </div>
 
     <?

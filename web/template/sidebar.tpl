@@ -84,6 +84,10 @@
         ?>
     </div>
     <? } ?>
+
+    <div class="block boards">
+        <? include_once _cfg('pages').'/boards/snippet.tpl'; ?>
+    </div>
     
     <?
     if (_cfg('env') == 'prod') {

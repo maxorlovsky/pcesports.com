@@ -143,6 +143,9 @@ header {
                 &.web-link-help:before {
                     content: '\0061';
                 }
+                &.web-link-forum:before {
+                    content: '\0039';
+                }
             }
         }
     }
@@ -323,137 +326,20 @@ footer {
         color: #888;
         width: 100%;
         background-color: #333;
-        padding: 5px 0 0 0;
-        margin: 20px 0 0 0;
-        border-top: 1px solid #484848;
+        border-top: 2px solid #595959;
         font-size: 12px;
         .rights {
             float: left;
-            margin: 6px 0 0 15px;
+            margin: 10px 0 10px 5%;
         }
         .devs {
             float: right;
             color: #888;
+            margin: 10px 5% 10px 0;
             &:hover {
                 color: #1697e1;
             }
         }
-    }
-    .block {
-        .block-content {
-            background-color: inherit;
-            box-shadow: none;
-            text-align: center;
-            &.board {
-                text-align: left;
-                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-                &:nth-child(even) {
-                    background-color: #333;
-                }
-                .thread {
-                    .title {
-                        display: inline-block;
-                        max-width: 300px
-                    }
-                    .date-user-box {
-                        color: #aaa;
-                        .deleted {
-                            color: #aaa;
-                        }
-                    }
-                }
-                .count {
-                    color: #eee;
-                }
-            }
-            &.comments {
-                text-align: left;
-                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-                padding: 0;
-                &:nth-child(even) {
-                    background-color: #333;
-                }
-                .thread {
-                    float: left;
-                    padding: 0 0 0 10px;
-                    height: 72px;
-                    display: block;
-                    box-sizing: border-box;
-                    .title {
-                        font-size: 21px;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        width: 395px;
-                        display: inline-block;
-                    }
-                    .text {
-                        color: #ccc;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        width: 395px;
-                    }
-                    .date-user-box {
-                        font-size: 11px;
-                        color: #999;
-                        line-height: 20px;
-                        height: 20px;
-                        display: inline-block;
-                        .comment-user img {
-                            float: right;
-                            width: 20px;
-                            margin-left: 5px;
-                        }
-                        .actions a {
-                            font-size: 12px;
-                            margin-right: 10px;
-                        }
-                    }
-                }
-            }
-            &.information {
-                background-color: #333;
-                box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-                text-align: left;
-                box-sizing: border-box;
-                padding: 10px;
-                color: #ccc;
-                a {
-                    display: block;
-                }
-            }
-        }
-    }
-    .partners {
-        img {
-            max-width: 315px;
-        }
-        .a {
-            float: left;
-        }
-        .unicon {
-            float: left;
-            margin-left: 20px;
-        }
-        .skillz {
-            float: left;
-            margin: 20px 0 0 20px;
-        }
-        .lesf {
-            margin: 30px 0 0 20px;
-            float: left;
-        }
-    }
-    .games {
-        img {
-            max-width: 315px;
-        }
-    }
-    .separator {
-        margin: 20px 1% 0 1%;
-        float: left;
-        width: 31%;
     }
 }
 
@@ -656,9 +542,29 @@ footer {
     min-width: 316px;
     width: 316px; /*28%*/
     float: right;
-}
-.right-containers .block {
-    margin-bottom: 40px;
+    .block {
+        margin-bottom: 40px;
+
+        &.boards {
+            h1 {
+                a {
+                    color: #fff;
+                    text-decoration: underline;
+                    &:hover {
+                        color: #555;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .thread {
+                .title {
+                    display: inline-block;
+                    max-width: 210px;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }
 
 .promo {

@@ -5,7 +5,7 @@ if( window.canRunAds === undefined ){
 $('#requestJoinTeam').on('click', function() {
     var id = $('.page.team').attr('attr-id');
     PC.requestJoinTeam(id);
-})
+});
 
 $('.tabs li').on('click', function() {
     $('.tabs li').removeClass('active');
