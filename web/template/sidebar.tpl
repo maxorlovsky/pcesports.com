@@ -88,6 +88,23 @@
     <div class="block boards">
         <? include_once _cfg('pages').'/boards/snippet.tpl'; ?>
     </div>
+
+    <div class="block boards">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">We're in social networks</h1>
+        </div>
+
+        <div class="block-content social">
+            <a class="fb hint" attr-msg="Facebook" href="https://www.facebook.com/pentaclickesports" target="_blank"></a>
+            <a class="tw hint" attr-msg="Twitter" href="https://twitter.com/pentaclick" target="_blank"></a>
+            <a class="yt hint" attr-msg="YouTube" href="https://www.youtube.com/c/pentaclickesports" target="_blank"></a>
+            <a class="tv hint" attr-msg="Twitch.TV" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
+            <a class="sm hint" attr-msg="Steam group" href="http://steamcommunity.com/groups/pentaclickesports" target="_blank"></a>
+            <script>
+            $('.social a').css('transition', '.5s');
+            </script>
+        </div>
+    </div>
     
     <?
     if (_cfg('env') == 'prod') {
