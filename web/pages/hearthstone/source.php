@@ -205,11 +205,12 @@ class hearthstone extends System
             '`name` = '.(int)$this->pickedTournament.' '.
             'LIMIT 1'
         );
+
         if ($tournamentRow) {
             $tournamentTime['registration'] = $this->convertTime($tournamentRow->dates_registration.' '.$tournamentRow->time);
             $tournamentTime['checkin'] = $this->convertTime(strtotime($tournamentRow->dates_start.' '.$tournamentRow->time) - 3600);
             $tournamentTime['start'] = $this->convertTime($tournamentRow->dates_start.' '.$tournamentRow->time);
-                        
+
             include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
         }
         else {

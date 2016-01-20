@@ -116,8 +116,8 @@
         <div class="block-content tournament-rules">
 			<h1><?=t('specific_tournament_rules')?></h1>
 			<?=str_replace(
-                array('%startTime%', '%registrationTime%', '%checkInTime%', '%eventPage%'),
-                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage),
+                array('%startTime%', '%registrationTime%', '%checkInTime%', '%eventPage%', '%prize%'),
+                array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $this->eventPage, $tournamentRow->prize),
                 t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
             )?>
             
