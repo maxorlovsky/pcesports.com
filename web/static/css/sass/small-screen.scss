@@ -528,6 +528,10 @@ footer {
                 display: inline-block;
             }
         }
+
+        &.participants.hidden {
+            display: block !important;
+        }
         
         .title {
             width: auto;
