@@ -1786,6 +1786,12 @@ footer .games img {
     }
 }
 
+.lol {
+    .block.isotope-item {
+        cursor: pointer;
+    }
+}
+
 #toTop {
     position: fixed;
     background: url('../images/to-top.png') no-repeat 50% 50% #222;
@@ -1952,7 +1958,7 @@ footer .games img {
 	padding: 6px !important
 }
 .g2a {
-    .block-content {
+    .block-content:not(.survive) {
         padding: 0px !important;
         background-color: initial;
         box-shadow: initial;
