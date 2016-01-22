@@ -6,7 +6,7 @@
             <p class="success-add"><?=t('participation_verified')?></p>
         <? } ?>
 
-        <p class="error-add">Please don't forget, all team members including captain must register on LoL event as well! In worst case you won't receive any prizes in case you win. <b>EVERY TEAM MEMBER INCLUDING SUBS!</b> and not only team captain - <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">please proceed by clicking this link</a></p>
+        <p class="info-add">Please don't forget, all team members including captain must register on LoL event as well! In worst case you won't receive any prizes in case you win. <b>EVERY TEAM MEMBER INCLUDING SUBS!</b> and not only team captain - <a style="color: #fff; text-decoration: underscro" href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">please proceed by clicking this link</a></p>
         
         <? if (!$this->logged_in) { ?>
             <p class="info-add"><?=t('participant_not_user')?></p>
