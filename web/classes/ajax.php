@@ -640,11 +640,12 @@ class Ajax extends System
         if ($row->checked_in == 0) {
             if (
                ($row->game == 'hs' && $this->data->settings['tournament-checkin-'.$row->game] != 1) ||
-               $this->data->settings['tournament-checkin-'.$row->game.'-'.$row->server] != 1
+               ($row->game == 'lol' && $this->data->settings['tournament-checkin-'.$row->game.'-'.$row->server] != 1)
                )
             {
                 return '0;'.t('none').';'.t('tournament_not_started_yet').';'.t('none');
             }
+
             
             return '2;'.t('none').';'.t('check_in_required').';'.t('none');
         }

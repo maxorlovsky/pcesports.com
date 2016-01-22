@@ -142,4 +142,4 @@
     <div class="hsicons-small %hero% hint" attr-msg="%heroName%"></div>
 </div>
 
-<script src="<?=_cfg('static')?>/js/profiler.js"></script>
+<script src="<?=_cfg('static')?>/js/profiler.js?v=1.1"></script>

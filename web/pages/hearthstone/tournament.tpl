@@ -93,7 +93,6 @@
 			</div>
 
             <div class="tournament-rules">
-                <?=dump($tournamentRow)?>
                 <?=str_replace(
                     array('%startTime%', '%registrationTime%', '%checkInTime%', '%prize%'),
                     array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $tournamentRow->prize),

@@ -63,38 +63,40 @@ $('#chat-input').on('keyup', function(e) {
     }
 });
 
-var uploadInProgress = 0;
-new AjaxUpload(
-    $('#uploadScreen'), {
-    	action: g.site+'?ajax=uploadScreenshot',
-    	//Name of the file input box  
-    	name: 'upload',
-    	onSubmit: function(file, ext) {
-            if (uploadInProgress == 1) {
-                alert('Upload in progress, wait!');
-            }
+if ($('.chat-content').length > 0) {
+    var uploadInProgress = 0;
+    new AjaxUpload(
+        $('#uploadScreen'), {
+        	action: g.site+'?ajax=uploadScreenshot',
+        	//Name of the file input box  
+        	name: 'upload',
+        	onSubmit: function(file, ext) {
+                if (uploadInProgress == 1) {
+                    alert('Upload in progress, wait!');
+                }
 
-    		if (! (ext && /^(jpg|png|jpeg)$/.test(ext))) {  
-    			alert('Only JPG, PNG files are allowed, your is: '+ext);
-    			return false; 
-    		}
-            
-            uploadInProgress = 1;
-            $('#uploadScreen').addClass('alpha');
-    	},  
-    	onComplete: function(file, data) {
-            data = data.split(';');
-            uploadInProgress = 0;
-            if (data[0] != 1) {
-                alert(data[1]);
-            }
-            $('#uploadScreen').removeClass('alpha');
-    	}  
-    }
-);
-$('input[name="upload"]').addClass('hint').attr('attr-msg', $('#uploadScreen').attr('attr-msg'));
+        		if (! (ext && /^(jpg|png|jpeg)$/.test(ext))) {  
+        			alert('Only JPG, PNG files are allowed, your is: '+ext);
+        			return false; 
+        		}
+                
+                uploadInProgress = 1;
+                $('#uploadScreen').addClass('alpha');
+        	},  
+        	onComplete: function(file, data) {
+                data = data.split(';');
+                uploadInProgress = 0;
+                if (data[0] != 1) {
+                    alert(data[1]);
+                }
+                $('#uploadScreen').removeClass('alpha');
+        	}  
+        }
+    );
+    $('input[name="upload"]').addClass('hint').attr('attr-msg', $('#uploadScreen').attr('attr-msg'));
 
-document.getElementById('ping').volume = 0.2;
+    document.getElementById('ping').volume = 0.2;
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -223,6 +225,11 @@ var profiler = {
                         $('.opponent-info .player-heroes').removeClass('bans');
                     }
                 }
+
+                //Required for check in page
+                if ($('#fightStatus').length > 0) {
+                    $('#fightStatus').html(answer[2]);
+                }
             }
         }
         PC.ajax(query);
@@ -237,9 +244,11 @@ var profiler = {
 
 //Start
 $(document).ready(function() {
-    profiler.fetchChat();
     profiler.statusCheck();
-    setInterval(function () { profiler.fetchChat(); }, 5000);
-    setInterval(function () { profiler.statusCheckTimer(); }, 1000);
     setInterval(function () { profiler.statusCheck(); }, profiler.checkTimer*1000);
+    if ($('.chat-content').length > 0) {
+        profiler.fetchChat();
+        setInterval(function () { profiler.fetchChat(); }, 5000);
+        setInterval(function () { profiler.statusCheckTimer(); }, 1000);
+    }
 });
