@@ -3037,6 +3037,10 @@ footer .games img {
     line-height: 20px;
     height: 20px;
     display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
 }
 .boards .board .thread .date-user-box .comment-user img {
     float: right;
@@ -3056,9 +3060,7 @@ footer .games img {
     border: 1px solid #999;
     border-radius: 4px;
     width: 650px;
-    overflow: auto;
     padding: 5px;
-    max-height: 1000px;
 }
 .boards  .user-comments .voting {
     float: left;

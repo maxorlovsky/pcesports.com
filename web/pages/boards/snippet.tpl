@@ -20,11 +20,11 @@
             <a class="title" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->title?></a>
             <div class="clear"></div>
             <div class="date-user-box">
-            	<? if ($v->comments == 0) { ?>
+            	<? /*if ($v->comments == 0) { ?>
                 	<?=t('submitted')?> 
                 <? } else { ?>
                 	<?=t('last_reply')?> 
-                <? } ?>
+                <? }*/ ?>
 
                 <?=$v->interval?>
 
