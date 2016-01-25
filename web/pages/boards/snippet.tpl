@@ -30,12 +30,12 @@
 
                 <?
                 if ($v->comments == 0) {
-	                if ($v->edited==1 && $v->status != 1) {
+	                /*if ($v->edited==1 && $v->status != 1) {
 	                    echo ' <i>('.t('edited').')</i>';
 	                }
 	                else if ($v->status == 1) {
 	                    echo ' <span class="deleted">('.t('deleted').') </span>';
-	                }
+	                }*/
                 ?> 
 	                <?=t('by')?> 
 	                <a class="comment-user" href="<?=_cfg('href')?>/member/<?=$v->name?>">
