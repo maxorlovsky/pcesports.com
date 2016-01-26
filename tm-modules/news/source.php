@@ -42,7 +42,7 @@ class News
 	
 	protected function able($id) {
 		$id = (int)$id;
-		$row = Db::fetchRow('SELECT `id`, `title`, `able` FROM `blog` WHERE `id` = '.$id.' LIMIT 1');
+		$row = Db::fetchRow('SELECT `id`, `title`, `able`, `added` FROM `blog` WHERE `id` = '.$id.' LIMIT 1');
 		if ($row->able == 1) {
 			$enable = 0;
 		}
@@ -50,6 +50,10 @@ class News
 			$enable = 1;
 		}
 		Db::query('UPDATE `blog` SET `able` = '.$enable.' WHERE `id` = '.$id);
+
+		if ($row->added == NULL) {
+			Db::query('UPDATE `blog` SET `added` = NOW() WHERE `id` = '.$id);
+		}
 	
 		if ($enable == 1) {
 			$this->system->log('Enabling article <b>('.$row->title.' ['.$row->id.'])</b>', array('module'=>get_class(), 'type'=>'enabling'));
