@@ -2,6 +2,36 @@ if( window.canRunAds === undefined ){
     $('.survive').show();
 }
 
+$('#changeTeamCaptain').on('click', function() {
+    var userId = $(this).closest('.block-content').attr('attr-id');
+    var id = $('.page.team').attr('attr-id');
+    if(confirm($(this).attr('attr-msg'))) {
+        PC.changeTeamCaptain(id, userId);
+    }
+});
+$('#removeTeamMember').on('click', function() {
+    var userId = $(this).closest('.block-content').attr('attr-id');
+    var id = $('.page.team').attr('attr-id');
+    if(confirm($(this).attr('attr-msg'))) {
+        PC.removeTeamMember(id, userId);
+    }
+});
+$('#leaveTeam').on('click', function() {
+    var id = $('.page.team').attr('attr-id');
+    if(confirm($(this).attr('attr-msg'))) {
+        PC.leaveTeam(id);
+    }
+});
+$('#acceptToTeam').on('click', function() {
+    var userId = $(this).closest('.block-content').attr('attr-id');
+    var id = $('.page.team').attr('attr-id');
+    PC.acceptToTeam(id, userId);
+});
+$('#rejectFromTeam').on('click', function() {
+    var userId = $(this).closest('.block-content').attr('attr-id');
+    var id = $('.page.team').attr('attr-id');
+    PC.rejectFromTeam(id, userId);
+});
 $('#requestJoinTeam').on('click', function() {
     var id = $('.page.team').attr('attr-id');
     PC.requestJoinTeam(id);

@@ -118,6 +118,36 @@ class Ajax extends System
         parse_str($data['form'], $post);
         return $team->editTeam($post);
     }
+    protected function requestJoinTeam($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->requestJoin($data);
+    }
+    protected function acceptToTeam($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->accept($data);
+    }
+    protected function rejectFromTeam($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->reject($data);
+    }
+    protected function leaveTeam($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->leave($data);
+    }
+    protected function removeTeamMember($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->remove($data);
+    }
+    protected function changeTeamCaptain($data) {
+        require_once _cfg('pages').'/team/source.php';
+        $team = new team();
+        return $team->changeCaptain($data);
+    }
     
     /*
      * Widgets functions

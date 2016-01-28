@@ -79,7 +79,8 @@ class member extends System
             'SELECT `tu`.`title`, `t`.`name` '.
             'FROM `teams2users` AS `tu` '.
             'LEFT JOIN `teams` AS `t` on `tu`.`team_id` = `t`.`id` '.
-            'WHERE `tu`.`user_id` = '.(int)$this->member->id.' '
+            'WHERE `tu`.`user_id` = '.(int)$this->member->id.' '.
+            'AND `t`.`status` = 0'
         );
         if ($rows) {
             $this->member->teams = $rows;

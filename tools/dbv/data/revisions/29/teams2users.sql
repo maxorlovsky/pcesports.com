@@ -1,0 +1,1 @@
+ALTER TABLE `teams2users` CHANGE `title` `title` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'Member';

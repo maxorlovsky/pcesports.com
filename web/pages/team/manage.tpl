@@ -1,9 +1,11 @@
-<section class="container page contacts team-page" ng-app="pcesports" ng-controller="Team">
+<section class="container page contacts team-page team" ng-app="pcesports" ng-controller="Team" attr-id="<?=$this->team->id?>">
 
 <div class="left-containers">
 	<? if ($_GET['val4'] == 'success') { ?>
         <div class="success-add registration-complete"><?=t('team_registration_success')?></div>
     <? } ?>
+
+    <a class="button submit navigation" href="<?=_cfg('href')?>/team/<?=strtolower(urlencode($this->team->name))?>"><?=t('back_to_team_page')?></a>
 
     <div class="block">
         <div class="block-header-wrapper">
@@ -54,7 +56,7 @@
         </form>
     </div>
     
-    <div class="block streamers edit-streamers">
+    <div class="block streamers edit-streamers member-list">
         <div class="block-header-wrapper">
             <h1 class=""><?=t('team_members')?></h1>
         </div>
@@ -64,17 +66,40 @@
         ?>
             <div class="block-content streamer" target="_blank" attr-id="<?=$v->id?>">
                 <img class="game-logo" src="<?=_cfg('img')?>/avatar/<?=$v->avatar?>.jpg" />
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?> (<?=$v->title?>)</label>
+                <a href="<?=_cfg('href')?>/member/<?=urlencode($v->name)?>" class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?> <?=($v->title?'('.$v->title.')':null)?></a>
                 
                 <? if ($this->team->user_id_captain != $v->id) { ?>
                 <span class="viewers editStreamerAction">
-                	<a href="javascript:void(0);" id="changeTeamCaptain"><?=t('make_team_captain')?></a> |
-                    <a href="javascript:void(0);" id="removeTeamMember"><?=t('kick_from_team')?></a>
+                	<a href="javascript:void(0);" id="changeTeamCaptain" attr-msg="<?=t('sure_to_change_captain')?>"><?=t('make_team_captain')?></a> |
+                    <a href="javascript:void(0);" id="removeTeamMember" attr-msg="<?=t('sure_to_kick_member')?>"><?=t('kick_from_team')?></a>
                 </span>
                 <? } ?>
             </div>
         <?
         	}
+        }
+        ?>
+    </div>
+
+    <div class="block streamers edit-streamers request-list">
+        <div class="block-header-wrapper">
+            <h1 class=""><?=t('requests_to_join_team')?></h1>
+        </div>
+        <?
+        if ($requestsRow) {
+            foreach($requestsRow as $v) {
+        ?>
+            <div class="block-content streamer" target="_blank" attr-id="<?=$v->id?>">
+                <img class="game-logo" src="<?=_cfg('img')?>/avatar/<?=$v->avatar?>.jpg" />
+                <a href="<?=_cfg('href')?>/member/<?=urlencode($v->name)?>" class="streamer-name"><?=$v->name?></a><label class="date"> - <?=$this->convertTime($v->added_date)?></label>
+                
+                <span class="viewers editStreamerAction">
+                    <a href="javascript:void(0);" id="acceptToTeam"><?=t('accept')?></a> |
+                    <a href="javascript:void(0);" id="rejectFromTeam"><?=t('reject')?></a>
+                </span>
+            </div>
+        <?
+            }
         }
         ?>
     </div>

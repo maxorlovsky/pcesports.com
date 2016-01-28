@@ -12,10 +12,16 @@
             <div class="buttons">
         		<? if ($this->team->user_id_captain == $this->data->user->id) { ?>
         			<a class="button" href="<?=_cfg('href')?>/team/<?=strtolower(urlencode($this->team->name))?>/manage"><?=t('manage_team')?></a>
-        			<p class="small" id="requestJoinTeam"><?=t('requests_to_join_team')?><!-- Requests to join team -->: 0</p>
-        		<? } else if (isset($this->data->user->id) && $this->data->user->id) { ?>
-        			<a class="button hint" href="javascript:void(0);" attr-msg="Before you will be added to the team, team captain will have to approve you">+ join team</a>
-        		<? } else { ?>
+        			<p class="small"><?=t('requests_to_join_team')?><!-- Requests to join team -->: <?=$requestsCount->count?></p>
+                <? } else if (isset($this->data->user->id) && $this->data->user->id && $isMember === 1) { ?>
+                    <a class="button" id="leaveTeam" href="javascript:void(0);" attr-msg="<?=t('are_you_sure_to_leave_team')?>"><?=t('leave_team')?></a>
+        		<? } else if (isset($this->data->user->id) && $this->data->user->id && $requstToJoin === 0) { ?>
+        			<a class="button hint" id="requestJoinTeam" href="javascript:void(0);" attr-msg="<?=t('join_team_request_hint')?>"><?=t('join_team_plus')?></a>
+                    <!--Before you will be added to the team, team captain will have to approve you-->
+        		<? } else if (isset($this->data->user->id) && $this->data->user->id && $requstToJoin === 1) { ?>
+                    <a class="button hint" id="requestJoinTeam" href="javascript:void(0);" attr-msg="<?=t('join_team_request_cancel_hint')?>"><?=t('cancel_join_minus')?></a>
+                    <!--You can cancel your request if you don't want to be added to the team-->
+                <? } else { ?>
         			<a class="button disabled must-login" href="javascript:;">Login to join team</a>
         		<? } ?>
             </div>

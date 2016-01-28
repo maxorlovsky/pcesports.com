@@ -117,6 +117,7 @@
     <audio id="achievement-ping" src="<?=_cfg('static')?>/achievement.ogg"></audio>
 </a>
 <? } ?>
+<div class="hidden popup" id="message-window"><div class="close"></div><p></p></div>
 <div id="hint-helper"><p></p></div>
 <div id="toTop"></div>
 <div id="fader"></div>

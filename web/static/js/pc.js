@@ -5,6 +5,9 @@ var PC = {
     //socket: io(g.site+':3000'),
     
     //functions
+    alert: function(message) {
+        PC.openPopup('message-window', message);
+    },
     socketInitiate: function() {
         if (g.participant === undefined) {
             return false;
@@ -30,7 +33,148 @@ var PC = {
             $('#fightStatus').html(answer[2]);
         });*/
     },
+    changeTeamCaptain: function(id, userId) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'changeTeamCaptain',
+                id: id,
+                user_id: userId
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                data = data.split(';');
+                if (data[0] == '1') {
+                    window.location.reload();
+                }
+                else {
+                    PC.alert(data[1]);
+                }
+            }
+        };
+        this.ajax(query);
+    },
+    removeTeamMember: function(id, userId) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'removeTeamMember',
+                id: id,
+                user_id: userId
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                data = data.split(';');
+                if (data[0] == '1') {
+                    $('.member-list .block-content.streamer[attr-id="'+userId+'"]').hide('fast');
+                }
+                else {
+                    PC.alert(data[1]);
+                }
+            }
+        };
+        this.ajax(query);
+    },
+    leaveTeam: function(id) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'leaveTeam',
+                id: id,
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                window.location.reload();
+            }
+        };
+        this.ajax(query);
+    },
+    rejectFromTeam: function(id, userId) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'rejectFromTeam',
+                id: id,
+                user_id: userId
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                data = data.split(';');
+                if (data[0] == '1') {
+                    $('.request-list .block-content.streamer[attr-id="'+userId+'"]').hide('fast');
+                }
+                else {
+                    PC.alert(data[1]);
+                }
+            }
+        };
+        this.ajax(query);
+    },
+    acceptToTeam: function(id, userId) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
+        var query = {
+            type: 'POST',
+            data: {
+                ajax: 'acceptToTeam',
+                id: id,
+                user_id: userId
+            },
+            success: function(data) {
+                PC.formInProgress = 0;
+                data = data.split(';');
+                if (data[0] == '1') {
+                    var html = $('.request-list .block-content.streamer[attr-id="'+userId+'"]');
+                    $('.request-list .block-content.streamer[attr-id="'+userId+'"]').hide('fast', function() {
+                        $('.member-list').append(html);
+                        var element = $('.member-list .block-content.streamer[attr-id="'+userId+'"]');
+                        element.find('.date').remove();
+                        element.find('.editStreamerAction').remove();
+                        element.show('fast');
+                    });
+                }
+                else {
+                    PC.alert(data[1]);
+                }
+            }
+        };
+        this.ajax(query);
+    },
     requestJoinTeam: function(id) {
+        if (this.formInProgress == 1) {
+            return false;
+        }
+        
+        this.formInProgress = 1;
+
         var query = {
             type: 'POST',
             data: {
@@ -38,26 +182,12 @@ var PC = {
                 id: id
             },
             success: function(data) {
-                if (data) {
-                    data = $.parseJSON(data);
-                    if (data.image) {
-                        $('.achievements').find('.image').html('<img src="'+data.image+'" />');
-                    }
-                    $('.achievements').find('.points').html(data.points);
-                    $('.achievements').find('.name').html(data.name);
-                    $('.achievements').find('.text').html(data.description);
-                    $('.achievements').show();
-                    $('.achievements').css('opacity', 1);
-
-                    document.getElementById('achievement-ping').play();
-
-                    $('.achievementsPoints').text(parseInt($('.achievementsPoints').text())+parseInt(data.points));
-
-                    setTimeout(function () { $('.achievements').trigger('click'); }, 20000); //hide in 20 sec
-                }
-            },
-            //Empty error message required
-            error: function() {}
+                PC.formInProgress = 0;
+                data = data.split(';');
+                PC.alert(data[1]);
+                $('#requestJoinTeam').html(data[2]);
+                $('#requestJoinTeam').attr('attr-msg', data[3]);
+            }
         };
         this.ajax(query);
     },
@@ -802,7 +932,10 @@ var PC = {
             }
         },
     },
-    openPopup: function(name) {
+    openPopup: function(name, message) {
+        if (!message) {
+            message = '';
+        }
         //If content block is too big, we lowering it height to normal window view and add scrollbar
         if ($('#'+name).height() > $(window).height()) {
             var minus = $(window).height() * 0.1;
@@ -817,10 +950,15 @@ var PC = {
         $('html, body').css('overflow', 'hidden');
         $('#fader').fadeIn('fast');
         $('#'+name).css('top', -$('#'+name).height());
-        
+
+        if (name == 'message-window') {
+            $('#message-window p').html(message);
+        }
+
+        windowTopPosition = $(window).scrollTop();
         getLeft = ($(window).width()/2) - ($('#'+name).width()/2);
-        getTop = ($(window).height()/2) - ($('#'+name).height()/2);
-        $('#'+name).css({left: getLeft});
+        getTop = ($(window).height()/2) - ($('#'+name).height()/2) + windowTopPosition;
+        $('#'+name).css({top: windowTopPosition, left: getLeft});
         $('#'+name).show();
         $('#'+name).stop().animate({top: getTop+20}, 500, function() {
             $(this).stop().animate({top: getTop});
@@ -1124,7 +1262,7 @@ var PC = {
                 $('#register-in-tournament').removeClass('alpha');
                 PC.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@pcesports.com');
+                PC.alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         };
         this.ajax(query);
@@ -1171,7 +1309,7 @@ var PC = {
                 $('#edit-in-tournament').removeClass('alpha');
                 PC.formInProgress = 0;
                 
-                alert('Something went wrong... Contact admin at info@pcesports.com');
+                PC.alert('Something went wrong... Contact admin at info@pcesports.com');
             }
         };
         this.ajax(query);
@@ -1296,7 +1434,7 @@ var PC = {
         }
         if (!object.success) {
             object.success = function(data) {
-                alert(data);
+                PC.alert(data);
             };
         }
         if (!object.data) {
@@ -1319,7 +1457,7 @@ var PC = {
         }
         if (!object.error) {
             object.error = function(xhr, ajaxOptions, thrownError) {
-                alert('Something went wrong... Contact admin at info@pcesports.com');
+                PC.alert('Something went wrong... Contact admin at info@pcesports.com');
                 console.log(object.url);
                 console.log(xhr);
                 console.log(ajaxOptions);

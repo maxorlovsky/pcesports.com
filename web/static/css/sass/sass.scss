@@ -878,7 +878,8 @@ footer {
 }
 
 
-#hint-helper {
+#hint-helper,
+#message-window {
     box-shadow: 0 1px 2px rgba(0,0,0,.6), inset 0 1px 1px 1px #999;
     max-width: 300px;
     background-color: #fff;
@@ -894,6 +895,15 @@ footer {
     i {
         color: #777;
         font-size: 11px;
+    }
+}
+#message-window {
+    p {
+        padding: 15px 35px 15px 15px;
+    }
+    .close {
+        right: 10px;
+        top: 10px;
     }
 }
 .timezone-hint {
@@ -3389,6 +3399,13 @@ footer .games img {
         margin-left: 0;
         text-align: center;
         font-size: 17px;
+    }
+
+    .submit {
+        margin-bottom: 10px;
+        width: 760px;
+        font-size: 20px;
+        text-align: center;
     }
 }
 

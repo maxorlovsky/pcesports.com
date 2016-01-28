@@ -147,35 +147,37 @@ class Achievements extends System
     	$points = 0;
     	$returnObject = new stdClass();
     	//Looping and searching if criteria match
-		foreach($achievements as $f) {
-			//Criteria match, can close achievement
-			if ($f->current >= $f->requirement) {
-				//Closing achievement
-				Db::query(
-					'UPDATE `users_achievements` '.
-					'SET `done` = 1, '.
-					'`date` = NOW() '.
-					'WHERE `achievement_id` = '.(int)$f->id.' AND '.
-					'`user_id` = '.(int)$this->data->user->id.' AND '.
-					'`done` = 0 '
-				);
+    	if ($achievements) {
+			foreach($achievements as $f) {
+				//Criteria match, can close achievement
+				if ($f->current >= $f->requirement) {
+					//Closing achievement
+					Db::query(
+						'UPDATE `users_achievements` '.
+						'SET `done` = 1, '.
+						'`date` = NOW() '.
+						'WHERE `achievement_id` = '.(int)$f->id.' AND '.
+						'`user_id` = '.(int)$this->data->user->id.' AND '.
+						'`done` = 0 '
+					);
 
-				$returnObject->id = $f->id;
-				$returnObject->name = $f->name;
-				$returnObject->description = $f->description;
-				if ($f->image) {
-					$f->image = _cfg('img').'/achievements/'.$f->image;
+					$returnObject->id = $f->id;
+					$returnObject->name = $f->name;
+					$returnObject->description = $f->description;
+					if ($f->image) {
+						$f->image = _cfg('img').'/achievements/'.$f->image;
+					}
+					$returnObject->image = $f->image;
+					$returnObject->points = $f->points;
+
+					//Adding points to user and
+					Db::query('UPDATE `users` '.
+						'SET `experience` = `experience` + '.(int)$returnObject->points.' '.
+						'WHERE `id` = '.(int)$this->data->user->id
+					);
+
+					return json_encode($returnObject);
 				}
-				$returnObject->image = $f->image;
-				$returnObject->points = $f->points;
-
-				//Adding points to user and
-				Db::query('UPDATE `users` '.
-					'SET `experience` = `experience` + '.(int)$returnObject->points.' '.
-					'WHERE `id` = '.(int)$this->data->user->id
-				);
-
-				return json_encode($returnObject);
 			}
 		}
 		
