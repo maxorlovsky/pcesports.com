@@ -28,20 +28,16 @@
 
                 <?=$v->interval?>
 
-                <?
-                if ($v->comments == 0) {
-	                /*if ($v->edited==1 && $v->status != 1) {
-	                    echo ' <i>('.t('edited').')</i>';
-	                }
-	                else if ($v->status == 1) {
-	                    echo ' <span class="deleted">('.t('deleted').') </span>';
-	                }*/
-                ?> 
-	                <?=t('by')?> 
-	                <a class="comment-user" href="<?=_cfg('href')?>/member/<?=$v->name?>">
-	                    <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$v->avatar?>.jpg" /><?=$v->name?>
-	                </a>
-                <? } ?>
+                <?/*if ($v->edited==1 && $v->status != 1) {
+                    echo ' <i>('.t('edited').')</i>';
+                }
+                else if ($v->status == 1) {
+                    echo ' <span class="deleted">('.t('deleted').') </span>';
+                }*/?> 
+                <?=t('by')?> 
+                <a class="comment-user" href="<?=_cfg('href')?>/member/<?=$v->name?>">
+                    <img class="avatar-block" src="<?=_cfg('avatars')?>/<?=$v->avatar?>.jpg" /><?=$v->name?>
+                </a>
             </div>
             <div class="actions">
                 <a class="comments-list" href="<?=_cfg('href')?>/boards/<?=$v->id?>"><?=$v->comments?> <?=t(($v->comments>1?'comments':'comment'))?></a>

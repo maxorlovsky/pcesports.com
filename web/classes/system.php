@@ -209,13 +209,16 @@ class System
             }
             
             $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
-                'FROM `boards` AS `b` '.
+                'FROM `boards_comments` AS `bc` '.
+                'LEFT JOIN `boards` AS `b` ON `bc`.`board_id` = `b`.`id` '.
                 $additionalSql.
-                'LEFT JOIN `users` AS `u` ON `b`.`user_id` = `u`.`id` '.
+                'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
                 'WHERE `b`.`status` != 1 '.
-                'ORDER BY `b`.`activity` DESC '.
+                'AND `bc`.`status` != 1 '.
+                'ORDER BY `bc`.`id` DESC '.
                 'LIMIT 3 '
             );
+            dump($this->boards);
             
             $currDate = new DateTime();
             
