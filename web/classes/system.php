@@ -215,6 +215,7 @@ class System
                 'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
                 'WHERE `b`.`status` != 1 '.
                 'AND `bc`.`status` != 1 '.
+                'GROUP BY `b`.`id` '.
                 'ORDER BY `bc`.`id` DESC '.
                 'LIMIT 3 '
             );
