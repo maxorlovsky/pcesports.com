@@ -218,7 +218,6 @@ class System
                 'ORDER BY `bc`.`id` DESC '.
                 'LIMIT 3 '
             );
-            dump($this->boards);
             
             $currDate = new DateTime();
             
