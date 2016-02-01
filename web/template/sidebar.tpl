@@ -141,57 +141,6 @@
         </div>
     </div>
     <? } ?>
-
-    <div class="block fb">
-        <div class="block-header-wrapper">
-            <h1 class="bordered">@Tweet</h1>
-        </div>
-        <div class="twitter-holder block-content">
-            <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/pentaclick" data-widget-id="422786485738147841">Tweets by @pentaclick</a>
-        </div>
-    </div>
-
-    <div class="block streamers">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('streamers')?></h1>
-        </div>
-        <?
-        if ($this->streams) {
-            foreach($this->streams as $k => $v) {
-                if (_cfg('https') == 1) {
-        ?>
-            <a href="http://www.twitch.tv/<?=$v->name?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=(isset($v->onlineStatus)&&$v->onlineStatus==0?'alpha':null)?>">
-                <? if ($v->game != 'other') { ?>
-                    <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
-                <? } ?>
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
-                <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
-            </a>
-        <?
-                }
-                else {
-        ?>
-            <a href="<?=_cfg('href')?>/streams/<?=$v->id?>" class="block-content streamer <?=($v->featured==1?'featured':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=(isset($v->onlineStatus)&&$v->onlineStatus==0?'alpha':null)?>">
-                <? if ($v->game != 'other') { ?>
-                    <img class="game-logo" src="<?=_cfg('img')?>/<?=$v->game?>.png" />
-                <? } ?>
-                <label class="streamer-name"><?=($v->display_name?$v->display_name:$v->name)?></label>
-                <span class="viewers"><?=$v->viewers?> <?=t('viewers')?></span>
-            </a>
-        <?
-                }
-            }
-        }
-        else {
-        ?>
-            <div class="block-content">
-                <?=t('no_streams_online')?>
-            </div>
-        <?
-        }
-        ?>
-    </div>
-
 </div>
 
 <div class="clear"></div>
