@@ -207,16 +207,17 @@ class System
                 $additionalSelect .= ', `bv`.`direction`';
                 $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
             }
-            
-            $this->boards = Db::fetchRows('SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
-                'FROM `boards_comments` AS `bc` '.
-                'LEFT JOIN `boards` AS `b` ON `bc`.`board_id` = `b`.`id` '.
+
+            $this->boards = Db::fetchRows(
+                'SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
+                'FROM `boards` AS `b` '.
+                'LEFT JOIN '.
+                '( SELECT `board_id`, `user_id` FROM `boards_comments` GROUP BY `id` ) AS `bc` ON `bc`.`board_id` = `b`.`id` '.
                 $additionalSql.
-                'LEFT JOIN `users` AS `u` ON `bc`.`user_id` = `u`.`id` '.
+                'LEFT JOIN `users` AS `u` ON (`bc`.`user_id` = `u`.`id` OR `b`.`user_id` = `u`.`id`) '.
                 'WHERE `b`.`status` != 1 '.
-                'AND `bc`.`status` != 1 '.
                 'GROUP BY `b`.`id` '.
-                'ORDER BY `bc`.`id` DESC '.
+                'ORDER BY `b`.`activity` DESC '.
                 'LIMIT 3 '
             );
             
