@@ -64,10 +64,10 @@
             <div class="fields">
                 <label for="subscribe"><?=t('receive_emails')?></label>
                 <select name="subscribe" id="subscribe">
-                    <option value="all"><?=t('all')?></option>
-                    <option value="lol"><?=t('only_about_lol')?></option>
-                    <option value="hs"><?=t('only_about_hs')?></option>
-                    <option value="none"><?=t('turn_off')?></option>
+                    <option value="all" <?=($subscribeStatus=='all'?'selected':null)?>><?=t('all')?></option>
+                    <option value="lol" <?=($subscribeStatus=='lol'?'selected':null)?>><?=t('only_about_lol')?></option>
+                    <option value="hs" <?=($subscribeStatus=='hs'?'selected':null)?>><?=t('only_about_hs')?></option>
+                    <option value="none" <?=($subscribeStatus=='none'?'selected':null)?>><?=t('turn_off')?></option>
                 </select>
             </div>
             

@@ -89,6 +89,13 @@ class profile extends System
             '660' => 'GMT+11 Magadan, New Caledonia',
             '720' => 'GMT+12 Auckland, Wellington',
         );*/
+
+        $row = Db::fetchRow('SELECT * FROM `subscribe` WHERE `email` = "'.Db::escape($this->data->user->email).'"');
+
+        $subscribeStatus = 'none';
+        if ($row && $row->removed == 0) {
+            $subscribeStatus = $row->theme;
+        }
         
         $avatars = $this->getAvatarList();
         
