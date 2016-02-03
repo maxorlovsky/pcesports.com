@@ -51,7 +51,7 @@ class hearthstone extends System
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
 			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
-        $row = Db::fetchRow('SELECT `email`, `contact_info`, `avatar` '.
+        $row = Db::fetchRow('SELECT `contact_info` '.
             'FROM `participants` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
