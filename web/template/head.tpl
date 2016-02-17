@@ -18,15 +18,15 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.47" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.48" />
 </head>
 
 <body class="<?=$this->data->mood?>">
 
 <script src="<?=_cfg('static')?>/js/ads.js"></script>
 
-<script src="<?=_cfg('static')?>/js/angular.js"></script>
-<script src="<?=_cfg('static')?>/js/angular-resource.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
 <script src="<?=_cfg('static')?>/js/angular-combined.js?v=1.1"></script>
 <script src="<?=_cfg('static')?>/js/scripts.js"></script>
 
