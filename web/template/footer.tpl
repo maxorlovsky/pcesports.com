@@ -16,7 +16,7 @@
     </div>
 </footer>
 
-<? if ($this->logged_in != 1) { ?>
+<? if ($this->logged_in != 1 && $this->page != 'restoration ') { ?>
 <div class="hidden popup" id="login-window">
     <div class="close"></div>
 

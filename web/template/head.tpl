@@ -111,11 +111,11 @@ hs.dimmingOpacity = 0.8;
         </ul>
         
     <? } else { ?>
-        <div class="login">
+        <? if ($this->page == 'restoration') { ?> <a class="login" href="<?=_cfg('href')?>"> <? } else { ?> <div class="login"> <? } ?>
             <span><?=t('login_register')?></span>
             <span class="mobile"><?=t('login')?></span>
             <div class="usericon"></div>
-        </div>
+        <? if ($this->page == 'restoration') { ?> </a> <? } else { ?> </div> <? } ?>
     <? } ?>
     
     <nav>
