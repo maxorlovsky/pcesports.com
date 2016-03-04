@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/web/inc/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/maxtream/themages/cms/inc/config-default.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/config-tm.php';
 /**
  * Your database authentication information goes here
  * @see http://dbv.vizuina.com/documentation/
