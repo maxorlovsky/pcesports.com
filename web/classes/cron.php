@@ -1121,7 +1121,7 @@ class Cron extends System {
     public function finalizeTournament() {
         $row = Db::fetchRow('SELECT `id`, `server`, `name`, `game` '.
             'FROM `tournaments` '.
-            'WHERE `status` = "Ended" AND '.
+            'WHERE `status` = "ended" AND '.
             '`finalized` = 0 '.
             'LIMIT 1 '
         );
