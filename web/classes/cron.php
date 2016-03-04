@@ -10,7 +10,7 @@ class Cron extends System {
 
         $row = Db::fetchRow(
             'SELECT * FROM `subscribe_sender` '.
-            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 MINUTE ) OR `timestamp` IS NULL) '.
+            'WHERE (`timestamp` < DATE_SUB( NOW(), INTERVAL 1 MINUTE ) OR `timestamp` IS NULL) AND `ended` = 0 '.
             'ORDER BY `id` ASC '.
             'LIMIT 1'
         );
@@ -61,7 +61,13 @@ class Cron extends System {
 
         if ($i < $limit) {
             //If number of sent mails are less then limit, then we probably sent all of them
-            Db::query('DELETE FROM `subscribe_sender` WHERE `id` = '.$row->id);
+            Db::query(
+                'UPDATE `subscribe_sender` SET '.
+                '`emails` = '.($row->emails + $i).', '.
+                '`ended` = 1, '.
+                '`timestamp` = NOW() '.
+                'WHERE `id` = '.$row->id
+            );
         }
         else {
             //Not all sent, adding timestamp and email limit
@@ -1034,8 +1040,8 @@ class Cron extends System {
     public function tournamentsOpenReg() {
         $rows = Db::fetchRows('SELECT * '.
             'FROM `tournaments` '.
-            'WHERE `status` = "Start" AND '.
-            '`reg_activated` = 0 '
+            'WHERE (`status` = "Start" AND `reg_activated` = 0) '.
+            'OR `status` = "upcoming" '
         );
         
         if ($rows) {
@@ -1069,9 +1075,41 @@ class Cron extends System {
                     }
 
                     Db::query('UPDATE `tournaments` SET '.
-                        '`reg_activated` = 1 '.
+                        '`reg_activated` = 1, '. //old mark for setting tournament in registration process, must be deprecated
+                        '`status` = "registration" '. //new mark for setting tournament in registration process
                         'WHERE '.
                         '`id` = '.(int)$v->id
+                    );
+
+                    //Creating subscribe row for a tournament
+                    $file = file_get_contents(_cfg('dir').'/template/mails/invite-to-tourn.html');
+
+                    if ($v->game == 'hs') {
+                        $gameName = 'Hearthstone League Season 2 Tournament '.$v->name;
+                        $href = _cfg('href').'/hearthstone/'.$v->server.'/'.$v->name;
+                    }
+                    else if ($v->game == 'lol') {
+                        $gameName = 'League of Legends EUW tournament #'.$v->name;
+                        $href = _cfg('href').'/leagueoflegends/'.$v->server.'/'.$v->name;
+                    }
+                    else {
+                        $gameName = '';
+                        $href = _cfg('href');
+                    }
+
+                    $html = str_replace(
+                        array('%tournamentName%', '%href%'),
+                        array($gameName, $href),
+                        $file
+                    );
+
+                    $type = '(`theme` = "'.$v->game.'" OR `theme` = "all")';
+
+                    Db::query(
+                        'INSERT INTO `subscribe_sender` SET '.
+                        '`type` = "'.Db::escape($type).'", '.
+                        '`subject` = "Pentaclick tournament invitation - '.Db::escape($gameName).'", '.
+                        '`text` = "'.Db::escape($html).'" '
                     );
                 }
             }
