@@ -172,7 +172,8 @@ var profiler = {
                         $('.chat-content').scrollTop($('.chat-content').prop('scrollHeight'));
                     }
                 }
-            }
+            },
+            error: function() {}
         }
         PC.ajax(query);
     },
