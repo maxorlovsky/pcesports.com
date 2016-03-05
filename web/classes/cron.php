@@ -1125,49 +1125,67 @@ class Cron extends System {
             '`finalized` = 0 '.
             'LIMIT 1 '
         );
-        
-        if ($row) {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/participants.json');
-            if ($answer) {
-                foreach($answer as $v) {
-                    //Settings places for participants
-                    Db::query('UPDATE `participants` SET '.
-                        '`place` = '.(int)$v->participant->final_rank.', '.
-                        '`seed_number` = '.(int)$v->participant->seed.' '.
-                        'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
-                        '`game` = "'.$row->game.'" AND '.
-                        '`approved` = 1 AND '.
-                        '`checked_in` = 1 AND '.
-                        '`server` = "'.$row->server.'" AND '.
-                        '`deleted` = 0 AND '.
-                        '`tournament_id` = "'.$row->name.'" '
-                    );
-                }
-            }
-            
-            //Removing tournament start
-            Db::query(
-                'UPDATE `tm_settings` SET '.
-                '`value` = 0 '.
-                'WHERE `setting` = "tournament-start-'.$row->game.'-'.$row->server.'" '
-            );
 
-            //Ending participants
-            Db::query(
-                'UPDATE `participants` SET '.
-                '`ended` = 1 '.
-                'WHERE `game` = "'.$row->game.'" AND '.
-                '`server` = "'.$row->server.'" AND '.
-                '`tournament_id` = "'.$row->name.'" '
-            );
-
-            //Registering that tournament is finalized
-            Db::query(
-                'UPDATE `tournaments` SET '.
-                '`finalized` = 1 '.
-                'WHERE `id` = '.(int)$row->id
-            );
+        if (!$row) {
+            return false;
         }
+        
+        //Closing tournament on challonge
+        $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/finalize.json');
+        
+        //Getting participants places
+        $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/participants.json');
+        if ($answer) {
+            foreach($answer as $v) {
+                //Settings places for participants
+                Db::query('UPDATE `participants` SET '.
+                    '`place` = '.(int)$v->participant->final_rank.', '.
+                    '`seed_number` = '.(int)$v->participant->seed.' '.
+                    'WHERE `challonge_id` = '.(int)$v->participant->id.' AND '.
+                    '`game` = "'.$row->game.'" AND '.
+                    '`approved` = 1 AND '.
+                    '`checked_in` = 1 AND '.
+                    '`server` = "'.$row->server.'" AND '.
+                    '`deleted` = 0 AND '.
+                    '`tournament_id` = "'.$row->name.'" '
+                );
+            }
+        }
+        
+        //Removing tournament start
+        Db::query(
+            'UPDATE `tm_settings` SET '.
+            '`value` = 0 '.
+            'WHERE `setting` = "tournament-start-'.$row->game.'-'.$row->server.'" '
+        );
+
+        //Ending participants
+        Db::query(
+            'UPDATE `participants` SET '.
+            '`ended` = 1 '.
+            'WHERE `game` = "'.$row->game.'" AND '.
+            '`server` = "'.$row->server.'" AND '.
+            '`tournament_id` = "'.$row->name.'" '
+        );
+
+        //Getting list of users in latest matches
+        /*$users = Db::fetchRow('SELECT `id`, `server`, `name`, `game` '.
+            'FROM `participants` '.
+            'WHERE `game` = "'.$row->game.'" AND '.
+            '`server` = "'.$row->server.'" AND '.
+            '`tournament_id` = "'.$row->name.'" AND '.
+            '`place` <= 8 AND '.
+            '`place` != 0 '.
+            'ORDER BY `place` '
+            'LIMIT 8 '
+        );*/
+
+        //Registering that tournament is finalized
+        Db::query(
+            'UPDATE `tournaments` SET '.
+            '`finalized` = 1 '.
+            'WHERE `id` = '.(int)$row->id
+        );
         
         return true;
     }
@@ -1207,9 +1225,10 @@ class Cron extends System {
     }
     
     public function sendNotifications() {
-        $rows = Db::fetchRows('SELECT `game`, `server`, `name`, `dates_start`, `time` '.
+        $rows = Db::fetchRows('SELECT `id`, `game`, `server`, `name`, `dates_start`, `time` '.
             'FROM `tournaments` '.
-            'WHERE `status` = "Start" '
+            'WHERE `status` = "Start" '. //old status
+            'OR `status` = "registration" ' //new status
         );
         
         if ($rows) {
@@ -1321,12 +1340,19 @@ class Cron extends System {
     }
     
     private function checkInProcess($tournament) {
-        //Enabling check in!
+        //Enabling check in! (old)
         Db::query('UPDATE `tm_settings` SET '.
             '`value` = 1 '.
             'WHERE '.
             '`setting` = "tournament-checkin-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
             '`setting` = "tournament-checkin-'.$tournament->game.'" '
+        );
+
+        //Enabling check in! (new)
+        Db::query('UPDATE `tournaments` SET '.
+            '`status` = "check_in" '.
+            'WHERE '.
+            '`id` = '.(int)$tournament->id
         );
         
         return true;
@@ -1355,6 +1381,13 @@ class Cron extends System {
             'WHERE '.
             '`setting` = "tournament-start-'.$tournament->game.'-'.Db::escape($tournament->server).'" OR '.
             '`setting` = "tournament-start-'.$tournament->game.'"'
+        );
+
+        //New status
+        Db::query('UPDATE `tournaments` SET '.
+            '`status` = "live" '.
+            'WHERE '.
+            '`id` = '.(int)$tournament->id
         );
         
         if ($tournament->game == 'hs') {
