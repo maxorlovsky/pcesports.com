@@ -1131,7 +1131,7 @@ class Cron extends System {
         }
         
         //Closing tournament on challonge
-        $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/finalize.json');
+        $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/finalize.json', array('end'=>'1'));
         
         //Getting participants places
         $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$row->game.$row->server.$row->name.'/participants.json');
