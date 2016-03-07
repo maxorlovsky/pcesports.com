@@ -138,6 +138,21 @@ class TournamentList
 				);
 			}
             $lastId = Db::lastId();
+
+            /*$this->runChallongeAPI(
+            	array(
+            		'api_key' 				=> '5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa',
+            		'tournament[name]'		=> ( $form['game'] == 'lol' ?
+            									 'LoL ('.strtoupper($form['server']).') Tournament #'.$form['name'] :
+            								 	 'Hearthstone League '.strtoupper($form['server']).'T'.$form['name'] ),
+            		'tournament[url]'		=> $form['game'].$form['server'].$form['name'],
+            		'tournament[subdomain]'	=> 'pentaclick',
+            		'tournament[description]' => _cfg('href').'/'.($form['game'] == 'lol'?'leagueoflegends':'hearthstone').'/'.strtoupper($form['server']).'/'.$form['name'],
+            		'tournament[open_signup]' => false,
+            		'tournament[hold_third_place_match]' => true,
+            		'tournament[hide_forum]' => true
+        		)
+    		);*/
 			
 			$this->system->log('Adding tournament <b>Tournament added</b> ('.$lastId.')', array('module'=>get_class(), 'type'=>'add'));
 
@@ -240,4 +255,66 @@ class TournamentList
 		}
 		$this->system->log('Deleting tournament <b>'.$id.'</b>', array('module'=>get_class(), 'type'=>'delete'));
 	}
+
+	private function runChallongeAPI($apiArray = array()) {
+    	$startTime = microtime(true);
+    	$error = '';
+    
+    	$apiUrl = 'https://api.challonge.com/v1/tournaments.json';
+    
+    	$apiUrlLog = $apiUrl;
+    	if ($apiArray) {
+    		foreach($apiArray as $k => $v) {
+    			$apiUrlLog .= '&'.$k.'='.$v;
+    		}
+    	}
+    
+    	Db::query(
+    		'INSERT INTO `challonge_requests` SET '.
+    		' `timestamp` = NOW(), '.
+    		' `ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
+    		' `data` = "'.$apiUrlLog.'"'
+		);
+    
+    	$lastId = Db::lastId();
+    
+    	$ch = curl_init();
+    	curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+    	curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+    	curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
+    	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    	curl_setopt($ch, CURLOPT_POST, 1); //POST
+    	curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST field
+    
+    	$response = curl_exec($ch); // run the whole process
+    	$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+    	curl_close($ch);
+    
+    	if ($http_status == 401) {
+    		$error = 'Invalid API key';
+    	}
+    	else if ($http_status == 404 ) {
+    		$error = 'Object not found within your account scope';
+    	}
+    	else if ($http_status == 422) {
+    		$error = 'Validation error(s) for create or update method';
+    	}
+    
+    	$endTime = microtime(true);
+    	$duration = $endTime - $startTime; //calculates total time taken
+    
+    	Db::query(
+	    	'UPDATE `challonge_requests` SET '.
+	    	' `response` = "POST ('.$http_status.':'.$error.')", '.
+	    	' `time` = "'.(float)$duration.'" '.
+	    	' WHERE id='.$lastId
+    	);
+
+    	return true;
+    }
 }

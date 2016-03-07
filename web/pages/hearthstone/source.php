@@ -228,7 +228,7 @@ class hearthstone extends System
 		);
         if ($rows) {
             foreach($rows as $v) {
-                if ($v->status != 'Ended') {
+                if ($v->status != 'ended') {
                     $startTime = strtotime($v->dates_start.' '.$v->time);
                     $regTime = strtotime($v->dates_registration.' '.$v->time);
                     

@@ -45,7 +45,7 @@ class tournaments extends System
                 else if ($checkReg == 1) {
                     $v->status = t('registration');
                 }
-                else if ($v->status == 'Ended') {
+                else if ($v->status == 'ended') {
                     $v->status = t('ended');
                 }
                 else {
