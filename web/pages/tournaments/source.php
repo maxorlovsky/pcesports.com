@@ -81,7 +81,7 @@ class tournaments extends System
 	
 	public static function getSeo() {
 		$seo = new stdClass();
-		$seo->title = 'Pentaclick tournaments list';
+		$seo->title = 'Tournaments list';
         
 		return $seo;
 	}
