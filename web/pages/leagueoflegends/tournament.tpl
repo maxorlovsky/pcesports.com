@@ -68,9 +68,14 @@
                         </div>
 					<? } ?>
 
+                    <div class="form-item" data-label="stream">
+                        <input class="hint" attr-msg="<?=t('stream_tournament_hint_lol')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
+                        <div class="message hidden"></div>
+                    </div>
+
                     <div class="form-item" data-label="agree">
                         <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
-					   <div class="message hidden"></div>
+                        <div class="message hidden"></div>
                     </div>
 
                     <input type="hidden" name="server" value="<?=$this->server?>" />

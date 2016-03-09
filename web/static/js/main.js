@@ -205,16 +205,6 @@ $('.avatars-list .avatar-block').on('click', function() {
     $('.nav-avatar a img').attr('src', src);
 });
 
-$('.editStreamerAction .change_game, .editStreamerAction .change_languages').on('change', function() {
-    PC.editStreamer(this);
-});
-$('.editStreamerAction #removeStreamer').on('click', function() {
-    PC.removeStreamer(this);
-});
-$('#submitStreamer').on('click', function() {
-    PC.submitStreamer();
-});
-
 $('#connectTeamToAccount').on('click', function() {
     PC.connectTeamToAccount();
 });

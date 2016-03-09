@@ -589,29 +589,18 @@ class hearthstone extends System
 		
 		foreach($answer as $f) {
 			if ($f->participant->name == $_SESSION['participant']->name) {
-                $row = Db::fetchRow('SELECT * FROM `participants` '.
-					'WHERE `tournament_id` = '.(int)$currentTournament.' '.
-					'AND `game` = "hs" '.
+                Db::query('UPDATE `participants` '.
+                    'SET `challonge_id` = '.(int)$f->participant->id.', '.
+                    '`checked_in` = 1 '.
+                    'WHERE `tournament_id` = '.(int)$currentTournament.' '.
+                    'AND `game` = "hs" '.
                     'AND `server` = "'.Db::escape($server).'" '.
-					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
-                    'AND `approved` = 1 '.
-                    //'AND `verified` = 1 '.
-                    'AND `checked_in` = 0 '
-				);
-                if ($row != 0) {
-                    Db::query('UPDATE `participants` '.
-                        'SET `challonge_id` = '.(int)$f->participant->id.', '.
-                        '`checked_in` = 1 '.
-                        'WHERE `tournament_id` = '.(int)$currentTournament.' '.
-                        'AND `game` = "hs" '.
-                        'AND `server` = "'.Db::escape($server).'" '.
-                        'AND `id` = '.(int)$_SESSION['participant']->id.' '.
-                        'AND `approved` = 1 '
-                        //'AND `verified` = 1 '
-                    );
-                    
-                    $_SESSION['participant']->checked_in = 1;
-                }
+                    'AND `id` = '.(int)$_SESSION['participant']->id.' '.
+                    'AND `approved` = 1 '
+                    //'AND `verified` = 1 '
+                );
+                
+                $_SESSION['participant']->checked_in = 1;
                 
 				break;
 			}

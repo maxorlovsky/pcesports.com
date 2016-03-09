@@ -12,9 +12,9 @@ class streams extends System
 	
 	public function getStreamList() {
         $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, IF(`online` >= '.(time()-360).', 1, 0) AS `onlineStatus`, `name` AS `link` FROM `streams` '.
-            'WHERE `online` != 0 AND '.
-            '`online` > '.(time()-1209600).' AND '.
-            '`approved` = 1 '.
+            'WHERE `online` != 0 '.
+            'AND `online` > '.(time()-1209600).' '.
+            'AND `approved` = 1 '.
             'ORDER BY `onlineStatus` DESC, `featured` DESC, `viewers` DESC '
         );
         
@@ -25,110 +25,7 @@ class streams extends System
 		include_once _cfg('pages').'/'.get_class().'/index.tpl';
 	}
 	
-	public function getStream() {
-		$this->stream = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers` FROM `streams` '.
-            'WHERE `id` = '.(int)$_GET['val2'].' '.
-            'LIMIT 1'
-		);
-		
-		include_once _cfg('pages').'/'.get_class().'/stream.tpl';
-	}
-	
 	public function showTemplate() {
-		/*if (isset($_GET['val1']) && $_GET['val1'] == 'stream') {
-			$this->getStream();
-		}
-		else {*/
-			$this->getStreamList();
-		//}
+		$this->getStreamList();
 	}
-
-    /*
-    Function from AJAX class
-    */
-    public function editStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $id = (int)$data['id'];
-        
-        $row = Db::fetchRow(
-            'SELECT * FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'AND `user_id` = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        if (!$row) {
-            return '0;'.t('error');
-        }
-        
-        Db::query(
-            'UPDATE `streams` SET '.
-            'WHERE `id` = '.$id.' '.
-            'LIMIT 1 '
-        );
-        
-        return '1;1';
-    }
-    
-    public function removeStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $id = (int)$data['id'];
-        
-        $row = Db::fetchRow(
-            'SELECT * FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'AND `user_id` = '.(int)$this->data->user->id.' '.
-            'LIMIT 1 '
-        );
-        if (!$row) {
-            return '0;'.t('error');
-        }
-        
-        Db::query(
-            'DELETE FROM `streams` '.
-            'WHERE `id` = '.$id.' '.
-            'LIMIT 1 '
-        );
-        
-        return '1;1';
-    }
-    
-    public function submitStreamer($data) {
-        if (!$this->logged_in) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        parse_str($data['form'], $post);
-        
-        if (!isset($post['name']) || !$post['name']) {
-            return '0;'.t('input_name');
-        }
-        $post['name'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['name']);
-        
-        $twitch = $this->runTwitchAPI($post['name']);
-        
-        if (!$twitch) {
-            return '0;'.t('channel_not_found');
-        }
-        
-        $row = Db::fetchRow('SELECT * FROM `streams` WHERE `name` = "'.Db::escape($post['name']).'" LIMIT 1');
-        if ($row) {
-            return '0;'.t('stream_already_registered');
-        }
-        
-        Db::query(
-            'INSERT INTO `streams` SET '.
-            '`user_id`  = '.(int)$this->data->user->id.', '.
-            '`name` = "'.Db::escape($post['name']).'", '.
-            '`game` = "other", '.
-            '`approved` = 1 '
-        );
-        
-        return '1;'.t('stream_added');
-    }
 }

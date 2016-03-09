@@ -933,14 +933,6 @@ footer {
         display: block;
         transition: .5s;
         color: #777;
-        &.hearthstone {
-            width: 100%;
-            height: auto;
-            padding-bottom: 0;
-            .name {
-                padding: 5px 0 0 15px;
-            }
-        }
         &:hover {
             background-color: #eee;
         }
@@ -958,7 +950,7 @@ footer {
             }
         }
         .name {
-            padding: 10px 0 0 15px;
+            padding: 5px 0 0 15px;
             font-size: 17px;
             font-weight: bold;
             color: #777;
@@ -981,7 +973,7 @@ footer {
         }
         .social {
             text-align: left;
-            margin-top: 3px;
+            margin-top: 5px;
         }
     }
     .team-division {

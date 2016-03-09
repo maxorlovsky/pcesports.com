@@ -3,7 +3,7 @@
 <div class="left-containers">
 
     <?
-    if ($this->streams && _cfg('https') != 1) {
+    if ($this->streams) {
         $i = 0;
     ?>
         <div class="block twitch">
@@ -12,11 +12,11 @@
             </div>
             <? foreach($this->streams as $v) { ?>
                 <div id="player" attr-current="<?=$v->name?>">
-                    <object type="application/x-shockwave-flash" height="400" width="100%" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>">
+                    <object type="application/x-shockwave-flash" height="400" width="100%" id="live_embed_player_flash" data="https://www.twitch.tv/widgets/live_embed_player.swf?channel=<?=$v->name?>">
                         <param name="allowFullScreen" value="true" />
                         <param name="allowScriptAccess" value="always" />
                         <param name="allowNetworking" value="all" />
-                        <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+                        <param name="movie" value="https://www.twitch.tv/widgets/live_embed_player.swf" />
                         <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=<?=$v->name?>&amp;auto_play=false&amp;start_volume=25" />
                     </object>
                 </div>
@@ -30,7 +30,7 @@
                 foreach($this->streams as $v) {
                 ?>
                     <div class="featured-streamer <?=($i==0?'active':null)?> <?=(isset($v->event)&&$v->event==1?'event':null)?> <?=$v->game?> hint" attr-msg="<?=$v->display_name?>" attr-name="<?=$v->name?>">
-                        <div class="image"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_<?=$v->name?>-80x45.jpg" /></div>
+                        <div class="image"><img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_<?=$v->name?>-80x45.jpg" /></div>
                         <div class="name"><?=$v->display_name?></div>
                         <div class="viewers"><?=t('viewers')?>: <?=$v->viewers?></div>
                         <div class="clear"></div>

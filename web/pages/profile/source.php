@@ -28,10 +28,7 @@ class profile extends System
             return false;
         }
         
-        if ($page == 'streamers-list') {
-            $this->additional = $this->streamersList();
-        }
-        else if ($page == 'summoners') {
+        if ($page == 'summoners') {
             $this->additional = $this->summonersList();
         }
         else if ($page == 'team') {
@@ -261,17 +258,6 @@ class profile extends System
         return $avatars;
     }
     
-    protected function streamersList() {
-        $return = new stdClass();
-        
-        $return->streams = Db::fetchRows(
-            'SELECT * FROM `streams` '.
-            'WHERE `user_id` = '.(int)$this->data->user->id.' '
-        );
-        
-        return $return;
-    }
-
     /*
     Function from AJAX class
     */

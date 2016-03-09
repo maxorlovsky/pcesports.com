@@ -81,28 +81,6 @@ class Ajax extends System
     }
 
     /*
-     * Streamers functions
-     * Add/Edit/Remove
-    */
-    protected function streamerEdit($data) {
-        require_once _cfg('pages').'/streams/source.php';
-        $streams = new streams();
-        return $streams->editStreamer($data);
-    }
-    
-    protected function streamerRemove($data) {
-        require_once _cfg('pages').'/streams/source.php';
-        $streams = new streams();
-        return $streams->removeStreamer($data);
-    }
-    
-    protected function streamerSubmit($data) {
-        require_once _cfg('pages').'/streams/source.php';
-        $streams = new streams();
-        return $streams->submitStreamer($data);
-    }
-
-    /*
      * Teams functions
      * Add/Edit/Remove
     */
@@ -277,72 +255,27 @@ class Ajax extends System
     protected function checkInHs() {
         require_once _cfg('pages').'/hearthstone/source.php';
         $hearthstone = new hearthstone();
-        return $hearthstone->checkIn($data);
+        return $hearthstone->checkIn();
     }
-    
-    protected function checkInLOL() {
-        if (!$_SESSION['participant']) {
-            return '0;'.t('not_logged_in');
-        }
-        
-        $server = $_SESSION['participant']->server;
-        $currentTournament = (int)$this->data->settings['lol-current-number-'.$server];
-        
-        if ($this->data->settings['tournament-checkin-lol-'.$server] != 1) {
-            return '0;Check in is not in progress';
-        }
-        
-        //Generating other IDs for different environment
-		if (_cfg('env') == 'prod') {
-			$participant_id = $_SESSION['participant']->id + 100000;
-		}
-		else {
-			$participant_id = $_SESSION['participant']->id;
-		}
-        
-        $apiArray = array(
-			'participant_id' => $participant_id,
-			'participant[name]' => $_SESSION['participant']->name,
-		);
-		
-		//Adding team to Challonge bracket
-        if (_cfg('env') == 'prod') {
-            $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$currentTournament.'/participants.post', $apiArray);
-        }
-        else {
-            $this->runChallongeAPI('tournaments/pentaclick-test1/participants.post', $apiArray);
-        }
-		
-		//Registering ID, because Challonge idiots not giving an answer with ID
-        if (_cfg('env') == 'prod') {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-lol'.$server.$currentTournament.'/participants.json');
-        }
-        else {
-            $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/participants.json');
-        }
-        
-		array_reverse($answer, true);
-		
-		foreach($answer as $f) {
-			if ($f->participant->name == $_SESSION['participant']->name) {
-				Db::query('UPDATE `participants` '.
-					'SET `challonge_id` = '.(int)$f->participant->id.', '.
-                    '`checked_in` = 1 '.
-					'WHERE `tournament_id` = '.(int)$currentTournament.' '.
-					'AND `game` = "lol" '.
-					'AND `id` = '.(int)$_SESSION['participant']->id.' '.
-                    'AND `approved` = 1 '
-				);
-                
-                $_SESSION['participant']->checked_in = 1;
-                
-				break;
-			}
-		}
 
-        Achievements::give(array(18,19,20));//I am experienced! (Participate in League of Legends tournament.)
-        
-        return '1;1';
+    /*
+     * League of Legends functions functions
+     * Register/Edit/Check In
+    */
+    protected function registerInLoL($data) {
+        require_once _cfg('pages').'/leagueoflegends/source.php';
+        $leagueoflegends = new leagueoflegends();
+        return $leagueoflegends->register($data);
+    }
+    protected function editInLOL($data) {
+        require_once _cfg('pages').'/leagueoflegends/source.php';
+        $leagueoflegends = new leagueoflegends();
+        return $leagueoflegends->editParticipant($data);
+    }
+    protected function checkInLOL() {
+        require_once _cfg('pages').'/leagueoflegends/source.php';
+        $leagueoflegends = new leagueoflegends();
+        return $leagueoflegends->checkIn();
     }
     
     protected function connectTeamToAccount() {
@@ -969,254 +902,6 @@ class Ajax extends System
         }
         
         return '0;'.t('error');
-    }
-	
-	protected function registerInLoL($data) {
-    	$err = array();
-    	$suc = array();
-    	parse_str($data['form'], $post);
-        
-        if (in_array($post['server'], array('eune', 'euw'))) {
-            $server = $post['server'];
-        }
-        else {
-            $server = 'euw';
-        }
-        
-        if ($this->data->settings['tournament-reg-lol-'.$server] != 1) {
-            return '0;Server error!';
-        }
-        
-        if (!$post['agree']) {
-    		$err['agree'] = '0;'.t('must_agree_with_rules');
-    	}
-        else {
-            $suc['agree'] = '1;'.t('approved');
-        }
-    	
-    	$row = Db::fetchRow('SELECT * FROM `participants` WHERE '.
-    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' AND '.
-    		'`name` = "'.Db::escape($post['team']).'" AND '.
-            '`server` = "'.Db::escape($server).'" AND '.
-    		'`game` = "lol" AND '.
-    		'`approved` = 1 AND '.
-    		'`deleted` = 0'
-    	);
-
-    	if (!$post['team']) {
-    		$err['team'] = '0;'.t('field_empty');
-    	}
-		else if (strlen($post['team']) < 4) {
-			$err['team'] = '0;'.t('team_name_small');
-		}
-		else if (strlen($post['team']) > 60) {
-			$err['team'] = '0;'.t('team_name_big');
-		}
-        else if ($row) {
-            $err['team'] = '0;'.t('team_name_taken');
-        }
-		else {
-			$suc['team'] = '1;'.t('approved');
-		}
-    	
-    	if (!$post['email']) {
-    		$err['email'] = '0;'.t('field_empty');
-    	}
-    	else if(!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-    		$err['email'] = '0;'.t('email_invalid');
-    	}
-    	else {
-    		$suc['email'] = '1;'.t('approved');
-    	}
-		
-		$players = array();
-		$checkForSame = array();
-        $summonersNames = array();
-		for($i=1;$i<=7;++$i) {
-            $post['mem'.$i] = trim($post['mem'.$i]);
-            
-			if (!$post['mem'.$i] && $i < 6) {
-				$err['mem'.$i] = '0;'.t('field_empty');    
-			}
-            else if (in_array($post['mem'.$i], $checkForSame)) {
-                $err['mem'.$i] = '0;'.t('same_summoner');
-            }
-			else if ($post['mem'.$i]) {
-                $summonersNames[] = rawurlencode(htmlspecialchars($post['mem'.$i]));
-                $checkForSame[] = $post['mem'.$i];
-			}
-		}
-        
-        if (!$err) {
-    		$summonersNames = implode(',', $summonersNames);
-            $response = $this->runRiotAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
-            for($i=1;$i<=7;++$i) {
-                $name = str_replace(' ', '', mb_strtolower($post['mem'.$i]));
-                
-                if (isset($response->$name) && $response->$name) {
-                    if ($response->$name->summonerLevel != 30) {
-                        $err['mem'.$i] = '0;'.t('summoner_low_lvl');
-                    }
-                    else {
-                        $players[$i]['id'] = $response->$name->id;
-                        $players[$i]['name'] = $response->$name->name;
-                        $suc['mem'.$i] = '1;'.t('approved');
-                    }
-                }
-                else if ($post['mem'.$i] && !isset($response->$name)) {
-                    $err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
-                }
-            }
-        }
-                
-    	if ($err) {
-    		$answer['ok'] = 0;
-    		if ($suc) {
-    			$err = array_merge($err, $suc);
-    		}
-    		$answer['err'] = $err;
-    	}
-    	else {
-    		$answer['ok'] = 1;
-    		$answer['err'] = $suc;
-    	
-    		$code = substr(sha1(time().rand(0,9999)).$post['team'], 0, 32);
-    		Db::query('INSERT INTO `participants` SET '.
-	    		'`game` = "lol", '.
-                '`user_id` = '.(int)$this->data->user->id.', '.
-                '`server` = "'.$server.'", '.
-	    		'`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-	    		'`timestamp` = NOW(), '.
-	    		'`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
-	    		'`name` = "'.Db::escape($post['team']).'", '.
-	    		'`email` = "'.Db::escape($post['email']).'", '.
-	    		'`contact_info` = "'.Db::escape($team).'", '.
-                '`cpt_player_id` = '.(int)$players[1]['id'].', '.
-	    		'`link` = "'.$code.'"'
-    		);
-    	
-    		$teamId = Db::lastId();
-			
-			foreach($players as $k => $v) {
-				Db::query(
-					'INSERT INTO `players` SET '.
-					' `game` = "lol", '.
-					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-					' `participant_id` = '.(int)$teamId.', '.
-					' `name` = "'.Db::escape($v['name']).'", '.
-					' `player_num` = "'.(int)$k.'", '.
-					' `player_id` = "'.(int)$v['id'].'"'
-				);
-			}
-            
-    		$text = Template::getMailTemplate('reg-lol-team');
-    	
-    		$text = str_replace(
-    			array('%name%', '%teamId%', '%code%', '%url%', '%href%'),
-    			array($post['team'], $teamId, $code, _cfg('href').'/leagueoflegends/'.$server, _cfg('site')),
-    			$text
-    		);
-    	
-    		$this->sendMail($post['email'], 'Pentaclick League of Legends tournament participation', $text);
-    	}
-    	 
-    	return json_encode($answer);
-    }
-    
-    protected function editInLOL($data) {
-    	$err = array();
-    	$suc = array();
-    	parse_str($data['form'], $post);
-        
-        if (in_array($post['server'], array('eune', 'euw'))) {
-            $server = $post['server'];
-        }
-        else {
-            $server = 'euw';
-        }
-        
-        if ($this->data->settings['tournament-start-lol-'.$server] == 1) {
-            $err['mem1'] = '0;'.t('tournament_in_progress');
-        }
-        else {
-            $players = array();
-            $checkForSame = array();
-            $summonersNames = array();
-            for($i=1;$i<=7;++$i) {
-                $post['mem'.$i] = trim($post['mem'.$i]);
-                
-                if (!$post['mem'.$i] && $i < 6) {
-                    $err['mem'.$i] = '0;'.t('field_empty');    
-                }
-                else if (in_array($post['mem'.$i], $checkForSame)) {
-                    $err['mem'.$i] = '0;'.t('same_summoner');
-                }
-                else if ($post['mem'.$i]) {
-                    $summonersNames[] = rawurlencode(htmlspecialchars($post['mem'.$i]));
-                    $checkForSame[] = $post['mem'.$i];
-                }
-            }
-        }
-        
-        if (!$err) {
-            $summonersNames = implode(',', $summonersNames);
-            $response = $this->runRiotAPI('/'.$server.'/v1.4/summoner/by-name/'.$summonersNames, $server, true);
-            for($i=1;$i<=7;++$i) {
-                $name = str_replace(' ', '', mb_strtolower($post['mem'.$i]));
-                if (isset($response->$name) && $response->$name) {
-                    if ($response->$name->summonerLevel != 30) {
-                        $err['mem'.$i] = '0;'.t('summoner_low_lvl');
-                    }
-                    else {
-                        $players[$i]['id'] = $response->$name->id;
-                        $players[$i]['name'] = $response->$name->name;
-                        $suc['mem'.$i] = '1;'.t('approved');
-                    }
-                }
-                else if ($post['mem'.$i] && !isset($response->$name)) {
-                    $err['mem'.$i] = '0;'.t('summoner_not_found_'.$server);
-                }
-            }
-        }
-    
-    	if ($err) {
-    		$answer['ok'] = 0;
-    		if ($suc) {
-    			$err = array_merge($err, $suc);
-    		}
-    		$answer['err'] = $err;
-    	}
-    	else {
-    		$answer['ok'] = 1;
-    		$answer['err'] = $suc;
-    	
-    		Db::query('UPDATE `participants` SET '.
-                '`cpt_player_id` = "'.(int)$players[1]['id'].'" '.
-                'WHERE `id` = '.(int)$_SESSION['participant']->id.' AND '.
-                '`game` = "lol" AND '.
-                '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
-            );
-            
-            Db::query('DELETE FROM `players` '.
-                'WHERE `participant_id` = '.(int)$_SESSION['participant']->id.' AND '.
-                '`game` = "lol" AND '.
-                '`tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].' '
-            );
-            
-            foreach($players as $k => $v) {
-				Db::query(
-					'INSERT INTO `players` SET '.
-					' `game` = "lol", '.
-					' `tournament_id` = '.(int)$this->data->settings['lol-current-number-'.$server].', '.
-					' `participant_id` = '.(int)$_SESSION['participant']->id.', '.
-					' `name` = "'.Db::escape($v['name']).'", '.
-					' `player_num` = "'.(int)$k.'", '.
-					' `player_id` = "'.(int)$v['id'].'"'
-				);
-			}
-    	}
-    	 
-    	return json_encode($answer);
     }
     
     protected function submitContactForm($data) {
