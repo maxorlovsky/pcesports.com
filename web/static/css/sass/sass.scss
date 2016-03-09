@@ -929,7 +929,6 @@ footer {
         width: 365px;
         margin-right: 20px;
         float: left;
-        height: 120px;
         overflow: hidden;
         display: block;
         transition: .5s;
@@ -959,7 +958,7 @@ footer {
             }
         }
         .name {
-            padding: 15px 0 0 15px;
+            padding: 10px 0 0 15px;
             font-size: 17px;
             font-weight: bold;
             color: #777;
@@ -979,6 +978,10 @@ footer {
             float: right;
             width: 100px;
             height: 100px;
+        }
+        .social {
+            text-align: left;
+            margin-top: 3px;
         }
     }
     .team-division {

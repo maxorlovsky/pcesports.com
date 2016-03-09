@@ -14,6 +14,7 @@ class pentaclick extends system
             'serge' => 44,
             'anya'  => 112,
             'dantey'=> 122,
+            'donnie'=> 1440,
         );
 
         if (_cfg('env') != 'prod') {
@@ -41,6 +42,11 @@ class pentaclick extends system
                 'socials' => array(
                     'fb' => 'https://www.facebook.com/andris.krumins.5',
                     'tw' => 'https://twitter.com/Andris_K',
+                )
+            ),
+            $teamIds['donnie'] => array(
+                'role' => 'Hearthstone Robo-Shoutcaster',
+                'socials' => array(
                 )
             ),
             $teamIds['serge'] => array(
