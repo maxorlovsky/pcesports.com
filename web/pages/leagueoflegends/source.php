@@ -381,6 +381,8 @@ class leagueoflegends extends System
         Db::query('UPDATE `fights` SET `done` = 1 '.
             'WHERE `match_id` = '.(int)$row->match_id.' '
         );
+
+        Db::query('DELETE FROM `streams` WHERE `participant_id` = '.(int)$_SESSION['participant']->id);
         
         $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
@@ -411,13 +413,7 @@ class leagueoflegends extends System
             'LIMIT 1'
         );
 
-        Db::query(
-            'DELETE FROM `streams` '.
-            'WHERE `game` = "lol" AND '.
-            '`participant_id` = '.(int)$_SESSION['participant']->id.' AND '. 
-            '`tournament_id` = "'.(int)$this->data->settings['lol-current-number-'.$server].'" '.
-            'LIMIT 1'
-        );
+        Db::query('DELETE FROM `streams` WHERE `participant_id` = '.(int)$_SESSION['participant']->id);
         
         $row = Db::fetchRow('SELECT `challonge_id` '.
             'FROM `participants` '.

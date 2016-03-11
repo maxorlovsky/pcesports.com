@@ -1180,6 +1180,12 @@ class Cron extends System {
             'LIMIT 8 '
         );*/
 
+        //Removing streams
+        Db::query(
+            'DELETE FROM `streams` '.
+            'WHERE `tournament_id` = '.(int)$row->name
+        );
+
         //Registering that tournament is finalized
         Db::query(
             'UPDATE `tournaments` SET '.
