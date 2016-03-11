@@ -23,9 +23,8 @@ class home extends System
         $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` '.
             'FROM `streams` '.
             'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
-            '`approved` = 1 AND '.
-            '`featured` = 1 '.
-            'ORDER BY `viewers` DESC '
+            '`approved` = 1 '.
+            'ORDER BY `featured`, `viewers` DESC '
         );
 
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.

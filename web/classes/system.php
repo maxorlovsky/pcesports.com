@@ -10,7 +10,6 @@ class System
     public $boards;
     public $comments;
     public $serverTimes = array();
-    public $streams = array();
     public $cacheTtl = 600;
     public $apcEnabled = false;
 

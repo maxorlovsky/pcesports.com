@@ -410,6 +410,14 @@ class leagueoflegends extends System
             '`link` = "'.Db::escape($_SESSION['participant']->link).'" '.
             'LIMIT 1'
         );
+
+        Db::query(
+            'DELETE FROM `streams` '.
+            'WHERE `game` = "lol" AND '.
+            '`participant_id` = '.(int)$_SESSION['participant']->id.' AND '. 
+            '`tournament_id` = "'.(int)$this->data->settings['lol-current-number-'.$server].'" '.
+            'LIMIT 1'
+        );
         
         $row = Db::fetchRow('SELECT `challonge_id` '.
             'FROM `participants` '.
