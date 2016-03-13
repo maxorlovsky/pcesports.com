@@ -29,7 +29,6 @@ class Cron extends System {
         $rows = Db::fetchRows($query);
 
         $i = 0;
-        $limitReached = 0;
         foreach($rows as $v) {
             $text = str_replace(
                 array(
@@ -55,10 +54,7 @@ class Cron extends System {
 
             //Sending message
             $mailer = Swift_Mailer::newInstance($transport);
-            $mailer->send($message, $fails);
-echo 'rawr';
-            dump($message);
-            dump($fails);
+            $mailer->send($message);
             
             ++$i;
         }
