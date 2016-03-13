@@ -56,7 +56,8 @@ class Cron extends System {
             //Sending message
             $mailer = Swift_Mailer::newInstance($transport);
             $mailer->send($message, $fails);
-
+echo 'rawr';
+            dump($message);
             dump($fails);
             
             ++$i;
