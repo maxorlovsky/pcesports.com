@@ -5,35 +5,26 @@ class home extends System
 	public $blog;
 	public $slider;
     public $streams;
-    public $timezone = 0;
     public $tournamentData;
 	
 	public function __construct($params = array()) {
         parent::__construct();
-    
-        if (isset($this->data->user->timezone)) {
-            $this->timezone = $this->data->user->timezone;
-        }
 		
 		$this->slider = array(
             //array('http://www.pcesports.com/en/blog/29', _cfg('img').'/poster-grandfinals.jpg'),
 			//array('http://www.pcesports.com/en/blog/27', _cfg('img').'/poster-vacation.jpg'),
 		);
         
-        $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` '.
-            'FROM `streams` '.
-            'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 AND '.
-            '`approved` = 1 '.
-            'ORDER BY `featured`, `viewers` DESC '
-        );
-
         $rows = Db::fetchRows('SELECT * FROM `tournaments` WHERE '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-euw'].' AND `server` = "euw") OR '.
             '(`game` = "lol" AND `name` = '.(int)$this->data->settings['lol-current-number-eune'].' AND `server` = "eune") OR '.
             '(`game` = "hs" AND `name` = '.(int)$this->data->settings['hs-current-number'].' AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'") '.
             'ORDER BY STR_TO_DATE(`dates_start`, "%d.%m.%Y") DESC '
         );
-        
+
+        //Variable to check if there is at least one started event
+        $eventStreams = 0;
+
         if ($rows) {
             $i = 0;
             foreach($rows as $v) {
@@ -58,14 +49,17 @@ class home extends System
                 if ($checkInStatus == 1) {
                     $v->status = t('check_in');
                     $time = $startTime;
+                    $eventStreams = 1;
                 }
                 else if ($checkLive == 1) {
                     $v->status = t('live');
                     $time = $startTime;
+                    $eventStreams = 1;
                 }
                 else if ($checkReg == 1) {
                     $v->status = t('registration');
                     $time = $startTime;
+                    $eventStreams = 1;
                 }
                 else if (strtolower($v->status) == 'start') {
                     $v->status = t('upcoming');
@@ -113,6 +107,14 @@ class home extends System
                 );
                 asort($this->tournamentData);
             }
+            
+            $this->streams = Db::fetchRows('SELECT `id`, `name`, `display_name`, `featured`, `game`, `viewers`, `name` AS `link` '.
+                'FROM `streams` '.
+                'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 '.
+                'AND `approved` = 1 '.
+                ($eventStreams != 1?'AND `featured` = 1 ':'').
+                'ORDER BY `viewers` DESC '
+            );
         }
 		
 		$this->blog = Db::fetchRows('SELECT `n`.`id`, `n`.`title`, `n`.`extension`, `n`.`short_english` AS `value`, `n`.`added`, `n`.`likes`, `n`.`comments`, `n`.`views`, `a`.`login`, `nl`.`ip` AS `active` '.
