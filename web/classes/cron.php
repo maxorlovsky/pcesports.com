@@ -1234,7 +1234,8 @@ class Cron extends System {
         $rows = Db::fetchRows('SELECT `id`, `game`, `server`, `name`, `dates_start`, `time` '.
             'FROM `tournaments` '.
             'WHERE `status` = "Start" '. //old status
-            'OR `status` = "registration" ' //new status
+            'OR `status` = "registration" '. //new status
+            'OR `status` = "check_in" ' //new status
         );
         
         if ($rows) {
