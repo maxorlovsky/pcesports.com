@@ -265,7 +265,7 @@ $('#register-in-tournament').on('click', function() {
     PC.addParticipant('Lol');
 });
 
-participantsNumber = <?=$this->participantsCount?>;
+var participantsNumber = <?=$this->participantsCount?>;
 if (participantsNumber > 100) {
     challongeHeight = 3500;
 }

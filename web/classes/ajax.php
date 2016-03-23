@@ -257,6 +257,11 @@ class Ajax extends System
         $hearthstone = new hearthstone();
         return $hearthstone->checkIn();
     }
+    protected function banHS($data) {
+        require_once _cfg('pages').'/hearthstone/source.php';
+        $hearthstone = new hearthstone();
+        return $hearthstone->ban();
+    }
 
     /*
      * League of Legends functions functions
@@ -648,6 +653,7 @@ class Ajax extends System
                 }
                 
                 $code = '';
+                $banStatus = '';
                 if ($_SESSION['participant']->game == 'lol') {
                     if (_cfg('env') == 'prod') {
                         $reportTo = 'http://www.pcesports.com/run/riotcode/';
@@ -694,15 +700,21 @@ class Ajax extends System
                     }
                     $code = json_encode($code);
 
-                    /*if ($_SESSION['participant']->challonge_id == $playersRow->player1_id) {
+                    if ($_SESSION['participant']->challonge_id == $playersRow->player1_id) {
                         $player = 1;
                     }
                     else {
                         $player = 2;
-                    }*/
+                    }
+
+                    $banStatus = 'none';
+                    $hsGamesRow = Db::fetchRow('SELECT `player'.$player.'_ban` AS `ban` FROM `hs_games` WHERE `match_id` = '.(int)$playersRow->match_id.' LIMIT 1');
+                    if ($hsGamesRow) {
+                        $banStatus = strtolower($hsGamesRow->ban);
+                    }
                 }
 
-                return '1;'.$enemyRow->name.';'.$status.';'.$code;
+                return '1;'.$enemyRow->name.';'.$status.';'.$code.';'.$banStatus;
             }
             
             return '0;'.t('none').';'.t('offline').';'.t('none');

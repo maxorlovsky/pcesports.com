@@ -10,6 +10,8 @@ class hearthstone extends System
     public $groups;
     public $server;
     public $winners;
+    public $heroes;
+    public $maxHeroes = 4;
 	
 	public function __construct($params = array()) {
         parent::__construct();
@@ -51,7 +53,7 @@ class hearthstone extends System
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
 			go(_cfg('href').'/hearthstone/'.$this->server);
 		}
-        $row = Db::fetchRow('SELECT `contact_info` '.
+        $row = Db::fetchRow('SELECT `email`, `contact_info` '.
             'FROM `participants` '.
             'WHERE '.
             '`tournament_id` = '.(int)$this->currentTournament.' AND '.
@@ -380,7 +382,7 @@ class hearthstone extends System
         }
         
         $heroesPicked = array();
-        for($i=1;$i<=3;++$i) {
+        for($i=1; $i <= $this->maxHeroes; ++$i) {
             if (!$post['hero'.$i]) {
                 $err['hero'.$i] = '0;'.t('pick_hero');
             }
@@ -392,9 +394,6 @@ class hearthstone extends System
             if ($post['hero'.$i]) {
                 $heroesPicked[] = $post['hero'.$i];
             }
-        }
-        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
-            $err['hero2'] = '0;'.t('same_hero_picked');
         }
     	
     	if ($err) {
@@ -412,6 +411,7 @@ class hearthstone extends System
                 'hero1' => $post['hero1'],
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
+                'hero4' => $post['hero4'],
                 'place' => 0,
             ));
     	
@@ -481,7 +481,7 @@ class hearthstone extends System
     	}
         
         $heroesPicked = array();
-        for($i=1;$i<=3;++$i) {
+        for($i=1; $i <= $this->maxHeroes; ++$i) {
             if (!$post['hero'.$i]) {
                 $err['hero'.$i] = '0;'.t('pick_hero');
             }
@@ -493,9 +493,6 @@ class hearthstone extends System
             if ($post['hero'.$i]) {
                 $heroesPicked[] = $post['hero'.$i];
             }
-        }
-        if ($post['hero1'] == $post['hero2'] && $post['hero1'] != 0) {
-            $err['hero2'] = '0;'.t('same_hero_picked');
         }
 		
         if ($err) {
@@ -513,6 +510,7 @@ class hearthstone extends System
                 'hero1' => $post['hero1'],
                 'hero2' => $post['hero2'],
                 'hero3' => $post['hero3'],
+                'hero4' => $post['hero4'],
                 'place' => 0,
             ));
             
@@ -608,6 +606,61 @@ class hearthstone extends System
 
         Achievements::give(array(24,25,26));//Cards means random! (Participate in Hearthstone tournament.)
         
+        return '1;1';
+    }
+
+    public function ban() {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return false;
+        }
+
+        $row = Db::fetchRow('SELECT `f`.`player1_id`, `f`.`player2_id`, `t1`.`id` AS `id1`, `t1`.`name` AS `name1`, `t2`.`id` AS `id2`, `t2`.`name` AS `name2`, `f`.`match_id` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `participants` AS `t1` ON `f`.`player1_id` = `t1`.`challonge_id` '.
+            'LEFT JOIN `participants` AS `t2` ON `f`.`player2_id` = `t2`.`challonge_id` '.
+            'WHERE (`f`.`player1_id` = '.(int)$_SESSION['participant']->challonge_id.' OR `f`.`player2_id` = '.(int)$_SESSION['participant']->challonge_id.') '.
+            'AND`f`.`done` = 0'
+        );
+
+        $player = 0;
+        if ($row->id1 == $_SESSION['participant']->id) {
+            $player = 1;
+        }
+        else if ($row->id2 == $_SESSION['participant']->id) {
+            $player = 2;
+        }
+
+        $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+        if (!$gameRow) {
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' picked his ban. Awaiting enemy ban.</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+
+            Db::query('INSERT INTO `hs_games` SET '.
+                '`match_id` = '.(int)$row->match_id.', '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '
+            );
+        }
+        else {
+            Db::query('UPDATE `hs_games` SET '.
+                '`player'.$player.'_ban` = "'.Db::escape($data['hero']).'" '.
+                'WHERE `match_id` = '.(int)$row->match_id
+            );
+
+            $gameRow = Db::fetchRow('SELECT * FROM `hs_games` WHERE `match_id` = '.(int)$row->match_id);
+
+            $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
+            
+            $file = fopen($fileName, 'a');
+            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name1.' banned "'.$gameRow->player1_ban.'"</b></p>';
+            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name2.' banned "'.$gameRow->player2_ban.'"</b></p>';
+            fwrite($file, htmlspecialchars($content));
+            fclose($file);
+        }
+
         return '1;1';
     }
     

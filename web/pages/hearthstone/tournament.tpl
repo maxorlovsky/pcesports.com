@@ -63,7 +63,7 @@
                         </div>
                     <? } ?>
                     
-                    <? for ($i=1;$i<=3;++$i) { ?>
+                    <? for ($i=1; $i <= $this->maxHeroes; ++$i) { ?>
                     <div class="form-item" data-label="hero<?=$i?>">
                         <select class="hero<?=$i?>" name="hero<?=$i?>">
                             <option value="0"><?=t('pick_hero')?></option>
@@ -82,7 +82,7 @@
                     
                     <div class="heroes-images">
                         <h6><?=t('your_classes')?></h6>
-                        <? for ($i=1;$i<=4;++$i) { ?>
+                        <? for ($i=1;$i<=$this->maxHeroes;++$i) { ?>
                         <div id="hero<?=$i?>img" class="hsicons" attr-picked=""></div>
                         <? } ?>
                     </div>
@@ -250,7 +250,7 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                     <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                                 <? } ?>
                             </div>
@@ -268,7 +268,7 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                            <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                             <? } ?>
                         </div>
@@ -314,7 +314,7 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                     <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                                 <? } ?>
                             </div>
@@ -332,7 +332,7 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                            <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                             <? } ?>
                         </div>
@@ -376,7 +376,7 @@
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                                <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                                <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                     <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                                 <? } ?>
                             </div>
@@ -394,7 +394,7 @@
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero1]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero1])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero2]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero2])?>"></div>
                             <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero3]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero3])?>"></div>
-                            <? if (isset($this->heroes[$p->contact_info->hero4]) && $this->heroes[$p->contact_info->hero4]) { ?>
+                            <? if (isset($this->heroes[$v->contact_info->hero4]) && $this->heroes[$v->contact_info->hero4]) { ?>
                                 <div class="hsicons-small <?=$this->heroes[$v->contact_info->hero4]?> hint" attr-msg="<?=ucfirst($this->heroes[$v->contact_info->hero4])?>"></div>
                             <? } ?>
                         </div>
@@ -435,10 +435,13 @@
 var heroes = {
     1: 0,
     2: 0,
-    3: 0
+    3: 0,
+    4: 0
 };
 
-$('.hero1, .hero2, .hero3').on('change keyup', function() {
+var maxHeroes = <?=$this->maxHeroes?>;
+
+$('.hero1, .hero2, .hero3, .hero4').on('change keyup', function() {
     var getClass = $(this).attr('class');
     var name = $(this).find(':selected').text();
     var id = $(this).find(':selected').val();
@@ -464,7 +467,7 @@ $('.hero1, .hero2, .hero3').on('change keyup', function() {
     
     $.each(heroes, function(k, v) {
         if (v != 0) {
-            for (i=1;i<=4;++i) {
+            for (i=1; i <= maxHeroes; ++i) {
                 if (i != k) {
                     $('.hero'+i).find('option[value="'+v+'"]').attr('disabled', true);
                 }
@@ -477,7 +480,19 @@ $('#register-in-tournament').on('click', function() {
     PC.addParticipant('HS');
 });
 
-challongeHeight = 550;
+var participantsNumber = <?=$participantsCount?>;
+if (participantsNumber > 100) {
+    challongeHeight = 3500;
+}
+else if (participantsNumber > 50) {
+    challongeHeight = 1800;
+}
+else if (participantsNumber > 25) {
+    challongeHeight = 950;
+}
+else {
+    challongeHeight = 550;
+}
 
 if ($('#challonge').length) {
     $('#challonge').height(challongeHeight);
