@@ -34,13 +34,13 @@
             <div class="block-content">
                 <p><?=t('check_in_will_apear_in')?></p>
                 
-                <? if ($this->data->settings['tournament-checkin-lol-'.$this->server] == 1) {?>
+                <? if ($row->tournamentStatus == 'check_in') {?>
                 <div class="check-in-holder">
                     <div class="button checkIn" id="checkInLol"><?=t('check_in')?></div>
                 </div>
                 <? } else { ?>
                 <div class="check-in-holder">
-                    <div class="button tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
+                    <div class="button lol tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
                 </div>
                 <? } ?>
             </div>
@@ -102,4 +102,4 @@
 
 <audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
 
-<script src="<?=_cfg('static')?>/js/profiler.js?v=1.2"></script>
+<script src="<?=_cfg('static')?>/js/profiler.js?v=1.3"></script>

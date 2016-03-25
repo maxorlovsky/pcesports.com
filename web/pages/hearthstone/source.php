@@ -97,16 +97,17 @@ class hearthstone extends System
 		}
         
         $row = Db::fetchRow(
-			'SELECT * '.
-			'FROM `participants` AS `t` '.
-			'WHERE '.
-			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
-			'`t`.`game` = "hs" AND '.
-            '`t`.`server` = "'.Db::escape($this->server).'" AND ' .
-			'`t`.`id` = '.Db::escape($id).' AND '.
-			'`t`.`link` = "'.Db::escape($code).'" AND '.
-			'`t`.`deleted` = 0 AND '.
-			'`t`.`ended` = 0'
+			'SELECT `p`.*, `t`.`status` AS `tournamentStatus` '.
+			'FROM `participants` AS `p` '.
+            'JOIN `tournaments` AS `t` ON `p`.`tournament_id` = `t`.`name` AND `p`.`server` = `t`.`server` AND `p`.`game` = `t`.`game` '.
+			'WHERE `p`.`tournament_id` = '.(int)$this->currentTournament.' '.
+			'AND `p`.`game` = "hs" '.
+            'AND `p`.`server` = "'.Db::escape($this->server).'" ' .
+			'AND `p`.`id` = '.Db::escape($id).' '.
+			'AND `p`.`link` = "'.Db::escape($code).'" '.
+			'AND `p`.`deleted` = 0 '.
+			'AND `p`.`ended` = 0 '.
+            'LIMIT 1'
 		);
 
 		if ($row && $row->approved == 0) {
@@ -609,7 +610,7 @@ class hearthstone extends System
         return '1;1';
     }
 
-    public function ban() {
+    public function ban($data) {
         if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
             return false;
         }
@@ -635,7 +636,11 @@ class hearthstone extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$_SESSION['participant']->name.' picked his ban. Awaiting enemy ban.</b></p>';
+            $content = '<div class="manager">';
+            $content .= '<div class="message">'.$_SESSION['participant']->name.' picked his ban. Awaiting enemy ban</div>';
+            $content .= '<span>System message</span>';
+            $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+            $content .= '</div>';
             fwrite($file, htmlspecialchars($content));
             fclose($file);
 
@@ -655,8 +660,17 @@ class hearthstone extends System
             $fileName = $_SERVER['DOCUMENT_ROOT'].'/chats/'.$row->id1.'_vs_'.$row->id2.'.txt';
             
             $file = fopen($fileName, 'a');
-            $content = '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name1.' banned "'.$gameRow->player1_ban.'"</b></p>';
-            $content .= '<p><span id="notice">('.date('H:i:s', time()).')</span> <b>'.$row->name2.' banned "'.$gameRow->player2_ban.'"</b></p>';
+            $content = '<div class="player1">';
+            $content .= '<div class="message">'.$row->name1.' banned <b>"'.$gameRow->player1_ban.'"</b></div>';
+            $content .= '<span>System message</span>';
+            $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+            $content .= '</div>';
+
+            $content .= '<div class="player2">';
+            $content .= '<div class="message">'.$row->name2.' banned <b>"'.$gameRow->player2_ban.'"</b></div>';
+            $content .= '<span>System message</span>';
+            $content .= '&nbsp;•&nbsp;<span id="notice">'.date('H:i', time()).'</span>';
+            $content .= '</div>';
             fwrite($file, htmlspecialchars($content));
             fclose($file);
         }

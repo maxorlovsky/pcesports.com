@@ -260,7 +260,7 @@ class Ajax extends System
     protected function banHS($data) {
         require_once _cfg('pages').'/hearthstone/source.php';
         $hearthstone = new hearthstone();
-        return $hearthstone->ban();
+        return $hearthstone->ban($data);
     }
 
     /*
@@ -586,41 +586,44 @@ class Ajax extends System
         return '0;'.t('none').';'.t('no_opponent').';'.t('none');
     }
     
-    protected function statusCheck($data) {
-        if (isset($_SESSION['participant']) && $_SESSION['participant']->id) {
-            $challonge_id = (int)$_SESSION['participant']->challonge_id;
-            Db::query('UPDATE `participants` SET `online` = '.time().' '.
-				'WHERE `id` = '.(int)$_SESSION['participant']->id
-			);
+    protected function statusCheck() {
+        if (!isset($_SESSION['participant']) && !$_SESSION['participant']->id) {
+            return '0;none;Not a participant';
         }
-        else {
-            $challonge_id = 0;
-        }
-        
-        $row = Db::fetchRow('SELECT `game`, `server`, `checked_in` '.
-            'FROM `participants` '.
-            'WHERE '.
-            '`id` = '.(int)$_SESSION['participant']->id.' AND '.
-            '`deleted` = 0 AND '.
-            '`ended` = 0 '
-        );
-        
-        if ($row->checked_in == 0) {
-            if (
-               ($row->game == 'hs' && $this->data->settings['tournament-checkin-'.$row->game] != 1) ||
-               ($row->game == 'lol' && $this->data->settings['tournament-checkin-'.$row->game.'-'.$row->server] != 1)
-               )
-            {
-                return '0;'.t('none').';'.t('tournament_not_started_yet').';'.t('none');
-            }
 
-            
+        //Updating status, showing if user is online
+        Db::query('UPDATE `participants` SET `online` = '.time().' WHERE `id` = '.(int)$_SESSION['participant']->id.' LIMIT 1');
+        
+        //Getting participant and tournament data
+        $row = Db::fetchRow('SELECT `p`.`game`, `p`.`server`, `p`.`tournament_id`, `p`.`checked_in`, `t`.`id` AS `tournamentId`, `t`.`status` AS `tournamentStatus` '.
+            'FROM `participants` AS `p` '.
+            'JOIN `tournaments` AS `t` ON `p`.`tournament_id` = `t`.`name` AND `p`.`server` = `t`.`server` AND `p`.`game` = `t`.`game` '.
+            'WHERE `p`.`id` = '.(int)$_SESSION['participant']->id.' '.
+            'AND `p`.`deleted` = 0 '.
+            'AND `p`.`ended` = 0 '.
+            'AND `t`.`status` != "ended" '.
+            'LIMIT 1'
+        );
+
+        //Checking up if challonge id exists
+        $challonge_id = (int)$_SESSION['participant']->challonge_id;
+
+        //Checking if check in is enable and/or required
+        if ($row->checked_in == 0 && $row->tournamentStatus == 'live') {
+            return '0;'.t('none').';Tournament already started and you did not checked in, sorry, you are out of the tournament;'.t('none');
+        }
+        else if ($row->checked_in == 0 && $row->tournamentStatus != 'check_in') {
+            return '0;'.t('none').';'.t('tournament_not_started_yet').';'.t('none');
+        }
+        else if ($row->checked_in == 0 && $row->tournamentStatus == 'check_in') {
             return '2;'.t('none').';'.t('check_in_required').';'.t('none');
         }
         
+        //Check if opponent exist
         $row = Db::fetchRow('SELECT * FROM `fights` '.
             'WHERE (`player1_id` = '.$challonge_id.' OR `player2_id` = '.$challonge_id.') AND '.
-            '`done` = 0'
+            '`done` = 0 '.
+            'LIMIT 1'
         );
         
         if (!$row) {
@@ -891,6 +894,13 @@ class Ajax extends System
             
             $file = fopen($fileName, 'a');
             if ($data['action'] == 'send') {
+                //Escape of breaking characters
+                $data['text'] = str_replace(
+                    array('<', '>'),
+                    '',
+                    $data['text']
+                );
+
                 $content = '<div class="'.($_SESSION['participant']->id==$playersRow->id1?'player1':'player2').'">';
                 $content .= '<div class="message">'.$data['text'].'</div>';
                 $content .= '<span>'.($_SESSION['participant']->id==$playersRow->id1?$playersRow->name1:$playersRow->name2).'</span>';

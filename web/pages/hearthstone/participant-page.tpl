@@ -45,7 +45,7 @@
             <div class="block-content">
                 <p><?=t('check_in_will_apear_in')?></p>
                 
-                <? if ($this->data->settings['tournament-checkin-hs'] == 1) {?>
+                <? if ($row->tournamentStatus == 'check_in') {?>
                 <div class="check-in-holder">
                     <? if ($paymentVerified != 1) { ?>
                         <div class="button tournamentOff">Check in is progress, but you're not verified, sorry</div>
@@ -55,7 +55,7 @@
                 </div>
                 <? } else { ?>
                 <div class="check-in-holder">
-                    <div class="button tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
+                    <div class="button hs tournamentOff" id="fightStatus"><img src="<?=_cfg('img')?>/bx_loader.gif" style="width: 12px;"/></div>
                 </div>
                 <? } ?>
             </div>
@@ -142,4 +142,4 @@
     <div class="hsicons-small %hero% hint" attr-msg="%heroName%"></div>
 </div>
 
-<script src="<?=_cfg('static')?>/js/profiler.js?v=1.2"></script>
+<script src="<?=_cfg('static')?>/js/profiler.js?v=1.3"></script>

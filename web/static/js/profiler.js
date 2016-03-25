@@ -203,7 +203,10 @@ var profiler = {
                 //Required for HS
                 if ($('.opponent-info .player-heroes').length > 0) {
                     var html = $('#hsicons-holder').html();
-                    var heroes = $.parseJSON(answer[3]);
+                    var heroes = {};
+                    if (answer[3] != 'none') {
+                        heroes = $.parseJSON(answer[3]);
+                    }
                     var returnHtml = '';
                     var buildUp = '';
                     $.each(heroes, function(k,v) {
@@ -230,6 +233,20 @@ var profiler = {
                 //Required for check in page
                 if ($('#fightStatus').length > 0) {
                     $('#fightStatus').html(answer[2]);
+                    if (answer[0] == 2) {
+                        //Check in required
+                        $('#fightStatus').addClass('checkIn').removeClass('tournamentOff');
+                        //Binding click event
+                        $('#fightStatus.hs').on('click', function() {
+                            PC.checkIn('hs');
+                        });
+                        $('#fightStatus.lol').on('click', function() {
+                            PC.checkIn('lol');
+                        });
+                    }
+                    else {
+                        $('#fightStatus').addClass('tournamentOff').removeClass('checkIn');
+                    }
                 }
             }
         }

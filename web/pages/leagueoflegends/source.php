@@ -88,18 +88,19 @@ class leagueoflegends extends System
 		}
 		
 		$row = Db::fetchRow(
-			'SELECT * '.
-			'FROM `participants` AS `t` '.
-			'WHERE '.
-			'`t`.`tournament_id` = '.(int)$this->currentTournament.' AND '.
-			'`t`.`game` = "lol" AND '.
-            '`t`.`server` = "'.Db::escape($this->server).'" AND ' .
-			'`t`.`id` = '.Db::escape($id).' AND '.
-			'`t`.`link` = "'.Db::escape($code).'" AND '.
-			'`t`.`deleted` = 0 AND '.
-			'`t`.`ended` = 0'
+			'SELECT `p`.*, `t`.`status` AS `tournamentStatus` '.
+			'FROM `participants` AS `p` '.
+            'JOIN `tournaments` AS `t` ON `p`.`tournament_id` = `t`.`name` AND `p`.`server` = `t`.`server` AND `p`.`game` = `t`.`game` '.
+			'WHERE `p`.`tournament_id` = '.(int)$this->currentTournament.' '.
+			'AND `p`.`game` = "lol" '.
+            'AND `p`.`server` = "'.Db::escape($this->server).'" ' .
+			'AND `p`.`id` = '.Db::escape($id).' '.
+			'AND `p`.`link` = "'.Db::escape($code).'" '.
+			'AND `p`.`deleted` = 0 '.
+			'AND `p`.`ended` = 0 '.
+            'LIMIT 1'
 		);
-		
+
 		if ($row && $row->approved == 0) {
 			//Not approved, registration open, approving
 			$this->approveRegisterPlayer($row);

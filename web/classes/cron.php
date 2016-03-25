@@ -253,129 +253,21 @@ class Cron extends System {
                 }
             }
         }
-        
-        if ($this->data->settings['tournament-start-hs'] == 1) {
-            if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-hs'.$this->data->settings['tournament-season-hs'].$this->data->settings['hs-current-number'].'/matches.json', array(), 'state=open');
-            }
-            else {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
-            }
 
-            foreach($answer as $v) {
-                //Checking if match is already registered
-                $row = Db::fetchRow('SELECT `match_id` '.
-                    'FROM `fights` '.
-                    'WHERE `match_id` = '.(int)$v->match->id
-                );
-                if (!$row) {
-                    //Registering match, if still not yet registered
-                    Db::query('INSERT INTO `fights` SET '.
-                        '`match_id` = '.(int)$v->match->id.', '.
-                        '`player1_id` = '.(int)$v->match->player1_id.', '.
-                        '`player2_id` = '.(int)$v->match->player2_id
-                    );
+        $rows = Db::fetchRows('SELECT `game`, `server`, `name` FROM `tournaments` WHERE `status` = "live"');
+        if ($rows) {
+            foreach($rows as $t) {
+                if (_cfg('env') == 'prod') {
+                    $answer = $this->runChallongeAPI('tournaments/pentaclick-'.$t->game.$t->server.$t->name.'/matches.json', array(), 'state=open');
                 }
-            }
-        }
-        
-        if ($this->data->settings['tournament-start-lol-euw'] == 1) {
-            if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-loleuw'.$this->data->settings['lol-current-number-euw'].'/matches.json', array(), 'state=open');
-            }
-            else {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
-            }
+                else {
+                    $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
+                }
 
-            foreach($answer as $v) {
-                //Checking if match is already registered
-                $row = Db::fetchRow('SELECT `match_id` '.
-                    'FROM `fights` '.
-                    'WHERE `match_id` = '.(int)$v->match->id
-                );
-                if (!$row) {
-                    //Registering match, if still not yet registered
-                    Db::query('INSERT INTO `fights` SET '.
-                        '`match_id` = '.(int)$v->match->id.', '.
-                        '`player1_id` = '.(int)$v->match->player1_id.', '.
-                        '`player2_id` = '.(int)$v->match->player2_id
-                    );
-                }
-            }
-        }
-        
-        if ($this->data->settings['tournament-start-lol-eune'] == 1) {
-            if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-loleune'.$this->data->settings['lol-current-number-eune'].'/matches.json', array(), 'state=open');
-            }
-            else {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
-            }
-            
-            if ($answer) {
-                foreach($answer as $v) {
-                    //Checking if match is already registered
-                    $row = Db::fetchRow('SELECT `match_id` '.
-                        'FROM `fights` '.
-                        'WHERE `match_id` = '.(int)$v->match->id
-                    );
-                    if (!$row) {
+                if ($answer) {
+                    foreach($answer as $v) {
                         //Registering match, if still not yet registered
-                        Db::query('INSERT INTO `fights` SET '.
-                            '`match_id` = '.(int)$v->match->id.', '.
-                            '`player1_id` = '.(int)$v->match->player1_id.', '.
-                            '`player2_id` = '.(int)$v->match->player2_id
-                        );
-                    }
-                }
-            }
-        }
-        
-        if ($this->data->settings['tournament-start-smite-na'] == 1) {
-            if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-smitena'.$this->data->settings['smite-current-number-na'].'/matches.json', array(), 'state=open');
-            }
-            else {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
-            }
-            
-            if ($answer) {
-                foreach($answer as $v) {
-                    //Checking if match is already registered
-                    $row = Db::fetchRow('SELECT `match_id` '.
-                        'FROM `fights` '.
-                        'WHERE `match_id` = '.(int)$v->match->id
-                    );
-                    if (!$row) {
-                        //Registering match, if still not yet registered
-                        Db::query('INSERT INTO `fights` SET '.
-                            '`match_id` = '.(int)$v->match->id.', '.
-                            '`player1_id` = '.(int)$v->match->player1_id.', '.
-                            '`player2_id` = '.(int)$v->match->player2_id
-                        );
-                    }
-                }
-            }
-        }
-        
-        if ($this->data->settings['tournament-start-smite-eu'] == 1) {
-            if (_cfg('env') == 'prod') {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-smiteeu'.$this->data->settings['smite-current-number-eu'].'/matches.json', array(), 'state=open');
-            }
-            else {
-                $answer = $this->runChallongeAPI('tournaments/pentaclick-test1/matches.json', array(), 'state=open');
-            }
-            
-            if ($answer) {
-                foreach($answer as $v) {
-                    //Checking if match is already registered
-                    $row = Db::fetchRow('SELECT `match_id` '.
-                        'FROM `fights` '.
-                        'WHERE `match_id` = '.(int)$v->match->id
-                    );
-                    if (!$row) {
-                        //Registering match, if still not yet registered
-                        Db::query('INSERT INTO `fights` SET '.
+                        Db::query('INSERT IGNORE INTO `fights` SET '.
                             '`match_id` = '.(int)$v->match->id.', '.
                             '`player1_id` = '.(int)$v->match->player1_id.', '.
                             '`player2_id` = '.(int)$v->match->player2_id

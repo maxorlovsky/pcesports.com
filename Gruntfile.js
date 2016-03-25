@@ -125,6 +125,10 @@ module.exports = function(grunt) {
                 files: ['Gruntfile.js', '<%= dirs.js %>/app/**'],
                 tasks: ['concat:app']
             },
+            js: {
+                files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js'],
+                tasks: ['concat:js', 'uglify:js']
+            },
             widget: {
                 files: ['<%= dirs.js %>/app/widget-work.js'],
                 tasks: ['concat:widget']
