@@ -981,7 +981,7 @@ class Cron extends System {
                         $href = _cfg('href').'/hearthstone/'.$v->server.'/'.$v->name;
                     }
                     else if ($v->game == 'lol') {
-                        $gameName = 'League of Legends EUW tournament #'.$v->name;
+                        $gameName = 'League of Legends '.strtoupper($v->server).' tournament #'.$v->name;
                         $href = _cfg('href').'/leagueoflegends/'.$v->server.'/'.$v->name;
                     }
                     else {
