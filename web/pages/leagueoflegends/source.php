@@ -605,7 +605,11 @@ class leagueoflegends extends System
 
         $addStream = 0;
         if ($post['stream']) {
-            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
+            $post['stream'] = str_replace(
+                array('http://www.twitch.tv/', 'http://twitch.tv/', 'https://www.twitch.tv/', 'https://twitch.tv/'),
+                array('',''),
+                $post['stream']
+            );
             
             $twitch = $this->runTwitchAPI($post['stream']);
             
@@ -741,7 +745,11 @@ class leagueoflegends extends System
 
         $addStream = 0;
         if ($post['stream']) {
-            $post['stream'] = str_replace(array('http://www.twitch.tv/', 'http://twitch.tv/'), array('',''), $post['stream']);
+            $post['stream'] = str_replace(
+                array('http://www.twitch.tv/', 'http://twitch.tv/', 'https://www.twitch.tv/', 'https://twitch.tv/'),
+                array('',''),
+                $post['stream']
+            );
             
             $twitch = $this->runTwitchAPI($post['stream']);
             
