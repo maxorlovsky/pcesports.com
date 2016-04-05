@@ -124,7 +124,7 @@ $cfg['widgets'] = $cfg['dir'].'/pages/widgets';
 
 $cfg['pages'] = $cfg['dir'].'/pages';
 
-$cfg['timeDifference'] = 0; //in seconds (-60m/-1h)
+$cfg['timeDifference'] = 3600; //in seconds (-60m/-1h)
 
 $cfg['cronjob'] = 'askdjOLIKSJDoi2o12d09asLL';
 
