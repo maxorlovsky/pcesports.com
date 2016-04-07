@@ -861,7 +861,7 @@ class System
                 }
                 else if ($_GET['val1'] == 'hslist' && $_GET['val2'] === 'haosdi012') {
                     $ajax = new Ajax();
-                    $ajax->getHsList();
+                    echo $ajax->getHsList();
                 }
                 else if ($_GET['val1'] == 'social' && strlen($_GET['val2']) == 2) {
                     unset($_SESSION['errors']);

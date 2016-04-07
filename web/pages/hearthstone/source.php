@@ -772,4 +772,41 @@ class hearthstone extends System
         
         go(_cfg('href').'/hearthstone/'.$this->server);
     }
+
+    public function getNodeList() {
+        $rows = Db::fetchRows('SELECT `challonge_id`, `name`, `contact_info` '.
+            'FROM `participants` '.
+            'WHERE `game` = "hs" '.
+            'AND `server` = "s1" '.
+            'AND `tournament_id` = 7 '.
+            //'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
+            //'AND `tournament_id` = '.$this->currentTournament.' '.
+            'AND `deleted` = 0 '.
+            'AND `approved` = 1 '.
+            'AND `checked_in` = 1 '.
+            'ORDER BY `name` ASC'
+        );
+
+        $bans = Db::fetchRows('SELECT `f`.`player1_id`, `f`.`player2_id`, `h`.`player1_ban`, `h`.`player2_ban` '.
+            'FROM `fights` AS `f` '.
+            'LEFT JOIN `hs_games` AS `h` ON `f`.`match_id` = `h`.`match_id` '
+            //'WHERE `f`.`done` = 0 '
+        );
+    
+        if ($rows) {
+            foreach($rows as &$v) {
+                $v->contact_info = json_decode($v->contact_info);
+                foreach($bans as $b) {
+                    if ($v->challonge_id == $b->player1_id) {
+                        $v->contact_info->ban = array_search(strtolower($b->player2_ban), $this->heroes);
+                    }
+                    if ($v->challonge_id == $b->player2_id) {
+                        $v->contact_info->ban = array_search(strtolower($b->player1_ban), $this->heroes);
+                    }
+                }
+            }
+        }
+
+        return json_encode($rows);
+    }
 }
