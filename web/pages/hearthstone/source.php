@@ -777,10 +777,10 @@ class hearthstone extends System
         $rows = Db::fetchRows('SELECT `challonge_id`, `name`, `contact_info` '.
             'FROM `participants` '.
             'WHERE `game` = "hs" '.
-            'AND `server` = "s1" '.
-            'AND `tournament_id` = 7 '.
-            //'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
-            //'AND `tournament_id` = '.$this->currentTournament.' '.
+            //'AND `server` = "s1" '.
+            //'AND `tournament_id` = 7 '.
+            'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
+            'AND `tournament_id` = '.$this->currentTournament.' '.
             'AND `deleted` = 0 '.
             'AND `approved` = 1 '.
             'AND `checked_in` = 1 '.
@@ -789,8 +789,8 @@ class hearthstone extends System
 
         $bans = Db::fetchRows('SELECT `f`.`player1_id`, `f`.`player2_id`, `h`.`player1_ban`, `h`.`player2_ban` '.
             'FROM `fights` AS `f` '.
-            'LEFT JOIN `hs_games` AS `h` ON `f`.`match_id` = `h`.`match_id` '
-            //'WHERE `f`.`done` = 0 '
+            'LEFT JOIN `hs_games` AS `h` ON `f`.`match_id` = `h`.`match_id` '.
+            'WHERE `f`.`done` = 0 '
         );
     
         if ($rows) {
@@ -803,6 +803,23 @@ class hearthstone extends System
                     if ($v->challonge_id == $b->player2_id) {
                         $v->contact_info->ban = array_search(strtolower($b->player1_ban), $this->heroes);
                     }
+                }
+
+                if ($v->contact_info->ban) {
+                    if ($v->contact_info->hero1 == $v->contact_info->ban) {
+                        $v->contact_info->hero1 = $v->contact_info->hero2;
+                        $v->contact_info->hero2 = $v->contact_info->hero3;
+                        $v->contact_info->hero3 = $v->contact_info->hero4;
+                    }
+                    else if ($v->contact_info->hero2 == $v->contact_info->ban) {
+                        $v->contact_info->hero2 = $v->contact_info->hero3;
+                        $v->contact_info->hero3 = $v->contact_info->hero4;
+                    }
+                    else if ($v->contact_info->hero3 == $v->contact_info->ban) {
+                        $v->contact_info->hero3 = $v->contact_info->hero4;
+                    }
+
+                    unset($v->contact_info->hero4);
                 }
             }
         }
