@@ -782,6 +782,7 @@ class hearthstone extends System
             'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
             'AND `tournament_id` = '.$this->currentTournament.' '.
             'AND `deleted` = 0 '.
+            'AND `ended` = 0 '.
             'AND `approved` = 1 '.
             'AND `checked_in` = 1 '.
             'ORDER BY `name` ASC'
