@@ -54,8 +54,37 @@ class Cron extends System {
 
             //Sending message
             $mailer = Swift_Mailer::newInstance($transport);
-            $mailer->send($message);
-            
+
+            try {
+                $mailer->send($message, $fails);
+            }
+            catch(Exception $e) {
+                $eMessage = $e->getMessage();
+                if (strpos($eMessage, '550')) {
+                    //Limit of SMTP reached, must stop spamming for next 24h
+                    Db::query(
+                        'UPDATE `subscribe_sender` SET '.
+                        '`emails` = '.($row->emails + $i).', '.
+                        '`timestamp` = DATE_ADD(NOW(), INTERVAL 1 DAY) '.
+                        'WHERE `id` = '.$row->id
+                    );
+                }
+                else if (strpos($eMessage, '535')) {
+                    //Authentication failed
+                    Db::query(
+                        'UPDATE `subscribe_sender` SET '.
+                        '`ended` = 2, '.
+                        '`timestamp` = NOW()'.
+                        'WHERE `id` = '.$row->id
+                    );
+                }
+
+                exit();
+                //dump($e);
+            }
+
+            sleep(3);
+
             ++$i;
         }
 
