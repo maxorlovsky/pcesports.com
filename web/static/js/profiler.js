@@ -75,8 +75,8 @@ if ($('.chat-content').length > 0) {
                     alert('Upload in progress, wait!');
                 }
 
-        		if (! (ext && /^(jpg|png|jpeg)$/.test(ext))) {  
-        			alert('Only JPG, PNG files are allowed, your is: '+ext);
+        		if (! (ext && /^(jpg|png|jpeg)$/.test(ext.toLower()))) {
+        			alert('Only JPG, PNG files are allowed, your is: '+ext.toLower());
         			return false; 
         		}
                 

@@ -102,4 +102,4 @@
 
 <audio id="ping" src="<?=_cfg('static')?>/chat.ogg"></audio>
 
-<script src="<?=_cfg('static')?>/js/profiler.js?v=1.3"></script>
+<script src="<?=_cfg('static')?>/js/profiler.js?v=1.4"></script>
