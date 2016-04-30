@@ -30,8 +30,11 @@ io.on('connection', function(socket){
 		
 		for(i=0;i<3;++i) {
 			fileName = data[2+i]+(data[5+i]===true?'-checked':'')+'.png';
-			//fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+i+'.png'));
+			fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+i+'.png'));
 		}
+
+		fileName = data[8]+'-banned.png';
+		fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
 	});
 });
 

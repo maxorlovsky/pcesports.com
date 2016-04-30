@@ -43,7 +43,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('http://dev.pcesports.com:3000');
+        var socket = io('http://localhost:3000');
 
         var heroes = [
             '',
@@ -77,6 +77,8 @@
         function updateIcons(element) {
             var data = element.find('.list').val().split(';');
 
+            var ban = data[4];
+
             element.find('.name').text(data[0]);
 
             for (i=1; i<=3; ++i) {
@@ -98,19 +100,21 @@
                 data[4+i] = $('.player'+data[0]+' .hero'+i+' input[type="checkbox"').is(':checked');
             }
 
+            data[8] = ban;
+
             console.log(data);
 
             socket.emit('updateIcons', data);
         }
 
         $.ajax({
-            url: 'http://dev.pcesports.com/run/hslist/haosdi012',
+            url: 'http://www.pcesports.com/run/hslist/haosdi012',
             type: 'GET',
             success: function(data) {
                 var html = '<option value="-;-;-;-">-</option>';
                 data = $.parseJSON(data);
                 $.each(data, function(k,v) {
-                    html += '<option value="'+v.name+';'+heroes[v.contact_info.hero1]+';'+heroes[v.contact_info.hero2]+';'+heroes[v.contact_info.hero3]+'">'+v.name+'</option>';
+                    html += '<option value="'+v.name+';'+heroes[v.contact_info.hero1]+';'+heroes[v.contact_info.hero2]+';'+heroes[v.contact_info.hero3]+';'+heroes[v.contact_info.ban]+'">'+v.name+'</option>';
                 });
                 $('.list').html(html);
             },
