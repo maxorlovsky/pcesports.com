@@ -8,6 +8,7 @@
     .player1, .player2 { float: left; padding: 20px; margin: 20px; }
     .player1 {border: 1px solid blue;}
     .player2 {border: 1px solid red;}
+    .ban {color: #900; font-style: italic;}
     label { float: left; }
     input[type="checkbox"] { float: right; }
     .clear { clear: both; }
@@ -26,6 +27,8 @@
         <div class="hero2"><label>-</label><input type="checkbox" /></div>
         <div class="clear"></div>
         <div class="hero3"><label>-</label><input type="checkbox" /></div>
+        <div class="clear"></div>
+        <div class="ban"><label>-</label></div>
     </div>
 
     <div class="player2">
@@ -38,6 +41,8 @@
         <div class="hero2"><label>-</label><input type="checkbox" /></div>
         <div class="clear"></div>
         <div class="hero3"><label>-</label><input type="checkbox" /></div>
+        <div class="clear"></div>
+        <div class="ban"><label>-</label></div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -58,8 +63,70 @@
             'priest'
         ];
 
-        socket.on('status', function(msg){
+        //Clearing browser saved data for checkboxes
+        $('.list option').prop('selected', false);
+        $('input[type="checkbox"]').prop('checked', false);
+
+        socket
+        .on('status', function(msg) {
             $('.status').text(msg);
+        })
+        .on('updateUserList', function(msg) {
+            //data[0] = player number (1 or 2)
+            //data[1] = player nickname
+            //data[2-4] = player heroes ID
+            //data[5-7] = player won/lost data for each hero
+            //data[2] hero = data[5] won/lost data
+            //data[3] hero = data[6] won/lost data
+            //data[4] hero = data[7] won/lost data
+            //data[8] = banned hero
+
+            data = $.parseJSON(msg);
+            var html = '<option value="-;-;-;-">-</option>';
+            $.each(data, function(k,v) {
+                html += '<option value="'+v.name+';'+heroes[v.contact_info.hero1]+';'+heroes[v.contact_info.hero2]+';'+heroes[v.contact_info.hero3]+';'+heroes[v.contact_info.ban]+'" >'+v.name+'</option>';
+            });
+            $('.list').html(html);
+        })
+        .on('userSelectedData', function(msg) {
+            //Clearing data
+            $('.list option').prop('selected', false);
+            $('input[type="checkbox"]').prop('checked', false);
+            $('.name').html('-');
+            for (i=1; i<=3; ++i) {
+                $('.hero'+i+' label').html('-');
+            }
+            $('.ban label').html('-');
+
+            $.each(msg, function(k ,v) {
+                if (v !== null) {
+                    //Updating select option
+                    $('.player'+v[0]+' .list option:contains("'+v[1]+'")').prop('selected', true).attr('selected', true);
+                    
+                    //Update name text
+                    $('.player'+v[0]+' .name').html(v[1]);
+                    
+                    //Update labels for heroes
+                    for (i=1; i<=3; ++i) {
+                        $('.player'+v[0]+' .hero'+i+' label').html(v[i+1]);
+                    }
+
+                    //Update heroes won/lost status in checkboxes
+                    for (i=1; i<=3; ++i) {
+                        if (v[4+i] === true) {
+                            $('.player'+v[0]+' .hero'+i+' input[type="checkbox"]').prop('checked', true).attr('checked', true);
+                        }
+                    }
+
+                    //Update ban label
+                    if (v[8] != 'undefined') {
+                        $('.player'+v[0]+' .ban label').html(v[8]);
+                    }
+                    else {
+                        $('.player'+v[0]+' .ban label').html('-');   
+                    }
+                }
+            });
         });
 
         $('.list').on('change', function() {
@@ -86,6 +153,12 @@
             }
 
             if (data[1] == '-') {
+                if (element.hasClass('player1')) {
+                    socket.emit('cleanUser', 1);
+                }
+                else {
+                    socket.emit('cleanUser', 2);
+                }
                 return false;
             }
 
@@ -106,22 +179,6 @@
 
             socket.emit('updateIcons', data);
         }
-
-        $.ajax({
-            url: 'http://www.pcesports.com/run/hslist/haosdi012',
-            type: 'GET',
-            success: function(data) {
-                var html = '<option value="-;-;-;-">-</option>';
-                data = $.parseJSON(data);
-                $.each(data, function(k,v) {
-                    html += '<option value="'+v.name+';'+heroes[v.contact_info.hero1]+';'+heroes[v.contact_info.hero2]+';'+heroes[v.contact_info.hero3]+';'+heroes[v.contact_info.ban]+'">'+v.name+'</option>';
-                });
-                $('.list').html(html);
-            },
-            error: function() {
-                alert('Error fetching users');
-            }
-        });
     </script>
     </body>
 </html>
