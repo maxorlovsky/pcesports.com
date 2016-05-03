@@ -777,12 +777,12 @@ class hearthstone extends System
         $rows = Db::fetchRows('SELECT `challonge_id`, `name`, `contact_info` '.
             'FROM `participants` '.
             'WHERE `game` = "hs" '.
-            'AND `server` = "s2" '.
+            'AND `server` = "s1" '.
             'AND `tournament_id` = 7 '.
             //'AND `server` = "'.Db::escape($this->data->settings['tournament-season-hs']).'" '.
             //'AND `tournament_id` = '.$this->currentTournament.' '.
             'AND `deleted` = 0 '.
-            'AND `ended` = 0 '.
+            //'AND `ended` = 0 '.
             'AND `approved` = 1 '.
             'AND `checked_in` = 1 '.
             'ORDER BY `name` ASC'
