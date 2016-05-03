@@ -1,19 +1,44 @@
 //for files
-const net = require("net");
+//io.require('socket.io-client');
+var socket = require('socket.io-client')('http://localhost:3000');
+var fs = require('fs');
 
 // Create a socket (client) that connects to the server
-var socket = new net.Socket();
-socket.connect(3000, 'localhost', function () {
-    console.log("Client: Connected to server");
-});
+socket
+.on('userSelectedData', function(data) {
+	var pathToIcons = 'icons';
 
-// Let's handle the data we get from the server
-socket.on("data", function (data) {
-	console.log(data);
-    /*data = JSON.parse(data);
-    console.log("Response from server: %s", data.response);
-    // Respond back
-    socket.write(JSON.stringify({ response: "Hey there server!" }));
-    // Close the connection
-    socket.end();*/
+	for (i=1; i<=2; ++i) {
+		var pathToPlayerFolder = i;
+
+		if (data[i] !== null) {
+			fs.writeFile(pathToPlayerFolder+'/name.txt', data[i][1], function(err) {
+				if (err) {
+					return console.log(err);
+				}
+			}); 
+			
+			for(j=0;j<3;++j) {
+				fileName = data[i][2+j]+(data[i][5+j]===true?'-checked':'')+'.png';
+				fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
+			}
+
+			if (data[i][8] != 'undefined') {
+				fileName = data[i][8]+'-banned.png';
+				fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
+			}
+		}
+		else {
+			//Clean
+			fs.writeFile(pathToPlayerFolder+'/name.txt', '-', function(err) {
+				if (err) {
+					return console.log(err);
+				}
+			}); 
+			for(j=0;j<3;++j) {
+				fs.createReadStream(pathToIcons+'/-.png').pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
+			}
+			fs.createReadStream(pathToIcons+'/-.png').pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
+		}
+	}
 });

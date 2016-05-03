@@ -797,15 +797,17 @@ class hearthstone extends System
         if ($rows) {
             foreach($rows as &$v) {
                 $v->contact_info = json_decode($v->contact_info);
-                foreach($bans as $b) {
-                    if ($v->challonge_id == $b->player1_id) {
-                        $v->contact_info->ban = array_search(strtolower($b->player2_ban), $this->heroes);
-                    }
-                    if ($v->challonge_id == $b->player2_id) {
-                        $v->contact_info->ban = array_search(strtolower($b->player1_ban), $this->heroes);
+                if ($bans) {
+                    foreach($bans as $b) {
+                        if ($v->challonge_id == $b->player1_id) {
+                            $v->contact_info->ban = array_search(strtolower($b->player2_ban), $this->heroes);
+                        }
+                        if ($v->challonge_id == $b->player2_id) {
+                            $v->contact_info->ban = array_search(strtolower($b->player1_ban), $this->heroes);
+                        }
                     }
                 }
-
+                
                 if ($v->contact_info->ban) {
                     if ($v->contact_info->hero1 == $v->contact_info->ban) {
                         $v->contact_info->hero1 = $v->contact_info->hero2;
