@@ -4,12 +4,15 @@ var io = require('socket.io')(http);
 var request = require('request');
 var url = require('url');
 
-if (process.argv[2] != 'dev' && process.argv[2] != 'www') {
-	console.log('Set environment dev/www');
-	return false;
+if (process.argv[2] == 'dev') {
+	var env = 'dev';
+}
+else if (process.argv[2] == 'live') {
+	var env = 'direct';
 }
 else {
-	var env = process.argv[2];
+	console.log('Set environment dev/live');
+	return false;
 }
 
 io.on('connection', function(socket){

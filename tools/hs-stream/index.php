@@ -13,6 +13,13 @@ if (!$validated) {
 	header('HTTP/1.0 401 Unauthorized');
 	die ("Not authorized");
 }
+
+if (substr($_SERVER['HTTP_HOST'], 0, 3) == 'dev') {
+	$env = 'dev';
+}
+else {
+	$env = 'direct';
+}
 ?>
 
 <!doctype html>
@@ -65,7 +72,7 @@ if (!$validated) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('http://localhost:3008');
+        var socket = io('http://<?=$env?>.pcesports.com:3008');
 
         var heroes = [
             '',
