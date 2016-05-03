@@ -1,6 +1,13 @@
 //for files
-//io.require('socket.io-client');
-var socket = require('socket.io-client')('http://localhost:3000');
+if (process.argv[2] != 'dev' && process.argv[2] != 'www') {
+	console.log('Set environment dev/www');
+	return false;
+}
+else {
+	var env = process.argv[2];
+}
+
+var socket = require('socket.io-client')('http://'+env+'.pcesports.com:3008');
 var fs = require('fs');
 
 // Create a socket (client) that connects to the server

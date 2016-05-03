@@ -2,6 +2,15 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var request = require('request');
+var url = require('url');
+
+if (process.argv[2] != 'dev' && process.argv[2] != 'www') {
+	console.log('Set environment dev/www');
+	return false;
+}
+else {
+	var env = process.argv[2];
+}
 
 io.on('connection', function(socket){
   	io.emit('status', 'Connected');
@@ -29,7 +38,7 @@ io.on('connection', function(socket){
 });
 
 //Initiate
-http.listen(3000, function() {
+http.listen(3008, function() {
 	stream.fetchUsers();
 
 	setInterval(stream.fetchUsers, 5000); //rerun to fetch list every 15 seconds, it's localhost so should be fine
@@ -41,7 +50,7 @@ var stream = {
 	//variables
 	users: [null, null, null],
 	usersFromServer: {},
-	hsListLink: 'http://dev.pcesports.com/run/hslist/haosdi012',
+	hsListLink: 'http://'+env+'.pcesports.com/run/hslist/haosdi012',
 	request: null,
 	heroes: [
         '',

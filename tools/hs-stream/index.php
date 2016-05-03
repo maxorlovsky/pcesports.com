@@ -1,3 +1,20 @@
+<?php
+
+$valid_passwords = array ("pcesports" => "123890");
+$valid_users = array_keys($valid_passwords);
+
+$user = $_SERVER['PHP_AUTH_USER'];
+$pass = $_SERVER['PHP_AUTH_PW'];
+
+$validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
+
+if (!$validated) {
+	header('WWW-Authenticate: Basic realm="FK off :)"');
+	header('HTTP/1.0 401 Unauthorized');
+	die ("Not authorized");
+}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -48,7 +65,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('http://localhost:3000');
+        var socket = io('http://localhost:3008');
 
         var heroes = [
             '',
