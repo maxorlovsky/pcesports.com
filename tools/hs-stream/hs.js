@@ -8,7 +8,7 @@ if (process.argv[2] == 'dev') {
 	var env = 'dev';
 }
 else if (process.argv[2] == 'live') {
-	var env = 'direct';
+	var env = 'www';
 }
 else {
 	console.log('Set environment dev/live');
