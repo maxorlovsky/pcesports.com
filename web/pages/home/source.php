@@ -113,6 +113,7 @@ class home extends System
                 'WHERE IF(`online` >= '.(time()-360).', 1, 0) = 1 '.
                 'AND `approved` = 1 '.
                 ($eventStreams != 1?'AND `featured` = 1 ':'').
+                'GROUP BY `name` '.
                 'ORDER BY `viewers` DESC '
             );
         }
