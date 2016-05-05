@@ -49,7 +49,6 @@ class home extends System
                 if ($checkInStatus == 1) {
                     $v->status = t('check_in');
                     $time = $startTime;
-                    $eventStreams = 1;
                 }
                 else if ($checkLive == 1) {
                     $v->status = t('live');
@@ -59,7 +58,6 @@ class home extends System
                 else if ($checkReg == 1) {
                     $v->status = t('registration');
                     $time = $startTime;
-                    $eventStreams = 1;
                 }
                 else if (strtolower($v->status) == 'start') {
                     $v->status = t('upcoming');
