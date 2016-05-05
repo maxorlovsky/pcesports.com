@@ -202,7 +202,7 @@ class System
                 'SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
                 'FROM `boards` AS `b` '.
                 'LEFT JOIN '.
-                '( SELECT `board_id`, `user_id` FROM `boards_comments` GROUP BY `id` ) AS `bc` ON `bc`.`board_id` = `b`.`id` '.
+                '( SELECT `board_id`, `user_id` FROM `boards_comments` GROUP BY `id` ORDER BY `id` DESC) AS `bc` ON `bc`.`board_id` = `b`.`id` '.
                 $additionalSql.
                 'LEFT JOIN `users` AS `u` ON (`bc`.`user_id` = `u`.`id` OR `b`.`user_id` = `u`.`id`) '.
                 'WHERE `b`.`status` != 1 '.
