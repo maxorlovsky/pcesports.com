@@ -42,6 +42,11 @@ class TournamentHs
                 $return[$v[0]] = '<p id="notice">Chat is empty</p>';
                 if (file_exists($fileName)) {
                     $return[$v[0]] = strip_tags(stripslashes(html_entity_decode(file_get_contents($fileName))), '<div><p><b><a><u><span>');
+                    $return[$v[0]] = str_replace(
+                        array('<', '>'),
+                        '',
+                        $return[$v[0]]
+                    );
                 }
             }
         }
