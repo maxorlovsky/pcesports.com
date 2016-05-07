@@ -8,7 +8,7 @@
         </div>
         <div class="block-content tournament-rules">
             All games were played on this date: <h2 style="display: inline;"><?=$tournamentTime['start']?></h2>
-            <p>Check page for simple users: <a href="<?=_cfg('href')?>/leagueoflegends/<?=$this->server?>/<?=$this->pickedTournament?>"><?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$this->pickedTournament?></a></p>
+            <p>Check page for simple users: <a href="<?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$this->pickedTournament?>"><?=_cfg('href')?>/hearthstone/<?=$this->server?>/<?=$this->pickedTournament?></a></p>
             <ul>
                 <li>Info (this)</li>
                 <li>Winners (for easy copy/paste)</li>
@@ -30,6 +30,7 @@
         		foreach($this->winners as $v) {
         			?>
         				<strong><?=$i?> place</strong>: <input style="padding: 2px; cursor: pointer;" type="text" value="<?=$v?>" onClick="$(this).select();" class="hint" attr-msg="Click to select for copy (ctrl+c)" />
+                        <div class="clear"></div>
         			<?
         			++$i;
         		}
@@ -50,44 +51,9 @@
         </div>
     </div>
 
-    <? /*
     <div class="block">
         <div class="block-header-wrapper">
             <h1 class="bordered"><?=t('participants')?> THAT WERE IN THE TOURNAMENT</h1>
-        </div>
-
-        <div class="block-content participants not" style="width: 100%; box-sizing: border-box;">
-			<?
-            $i = 0;
-            if ($this->participants) {
-                foreach($this->participants as $v) {
-                    if ($v['checked_in'] == 1) {
-                    ++$this->participantsCount;
-                ?>
-                    <div class="block" title="<?=$v['name']?> #<?=$this->participantsCount?>" style="float: left; margin: 0 15px 10px 0 !important;">
-                        <div class="team-name" title="Participants ID in Pentaclick system: <?=$v['id']?>" style="width: 170px;">
-                            <?=$v['name']?>
-                        </div>
-                        <span style="size: 15px; color: #ddd;">Participant ID: <?=$v['id']?></span>
-                    </div>
-                <?
-                    ++$i;
-                    }
-                }
-            }
-            
-            if ($i == 0) {
-                ?><p class="empty-list"><?=t('no_checked_in_teams')?></p><?
-            }
-            ?>
-            <div class="clear"></div>
-        </div>
-    </div>
-    */?>
-
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?></h1>
         </div>
         
         <div class="block-content participants isotope-participants">
