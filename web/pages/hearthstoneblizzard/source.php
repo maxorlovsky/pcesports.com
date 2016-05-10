@@ -63,6 +63,8 @@ class hearthstoneblizzard extends System
 	                    $this->winners[$v->place] = $v->name;
 	                }
 	            }
+
+                ksort($this->winners);
 	        }
 	        $this->participants = $rows;
             
