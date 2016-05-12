@@ -60,7 +60,15 @@ class Cron extends System {
             }
             catch(Exception $e) {
                 $eMessage = $e->getMessage();
-                if (strpos($eMessage, '550')) {
+                if (strpos($eMessage, '550 Requested action not taken') || strpos($eMessage, '550 Message was not accepted')) {
+                    //Mail not accepting emails, ignoring and removing mail from subscribers list
+                    Db::query(
+                        'UPDATE `subscribe` SET '.
+                        '`removed` = 1 '.
+                        'WHERE `email` = "'.Db::escape($v->email).'" '
+                    );
+                }
+                else if (strpos($eMessage, '550')) {
                     //Limit of SMTP reached, must stop spamming for next 24h
                     Db::query(
                         'UPDATE `subscribe_sender` SET '.
