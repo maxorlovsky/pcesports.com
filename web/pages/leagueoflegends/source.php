@@ -161,6 +161,37 @@ class leagueoflegends extends System
 		
 		return true;
 	}
+
+    public function getBattlefyTournamentData($number) {
+        $this->pickedTournament = (int)$number;
+        
+        /*$tournamentRow = Db::fetchRow('SELECT `dates_start`, `dates_registration`, `time`, `status`, `prize`, `event_id` '.
+            'FROM `tournaments` '.
+            'WHERE `game` = "lol" AND '.
+            '`server` = "'.Db::escape($this->server).'" AND '.
+            '`name` = '.(int)$this->pickedTournament.' '.
+            'LIMIT 1'
+        );*/
+        
+        /*if ($tournamentRow) {
+            $tournamentTime['registration'] = $this->convertTime($tournamentRow->dates_registration.' '.$tournamentRow->time);
+            $tournamentTime['checkin'] = $this->convertTime(strtotime($tournamentRow->dates_start.' '.$tournamentRow->time) - 3600);
+            $tournamentTime['start'] = $this->convertTime($tournamentRow->dates_start.' '.$tournamentRow->time);
+
+            $this->eventId = $tournamentRow->event_id;
+
+            include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
+        }
+        else {
+            include_once  _cfg('pages').'/404/error.tpl';
+        }*/
+
+        $tournamentRow = new stdClass();
+        $tournamentRow->battlefyId = '571cd5d0f9244c9612925596';
+        $tournamentRow->battlefyStage = '573d8fddc0932a7e127f6cc1';
+
+        include_once _cfg('pages').'/'.get_class().'/battlefy-tournament.tpl';
+    }
 	
 	public function getTournamentData($number) {
         $this->pickedTournament = (int)$number;
@@ -330,9 +361,12 @@ class leagueoflegends extends System
 		else if (isset($_GET['val3']) && $_GET['val3'] == 'participant') {
 			$this->participantPage();
 		}
-        else if (isset($_GET['val3']) && is_numeric($_GET['val3'])) {
+        else if (isset($_GET['val3']) && is_numeric($_GET['val3']) && $_GET['val3'] <= 29) {
 			$this->getTournamentData($_GET['val3']);
 		}
+        else if (isset($_GET['val3']) && is_numeric($_GET['val3'])) {
+            $this->getBattlefyTournamentData($_GET['val3']);
+        }
 		else {
 			$this->getTournamentList();
 		}

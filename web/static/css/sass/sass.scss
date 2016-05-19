@@ -1254,6 +1254,11 @@ footer {
 .tournament {
     .block {
     	margin-bottom: 40px;
+        .block-content {
+            &.battlefy-embed {
+                padding: 0;
+            }
+        }
     }
     .active-tournament {
         &:hover {
