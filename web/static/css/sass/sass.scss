@@ -1257,8 +1257,17 @@ footer {
         .block-content {
             &.battlefy-embed {
                 padding: 0;
+                #join-form {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 175px;
+                }
             }
         }
+    }
+    &.hs .block .block-content.battlefy-embed #join-form {
+        height: 220px;
     }
     .active-tournament {
         &:hover {

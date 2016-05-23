@@ -28,42 +28,13 @@ class home extends System
         if ($rows) {
             $i = 0;
             foreach($rows as $v) {
-                $startTime = strtotime($v->dates_start.' '.$v->time);
-                $regTime = strtotime($v->dates_registration.' '.$v->time);
-                $time = $regTime;
-
-                if ($v->game == 'hs') {
-                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game];
-                    $checkLive = $this->data->settings['tournament-start-'.$v->game];
-                    $checkReg = $this->data->settings['tournament-reg-'.$v->game];
+                if ($v->status != 'registration') {
+                    $time = strtotime($v->dates_start.' '.$v->time);
                 }
                 else {
-                    $checkInStatus = $this->data->settings['tournament-checkin-'.$v->game.'-'.$v->server];
-                    $checkLive = $this->data->settings['tournament-start-'.$v->game.'-'.$v->server];
-                    $checkReg = $this->data->settings['tournament-reg-'.$v->game.'-'.$v->server];
-                    if ($i === 0) {
-                        $lolPriority = 1;
-                    }
+                    $time = strtotime($v->dates_registration.' '.$v->time);
                 }
 
-                if ($checkInStatus == 1) {
-                    $v->status = t('check_in');
-                    $time = $startTime;
-                }
-                else if ($checkLive == 1) {
-                    $v->status = t('live');
-                    $time = $startTime;
-                    $eventStreams = 1;
-                }
-                else if ($checkReg == 1) {
-                    $v->status = t('registration');
-                    $time = $startTime;
-                }
-                else if (strtolower($v->status) == 'start') {
-                    $v->status = t('upcoming');
-                }
-                
-                $additionalWhere = '';
                 $name = '';
                 if ($v->game == 'lol') {
                     $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
@@ -73,35 +44,21 @@ class home extends System
                     else {
                         $name = 'Europe West';
                     }
-                    $additionalWhere = '`approved` = 1 AND ';
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
                     $name = 'Hearthstone League Season 2';
-                    $additionalWhere = '`approved` = 1 AND ';
                 }
 
-                //Fetching number of players for each tournament
-                $row = Db::fetchRow('SELECT COUNT(`tournament_id`) AS `value`'.
-                    'FROM `participants` '.
-                    'WHERE `game` = "'.Db::escape($v->game).'" AND '.
-                    '`server` = "'.Db::escape($v->server).'" AND ' .
-                    $additionalWhere.
-                    '`deleted` = 0 AND '.
-                    '`tournament_id` = "'.Db::escape($v->name).'" '.
-                    'LIMIT 1 '
-                );
-
                 $this->tournamentData[$v->game.''.$v->server] = array(
-                    'order'     => ($lolPriority==1&&$v->game=='lol'?1:2),
+                    'order'     => ($v->game=='lol'?1:2),
                     'id'	    => $v->name,
                     'name'      => $name,
-                    'status'    => $v->status,
+                    'status'    => str_replace('_', ' ', $v->status),
                     'max_num'   => $v->max_num,
                     'prize'     => $v->prize,
                     'time'      => $time,
                     'link'      => $link,
-                    'teams'     => $row->value,
                 );
                 asort($this->tournamentData);
             }

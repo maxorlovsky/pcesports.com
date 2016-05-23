@@ -113,4 +113,34 @@ class blog extends System
 		
 		return $text;
 	}
+
+	public function vote($data) {
+		$row = Db::fetchRow('SELECT * FROM `blog_likes`'.
+		    'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'.
+		    'LIMIT 1'
+		);
+		
+		if ($row) {
+		    $num = '- 1';
+		    Db::query('DELETE FROM `blog_likes`'.
+		        'WHERE `blog_id` = '.(int)$data['id'].' AND `ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'.
+		        'LIMIT 1'
+		    );
+		}
+		else {
+		    $num = '+ 1';
+		    Db::query('INSERT INTO `blog_likes` SET '.
+		        '`blog_id` = '.(int)$data['id'].', '.
+		        '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'"'
+		    );
+		}
+		
+		Db::query('UPDATE `blog`'.
+		    'SET `likes` = `likes` '.$num.' '.
+		    'WHERE `id` = '.(int)$data['id'].' '.
+		    'LIMIT 1'
+		);
+		
+		return '1;'.$num;
+	}
 }

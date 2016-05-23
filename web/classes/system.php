@@ -808,46 +808,10 @@ class System
                     //Others functions without SQL
                     $cronClass->cleanImagesTmp();
                 }
-                //skillz specific notifications
-                else if ($_GET['val1'] == 'notificationzskillz' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->sendNotificationsSkillz();
-                }
-                else if ($_GET['val1'] == 'euw' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->checkLolGames('euw');
-                }
-                else if ($_GET['val1'] == 'eune' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->checkLolGames('eune');
-                }
-                else if ($_GET['val1'] == 'riotcode') {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->checkLolGames('eune');
-                }
-                else if ($_GET['val1'] == 'na' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->checkSmiteGames('na');
-                }
-                else if ($_GET['val1'] == 'eu' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(300);
-                    $cronClass = new Cron();
-                    $cronClass->checkSmiteGames('eu');
-                }
                 else if ($_GET['val1'] == 'streams' && $_GET['val2'] === _cfg('cronjob')) {
                     set_time_limit(120);
                     $cronClass = new Cron();
                     $cronClass->updateStreamers();
-                }
-                else if ($_GET['val1'] == 'matches' && $_GET['val2'] === _cfg('cronjob')) {
-                    set_time_limit(60);
-                    $cronClass = new Cron();
-                    $cronClass->updateChallongeMatches();
                 }
                 else if ($_GET['val1'] == 'summoners' && $_GET['val2'] === _cfg('cronjob')) {
                     set_time_limit(60);

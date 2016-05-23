@@ -2238,6 +2238,14 @@ footer {
   margin-bottom: 40px; }
   .tournament .block .block-content.battlefy-embed {
     padding: 0; }
+    .tournament .block .block-content.battlefy-embed #join-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 175px; }
+
+.tournament.hs .block .block-content.battlefy-embed #join-form {
+  height: 220px; }
 
 .tournament .active-tournament:hover {
   background-color: #1697E1;

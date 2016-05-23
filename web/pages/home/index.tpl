@@ -69,11 +69,13 @@
                         <h4><?=t('prize_pool')?></h4>
                         <div><?=$v['prize']?></div>
                     </div>
+                    <? if ($v['status'] != 'ended') { ?>
                     <div class="timing">
                         <h4 class="timer hint" attr-time="<?=intval($v['time'] - time())?>" attr-msg="<?=$this->convertTime($v['time'], 'j M - '.($this->data->user->timestyle==1?'H':'h').':i'.($this->data->user->timestyle!=1?' A':null), 1)?>" <?=($k=='hs'.$this->data->settings['tournament-season-hs']?'attr-br="1"':null)?>><img src="<?=_cfg('img')?>/bx_loader.gif" /></h4>
                     </div>
+                    <? } ?>
                     <div class="registered-now">
-                        <div><?=$v['teams']?> / <span class="<?=($v['teams']>=$v['max_num']?'red':null)?>"><?=$v['max_num']?></span></div>
+                        <div>Max. slots: <?=$v['max_num']?></div>
                     </div>
                 </a>
             </div>

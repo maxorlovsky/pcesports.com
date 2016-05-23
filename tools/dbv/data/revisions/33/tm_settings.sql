@@ -1,0 +1,16 @@
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-reg-lol-euw';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-auto-lol-euw';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-start-lol-euw';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-checkin-lol-euw';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-supress-lol-euw';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-reg-lol-eune';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-auto-lol-eune';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-start-lol-eune';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-checkin-lol-eune';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-supress-lol-eune';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-reg-hs';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-start-hs';
+DELETE FROM `tm_settings` WHERE `tm_settings`.`setting` = 'tournament-checkin-hs';
+UPDATE `tm_settings` SET `position` = '1' WHERE `tm_settings`.`setting` = 'lol-current-number-eune';
+UPDATE `tm_settings` SET `position` = '2' WHERE `tm_settings`.`setting` = 'hs-current-number';
+UPDATE `tm_settings` SET `position` = '2' WHERE `tm_settings`.`setting` = 'tournament-season-hs';

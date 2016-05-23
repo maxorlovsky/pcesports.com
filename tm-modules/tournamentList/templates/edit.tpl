@@ -63,6 +63,18 @@
     </tr>
     <? } ?>
     <tr>
+        <td width="20%">
+            <b>Battlefy ID</b><br />
+        </td>
+        <td><input type="text" id="battlefyId" size="50" value="<?=$module->editData->battlefy_id?>" /></td>
+    </tr>
+    <tr>
+        <td width="20%">
+            <b>Battlefy Stage</b><br />
+        </td>
+        <td><input type="text" id="battlefyStage" size="50" value="<?=$module->editData->battlefy_stage?>" /></td>
+    </tr>
+    <tr>
         <td width="20%"><b>Prize <span class="red">*</span></b></td>
         <td><input type="text" id="prize" size="50" value="<?=$module->editData->prize?>" /></td>
     </tr>
