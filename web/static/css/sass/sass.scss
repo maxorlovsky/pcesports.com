@@ -2630,93 +2630,95 @@ footer .games img {
 }
 
 .groups {
-    
-}
-.groups .group {
-    float: left;
-    width: 48%;
-    margin-bottom: 20px;
-    border: 1px solid #222;
-    border-radius: 5px;
-    background-color: #32333b;
-    color: #ddd;
-}
-.groups .group:nth-child(1n) {
-    margin-right: 12px;
-}
-.groups .group .header {
-    border-bottom: 1px solid #444;
-    padding: 7px 0;
-}
-.groups .group h3 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: normal;
-    text-transform: uppercase;
-    margin-left: 5px;
-    color: #fff;
-    font-family: $font;
-    float: left;
-}
-.groups .group .place {
-    float: right;
-    font-size: 13px;
-    margin-top: 4px;
-    margin-right: 5px;
-    color: #fff;
-}
-.groups .group .group-list .holder {
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #555;
-    padding: 5px;
-    margin: 0;
-}
-.groups .group .group-list .empty {
-    font-style: italic;
-}
-.groups .group .group-list .holder:first-child {
-    border-top: 0;
-}
-.groups .group .group-list .holder:last-child {
-    border-bottom: 0;
-}
-.groups .group .group-list .holder .player-num {
-    float: left;
-    color: #fff;
-    font-size: 15px;
-    font-weight: bold;
-}
-.groups .group .group-list .holder .player-name {
-    margin-left: 10px;
-    display: block;
-    float: left;
-    width: 150px;
-    font-size: 15px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.groups .group .group-list .holder .player-score {
-    color: #fff;
-    float: right;
-    font-size: 15px;
-}
-.groups .group .group-list .holder.player-won,
-.groups .group .group-list .holder.player-won .player-num,
-.groups .group .group-list .holder.player-won .player-score {
-    background-color: #FFD700;
-    color: #333;
-}
+    .group {
+        float: left;
+        width: 48%;
+        margin-bottom: 20px;
+        border: 1px solid #222;
+        border-radius: 5px;
+        background-color: #32333b;
+        color: #ddd;
+        .header {
+            border-bottom: 1px solid #444;
+            padding: 7px 0;
+        }
+        h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: normal;
+            text-transform: uppercase;
+            margin-left: 5px;
+            color: #fff;
+            font-family: $font;
+            float: left;
+        }
+        .place {
+            float: right;
+            font-size: 13px;
+            margin-top: 4px;
+            margin-right: 5px;
+            color: #fff;
+        }
+        &:nth-child(1n) {
+            margin-right: 12px;
+        }
 
-.groups .group .group-list .holder .player-heroes {
-    display: inline-block;
-    padding: 0;
-    height: 18px;
-    margin: 3px 0 0 5px;
-}
-.groups .group .group-list .holder .player-heroes div {
-    display: inline-block;
-    margin: 0;
+        .group-list {
+            .holder {
+                border-bottom: 1px solid #000;
+                border-top: 1px solid #555;
+                padding: 5px;
+                margin: 0;
+                &:first-child {
+                    border-top: 0;
+                }
+                &:last-child {
+                    border-bottom: 0;
+                }
+                .player-num {
+                    float: left;
+                    color: #fff;
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                .player-name {
+                    margin-left: 10px;
+                    display: block;
+                    float: left;
+                    width: 150px;
+                    font-size: 15px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .player-score {
+                    color: #fff;
+                    float: right;
+                    font-size: 15px;
+                }
+                &.player-won {
+                    .player-num,
+                    .player-score {
+                        background-color: #FFD700;
+                        color: #333;
+                    }
+                }
+                .player-heroes {
+                    display: inline-block;
+                    padding: 0;
+                    height: 18px;
+                    margin: 3px 0 0 5px;
+                    div {
+                        display: inline-block;
+                        margin: 0;
+                    }
+                }
+            }
+            .empty {
+                font-style: italic;
+            }
+        }
+    }
 }
 
 .avatars-list {
@@ -3099,41 +3101,43 @@ footer .games img {
     margin: 5px 0;
 }
 
-.submitBoard #title {
-    font-size: 22px;
-    width: 720px;
-    padding: 5px 10px;
-    border-radius: $defaultBorderRadius;
-    border: 1px solid #000;
-}
-.submitBoard #title:focus {
-	border-color: #1697e1;
-	transition: linear .3s;
-	outline: 0;
-}
-.submitBoard .categories div {
-    float: left;
-    border: 3px solid #000;
-    width: 80px;
-    height: 80px;
-    text-align: center;
-    margin-right: 20px;
-    line-height: 80px;
-    opacity: 0.5;
-    transition: .5s;
-    cursor: pointer;
-}
-.submitBoard .categories div img {
-    vertical-align: middle;
-}
-.submitBoard .categories div:hover,
-.submitBoard .categories div.active {
-    opacity: 1;
-    background-color: #1697e1;
-}
+.submitBoard {
+    #title {
+        font-size: 22px;
+        width: 720px;
+        padding: 5px 10px;
+        border-radius: $defaultBorderRadius;
+        border: 1px solid #000;
+        &:focus {
+            border-color: #1697e1;
+            transition: linear .3s;
+            outline: 0;
+        }
+    }
 
-.submitBoard .categories div.active {
-    border: 3px solid #1697e1;
+    .categories div {
+        float: left;
+        border: 3px solid #000;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        margin-right: 20px;
+        line-height: 80px;
+        opacity: 0.5;
+        transition: .5s;
+        cursor: pointer;
+        img {
+            vertical-align: middle;
+        }
+        &:hover,
+        &.active {
+            opacity: 1;
+            background-color: #1697e1;
+        }
+        &.active {
+            border: 3px solid #1697e1;
+        }
+    }
 }
 
 .deleted {
@@ -3369,62 +3373,6 @@ footer .games img {
     }
 }
 
-.team-page {
-    .block {
-        margin-bottom: 20px;
-    }
-
-    .fields {
-        label {
-           width: 140px !important;
-        }
-        input, p {
-            width: 595px !important;
-        }
-        select {
-            width: 605px !important;
-        }
-        p {
-            display: inline-block;
-            border: 1px solid #999;
-            margin: 0 0 0 -1px;
-            border-radius: 0 4px 4px 0;
-            padding-left: 10px;
-            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
-            height: 40px;
-            background-color: #eee;
-            line-height: 40px;
-        }
-        .check_holder {
-            width: 602px;
-            background-color: #fff;
-            border: 1px solid #999;
-            border-radius: 0 4px 4px 0;
-            margin-left: 142px;
-            height: 40px;
-        }
-        input[type="checkbox"] {
-            height: 35px;
-            margin-top: 3px;
-            box-shadow: none;
-        }
-    }
-    .button {
-        width: 100%;
-        margin-left: 0;
-        text-align: center;
-        font-size: 17px;
-    }
-
-    .submit {
-        margin-bottom: 10px;
-        width: 760px;
-        font-size: 20px;
-        text-align: center;
-    }
-}
-
-
 .faq {
     .QnA {
         box-shadow: 0 1px 5px 1px #ccc;
@@ -3518,124 +3466,5 @@ footer .games img {
         background-repeat: repeat-x;
         top: 50px;
         left: 0;
-    }
-}
-
-.member-teams {
-    margin-top: 20px;
-    a {
-        width: 100%;
-        display: block;
-        padding: 0 !important;
-        height: 38px;
-        &:hover {
-            background-color: #eee;
-            transition: .3s;
-        }
-        .game-logo {
-            float: left;
-            height: 30px;
-            padding: 4px 0 0 5px;
-        }
-        label {
-            display: inline-block;
-            height: 30px;
-            margin: 10px 0 0 10px;
-            font-weight: bold;
-            width: 200px;
-            cursor: pointer;
-        }
-        .summoner {
-            display: inline-block;
-            .division-logo {
-                float: left;
-                margin-top: -6px;
-            }
-        }
-        .right {
-            float: right;
-            padding: 10px 10px 0 0;
-        }
-    }
-}
-
-.teams-list {
-    @extend .users-list;
-    
-    .headers,
-    .block-content {
-        padding-left: 48px;
-    }
-    .cell1 {
-        width: 350px;
-    }
-    .cell2 {
-        width: 170px;
-    }
-    .cell3 {
-        width: 200px;
-        text-align: right;
-    }
-}
-
-.team {
-    .member {
-        .avatar {
-            border: 1px solid #fff;
-            outline: 1px solid #555;
-            height: 150px;
-            float: left;
-            margin: 0 10px 10px 0;
-            img {
-                height: 150px;
-            }
-        }
-        .information {
-            width: 570px;
-            label {
-                display: inline-block;
-                font-weight: bold;
-                min-width: 160px;
-            }
-            p {
-                margin-top: 0;
-            }
-        }
-        .buttons {
-            float: right;
-            text-align: right;
-            .small {
-                font-size: 11px;
-                color: #555;
-                width: 145px;
-            }
-        }
-    }
-
-    .member-summoners, .member-tournaments, .member-achievements {
-        margin-top: 20px;
-    }
-
-    .line-bar {
-        width: 500px;
-        margin: 10px auto;
-        text-align: center;
-        span {
-            display: inline-block;
-        }
-        > div {
-            display: inline-block;
-            margin-top: 2px;
-            border: 1px solid #1697e1;
-            border-radius: 15px;
-            width: 400px;
-            height: 10px;
-            span {
-                display: block;
-                background-color: #1697e1;
-                border-radius: 15px;
-                height: 10px;
-            }
-        }
     }
 }
