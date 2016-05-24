@@ -8,6 +8,18 @@
 <section class="container page tournament hs <?=$this->server?>">
 
 <div class="left-containers">
+    <? if ($tournamentRow->status == 'upcoming') { ?>
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('information')?></h1>
+        </div>
+        
+        <div class="block-content tournament-rules">
+            <div>Tournament registration will become available at <strong><?=$tournamentTime['registration']?></strong></div>
+        </div>
+    </div>
+    <? } ?>
+
 	<? if ($tournamentRow->status == 'registration' || $tournamentRow->status == 'check_in') { ?>
 	<div class="block registration">
 		<div class="block-header-wrapper">
