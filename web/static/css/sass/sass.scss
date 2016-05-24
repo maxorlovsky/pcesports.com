@@ -113,6 +113,10 @@ header {
                             padding: 0 10px;
                             text-transform: none;
                             font-weight: normal;
+                            &:hover {
+                                background-color: #fff;
+                                color: #000;
+                            }
                         }
                     }
                 }

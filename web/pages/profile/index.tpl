@@ -71,11 +71,6 @@
                 </select>
             </div>
             
-            <div class="fields">
-                <label for="https"><?=t('secure_connection')?></label>
-                <div class="check_holder"><input name="https" id="https" type="checkbox" value="<?=$this->data->user->https?>" <?=($this->data->user->https==1?'checked="checked"':null)?> /></div>
-            </div>
-            
             <a href="javascript:void(0);" class="button" id="updateProfile"><?=t('update_profile')?></a>
         </form>
     </div>

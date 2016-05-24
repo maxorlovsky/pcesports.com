@@ -565,13 +565,13 @@ class User extends System
             Achievements::give(9);//I have a face now!
         }
         
-        if (isset($form['https']) && $form['https'] == 1) {
+        /*if (isset($form['https']) && $form['https'] == 1) {
             $form['https'] = 1;
             Achievements::give(10);//007 is my way!
         }
         else {
             $form['https'] = 0;
-        }
+        }*/
 
         if (isset($form['timestyle']) && $form['timestyle'] == 1) {
             $form['timestyle'] = 1;
@@ -586,8 +586,8 @@ class User extends System
             //'`timezone` = "'.Db::escape($timezone).'", '.
             '`timestyle` = '.(int)$form['timestyle'].', '.
             '`avatar` = '.(int)$form['avatar'].', '.
-            '`battletag` = "'.Db::escape($form['battletag']).'", '.
-            '`https` = '.(int)$form['https'].' '.
+            //'`https` = '.(int)$form['https'].', '.
+            '`battletag` = "'.Db::escape($form['battletag']).'" '.
             'WHERE `id` = '.(int)$user->id
         );
         
