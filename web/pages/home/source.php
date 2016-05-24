@@ -28,11 +28,11 @@ class home extends System
         if ($rows) {
             $i = 0;
             foreach($rows as $v) {
-                if ($v->status != 'registration') {
-                    $time = strtotime($v->dates_start.' '.$v->time);
+                if ($v->status == 'upcoming') {
+                    $time = strtotime($v->dates_registration.' '.$v->time);
                 }
                 else {
-                    $time = strtotime($v->dates_registration.' '.$v->time);
+                    $time = strtotime($v->dates_start.' '.$v->time);
                 }
 
                 $name = '';
