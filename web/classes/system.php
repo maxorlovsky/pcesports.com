@@ -297,97 +297,6 @@ class System
     	return $response;
     }
     
-    public function runChallongeAPI($apiAdditionalData, $apiArray = array(), $apiGetUrl = '') {
-    	$startTime = microtime(true);
-    	$error = '';
-    
-    	$apiUrl = 'https://api.challonge.com/v1/';
-    	$apiUrl .= $apiAdditionalData;
-    	$apiUrl .= '?api_key=5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
-    	if ($apiGetUrl) {
-    		$apiUrl .= '&'.$apiGetUrl;
-    	}
-    
-    	$apiUrlLog = $apiUrl;
-    	if ($apiArray) {
-    		foreach($apiArray as $k => $v) {
-    			$apiUrlLog .= '&'.$k.'='.$v;
-    		}
-            $apiArray['api_key'] = '5Md6xHmc7hXIEpn87nf6z13pIik1FRJY7DpOSoYa';
-    	}
-    
-    	Db::query(
-    		'INSERT INTO `challonge_requests` SET '.
-    		' `timestamp` = NOW(), '.
-    		' `ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
-    		' `data` = "'.$apiUrlLog.'"'
-		);
-    
-    	$lastId = Db::lastId();
-    
-    	$ch = curl_init();
-    
-    	//---
-    	curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
-    	curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
-    	curl_setopt($ch, CURLOPT_TIMEOUT, 60); // times out after 119s
-    	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-    	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-    	if ($apiArray) {
-    		curl_setopt($ch, CURLOPT_POST, 1); //POST
-    		curl_setopt($ch, CURLOPT_POSTFIELDS, $apiArray); // add POST fields
-    	}
-    	else {
-    		curl_setopt($ch, CURLOPT_POST, 0); //GET
-    	}
-    
-    	$response = curl_exec($ch); // run the whole process
-    	//dump(curl_error($ch));
-    	$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    
-    	curl_close($ch);
-    
-    	if ($http_status == 401) {
-    		$error = 'Invalid API key';
-    	}
-    	else if ($http_status == 404 ) {
-    		$error = 'Object not found within your account scope';
-    	}
-    	else if ($http_status == 422) {
-    		$error = 'Validation error(s) for create or update method';
-    	}
-    
-    	$endTime = microtime(true);
-    	$duration = $endTime - $startTime; //calculates total time taken
-    
-    	if ($apiArray) {
-    		$response = 'POST';
-    	}
-    
-    	Db::query(
-	    	'UPDATE `challonge_requests` SET '.
-	    	' `response` = "'.($error?$error:Db::escape($response)).'", '.
-	    	' `time` = "'.(float)$duration.'" '.
-	    	' WHERE id='.$lastId
-    	);
-    
-    	if ( $error )
-    	{
-    		return false;
-    	}
-    
-    	if ($response == 'POST') {
-    		return true;
-    	}
-    
-    	$response = json_decode($response);
-    
-    	return $response;
-    }
-	
 	public function runRiotAPI($apiAdditionalData, $server, $fullReturn = false) {
         if (!$apiAdditionalData || !in_array($server, array_keys(_cfg('lolRegions')))) {
             return false;
@@ -468,97 +377,6 @@ class System
 		return (object)$response;
 	}
 
-    public function paypalAPI($apiAdditionalData) {
-        $startTime = microtime(true);
-        
-        /*if (_cfg('env') == 'dev') {
-            $apiUrl = 'https://';
-        }
-        else {
-            $apiUrl = 'https://';
-        }*/
-        $apiAdditionalData = 'oauth2/token';
-
-        $apiUrl = 'https://api.sandbox.paypal.com/v1/';
-        $apiUrl .= $apiAdditionalData; //payments/payment
-        
-        Db::query('INSERT INTO `paypal_requests` SET '.
-            '`timestamp` = NOW(), '.
-            '`ip` = "'.Db::escape(isset($_SERVER['HTTP_CF_CONNECTING_IP'])?$_SERVER['HTTP_CF_CONNECTING_IP']:$_SERVER['REMOTE_ADDR']).'", '.
-            '`data` = "'.$apiUrl.'"'
-        );
-        
-        $lastId = Db::lastId();
-        
-        $ch = curl_init();
-        
-        $curlOptions = array (
-            CURLOPT_URL => $apiUrl,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_SSL_VERIFYPEER => 1,
-            CURLOPT_SSL_VERIFYHOST => true,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_CONNECTTIMEOUT => 30,
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => array(
-                'USER' => 'max.orlovsky-facilitator_api1.gmail.com',
-                'PWD' => '1362986413',
-                'SIGNATURE' => 'At39XbOSsGMwp5m60oESMpE0iOJ4A86HKcWlXKX4PAhhC7EAvBS3oWJQ',
-            ),
-        );
-
-        curl_setopt_array($ch,$curlOptions);        
-        $response = curl_exec($ch); // run the whole process 
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //$error = curl_error($ch);
-        curl_close($ch);
-
-        dump($http_status);
-        ddump($response);
-        
-        if ($http_status == 400) {
-            //$error = curl_error($ch);
-            $error = 'Bad request';
-        }
-        else if ($http_status == 503) {
-            $error = 'Service unavailable';
-        }
-        else if ($http_status == 500) {
-            $error = 'Internal server error';
-        }
-        else if ($http_status == 401) {
-            $error = 'Unauthorized';
-        }
-        else if ($http_status == 404) {
-            $error = 'Not found';
-        }
-        
-        $endTime = microtime(true);
-        $duration = $endTime - $startTime; //calculates total time taken
-        
-        Db::query('UPDATE `riot_requests` SET '.
-            '`response` = "'.($error?$error:Db::escape($response)).'", '.
-            '`time` = "'.(float)$duration.'" '.
-            'WHERE `id` = '.$lastId.' '
-        );
-        
-        if ( $error ) {
-            return false;
-        }
-        
-        if ($fullReturn === false) {
-            $response = (array)json_decode($response);
-            $response = array_values($response);
-            $response = $response[0];
-        }
-        else {
-            $response = json_decode($response);
-        }
-        
-        return (object)$response;
-    }
-    
     //@email - Send TO
     //@subject - Subject of email
     //@msg - Body of message (can be html)
@@ -800,9 +618,7 @@ class System
                     
                     //SQL involved functions
                     $cronClass->tournamentsOpenReg();
-                    $cronClass->finalizeTournament();
-                    $cronClass->sendNotifications();
-                    //$cronClass->checkDotaGames();
+                    $cronClass->tournamentStatusUpdate();
                     $cronClass->sqlCleanUp();
                     
                     //Others functions without SQL

@@ -79,53 +79,6 @@ class Ajax extends System
         $profile = new profile();
         return $profile->addSummoner($data);
     }
-
-    /*
-     * Teams functions
-     * Add/Edit/Remove
-    */
-    protected function addTeam($data) {
-        require_once _cfg('pages').'/profile/source.php';
-        $profile = new profile();
-        parse_str($data['form'], $post);
-        return $profile->addTeam($post);
-    }
-    protected function editTeam($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        parse_str($data['form'], $post);
-        return $team->editTeam($post);
-    }
-    protected function requestJoinTeam($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->requestJoin($data);
-    }
-    protected function acceptToTeam($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->accept($data);
-    }
-    protected function rejectFromTeam($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->reject($data);
-    }
-    protected function leaveTeam($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->leave($data);
-    }
-    protected function removeTeamMember($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->remove($data);
-    }
-    protected function changeTeamCaptain($data) {
-        require_once _cfg('pages').'/team/source.php';
-        $team = new team();
-        return $team->changeCaptain($data);
-    }
     
     /*
      * Widgets functions
