@@ -1,10 +1,3 @@
-<div class="hidden popup" id="rules-window">
-    <div class="rules-inside">
-        <h1>League of legends rules</h1>
-        <?=t('lol_tournament_rules')?>
-    </div>
-</div>
-
 <section class="container page tournament hs <?=$this->server?>">
 
 <div class="left-containers">
@@ -37,9 +30,6 @@
                     array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $tournamentRow->prize),
                     t('hs_tournament_information')
                 )?>
-                <div>
-                    <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
-                </div>
             </div>
 
             <div class="clear"></div>
@@ -90,5 +80,15 @@
         </div>
     </div>
     <? } ?>
+
+    <div class="block">
+        <div class="block-header-wrapper">
+            <h1 class="bordered">Tournament rules</h1>
+        </div>
+
+        <div class="block-content">
+            <?=t('hearthstone_tournament_rules')?>
+        </div>
+    </div>
 
 </div>
