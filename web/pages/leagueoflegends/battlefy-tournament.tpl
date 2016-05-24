@@ -15,7 +15,7 @@
         </div>
         
         <div class="block-content tournament-rules">
-            <div>Tournament registration will become available at <strong><?=$tournamentTime['registration']?></strong></div>
+            <div>Tournament registration will be available on <strong><?=$tournamentTime['registration']?></strong> on Battlefy page</div>
         </div>
     </div>
     <? } ?>
