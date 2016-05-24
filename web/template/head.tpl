@@ -18,7 +18,7 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,600&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="<?=_cfg('site')?>/favicon.ico" />
     
-    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.52" />
+    <link rel="stylesheet" type="text/css" href="<?=_cfg('static')?>/css/combined.css?v=1.53" />
 </head>
 
 <body class="<?=$this->data->mood?>">
@@ -27,7 +27,7 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
-<script src="<?=_cfg('static')?>/js/angular-combined.js?v=1.1"></script>
+<script src="<?=_cfg('static')?>/js/angular-combined.js?v=1.2"></script>
 <script src="<?=_cfg('static')?>/js/scripts.js"></script>
 
 <section id="full-site-wrapper">
