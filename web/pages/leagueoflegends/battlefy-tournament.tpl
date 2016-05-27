@@ -21,7 +21,7 @@
 		
 		<div class="block-content signup battlefy-embed">
 			<div id="join-form">
-                <a href="https://battlefy.com/pentaclick-esports//<?=$tournamentRow->battlefy_id?>/info" target="_blank" class="button join-battlefy">Sign up on Battlefy page</a>
+                <a href="https://battlefy.com/pentaclick-esports//<?=$tournamentRow->battlefy_id?>/join/rules" target="_blank" class="button join-battlefy">Sign up on Battlefy page</a>
             </div>
 
             <div class="tournament-rules">
