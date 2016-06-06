@@ -15,10 +15,10 @@ if (!$validated) {
 }
 
 if (substr($_SERVER['HTTP_HOST'], 0, 3) == 'dev') {
-	$env = 'http://dev.pcesports.com:3008';
+	$env = 'dev';
 }
 else {
-	$env = 'https://maxorlovsky.net:3008';
+	$env = 'direct';
 }
 ?>
 
@@ -196,7 +196,7 @@ else {
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('<?=$env?>');
+        var socket = io('//<?=$env?>.pcesports.com:3008');
 
         var heroes = [
             '',
