@@ -12,43 +12,53 @@ else {
 
 var socket = require('socket.io-client')('http://'+env+'.pcesports.com:3008');
 var fs = require('fs');
+var heroes = [
+    '',
+    'warrior',
+    'hunter',
+    'mage',
+    'warlock',
+    'shaman',
+    'rogue',
+    'druid',
+    'paladin',
+    'priest'
+];
 
 // Create a socket (client) that connects to the server
 socket
-.on('userSelectedData', function(data) {
+.on('updateUserList', function(users) {
 	var pathToIcons = 'icons';
+
+	if (!users) {
+		return false;
+	}
+
+	console.log(users);
 
 	for (i=1; i<=2; ++i) {
 		var pathToPlayerFolder = i;
+		if (i == 1) {
+            data = users.player1;
+        }
+        else {
+            data = users.player2;
+        }
 
-		if (data[i] !== null) {
-			fs.writeFile(pathToPlayerFolder+'/name.txt', data[i][1], function(err) {
-				if (err) {
-					return console.log(err);
-				}
-			}); 
-			
-			for(j=0;j<3;++j) {
-				fileName = data[i][2+j]+(data[i][5+j]===true?'-checked':'')+'.png';
-				fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
+		fs.writeFile(pathToPlayerFolder+'/name.txt', data.name, function(err) {
+			if (err) {
+				return console.log(err);
 			}
+		}); 
+		
+		for(j=0;j<3;++j) {
+			fileName = heroes[data.class[j]]+(data.classStatus[j]===true?'-checked':'')+'.png';
+			fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
+		}
 
-			if (data[i][8] != 'undefined') {
-				fileName = data[i][8]+'-banned.png';
-				fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
-			}
-		}
-		else {
-			//Clean
-			fs.writeFile(pathToPlayerFolder+'/name.txt', '-', function(err) {
-				if (err) {
-					return console.log(err);
-				}
-			}); 
-			for(j=0;j<3;++j) {
-				fs.createReadStream(pathToIcons+'/-.png').pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
-			}
-			fs.createReadStream(pathToIcons+'/-.png').pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
-		}
+		
+		fileName = heroes[data.ban]+'-banned.png';
+		fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
+		
 	}
 });

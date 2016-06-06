@@ -32,47 +32,171 @@ else {
     .player1, .player2 { float: left; padding: 20px; margin: 20px; }
     .player1 {border: 1px solid blue;}
     .player2 {border: 1px solid red;}
+    .player1 div,
+    .player2 div {
+        margin-bottom: 5px;
+    }
     .ban {color: #900; font-style: italic;}
-    label { float: left; }
+    label { float: left; margin-right: 5px; }
     input[type="checkbox"] { float: right; }
+    input[type="text"] { padding: 2px; box-sizing: border-box; }
     .clear { clear: both; }
+    .ban select { margin-left: 20px; }
+
+    #update { margin-left: 190px;}
     </style>
 </head>
 <body>
     <div class="status"></div>
 
     <div class="player1">
-        <select class="list">
-            <option>-</option>
-        </select>
-        <div class="name">-</div>
-        <div class="hero1"><label>-</label><input type="checkbox" /></div>
+        <input type="text" class="name" value="-" />
+        <div class="hero1">
+            <label>Class 1 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="hero2"><label>-</label><input type="checkbox" /></div>
+        <div class="hero2">
+            <label>Class 2 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="hero3"><label>-</label><input type="checkbox" /></div>
+        <div class="hero3">
+            <label>Class 3 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="ban"><label>-</label></div>
+        <div class="ban">
+            <label>Ban - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+        </div>
     </div>
 
     <div class="player2">
-        <select class="list">
-            <option>-</option>
-        </select>
-        <div class="name">-</div>
-        <div class="hero1"><label>-</label><input type="checkbox" /></div>
+        <input type="text" class="name" value="-" />
+        <div class="hero1">
+            <label>Class 1 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="hero2"><label>-</label><input type="checkbox" /></div>
+        <div class="hero2">
+            <label>Class 2 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="hero3"><label>-</label><input type="checkbox" /></div>
+        <div class="hero3">
+            <label>Class 3 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
         <div class="clear"></div>
-        <div class="ban"><label>-</label></div>
+        <div class="ban">
+            <label>Ban - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+        </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+    <div class="clear"></div>
+
+    <button id="update">Update stream data</button>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('http://<?=$env?>.pcesports.com:3008');
+        var socket = io('//<?=$env?>.pcesports.com:3008');
 
         var heroes = [
             '',
@@ -95,114 +219,61 @@ else {
         .on('status', function(msg) {
             $('.status').text(msg);
         })
-        .on('updateUserList', function(msg) {
-            //data[0] = player number (1 or 2)
-            //data[1] = player nickname
-            //data[2-4] = player heroes ID
-            //data[5-7] = player won/lost data for each hero
-            //data[2] hero = data[5] won/lost data
-            //data[3] hero = data[6] won/lost data
-            //data[4] hero = data[7] won/lost data
-            //data[8] = banned hero
+        .on('updateUserList', function(users) {
 
-            data = $.parseJSON(msg);
-            var html = '<option value="-;-;-;-">-</option>';
-            $.each(data, function(k,v) {
-                html += '<option value="'+v.name+';'+heroes[v.contact_info.hero1]+';'+heroes[v.contact_info.hero2]+';'+heroes[v.contact_info.hero3]+';'+heroes[v.contact_info.ban]+'" >'+v.name+'</option>';
-            });
-            $('.list').html(html);
-        })
-        .on('userSelectedData', function(msg) {
-            //Clearing data
-            $('.list option').prop('selected', false);
-            $('input[type="checkbox"]').prop('checked', false);
-            $('.name').html('-');
-            for (i=1; i<=3; ++i) {
-                $('.hero'+i+' label').html('-');
-            }
-            $('.ban label').html('-');
-
-            $.each(msg, function(k ,v) {
-                if (v !== null) {
-                    //Updating select option
-                    $('.player'+v[0]+' .list option:contains("'+v[1]+'")').prop('selected', true).attr('selected', true);
-                    
-                    //Update name text
-                    $('.player'+v[0]+' .name').html(v[1]);
-                    
-                    //Update labels for heroes
-                    for (i=1; i<=3; ++i) {
-                        $('.player'+v[0]+' .hero'+i+' label').html(v[i+1]);
-                    }
-
-                    //Update heroes won/lost status in checkboxes
-                    for (i=1; i<=3; ++i) {
-                        if (v[4+i] === true) {
-                            $('.player'+v[0]+' .hero'+i+' input[type="checkbox"]').prop('checked', true).attr('checked', true);
-                        }
-                    }
-
-                    //Update ban label
-                    if (v[8] != 'undefined') {
-                        $('.player'+v[0]+' .ban label').html(v[8]);
-                    }
-                    else {
-                        $('.player'+v[0]+' .ban label').html('-');   
-                    }
-                }
-            });
-        });
-
-        $('.list').on('change', function() {
-            $.each($('input[type="checkbox"]'), function(k,v) {
-                $(v).attr('checked', false);
-            });
-
-            updateIcons($(this).parent());
-        });
-
-        $('input[type="checkbox"').on('change', function() {
-            updateIcons($(this).parent().parent());
-        })
-
-        function updateIcons(element) {
-            var data = element.find('.list').val().split(';');
-
-            var ban = data[4];
-
-            element.find('.name').text(data[0]);
-
-            for (i=1; i<=3; ++i) {
-                element.find('.hero'+i+' label').html(data[i]);
-            }
-
-            if (data[1] == '-') {
-                if (element.hasClass('player1')) {
-                    socket.emit('cleanUser', 1);
+            for(i = 1; i <= 2; ++i) {
+                if (i == 1) {
+                    data = users.player1;
                 }
                 else {
-                    socket.emit('cleanUser', 2);
+                    data = users.player2;
                 }
-                return false;
-            }
 
-            if (element.hasClass('player1')) {
-                data.unshift(1);
+                $('.player'+i+' .name').val(data.name);
+                $('.player'+i+' .hero1 .list').val(data.class[0]);
+                $('.player'+i+' .hero2 .list').val(data.class[1]);
+                $('.player'+i+' .hero3 .list').val(data.class[2]);
+                $('.player'+i+' .hero1 input[type="checkbox"').prop('checked', data.classStatus[0]).attr('checked', data.classStatus[0]);
+                $('.player'+i+' .hero2 input[type="checkbox"').prop('checked', data.classStatus[1]).attr('checked', data.classStatus[1]);
+                $('.player'+i+' .hero3 input[type="checkbox"').prop('checked', data.classStatus[2]).attr('checked', data.classStatus[2]);
+                $('.player'+i+' .ban .list').val(data.ban);
             }
-            else {
-                data.unshift(2);
-            }
-        
-            for(i=1; i<=3; ++i) {
-                data[4+i] = $('.player'+data[0]+' .hero'+i+' input[type="checkbox"').is(':checked');
-            }
+        });
 
-            data[8] = ban;
+        $('#update').on('click', function() {
+            var userData = {
+                player1: {
+                    name: $('.player1 .name').val(),
+                    class: [
+                        $('.player1 .hero1 .list').val(),
+                        $('.player1 .hero2 .list').val(),
+                        $('.player1 .hero3 .list').val()
+                    ],
+                    classStatus: [
+                        $('.player1 .hero1 input[type="checkbox"').is(':checked'),
+                        $('.player1 .hero2 input[type="checkbox"').is(':checked'),
+                        $('.player1 .hero3 input[type="checkbox"').is(':checked')
+                    ],
+                    ban: $('.player1 .ban .list').val()
+                },
+                player2: {
+                    name: $('.player2 .name').val(),
+                    class: [
+                        $('.player2 .hero1 .list').val(),
+                        $('.player2 .hero2 .list').val(),
+                        $('.player2 .hero3 .list').val()
+                    ],
+                    classStatus: [
+                        $('.player2 .hero1 input[type="checkbox"').is(':checked'),
+                        $('.player2 .hero2 input[type="checkbox"').is(':checked'),
+                        $('.player2 .hero3 input[type="checkbox"').is(':checked')
+                    ],
+                    ban: $('.player2 .ban .list').val()
+                }
+            };
 
-            console.log(data);
-
-            socket.emit('updateIcons', data);
-        }
+            socket.emit('updateData', userData);
+        });
     </script>
     </body>
 </html>
