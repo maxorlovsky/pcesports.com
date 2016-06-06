@@ -196,7 +196,7 @@ else {
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdn.socket.io/socket.io-1.3.7.js"></script>
     <script>
-        var socket = io('//<?=$env?>.pcesports.com:3008');
+        var socket = io('http://<?=$env?>.pcesports.com:3008');
 
         var heroes = [
             '',
