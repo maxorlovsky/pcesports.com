@@ -6,11 +6,11 @@
     </div>-->
     
     <div class="copyrights">
-        <p class="rights">© <?=date('Y', time())?> Pentaclick eSports / <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>. All rights reserved.</p>
+        <p class="rights">© <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>.</p>
         <div class="devs">
             <a href="<?=_cfg('href')?>/pentaclick">About Pentaclick eSports</a> | 
-            <a href="<?=_cfg('href')?>/contacts">Contact us</a> | 
-            <a href="<?=_cfg('href')?>/partners">Partners</a>
+            <a href="<?=_cfg('href')?>/contacts">Contacts</a> | 
+            <a href="https://twitter.com/maxorlovsky" target="_blank">Developer Twitter</a>
         </div>
         <div class="clear"></div>
     </div>
