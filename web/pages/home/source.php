@@ -39,19 +39,19 @@ class home extends System
                 if ($v->game == 'lol') {
                     $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
                     if ($v->server == 'eune') {
-                        $name = 'Europe East';
+                        $name = 'Europe East #'.$v->id;
                     }
                     else {
-                        $name = 'Europe West';
+                        $name = 'Europe West #'.$v->id;
                     }
                 }
                 else if ($v->game == 'hs') {
                     $link = 'hearthstone/'.$v->server.'/'.$v->name;
-                    $name = 'Hearthstone League Season 2';
+                    $name = 'Hearthstone League Season 2 Finals';
                 }
 
                 $this->tournamentData[$v->game.''.$v->server] = array(
-                    'order'     => ($v->game=='lol'?1:2),
+                    'order'     => ($v->game == 'lol' ? 2 : 1),
                     'id'	    => $v->name,
                     'name'      => $name,
                     'status'    => str_replace('_', ' ', $v->status),

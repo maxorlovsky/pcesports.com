@@ -63,7 +63,7 @@
         ?>
             <div class="<?=$k?> parent <?=strtolower($v['status'])?>">
                 <a href="<?=_cfg('href')?>/<?=$v['link']?>" class="inner">
-                    <h1><?=$v['name']?> #<?=$v['id']?></h1>
+                    <h1><?=$v['name']?></h1>
                     <div class="status"><label><?=$v['status']?></label></div>
                     <div class="prize-pool">
                         <h4><?=t('prize_pool')?></h4>
