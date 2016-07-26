@@ -2,6 +2,7 @@ var PC = {
     //global insides
     site: g.site,
     formInProgress: 0, //used when required to check if form is still in progress
+    top: false,
     //socket: io(g.site+':3000'),
     
     //functions

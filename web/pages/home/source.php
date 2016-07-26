@@ -39,10 +39,10 @@ class home extends System
                 if ($v->game == 'lol') {
                     $link = 'leagueoflegends/'.$v->server.'/'.$v->name;
                     if ($v->server == 'eune') {
-                        $name = 'Europe East #'.$v->id;
+                        $name = 'Europe East #'.$v->name;
                     }
                     else {
-                        $name = 'Europe West #'.$v->id;
+                        $name = 'Europe West #'.$v->name;
                     }
                 }
                 else if ($v->game == 'hs') {
