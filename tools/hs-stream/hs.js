@@ -41,13 +41,13 @@ var stream = {
         player1: {
             name: '-',
             class: [0, 0, 0, 0],
-            classStatus: [false, false, false],
+            classStatus: [false, false, false, false],
             ban: 0
         },
         player2: {
             name: '-',
             class: [0, 0, 0, 0],
-            classStatus: [false, false, false],
+            classStatus: [false, false, false, false],
             ban: 0
         }
     }
