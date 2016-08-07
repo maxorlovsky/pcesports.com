@@ -267,9 +267,11 @@ else {
                 $('.player'+i+' .hero1 .list').val(data.class[0]);
                 $('.player'+i+' .hero2 .list').val(data.class[1]);
                 $('.player'+i+' .hero3 .list').val(data.class[2]);
+                $('.player'+i+' .hero4 .list').val(data.class[3]);
                 $('.player'+i+' .hero1 input[type="checkbox"').prop('checked', data.classStatus[0]).attr('checked', data.classStatus[0]);
                 $('.player'+i+' .hero2 input[type="checkbox"').prop('checked', data.classStatus[1]).attr('checked', data.classStatus[1]);
                 $('.player'+i+' .hero3 input[type="checkbox"').prop('checked', data.classStatus[2]).attr('checked', data.classStatus[2]);
+                $('.player'+i+' .hero4 input[type="checkbox"').prop('checked', data.classStatus[3]).attr('checked', data.classStatus[3]);
                 $('.player'+i+' .ban .list').val(data.ban);
             }
         });
@@ -281,12 +283,14 @@ else {
                     class: [
                         $('.player1 .hero1 .list').val(),
                         $('.player1 .hero2 .list').val(),
-                        $('.player1 .hero3 .list').val()
+                        $('.player1 .hero3 .list').val(),
+                        $('.player1 .hero4 .list').val()
                     ],
                     classStatus: [
                         $('.player1 .hero1 input[type="checkbox"').is(':checked'),
                         $('.player1 .hero2 input[type="checkbox"').is(':checked'),
-                        $('.player1 .hero3 input[type="checkbox"').is(':checked')
+                        $('.player1 .hero3 input[type="checkbox"').is(':checked'),
+                        $('.player1 .hero4 input[type="checkbox"').is(':checked')
                     ],
                     ban: $('.player1 .ban .list').val()
                 },
@@ -295,12 +299,14 @@ else {
                     class: [
                         $('.player2 .hero1 .list').val(),
                         $('.player2 .hero2 .list').val(),
-                        $('.player2 .hero3 .list').val()
+                        $('.player2 .hero3 .list').val(),
+                        $('.player2 .hero4 .list').val()
                     ],
                     classStatus: [
                         $('.player2 .hero1 input[type="checkbox"').is(':checked'),
                         $('.player2 .hero2 input[type="checkbox"').is(':checked'),
-                        $('.player2 .hero3 input[type="checkbox"').is(':checked')
+                        $('.player2 .hero3 input[type="checkbox"').is(':checked'),
+                        $('.player2 .hero4 input[type="checkbox"').is(':checked')
                     ],
                     ban: $('.player2 .ban .list').val()
                 }
