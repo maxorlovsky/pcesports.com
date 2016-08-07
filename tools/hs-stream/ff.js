@@ -51,13 +51,22 @@ socket
 			}
 		}); 
 		
-		for(j=0;j<3;++j) {
-			fileName = heroes[data.class[j]]+(data.classStatus[j]===true?'-checked':'')+'.png';
+		for(j=0;j<=3;++j) {
+            if (data.class[j] == '0') {
+                fileName = '-.png';
+            }
+            else {
+                fileName = heroes[data.class[j]]+(data.classStatus[j]===true?'-checked':'')+'.png';
+            }
 			fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/'+j+'.png'));
 		}
 
-		
-		fileName = heroes[data.ban]+'-banned.png';
+		if (data.ban == '0') {
+            fileName = '-.png';
+        }
+        else {
+            fileName = heroes[data.ban]+'-banned.png';
+        }
 		fs.createReadStream(pathToIcons+'/'+fileName).pipe(fs.createWriteStream(pathToPlayerFolder+'/b.png'));
 		
 	}
