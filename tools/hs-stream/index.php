@@ -102,6 +102,23 @@ else {
             <input type="checkbox" />
         </div>
         <div class="clear"></div>
+        <div class="hero3">
+            <label>Class 4 (BO7) - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
+        <div class="clear"></div>
         <div class="ban">
             <label>Ban - </label>
             <select class="list">
@@ -157,6 +174,23 @@ else {
         <div class="clear"></div>
         <div class="hero3">
             <label>Class 3 - </label>
+            <select class="list">
+                <option value="0">-</option>
+                <option value="1">warrior</option>
+                <option value="2">hunter</option>
+                <option value="3">mage</option>
+                <option value="4">warlock</option>
+                <option value="5">shaman</option>
+                <option value="6">rogue</option>
+                <option value="7">druid</option>
+                <option value="8">paladin</option>
+                <option value="9">priest</option>
+            </select>
+            <input type="checkbox" />
+        </div>
+        <div class="clear"></div>
+        <div class="hero3">
+            <label>Class 4 (BO7) - </label>
             <select class="list">
                 <option value="0">-</option>
                 <option value="1">warrior</option>
