@@ -102,7 +102,7 @@ else {
             <input type="checkbox" />
         </div>
         <div class="clear"></div>
-        <div class="hero3">
+        <div class="hero4">
             <label>Class 4 (BO7) - </label>
             <select class="list">
                 <option value="0">-</option>
@@ -189,7 +189,7 @@ else {
             <input type="checkbox" />
         </div>
         <div class="clear"></div>
-        <div class="hero3">
+        <div class="hero4">
             <label>Class 4 (BO7) - </label>
             <select class="list">
                 <option value="0">-</option>
