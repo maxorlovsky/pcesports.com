@@ -1,1 +1,0 @@
-ALTER TABLE `tournaments` CHANGE `status` `status` ENUM('Start','upcoming','registration','check_in','live','ended') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

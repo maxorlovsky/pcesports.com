@@ -1,1 +1,0 @@
-INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('latest-summoner', '0', 'Summoner number (cronjob)', 'text', '20');
