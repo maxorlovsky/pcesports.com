@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, maximum-scale=1, width=device-width" />
+    <meta name="robots" content="all,index,follow" />
+    <meta name="description" content="PC eSports - your source for eSports PC events" />
+    <meta name="author" content="Maxtream (https://www.maxorlovsky.net)" />
+
+    <title>PC eSports - your source for eSports PC events, find tournaments and cups that are interesting to you</title>
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/build/styles.css?v=1.5" />
+    
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css">
+
+    <base href="/">
+</head>
+
+<body ng-controller="MainController" ng-cloak ng-class="{'sidebar-open': parentObject.sidebar}">
+    <section class="sidebar-closer" ng-click="parentObject.sidebar = 0"></section>
+    <section class="sidebar" ng-include="'/app/views/sidebar.html'"></section>
+
+    <header>
+        <div class="wrapper">
+            <a href="/"></a>
+
+            <nav>
+                <ul>
+                    <li ng-repeat="link in links">
+                        <a ng-href="{{ link.url !== false ? link.url : '#' }}"
+                        ng-class="{'active': parentObject.currentPage == link.url}"
+                        ng-click="link.url !== false ? parentObject.sidebar = 0 : undefined"
+                        ng-attr-target="{{ link.external === true ? '_blank' : undefined }}">
+                            {{ ::link.value }}
+                        </a>
+                        <ul>
+                            <li>
+                                <a ng-href="{{ sublink.url !== false ? sublink.url : '#' }}"
+                                ng-repeat="sublink in link.subLinks"
+                                ng-class="{'active': parentObject.currentPage == sublink.url}"
+                                class="sublink"
+                                ng-click="sublink.url !== false ? parentObject.sidebar = 0 : undefined"
+                                ng-attr-target="{{ sublink.external === true ? '_blank' : undefined }}">
+                                    {{ ::sublink.value }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="burger" ng-click="parentObject.sidebar == 1 ? parentObject.sidebar = 0 : parentObject.sidebar = 1">
+                <svg viewBox="0 0 32 32"  xmlns="http://www.w3.org/2000/svg"><path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/></svg>
+            </div>
+
+            <div class="to-top"></div>
+        </div>
+    </header>
+
+    <section class="container" ng-view></section>
+
+    <footer>
+        <p class="copyright">&copy; 2014 - {{ ::year }} PCeSports.com / <a href="https://www.maxorlovsky.net" target="_blank">Max Orlovsky</a></p>
+        <div class="links">
+            <a href="<?=_cfg('href')?>/pentaclick">About PC eSports</a> | 
+            <a href="<?=_cfg('href')?>/contacts">Contacts</a> | 
+            <a href="https://twitter.com/maxorlovsky" target="_blank">Developer Twitter</a>
+        </div>
+    </footer>
+	
+    <script src="/assets/build/scripts.js?v=1.0" async></script>
+</body>
+</html>

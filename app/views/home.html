@@ -1,0 +1,12 @@
+<section class="home">
+	<p>PC eSports is a project where you can find all publically available cups for games on PC platform. There are plenty of wikipedias out there that have full list of upcoming major events, but non for minor ones, where upcoming pro-players can participate in.</p>
+
+	<h1>Pick a game</h1>
+
+	<div class="games-picker">
+		<a href="/game/{{ ::game.link }}" class="{{ ::game.id }}" ng-repeat="game in games">
+			<img ng-src="/new/assets/images/{{ ::game.id }}-main.png" alt="{{ ::game.name }}" />
+			<p>Upcoming Cups count: {{ ::game.count }}</p>
+		</a>
+	</div>
+</section>

@@ -1,0 +1,12 @@
+<nav>
+	<div ng-repeat="link in links">
+		<a ng-href="{{ link.url !== false ? link.url : '#' }}"
+		ng-class="{'active': parentObject.currentPage == link.url}"
+		ng-click="link.url !== false ? parentObject.sidebar = 0 : undefined"
+		ng-attr-target="{{ link.external === true ? '_blank' : undefined }}"
+		ng-if="link.nav != false"
+		class="icon-{{ ::link.icon }}">
+		    {{ ::link.value }}
+		</a>
+	</div>
+</nav>

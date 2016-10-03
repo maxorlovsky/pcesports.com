@@ -1,5 +1,5 @@
 {
-    "name": "Pentaclick eSports",
+    "name": "PC eSports",
     "authors": [
         {
             "name": "Maxtream",
@@ -9,8 +9,8 @@
     "require": {
         "ext-curl" : "*",
         "ext-json" : ">=1",
-        "swiftmailer/swiftmailer": "~5.3.0",
-        "masterexploder/phpthumb": "2.0",
-        "maxtream/themages": "^3.15.0"
+        "swiftmailer/swiftmailer": "^5.4.0",
+        "masterexploder/phpthumb": "^2.1",
+        "maxtream/themages": "^3.16.0"
     }
 }

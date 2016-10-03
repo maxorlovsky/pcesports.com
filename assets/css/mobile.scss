@@ -1,0 +1,331 @@
+$sideBarTransformPercent: 80%;
+
+header {
+	transition: $transition;
+	background-color: rgba(0,0,0,0.9);
+	width: 100%;
+	min-height: 40px;
+	border-bottom: 1px solid $linkColor;
+	position: fixed;
+	top: 0;
+	z-index: 11;
+
+	.wrapper {
+		width: 100%;
+
+		> a {
+			width: 92px;
+			height: 43px;
+			display: block;
+			position: absolute;
+			left: 50%;
+			margin-left: -41px;
+			background-image: url($img+'/logo.png');
+			background-size: 100% 100%;
+			border-bottom: none;
+		}
+
+		> nav {
+			display: none;
+		}
+
+		.burger {
+			width: 32px;
+			height: 32px;
+			float: left;
+			margin: 4px 0 0 5%;
+			z-index: 5;
+			fill: #fff;
+			cursor: pointer;
+		}
+
+		.to-top {
+		    position: absolute;
+		    background: url($img+'/to-top.png') no-repeat 50% 50% #222;
+		    opacity: 0.7;
+		    border-radius: $defaultBorderRadius;
+		    width: 30px;
+		    height: 35px;
+		    top: 3px;
+		    right: 10px;
+		    overflow: hidden;
+		    border: none;
+		    cursor: pointer;
+		    display: none;
+		    &:hover {
+		        background-color: #555 !important;
+		        opacity: 0.8;
+		    }
+		}
+
+		&:after {
+			@include clear();
+		}
+	}
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+    background-color: #333;
+    color: #888;
+    width: 100%;
+    border-top: 2px solid #595959;
+    font-size: 12px;
+    text-align: center;
+    transition: $transition;
+    .copyright {
+    	padding-top: 10px;
+    }
+    .links {
+        color: #888;
+        padding: 10px 0;
+        &:hover {
+            color: $linkColor;
+        }
+    }
+
+    .sidebar-open & {
+		transform: translate($sideBarTransformPercent, 0);
+	}
+}
+
+.container {
+	z-index: 6;
+	transition: $transition;
+	margin-top: 40px;
+	background-color: rgba(255,255,255,0.95);
+	color: $mainColor;
+	box-sizing: border-box;
+	padding: 5px 10px;
+
+	.sidebar-open & {
+		transform: translate($sideBarTransformPercent, 0);
+	}
+
+	h1 {
+		padding: 10px 0;
+		margin: 0;
+		text-align: center;
+	}
+}
+
+.sidebar {
+	position: fixed;
+	z-index: 4;
+	width: $sideBarTransformPercent;
+	left: - ($sideBarTransformPercent);
+	background-color: #191919;
+	height: 100%;
+	transition: $transition;
+	margin-right: $sideBarTransformPercent;
+
+	overflow-y: auto;
+
+	.sidebar-open & {
+		transform: translate(100%, 0);
+		box-shadow: -15px 0 5px -5px rgba(0, 0, 0, 0.25);
+		overflow: auto;
+	}
+
+	nav {
+		div {
+			&:first-child a {
+				border-top: none;
+			}
+			&:last-child {
+				border-bottom: 2px solid #fff;
+			}
+
+			a {
+				width: 100%;
+				display: block;
+				border-top: 2px solid #fff;
+				font-size: 22px;
+				padding: 3% 0 3% 10px;
+				box-sizing: border-box;
+				color: #fff;
+				&.active {
+					border-bottom: none;
+					color: #000;
+					background-color: #fff;
+				}
+
+				&[class^="icon-"]:before {
+					font-family: 'entyporegular';
+					font-size: 32px;
+					width: 25px;
+					display: inline-block;
+					text-align: center;
+				}
+
+				&.icon-home:before {
+					content: '\00EF';
+				}
+				&.icon-about:before {
+					content: '\005F';
+				}
+				&.icon-contact:before {
+					content: '\0025';
+				}
+
+				&.icon-lol:before,
+				&.icon-hs:before {
+					content: ' ';
+					display: inline-block;
+					background-size: 16px 16px;
+					background-repeat: no-repeat;
+					background-position: center;
+					width: 25px;
+					height: 16px;
+				}
+				&.icon-lol:before {
+					background-image: url($img+'/games/lol.png');
+				}
+				&.icon-hs:before {
+					background-image: url($img+'/games/hs.png');
+				}
+			}
+		}
+	}
+}
+
+.sidebar-closer {
+	position: fixed;
+	z-index: 5;
+	width: 100%;
+	right: 0;
+	height: 100%;
+	visibility: hidden;
+	transition: $transition;
+	z-index: -2;
+	.sidebar-open & {
+		background-color: rgba(0,0,0,0.8);
+		visibility: visible;
+		z-index: 5;
+		transform: translate($sideBarTransformPercent, 0);
+	}
+}
+
+.home {
+	.games-picker {
+		> a {
+			display: block;
+			text-align: center;
+			> img {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.scrollable {
+	width: 100%;
+	overflow-x: auto;	
+}
+
+.lol {
+	table {
+		border: 1px solid #000;
+	}
+}
+
+/* 
+.content {
+	margin: 20px 0;
+	width: 90%;
+	margin: 0 auto;
+	h2 {
+		font-size: 18px;
+		border-bottom: 1px solid #000;
+	}
+}
+
+.container {
+	z-index: 6;
+	transition: $transition;
+	min-height: 300px;
+	margin: 0 0 20px 0;
+	background-color: rgba(0,0,0,0.8);
+	color: $subColor;
+	
+	.sidebar-open & {
+		transform: translate($sideBarTransformPercent, 0);
+	}
+
+	h1 {
+		font-size: 32px;
+	}
+
+	h2 {
+		font-size: 26px;
+	}
+
+	p {
+		padding: 10px;
+	}
+
+	.home-text {
+		text-align: justify;
+	}
+
+	article {
+		color: $subColor;
+		margin: 0 20px;
+		padding-bottom: 20px;
+		text-align: justify;
+		box-sizing: border-box;
+	}
+
+	.buttons {
+		.buttons-category {
+			text-align: center;
+			h2 {
+				color: $subColor;
+				padding: 10px;
+				margin: 0;
+				text-transform: uppercase;
+				font-family: 'Dosis';
+				margin-bottom: 15px;
+				&:after {
+					content: ' ';
+					display: block;
+					width: 90%;
+					border-bottom: 1px solid $subColor;
+					margin: 10px auto 0 auto;
+				}
+			}
+			a {
+				display: inline-block;
+				border: 2px solid $uniColor;
+				background-color: rgba(255,255,255,0.1);
+				padding: 10px 15px;
+				color: $inuColor;
+				font-size: 20px;
+				margin: 30px 0;
+				font-family: 'Dosis';
+				&.join {
+					font-size: 28px;
+					color: $uniColor;
+					border: 3px solid $inuColor;
+				}
+			}
+		}
+	}
+
+	.header-logo {
+		img {
+			width: 100%;
+			max-width: 600px;
+			margin: 0 auto;
+			display: block;
+		}
+	}
+
+	.footer-logo img {
+		width: 100%;
+		margin: 20px auto 0 auto;
+		display: block;
+	}
+}
+ */
