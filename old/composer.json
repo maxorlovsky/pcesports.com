@@ -1,0 +1,16 @@
+{
+    "name": "Pentaclick eSports",
+    "authors": [
+        {
+            "name": "Maxtream",
+            "email": "max.orlovsky@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-curl" : "*",
+        "ext-json" : ">=1",
+        "swiftmailer/swiftmailer": "~5.3.0",
+        "masterexploder/phpthumb": "2.0",
+        "maxtream/themages": "^3.15.0"
+    }
+}

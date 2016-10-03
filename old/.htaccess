@@ -1,0 +1,34 @@
+# must be always utf-8
+AddDefaultCharset UTF-8
+
+# adding options
+Options -Indexes
+Options +FollowSymLinks
+Options -MultiViews
+
+# hiding all packages files
+<Files ~ "(.tpl|composer.json|composer.lock|composer.phar|Gruntfile.js|package.json|server.js)">
+    Order allow,deny
+    Deny from all
+    Require all denied
+</Files>
+
+# Rewritting rules
+RewriteEngine On
+RewriteBase /
+
+# Ignoring specific folders for css, js and uploads like image
+RewriteRule ^web/static/? - [L]
+RewriteRule ^cms/static/? - [L]
+RewriteRule ^web/uploads/? - [L]
+RewriteRule ^screenshots/? - [L]
+
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+# fetching all links params in one variable and breaking it down in index.php
+RewriteRule (.*) /index.php?params=$1 [L,QSA]
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin *
+</IfModule>
