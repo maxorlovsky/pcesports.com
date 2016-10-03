@@ -1,0 +1,1 @@
+INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('participantsHs', '3', CURRENT_TIMESTAMP);

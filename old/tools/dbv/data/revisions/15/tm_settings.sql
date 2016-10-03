@@ -1,0 +1,2 @@
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-start-hs-widget', '0', 'Widget tournament start (skillz)', 'checkbox', '8');
+INSERT INTO `tm_settings` (`setting`, `value`, `field`, `type`, `position`) VALUES ('tournament-checkin-hs-widget', '0', 'Widget tournament checkin (skillz)', 'checkbox', '8');

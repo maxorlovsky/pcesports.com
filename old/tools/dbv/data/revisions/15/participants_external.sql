@@ -1,0 +1,1 @@
+ALTER TABLE `participants_external` ADD `ended` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' ;

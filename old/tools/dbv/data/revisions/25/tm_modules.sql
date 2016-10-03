@@ -1,0 +1,1 @@
+INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('projectConfig', '5', CURRENT_TIMESTAMP);

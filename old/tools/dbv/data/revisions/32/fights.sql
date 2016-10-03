@@ -1,0 +1,1 @@
+ALTER TABLE `fights` ADD UNIQUE(`match_id`);

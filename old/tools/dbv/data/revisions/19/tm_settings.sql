@@ -1,0 +1,1 @@
+UPDATE `tm_settings` SET `setting` = REPLACE(`setting`, 's1', 's2') WHERE `position` = 3;
