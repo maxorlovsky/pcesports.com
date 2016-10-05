@@ -1,6 +1,6 @@
 angular.module('app', ['ngRoute', 'ngAnimate'])
 .constant('LINKS', [
-		{url: '/new', value: 'Home', controller: 'HomeController', icon: 'home'},
+		{url: '/', value: 'Home', controller: 'HomeController', icon: 'home'},
 		{url: '/game/leagueoflegends', value: 'League of Legends', controller: 'LolController', icon: 'lol'},
 		{url: '/game/hearthstone', value: 'Hearthstone', controller: 'HsController', icon: 'hs'},
 		//{url: '/games/overwatch', value: 'Overwatch', controller: 'OwController'},
@@ -21,18 +21,18 @@ angular.module('app', ['ngRoute', 'ngAnimate'])
 			file = value.url.replace(/\//g, '-').substring(1);
 
 			//Home URL, exception
-			if (value.url == '/new') {
+			if (value.url == '/') {
 				file = 'home';
 			}
 
 			//Adding to router
 			$routeProvider.when(value.url, {
-				templateUrl: 'new/app/pages/' + file + '/view.html',
+				templateUrl: 'app/pages/' + file + '/view.html',
 				controller: value.controller
 			});
 		}
 	});
-	$routeProvider.otherwise({ redirectTo: '/new' });
+	$routeProvider.otherwise({ redirectTo: '/' });
 	
 	//Enabling html5 mode to not use hashtag
 	$locationProvider.html5Mode(true);

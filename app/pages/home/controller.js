@@ -1,3 +1,3 @@
-angular.module('app').controller('HsController', ['$scope', function ($scope) {
-	$scope.parentObject.currentPage = '/games/hearthstone';
+angular.module('app').controller('HomeController', ['$scope', function ($scope) {
+	$scope.parentObject.currentPage = '/';
 }]);

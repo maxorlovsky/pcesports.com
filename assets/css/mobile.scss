@@ -208,13 +208,45 @@ footer {
 }
 
 .home {
-	.games-picker {
-		> a {
+	.cup-list {
+		position: relative;
+
+		.icon {
+			border: 1px solid blue;
+			width: 25px;
+			height: 25px;
 			display: block;
-			text-align: center;
-			> img {
-				width: 100%;
-			}
+			float: left;
+			margin-right: 15px;
+		}
+
+		.title {
+			display: inline-block;
+		}
+
+		.all {
+			float: right;
+		}
+	}
+
+	.cups {
+		display: flex;
+		overflow: hidden;
+	}
+
+	.item {
+		.image {
+			border: 1px solid #999;
+			width: 150px;
+			height: 75px;
+		}
+
+		.name {
+			float: left;
+		}
+
+		.rating {
+			float: right;
 		}
 	}
 }
