@@ -13,13 +13,12 @@ header {
 	.wrapper {
 		width: 100%;
 
-		> a {
+		.logo {
 			width: 92px;
 			height: 43px;
 			display: block;
-			position: absolute;
-			left: 50%;
-			margin-left: -41px;
+			float: left;
+			margin-left: 41px;
 			background-image: url($img+'/logo.png');
 			background-size: 100% 100%;
 			border-bottom: none;
@@ -33,7 +32,7 @@ header {
 			width: 32px;
 			height: 32px;
 			float: left;
-			margin: 4px 0 0 5%;
+			margin: 4px 0 0 1rem;
 			z-index: 5;
 			fill: #fff;
 			cursor: pointer;
@@ -65,21 +64,21 @@ header {
 }
 
 footer {
-	position: absolute;
-	bottom: 0;
     background-color: #333;
     color: #888;
     width: 100%;
     border-top: 2px solid #595959;
     font-size: 12px;
     text-align: center;
-    transition: $transition;
+
     .copyright {
     	padding-top: 10px;
     }
+
     .links {
         color: #888;
         padding: 10px 0;
+
         &:hover {
             color: $linkColor;
         }
@@ -91,7 +90,6 @@ footer {
 }
 
 .container {
-	z-index: 6;
 	transition: $transition;
 	margin-top: 40px;
 	background-color: rgba(255,255,255,0.95);
