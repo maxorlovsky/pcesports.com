@@ -12,7 +12,7 @@
         </div>
 
         <div class="block-content social">
-            <a class="tw hint" attr-msg="Twitter" href="https://twitter.com/pentaclick" target="_blank"></a>
+            <a class="tw hint" attr-msg="Twitter" href="https://twitter.com/pcesports" target="_blank"></a>
             <a class="yt hint" attr-msg="YouTube" href="https://www.youtube.com/c/pentaclickesports" target="_blank"></a>
             <a class="tv hint" attr-msg="Twitch.TV" href="http://www.twitch.tv/pentaclick_tv" target="_blank"></a>
             <script>
