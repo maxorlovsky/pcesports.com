@@ -1,0 +1,1 @@
+ALTER TABLE `participants_external` ADD `link` VARCHAR(32) NULL DEFAULT NULL ;

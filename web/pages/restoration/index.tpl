@@ -1,0 +1,53 @@
+<section class="container page">
+
+<div class="left-containers">
+    <div class="block" ng-app="pcesports" ng-controller="Restore" ng-cloak>
+        <div class="block-header-wrapper">
+            <h1 class="bordered"><?=t('password_restoration')?></h1>
+        </div>
+
+        <div class="block-content">
+	        <? if ($this->expired === 1) { ?>
+	        	<div>Sorry, link does not exist or expired. Usually it happens if link wasn't used in 24h, use form again to generate new link.</div>
+	        <? } else { ?>
+	        <form class="form restore-password-form" name="form" ng-submit="restore();">
+	            <div id="ngError" ng-show="error"><p>{{error}}</p></div>
+	            
+	            <div class="fields">
+	                <label for="code"><?=t('code')?></label>
+	                <input name="code" id="code" ng-model="code" type="text" placeholder="<?=t('code')?>*" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required ng-init="code='<?=$_GET['val2']?>'"/>
+	            </div>
+	            <div id="ngError" ng-show="form.code.$error.required && form.code.$touched"><p>Code is required</p></div>
+
+	            <div class="fields">
+	                <label for="email"><?=t('email')?></label>
+	                <input name="email" id="email" ng-model="email" type="email" placeholder="Just in case, input your email, you know, for security reasons*" ng-pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+	            </div>
+	            <div id="ngError" ng-show="form.email.$error.required && form.email.$touched"><p><?=t('email_is_empty')?></p></div>
+	            <div id="ngError" ng-show="form.email.$error.pattern"><p><?=t('email_invalid')?></p></div>
+
+	            <div class="fields">
+	                <label for="password"><?=t('password')?></label>
+	                <input name="password" id="password" ng-model="password" type="password" value="" placeholder="<?=t('password')?>*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+	            </div>
+	            <div id="ngError" ng-show="form.password.$error.required && form.password.$touched"><p><?=t('password_empty')?></p></div>
+	            <div id="ngError" ng-show="form.password.$error.minlength"><p><?=t('password_too_small')?></p></div>
+
+	            <div class="fields">
+	                <label for="repeat_password"><?=t('repeat_password')?></label>
+	                <input name="repeat_password" id="repeat_password" ng-model="passwordRepeat" type="password" value="" placeholder="Repeat same password please*" ng-minlength="6" ng-model-options="{ updateOn: 'keyup blur', debounce: { keyup: 500, blur: 0 } }" required />
+	            </div>
+	            <div id="ngError" ng-show="form.repeat_password.$error.required && form.repeat_password.$touched"><p><?=t('password_empty')?></p></div>
+	            <div id="ngError" ng-show="form.repeat_password.$error.minlength"><p><?=t('password_too_small')?></p></div>
+	            <div id="ngError" ng-show="form.repeat_password.$error.match"><p><?=t('password_not_match')?></p></div>
+
+	            <div class="fields captcha">
+                	<div class="g-recaptcha" data-sitekey="<?=_cfg('recaptchaSiteKey')?>"></div>
+            	</div>
+
+	            <button class="button {{button}}"><?=t('set_new_password')?></button>
+	        </form>
+	        <? } ?>
+        </div>
+    </div>
+</div>

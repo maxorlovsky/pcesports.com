@@ -9,8 +9,7 @@
         <p class="rights">© <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>.</p>
         <div class="devs">
             <a href="<?=_cfg('href')?>/pentaclick">About Pentaclick eSports</a> | 
-            <a href="<?=_cfg('href')?>/contacts">Contacts</a> | 
-            <a href="https://twitter.com/maxorlovsky" target="_blank">Developer Twitter</a>
+            <a href="<?=_cfg('href')?>/contacts">Contacts</a>
         </div>
         <div class="clear"></div>
     </div>
