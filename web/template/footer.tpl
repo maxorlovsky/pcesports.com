@@ -6,11 +6,11 @@
     </div>-->
     
     <div class="copyrights">
-        <p class="rights">© 2014 - <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.net" target="_blank">Max Orlovsky</a>.</p>
-        <div class="devs">
+        <p class="rights">© 2014 - <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.com" target="_blank">Maxtream</a>.</p>
+        <!--<div class="devs">
             <a href="<?=_cfg('href')?>/pentaclick">About PC eSports</a> | 
             <a href="<?=_cfg('href')?>/contacts">Contacts</a>
-        </div>
+        </div>-->
         <div class="clear"></div>
     </div>
 </footer>
