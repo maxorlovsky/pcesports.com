@@ -12,7 +12,7 @@ node_modules
 .buildpath
 .project
 .sass-cache
-composer.phar
+#composer.phar
 composer.lock
 vendor
 node_modules
