@@ -125,11 +125,6 @@ footer {
     }
 }
 
-.page {
-    min-width: inherit;
-    padding: 20px 0;
-}
-
 .container {
     max-width: 860px;
     width: 100%;
@@ -154,14 +149,6 @@ footer {
         display: block;
         content: ' ';
         clear: both;
-    }
-}
-
-.home {
-    .home-tournaments {
-        .hss2 {
-            width: 100%;
-        }
     }
 }
 
@@ -238,9 +225,7 @@ body {
     min-height: 0;
 }
 
-.home {
-    padding: 0;
-}
+
 .promo {
     display: none;
 }
@@ -390,45 +375,7 @@ header {
     }
 }
 
-.news {
-    .big-block {
-        .image-holder {
-            max-width: 320px;
-            max-height: 140px;
-            img {
-                max-width: 320px;
-            }
-        }
-        .add-box {
-            display: none;
-        }
-        &.readmore {
-            padding: 2px !important;
-            .news-info {
-                float: none;
-                text-align: center;
-                margin: 0;
-            }
-            .button {
-                float: none;
-                margin: 0 0 10px 100px;
-            }
-            .news-share {
-                float: none;
-                margin-left: 5px;
-            }
-        }
-    }
-    .small-block {
-        float: none;
-        width: auto;
-        margin-right: 0;
-        .image-holder {
-            width: 225px;
-            margin: 0 auto;
-        }
-    }
-}
+
 
 #toTop, #hint-helper {
     opacity: 0;

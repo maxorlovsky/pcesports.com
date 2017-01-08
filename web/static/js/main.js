@@ -277,14 +277,6 @@ $('.disconnected').on('mouseover', function() {
     $(this).text(g.str.disconnected);
 });
 
-$('.bx-wrapper').bxSlider({
-    auto: true,
-    autoHover: true,
-    mode: 'fade',
-    speed: 2000,
-    pause: 5000
-});
-
 $('.languages a').on('click', function() {
     $('.languages .language-switcher').stop().slideToggle('fast');
 });

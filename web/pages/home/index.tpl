@@ -1,49 +1,41 @@
-<section class="container page home lol error">
-
-<div class="left-containers">
-    <div class="maintenance" style="margin-bottom: 40px;">
-        Upgrade in progress...
-        <img src="<?=_cfg('img')?>/maintenance.png" />
-    </div>
+<div class="home">
     
-    <div class="block separate">
+    <div class="block blog-home-page">
         <div class="block-header-wrapper">
-            <h1 class=""><?=t('latest_blogs')?></h1>
+            <h1 class="">Latest blogs</h1>
         </div>
 
-        <div class="block-content news">
-        <?
-        if ($this->blog) {
-            foreach($this->blog as $v) {
-        ?>
-            <div class="small-block">
-                <div class="image-holder">
-                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>">
-                    <? if ($v->extension) { ?>
-                        <? if (_cfg('env') != 'prod') { ?>
-                            <img src="http://www.pcesports.com/web/uploads/news/small-<?=$v->id?>.<?=$v->extension?>" />
-                        <? } else { ?>
-                            <img src="<?=_cfg('imgu')?>/news/small-<?=$v->id?>.<?=$v->extension?>" />
-                        <? } ?>
-                    <? } else { ?>
-                        <p><?=t('no_image')?></p>
-                    <? } ?>
-                    </a>
-                </div>
-                <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="title"><?=$v->title?></a>
-                <div class="info">
-                    <div class="dates"><?=date('d M Y', strtotime($v->added))?></div>
-                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>#comments" class="comments hint" attr-msg="<?=t(($v->comments>1?'comments':'comment'))?>"><?=$v->comments?></a>
-                    <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="views hint" attr-msg="<?=t('views')?>"><?=$v->views?></a>
-                    <a href="javascript:void(0);" attr-news-id="<?=$v->id?>" class="like like-icon hint <?=($v->active?'active':null)?>" attr-msg="Like"><?=$v->likes?></a>
-                    <div class="clear"></div>
-                </div>
+        <div class="block-content">
+            <div class="small-blog-block" v-for="post in posts">
+                <a href="<?=_cfg('href')?>/blog/<?=$v->id?>" class="blog-link-wrapper">
+                    <div class="image-holder">
+                        <span v-if="post.image" v-html="post.image"></span>
+                        <p v-else>No image</p>
+                    </div>
+                    <h4 class="title">{{post.title.rendered}}</h4>
+                    <div class="dates" v-html="post.date"></div>
+                </a>
             </div>
-        <?
-            }
-        }
-        ?>
-            <div class="clear"></div>
         </div>
     </div>
 </div>
+
+<script>
+axios.get('/wp/wp-json/wp/v2/posts/?per_page=3')
+.then(function (response) {
+    posts = response.data;
+
+    for (i = 0; i < posts.length; ++i) {
+        date = (new Date(posts[i].date));
+        posts[i].date = date.toLocaleString('en-us', { month: "short" })+'<br />'+date.getDate();
+    }
+
+    new Vue({
+        el: '.blog-home-page',
+        data: {
+            posts: posts,
+        }
+    });
+});
+
+</script>

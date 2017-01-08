@@ -1,28 +1,15 @@
-$link-hover-decoration: none;
-
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
-
 $mainColor: #1697e1;
 $secondaryColor: #e5dc2d;
 $defaultBorderRadius: 8px;
 $font: 'Open Sans';
 
-input[type="text"] {
-	outline: none;
-	border: 1px solid #aaa;
-	transition: .5s;
-	&:focus {
-		border-bottom: 1px inset $mainColor;
-	}
-}
+$link-hover-decoration: none;
+$link-color: $mainColor;
+$link-hover-color: #555;
+$link-hover-decoration: none;
+$font-family-base: $font;
 
-/* Reset like things */
-img,p,td{border: 0;margin: 0;padding: 0;}
-a{text-decoration: none;color: #1697e1;transition: .5s;}
-a:hover{color: #555; }
-.clear {clear:both;}
-.fright {float:right;}
-a img {border: 0;}
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
 @font-face {
     font-family: 'entyporegular';
@@ -35,11 +22,15 @@ a img {border: 0;}
     font-style: normal;
 }
 
+a {
+    transition: .5s;
+}
+
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    margin: 81px 0 0 0;
+    margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
@@ -49,20 +40,27 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0px -100px;
+
     &.winter {
         background-image:url(../images/bg-christmas.jpg);
     }
 }
 
-#full-site-wrapper {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+.page {
+    min-width: 1130px;
+    width: 85%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    z-index: 10;
+    flex: 1;
+    position: relative;
+    margin: 81px auto 0px auto;
 
-    > section {
-        flex: 1;
-        z-index: 1;
+    @media (max-width: 768px) {
+        min-width: inherit;
+        margin: 0;
+        width: 100%;
+        overflow-x: hidden;
     }
 }
 
@@ -70,88 +68,109 @@ body {
     display: none;
 }
 
-.button {
-    border: 0;
-    color: #eee;
-    display: inline-block;
-    background-color: #1697e1;
-    padding: 10px 15px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
-    transition: .3s;
-    &.tournamentOff {
-        background-color: #900;
-        box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2), inset 0 0 10px 8px rgba(0,0,0,0.2);
-        margin-top: 10px;
-        cursor: default;
-        &:hover {
-            background-color: #b00;
-        }
-    }
-    &.checkIn {
-        margin-top: 15px;
-        font-size: 20px;
-        background-color: #0a0;
-        box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2), inset 0 0 10px 8px rgba(0,0,0,0.2);
-    }
-    &.loading {
-        background-image:url(../images/loading.gif);
-        background-position: 50%;
-        background-repeat: no-repeat;
-    }
-    &:hover {
-        color: #fff;
-        background-color: #2878d1;
-    }
-    &.disabled {
-        background-color: #999;
-        box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2), inset 0 0 10px 8px rgba(0,0,0,0.2);
-    }
-}
-
 .mobile {
     display: none;
 }
 
-ul.tabs {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    li {
-        cursor: pointer;
-        display: inline-block;
-        margin: 0;
-        background: linear-gradient(to bottom, rgba(198,198,198,1) 0%,rgba(127,127,127,1) 100%);
-        box-shadow: 0 1px 2px rgba(0,0,0,.3), inset 0 1px 1px 1px #999;
-        padding: 10px;
-        font-size: 15px;
-        color: #fff;
-        float: left;
-        text-transform: uppercase;
-        font-weight: bold;
-        &.active {
-            background: linear-gradient(to bottom, rgba(39,198,208,1) 0%,rgba(33,127,187,1) 100%);
-            box-shadow: 0 1px 2px rgba(0,0,0,.3), inset 0 1px 1px 1px #43CDEF;
-        }
-    }
-    &:after {
-        content: ' ';
-        display: block;
-        clear: both;
-    }
+.left-container {
+    min-width: 790px;
+    width: 70%;
+    float: left;
 }
-.tabs-content {
-    .tab-point {
-        margin-top: 0;
-        display: none !important;
-        &.active {
-            display: block !important;
+
+.right-containers {
+    min-width: 280px;
+    width: 27%;
+    float: right;
+
+    .block {
+        margin-bottom: 40px;
+    }
+
+    .social {
+        text-align: center;
+
+        a {
+            background-image: url('../images/icons.png?2');
+            height: 36px;
+            display: inline-block;
+            margin-right: 10px;
+
+            &.fb {
+                background-position: 0px 0px;
+                width: 39px;
+                &:hover {
+                    background-position: 0px -46px;
+                }
+            }
+
+            &.tw {
+                background-position: -47px 0px;
+                width: 35px;
+                &:hover {
+                    background-position: -47px -46px;
+                }
+            }
+
+            &.gp {
+                background-position: -92px 0px;
+                width: 36px;
+                &:hover {
+                    background-position: -74px -46px;
+                }
+            }
+
+            &.yt {
+                background-position: -136px 0px;
+                width: 36px;
+                &:hover {
+                    background-position: -136px -46px;
+                }
+            }
+
+            &.tv {
+                background-position: -222px 0px;
+                width: 36px;
+                &:hover {
+                    background-position: -222px -46px;
+                }
+            }
+
+            &.vk {
+                background-position: -212px 0px;
+                width: 28px;
+                &:hover {
+                    background-position: -212px -46px;
+                }
+            }
+
+            &.sm {
+                background-position: -178px 0px;
+                width: 36px;
+                &:hover {
+                    background-position: -178px -46px;
+                }
+            }
         }
     }
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+footer {
+    flex: none;
+    background-color: #1f1f1f;
+    margin: 2px 0 0 0;
+    padding: 0;
+    color: #888;
+    border-top: 2px solid #595959;
+    font-size: 0.75rem;
+
+    .copyrights {
+        float: left;
+        margin: 10px 0 10px 7.5%;
+    }
+
+    .footer-links {
+        float: right;
+        margin: 10px 7.5% 10px 0;
+    }
 }

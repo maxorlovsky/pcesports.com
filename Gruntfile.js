@@ -3,6 +3,7 @@ module.exports = function(grunt) {
         dirs: {
             css: 'web/static/css',
             sass: 'web/static/css/sass',
+            pages: 'web/pages/**/',
             js: 'web/static/js',
             images: 'web/static/images'
         },
@@ -13,7 +14,7 @@ module.exports = function(grunt) {
         sass: {
             dist: {
                 files: {
-                    '<%= dirs.css %>/combined-sass': '<%= dirs.css %>/combined-sass'
+                    '<%= dirs.css %>/combined.css': '<%= dirs.css %>/combined.css'
                 }
             }
         },
@@ -23,25 +24,17 @@ module.exports = function(grunt) {
             sass: {
                 src: [
                     '<%= dirs.sass %>/*.scss',
-                ],
-                dest: '<%= dirs.css %>/combined-sass'
-            },
-
-            /* Gathering all css external files and project combined sass file together */
-            css: {
-                src: [
-                    '<%= dirs.css %>/slider.css',
-                    '<%= dirs.css %>/highslide.css',
-                    '<%= dirs.css %>/combined-sass'
+                    '<%= dirs.pages %>/*.scss'
                 ],
                 dest: '<%= dirs.css %>/combined.css'
             },
 
             scriptsJs: {
                 src : [
-                    '<%= dirs.js %>/jquery.js', //jquery is a separate file because it is used by widget and already minified
-                    '<%= dirs.js %>/socket.io.js', //same reason as jquery
-                    '<%= dirs.js %>/externals.js'
+                    'node_modules/vue/dist/vue.min.js',
+                    'node_modules/vue-router/dist/vue-router.min.js',
+                    'node_modules/axios/dist/axios.min.js',
+                    'node_modules/jquery/dist/jquery.min.js'
                 ],
                 dest : '<%= dirs.js %>/scripts.js'
             },
@@ -60,12 +53,6 @@ module.exports = function(grunt) {
                     '<%= dirs.js %>/app/**/controllers/*.js'
                 ],
                 dest : '<%= dirs.js %>/angular-combined.js'
-            },
-            widget: {
-                src : [
-                    '<%= dirs.js %>/widget-work.js'
-                ],
-                dest : '<%= dirs.js %>/widget.js'
             }
         },
 
@@ -91,11 +78,6 @@ module.exports = function(grunt) {
                 files: {
                     '<%= dirs.js %>/angular-combined.js': ['<%= dirs.js %>/angular-combined.js']
                 }
-            },
-            widget: {
-                files: {
-                    '<%= dirs.js %>/widget.js': ['<%= dirs.js %>/widget.js']
-                }
             }
         },
         
@@ -118,8 +100,8 @@ module.exports = function(grunt) {
 
         watch: {
             default: {
-				files: ['Gruntfile.js', '<%= dirs.sass %>/*.scss'],
-				tasks: ['concat:sass', 'sass', 'concat:css']
+				files: ['Gruntfile.js', '<%= dirs.sass %>/*.scss', '<%= dirs.pages %>/*.scss'],
+				tasks: ['concat:sass', 'sass']
 			},
             app: {
                 files: ['Gruntfile.js', '<%= dirs.js %>/app/**'],
@@ -129,10 +111,6 @@ module.exports = function(grunt) {
                 files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js'],
                 tasks: ['concat:js', 'uglify:js']
             },
-            widget: {
-                files: ['<%= dirs.js %>/app/widget-work.js'],
-                tasks: ['concat:widget']
-            }
         },
     });
     
@@ -148,16 +126,13 @@ module.exports = function(grunt) {
         'concat:sass',
         'sass',
         'jshint',
-        'concat:css',
         'cssmin:css',
         'concat:scriptsJs',
         'uglify:scriptsJs',
         'concat:js',
         'uglify:js',
         'concat:app',
-        'uglify:app',
-        'concat:widget',
-        'uglify:widget'
+        'uglify:app'
     ]);
 
     /* Task used when developing */

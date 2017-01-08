@@ -1,17 +1,10 @@
 </section>
 
-<footer class="container">
-    <!--<div class="separator left boards">
-        <? include_once _cfg('pages').'/boards/snippet.tpl'; ?>
-    </div>-->
-    
-    <div class="copyrights">
-        <p class="rights">© 2014 - <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.com" target="_blank">Maxtream</a>.</p>
-        <!--<div class="devs">
-            <a href="<?=_cfg('href')?>/pentaclick">About PC eSports</a> | 
-            <a href="<?=_cfg('href')?>/contacts">Contacts</a>
-        </div>-->
-        <div class="clear"></div>
+<footer>
+    <p class="copyrights">© 2014 - <?=date('Y', time())?> PCeSports.com / <a href="http://www.maxorlovsky.com" target="_blank">Maxtream</a>.</p>
+    <div class="footer-links">
+        <a href="<?=_cfg('href')?>/pentaclick">About PC eSports</a> | 
+        <a href="<?=_cfg('href')?>/contacts">Contacts</a>
     </div>
 </footer>
 

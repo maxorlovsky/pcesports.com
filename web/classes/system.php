@@ -25,7 +25,7 @@ class System
     		$this->data = new stdClass();
     	}
         
-        $this->apcEnabled = extension_loaded('apc');
+        $this->apcEnabled = extension_loaded('apcu');
         $this->loadClasses();
         
         //Making a connection
@@ -96,31 +96,40 @@ class System
             }
         }
         
-        $rows = Db::fetchRows('SELECT * FROM `tm_links` '.
-            'WHERE `able` = 1 '.
-            'ORDER BY `position` '
-        );
-        
         if (!isset($this->data->links) && !$this->data->links) {
-            $this->data->links = new stdClass();
-            if ($rows) {
-                foreach($rows as $k => $v) {
-                    if ($v->main_link == 0) {
-                        $id = $v->id;
-                        $this->data->links->$id = $v;
-                        $this->data->links->$id->sublinks = new stdClass();
+            $this->data->links = array();
+
+            if ($this->getCache('main-menu')) {
+                $this->data->links = $this->getCache('main-menu');
+            }
+            else {
+                $apiMenu = $this->wpApiCall('pce-api/menu');
+                
+                if ($apiMenu) {
+                    foreach($apiMenu as $k => $v) {
+                        if ($v['menu_item_parent'] == 0) {
+                            $this->data->links[$v['ID']] = array(
+                                'title'         => $v['title'],
+                                'url'           => str_replace('http://', '', $v['url']),
+                                'css_classes'   => implode(' ', $v['classes']),
+                                'target'        => $v['target'],
+                                'slug'          => $v['post_name'],
+                                'sublinks'      => array(),
+                            );
+                        }
+                        else {
+                            $this->data->links[$v['menu_item_parent']]['sublinks'][$v['ID']] = array(
+                                'title'         => $v['title'],
+                                'url'           => str_replace('http://', '', $v['url']),
+                                'css_classes'   => $v['classes'],
+                                'target'        => $v['target'],
+                                'slug'          => $v['post_name'],
+                            );
+                        }
                     }
                 }
-                
-                foreach($rows as $k => $v) {
-                    if ($v->main_link != 0) {
-                        $mainId = $v->main_link;
-                        $id = $v->id;
-                        $this->data->links->$mainId->sublinks->$id = $v;
-                    }
-                }
-                
-                $this->data->links = $rows;
+
+                $this->setCache('main-menu', $this->data->links);
             }
         }
         
@@ -148,83 +157,6 @@ class System
         else {
         	$this->page = 'home';
         }
-        
-        $rows = Db::fetchRows('SELECT * FROM `tournaments` '.
-            'WHERE `status` != "ended" '.
-            'GROUP BY `server`, `game` '.
-            'ORDER BY `id` DESC '
-        );
-
-        if ($rows) {
-            foreach($rows as $v) {
-                $time = strtotime($v->dates_registration.' '.$v->time);
-                
-                if ($time > (time() - 86400)) {
-                    $statusString = str_replace(' ', '_', strtolower('registration'));
-                }
-                else {
-                    $time = strtotime($v->dates_start.' '.$v->time);
-                    $statusString = str_replace(' ', '_', strtolower('start'));
-                }
-
-                if ($v->game == 'hs') {
-                    $game = 'Hearthstone';
-                }
-                else if ($v->game == 'lol') {
-                    $game = 'League of Legends';
-                }
-                else {
-                    $game = $v->game;
-                }
-                
-                $this->serverTimes[] = array(
-                    'time' 	=> $time,
-                    'id'	=> $v->name,
-                    'server'=> $v->server,
-                    'game'  => $v->game,
-                    'name' 	=> $game,
-                    'status'=> $statusString,
-                );
-            }
-            asort($this->serverTimes);
-        }
-
-        //Boards
-        if (!$this->boards) {
-            $additionalSelect = '';
-            $additionalSql = '';
-            if ($this->logged_in) {
-                $additionalSelect .= ', `bv`.`direction`';
-                $additionalSql .= 'LEFT JOIN `boards_votes` AS `bv` ON `b`.`id` = `bv`.`board_id` AND `bv`.`user_id` = '.(int)$this->data->user->id.' ';
-            }
-
-            $this->boards = Db::fetchRows(
-                'SELECT `b`.`id`, `b`.`title`, `b`.`category`, `b`.`added`, `b`.`votes`, `b`.`comments`, `b`.`user_id`, `b`.`edited`, `b`.`status`, `u`.`name`, `u`.`avatar`, `b`.`activity` '.$additionalSelect.
-                'FROM `boards` AS `b` '.
-                'LEFT JOIN '.
-                '( SELECT `board_id`, `user_id` FROM `boards_comments` GROUP BY `id` ORDER BY `id` DESC) AS `bc` ON `bc`.`board_id` = `b`.`id` '.
-                $additionalSql.
-                'LEFT JOIN `users` AS `u` ON (`bc`.`user_id` = `u`.`id` OR `b`.`user_id` = `u`.`id`) '.
-                'WHERE `b`.`status` != 1 '.
-                'GROUP BY `b`.`id` '.
-                'ORDER BY `b`.`activity` DESC '.
-                'LIMIT 3 '
-            );
-            
-            $currDate = new DateTime();
-            
-            foreach($this->boards as &$v) {
-                if ($v->comments != 0) {
-                    $conv = date('Y-m-d H:i:s', $v->activity);
-                    $dbDate = new DateTime($conv);
-                }
-                else {
-                    $dbDate = new DateTime($v->added);
-                }
-                $v->interval = $this->getAboutTime($currDate->diff($dbDate));
-            }
-            unset($v);
-        }
 
         //Setting class for body for specific mood
         $this->data->mood = '';
@@ -249,6 +181,29 @@ class System
     	$this->logged_in = 0;
     	$this->user = array();
     	go(_cfg('site'));
+    }
+
+    public function wpApiCall($path) {
+        $apiUrl = _cfg('site').'/wp/wp-json/';
+        $apiUrl .= $path;
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $apiUrl); // set url to post to
+        curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // times out after 4s
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_POST, 0); // set POST method
+        $response = curl_exec($ch); // run the whole process 
+        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        $response = json_decode($response, true);
+    
+        return $response;
     }
     
     public function runTwitchAPI($channelName) {
@@ -510,7 +465,7 @@ class System
         }
         
         $resouse = false;
-        $data = apc_fetch($key, $resouse);
+        $data = apcu_fetch($key, $resouse);
         return $resouse ? $data : null;
     }
     
@@ -519,7 +474,7 @@ class System
             return false;
         }
         
-        return apc_store($key, $data, $this->cacheTtl);
+        return apcu_store($key, $data, $this->cacheTtl);
     }
 
     public function deleteCache($key) {
@@ -527,7 +482,7 @@ class System
             return false;
         }
         
-        return (apc_exists($key)) ? apc_delete($key) : true;
+        return (apcu_exists($key)) ? apcu_delete($key) : true;
     }
     
     public function errorMessage($error) {
@@ -580,29 +535,10 @@ class System
     private function checkGetData() {
         global $cfg;
         
-        $availableLanguages = array();
-        $fetchingFullLanguage = array();
-        $languageRows = Db::fetchRows('SELECT `title`, `flag` FROM `tm_languages`');
-        if ($languageRows) {
-            foreach($languageRows as $v) {
-                $availableLanguages[] = $v->flag;
-                $fetchingFullLanguage[$v->flag] = $v->title;
-            }
-        }
-        
         //Setting - Languages
-        if (isset($_GET['language']) && $_GET['language'] && in_array($_GET['language'], $availableLanguages)) {
-            $cfg['language'] = $_GET['language'];
-            setcookie('language', _cfg('language'), time()+7776000, '/', 'pcesports.com');
-        }
-        else if (isset($_COOKIE['language']) && $_COOKIE['language'] && in_array($_COOKIE['language'], $availableLanguages)) {
-            $cfg['language'] = $_COOKIE['language'];
-        }
-        else {
-        	$cfg['language'] = 'en';
-        }
-        
-        $cfg['fullLanguage'] = $fetchingFullLanguage[$cfg['language']];
+        $_GET['language'] = 'en';
+       	$cfg['language'] = 'en';
+        $cfg['fullLanguage'] = 'english';
         
         $this->getStrings();
         

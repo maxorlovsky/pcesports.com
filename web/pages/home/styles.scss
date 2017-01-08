@@ -1,0 +1,17 @@
+.home {
+	@extend .left-container;
+	
+	@media (max-width: 768px) {
+	    .home-tournaments {
+	        .hss2 {
+	            width: 100%;
+	        }
+	    }
+    }
+
+    @media (max-width: 767px) {
+    	.home {
+    		padding: 0;
+		}
+	}
+}

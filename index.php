@@ -5,9 +5,12 @@
  * Credits (dev): Maxtream
  */
 
-// Maintenance check
-if (file_exists('maint_mode')) {
-	die('This site is on maintenance');
+// Hardcoding parameters for language
+if (isset($_GET['params']) && substr($_GET['params'], 0 , 2) != 'en') {
+	$_GET['params'] = 'en/'.$_GET['params'];
+}
+if(isset($_GET['language'])) {
+	$_GET['language'] = 'en';
 }
 
 require_once dirname(__FILE__).'/vendor/autoload.php';

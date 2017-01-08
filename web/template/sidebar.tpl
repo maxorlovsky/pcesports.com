@@ -1,12 +1,5 @@
-<script>
-	var requireStatus = 0;
-	<? if (isset($_SESSION['participant']) && $_SESSION['participant']->id) { ?>
-	var requireStatus = 1;
-	<? } ?>
-</script>
-	
-<div class="right-containers">
-    <div class="block boards">
+<aside class="right-containers">
+    <div class="block">
         <div class="block-header-wrapper">
             <h1>Follow for more news</h1>
         </div>
@@ -20,7 +13,8 @@
             </script>
         </div>
     </div>
-    
+
+    <? if (_cfg('env') == 'prod') { ?>
 	<div class="block sense">
 		<div class="ad-holder block-content">
 			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -38,6 +32,5 @@
             We detected that you might use AdBlock. You might not know, that PC eSports is running completely out of our pockets and small advertisement revenue that we get. You would be a project savior and helped us a lot, if you added our website to your adblock whitelist. Thank you.
         </div>
     </div>
-</div>
-
-<div class="clear"></div>
+    <? } ?>
+</aside>
