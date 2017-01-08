@@ -86,7 +86,7 @@ class System
             }
         }
         
-        if (!isset($this->data->settings) && !$this->data->settings) {
+        if (!isset($this->data->settings) || !$this->data->settings) {
             $this->data->settings = array();
             $rows = Db::fetchRows('SELECT * FROM `tm_settings`');
             if ($rows) {
@@ -96,7 +96,7 @@ class System
             }
         }
         
-        if (!isset($this->data->links) && !$this->data->links) {
+        if (!isset($this->data->links) || !$this->data->links) {
             $this->data->links = array();
 
             if ($this->getCache('main-menu')) {
