@@ -5,6 +5,14 @@
         margin-bottom: 40px;
     }
 
+    .leagueoflegends.tournament-list::before {
+        background-image: url('../images/footer-lol-logo.png');
+    }
+
+    .hearthstone.tournament-list::before {
+        background-image: url('../images/footer-hs-logo.png');
+    }
+
     .tournament-list {
         padding: 10px;
         position: relative;
@@ -80,14 +88,6 @@
 
         .participant_count {
             margin-top: 0;
-        }
-
-        &.leagueoflegends::before {
-            background-image: url('../images/footer-lol-logo.png');
-        }
-
-        &.hearthstone::before {
-            background-image: url('../images/footer-hs-logo.png');
         }
     }
     

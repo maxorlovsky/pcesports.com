@@ -147,7 +147,7 @@ class leagueoflegends extends System
             );
             if ($rows) {
                 foreach($rows as $v) {
-                    if ($this->tournamentData[$v->tournament_id]) {
+                    if (isset($this->tournamentData[$v->tournament_id]) && $this->tournamentData[$v->tournament_id]) {
                         $this->tournamentData[$v->tournament_id]['teamsCount'] = $v->value;
                     }
                 }
@@ -180,7 +180,7 @@ class leagueoflegends extends System
         
         $u = new self;
         
-        if (is_numeric($_GET['val3'])) {
+        if (isset($_GET['val3']) && is_numeric($_GET['val3'])) {
             $seo->title = 'League of Legends tournament '.strtoupper($u->server).'#'.$_GET['val3'];
             $seo->ogDesc = $seo->title;
         }

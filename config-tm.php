@@ -92,7 +92,8 @@ $cfg['classes'] = $cfg['dir'].'/classes';
 //web/template directory
 $cfg['template'] = $cfg['dir'].'/template';
 //web/static files directory
-$cfg['static'] = $cfg['site'].'/web/static';
+$cfg['static'] = $cfg['site'].'/web/assets';
+$cfg['assets'] = $cfg['site'].'/web/assets';
 //web/images directory
 $cfg['img'] = $cfg['static'].'/images';
 //web/uploads directory

@@ -145,7 +145,7 @@ class profile extends System
     }
     
     protected function getAvatarList() {
-        $directory = _cfg('dir').'/static/images/avatar';
+        $directory = _cfg('dir').'/assets/images/avatar';
         $avatars = array();
         
         if (!file_exists($directory) && !is_dir($directory)) {
