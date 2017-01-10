@@ -140,6 +140,4 @@ module.exports = function(grunt) {
         'default',
         'watch'
     ]);
-
-    grunt.registerTask('imagemin', ['imagemin']);
 };
