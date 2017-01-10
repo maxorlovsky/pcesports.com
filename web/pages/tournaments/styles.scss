@@ -1,0 +1,290 @@
+.tournaments {
+    @extend .left-container;
+
+	/*.block {
+    	margin-bottom: 40px;
+
+        .block-content {
+            &.battlefy-embed {
+                padding: 0;
+                #join-form {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 210px;
+                }
+            }
+        }
+    }
+
+    &.hs .block .block-content.battlefy-embed #join-form {
+        height: 220px;
+    }
+
+    .active-tournament {
+        &:hover {
+            background-color: #1697E1;
+            color: #fff;
+            .right-part {
+                color: #fff;
+            }
+        }
+        .status {
+            background-color: #1697E1;
+            color: #fff;
+        }
+    }
+
+    .ended-tournament {
+        &:hover {
+            background-color: #bbb;
+            color: #000;
+            .status {
+                color: #fff;
+            }
+        }
+        .status {
+            background-color: #444;
+        }
+    }
+
+    .left-part {
+        float: left;
+    }
+
+    .right-part {
+        float: right;
+        font-size: 14px;
+        min-width: 225px;
+        .status {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+
+    .mid-part {
+        width: 280px;
+        margin: 0 auto;
+        color: #000;
+        div {
+            height: 30px;
+            &.clear {
+                height: 0;
+            }
+        }
+        img {
+            float: left;
+            margin: 4px 10px 0 0;
+        }
+        span {
+            line-height: 30px;
+            display: block;
+            font-size: 16px;
+        }
+    }
+
+    .title {
+        font-size: 21px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 285px;
+        white-space: nowrap;
+        img {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+
+    .participant_count {
+        margin-top: 0;
+    }
+
+    .status {
+        display: block;
+        padding: 5px 8px;
+        border-radius: 4px;
+        float: right;
+    }
+
+    .success-add, .error-add, .info-add {
+        margin-top: 0;
+    }
+
+    .check-in-holder {
+        text-align: center;
+    }
+
+    .connect-team {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .tournament-list {
+        padding: 10px;
+        position: relative;
+
+        @include clearfix();
+    }
+
+    &.hs {
+        .sponsor {
+            text-align: center;
+        }
+    }
+
+    &.hs .left-containers .block .tournament-list, .left-containers .block .tournament-list.hs {
+        &::after {
+            content: "";
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            position: absolute;
+            z-index: 0;
+            background-image: url('../images/footer-hs-logo.png');
+        }
+    }
+
+    &.lol .left-containers .block .tournament-list, .left-containers .block .tournament-list.lol {
+        &::after {
+            content: "";
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            position: absolute;
+            z-index: 0;
+            background-image: url('../images/footer-lol-logo.png');
+        }
+    }
+
+    .block-content.signup {
+        padding: 0;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            border-left: 1px solid #888;
+            top: 0;
+            left: 49%;
+            height: 100%;
+        }
+    }
+    
+    .block-content.places {
+        padding: 20px 0 0 0;
+        position: relative;
+        height: 300px;
+        .first {
+            padding-top: 20px;
+            margin: 0 auto;
+            width: 310px;
+            height: 274px;
+            background-position: 0 0;
+            position: relative;
+            z-index: 4;
+            p {
+                margin: 200px auto 0 auto;
+                color: #f8ec82;
+                font-size: 20px;
+                text-shadow: 1px 1px #d09e26;
+                max-width: 260px;
+                padding: 10px;
+                background-color: rgba(0,0,0,0.7);
+            }
+        }
+        .second {
+            position: absolute;
+            left: 25px;
+            top: 40px;
+            width: 242px;
+            height: 213px;
+            background-position: -310px 0;
+            z-index: 3;
+            p {
+                margin: 160px auto 0 auto;
+                color: #d1d3d6;
+                font-size: 17px;
+                text-shadow: 1px 1px #77828a;
+                max-width: 170px;
+                padding: 7px;
+                background-color: rgba(0,0,0,0.7);
+            }
+        }
+        .third {
+            position: absolute;
+            right: 62px;
+            top: 60px;
+            width: 185px;
+            height: 163px;
+            background-position: -551px 0;
+            z-index: 2;
+            p {
+                margin: 125px auto 0 auto;
+                color: #da9928;
+                font-size: 14px;
+                text-shadow: 1px 1px #b45e29;
+                max-width: 130px;
+                padding: 5px;
+            }
+        }
+        div {
+            background-image: url(../images/cups.png);
+            background-repeat: no-repeat;
+        }
+        p {
+            text-align: center;
+            box-sizing: border-box;
+            background-color: rgba(0,0,0,0.7);
+            cursor: default;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .vods {
+        iframe {
+            width: 750px;
+            height: 505px;
+        }
+    }
+
+    .bracket {
+        .participants {
+            display: hidden;
+        }
+    }
+
+	.registration {
+	    #join-form {
+	        width: 49%;
+	        float: left;
+	        padding: 10px;
+	        box-sizing: border-box;
+	    }
+	    .tournament-rules {
+	        width: 49%;
+	        float: left;
+	        padding: 10px;
+	        box-sizing: border-box;
+	    }
+	}
+
+	.tournament-rules {
+		color: #444;
+	    h1 {
+	        margin: 5px 0;
+	    }
+	    p {
+	        margin: 0;
+	        padding: 0;
+	    }
+	}*/
+}

@@ -1,0 +1,272 @@
+.legacy-tournament {
+    @extend .left-container;
+
+    .block {
+        margin-bottom: 40px;
+    }
+
+    .tournament-list {
+        padding: 10px;
+        position: relative;
+        display: block;
+
+        @include clearfix();
+
+        &::before {
+            content: " ";
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            position: absolute;
+            z-index: 0;
+        }
+
+        .status {
+            display: block;
+            padding: 5px 8px;
+            border-radius: 4px;
+            float: right;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        &.active-tournament {
+            &:hover {
+                background-color: #1697E1;
+                color: #fff;
+                .right-part {
+                    color: #fff;
+                }
+            }
+            
+            .status {
+                background-color: #1697E1;
+                color: #fff;
+            }
+        }
+
+        &.ended-tournament {
+            &:hover {
+                background-color: #bbb;
+                color: #000;
+                .status {
+                    color: #fff;
+                }
+            }
+            .status {
+                background-color: #444;
+            }
+        }
+
+        .left-part {
+            float: left;
+        }
+
+        .right-part {
+            float: right;
+            font-size: 0.875rem;
+            min-width: 190px;
+        }
+
+        .title {
+            font-size: 21px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .participant_count {
+            margin-top: 0;
+        }
+
+        &.leagueoflegends::before {
+            background-image: url('../images/footer-lol-logo.png');
+        }
+
+        &.hearthstone::before {
+            background-image: url('../images/footer-hs-logo.png');
+        }
+    }
+    
+    .places {
+        padding: 20px 0 0 0;
+        position: relative;
+        height: 300px;
+
+        .first {
+            padding-top: 20px;
+            margin: 0 auto;
+            width: 310px;
+            height: 274px;
+            background-position: 0 0;
+            position: relative;
+            z-index: 4;
+            p {
+                margin: 200px auto 0 auto;
+                color: #f8ec82;
+                font-size: 20px;
+                text-shadow: 1px 1px #d09e26;
+                max-width: 260px;
+                padding: 10px;
+                background-color: rgba(0,0,0,0.7);
+            }
+        }
+
+        .second {
+            position: absolute;
+            left: 25px;
+            top: 40px;
+            width: 242px;
+            height: 213px;
+            background-position: -310px 0;
+            z-index: 3;
+            p {
+                margin: 160px auto 0 auto;
+                color: #d1d3d6;
+                font-size: 17px;
+                text-shadow: 1px 1px #77828a;
+                max-width: 170px;
+                padding: 7px;
+                background-color: rgba(0,0,0,0.7);
+            }
+        }
+
+        .third {
+            position: absolute;
+            right: 62px;
+            top: 60px;
+            width: 185px;
+            height: 163px;
+            background-position: -551px 0;
+            z-index: 2;
+            p {
+                margin: 125px auto 0 auto;
+                color: #da9928;
+                font-size: 14px;
+                text-shadow: 1px 1px #b45e29;
+                max-width: 130px;
+                padding: 5px;
+            }
+        }
+
+        div {
+            background-image: url(../images/cups.png);
+            background-repeat: no-repeat;
+        }
+
+        p {
+            text-align: center;
+            box-sizing: border-box;
+            background-color: rgba(0,0,0,0.7);
+            cursor: default;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .vods iframe {
+        width: 750px;
+        height: 505px;
+    }
+
+    .bracket .participants {
+        display: hidden;
+    }
+
+    .participants {
+
+        .block {
+            padding: 15px;
+            border: 1px solid #fff;
+            background-color: #32333b;
+            width: 170px;
+            margin: 20px 70px 0 0;
+            min-height: 0;
+
+            &:nth-child(3n) {
+                margin-right: 0 !important;
+            }
+
+            &:nth-of-type(-n+3) {
+                margin-top: 0 !important;
+            }
+
+            a & {
+                transition: none;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 35px 0 0 0;
+                word-break: break-all;
+            }
+
+            .team-num {
+                float: right;
+                font-size: 14px;
+                color: #bbb;
+                margin-top: 3px;
+                font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+            }
+
+            &.hoverable {
+                background-position: center;
+                background-size: cover;
+                padding: 10px 15px;
+                cursor: pointer;
+
+                a {
+                    display: block;
+                    background-color: rgba(0,0,0,0.9);
+                    border-radius: 4px;
+                    padding: 5px;
+                }
+
+                .team-name {
+                    transition: .3s;
+                    color: #1697e1;
+                }
+
+                &:hover {
+                    background-color: #87888f;
+
+                    .team-name {
+                        color: #444;
+                    }
+                }
+
+                .player-heroes {
+                    text-align: center;
+                    div {
+                        margin: 0 1px 0 0;
+                    }
+                }
+            }
+        }
+
+        .team-name {
+            margin-bottom: 0;
+            float: left;
+            position: relative;
+            color: #eee;
+            font-size: 16px;
+            width: 110px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .player-list {
+            display: none;
+
+            a:hover {
+                color: #fff;
+            }
+        }
+    }
+}

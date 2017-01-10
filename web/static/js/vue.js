@@ -75,5 +75,12 @@ Vue.component('pagination', {
 			this.render();
 		}
 	}
+})
+
+Vue.component('loading', {
+	template: '<div class="loading"></div>',
+   	data: function() {
+   		return { pages: {} };
+	}
 });
 

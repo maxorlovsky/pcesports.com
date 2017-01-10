@@ -174,3 +174,15 @@ footer {
         margin: 10px 7.5% 10px 0;
     }
 }
+
+.loading {
+    width: 100%;
+    min-height: 70px;
+    background-image: url('../images/fb-loading.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+[v-cloak] .v-cloak--hidden{
+  display: none;
+}

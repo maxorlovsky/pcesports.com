@@ -542,7 +542,7 @@ class System
         
         $this->getStrings();
         
-        $cfg['href'] = str_replace('%lang%', $cfg['language'], $cfg['href']);
+        $cfg['href'] = str_replace('%lang%', '', $cfg['href']);
         $cfg['hssite'] = $cfg['href'].'/hearthstone';
         $cfg['lolsite'] = $cfg['href'].'/leagueoflegends';
     

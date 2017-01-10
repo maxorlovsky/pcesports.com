@@ -2,10 +2,8 @@
 	@extend .left-container;
 	
 	@media (max-width: 768px) {
-	    .home-tournaments {
-	        .hss2 {
-	            width: 100%;
-	        }
+	    .home-tournaments .hss2 {
+            width: 100%;
 	    }
     }
 

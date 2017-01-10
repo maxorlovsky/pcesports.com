@@ -1,9 +1,7 @@
-<section class="container page tournament hs">
-
-<div class="left-containers">
+<div class="legacy-tournament hearthstone">
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered">Hearthstone <?=$this->server?> <?=t('tournament_list')?></h1>
+            <h1>Hearthstone <?=$this->server?> <?=t('tournament_list')?></h1>
         </div>
         
 		<? if ($this->tournamentData) {
@@ -39,7 +37,7 @@
     <div class="block">
         <a name="stats"></a>
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('season_stats')?></h1>
+            <h1><?=t('season_stats')?></h1>
         </div>
         
         <div class="block-content">
@@ -51,7 +49,7 @@
     <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('global_tournament_rules')?></h1>
+            <h1><?=t('global_tournament_rules')?></h1>
         </div>
 
         <div class="block-content tournament-rules">
@@ -62,7 +60,7 @@
     <div class="block">
         <a name="rules"></a>
         <div class="block-header-wrapper">
-            <h1 class="bordered">Seasons legacy</h1>
+            <h1>Seasons legacy</h1>
         </div>
 
         <div class="block-content tournament-rules">

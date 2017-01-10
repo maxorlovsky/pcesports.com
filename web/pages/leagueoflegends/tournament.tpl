@@ -5,13 +5,11 @@
     </div>
 </div>
 
-<section class="container page tournament lol <?=$this->server?>">
-
-<div class="left-containers">
+<div class="legacy-tournament leagueoflegends">
 	<? if (t('lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) != 'lol_tournament_vod_'.$this->server.'_'.$this->pickedTournament) { ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('broadcast_vod')?></h1>
+            <h1><?=t('broadcast_vod')?></h1>
         </div>
         
         <div class="block-content vods">
@@ -23,7 +21,7 @@
     <? if ($this->winners) { ?>
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('winners')?></h1>
+            <h1><?=t('winners')?></h1>
         </div>
         
         <div class="block-content places">
@@ -33,89 +31,10 @@
         </div>
     </div>
     <? } ?>
-	
-	<? if ($this->data->settings['tournament-reg-lol-'.$this->server] == 1 && $this->pickedTournament == $this->currentTournament) { ?>
-	<div class="block registration">
-		<div class="block-header-wrapper">
-			<h1 class="bordered"><?=t('sign_up')?></h1>
-		</div>
-		
-		<div class="block-content signup">
-			<div id="join-form">
-                <p class="reg-completed success-add"><?=t('join_tournament_almost_done')?></p>
-
-				<form id="da-form" method="post">
-                    <div class="form-item" data-label="team">
-					    <input type="text" name="team" placeholder="<?=t('team_name')?>*" />
-					    <div class="message hidden"></div>
-                    </div>
-					
-                    <div class="form-item" data-label="email">
-                        <input type="text" name="email" placeholder="Email*" value="<?=($this->data->user->email?$this->data->user->email:null)?>" />
-					    <div class="message hidden"></div>
-                    </div>
-
-					<div class="form-item" data-label="mem1">
-                        <input type="text" name="mem1" placeholder="<?=t('cpt_nickname')?> (<?=t('member')?> #1)*" value="<?=$pickedSummoner?>" />
-					    <div class="message hidden"></div>
-                    </div>
-
-					
-					<? for($i=2;$i<=7;++$i) { ?>
-                        <div class="form-item" data-label="mem<?=$i?>">
-    						<input type="text" name="mem<?=$i?>" placeholder="<?=t('member')?> #<?=$i?><?=($i<=5?'*':null)?>" />
-    						<div class="message hidden"></div>
-                        </div>
-					<? } ?>
-
-                    <div class="form-item" data-label="stream">
-                        <input class="hint" attr-msg="<?=t('stream_tournament_hint_lol')?>" type="text" name="stream" placeholder="<?=t('stream_name_or_link_from')?> Twitch.tv" value="" />
-                        <div class="message hidden"></div>
-                    </div>
-
-                    <div class="form-item" data-label="agree">
-                        <input type="checkbox" name="agree" id="agree" /><label for="agree"><?=t('agree_with_rules_lol')?></label>
-                        <div class="message hidden"></div>
-                    </div>
-
-                    <input type="hidden" name="server" value="<?=$this->server?>" />
-				</form>
-				<div class="clear"></div>
-				<a href="javascript:void(0);" class="button" id="register-in-tournament"><?=t('join_tournament')?> #<?=$this->currentTournament?></a>
-			</div>
-
-            <div class="tournament-rules">
-                <h1><?=t('specific_tournament_rules')?></h1>
-                <?=str_replace(
-                    array('%startTime%', '%registrationTime%', '%checkInTime%', '%prize%'),
-                    array($tournamentTime['start'], $tournamentTime['registration'], $tournamentTime['checkin'], $tournamentRow->prize),
-                    t('lol_'.$this->server.'_tournament_information'.($this->pickedTournament<5?'_'.$this->pickedTournament:null))
-                )?>
-
-                <? if ($this->eventId) { ?>
-                    <p><?=t('eventpage_link_text')?>: <a href="http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?>" target="_blank">http://events.<?=$this->server?>.leagueoflegends.com/en/events/<?=$this->eventId?></a></p>
-                <? } ?>
-                    
-                <div>
-                    <a href="javascript:;" class="rules"><?=t('global_tournament_rules')?></a>
-                </div>
-                
-                <div class="share-tournament">
-                    <h2><?=t('share_this_tournament')?></h2>
-                    <div class="addthis_sharing_toolbox"></div>
-                </div>
-            </div>
-
-            <div class="clear"></div>
-
-		</div>
-	</div>
-
-	<? } else { ?>
-    
+	  
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('information')?></h1>
+            <h1><?=t('information')?></h1>
         </div>
         
         <div class="block-content tournament-rules">
@@ -140,11 +59,10 @@
             </div>
         </div>
     </div>
-    <? } ?>
     
     <div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('participants')?></h1>
+            <h1><?=t('participants')?></h1>
         </div>
 
         <div class="block-content participants isotope-participants">
@@ -193,7 +111,7 @@
 	
 	<div class="block">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('pending_participants')?></h1>
+            <h1><?=t('pending_participants')?></h1>
         </div>
 
         <div class="block-content participants isotope-participants-pending">
@@ -243,7 +161,7 @@
 	<? if ($i >= 2) { ?>
 	<div class="block bracket">
         <div class="block-header-wrapper">
-            <h1 class="bordered"><?=t('brackets')?></h1>
+            <h1><?=t('brackets')?></h1>
         </div>
 
         <div class="block-content participants <? if (_cfg('https') != 1) {?>hidden<?}?>">
@@ -257,15 +175,12 @@
 	
 </div>
 
-<script src="<?=_cfg('static')?>/js/jquery.challonge.js"></script>
-<script src="<?=_cfg('static')?>/js/jquery.isotope.min.js"></script>
+<script src="../../legacy/js/jquery.challonge.js"></script>
+<script src="../../legacy/js/jquery.isotope.min.js"></script>
 
 <script>
-$('#register-in-tournament').on('click', function() {
-    PC.addParticipant('Lol');
-});
-
 var participantsNumber = <?=$this->participantsCount?>;
+
 if (participantsNumber > 100) {
     challongeHeight = 3500;
 }

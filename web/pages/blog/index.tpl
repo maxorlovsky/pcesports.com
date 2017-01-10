@@ -10,6 +10,8 @@ const Blog = {
                     '<h1>Blog</h1>'+
                 '</div>'+
 
+                '<loading v-if="loading"></loading>'+
+
                 '<div class="block-content blog-block" v-for="post in posts">'+
                     '<div class="date" v-html="post.date"></div>'+
                     '<router-link v-bind:to="\'../article/\'+post.slug" class="image-holder" v-html="post.image"></router-link>'+
@@ -70,11 +72,14 @@ const Blog = {
 const BlogArticle = {
     template:
             '<div class="block">'+
-                '<div class="block-header-wrapper">'+
+
+                '<loading v-if="loading"></loading>'+
+
+                '<div v-if="!loading" class="block-header-wrapper">'+
                     '<h1>{{post.title}} | Blog</h1>'+
                 '</div>'+
 
-                '<div class="block-content blog-block">'+
+                '<div v-if="!loading" class="block-content blog-block">'+
                     '<div class="date" v-html="post.date"></div>'+
                     '<div class="image-holder" v-html="post.image"></div>'+
                     '<div class="text" v-html="post.content"></div>'+
@@ -89,6 +94,8 @@ const BlogArticle = {
     },
     created: function() {
         var self = this;
+
+        this.loading = true;
 
         axios.get('/wp/wp-json/wp/v2/posts/?slug='+this.$route.params.post)
         .then(function (response) {

@@ -54,21 +54,6 @@
 
         @include clearfix();
     }
-
-
-    /* @media (max-width: 767px) {
-
-        .small-blog-block {
-            float: none;
-            width: auto;
-            margin-right: 0;
-
-            .image-holder {
-                width: 225px;
-                margin: 0 auto;
-            }
-        }
-    } */
 }
 
 .blog-home-page {
@@ -126,6 +111,16 @@
 
         &:nth-child(3n) {
             margin-right: 0;
+        }
+
+        @media (max-width: 767px) {
+            float: none;
+            width: auto;
+            margin-right: 0;
+
+            .image-holder {
+                width: 225px;
+            }
         }
     }
 }
