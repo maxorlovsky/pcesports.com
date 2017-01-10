@@ -1,1 +1,0 @@
-INSERT INTO `tm_modules` (`name`, `level`, `added_timestamp`) VALUES ('faq', '2', CURRENT_TIMESTAMP);

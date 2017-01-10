@@ -1,11 +1,11 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         dirs: {
-            css: 'web/static/css',
-            sass: 'web/static/css/sass',
+            css: 'web/assets/css',
+            sass: 'web/assets/css/sass',
             pages: 'web/pages/**/',
-            js: 'web/static/js',
-            images: 'web/static/images'
+            js: 'web/assets/js',
+            images: 'web/assets/images'
         },
 
         pkg: grunt.file.readJSON('package.json'),

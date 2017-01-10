@@ -1,1 +1,0 @@
-ALTER TABLE `subscribe_sender` ADD `ended` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `timestamp`;

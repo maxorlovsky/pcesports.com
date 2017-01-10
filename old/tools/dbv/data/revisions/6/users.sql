@@ -1,1 +1,0 @@
-ALTER TABLE `users` ADD `timestyle` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '0 = am/pm, 1 = 24h' AFTER `timezone`;

@@ -1,1 +1,0 @@
-DROP TABLE `challonge_requests`, `dota_requests`, `paypal_requests`, `riot_callback`, `smite_games`, `smite_requests`, `teams`, `teams2users`, `teams2users_queue`;

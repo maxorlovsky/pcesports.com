@@ -1,4 +1,0 @@
-ALTER TABLE `teams` ADD `password` VARCHAR(20) NOT NULL AFTER `description`;
-ALTER TABLE `teams` ADD `twitch_tv` VARCHAR(100) NULL DEFAULT NULL ;
-ALTER TABLE `teams` CHANGE `facebook` `facebook` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `twitter` `twitter` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
-ALTER TABLE `teams` ADD `extension` VARCHAR(4) NULL DEFAULT NULL AFTER `tag`;
