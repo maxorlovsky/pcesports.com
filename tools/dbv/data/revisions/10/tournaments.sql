@@ -1,1 +1,0 @@
-ALTER TABLE `tournaments` ADD `event_id` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `time`;

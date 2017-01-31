@@ -1,1 +1,0 @@
-ALTER TABLE `blog` CHANGE `added` `added` TIMESTAMP NULL DEFAULT NULL;

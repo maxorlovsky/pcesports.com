@@ -1,2 +1,0 @@
-ALTER TABLE `participants_external` ADD `tournament_id` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `project`, ADD INDEX `tournament_id` (`tournament_id`);
-ALTER TABLE `tournaments_external` CHANGE `status` `status` ENUM('Ended','Start','Registration','CheckIn','Live') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

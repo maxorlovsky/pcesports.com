@@ -1,1 +1,0 @@
-﻿ALTER TABLE `users_social` ADD INDEX(`user_id`);

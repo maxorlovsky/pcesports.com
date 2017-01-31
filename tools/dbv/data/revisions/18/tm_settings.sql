@@ -1,1 +1,0 @@
-DELETE FROM `tm_settings` WHERE `position` = 5 OR `position` = 6 OR `position` = 7;
