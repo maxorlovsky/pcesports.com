@@ -43,7 +43,7 @@ class boards extends System
         }
         unset($v);
         
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 	
 	public function getBoard() {
@@ -85,7 +85,7 @@ class boards extends System
             unset($v);
         }
 		
-		include_once _cfg('pages').'/'.get_class().'/board.tpl';
+		include_once _cfg('pages').'/'.get_class().'/board.html';
 	}
     
     public function submitPage() {
@@ -104,7 +104,7 @@ class boards extends System
                 exit();
             }
         }
-        include_once _cfg('pages').'/'.get_class().'/submit.tpl';
+        include_once _cfg('pages').'/'.get_class().'/submit.html';
     }
 	
 	public function showTemplate() {

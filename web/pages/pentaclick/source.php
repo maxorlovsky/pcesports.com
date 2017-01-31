@@ -8,6 +8,6 @@ class pentaclick extends system
     
 	
 	public function showTemplate() {
-        include_once _cfg('pages').'/'.get_class().'/index.tpl';   
+        include_once _cfg('pages').'/'.get_class().'/index.html';   
 	}
 }

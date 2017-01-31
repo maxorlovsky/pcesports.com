@@ -8,12 +8,12 @@ class unsubscribe
     public function showTemplate() {
         if (isset($_GET['val2']) && $_GET['val2']) {
             if ($this->unsubscribe() === true) {
-                include_once _cfg('pages').'/'.get_class().'/success.tpl';
+                include_once _cfg('pages').'/'.get_class().'/success.html';
                 return;
             }
         }
         
-		include_once _cfg('pages').'/'.get_class().'/error.tpl';
+		include_once _cfg('pages').'/'.get_class().'/error.html';
 	}
     
     private function unsubscribe() {

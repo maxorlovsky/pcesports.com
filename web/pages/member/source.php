@@ -139,7 +139,7 @@ class member extends System
         
         $this->member->achievements = (object)array_merge($this->member->achievements, $rows);
 
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 	
 	public static function getSeo() {
@@ -158,7 +158,7 @@ class member extends System
 	
 	public function showTemplate() {
 		if (!$this->member) {
-			include_once  _cfg('pages').'/404/error.tpl';
+			include_once  _cfg('pages').'/404/error.html';
 		}
 		else {
             $this->getMember();

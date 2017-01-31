@@ -28,7 +28,7 @@ class users extends System
 	}
     
 	public function getMember() {
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 	
 	public static function getSeo() {
@@ -41,7 +41,7 @@ class users extends System
 	}
 	
 	public function showTemplate() {
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
     
     

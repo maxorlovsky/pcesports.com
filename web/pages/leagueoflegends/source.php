@@ -41,10 +41,10 @@ class leagueoflegends extends System
             $tournamentTime['checkin'] = $this->convertTime(strtotime($tournamentRow->dates_start.' '.$tournamentRow->time) - 3600);
             $tournamentTime['start'] = $this->convertTime($tournamentRow->dates_start.' '.$tournamentRow->time);
 
-            include_once _cfg('pages').'/'.get_class().'/battlefy-tournament.tpl';
+            include_once _cfg('pages').'/'.get_class().'/battlefy-tournament.html';
         }
         else {
-            include_once  _cfg('pages').'/404/error.tpl';
+            include_once  _cfg('pages').'/404/error.html';
         }
     }
 	
@@ -112,10 +112,10 @@ class leagueoflegends extends System
             );
             $this->eventId = $eventId->event_id;
 			
-			include_once _cfg('pages').'/'.get_class().'/tournament.tpl';
+			include_once _cfg('pages').'/'.get_class().'/tournament.html';
 		}
 		else {
-			include_once  _cfg('pages').'/404/error.tpl';
+			include_once  _cfg('pages').'/404/error.html';
 		}
 	}
 	
@@ -171,7 +171,7 @@ class leagueoflegends extends System
             }
         }
 		
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 	
 	public static function getSeo() {

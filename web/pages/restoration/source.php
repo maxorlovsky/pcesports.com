@@ -31,7 +31,7 @@ class restoration extends System
 			$this->expired = 1;
 		}
 
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 
     public function restorePassword($data) {

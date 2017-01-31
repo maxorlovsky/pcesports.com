@@ -1,18 +1,9 @@
-#new
-.settings
-.buildpath
-.project
-.sass-cache
+# Specific project files and logs
 *.sublime-*
+*.log
+
+# Folders
 node_modules
-
-
-#old
-.settings
-.buildpath
-.project
-.sass-cache
-#composer.phar
-composer.lock
+public/dist/
+public/be/*
 vendor
-node_modules

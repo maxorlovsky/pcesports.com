@@ -2,6 +2,7 @@ Vue.component('pagination', {
 	props: {
 		page: Number,
 		amount: Number,
+		pageUrl: String,
 		amountPerPage: {
 			type: Number,
 			default: 5
@@ -12,7 +13,7 @@ Vue.component('pagination', {
 					'class="btn btn-info" '+
 					'role="button" '+
 					':class="page.disabled?\'disabled\':false" '+
-					'v-bind:to="\'../page/\'+page.url">{{page.value}}</router-link>'+
+					'v-bind:to="\'/\'+pageUrl+\'/page/\'+page.url">{{page.value}}</router-link>'+
 			   '</div>',
    	data: function() {
    		return { pages: {} };

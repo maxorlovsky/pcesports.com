@@ -53,7 +53,7 @@ case 'test':
 //=====================================================
 case 'dev':
 	// DB config
-    $cfg['dbHost'] ='78.46.223.238';
+    $cfg['dbHost'] ='sql.maxorlovsky.net';
     $cfg['dbBase'] ='pentaclick_dev';
     $cfg['dbUser'] ='pcusertest';
     $cfg['dbPass'] ='s12WD@#$asdaAD2';

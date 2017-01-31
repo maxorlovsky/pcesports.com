@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                 tasks: ['concat:app']
             },
             js: {
-                files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js'],
+                files: ['Gruntfile.js', '<%= dirs.js %>/pc.js', '<%= dirs.js %>/main.js', '<%= dirs.js %>/vue.js'],
                 tasks: ['concat:js', 'uglify:js']
             },
         },

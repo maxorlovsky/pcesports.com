@@ -123,12 +123,12 @@ class Template extends System
             'LIMIT 1 '
         );
         if ($row->logged_in == 1 && $this->logged_in || $row->logged_in == 0) {
-            $html = file_get_contents(_cfg('template').'/page.tpl');
+            $html = file_get_contents(_cfg('template').'/page.html');
             $html = str_replace(array('%title%', '%text%'), array(t($row->value), $row->text), $html);
             return $html;
         }
         
-        $html = file_get_contents(_cfg('template').'/page.tpl');
+        $html = file_get_contents(_cfg('template').'/page.html');
         $html = str_replace(array('%title%', '%text%'), array('Registration required', 'Oops, not logged in'), $html);
         return $html;
     }
@@ -142,8 +142,8 @@ class Template extends System
     }
     
     public function getWidgetTemplate($page) {
-    	if (file_exists(_cfg('template').'/widget/'.$page.'.tpl')) {
-        	include _cfg('template').'/widget/'.$page.'.tpl';
+    	if (file_exists(_cfg('template').'/widget/'.$page.'.html')) {
+        	include _cfg('template').'/widget/'.$page.'.html';
     	}
     	else {
     		echo '<br />Widget template '.$page.' not found<br />';
@@ -151,8 +151,8 @@ class Template extends System
     }
     
     public function getMainTemplate($page) {
-    	if (file_exists(_cfg('template').'/'.$page.'.tpl')) {
-        	include _cfg('template').'/'.$page.'.tpl';
+    	if (file_exists(_cfg('template').'/'.$page.'.html')) {
+        	include _cfg('template').'/'.$page.'.html';
     	}
     	else {
     		echo '<br />Template '.$page.' not found<br />';

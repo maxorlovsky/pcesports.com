@@ -184,7 +184,7 @@ class System
     }
 
     public function wpApiCall($path) {
-        $apiUrl = _cfg('site').'/wp/wp-json/';
+        $apiUrl = 'https://api.pcesports.com/wp/wp-json/';
         $apiUrl .= $path;
         
         $ch = curl_init();

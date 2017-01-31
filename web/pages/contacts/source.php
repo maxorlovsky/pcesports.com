@@ -6,7 +6,7 @@ class contacts
 	}
 	
 	public function showTemplate() {
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 
 	public function submit($data) {

@@ -20,11 +20,11 @@ class profile extends System
         }
         $messages = $_SESSION['errors'];
         unset($_SESSION['errors']);
-		include_once _cfg('pages').'/'.get_class().'/error.tpl';
+		include_once _cfg('pages').'/'.get_class().'/error.html';
 	}
     
     public function getProfileAdditionalPage($page) {
-        if (!file_exists(_cfg('pages').'/'.get_class().'/'.$page.'.tpl')) {
+        if (!file_exists(_cfg('pages').'/'.get_class().'/'.$page.'.html')) {
             return false;
         }
         
@@ -35,7 +35,7 @@ class profile extends System
             $this->additional = $this->teamList();
         }
         
-        include_once _cfg('pages').'/'.get_class().'/'.$page.'.tpl';
+        include_once _cfg('pages').'/'.get_class().'/'.$page.'.html';
         
         return true;
     }
@@ -96,7 +96,7 @@ class profile extends System
         
         $avatars = $this->getAvatarList();
         
-		include_once _cfg('pages').'/'.get_class().'/index.tpl';
+		include_once _cfg('pages').'/'.get_class().'/index.html';
 	}
 	
 	public static function getSeo() {
