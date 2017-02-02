@@ -1,0 +1,53 @@
+.members {
+    @extend .left-container;
+    
+    .member {
+        .avatar {
+            border: 1px solid #fff;
+            outline: 1px solid #555;
+            height: 150px;
+            float: left;
+            margin: 0 10px 10px 0;
+            img {
+                height: 150px;
+            }
+        }
+        .information {
+            label {
+                display: inline-block;
+                font-weight: bold;
+                min-width: 160px;
+            }
+            p {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .member-summoners, .member-tournaments, .member-achievements {
+        margin-top: 20px;
+    }
+
+    .line-bar {
+        width: 500px;
+        margin: 10px auto;
+        text-align: center;
+        span {
+            display: inline-block;
+        }
+        > div {
+            display: inline-block;
+            margin-top: 2px;
+            border: 1px solid #1697e1;
+            border-radius: 15px;
+            width: 400px;
+            height: 10px;
+            span {
+                display: block;
+                background-color: #1697e1;
+                border-radius: 15px;
+                height: 10px;
+            }
+        }
+    }
+}
