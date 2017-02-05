@@ -1,0 +1,63 @@
+<script type="text/x-template" id="header-template">
+    <header>
+        <div class="burger"></div>
+
+        <a href="/" class="logo"><img src="/assets/images/logo.png" /></a>
+
+        <!--<ul class="nav-user">
+            <li class="nav-link">
+                <div class="nav-avatar"><a href="/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
+                <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>">
+                    <?=$this->data->user->name?><?//=t($v->value)?>
+                    <p><?=t('points')?>: <span class="achievementsPoints"><?=$this->data->user->experience?></span></p>
+                </a>
+                <ul class="nav-sub">
+                <?
+                if ($v->sublinks) {
+                    foreach($v->sublinks as $v2) {
+                        ?>
+                        <li class="nav-sublink" id="<?=$v2->link?>">
+                            <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
+                        </li>
+                        <?
+                    }
+                }
+                ?>
+                    <li class="nav-sublink" id="logout">
+                        <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>-->
+
+        <nav>
+            <div class="navbar-inner">
+                <ul class="nav" v-for="link in menu">
+                    <li class="nav-link">{{link}}
+                        <a href="" target=""></a>
+
+                        <!--<? if ($link['sublinks']) { ?>
+                            <ul class="nav-sub">
+                            <? foreach($link['sublinks'] as $sublink) { ?>
+                                <li class="nav-sublink <?=$sublink['css_classes']?>">
+                                    <a href="<?=$sublink['url']?>" target="<?=$sublink['target']?>"><?=$sublink['title']?></a>
+                                </li>
+                            <? } ?>
+                            </ul>
+                        <? } ?>-->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <!-- if mood winter -->
+        <ul class="snow">
+            <li>Snow Effect 1</li>
+            <li>Snow Effect 2</li>
+        </ul>
+        <div class="lights"></div>
+        <!-- endif -->
+
+    </header>
+</script>

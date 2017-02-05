@@ -17,116 +17,29 @@
 
     <!-- Critical css/js -->
     <script></script>
-    <style></style>
+    <style>
+    /*body{background-color:#000}
+    .loading{width:100%;height:90vh;color:#fff;display:flex;align-items:center;justify-content:center;}
+    header,footer,.page{visibility:hidden;height:0;}*/
+    </style>
 </head>
 
 <body class="moodClass">
 
-<script src="../js/ads.js"></script>
-<script src="../js/vue.js"></script>
+<section class="loading">Loading...</section>
 
+<header-component id="header"></header-component>
 
-<header>
-    <div class="burger"></div>
-
-    <a href="/" class="logo"><img src="../img/logo.png" /></a>
-    
-    <? if ($this->logged_in == 1) { ?>
-        <ul class="nav-user">
-            <?
-            if ($this->data->links) {
-                foreach($this->data->links as $v) {
-                    if ($v->logged_in == 1 && $v->main_link == 0 && $v->block == 1) {
-                    ?>
-                    <li class="nav-link" id="<?=$v->link?>">
-                        <div class="nav-avatar"><a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
-                        <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>">
-                            <?=$this->data->user->name?><?//=t($v->value)?>
-                            <p><?=t('points')?>: <span class="achievementsPoints"><?=$this->data->user->experience?></span></p>
-                        </a>
-                        <ul class="nav-sub">
-                        <?
-                        if ($v->sublinks) {
-                            foreach($v->sublinks as $v2) {
-                                ?>
-                                <li class="nav-sublink" id="<?=$v2->link?>">
-                                    <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
-                                </li>
-                                <?
-                            }
-                        }
-                        ?>
-                            <li class="nav-sublink" id="logout">
-                                <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <?
-                    }
-                }
-            }
-            ?>
-        </ul>
-        
-    <? } else { ?>
-        <? if ($this->page == 'restoration') { ?>
-            <a class="login" href="<?=_cfg('href')?>">
-        <? } else { ?>
-            <div class="login">
-        <? } ?>
-
-            <span><?=t('login_register')?></span>
-            <span class="mobile"><?=t('login')?></span>
-            <div class="usericon"></div>
-
-        <? if ($this->page == 'restoration') { ?>
-            </a>
-        <? } else { ?>
-            </div>
-        <? } ?>
-    <? } ?>
-    
-    <nav>
-        <div class="navbar-inner">
-            <ul class="nav">
-                <? foreach($this->data->links as $link) { ?>
-                <li class="nav-link <?=$link['css_classes']?>">
-                    <a href="<?=$link['url']?>" target="<?=$link['target']?>"><?=$link['title']?></a>
-
-                    <? if ($link['sublinks']) { ?>
-                        <ul class="nav-sub">
-                        <? foreach($link['sublinks'] as $sublink) { ?>
-                            <li class="nav-sublink <?=$sublink['css_classes']?>">
-                                <a href="<?=$sublink['url']?>" target="<?=$sublink['target']?>"><?=$sublink['title']?></a>
-                            </li>
-                        <? } ?>
-                        </ul>
-                    <? } ?>
-                </li>
-                <? } ?>
-            </ul>
-        </div>
-    </nav>
-
-    <? if ($this->data->mood == 'winter') { ?>
-    <ul class="snow">
-        <li>Snow Effect 1</li>
-        <li>Snow Effect 2</li>
-    </ul>
-    <div class="lights"></div>
-    <? } ?>
-</header>
-
-<section class="page">
-
+<section class="page" id="app">
+    <router-view></router-view>
 </section>
 
-<footer>
-    <p class="copyrights">© 2014 - 2017 PCeSports.com / <a href="http://www.maxorlovsky.com" target="_blank">Maxtream</a>.</p>
+<footer id="footer">
+    <!--<p class="copyrights">© 2014 - 2017 PCeSports.com / <a href="http://www.maxorlovsky.com" target="_blank">Maxtream</a>.</p>
     <div class="footer-links">
         <a href="../pentaclick">About PC eSports</a> | 
         <a href="../contacts">Contacts</a>
-    </div>
+    </div>-->
 </footer>
 
 <div class="hidden popup" id="message-window"><div class="close"></div><p></p></div>
@@ -134,8 +47,13 @@
 <div id="toTop"></div>
 <div id="fader"></div>
 
-<link rel="stylesheet" type="text/css" href="../css/combined.css?v=2.0" />
-<script src="<?=_cfg('static')?>/js/combined.js?v=2.0"></script>
+<div id="template-holder" class="template-holder"></div>
+
+<script src="./ads.js"></script>
+<script src="./dist/js/libs.js"></script>
+<script src="./dist/js/components.js?v=2.0"></script>
+<script src="./dist/js/scripts.js?v=2.0"></script>
+<link rel="stylesheet" type="text/css" href="./dist/styles/combined.css?v=2.0" />
 
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

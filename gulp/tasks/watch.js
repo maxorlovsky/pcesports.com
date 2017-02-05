@@ -9,6 +9,10 @@ gulp.task('watch', ['serve'], () => {
 	gulp.watch('./fe/styles/*.scss', ['styles', browserSync.reload])
 		.on("change", watchChange)
 		.on("error", watchError);
+
+	gulp.watch('./fe/src/**/*.html', ['copy', browserSync.reload])
+		.on("change", watchChange)
+		.on("error", watchError);
 });
 
 

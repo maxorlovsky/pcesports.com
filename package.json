@@ -1,5 +1,5 @@
 {
-  "name": "PCeSports",
+  "name": "pcesports",
   "description": "PC eSports website",
   "license": "unlicensed",
   "private": true,
@@ -31,6 +31,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.1",
     "gulp-uglifycss": "^1.0.6",
