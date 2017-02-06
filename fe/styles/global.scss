@@ -26,7 +26,7 @@ a {
     transition: .5s;
 }
 
-body {
+.wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -55,6 +55,10 @@ body {
     flex: 1;
     position: relative;
     margin: 81px auto 0px auto;
+    visibility: visible;
+    height: auto;
+
+    @include clearfix();
 
     @media (max-width: 768px) {
         min-width: inherit;
@@ -78,103 +82,6 @@ body {
     float: left;
 }
 
-.right-containers {
-    min-width: 280px;
-    width: 27%;
-    float: right;
-
-    .block {
-        margin-bottom: 40px;
-    }
-
-    .social {
-        text-align: center;
-
-        a {
-            background-image: url('../assets/images/icons.png?2');
-            height: 36px;
-            display: inline-block;
-            margin-right: 10px;
-
-            &.fb {
-                background-position: 0px 0px;
-                width: 39px;
-                &:hover {
-                    background-position: 0px -46px;
-                }
-            }
-
-            &.tw {
-                background-position: -47px 0px;
-                width: 35px;
-                &:hover {
-                    background-position: -47px -46px;
-                }
-            }
-
-            &.gp {
-                background-position: -92px 0px;
-                width: 36px;
-                &:hover {
-                    background-position: -74px -46px;
-                }
-            }
-
-            &.yt {
-                background-position: -136px 0px;
-                width: 36px;
-                &:hover {
-                    background-position: -136px -46px;
-                }
-            }
-
-            &.tv {
-                background-position: -222px 0px;
-                width: 36px;
-                &:hover {
-                    background-position: -222px -46px;
-                }
-            }
-
-            &.vk {
-                background-position: -212px 0px;
-                width: 28px;
-                &:hover {
-                    background-position: -212px -46px;
-                }
-            }
-
-            &.sm {
-                background-position: -178px 0px;
-                width: 36px;
-                &:hover {
-                    background-position: -178px -46px;
-                }
-            }
-        }
-    }
-}
-
-footer {
-    flex: none;
-    background-color: #1f1f1f;
-    margin: 2px 0 0 0;
-    padding: 0;
-    color: #888;
-    border-top: 2px solid #595959;
-    font-size: 0.75rem;
-
-    .copyrights {
-        float: left;
-        margin: 10px 0 10px 7.5%;
-    }
-
-    .footer-links {
-        float: right;
-        margin: 10px 7.5% 10px 0;
-    }
-}
-
 .loading {
     width: 100%;
     min-height: 70px;
@@ -193,3 +100,5 @@ footer {
 
 @import './sass.scss';
 @import './small-screen.scss';
+
+@import '../src/components/**/*.scss';

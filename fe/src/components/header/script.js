@@ -2,6 +2,7 @@ Vue.component('header-component', {
     template: '#header-template',
     data: function() {
         return {
+            mood: '',
             menu: {}
         };
     },
@@ -11,13 +12,18 @@ Vue.component('header-component', {
     methods: {
         fetchData: function() {
             let self = this;
+
+            const month = new Date().getMonth();
+            if (month == 11 || month < 1) {
+                this.mood = 'winter';
+            }
             
             axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
             .then((links) => {
                 let returnMenu = {};
 
                 for (let value of links.data) {
-                    if (value.menu_item_parent == 0) {
+                    if (value.menu_item_parent == '0') {
                         returnMenu['link-' + value.ID] = {
                             'title': value.title,
                             'url': (value.url?value.url:''),
@@ -37,9 +43,6 @@ Vue.component('header-component', {
                         };
                     }
                 }
-
-                console.log(returnMenu);
-                console.log(returnMenu['link-129'].sublinks);
                 
                 self.menu = returnMenu;
             });

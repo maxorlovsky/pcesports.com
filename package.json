@@ -33,6 +33,7 @@
     "gulp-jshint": "^2.0.4",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sass-glob": "^1.0.8",
     "gulp-uglify": "^2.0.1",
     "gulp-uglifycss": "^1.0.6",
     "require-dir": "^0.3.1",

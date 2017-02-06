@@ -6,7 +6,7 @@ gulp.task('watch', ['serve'], () => {
 		.on("change", watchChange)
 		.on("error", watchError);
 
-	gulp.watch('./fe/styles/*.scss', ['styles', browserSync.reload])
+	gulp.watch(['./fe/styles/*.scss', './fe/src/**/*.scss'], ['styles', browserSync.reload])
 		.on("change", watchChange)
 		.on("error", watchError);
 

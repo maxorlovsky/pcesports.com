@@ -1,5 +1,5 @@
 .blog {
-    //@extend .left-container;
+    @extend .left-container;
 
     .blog-block {
         position: relative;
@@ -52,14 +52,14 @@
             margin: 0 20px 20px 0;
         }
 
-        //@include clearfix();
+        @include clearfix();
     }
 }
 
 .blog-home-page {
 
     .block-content {
-        //@include clearfix();
+        @include clearfix();
     }
 
     .small-blog-block {

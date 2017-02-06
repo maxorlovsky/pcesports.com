@@ -14,5 +14,5 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # fetching all links params in one variable and breaking it down in index.php
+#RewriteRule legacy/?(.*) /legacy.php?params=$1 [L,QSA]
 RewriteRule (.*) index.html?params=$1 [L,QSA]
-RewriteRule ^legacy/?(.*) /legacy.php?params=$1 [L,QSA]

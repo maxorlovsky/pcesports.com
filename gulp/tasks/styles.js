@@ -1,13 +1,12 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
+const sassGlob = require('gulp-sass-glob');
 const uglifycss = require('gulp-uglifycss');
 
 gulp.task('styles', () => {
-    gulp.src([
-			'./fe/styles/global.scss',
-			'./fe/src/**/*.scss'
-		])
+    gulp.src('./fe/styles/global.scss')
+		.pipe(sassGlob())
     	.pipe(sass().on('error', sass.logError))
     	.pipe(uglifycss({
 			"uglyComments": true

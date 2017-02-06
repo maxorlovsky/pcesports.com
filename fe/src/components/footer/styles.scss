@@ -1,0 +1,23 @@
+footer {
+    flex: none;
+    background-color: #1f1f1f;
+    margin: 2px 0 0 0;
+    padding: 0;
+    color: #888;
+    border-top: 2px solid #595959;
+    font-size: 0.75rem;
+    visibility: visible;
+    height: auto;
+
+    @include clearfix();
+
+    .copyrights {
+        float: left;
+        margin: 10px 0 10px 7.5%;
+    }
+
+    .footer-links {
+        float: right;
+        margin: 10px 7.5% 10px 0;
+    }
+}

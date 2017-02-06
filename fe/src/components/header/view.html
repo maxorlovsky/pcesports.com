@@ -1,8 +1,8 @@
 <script type="text/x-template" id="header-template">
-    <header>
+    <header :class="mood">
         <div class="burger"></div>
 
-        <a href="/" class="logo"><img src="/assets/images/logo.png" /></a>
+        <a href="/" class="logo"><img src="./dist/assets/images/logo.png" /></a>
 
         <!--<ul class="nav-user">
             <li class="nav-link">
@@ -30,37 +30,17 @@
             </li>
         </ul>-->
 
-        <!--<nav>
-        <div class="navbar-inner">
-            <ul class="nav">
-                <? foreach($this->data->links as $link) { ?>
-                <li class="nav-link <?=$link['css_classes']?>">
-                    
-
-                    <? if ($link['sublinks']) { ?>
-                        <ul class="nav-sub">
-                        <? foreach($link['sublinks'] as $sublink) { ?>
-                            <li class="nav-sublink <?=$sublink['css_classes']?>">
-                                <a href="<?=$sublink['url']?>" target="<?=$sublink['target']?>"><?=$sublink['title']?></a>
-                            </li>
-                        <? } ?>
-                        </ul>
-                    <? } ?>
-                </li>
-                <? } ?>
-            </ul>
-        </div>
-    </nav>-->
-
         <nav>
             <div class="navbar-inner">
                 <ul class="nav" >
                     <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
-                        <a :href="link.url" :target="link.target">{{link.title}}</a>
+                        <a v-if="link.target" :href="link.url" :target="link.target">{{link.title}}</a>
+                        <router-link v-else :to="link.url" :target="link.target">{{link.title}}</router-link>
 
                         <ul class="nav-sub" v-if="link.sublinks">
                             <li :class="'nav-sublink ' + sublink.css_classes" v-for="(sublink, subkey) in link.sublinks">
-                                <a :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
+                                <a v-if="sublink.target" :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
+                                <router-link v-else :to="sublink.url" :target="sublink.target">{{sublink.title}}</router-link>
                             </li>
                         </ul>
                     </li>
@@ -68,14 +48,12 @@
             </div>
         </nav>
 
-
-        <!-- if mood winter -->
-        <ul class="snow">
-            <li>Snow Effect 1</li>
-            <li>Snow Effect 2</li>
-        </ul>
-        <div class="lights"></div>
-        <!-- endif -->
-
+        <div v-if="mood">
+            <ul class="snow">
+                <li>Snow Effect 1</li>
+                <li>Snow Effect 2</li>
+            </ul>
+            <div class="lights"></div>
+        </div>
     </header>
 </script>

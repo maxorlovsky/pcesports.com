@@ -5,7 +5,8 @@ const router = new VueRouter({
         { path: '/blog', component: Blog, meta: { title: 'Blog' } },
         { path: '/blog/page/:page', component: Blog, meta: { title: 'Blog' } },
         //{ path: '/blog/article/:post', component: BlogArticle, meta: { title: '' } },
-        { path: '*', component: Blog, meta: { title: 'Blog' } },
+        { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
+        { path: '*', redirect: '/404' }
     ]
 });
 
@@ -36,17 +37,21 @@ router.beforeEach((to, from, next) => {
     });
 });
 
-axios.get('./dist/html/header.html')
-.then(function(template) {
+axios.all([
+    axios.get('./dist/html/header.html'),
+    axios.get('./dist/html/footer.html'),
+    axios.get('./dist/html/right-block.html'),
+])
+.then(axios.spread(function (headerTemplate, footerTemplate, rightBlockTemplate) {
     let element = document.getElementById('template-holder');
-    element.innerHTML = template.data;
+    element.innerHTML = headerTemplate.data;
+    element.innerHTML += footerTemplate.data;
+    element.innerHTML += rightBlockTemplate.data;
+
     new Vue({
-        el: '#header'
+        el: '#app',
+        router: router
     });
-});
 
-
-new Vue({
-    el: '#app',
-    router: router
-});
+    document.getElementById('loading').remove();
+}));
