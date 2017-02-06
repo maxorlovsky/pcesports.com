@@ -30,21 +30,39 @@
             </li>
         </ul>-->
 
+        <!--<nav>
+        <div class="navbar-inner">
+            <ul class="nav">
+                <? foreach($this->data->links as $link) { ?>
+                <li class="nav-link <?=$link['css_classes']?>">
+                    
+
+                    <? if ($link['sublinks']) { ?>
+                        <ul class="nav-sub">
+                        <? foreach($link['sublinks'] as $sublink) { ?>
+                            <li class="nav-sublink <?=$sublink['css_classes']?>">
+                                <a href="<?=$sublink['url']?>" target="<?=$sublink['target']?>"><?=$sublink['title']?></a>
+                            </li>
+                        <? } ?>
+                        </ul>
+                    <? } ?>
+                </li>
+                <? } ?>
+            </ul>
+        </div>
+    </nav>-->
+
         <nav>
             <div class="navbar-inner">
-                <ul class="nav" v-for="link in menu">
-                    <li class="nav-link">{{link}}
-                        <a href="" target=""></a>
+                <ul class="nav" >
+                    <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
+                        <a :href="link.url" :target="link.target">{{link.title}}</a>
 
-                        <!--<? if ($link['sublinks']) { ?>
-                            <ul class="nav-sub">
-                            <? foreach($link['sublinks'] as $sublink) { ?>
-                                <li class="nav-sublink <?=$sublink['css_classes']?>">
-                                    <a href="<?=$sublink['url']?>" target="<?=$sublink['target']?>"><?=$sublink['title']?></a>
-                                </li>
-                            <? } ?>
-                            </ul>
-                        <? } ?>-->
+                        <ul class="nav-sub" v-if="link.sublinks">
+                            <li :class="'nav-sublink ' + sublink.css_classes" v-for="(sublink, subkey) in link.sublinks">
+                                <a :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

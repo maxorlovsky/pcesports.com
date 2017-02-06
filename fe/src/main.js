@@ -9,6 +9,8 @@ const router = new VueRouter({
     ]
 });
 
+//let headerTemplate = '';
+
 router.beforeEach((to, from, next) => {
     //window.scrollTo(0, 0);
     //document.title = to.meta.title;
@@ -25,6 +27,9 @@ router.beforeEach((to, from, next) => {
 
     axios.get('./dist/html/' + getPath + '.html')
     .then(function(template) {
+        //headerTemplate = document.createElement('script');
+        //headerTemplate.appendChild(template.data);
+        
         element.innerHTML = template.data;
 
         next();

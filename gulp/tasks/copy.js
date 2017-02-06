@@ -10,7 +10,7 @@ gulp.task('copy', function() {
     // Copy html files with rename
     gulp.src('./fe/src/**/*.html')
 		.pipe(rename(function (path) {
-			let split = path.dirname.split('/').pop();
+			let split = path.dirname.split(/[\\\/]+/).pop();
 			let newName = path.basename.replace(path.basename, split);
 			path.dirname = '';
 			path.basename = newName;
