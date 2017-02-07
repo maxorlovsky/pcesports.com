@@ -1,5 +1,5 @@
 Vue.component('header-component', {
-    template: '#header-template',
+    template: dynamicTemplates.header,
     data: function() {
         return {
             mood: '',

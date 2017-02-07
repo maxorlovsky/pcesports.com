@@ -10,8 +10,6 @@ const router = new VueRouter({
     ]
 });
 
-//let headerTemplate = '';
-
 router.beforeEach((to, from, next) => {
     //window.scrollTo(0, 0);
     //document.title = to.meta.title;
@@ -28,9 +26,6 @@ router.beforeEach((to, from, next) => {
 
     axios.get('./dist/html/' + getPath + '.html')
     .then(function(template) {
-        //headerTemplate = document.createElement('script');
-        //headerTemplate.appendChild(template.data);
-        
         element.innerHTML = template.data;
 
         next();
@@ -43,10 +38,9 @@ axios.all([
     axios.get('./dist/html/right-block.html'),
 ])
 .then(axios.spread(function (headerTemplate, footerTemplate, rightBlockTemplate) {
-    let element = document.getElementById('template-holder');
-    element.innerHTML = headerTemplate.data;
-    element.innerHTML += footerTemplate.data;
-    element.innerHTML += rightBlockTemplate.data;
+    dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
+    dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
+    dynamicTemplates.rightBlock.appendChild(document.createTextNode(rightBlockTemplate.data));
 
     new Vue({
         el: '#app',

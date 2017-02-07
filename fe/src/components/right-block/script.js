@@ -1,4 +1,4 @@
 Vue.component('right-block', {
-    template: '#right-block-template',
+    template: dynamicTemplates.rightBlock,
     data: function() {}
 });

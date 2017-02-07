@@ -1,4 +1,10 @@
 Vue.component('footer-component', {
-    template: '#footer-template',
-    data: function() {}
+    template: dynamicTemplates.footer,
+    data: function() {
+        const year = new Date().getFullYear();
+        
+        return {
+            year: year,
+        };
+    }
 });
