@@ -1,5 +1,5 @@
 const Home = {
-    template: '#template-holder',
+    template: '#home-template',
     data: function() {
         return {
             loading: true,

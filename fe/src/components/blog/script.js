@@ -1,5 +1,5 @@
 const Blog = {
-    template: '#template-holder',
+    template: '#blog-template',
     data: function () {
         if (!this.$route.params.page) {
             this.$route.params.page = 1;

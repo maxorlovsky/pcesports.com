@@ -1,0 +1,20 @@
+<script type="text/x-template" id="article-template">
+    <div class="article">
+        <div class="block">
+            <loading v-if="loading"></loading>
+
+            <div v-if="!loading" class="block-header-wrapper">
+                <h1>{{post.title}} | Blog</h1>
+            </div>
+
+            <div v-if="!loading" class="block-content blog-block">
+                <div class="date" v-html="post.date"></div>
+                <div class="image-holder" v-html="post.image"></div>
+                <div class="text" v-html="post.content"></div>
+                <router-link role="button"
+                    class="btn btn-info"
+                    v-bind:to="'/blog'">Back to blog</router-link>
+            </div>
+        </div>
+    </div>
+</script>

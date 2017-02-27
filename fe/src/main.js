@@ -1,10 +1,19 @@
-const router = new VueRouter({
+let router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/', component: Home, meta: { title: 'Home' } },
-        { path: '/blog', component: Blog, meta: { title: 'Blog' } },
-        { path: '/blog/page/:page', component: Blog, meta: { title: 'Blog' } },
-        //{ path: '/blog/article/:post', component: BlogArticle, meta: { title: '' } },
+        {
+            path: '/blog',
+            component: Blog,
+            meta: { title: 'Blog' },
+            children: [
+                {
+                    path: 'page/:page',
+                    meta: { title: 'Blog page :page' }
+                }
+            ]
+        },
+        { path: '/article/:post', component: Article, meta: { title: 'Article :post' } },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
         { path: '*', redirect: '/404' }
     ]
@@ -24,7 +33,7 @@ router.beforeEach((to, from, next) => {
         getPath = 'home';
     }
 
-    axios.get('./dist/html/' + getPath + '.html')
+    axios.get('/dist/html/' + getPath + '.html')
     .then(function(template) {
         element.innerHTML = template.data;
 
@@ -33,9 +42,9 @@ router.beforeEach((to, from, next) => {
 });
 
 axios.all([
-    axios.get('./dist/html/header.html'),
-    axios.get('./dist/html/footer.html'),
-    axios.get('./dist/html/right-block.html'),
+    axios.get('/dist/html/header.html'),
+    axios.get('/dist/html/footer.html'),
+    axios.get('/dist/html/right-block.html'),
 ])
 .then(axios.spread(function (headerTemplate, footerTemplate, rightBlockTemplate) {
     dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));

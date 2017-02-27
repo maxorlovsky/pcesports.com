@@ -4,9 +4,9 @@ const runSequence = require('run-sequence');
 require('require-dir')('./tasks');
 
 //add clean
-gulp.task('default', ['copy', 'styles', 'scripts']);
+gulp.task('release', ['copy', 'styles', 'scripts']);
 
-gulp.task('dev', (cb) => {
+gulp.task('build', (cb) => {
 	runSequence(
 		'lint:script',
 		'copy',

@@ -1,16 +1,12 @@
-<template>
-    <div class="pagination">
-        <router-link v-for="page in pages"
-            class="btn btn-info"
-            ole="button"
-            :class="page.disabled?'disabled':false"
-            v-bind:to="'/'+pageUrl+'/page/'+page.url">{{page.value}}</router-link>
-    </div>
-</template>
-
-<script>
-export default {
-	props: {
+Vue.component('pagination', {
+    template: '<div class="pagination">'+
+                '<router-link v-for="page in pages"'+
+                    'class="btn btn-info"'+
+                    'role="button"'+
+                    ':class="page.disabled?\'disabled\':false"'+
+                    'v-bind:to="\'/\'+pageUrl+\'/page/\'+page.url">{{page.value}}</router-link>'+
+              '</div>',
+    props: {
 		page: Number,
 		amount: Number,
 		pageUrl: String,
@@ -22,7 +18,10 @@ export default {
    	data: function() {
    		return { pages: {} };
 	},
-	methods: {
+    created: function() {
+        this.render();
+    },
+    methods: {
         render: function() {
             // Getting max amount of possible pages
 		    let maxPages = Math.ceil(this.amount / this.amountPerPage);
@@ -66,7 +65,7 @@ export default {
 		    }
 
 		    this.pages = pages;
-
+            
 		    return pages;
         }
     },
@@ -78,5 +77,4 @@ export default {
 			this.render();
 		}
 	}
-}
-</script>
+});

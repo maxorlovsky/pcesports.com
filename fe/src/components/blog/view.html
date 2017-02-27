@@ -1,29 +1,31 @@
-<div class="blog">
-    <div class="block">
-        <div class="block-header-wrapper">
-            <h1>Blog</h1>
-        </div>
+<script type="text/x-template" id="blog-template">
+    <div class="blog">
+        <div class="block">
+            <div class="block-header-wrapper">
+                <h1>Blog</h1>
+            </div>
 
-        <loading v-if="loading"></loading>
+            <loading v-if="loading"></loading>
 
-        <div class="block-content blog-block" v-for="post in posts">
-            <div class="date" v-html="post.date"></div>
-            <router-link class="image-holder"
-                v-bind:to="'/blog/article/'+post.slug"
-                v-html="post.image"></router-link>
-            <h3 :href="'blog/'+post.slug" class="title">{{post.title.rendered}}</h3>
-            <div class="text" v-html="post.excerpt.rendered"></div>
+            <div class="block-content blog-block" v-for="post in posts">
+                <div class="date" v-html="post.date"></div>
+                <router-link class="image-holder"
+                    v-bind:to="'/article/'+post.slug"
+                    v-html="post.image"></router-link>
+                <h3 :href="'blog/'+post.slug" class="title">{{post.title.rendered}}</h3>
+                <div class="text" v-html="post.excerpt.rendered"></div>
 
-            <router-link role="button"
-                class="btn btn-info"
-                v-bind:to="'/blog/article/'+post.slug">Read more</router-link>
-        </div>
+                <router-link role="button"
+                    class="btn btn-info"
+                    v-bind:to="'/article/'+post.slug">Read more</router-link>
+            </div>
 
-        <div class="pages">
-            <pagination v-bind:page="page"
-                :v-bind:amount="amount"
-                :amount-per-page="5"
-                page-url="blog"></pagination>
+            <div class="pages">
+                <pagination v-bind:page="page"
+                    v-bind:amount="amount"
+                    :amount-per-page="5"
+                    page-url="blog"></pagination>
+            </div>
         </div>
     </div>
-</div>
+</script>
