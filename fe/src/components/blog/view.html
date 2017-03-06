@@ -1,10 +1,6 @@
 <script type="text/x-template" id="blog-template">
     <div class="blog">
         <div class="block">
-            <div class="block-header-wrapper">
-                <h1>Blog</h1>
-            </div>
-
             <loading v-if="loading"></loading>
 
             <div class="block-content blog-block" v-for="post in posts">

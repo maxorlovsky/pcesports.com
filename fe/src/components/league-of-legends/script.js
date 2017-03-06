@@ -1,5 +1,5 @@
-const Home = {
-    template: '#home-template',
+const LolTournaments = {
+    template: '#lol-template',
     data: function() {
         const games = [
             {

@@ -3,11 +3,9 @@
         <div class="block">
             <loading v-if="loading"></loading>
 
-            <div v-if="!loading" class="block-header-wrapper">
-                <h1>{{post.title}} | Blog</h1>
-            </div>
-
             <div v-if="!loading" class="block-content blog-block">
+                <h2>{{post.title}}</h2>
+
                 <div class="date" v-html="post.date"></div>
                 <div class="image-holder" v-html="post.image"></div>
                 <div class="text" v-html="post.content"></div>

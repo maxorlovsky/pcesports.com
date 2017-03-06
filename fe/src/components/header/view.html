@@ -1,7 +1,23 @@
 <header :class="mood">
     <div class="burger"></div>
 
-    <a href="/" class="logo"><img src="./dist/assets/images/logo.png" /></a>
+    <a href="/" class="logo"><img src="../dist/assets/images/new-logo.png" /></a>
+
+    <nav>
+        <ul>
+            <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
+                <a v-if="link.target" :href="link.url" :target="link.target">{{link.title}}</a>
+                <router-link v-else :to="link.url" :target="link.target" exact>{{link.title}}</router-link>
+
+                <ul class="nav-sub" v-if="link.sublinks">
+                    <li :class="'nav-sublink ' + sublink.css_classes" v-for="(sublink, subkey) in link.sublinks">
+                        <a v-if="sublink.target" :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
+                        <router-link v-else :to="sublink.url" :target="sublink.target">{{sublink.title}}</router-link>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 
     <!--<ul class="nav-user">
         <li class="nav-link">
@@ -28,24 +44,6 @@
             </ul>
         </li>
     </ul>-->
-
-    <nav>
-        <div class="navbar-inner">
-            <ul class="nav" >
-                <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
-                    <a v-if="link.target" :href="link.url" :target="link.target">{{link.title}}</a>
-                    <router-link v-else :to="link.url" :target="link.target">{{link.title}}</router-link>
-
-                    <ul class="nav-sub" v-if="link.sublinks">
-                        <li :class="'nav-sublink ' + sublink.css_classes" v-for="(sublink, subkey) in link.sublinks">
-                            <a v-if="sublink.target" :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
-                            <router-link v-else :to="sublink.url" :target="sublink.target">{{sublink.title}}</router-link>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
     <div v-if="mood">
         <ul class="snow">

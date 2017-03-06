@@ -1,22 +1,43 @@
 <script type="text/x-template" id="home-template">
     <div class="home">
-        <div class="block blog-home-page">
-            <div class="block-header-wrapper">
-                <h1>Latest blogs</h1>
-            </div>
-
+        <div class="block home-games-categories">
             <div class="block-content">
                 <loading v-if="loading"></loading>
+
+                <h2 v-if="!loading">Choose a game</h2>
+
+                <div class="game-wrapper" v-if="!loading">
+                    <router-link
+                        :to="game.link"
+                        class="game-block"
+                        v-for="game in games"
+                        v-bind:class="game.cssClass">
+                        <button class="btn btn-primary">View {{game.gameName}} events</button>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+
+        <div class="block blog-home-page">
+            <div class="block-content">
+                <loading v-if="loading"></loading>
+
+                <h2 v-if="!loading">Latest blogs</h2>
+
                 <div class="small-blog-block" v-for="post in posts" v-if="!loading">
-                    <a :href="'../article/'+post.slug" class="blog-link-wrapper">
+                    <router-link :to="'../article/'+post.slug" class="blog-link-wrapper">
                         <div class="image-holder">
                             <span v-if="post.image" v-html="post.image"></span>
                             <p v-else>No image</p>
                         </div>
-                        <h4 class="title">{{post.title.rendered}}</h4>
+                        <h5 class="title">{{post.title.rendered}}</h5>
                         <div class="dates" v-html="post.date"></div>
-                    </a>
+                    </router-link>
                 </div>
+
+                <router-link
+                    :to="'../blog'"
+                    class="view-all btn btn-lg btn-secondary">View all blog posts</router-link>
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@ let router = new VueRouter({
             ]
         },
         { path: '/article/:post', component: Article, meta: { title: 'Article :post' } },
+        { path: '/league-of-legends', component: LolTournaments, meta: { title: 'League of Legends tournaments' } },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
         { path: '*', redirect: '/404' }
     ]
@@ -43,13 +44,11 @@ router.beforeEach((to, from, next) => {
 
 axios.all([
     axios.get('/dist/html/header.html'),
-    axios.get('/dist/html/footer.html'),
-    axios.get('/dist/html/right-block.html'),
+    axios.get('/dist/html/footer.html')
 ])
 .then(axios.spread(function (headerTemplate, footerTemplate, rightBlockTemplate) {
     dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
     dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
-    dynamicTemplates.rightBlock.appendChild(document.createTextNode(rightBlockTemplate.data));
 
     new Vue({
         el: '#app',

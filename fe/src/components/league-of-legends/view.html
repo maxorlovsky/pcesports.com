@@ -1,0 +1,21 @@
+<script type="text/x-template" id="lol-template">
+    <div class="lol-tournaments">
+        <div class="block home-games-categories">
+            <div class="block-content">
+                <loading v-if="loading"></loading>
+
+                <h2 v-if="!loading">Choose a game</h2>
+
+                <div class="game-wrapper" v-if="!loading">
+                    <router-link
+                        :to="game.link"
+                        class="game-block"
+                        v-for="game in games"
+                        v-bind:class="game.cssClass">
+                        <button class="btn btn-primary">View {{game.gameName}} events</button>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

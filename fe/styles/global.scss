@@ -8,6 +8,7 @@ $link-color: $mainColor;
 $link-hover-color: #555;
 $link-hover-decoration: none;
 $font-family-base: $font;
+$nav-link-padding: 0;
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
@@ -47,14 +48,10 @@ a {
 }
 
 .page {
-    min-width: 1130px;
-    width: 85%;
-    background-color: #f1f1f1;
-    padding: 20px;
-    z-index: 10;
+    width: 100%;
     flex: 1;
     position: relative;
-    margin: 81px auto 0px auto;
+    margin: 62px auto 0px auto;
     visibility: visible;
     height: auto;
 
@@ -76,12 +73,6 @@ a {
     display: none;
 }
 
-.left-container {
-    min-width: 790px;
-    width: 70%;
-    float: left;
-}
-
 .loading {
     width: 100%;
     min-height: 70px;
@@ -96,6 +87,14 @@ a {
 
 .template-holder {
     display: none;
+}
+
+.block-content h2 {
+    text-align: center;
+    margin: 10px 0 30px 0;
+    text-transform: uppercase;
+    font-family: 'Nunito';
+    font-weight: bold;
 }
 
 @import './sass.scss';
