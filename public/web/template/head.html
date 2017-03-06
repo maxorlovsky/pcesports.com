@@ -41,7 +41,7 @@ var g = {
 
     <a href="<?=_cfg('href')?>" class="logo"><img src="<?=_cfg('img')?>/logo.png" /></a>
     
-    <? if ($this->logged_in == 1) { ?>
+    <? /*if ($this->logged_in == 1) { ?>
         <ul class="nav-user">
             <?
             if ($this->data->links) {
@@ -78,7 +78,7 @@ var g = {
             ?>
         </ul>
         
-    <? } else { ?>
+    <? } else {*/ ?>
         <? if ($this->page == 'restoration') { ?>
             <a class="login" href="<?=_cfg('href')?>">
         <? } else { ?>
@@ -94,7 +94,7 @@ var g = {
         <? } else { ?>
             </div>
         <? } ?>
-    <? } ?>
+    <? //} ?>
     
     <nav>
         <div class="navbar-inner">

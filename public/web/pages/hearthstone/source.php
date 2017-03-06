@@ -161,7 +161,7 @@ class hearthstone extends System
                 }
             }
         
-            $rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
+            /*$rows = Db::fetchRows('SELECT `tournament_id`, `name`, `place` '.
                 'FROM `participants` '.
                 'WHERE `game` = "hs" AND '.
                 '`server` = "'.Db::escape($this->server).'" AND '.
@@ -176,7 +176,7 @@ class hearthstone extends System
                         $this->tournamentData[$v->tournament_id]['places'][$v->place] = $v->name;
                     }
                 }
-            }
+            }*/
         }
 		
 		include_once _cfg('pages').'/'.get_class().'/index.html';
