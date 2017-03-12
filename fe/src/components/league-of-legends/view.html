@@ -1,12 +1,27 @@
 <script type="text/x-template" id="lol-template">
     <div class="lol-tournaments">
-        <div class="block home-games-categories">
+        <div class="block">
             <div class="block-content">
                 <loading v-if="loading"></loading>
 
-                <h2 v-if="!loading">Choose a game</h2>
+                <h2 v-if="!loading">League of Legends tournaments</h2>
 
-                <div class="game-wrapper" v-if="!loading">
+                <div class="event-list-wrapper" v-for="game in games" v-if="!loading">
+                    <img src="../dist/assets/images/lol.png" />
+                    <div class="event-name-info">
+                        <h3 class="event-name">{{game.name}}</h3>
+                        <div>* {{game.region}} | * {{game.start_datetime}} | Max slots: {{game.participants_limit}}</div>
+                    </div>
+                    <div class="event-organizer"></div>
+                    <div class="event-status-links">
+                        <div class="event-status">Registration/Live</div>
+                        <div class="event-links">
+                            Links to event
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="game-wrapper" v-if="!loading">
                     <router-link
                         :to="game.link"
                         class="game-block"
@@ -14,7 +29,7 @@
                         v-bind:class="game.cssClass">
                         <button class="btn btn-primary">View {{game.gameName}} events</button>
                     </router-link>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
