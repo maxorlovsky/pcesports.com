@@ -2,10 +2,26 @@
     .event-list-wrapper {
         background-color: #ddd;
         border-bottom: 2px solid #000;
-        display: flex;
     }
 
     .event-item {
+        display: flex;
+    }
 
+    .event-image {
+        padding: 5px 10px;
+    }
+
+    .event-name-info {
+        padding: 10px 0;
+        width: 50%;
+        min-width: 300px;
+
+        .event-name {
+            width: 95%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
     }
 }

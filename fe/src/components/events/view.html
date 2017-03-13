@@ -8,16 +8,19 @@
 
                 <div class="event-list-wrapper" v-for="game in games" v-if="!loading">
                     <div class="event-item">
-                        <img src="../dist/assets/images/lol.png" />
+                        <img class="event-image" src="../../dist/assets/images/lol.png" />
                         <div class="event-name-info">
-                            <h3 class="event-name">{{game.name}}</h3>
-                            <div>* {{game.region}} | * {{game.start_datetime}} | Max slots: {{game.participants_limit}}</div>
+                            <h4 class="event-name">{{game.name}}</h4>
+                            <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
                         </div>
                         <div class="event-organizer"></div>
                         <div class="event-status-links">
                             <div class="event-status">Registration/Live</div>
                             <div class="event-links">
-                                Links to event
+                                <router-link
+                                    :to="'./'+game.id">
+                                    <button class="btn btn-primary">Details</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>

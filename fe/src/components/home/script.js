@@ -6,13 +6,13 @@ const Home = {
                 gameName: 'League of Legends',
                 cssClass: 'game-lol',
                 tournamentsNumbers: 0,
-                link: '../league-of-legends/'
+                link: '../events/league-of-legends/'
             },
             {
                 gameName: 'Hearthstone',
                 cssClass: 'game-hs',
                 tournamentsNumbers: 0,
-                link: '../hearthstone'
+                link: '../events/hearthstone'
             },
             /*{
                 gameName: 'Counter-Strike: GO',
