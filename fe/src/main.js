@@ -14,6 +14,20 @@ let router = new VueRouter({
             ]
         },
         { path: '/article/:post', component: Article, meta: { title: 'Article :post' } },
+        {
+            path: '/events',
+            component: Events,
+            meta: { title: 'Events List' },
+            children: [
+                {
+                    path: 'events/:game',
+                    meta: {
+                        game: ':game',
+                        title: 'Events list for :game'
+                    }
+                }
+            ]
+        },
         { path: '/league-of-legends', component: LolTournaments, meta: { title: 'League of Legends tournaments' } },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
         { path: '*', redirect: '/404' }
