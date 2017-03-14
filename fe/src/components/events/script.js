@@ -21,25 +21,24 @@ const Events = {
     },
     methods: {
         getGameData: function(gameName) {
-            const abbr = '';
-            const name = '';
+            const game = {};
 
             switch(gameName) {
                 case 'league-of-legends':
-                    abbr = 'lol';
-                    name = 'League of Legends';
+                    game.abbriviature = 'lol';
+                    game.name = 'League of Legends';
                 break;
                 case 'hearthstone':
-                    abbr = 'hs';
-                    name = 'Hearthstone';
+                    game.abbriviature = 'hs';
+                    game.name = 'Hearthstone';
                 break;
                 default:
-                    abbr = 'lol';
-                    name = 'League of Legends';
+                    game.abbriviature = 'lol';
+                    game.name = 'League of Legends';
                 break;
             }
 
-            return { name: name, abbriviature: abbr };
+            return game;
         }
     }
 };
