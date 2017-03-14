@@ -1,10 +1,9 @@
-const Events = {
-    template: '#events-template',
+const EventDetails = {
+    template: '#event-details-template',
     data: function() {
         return {
             loading: true,
-            games: {},
-            currentGame: '',
+            game: {},
         };
     },
     created: function() {
@@ -12,9 +11,9 @@ const Events = {
 
         this.currentGame = this.getGameData(this.$route.params.game);
 
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/?game=' + this.currentGame.abbriviature + '&limit=20')
+        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournament/?game=' + this.currentGame.abbriviature + '&id=1')
         .then(function (response) {
-            self.games = response.data;
+            self.game = response.data;
 
             self.loading = false;
         });

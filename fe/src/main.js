@@ -28,7 +28,7 @@ let router = new VueRouter({
                 }
             ]
         },
-        //{ path: '/league-of-legends', component: LolTournaments, meta: { title: 'League of Legends tournaments' } },
+        { path: '/events/:game/:event', component: EventDetails, meta: { title: 'Event Details' } },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
         { path: '*', redirect: '/404' }
     ]

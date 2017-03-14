@@ -1,0 +1,15 @@
+<script type="text/x-template" id="event-details-template">
+    <div class="event-details">
+        <div class="block">
+            <div class="block-content">
+                <loading v-if="loading"></loading>
+
+                <!--<h2 v-if="!loading">{{currentGame.name}} tournaments</h2>-->
+
+                <div class="" v-if="!loading">
+                    {{game}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
