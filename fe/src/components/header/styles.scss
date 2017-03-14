@@ -3,7 +3,7 @@ header {
     padding: 0;
     background-color: rgba(25, 25, 25, 0.9);
     border-bottom: 2px solid $mainColor;
-    position: fixed !important;
+    position: fixed;
     width: 100%;
     top: 0;
     z-index: 50;
@@ -18,11 +18,19 @@ header {
     .logo {
         margin: 0 2.5%;
         float: left;
-        width: 60px;
+        width: 113px;
         height: 60px;
+        position: relative;
 
         img {
-            width: 60px;
+            position: absolute;
+            width: 113px;
+            height: 80px;
+            transition: .5s;
+        }
+
+        &.logoSmall img {
+            width: 85px;
             height: 60px;
         }
     }

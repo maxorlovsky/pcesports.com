@@ -1,11 +1,17 @@
 .events {
+    .block-content {
+        background-color: #222;
+        h2 {color: #fff;}
+    }
+
     .event-list-wrapper {
-        background-color: #ddd;
+        background-color: #f5f5dc;
         border-bottom: 2px solid #000;
     }
 
     .event-item {
         display: flex;
+        color: #333;
     }
 
     .event-image {
@@ -21,5 +27,34 @@
             white-space: nowrap;
             overflow: hidden;
         }
+    }
+
+    .event-status-links {
+        padding: 10px 0;
+
+        .event-status {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+
+            &.started {
+                color: #900;
+            }
+            &.starting {
+                color: #ec971f;
+            }
+            &.upcoming {
+                color: #090;
+            }
+        }
+
+        .event-links a {
+            font-size: 1.4rem;
+            padding-right: 10px;
+        }
+    }
+
+    .event-details .btn {
+        cursor: pointer;
+        margin: 18px 0;
     }
 }

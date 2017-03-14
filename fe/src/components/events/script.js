@@ -4,22 +4,38 @@ const Events = {
         return {
             loading: true,
             games: {},
-            currentGame: '',
+            currentGame: {},
         };
     },
     created: function() {
-        var self = this;
-
-        this.currentGame = this.getGameData(this.$route.params.game);
-
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/?game=' + this.currentGame.abbriviature + '&limit=20')
-        .then(function (response) {
-            self.games = response.data;
-
-            self.loading = false;
-        });
+        return this.fetchEventData();
+    },
+    watch: {
+        $route: 'fetchEventData'
     },
     methods: {
+        fetchEventData: function() {
+            this.loading = true;
+
+            let self = this;
+            let filter = '?';
+
+            if (this.$route.params.game) {
+                this.currentGame = this.getGameData(this.$route.params.game);
+                filter += '&game=' + this.currentGame.abbriviature;
+            } else {
+                this.currentGame.name = 'All';
+            }
+
+            filter += '&limit=25';
+
+            axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
+            .then(function (response) {
+                self.games = response.data;
+
+                self.loading = false;
+            });
+        },
         getGameData: function(gameName) {
             const game = {};
 

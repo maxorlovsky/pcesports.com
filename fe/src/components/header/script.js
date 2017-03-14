@@ -3,11 +3,17 @@ Vue.component('header-component', {
     data: function() {
         return {
             mood: '',
+            logoSmall: false,
             menu: {}
         };
     },
     created: function() {
+        window.addEventListener('scroll', this.handleScroll);
+
         return this.fetchData();
+    },
+    destroyed: function() {
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         fetchData: function() {
@@ -46,6 +52,14 @@ Vue.component('header-component', {
                 
                 self.menu = returnMenu;
             });
+        },
+        handleScroll: function() {
+            if (window.scrollY !== 0) {
+                this.logoSmall = true;
+            }
+            else {
+                this.logoSmall = false;
+            }
         }
     }
 });
