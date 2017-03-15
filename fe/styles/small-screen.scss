@@ -5,11 +5,7 @@ body {
     margin: 0;
 }
 .burger {
-    &:before {
-        content: "\0069";
-    }
     display: block !important;
-    font: 80px 'EntypoRegular';
     float: left;
     color: #fff;
     margin: 0 10px;

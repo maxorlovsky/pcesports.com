@@ -55,6 +55,20 @@ const Events = {
             }
 
             return game;
+        },
+        getGameLink: function(gameAbbriviature) {
+            let link = '';
+
+            switch(gameAbbriviature) {
+                case 'lol':
+                    link = 'league-of-legends';
+                break;
+                case 'hs':
+                    link = 'hearthstone';
+                break;
+            }
+
+            return link;
         }
     }
 };

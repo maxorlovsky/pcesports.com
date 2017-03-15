@@ -28,7 +28,7 @@
                         </div>
                         <div class="event-details col-1">
                             <router-link
-                                :to="'/events/' + game.game + '/' + game.id">
+                                :to="'/events/' + getGameLink(game.game) + '/' + game.id">
                                 <button class="btn btn-secondary">Details</button>
                             </router-link>
                         </div>

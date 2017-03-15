@@ -7,6 +7,10 @@ gulp.task('copy', function() {
   	gulp.src('./fe/assets/**/*')
     	.pipe(gulp.dest('./public/dist/assets/'));
 
+	// FontAwesome fonts
+	gulp.src('./node_modules/font-awesome/fonts/*')
+        .pipe(gulp.dest('./public/dist/assets/font/'));
+
     // Copy html files with rename
     gulp.src('./fe/src/**/*.html')
 		.pipe(rename(function (path) {
