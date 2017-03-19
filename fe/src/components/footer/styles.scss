@@ -1,6 +1,6 @@
 footer {
     flex: none;
-    background-color: #1f1f1f;
+    background-color: rgba(25, 25, 25, 0.9);
     color: #888;
     border-top: 2px solid $mainColor;
     font-size: 0.75rem;
@@ -16,6 +16,11 @@ footer {
 
     .footer-links {
         float: right;
-        margin: 10px 7.5% 10px 0;
+        margin: 5px 7.5% 5px 0;
+
+        .fa {
+            font-size: 1.6rem;
+            margin-right: 0.5rem;
+        }
     }
 }

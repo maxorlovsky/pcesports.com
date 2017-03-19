@@ -6,30 +6,34 @@
 
                 <h2 v-if="!loading">{{currentGame.name}} tournaments</h2>
 
+                <div class="events-filters" v-if="!loading">
+                    <input type="text" placeholder="Region (North America / Europe), Name or Status (Started/Upcoming)" />
+                </div>
+
                 <div class="event-list-wrapper" v-for="game in games" v-if="!loading">
                     <div class="event-item col-12">
                         <div class="col-1">
                             <img class="event-image" :src="'../../dist/assets/images/' + game.game +'.png'" />
                         </div>
                         <div class="event-name-info col-7">
-                            <h4 class="event-name">{{game.name}}</h4>
+                            <h4 class="event-name" :title="game.name">{{game.name}}</h4>
                             <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
                         </div>
                         <div class="event-organizer col-1"></div>
                         <div class="event-status-links col-2">
                             <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>
                             <div class="event-links">
-                                <a :href="game.link" target="_blank"><i class="fa fa-external-link"></a>
-                                <a :href="game.fbLink" target="_blank" v-if="game.fbLink"><i class="fa fa-facebook"></a>
-                                <a :href="game.ytLink" target="_blank" v-if="game.ytLink"><i class="fa fa-youtube"></a>
-                                <a :href="game.twLink" target="_blank" v-if="game.twLink"><i class="fa fa-twitch"></a>
-                                <a :href="game.dsLink" target="_blank" v-if="game.dsLink"><i class="fa fa-comments"></a>
+                                <a :href="game.link" target="_blank" title="External source link"><i class="fa fa-external-link"></a>
+                                <a :href="game.fbLink" target="_blank" v-if="game.fbLink" title="Facebook"><i class="fa fa-facebook"></a>
+                                <a :href="game.ytLink" target="_blank" v-if="game.ytLink" title="Youtube"><i class="fa fa-youtube"></a>
+                                <a :href="game.twLink" target="_blank" v-if="game.twLink" title="Twitch"><i class="fa fa-twitch"></a>
+                                <a :href="game.dsLink" target="_blank" v-if="game.dsLink" title="Discord"><i class="fa fa-comments"></a>
                             </div>
                         </div>
                         <div class="event-details col-1">
                             <router-link
                                 :to="'/events/' + getGameLink(game.game) + '/' + game.id">
-                                <button class="btn btn-secondary">Details</button>
+                                <button class="btn btn-success">Details</button>
                             </router-link>
                         </div>
                     </div>

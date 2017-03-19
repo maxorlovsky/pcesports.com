@@ -12,7 +12,7 @@ const Home = {
                 gameName: 'Hearthstone',
                 cssClass: 'game-hs',
                 tournamentsNumbers: 0,
-                link: '../events/hearthstone'
+                link: '../events/hearthstone/'
             },
             /*{
                 gameName: 'Counter-Strike: GO',

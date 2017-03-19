@@ -57,4 +57,18 @@
         cursor: pointer;
         margin: 18px 0;
     }
+
+    .events-filters {
+        input[type="text"] {
+            border: 1px solid #f5f5dc;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 5px 10px;
+            width: 95%;
+            margin: 10px auto;
+            display: block;
+            font-size: 1.3rem;
+            font-family: $font;
+        }
+    }
 }

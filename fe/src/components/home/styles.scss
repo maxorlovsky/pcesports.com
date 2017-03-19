@@ -11,13 +11,14 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 	}
 
     .blog-home-page {
-        max-width: 1170px;
+        max-width: 90%;
         margin: 0 auto;
 
         text-align: center;
 
         .block-content {
             @include clearfix();
+            background-color: #f5f5dc;
         }
 
         .small-blog-block {
@@ -42,10 +43,6 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 text-overflow: ellipsis;
                 max-height: 100px;
                 width: 100%;
-
-                &:hover {
-                    color: #fff;
-                }
             }
 
             .dates {
@@ -62,11 +59,16 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             }
 
             .image-holder {
-                background-color: #999;
-                width: 100%;
+                background-color: #444;
                 height: 170px;
                 overflow: hidden;
                 margin-bottom: 10px;
+
+                > div {
+                    background-size: cover;
+                    background-position: center center;
+                    height: 170px;
+                }
 
                 p {
                     display: block;
@@ -179,6 +181,18 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         .game-smite {
             background-image: url('../assets/images/smite-logo-big.png');
             background-color: #449d44;
+        }
+    }
+
+    .seo-about {
+        .block-content {
+            background-color: #111;
+            color: #fff;
+        }
+
+        .seo-content {
+            width: 90%;
+            margin: 0 auto;
         }
     }
 }

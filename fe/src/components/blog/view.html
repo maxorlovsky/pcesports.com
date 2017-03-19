@@ -5,9 +5,8 @@
 
             <div class="block-content blog-block" v-for="post in posts">
                 <div class="date" v-html="post.date"></div>
-                <router-link class="image-holder"
-                    v-bind:to="'/article/'+post.slug"
-                    v-html="post.image"></router-link>
+                <div class="image-holder"
+                    v-html="post.image"></div>
                 <h3 :href="'blog/'+post.slug" class="title">{{post.title.rendered}}</h3>
                 <div class="text" v-html="post.excerpt.rendered"></div>
 

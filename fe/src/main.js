@@ -1,35 +1,66 @@
 let router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/', component: Home, meta: { title: 'Home' } },
+        {
+            path: '/',
+            component: Home,
+            meta: {
+                title: 'Home',
+                template: 'home'
+            },
+        },
         {
             path: '/blog',
             component: Blog,
-            meta: { title: 'Blog' },
+            meta: {
+                title: 'Blog',
+                template: 'blog'
+            },
             children: [
                 {
                     path: 'page/:page',
-                    meta: { title: 'Blog page :page' }
+                    meta: {
+                        title: 'Blog page :page',
+                        template: 'blog'
+                    }
                 }
             ]
         },
-        { path: '/article/:post', component: Article, meta: { title: 'Article :post' } },
+        {
+            path: '/article/:post',
+            component: Article,
+            meta: {
+                title: 'Article :post',
+                template: 'article'
+            }
+        },
         {
             path: '/events',
             component: Events,
-            meta: { title: 'Events List' },
+            meta: {
+                title: 'Events List',
+                template: 'events'
+            },
             children: [
                 {
                     path: ':game',
                     meta: {
                         game: ':game',
-                        title: 'Events list for :game'
+                        title: 'Events list for :game',
+                        template: 'events'
                     }
                 }
             ]
         },
-        { path: '/events/:game/:event', component: EventDetails, meta: { title: 'Event Details' } },
-        { path: '/404', component: PageNotFound, meta: { title: 'Page not found' } },
+        {
+            path: '/events/:game/:event',
+            component: EventDetails,
+            meta: {
+                title: 'Event Details',
+                template: 'event-details'
+            }
+        },
+        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
         { path: '*', redirect: '/404' }
     ]
 });
@@ -41,14 +72,8 @@ router.beforeEach((to, from, next) => {
 
     // Loading html template for component
     let element = document.getElementById('template-holder');
-    let getPath = to.path.split('/');
-    getPath = getPath[1];
 
-    if (getPath === '') {
-        getPath = 'home';
-    }
-
-    axios.get('/dist/html/' + getPath + '.html')
+    axios.get('/dist/html/' + to.meta.template + '.html')
     .then(function(template) {
         element.innerHTML = template.data;
 
