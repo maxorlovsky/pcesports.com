@@ -7,11 +7,55 @@
                 <h2 v-if="!loading">{{currentGame.name}} tournaments</h2>
 
                 <div class="events-filters" v-if="!loading">
-                    <input type="text" placeholder="Region (North America / Europe), Name or Status (Started/Upcoming)" />
+                    <input class="filter-input" type="text" placeholder="Region (North America / Europe), Name or Status (Started/Upcoming)" />
+
+                    <div class="btn-group" :class="{ 'show': status.open }">
+                        <button class="btn btn-secondary dropdown-toggle"
+                            v-on:click="status.open ? status.open = false : status.open = true">
+                            <i class="fa fa-check-circle-o"></i> {{status.name}}</i>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <button type="link"
+                                class="dropdown-item"
+                                :class="{ 'active': status.current === null }"
+                                v-on:click="status.open = false; status.current = null; fetchEventData();">All</button>
+
+                            <div class="dropdown-divider"></div>
+
+                            <button type="link"
+                                class="dropdown-item"
+                                :class="{ 'active': status.current == value }"
+                                v-for="value in status.list"
+                                v-on:click="status.open = false; status.current = value; fetchEventData();">{{value}}</button>
+                        </div>
+                    </div>
+
+                    <div class="btn-group" :class="{ 'show': region.open }">
+                        <button class="btn btn-primary dropdown-toggle"
+                            v-on:click="region.open ? region.open = false : region.open = true">
+                            <i class="fa fa-globe"></i> {{region.name}} <i class="fa fa-chevron-down"></i>
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <button type="link"
+                                class="dropdown-item"
+                                :class="{ 'active': region.current === null }"
+                                v-on:click="region.open = false; region.current = null; fetchEventData();">All</button>
+
+                            <div class="dropdown-divider"></div>
+
+                            <button type="link"
+                                class="dropdown-item"
+                                :class="{ 'active': region.current == key }"
+                                v-for="value, key in region.list"
+                                v-on:click="region.open = false; region.current = key; fetchEventData();">{{value}}</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="event-list-wrapper" v-for="game in games" v-if="!loading">
-                    <div class="event-item col-12">
+                <div class="event-list-wrapper" v-if="games">
+                    <div class="event-item col-12" v-for="game in games">
                         <div class="col-1">
                             <img class="event-image" :src="'../../dist/assets/images/' + game.game +'.png'" />
                         </div>
@@ -37,6 +81,9 @@
                             </router-link>
                         </div>
                     </div>
+                </div>
+                <div class="event-list-wrapper" v-else>
+                    <div class="event-none col-12">There are no tournaments available</div>
                 </div>
             </div>
         </div>

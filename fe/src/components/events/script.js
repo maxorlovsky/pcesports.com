@@ -5,6 +5,18 @@ const Events = {
             loading: true,
             games: {},
             currentGame: {},
+            status: {
+                name: 'Status',
+                list: ['Started', 'Starting soon', 'Upcoming'],
+                open: false,
+                current: null
+            },
+            region: {
+                name: 'Region',
+                list: {},
+                open: false,
+                current: null
+            }
         };
     },
     created: function() {
@@ -23,11 +35,20 @@ const Events = {
             if (this.$route.params.game) {
                 this.currentGame = this.getGameData(this.$route.params.game);
                 filter += '&game=' + this.currentGame.abbriviature;
+                this.region.list = this.currentGame.regions;
             } else {
                 this.currentGame.name = 'All';
             }
 
             filter += '&limit=40';
+
+            if (this.region.current) {
+                filter += '&region='+this.region.current;
+            }
+
+            if (this.status.current) {
+                filter += '&status='+this.status.current.toLowerCase();
+            }
 
             axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
             .then(function (response) {
@@ -54,17 +75,22 @@ const Events = {
             const game = {};
 
             switch(gameName) {
-                case 'league-of-legends':
-                    game.abbriviature = 'lol';
-                    game.name = 'League of Legends';
-                break;
                 case 'hearthstone':
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';
+                    game.regions = {
+                        'na': 'North America',
+                        'eu': 'Europe',
+                    };
                 break;
                 default:
                     game.abbriviature = 'lol';
                     game.name = 'League of Legends';
+                    game.regions = {
+                        'na': 'North America',
+                        'euw': 'Europe West',
+                        'eune': 'Europe East'
+                    };
                 break;
             }
 
