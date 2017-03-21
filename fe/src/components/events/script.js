@@ -9,13 +9,13 @@ const Events = {
                 name: 'Status',
                 list: ['Started', 'Starting soon', 'Upcoming'],
                 open: false,
-                current: null
+                current: 'All'
             },
             region: {
                 name: 'Region',
                 list: {},
                 open: false,
-                current: null
+                current: 'All'
             }
         };
     },
