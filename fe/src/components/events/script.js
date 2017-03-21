@@ -55,7 +55,7 @@ const Events = {
                 filter += '&search='+this.searchString;
             }
 
-            axios.get('http://dev.api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
+            axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
             .then(function (response) {
                 self.games = response.data;
 
