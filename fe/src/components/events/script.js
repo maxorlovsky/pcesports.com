@@ -16,7 +16,8 @@ const Events = {
                 list: {},
                 open: false,
                 current: 'All'
-            }
+            },
+            searchString: '',
         };
     },
     created: function() {
@@ -42,15 +43,19 @@ const Events = {
 
             filter += '&limit=40';
 
-            if (this.region.current) {
-                filter += '&region='+this.region.current;
+            if (this.region.current && this.region.current != 'All') {
+                filter += '&region='+this.region.current.toLowerCase();
             }
 
-            if (this.status.current) {
+            if (this.status.current && this.status.current != 'All') {
                 filter += '&status='+this.status.current.toLowerCase();
             }
 
-            axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
+            if (this.searchString && this.searchString.length >= 3) {
+                filter += '&search='+this.searchString;
+            }
+
+            axios.get('http://dev.api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
             .then(function (response) {
                 self.games = response.data;
 
@@ -109,6 +114,14 @@ const Events = {
             }
 
             return link;
+        },
+        closeDropdown: function(event) {
+            if (event.toElement.className.indexOf('dropdown') !== - 1) {
+                return false;
+            }
+
+            this.status.open = false;
+            this.region.open = false;
         }
     }
 };
