@@ -24,6 +24,9 @@ const EventDetails = {
 
             self.game.meta_data = JSON.parse(self.game.meta_data);
 
+            self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />')
+            self.game.meta_data.description = self.game.meta_data.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
+
             self.loading = false;
         });
     },

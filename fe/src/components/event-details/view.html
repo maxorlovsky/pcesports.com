@@ -13,11 +13,11 @@
                     <p>{{game.start_datetime}}</p>
                     <p>{{game.meta_data.best_of}}</p>
                     <p>{{game.meta_data.elimination}}</p>
-                    <p>{{game.meta_data.prizes}}</p>
+                    <p v-html="game.meta_data.prizes"></p>
                     <p>{{game.meta_data.free}}</p>
                     <p>{{game.meta_data.home_link}}</p>
                     <p>{{game.meta_data.registration_link}}</p>
-                    <p>{{game.meta_data.description}}</p>
+                    <p v-html="game.meta_data.description"></p>
                     <a :href="game.fbLink" target="_blank" v-if="game.fbLink" title="Facebook"><i class="fa fa-facebook"></a>
                     <a :href="game.ytLink" target="_blank" v-if="game.ytLink" title="Youtube"><i class="fa fa-youtube"></a>
                     <a :href="game.twLink" target="_blank" v-if="game.twLink" title="Twitch"><i class="fa fa-twitch"></a>
