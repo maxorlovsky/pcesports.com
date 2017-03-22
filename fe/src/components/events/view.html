@@ -70,7 +70,9 @@
                             <h4 class="event-name" :title="game.name">{{game.name}}</h4>
                             <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
                         </div>
-                        <div class="event-organizer col-1"></div>
+                        <div class="event-organizer col-1">
+                            <img :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.jpg'" />
+                        </div>
                         <div class="event-status-links col-2">
                             <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>
                             <div class="event-links">
