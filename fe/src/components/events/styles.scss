@@ -96,7 +96,12 @@
         }
     }
 
-    .event-organizer img {
-        width: 100%;
+    .event-organizer {
+        text-align: center;
+        
+        img {
+            height: 48px;
+            margin: 15px 0;
+        }
     }
 }

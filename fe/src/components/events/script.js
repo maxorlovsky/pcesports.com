@@ -18,13 +18,17 @@ const Events = {
                 current: 'All'
             },
             searchString: '',
+            searchStatus: false,
         };
     },
     created: function() {
         return this.fetchEventData();
     },
     watch: {
-        $route: 'fetchEventData'
+        $route: function() {
+            this.searchString = '';
+            this.fetchEventData();
+        }
     },
     methods: {
         fetchEventData: function() {
@@ -122,6 +126,23 @@ const Events = {
 
             this.status.open = false;
             this.region.open = false;
+        },
+        cleanSearch: function(keyAction) {
+            if (keyAction && !this.searchString) {
+                this.searchStatus = false;
+                return false;
+            }
+            else if (keyAction) {
+                this.searchStatus = true;
+                return false;
+            }
+            
+            if (this.searchString.length === 0 && this.searchStatus) {
+                // Need to delay the function call
+                setTimeout(() => {
+                    this.fetchEventData();
+                });
+            }
         }
     }
 };

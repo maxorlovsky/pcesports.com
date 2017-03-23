@@ -4,15 +4,19 @@
             <div class="block-content">
                 <loading v-if="loading"></loading>
 
-                <h2 v-if="!loading">{{currentGame.name}} tournaments</h2>
+                <h2>{{currentGame.name}} tournaments</h2>
 
-                <div class="events-filters" v-if="!loading">
+                <div class="events-filters">
                     <input class="filter-input"
                         type="text"
                         placeholder="Input name of event and press enter"
                         v-model="searchString"
                         v-on:keyup.enter="searchString.length >= 3 ? fetchEventData() : false"
-                        v-on:keydown.8="searchString.length == 1 ? fetchEventData() : false" />
+                        v-on:keydown.8="cleanSearch(true)"
+                        v-on:keydown.46="cleanSearch(true)"
+                        v-on:keyup.8="cleanSearch(false)"
+                        v-on:keyup.46="cleanSearch(false)"
+                         />
 
                     <div class="btn-group" :class="{ 'show': status.open }">
                         <button class="btn btn-secondary dropdown-toggle"
@@ -71,7 +75,7 @@
                             <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
                         </div>
                         <div class="event-organizer col-1">
-                            <img :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.jpg'" />
+                            <img :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.png'" />
                         </div>
                         <div class="event-status-links col-2">
                             <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>
