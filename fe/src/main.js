@@ -83,11 +83,15 @@ router.beforeEach((to, from, next) => {
 
 axios.all([
     axios.get('/dist/html/header.html'),
-    axios.get('/dist/html/footer.html')
+    axios.get('/dist/html/footer.html'),
+    axios.get('/dist/html/event-item.html'),
+    //axios.get('/dist/html/events-filters.html'),
 ])
-.then(axios.spread(function (headerTemplate, footerTemplate, rightBlockTemplate) {
+.then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate) {
     dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
     dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
+    dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
+    //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
 
     new Vue({
         el: '#app',

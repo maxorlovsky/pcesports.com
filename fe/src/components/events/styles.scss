@@ -8,61 +8,11 @@
         background-color: #f5f5dc;
     }
 
-    .event-item {
-        display: flex;
-        color: #333;
-        border-bottom: 2px solid #000;
-    }
-
     .event-none {
         font-style: italic;
         text-align: center;
         padding: 10px 0;
         font-size: 1.1rem;
-    }
-
-    .event-image {
-        margin: 5px 0;
-    }
-
-    .event-name-info {
-        padding: 10px 0;
-
-        .event-name {
-            width: 95%;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-    }
-
-    .event-status-links {
-        padding: 10px 0;
-
-        .event-status {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-
-            &.started {
-                color: #900;
-            }
-            &.starting {
-                color: #ec971f;
-            }
-            &.upcoming {
-                color: #090;
-            }
-        }
-
-        .event-links a {
-            font-size: 1.4rem;
-            padding-right: 10px;
-        }
-    }
-
-    .event-details .btn {
-        cursor: pointer;
-        margin: 18px 0;
     }
 
     .events-filters {
@@ -93,15 +43,6 @@
             span {
                 text-transform: capitalize;
             }
-        }
-    }
-
-    .event-organizer {
-        text-align: center;
-        
-        img {
-            height: 48px;
-            margin: 15px 0;
         }
     }
 }
