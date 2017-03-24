@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const rename = require("gulp-rename");
 
-gulp.task('copy', function() {
+gulp.task('copy', () => {
 	// Copy assets
   	gulp.src('./fe/assets/**/*')
     	.pipe(gulp.dest('./public/dist/assets/'));
@@ -13,7 +13,7 @@ gulp.task('copy', function() {
 
     // Copy html files with rename
     gulp.src('./fe/src/**/*.html')
-		.pipe(rename(function (path) {
+		.pipe(rename((path) => {
 			let split = path.dirname.split(/[\\\/]+/).pop();
 			let newName = path.basename.replace(path.basename, split);
 			path.dirname = '';
