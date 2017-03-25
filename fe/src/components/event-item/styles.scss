@@ -51,8 +51,12 @@
         }
     }
 
-    .event-details .btn {
-        cursor: pointer;
-        margin: 18px 0;
+    .event-details {
+        text-align: center;
+
+        .btn {
+            cursor: pointer;
+            margin: 18px 0;
+        }
     }
 }

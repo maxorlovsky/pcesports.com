@@ -79,6 +79,10 @@
                 <div class="event-list-wrapper" v-else>
                     <div class="event-none col-12">There are no tournaments tournaments matching criteria</div>
                 </div>
+
+                <button class="load-more btn btn-lg btn-primary"
+                    v-on:click="loadMore()"
+                    v-if="!hideLoadMore">Load more</button>
             </div>
         </div>
     </div>

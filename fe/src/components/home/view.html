@@ -22,6 +22,8 @@
             <div class="block-content">
                 <loading v-if="loading"></loading>
 
+                <adsense></adsense>
+
                 <h2 v-if="!loading">Latest blogs</h2>
 
                 <div class="small-blog-block" v-for="post in posts" v-if="!loading">
@@ -46,8 +48,10 @@
                 <loading v-if="loading"></loading>
 
                 <div class="seo-content" v-if="!loading">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer commodo nunc dolor, vel maximus diam lobortis at. Morbi sodales lacus efficitur felis egestas, mollis dictum nisl posuere. Pellentesque pellentesque odio et tortor ornare, quis condimentum enim venenatis. Nulla commodo justo mi, ac hendrerit lectus tincidunt eget. Donec et pulvinar enim, ac lobortis orci. Proin non mauris eget nisi pharetra eleifend. Donec ut sapien et arcu scelerisque aliquet. Morbi fringilla urna id sapien ultricies eleifend. Cras imperdiet dui a nunc efficitur aliquam. In feugiat, dolor id posuere malesuada, mi ex egestas enim, elementum consectetur est urna a arcu. Praesent arcu ex, vehicula faucibus ex nec, lacinia commodo ligula. Aliquam nec ultricies sem. Cras tortor metus, consequat vitae lacus in, interdum interdum nisl.</p>
-                    <p>Mauris sit amet metus blandit, lobortis enim sed, porta enim. Proin pulvinar vestibulum suscipit. Duis facilisis nec felis sit amet maximus. Aenean arcu ante, fringilla a iaculis at, tristique quis purus. Nunc suscipit sem quis arcu feugiat, sodales lobortis nibh lobortis. Suspendisse potenti. Quisque pellentesque mollis magna, eu consequat leo. Quisque suscipit fringilla iaculis. In hac habitasse platea dictumst. Duis eleifend erat quis orci fermentum placerat. Morbi in accumsan leo. Duis scelerisque nisl in sollicitudin tincidunt. Proin in felis sem. Etiam eu mollis purus, non porttitor sem. Nulla facilisi. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                    <h1>eSports event catalog for PC games</h1>
+                    <p>"PC eSports" provide catalog of game events, played on PC, mostly online, for North America and Europe. Catalog created with the idea to help amature and semi-pro teams to find tournaments easily on centralized platform. Catalog displaying informations for games such as <router-link :to="'../events/league-of-legends'">League of Legends</router-link>, <router-link :to="'../events/hearthstone'">Hearthstone</router-link> from many platforms such as <a href="http://events.na.leagueoflegends.com/" target="_blank">LoL Events page</a>, <a href="https://battlefy.com/" target="_blank">Battlefy</a>, <a href="https://strivewire.com/" target="_blank">StriveWire</a>.</p>
+                    <p>For feedback, comment, questions you can always leave feedback on <a href="https://www.reddit.com/r/pcesports/" target="_blank">PC eSports subreddit</a>.</p>
+                    <p>PC eSports is not in any way connected to tournament organizers specified in catalog. PC eSports is not responsible for organizers actions and updates that can happen to event.</p>
                 </div>
             </div>
         </div>

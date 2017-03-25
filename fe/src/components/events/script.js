@@ -19,6 +19,9 @@ const Events = {
             },
             searchString: '',
             searchStatus: false,
+            hideLoadMore: true,
+            limit: 40,
+            offset: 0
         };
     },
     created: function() {
@@ -27,6 +30,7 @@ const Events = {
     watch: {
         $route: function() {
             this.searchString = '';
+            this.offset = 0;
             this.fetchEventData();
         }
     },
@@ -45,7 +49,7 @@ const Events = {
                 this.currentGame.name = 'All';
             }
 
-            filter += '&limit=40';
+            filter += '&limit=' + this.limit;
 
             if (this.region.current && this.region.current != 'All') {
                 filter += '&region='+this.region.current.toLowerCase();
@@ -59,22 +63,41 @@ const Events = {
                 filter += '&search='+this.searchString;
             }
 
+            if (this.offset) {
+                filter += '&offset=' + this.offset;
+            }
+
             axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
             .then(function (response) {
-                self.games = response.data;
+                let gamesFiltered = response.data;
 
                 let currentDate = new Date();
                 let timezoneOffset = currentDate.getTimezoneOffset() * 60;
 
-                for (let i = 0; i < self.games.length; i++) {
-                    let date = new Date((self.games[i].startTime - timezoneOffset) * 1000);
+                for (let i = 0; i < gamesFiltered.length; i++) {
+                    let date = new Date((gamesFiltered[i].startTime - timezoneOffset) * 1000);
 
-                    self.games[i].name = self.games[i].name
+                    gamesFiltered[i].name = gamesFiltered[i].name
                         .replace(/&amp;/g, "&")
                         .replace(/&gt;/g, ">")
                         .replace(/&lt;/g, "<")
                         .replace(/&quot;"/g, "\"");
-                    self.games[i].startTime = date.toUTCString().replace(':00 GMT', '');
+                    gamesFiltered[i].startTime = date.toUTCString().replace(':00 GMT', '');
+                }
+
+                if (self.offset) {
+                    let combinedArray = self.games.concat(gamesFiltered);
+                    self.games = combinedArray;
+                }
+                else {
+                    self.games = gamesFiltered;
+                }
+
+                if (gamesFiltered.length < self.limit) {
+                    self.hideLoadMore = true;
+                }
+                else {
+                    self.hideLoadMore = false;
                 }
 
                 self.loading = false;
@@ -129,6 +152,11 @@ const Events = {
                     this.fetchEventData();
                 });
             }
+        },
+        loadMore: function() {
+            this.offset += this.limit;
+
+            this.fetchEventData();
         }
     }
 };

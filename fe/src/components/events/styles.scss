@@ -6,6 +6,9 @@
 
     .event-list-wrapper {
         background-color: #f5f5dc;
+        width: 100%;
+        overflow-x: auto;
+
     }
 
     .event-none {
@@ -21,6 +24,11 @@
         justify-content: space-between;
         margin-bottom: 10px;
 
+        @media (max-width: 768px) {
+            display: block;
+            text-align: center;
+        }
+
         .filter-input {
             border: 1px solid #f5f5dc;
             background: rgba(0, 0, 0, 0.5);
@@ -30,6 +38,15 @@
             display: block;
             font-size: 1.3rem;
             font-family: $font;
+
+            @media (max-width: 1024px) {
+                width: 50%;
+            }
+
+            @media (max-width: 768px) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
 
         .btn {
@@ -44,5 +61,11 @@
                 text-transform: capitalize;
             }
         }
+    }
+
+    .load-more {
+        margin: 2rem auto;
+        display: flex;
+        cursor: pointer;
     }
 }

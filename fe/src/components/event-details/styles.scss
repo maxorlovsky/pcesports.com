@@ -5,4 +5,97 @@
         background-color: #222;
         color: #fff;
     }
+
+    .event-details-header {
+        display: flex;
+        align-items: center;
+
+        h1 {
+            width: 50%;
+            text-align: center;
+            padding: 0 1rem;
+            margin: 0;
+        }
+
+        .game-image {
+            width: 50%;
+            padding: 0 1rem;
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .event-details-wrapper {
+        display: flex;
+
+        h4 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .event-details-data {
+            width: 50%;
+            margin-right: 1rem;
+        }
+
+        .event-additiona-data {
+            display: flex;
+            justify-content: space-between;
+
+            > div {
+                width: 50%;
+                padding: 0 1rem;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+                &:last-child {
+                    padding-right: 0;
+                }
+            }
+
+            .event-links a {
+                display: block;
+                font-size: 1.3rem;
+            }
+        }
+
+        .event-description {
+            border: 1px solid #eee;
+            padding: 1rem;
+            margin-left: 1rem;
+            width: 50%;
+        }
+
+        .event-details-params {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            
+            .event-details-platform img {
+                max-width: 20px;
+                width: 1.3rem;
+                margin-left: 0.5rem;
+            }
+
+            p {
+                flex-grow: 1;
+                width: 45%;
+                box-sizing: border-box;
+                border-bottom: 1px solid #eee;
+                margin-right: 1rem;
+                
+                &:nth-child(2n+2),
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            label {
+                font-weight: bold;
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@ const Article = {
     data: function () {
         return {
             loading: true,
+            pageError: '',
             post: {}
         };
     },
@@ -13,6 +14,9 @@ const Article = {
 
         axios.get('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?slug='+this.$route.params.post)
         .then(function (response) {
+            if (response.data === []) {
+                return false;
+            }
             let post = response.data[0];
 
             let date = (new Date(post.date));
@@ -23,6 +27,10 @@ const Article = {
             document.title = post.title + ' | Blog | PC eSports';
 
             self.post = post;
+            self.loading = false;
+        })
+        .catch(function (error) {
+            self.pageError = 'Blog post not found';
             self.loading = false;
         });
     }

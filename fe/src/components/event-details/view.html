@@ -1,28 +1,60 @@
 <script type="text/x-template" id="event-details-template">
     <div class="event-details">
         <div class="block">
-            <div class="block-content">
+            <div class="block-content" v-if="!pageError">
                 <loading v-if="loading"></loading>
 
-                <h2 v-if="!loading">{{game.name}}</h2>
-
-                <div class="" v-if="!loading">
-                    <a :href="game.link" target="_blank" title="External source link"><i class="fa fa-external-link"></a>
-
-                    <p>{{game.participants_limit}}</p>
-                    <p>{{game.start_datetime}}</p>
-                    <p>{{game.meta_data.best_of}}</p>
-                    <p>{{game.meta_data.elimination}}</p>
-                    <p v-html="game.meta_data.prizes"></p>
-                    <p>{{game.meta_data.free}}</p>
-                    <p>{{game.meta_data.home_link}}</p>
-                    <p>{{game.meta_data.registration_link}}</p>
-                    <p v-html="game.meta_data.description"></p>
-                    <a :href="game.fbLink" target="_blank" v-if="game.fbLink" title="Facebook"><i class="fa fa-facebook"></a>
-                    <a :href="game.ytLink" target="_blank" v-if="game.ytLink" title="Youtube"><i class="fa fa-youtube"></a>
-                    <a :href="game.twLink" target="_blank" v-if="game.twLink" title="Twitch"><i class="fa fa-twitch"></a>
-                    <a :href="game.dsLink" target="_blank" v-if="game.dsLink" title="Discord"><i class="fa fa-comments"></a>
+                <div class="event-details-header" v-if="!loading && game">
+                    <h1>{{game.name}}</h1>
+                    <router-link class="game-image"
+                        :to="'/events/' + $route.params.game">
+                        <img :src="'../../dist/assets/images/' + game.game +'-logo-big.png'" />
+                    </router-link>
                 </div>
+
+                <div class="event-details-wrapper" v-if="!loading && game">
+                    <div class="event-details-data">
+                        <div class="event-details-params">
+                            <p v-if="game.platform" class="event-details-platform"><label>Platform:</label> {{game.platform.name}} <img v-if="game.platform.image" :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" /></p>
+                            <p v-if="game.region"><label>Region:</label> {{game.region.toUpperCase()}}</p>
+                            <p v-if="game.participants_limit"><label>Participants limit:</label> {{game.participants_limit}}</p>
+                            <p v-if="game.start_datetime"><label>Start time:</label> {{game.start_datetime}}</p>
+                            <p v-if="game.meta_data.best_of"><label>Best of (*):</label> {{game.meta_data.best_of}}</p>
+                            <p v-if="game.meta_data.elimination"><label>Tournament format:</label> {{game.meta_data.elimination}}</p>
+                            <p v-if="game.meta_data.free"><label>Payment:</label> {{game.meta_data.free}}</p>
+                            <p v-if="game.meta_data.online"><label>Online:</label> {{game.meta_data.free}}</p>
+                        </div>
+
+                        <div class="event-additiona-data">
+                            <div class="event-prizes">
+                                <h4>Prizes</h4>
+                                <p v-html="game.meta_data.prizes"></p>
+                            </div>
+
+                            <div class="event-links">
+                                <h4>Links</h4>
+                                <a :href="game.link" target="_blank" v-if="game.link"><i class="fa fa-external-link"> Link to platform</a>
+                                <a :href="game.meta_data.home_link" target="_blank" v-if="game.meta_data.home_link"><i class="fa fa-external-link"> Home page</a>
+                                <a :href="game.meta_data.registration_link" target="_blank" v-if="game.meta_data.registration_link"><i class="fa fa-external-link"> Registration link</a>
+                                <a :href="game.meta_data.facebook_link" target="_blank" v-if="game.meta_data.facebook_link"><i class="fa fa-facebook"> Facebook</a>
+                                <a :href="game.meta_data.youtube_link" target="_blank" v-if="game.meta_data.youtube_link"><i class="fa fa-youtube"> YouTube</a>
+                                <a :href="game.meta_data.twitch_link" target="_blank" v-if="game.meta_data.twitch_link"><i class="fa fa-twitch"> Twitch.TV</a>
+                                <a :href="game.meta_data.discord_link" target="_blank" v-if="game.meta_data.discord_link"><i class="fa fa-comments"> Discord chat</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-description">
+                        <h4>Event description</h4>
+                        <p v-html="game.meta_data.description"></p>
+                    </div>
+                </div>
+
+                <adsense></adsense>
+            </div>
+
+            <div class="maintenance block-content" v-if="pageError">
+                <h2>{{pageError}}</h2>
+                <img src="/dist/assets/images/maintenance.png" />
             </div>
         </div>
     </div>

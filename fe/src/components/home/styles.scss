@@ -185,8 +185,12 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
     }
 
     .seo-about {
+        h1 {
+            font-size: 1.4rem;
+        }
+
         .block-content {
-            background-color: rgba(15, 15, 15, 0.9);
+            background-color: rgba(15, 15, 15, 0.95);
             color: #ddd;
         }
 
