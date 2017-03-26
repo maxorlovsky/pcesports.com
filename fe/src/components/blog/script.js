@@ -35,8 +35,6 @@ const Blog = {
                     let date = (new Date(posts[i].date));
                     posts[i].date = date.toLocaleString('en-us', { month: "short" })+'<br />'+date.getDate();
                 }
-
-                document.title = 'Blog | PC eSports';
                 
                 self.posts = posts;
                 self.loading = false;

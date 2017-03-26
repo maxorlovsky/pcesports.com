@@ -58,5 +58,7 @@ const Home = {
 
             self.loading = false;
         });
+
+        document.title = document.title + ' - Home';
     }
 };

@@ -13,6 +13,20 @@ header {
 
     .burger {
         display: none;
+        @media (max-width: 768px) {
+            display: block;
+            float: left;
+            color: #fff;
+            margin: 0 10px;
+            transition: .5s;
+            line-height: 60px;
+            cursor: pointer;
+            font-size: 1.5rem;
+
+            &.active {
+                transform: rotate(90deg);
+            }
+        }
     }
 
     .logo {
@@ -22,6 +36,10 @@ header {
         height: 60px;
         position: relative;
 
+        @media (max-width: 768px) {
+            margin: 0 0 0 calc(50% - 58px - 40px);
+        }
+
         img {
             position: absolute;
             width: 113px;
@@ -29,13 +47,23 @@ header {
             transition: .5s;
         }
 
-        &.logoSmall img {
-            width: 85px;
-            height: 60px;
+        &.logoSmall {
+            @media (max-width: 768px) {
+                margin: 0 0 0 calc(50% - 43px - 40px);
+            }
+
+            img {
+                width: 85px;
+                height: 60px;
+            }
         }
     }
     
     nav {
+        @media (max-width: 768px) {
+            display: none;
+        }
+        
         ul {
             margin-bottom: 0;
         }

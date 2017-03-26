@@ -4,6 +4,7 @@ Vue.component('header-component', {
         return {
             mood: '',
             logoSmall: false,
+            burgerStatus: false,
             menu: {}
         };
     },

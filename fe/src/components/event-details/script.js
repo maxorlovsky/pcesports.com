@@ -23,6 +23,8 @@ const EventDetails = {
                 .replace(/&lt;/g, "<")
                 .replace(/&quot;"/g, "\"");
 
+            document.title += ' - '+ self.game.name;
+
             self.game.meta_data = JSON.parse(self.game.meta_data);
 
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');

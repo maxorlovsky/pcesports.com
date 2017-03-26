@@ -24,7 +24,7 @@ const Article = {
             post.title = post.title.rendered;
             post.content = post.content.rendered;
 
-            document.title = post.title + ' | Blog | PC eSports';
+            document.title += ' - '+ post.title;
 
             self.post = post;
             self.loading = false;

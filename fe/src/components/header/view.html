@@ -1,5 +1,6 @@
 <header :class="mood">
-    <div class="fa fa-bars burger"></div>
+    <div class="fa fa-bars burger"
+        :class="{ 'active': burgerStatus }"></div>
 
     <a href="/" class="logo" :class="{ 'logoSmall': logoSmall }"><img src="/dist/assets/images/80p5.png" /></a>
 

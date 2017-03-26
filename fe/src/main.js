@@ -5,7 +5,6 @@ let router = new VueRouter({
             path: '/',
             component: Home,
             meta: {
-                title: 'Home',
                 template: 'home'
             },
         },
@@ -20,7 +19,7 @@ let router = new VueRouter({
                 {
                     path: 'page/:page',
                     meta: {
-                        title: 'Blog page :page',
+                        title: 'Blog',
                         template: 'blog'
                     }
                 }
@@ -30,7 +29,7 @@ let router = new VueRouter({
             path: '/article/:post',
             component: Article,
             meta: {
-                title: 'Article :post',
+                title: 'Article',
                 template: 'article'
             }
         },
@@ -45,8 +44,7 @@ let router = new VueRouter({
                 {
                     path: ':game',
                     meta: {
-                        game: ':game',
-                        title: 'Events list for :game',
+                        title: 'Events List',
                         template: 'events'
                     }
                 }
@@ -67,9 +65,12 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
-    //document.title = to.meta.title;
-    //next();
-
+    
+    document.title = 'PC eSports';
+    if (to.meta.title) {
+        document.title += ' - ' + to.meta.title;
+    }
+    
     // Loading html template for component
     let element = document.getElementById('template-holder');
 
