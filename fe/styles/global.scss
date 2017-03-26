@@ -51,13 +51,6 @@ a {
     height: auto;
 
     @include clearfix();
-
-    @media (max-width: 768px) {
-        min-width: inherit;
-        margin: 0;
-        width: 100%;
-        overflow-x: hidden;
-    }
 }
 
 .hidden {
