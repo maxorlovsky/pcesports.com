@@ -1,0 +1,18 @@
+<side class="side-menu">
+    <nav v-on:click="triggerClick()">
+        <ul>
+            <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
+                <a v-if="link.target" :href="link.url" :target="link.target">{{link.title}}</a>
+                <router-link v-else :to="link.url" :target="link.target" exact>{{link.title}}</router-link>
+
+                <ul class="nav-sub" v-if="link.sublinks">
+                    <li :class="'nav-sublink ' + sublink.css_classes" v-for="(sublink, subkey) in link.sublinks">
+                        <a v-if="sublink.target" :href="sublink.url" :target="sublink.target">{{sublink.title}}</a>
+                        <router-link v-else :to="sublink.url" :target="sublink.target">{{sublink.title}}</router-link>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="side-menu-cover" v-on:click="triggerClick()"></div>
+</side>

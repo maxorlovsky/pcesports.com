@@ -1,0 +1,36 @@
+.pagination {
+    display: block;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    border-radius: 0;
+    
+    b {
+        color: #fff;
+        display: inline-block;
+        background-color: #bbb;
+        padding: 10px 15px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin: 0 5px;
+    }
+
+    a {
+        color: #fff;
+        display: inline-block;
+        background-color: #1697e1;
+        padding: 10px 15px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 0 5px;
+        font-size: 1.2rem;
+
+        &:hover {
+            color: #fff;
+            background-color: #2878d1;
+        }
+    }
+}

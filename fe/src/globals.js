@@ -3,5 +3,6 @@ const dynamicTemplates = {
     footer: document.createElement('script'),
     eventItem: document.createElement('script'),
     //eventsFilters: document.createElement('script')
-    ga: document.createElement('script')
+    ga: document.createElement('script'),
+    sideMenu: document.createElement('script')
 };

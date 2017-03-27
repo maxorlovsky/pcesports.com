@@ -1,3 +1,4 @@
+/* Project variables */
 $mainColor: #3a64b2;
 $secondaryColor: #e5dc2d;
 $defaultBorderRadius: 8px;
@@ -11,73 +12,13 @@ $link-hover-decoration: none;
 $font-family-base: $font;
 $nav-link-padding: 0;
 
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
-
 /* Font-Awesome variables */
 $fa-font-path: '../assets/font/';
 
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 
-a {
-    transition: .5s;
-}
-
-.wrapper {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Open Sans;
-    background-image: url('../assets/images/bg3.jpg');
-    background-color: #000;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: 0px -100px;
-
-    &.winter {
-        background-image:url('../assets/images/bg-christmas.jpg');
-    }
-}
-
-.page {
-    width: 100%;
-    flex: 1;
-    position: relative;
-    margin: 62px auto 0px auto;
-    visibility: visible;
-    height: auto;
-
-    @include clearfix();
-}
-
-.hidden {
-    display: none;
-}
-
-.mobile {
-    display: none;
-}
-
-[v-cloak] .v-cloak--hidden{
-  display: none;
-}
-
-.template-holder {
-    display: none;
-}
-
-.block-content h2 {
-    text-align: center;
-    margin: 10px 0 30px 0;
-    text-transform: uppercase;
-    font-family: 'Nunito';
-    font-weight: bold;
-}
-
-@import './sass.scss';
+@import './styles.scss';
 @import './small-screen.scss';
 
 @import '../src/components/**/*.scss';

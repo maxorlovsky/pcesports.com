@@ -2,24 +2,39 @@
     display: flex;
     color: #333;
     border-bottom: 2px solid #000;
+    align-items: center;
+    padding: 10px 0;
+    min-width: 860px;
 
     .event-image {
-        margin: 5px 0;
+        min-width: 94px;
+        padding: 0 15px;
+        width: 5%;
     }
 
     .event-name-info {
-        padding: 10px 0;
+        min-width: 440px;
+        width: 100%;
 
         .event-name {
-            width: 95%;
+            width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
         }
     }
 
+    .event-organizer {
+        text-align: center;
+        min-width: 74px;
+        
+        img {
+            height: 48px;
+        }
+    }
+
     .event-status-links {
-        padding: 10px 0;
+        min-width: 150px;
 
         .event-status {
             font-size: 1.1rem;
@@ -42,21 +57,13 @@
         }
     }
 
-    .event-organizer {
-        text-align: center;
-        
-        img {
-            height: 48px;
-            margin: 15px 0;
-        }
-    }
-
     .event-details {
         text-align: center;
+        margin: 0 10px;
+        min-width: 90px;
 
         .btn {
             cursor: pointer;
-            margin: 18px 0;
         }
     }
 }

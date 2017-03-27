@@ -1,15 +1,15 @@
-<div class="event-item col-12">
-    <div class="col-1">
-        <img class="event-image" :src="'../../dist/assets/images/' + game.game +'.png'" />
+<div class="event-item">
+    <div class="event-image">
+        <img :src="'../../dist/assets/images/' + game.game +'.png'" />
     </div>
-    <div class="event-name-info col-7">
+    <div class="event-name-info">
         <h4 class="event-name" :title="game.name">{{game.name}}</h4>
         <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
     </div>
-    <div class="event-organizer col-1">
+    <div class="event-organizer">
         <img v-if="game.platform && game.platform != 'lol-event'" :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.png'" />
     </div>
-    <div class="event-status-links col-2">
+    <div class="event-status-links">
         <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>
         <div class="event-links">
             <a :href="game.link" target="_blank" title="External source link"><i class="fa fa-external-link"></a>
@@ -19,7 +19,7 @@
             <a :href="game.dsLink" target="_blank" v-if="game.dsLink" title="Discord"><i class="fa fa-comments"></a>
         </div>
     </div>
-    <div class="event-details col-1">
+    <div class="event-details">
         <router-link
             :to="'/events/' + getGameLink(game.game) + '/' + game.id">
             <button class="btn btn-success">Details</button>

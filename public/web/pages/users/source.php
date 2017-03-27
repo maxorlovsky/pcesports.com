@@ -12,10 +12,11 @@ class users extends System
             'countPerPage'  => 20,
             'maxNumShow'    => 3,
             'tableName'     => 'users',
-            'pageNum'       => $_GET['val3'],
+            'pageNum'       => (isset($_GET['val3']) ? $_GET['val3'] : 1),
         );
         
         $this->pages = pages($pagesData);
+        $this->pages->html = str_replace('/users/', 'legacy/users/', $this->pages->html);
         
         $this->users = Db::fetchRows(
             'SELECT `u`.*, `s`.`name` AS `summoner`, `s`.`division`, `s`.`league`, `s`.`approved` AS `summonerApproved` '.

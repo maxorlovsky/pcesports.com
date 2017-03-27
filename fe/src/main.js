@@ -87,19 +87,66 @@ axios.all([
     axios.get('/dist/html/footer.html'),
     axios.get('/dist/html/event-item.html'),
     //axios.get('/dist/html/events-filters.html'),
-    axios.get('/dist/html/ga.html')
+    axios.get('/dist/html/ga.html'),
+    axios.get('/dist/html/side-menu.html'),
+    axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
 ])
-.then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate) {
+.then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate, sideMenuTemplate, menuData) {
     dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
     dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
     dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
     //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
     dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
+    dynamicTemplates.sideMenu.appendChild(document.createTextNode(sideMenuTemplate.data));
 
+    let returnMenu = {};
+    if (menuData.data) {
+        for (let value of menuData.data) {
+            if (value.menu_item_parent == '0') {
+                returnMenu['link-' + value.ID] = {
+                    'title': value.title,
+                    'url': (value.url?value.url:''),
+                    'css_classes': value.classes.join(' '),
+                    'target': (value.target?value.target:''),
+                    'slug': value.post_name,
+                    'sublinks': {}
+                };
+            }
+            else {
+                returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
+                    'title': value.title,
+                    'url': value.url.replace('http://', ''),
+                    'css_classes': value.classes.join(' '),
+                    'target': value.target,
+                    'slug': value.post_name,
+                };
+            }
+        }
+    }
+
+    loadApp(returnMenu);
+}));
+
+function loadApp(menu) {
     new Vue({
         el: '#app',
-        router: router
+        router: router,
+        data: {
+            menu: menu,
+            sideMenu: false
+        },
+        methods: {
+            burgerMenu: function() {
+                if (this.sideMenu) {
+                    this.sideMenu = false;
+                    document.querySelector('body').className = document.querySelector('body').className.replace('open', '').trim();
+                } else {
+                    this.sideMenu = true;
+                    document.querySelector('body').className = document.querySelector('body').className + ' open'.trim();
+                }
+            }
+        }
     });
 
-    document.getElementById('loading').remove();
-}));
+    document.getElementById('pre-loading').remove();
+}

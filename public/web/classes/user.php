@@ -422,7 +422,7 @@ class User extends System
         
         //$userRow->timezone = $userRow->timezone * 60;
 
-        if (!isset($_SESSION['participant']) && !$_SESSION['participant']) {
+        /*if (!isset($_SESSION['participant']) && !$_SESSION['participant']) {
             //Check if user is participant
             $row = Db::fetchRow(
                 'SELECT * '.
@@ -439,9 +439,9 @@ class User extends System
                 $_SESSION['participant'] = $row;
                 $userRow->participant = $row;
             }
-        }
+        }*/
         
-        if (!isset($_SESSION['user']) || !$_SESSION['user']) {
+        /*if (!isset($_SESSION['user']) || !$_SESSION['user']) {
             //Getting fresh updated data (stupid way, but must do it)
             $row = Db::fetchRow('SELECT `u`.`id` AS `id`, `us`.`id` AS `sid`, `us`.`social_uid` AS `uid`, `u`.* '.
                 'FROM `users` AS `u` '.
@@ -450,7 +450,7 @@ class User extends System
             );
             
             $_SESSION['user'] = (array)$row;
-        }
+        }*/
 
         //Fetching all available achievements
         $userRow->achievements = Db::fetchRows('SELECT * FROM `users_achievements` WHERE `user_id` = '.$userRow->id);

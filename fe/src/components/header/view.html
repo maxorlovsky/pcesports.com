@@ -1,8 +1,9 @@
 <header :class="mood">
     <div class="fa fa-bars burger"
+        v-on:click="burgerMenu();"
         :class="{ 'active': burgerStatus }"></div>
 
-    <a href="/" class="logo" :class="{ 'logoSmall': logoSmall }"><img src="/dist/assets/images/80p5.png" /></a>
+    <a href="/" class="logo" :class="{ 'logoSmall': logoSmall }"><img src="/dist/assets/images/logo.png" /></a>
 
     <nav>
         <ul>
@@ -48,8 +49,8 @@
 
     <div v-if="mood">
         <ul class="snow">
-            <li>Snow Effect 1</li>
-            <li>Snow Effect 2</li>
+            <li></li>
+            <li></li>
         </ul>
         <div class="lights"></div>
     </div>

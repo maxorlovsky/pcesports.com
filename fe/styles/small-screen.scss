@@ -27,15 +27,6 @@ body {
     margin: 0;
 }
 
-#head-line  {
-    min-height: 0;
-}
-
-
-.promo {
-    display: none;
-}
-
 .container {
     width: 320px;
     position: relative !important;
@@ -115,59 +106,8 @@ header {
     }
 }
 
-.block {
-    .block-header-wrapper {
-        background: none;
-        min-height: 30px;
-        h1 {
-            padding: 5px;
-            &.bordered {
-                border-radius: 0;
-                line-height: 29px;
-                float: none;
-            }
-        }
-    }
-}
-
 #toTop, #hint-helper {
     opacity: 0;
-}
-
-.right-containers .block {
-    margin-bottom: 10px;
-}
-
-footer {
-    margin: 20px 0 0 0 !important;
-    background-color: inherit;
-    .separator {
-        width: 100% !important;
-        margin: 20px 0 10px 0;
-        float: none;
-        background-color: #1f1f1f;
-    }
-    .partners a {
-        position: initial !important;
-        left: initial !important;
-    }
-    .copyrights {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        .rights,
-        .devs {
-            margin: 3px 0 0 5px;
-            float: none;
-        }
-    }
-    .comments {
-        margin: 0;
-        .thread {
-            max-width: 310px;
-            overflow: hidden;
-        }
-    }
 }
 
 #login-window {
@@ -189,92 +129,6 @@ footer {
     }
     #ngError {
         width: 270px;
-    }
-}
-
-.profile {
-    .fields {
-        label {
-            width: 100px !important;
-        }
-        input,
-        p {
-            width: 165px !important;
-        }
-        select {
-            width: 175px !important;
-        }
-    }
-    .button {
-        margin-left: 90px !important;
-    }
-}
-
-.connections {
-    .status-holder {
-        width: 275px;
-    }
-    .connect-line {
-        width: 30px;
-    }
-}
-
-.fields .holder {
-    width: 180px;
-    margin: 0 0 0 101px
-}
-.avatars-list {
-    padding: 5px 0;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.participants {
-    .block {
-        margin: 0 0 10px 0;
-        box-sizing: border-box;
-        width: 280px;
-        &:nth-child(2n) {
-            margin-right: 0 !important;
-        }
-        &:nth-of-type(-n+2) {
-            margin-top: 0 !important;
-        }
-    }
-    .team-name {
-        width: 220px;
-    }
-}
-
-.places {
-    .second,
-    .third {
-        display: none;
-    }
-}
-
-.users-list {
-    .cell2,
-    .cell3,
-    .cell4 {
-        display: none !important;
-    }
-    .cell5 {
-        width: 115px;
-    }
-}
-
-.partners {
-    .partner {
-        .logo {
-            margin: 0 0 0 10px;
-        }
-    }
-}
-
-.achievement {
-    .line-bar {
-        display: none;
     }
 }
 

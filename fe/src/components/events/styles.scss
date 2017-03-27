@@ -9,6 +9,9 @@
         width: 100%;
         overflow-x: auto;
 
+        @media (max-width: 1060px) {
+            overflow-x: scroll;
+        }
     }
 
     .event-none {
@@ -67,5 +70,12 @@
         margin: 2rem auto;
         display: flex;
         cursor: pointer;
+    }
+
+    .event-table-notification {
+        display: none;
+        @media (max-width: 860px) {
+            display: block;
+        }
     }
 }

@@ -10,6 +10,7 @@ header {
     box-shadow: 0 1px 2px rgba(0,0,0,.6);
     visibility: visible;
     height: auto;
+    transition: .5s;
 
     .burger {
         display: none;
@@ -241,22 +242,6 @@ header {
             margin: 0 !important;
             padding: 0 !important;
             opacity: 1 !important;
-        }
-    }
-}
-
-@media (max-width: 1300px) {
-    header .header-middle {
-        display: none;
-    }
-}
-@media (min-width: 1600px) {
-    header {
-        nav {
-            margin-left: 10%;
-        }
-        .header-middle {
-            margin-left: 10%;
         }
     }
 }
