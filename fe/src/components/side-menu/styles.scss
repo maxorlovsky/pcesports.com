@@ -9,7 +9,6 @@
         z-index: 50;
         transition: .5s;
         transform: translate(-100%, 0);
-        color: #fff;
         overflow-y: auto;
 
         @media (max-width: 425px) {
@@ -35,6 +34,8 @@
             display: block;
             padding: 10px;
             text-transform: uppercase;
+            color: #fff;
+            font-size: 1rem;
         }
     }
 
@@ -44,6 +45,7 @@
         > a {
             display: block;
             padding: 10px 20px;
+            font-size: 0.8rem;
         }
     }
 

@@ -55,6 +55,11 @@
         select {
             width: 18%;
             padding: 0 0 0 0.5rem;
+
+            @media (max-width: 768px) {
+                display: inline-block;
+                width: 49%;
+            }
         }
     }
 
