@@ -3,7 +3,9 @@
         v-on:click="burgerMenu();"
         :class="{ 'active': burgerStatus }"></div>
 
-    <a href="/" class="logo" :class="{ 'logoSmall': logoSmall }"><img src="/dist/assets/images/logo.png" /></a>
+    <router-link :to="'/'" class="logo" :class="{ 'logoSmall': logoSmall }">
+        <img src="/dist/assets/images/logo.png" />
+    </router-link>
 
     <nav>
         <ul>
