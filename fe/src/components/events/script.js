@@ -7,15 +7,13 @@ const Events = {
             currentGame: {},
             status: {
                 name: 'Status',
-                list: ['Started', 'Starting soon', 'Upcoming'],
-                open: false,
+                list: ['All', 'Started', 'Starting soon', 'Upcoming'],
                 current: 'All'
             },
             region: {
                 name: 'Region',
-                list: {},
-                open: false,
-                current: 'All'
+                list: [],
+                current: 'all'
             },
             searchString: '',
             searchStatus: false,
@@ -111,14 +109,16 @@ const Events = {
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';
                     game.regions = {
+                        'all': 'All',
                         'na': 'North America',
-                        'eu': 'Europe',
+                        'eu': 'Europe'
                     };
                 break;
                 default:
                     game.abbriviature = 'lol';
                     game.name = 'League of Legends';
                     game.regions = {
+                        'all': 'All',
                         'na': 'North America',
                         'euw': 'Europe West',
                         'eune': 'Europe East'
@@ -127,14 +127,6 @@ const Events = {
             }
 
             return game;
-        },
-        closeDropdown: function(event) {
-            if (event.toElement.className.indexOf('dropdown') !== - 1) {
-                return false;
-            }
-
-            this.status.open = false;
-            this.region.open = false;
         },
         cleanSearch: function(keyAction) {
             if (keyAction && !this.searchString) {

@@ -52,17 +52,9 @@
             }
         }
 
-        .btn {
-            cursor: pointer;
-            font-size: 1.3rem;
-
-            .fa-globe {
-                margin-right: 5px;
-            }
-
-            span {
-                text-transform: capitalize;
-            }
+        select {
+            width: 18%;
+            padding: 0 0 0 0.5rem;
         }
     }
 
