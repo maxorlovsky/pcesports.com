@@ -98,6 +98,10 @@
                 width: 95%;
                 margin: 0 auto;
             }
+
+            p {
+                word-wrap: break-word;
+            }
         }
 
         .event-details-params {
