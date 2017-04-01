@@ -140,7 +140,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 height: $game-block-height - 100;
             }
 
-            $game-block-width-mobile: calc(50% - 2px);
+            $game-block-width-mobile: calc(49% - 2px);
             @media (max-width: 425px) {
                 width: $game-block-width-mobile;
                 margin: 0 1px 50px 1px;
