@@ -1,4 +1,20 @@
 .error {
 	width: 50%;
 	margin: 0 auto;
+
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+
+	img {
+		@media (max-width: 768px) {
+			width: 80%;
+			margin: 0 auto;
+		}
+	}
+
+	.btn {
+		width: 70%;
+		margin: 20px auto;
+	}
 }
