@@ -25,6 +25,9 @@ Vue.component('event-item', {
                 case 'hs':
                     link = 'hearthstone';
                 break;
+                case 'ow':
+                    link = 'overwatch';
+                break;
             }
 
             return link;

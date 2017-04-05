@@ -105,6 +105,15 @@ const Events = {
             const game = {};
 
             switch(gameName) {
+                case 'overwatch':
+                    game.abbriviature = 'ow';
+                    game.name = 'Overwatch';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
                 case 'hearthstone':
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';

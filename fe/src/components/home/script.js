@@ -5,23 +5,21 @@ const Home = {
             {
                 gameName: 'League of Legends',
                 cssClass: 'game-lol',
-                tournamentsNumbers: 0,
                 link: '../events/league-of-legends/'
             },
             {
                 gameName: 'Hearthstone',
                 cssClass: 'game-hs',
-                tournamentsNumbers: 0,
                 link: '../events/hearthstone/'
-            },
-            /*{
-                gameName: 'Counter-Strike: GO',
-                cssClass: 'game-csgo',
-                tournamentsNumbers: 0
             },
             {
                 gameName: 'Overwatch',
                 cssClass: 'game-ow',
+                link: '../events/overwatch/'
+            }
+            /*{
+                gameName: 'Counter-Strike: GO',
+                cssClass: 'game-csgo',
                 tournamentsNumbers: 0
             },
             {

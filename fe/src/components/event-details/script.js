@@ -59,6 +59,10 @@ const EventDetails = {
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';
                 break;
+                case 'overwatch':
+                    game.abbriviature = 'ow';
+                    game.name = 'Overwatch';
+                break;
                 default:
                     game.abbriviature = 'lol';
                     game.name = 'League of Legends';
