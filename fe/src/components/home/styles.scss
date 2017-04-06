@@ -1,5 +1,4 @@
-$game-block-width: 40%;
-$game-block-width-tablet: 48%;
+$game-block-width: 48%;
 $game-block-height: 270px;
 $game-block-height-button: 38px;
 $game-block-height-full: ($game-block-height + $game-block-height-button);
@@ -117,7 +116,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
         .game-wrapper {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             flex-wrap: wrap;
         }
 
@@ -132,18 +131,20 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             position: relative;
             box-sizing: border-box;
 
-            @media (max-width: 768px) {
-                width: $game-block-width-tablet;
-            }
-
-            @media (max-width: 425px) {
-                height: $game-block-height - 100;
+            &:first-child {
+                width: 98%;
             }
 
             $game-block-width-mobile: calc(49% - 2px);
             @media (max-width: 425px) {
                 width: $game-block-width-mobile;
-                margin: 0 1px 50px 1px;
+                height: $game-block-height - 100;
+                margin: 0 1px;
+
+                &:first-child {
+                    width: 98.5%;
+                    margin: 0 1px 5px 1px;
+                }
             }
 
             .btn {

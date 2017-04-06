@@ -28,7 +28,11 @@ const EventDetails = {
             self.game.meta_data = JSON.parse(self.game.meta_data);
 
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            self.game.meta_data.description = self.correctDescription(self.game.meta_data.description);
+            if (self.game.platform === 'battlefy' && self.game.game === 'ow') {
+                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
+            } else {
+                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
+            }
             self.game.platform = self.correctPlatform(self.game.platform);
             self.game.start_datetime = self.correctDate(self.game.start_datetime);
             self.game.meta_data.elimination = self.correctEventFormat(self.game.meta_data.elimination);
@@ -59,6 +63,10 @@ const EventDetails = {
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';
                 break;
+                case 'overwatch':
+                    game.abbriviature = 'ow';
+                    game.name = 'Overwatch';
+                break;
                 default:
                     game.abbriviature = 'lol';
                     game.name = 'League of Legends';
@@ -76,8 +84,13 @@ const EventDetails = {
 
             return date;
         },
-        correctDescription: function(description) {
-            description = marked(description)
+        correctDescription: function(description, markedEnable) {
+            if (markedEnable) {
+                console.log('enabled');
+                description = marked(description);
+            }
+
+            description = description
                 .replace(/&amp;/g, "&")
                 .replace(/&gt;/g, ">")
                 .replace(/&lt;/g, "<")

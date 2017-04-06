@@ -54,7 +54,8 @@
 
                 <button class="load-more btn btn-lg btn-primary"
                     v-on:click="loadMore()"
-                    v-if="!hideLoadMore">Load more</button>
+                    v-if="!hideLoadMore"
+                    :disabled="loadingMore">Load more</button>
             </div>
         </div>
     </div>

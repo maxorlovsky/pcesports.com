@@ -19,7 +19,8 @@ const Events = {
             searchStatus: false,
             hideLoadMore: true,
             limit: 40,
-            offset: 0
+            offset: 0,
+            loadingMore: false
         };
     },
     created: function() {
@@ -99,12 +100,22 @@ const Events = {
                 }
 
                 self.loading = false;
+                self.loadingMore = false;
             });
         },
         getGameData: function(gameName) {
             const game = {};
 
             switch(gameName) {
+                case 'overwatch':
+                    game.abbriviature = 'ow';
+                    game.name = 'Overwatch';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
                 case 'hearthstone':
                     game.abbriviature = 'hs';
                     game.name = 'Hearthstone';
@@ -146,6 +157,7 @@ const Events = {
             }
         },
         loadMore: function() {
+            this.loadingMore = true;
             this.offset += this.limit;
 
             this.fetchEventData();

@@ -26,7 +26,8 @@ gulp.task('copy', () => {
 			'./node_modules/vue/dist/vue.min.js',
 			'./node_modules/vue-*/dist/vue-*.min.js',
 			'./node_modules/axios/dist/axios.min.js',
-			'./node_modules/marked/marked.min.js'
+			'./node_modules/marked/marked.min.js',
+			'./node_modules/hammerjs/hammer.min.js'
 		])
     	.pipe(concat('libs.js'))
         .pipe(gulp.dest('./public/dist/js/'));

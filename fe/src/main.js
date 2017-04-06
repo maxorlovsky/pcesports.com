@@ -135,6 +135,31 @@ function loadApp(menu) {
             menu: menu,
             sideMenu: false
         },
+        mounted() {
+            let self = this;
+            // If back button is clicked and menu is open, we need to close menu first
+            window.addEventListener("hashchange", this.checkMenu);
+
+            Hammer(document.getElementById('app'))
+            .on('swiperight', function(ev) {
+                if (ev.pointerType !== 'touch') {
+                    return false;
+                }
+                
+                if (self.sideMenu === false) {
+                    self.burgerMenu();
+                }
+            })
+            .on('swipeleft', function(ev) {
+                if (ev.pointerType !== 'touch') {
+                    return false;
+                }
+
+                if (self.sideMenu === true) {
+                    self.burgerMenu();
+                }
+            });
+        },
         methods: {
             burgerMenu: function() {
                 if (this.sideMenu) {
@@ -142,7 +167,13 @@ function loadApp(menu) {
                     document.querySelector('body').className = document.querySelector('body').className.replace('open', '').trim();
                 } else {
                     this.sideMenu = true;
+                    window.location.hash = '#side-menu-open';
                     document.querySelector('body').className = document.querySelector('body').className + ' open'.trim();
+                }
+            },
+            checkMenu: function(e) {
+                if (this.sideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
+                    this.burgerMenu();
                 }
             }
         }
