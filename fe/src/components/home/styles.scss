@@ -116,7 +116,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
         .game-wrapper {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-around;
             flex-wrap: wrap;
         }
 
@@ -132,7 +132,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             box-sizing: border-box;
 
             &:first-child {
-                width: 97%;
+                width: 98%;
             }
 
             $game-block-width-mobile: calc(49% - 2px);
@@ -140,8 +140,10 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 width: $game-block-width-mobile;
                 height: $game-block-height - 100;
                 margin: 0 1px;
+
                 &:first-child {
-                    width: $game-block-width;
+                    width: 98.5%;
+                    margin: 0 1px 5px 1px;
                 }
             }
 

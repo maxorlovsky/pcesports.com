@@ -19,7 +19,8 @@ const Events = {
             searchStatus: false,
             hideLoadMore: true,
             limit: 40,
-            offset: 0
+            offset: 0,
+            loadingMore: false
         };
     },
     created: function() {
@@ -99,6 +100,7 @@ const Events = {
                 }
 
                 self.loading = false;
+                self.loadingMore = false;
             });
         },
         getGameData: function(gameName) {
@@ -155,6 +157,7 @@ const Events = {
             }
         },
         loadMore: function() {
+            this.loadingMore = true;
             this.offset += this.limit;
 
             this.fetchEventData();

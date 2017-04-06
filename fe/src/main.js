@@ -135,6 +135,10 @@ function loadApp(menu) {
             menu: menu,
             sideMenu: false
         },
+        ready() {
+            // If back button is clicked and menu is open, we need to close menu first
+            window.onbeforeunload = this.checkMenu();
+        },
         methods: {
             burgerMenu: function() {
                 if (this.sideMenu) {
@@ -143,6 +147,12 @@ function loadApp(menu) {
                 } else {
                     this.sideMenu = true;
                     document.querySelector('body').className = document.querySelector('body').className + ' open'.trim();
+                }
+            },
+            checkMenu: function() {
+                alert('menu-test');
+                if (this.sideMenu === true) {
+                    this.burgerMenu();
                 }
             }
         }
