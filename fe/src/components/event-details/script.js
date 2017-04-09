@@ -28,7 +28,7 @@ const EventDetails = {
             self.game.meta_data = JSON.parse(self.game.meta_data);
 
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            if (self.game.platform === 'battlefy' && self.game.game === 'ow') {
+            if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
             } else {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
@@ -55,6 +55,10 @@ const EventDetails = {
             const game = {};
 
             switch(gameName) {
+                case 'heroes-of-the-storm':
+                    game.abbriviature = 'hots';
+                    game.name = 'Heroes of the Storm';
+                break;
                 case 'league-of-legends':
                     game.abbriviature = 'lol';
                     game.name = 'League of Legends';
@@ -80,13 +84,13 @@ const EventDetails = {
             const timezoneOffset = currentDate.getTimezoneOffset() * 60;
 
             let date = new Date((timeStamp - timezoneOffset) * 1000);
-            date = date.toUTCString().replace(':00 GMT', '');
+            date = date.toUTCString();
+            date = date.substring(0, (date.length - 7));
 
             return date;
         },
         correctDescription: function(description, markedEnable) {
             if (markedEnable) {
-                console.log('enabled');
                 description = marked(description);
             }
 

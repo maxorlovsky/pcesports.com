@@ -116,7 +116,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
         .game-wrapper {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
         }
 
@@ -131,9 +131,9 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             position: relative;
             box-sizing: border-box;
 
-            &:first-child {
+            /*&:first-child {
                 width: 98%;
-            }
+            }*/
 
             $game-block-width-mobile: calc(49% - 2px);
             @media (max-width: 425px) {
@@ -141,10 +141,10 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 height: $game-block-height - 100;
                 margin: 0 1px;
 
-                &:first-child {
+                /*&:first-child {
                     width: 98.5%;
                     margin: 0 1px 5px 1px;
-                }
+                }*/
             }
 
             .btn {
