@@ -19,6 +19,9 @@ Vue.component('event-item', {
             let link = '';
 
             switch(gameAbbriviature) {
+                case 'hots':
+                    link = 'heroes-of-the-storm';
+                break;
                 case 'lol':
                     link = 'league-of-legends';
                 break;

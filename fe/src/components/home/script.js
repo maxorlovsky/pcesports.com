@@ -16,15 +16,15 @@ const Home = {
                 gameName: 'Overwatch',
                 cssClass: 'game-ow',
                 link: '../events/overwatch/'
-            }
-            /*{
-                gameName: 'Counter-Strike: GO',
-                cssClass: 'game-csgo',
-                tournamentsNumbers: 0
             },
             {
                 gameName: 'Heroes of the Storm',
                 cssClass: 'game-hots',
+                link: '../events/heroes-of-the-storm'
+            }
+            /*{
+                gameName: 'Counter-Strike: GO',
+                cssClass: 'game-csgo',
                 tournamentsNumbers: 0
             },
             {

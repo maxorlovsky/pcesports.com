@@ -34,8 +34,7 @@
 
                     <select class="form-control form-control-lg btn-primary"
                         v-model="region.current"
-                        v-on:change="fetchEventData()"
-                        v-if="currentGame.name.toLowerCase() !== 'all'">
+                        v-on:change="fetchEventData()">
                         <option :value="key" v-for="(value, key) in region.list">
                                 {{region.name}}: {{value}}
                         </option>
