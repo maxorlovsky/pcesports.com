@@ -12,7 +12,11 @@ const Events = {
             },
             region: {
                 name: 'Region',
-                list: [],
+                list: {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                },
                 current: 'all'
             },
             searchString: '',
@@ -81,7 +85,8 @@ const Events = {
                         .replace(/&gt;/g, ">")
                         .replace(/&lt;/g, "<")
                         .replace(/&quot;"/g, "\"");
-                    gamesFiltered[i].startTime = date.toUTCString().replace(':00 GMT', '');
+                    date = date.toUTCString();
+                    gamesFiltered[i].startTime = date.substring(0, (date.length - 7));
                 }
 
                 if (self.offset) {
@@ -107,6 +112,15 @@ const Events = {
             const game = {};
 
             switch(gameName) {
+                case 'heroes-of-the-storm':
+                    game.abbriviature = 'hots';
+                    game.name = 'Heroes of the Storm';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
                 case 'overwatch':
                     game.abbriviature = 'ow';
                     game.name = 'Overwatch';
