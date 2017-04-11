@@ -21,6 +21,11 @@ const Home = {
                 gameName: 'Heroes of the Storm',
                 cssClass: 'game-hots',
                 link: '../events/heroes-of-the-storm'
+            },
+            {
+                gameName: 'Rocket League',
+                cssClass: 'game-rl',
+                link: '../events/rocket-league'
             }
             /*{
                 gameName: 'Counter-Strike: GO',

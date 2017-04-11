@@ -112,6 +112,15 @@ const Events = {
             const game = {};
 
             switch(gameName) {
+                case 'rocket-league':
+                    game.abbriviature = 'rl';
+                    game.name = 'Rocket League';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
                 case 'heroes-of-the-storm':
                     game.abbriviature = 'hots';
                     game.name = 'Heroes of the Storm';
