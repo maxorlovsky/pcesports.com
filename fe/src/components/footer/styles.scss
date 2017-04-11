@@ -13,11 +13,23 @@ footer {
     .copyrights {
         float: left;
         margin: 10px 0 10px 7.5%;
+
+        @media (max-width: 375px) {
+            text-align: center;
+            float: none;
+            margin: 5px 0;
+        }
     }
 
     .footer-links {
         float: right;
         margin: 5px 7.5% 5px 0;
+
+        @media (max-width: 375px) {
+            text-align: center;
+            float: none;
+            margin: 5px 0;
+        }
 
         .fa {
             font-size: 1.6rem;
