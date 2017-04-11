@@ -55,6 +55,10 @@ const EventDetails = {
             const game = {};
 
             switch(gameName) {
+                case 'rocket-league':
+                    game.abbriviature = 'rl';
+                    game.name = 'Rocket League';
+                break;
                 case 'heroes-of-the-storm':
                     game.abbriviature = 'hots';
                     game.name = 'Heroes of the Storm';
@@ -107,10 +111,14 @@ const EventDetails = {
 
             switch(format) {
                 case 'single-elim':
+                case 'Standard':
                     fullName = 'Single Elimination';
                 break;
                 case 'double-elim':
                     fullName = 'Double Elimination';
+                break;
+                case 'Last Hero Standing':
+                    fullName = 'Last Hero Standing';
                 break;
                 default:
                     fullName = 'Not specified';
@@ -161,9 +169,9 @@ const EventDetails = {
                 fullName.name = 'Toornament';
                 fullName.image = 'toornament';
             }
-            else if (platform === 'esports-wall') {
+            else if (platform === 'esportswall') {
                 fullName.name = 'eSports Wall';
-                fullName.image = 'esports-wall';
+                fullName.image = 'esportswall';
             }
 
             return fullName;
