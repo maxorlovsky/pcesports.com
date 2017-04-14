@@ -82,50 +82,76 @@ router.beforeEach((to, from, next) => {
     });
 });
 
-axios.all([
-    axios.get('/dist/html/header.html'),
-    axios.get('/dist/html/footer.html'),
-    axios.get('/dist/html/event-item.html'),
-    //axios.get('/dist/html/events-filters.html'),
-    axios.get('/dist/html/ga.html'),
-    axios.get('/dist/html/side-menu.html'),
-    axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
-])
-.then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate, sideMenuTemplate, menuData) {
-    dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
-    dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
-    dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
-    //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
-    dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
-    dynamicTemplates.sideMenu.appendChild(document.createTextNode(sideMenuTemplate.data));
+const checkStorage = pce.storage('get', 'structure-data');
 
-    let returnMenu = {};
-    if (menuData.data) {
-        for (let value of menuData.data) {
-            if (value.menu_item_parent == '0') {
-                returnMenu['link-' + value.ID] = {
-                    'title': value.title,
-                    'url': (value.url?value.url:''),
-                    'css_classes': value.classes.join(' '),
-                    'target': (value.target?value.target:''),
-                    'slug': value.post_name,
-                    'sublinks': {}
-                };
-            }
-            else {
-                returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
-                    'title': value.title,
-                    'url': value.url.replace('http://', ''),
-                    'css_classes': value.classes.join(' '),
-                    'target': value.target,
-                    'slug': value.post_name,
-                };
+if (checkStorage) {
+    dynamicTemplates.header.appendChild(document.createTextNode(checkStorage.templates.header));
+    dynamicTemplates.footer.appendChild(document.createTextNode(checkStorage.templates.footer));
+    dynamicTemplates.eventItem.appendChild(document.createTextNode(checkStorage.templates.eventItem));
+    dynamicTemplates.ga.appendChild(document.createTextNode(checkStorage.templates.ga));
+    dynamicTemplates.sideMenu.appendChild(document.createTextNode(checkStorage.templates.sideMenu));
+
+    loadApp(checkStorage.menu);
+}
+else {
+    axios.all([
+        axios.get('/dist/html/header.html'),
+        axios.get('/dist/html/footer.html'),
+        axios.get('/dist/html/event-item.html'),
+        //axios.get('/dist/html/events-filters.html'),
+        axios.get('/dist/html/ga.html'),
+        axios.get('/dist/html/side-menu.html'),
+        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
+    ])
+    .then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate, sideMenuTemplate, menuData) {
+        dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
+        dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
+        dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
+        //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
+        dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
+        dynamicTemplates.sideMenu.appendChild(document.createTextNode(sideMenuTemplate.data));
+
+        let returnMenu = {};
+        if (menuData.data) {
+            for (let value of menuData.data) {
+                if (value.menu_item_parent == '0') {
+                    returnMenu['link-' + value.ID] = {
+                        'title': value.title,
+                        'url': (value.url?value.url:''),
+                        'css_classes': value.classes.join(' '),
+                        'target': (value.target?value.target:''),
+                        'slug': value.post_name,
+                        'sublinks': {}
+                    };
+                }
+                else {
+                    returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
+                        'title': value.title,
+                        'url': value.url.replace('http://', ''),
+                        'css_classes': value.classes.join(' '),
+                        'target': value.target,
+                        'slug': value.post_name,
+                    };
+                }
             }
         }
-    }
 
-    loadApp(returnMenu);
-}));
+        let store = {
+            templates: {
+                header: headerTemplate.data,
+                footer: footerTemplate.data,
+                eventItem: eventItemTemplate.data,
+                ga: gaTemplate.data,
+                sideMenu: sideMenuTemplate.data
+            },
+            menu: returnMenu
+        };
+
+        pce.storage('set', 'structure-data', store);
+
+        loadApp(returnMenu);
+    }));
+}
 
 function loadApp(menu) {
     new Vue({
