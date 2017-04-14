@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "gulp build",
-    "release": "gulp build && gulp minify"
+    "release": "git pull && yarn install && gulp build && gulp minify"
   },
   "version": "2.3.0",
   "dependencies": {
