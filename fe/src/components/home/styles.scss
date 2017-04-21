@@ -190,11 +190,6 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             background-color: #5bc0de;
         }
 
-        .game-csgo {
-            background-image: url('../assets/images/csgo-logo-big.png');
-            background-color: #e5dc2d;
-        }
-
         .game-hs {
             background-image: url('../assets/images/hs-logo-big.png');
             background-color: #ec971f;
@@ -210,14 +205,24 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             background-color: #636c72;
         }
 
-        .game-smite {
-            background-image: url('../assets/images/smite-logo-big.png');
-            background-color: #449d44;
-        }
-
         .game-rl {
             background-image: url('../assets/images/rl-logo-big.png');
             background-color: #002233;
+        }
+
+        .game-cs {
+            background-image: url('../assets/images/cs-logo-big.png');
+            background-color: #e5dc2d;
+        }
+
+        .game-dota {
+            background-image: url('../assets/images/dota-logo-big.png');
+            background-color: #000;
+        }
+
+        .game-smite {
+            background-image: url('../assets/images/smite-logo-big.png');
+            background-color: #449d44;
         }
     }
 
