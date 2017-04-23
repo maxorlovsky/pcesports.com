@@ -30,6 +30,8 @@ const EventDetails = {
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
             if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
+            } else if (self.game.platform === 'esl') {
+                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
             } else {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
             }
@@ -185,7 +187,7 @@ const EventDetails = {
                 fullName.name = 'eSports Wall';
                 fullName.image = 'esportswall';
             }
-            else if (platform === 'go4') {
+            else if (platform === 'esl') {
                 fullName.name = 'Go4 ESL';
                 fullName.image = 'esl';
             }
