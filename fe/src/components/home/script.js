@@ -29,7 +29,7 @@ const Home = {
             },
             {
                 gameName: 'Counter-Strike: GO',
-                cssClass: 'game-csgo',
+                cssClass: 'game-cs',
                 link: '../events/counter-strike'
             },
             {

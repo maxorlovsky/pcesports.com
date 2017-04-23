@@ -131,7 +131,7 @@ const Events = {
                         'eune': 'Europe East'
                     };
                 break;
-                case 'cs':
+                case 'counter-strike':
                     game.abbriviature = 'cs';
                     game.name = 'Counter Strike:GO';
                     game.regions = {

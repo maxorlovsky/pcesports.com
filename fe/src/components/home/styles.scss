@@ -145,9 +145,14 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 height: $game-block-height - 100;
                 margin: 1px;
 
-                &:first-child {
+                /*&:first-child {
                     width: 98.5%;
                     margin: 0 1px;
+                }*/
+
+                &:first-child {
+                    width: $game-block-width-mobile;
+                    margin: 1px;
                 }
             }
 
@@ -212,17 +217,17 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
         .game-cs {
             background-image: url('../assets/images/cs-logo-big.png');
-            background-color: #e5dc2d;
+            background-color: #222;
         }
 
         .game-dota {
             background-image: url('../assets/images/dota-logo-big.png');
-            background-color: #000;
+            background-color: #800000;
         }
 
         .game-smite {
             background-image: url('../assets/images/smite-logo-big.png');
-            background-color: #449d44;
+            background-color: #006600;
         }
     }
 
