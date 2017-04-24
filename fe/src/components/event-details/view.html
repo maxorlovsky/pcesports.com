@@ -17,7 +17,7 @@
                         <div class="event-details-params">
                             <p v-if="game.platform" class="event-details-platform"><label>Platform:</label> {{game.platform.name}} <img v-if="game.platform.image" :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" /></p>
                             <p v-if="game.region"><label>Region:</label> {{game.region.toUpperCase()}}</p>
-                            <p v-if="game.participants_limit && game.participants_limit != 0"><label>Participants limit:</label> {{game.participants_limit}}</p>
+                            <p v-if="game.participants_limit"><label>Participants limit:</label> {{game.participants_limit}}</p>
                             <p v-if="game.start_datetime"><label>Start time:</label> {{game.start_datetime}}</p>
                             <p v-if="game.meta_data.best_of"><label>Best of (*):</label> {{game.meta_data.best_of}}</p>
                             <p v-if="game.meta_data.elimination"><label>Tournament format:</label> {{game.meta_data.elimination}}</p>

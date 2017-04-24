@@ -7,12 +7,13 @@ Vue.component('event-item', {
         }
     },
     data: function() {
+        if (this.game.participantsLimit === '0') {
+            this.game.participantsLimit = 'Unlimited';
+        }
+
         return {
             game: this.game
         };
-    },
-    created: function() {
-        
     },
     methods: {
         getGameLink: function(gameAbbriviature) {

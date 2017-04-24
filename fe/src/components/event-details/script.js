@@ -44,6 +44,10 @@ const EventDetails = {
             if (self.game.meta_data.online) {
                 self.game.meta_data.online = self.correctOnline(self.game.meta_data.online);
             }
+
+            if (self.game.participants_limit === '0') {
+                self.game.participants_limit = 'Unlimited';
+            }
             
             self.loading = false;
         })
