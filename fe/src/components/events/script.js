@@ -112,6 +112,34 @@ const Events = {
             const game = {};
 
             switch(gameName) {
+                case 'smite':
+                    game.abbriviature = 'smite';
+                    game.name = 'Smite';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
+                case 'dota':
+                    game.abbriviature = 'dota';
+                    game.name = 'Dota 2';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'euw': 'Europe West',
+                        'eune': 'Europe East'
+                    };
+                break;
+                case 'counter-strike':
+                    game.abbriviature = 'cs';
+                    game.name = 'Counter Strike:GO';
+                    game.regions = {
+                        'all': 'All',
+                        'na': 'North America',
+                        'eu': 'Europe'
+                    };
+                break;
                 case 'rocket-league':
                     game.abbriviature = 'rl';
                     game.name = 'Rocket League';

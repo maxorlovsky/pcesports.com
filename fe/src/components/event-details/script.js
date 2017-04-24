@@ -30,6 +30,8 @@ const EventDetails = {
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
             if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
+            } else if (self.game.platform === 'esl') {
+                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
             } else {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
             }
@@ -41,6 +43,10 @@ const EventDetails = {
             }
             if (self.game.meta_data.online) {
                 self.game.meta_data.online = self.correctOnline(self.game.meta_data.online);
+            }
+
+            if (self.game.participants_limit === '0') {
+                self.game.participants_limit = 'Unlimited';
             }
             
             self.loading = false;
@@ -55,6 +61,18 @@ const EventDetails = {
             const game = {};
 
             switch(gameName) {
+                case 'smite':
+                    game.abbriviature = 'smite';
+                    game.name = 'Smite';
+                break;
+                case 'dota':
+                    game.abbriviature = 'dota';
+                    game.name = 'Dota 2';
+                break;
+                case 'counter-strike':
+                    game.abbriviature = 'cs';
+                    game.name = 'Counter Strike:GO';
+                break;
                 case 'rocket-league':
                     game.abbriviature = 'rl';
                     game.name = 'Rocket League';
@@ -172,6 +190,10 @@ const EventDetails = {
             else if (platform === 'esportswall') {
                 fullName.name = 'eSports Wall';
                 fullName.image = 'esportswall';
+            }
+            else if (platform === 'esl') {
+                fullName.name = 'Go4 ESL';
+                fullName.image = 'esl';
             }
 
             return fullName;

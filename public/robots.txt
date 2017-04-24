@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 #Sitemap Reference
-#Sitemap: http://www.pcesports.com/sitemap.xml
+#Sitemap: https://www.pcesports.com/sitemap.xml

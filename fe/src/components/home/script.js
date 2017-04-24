@@ -26,17 +26,22 @@ const Home = {
                 gameName: 'Rocket League',
                 cssClass: 'game-rl',
                 link: '../events/rocket-league'
-            }
-            /*{
+            },
+            {
+                gameName: 'Dota 2',
+                cssClass: 'game-dota',
+                link: '../events/dota'
+            },
+            {
                 gameName: 'Counter-Strike: GO',
-                cssClass: 'game-csgo',
-                tournamentsNumbers: 0
+                cssClass: 'game-cs',
+                link: '../events/counter-strike'
             },
             {
                 gameName: 'Smite',
                 cssClass: 'game-smite',
-                tournamentsNumbers: 0
-            }*/
+                link: '../events/smite'
+            }
         ];
 
         return {
