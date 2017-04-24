@@ -8,7 +8,7 @@ const dynamicTemplates = {
 };
 
 const pce = {
-    version: '2.3.0',
+    version: '2.4.0',
     // Local storage
     storage: (func, key, json) => {
         // setItem
