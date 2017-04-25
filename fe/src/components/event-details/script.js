@@ -10,7 +10,7 @@ const EventDetails = {
     created: function() {
         var self = this;
 
-        this.currentGame = this.getGameData(this.$route.params.game);
+        this.currentGame = pce.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
 
         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournament/?game=' + this.currentGame.abbriviature + '&id='+this.eventId)
@@ -57,50 +57,6 @@ const EventDetails = {
         });
     },
     methods: {
-        getGameData: function(gameName) {
-            const game = {};
-
-            switch(gameName) {
-                case 'smite':
-                    game.abbriviature = 'smite';
-                    game.name = 'Smite';
-                break;
-                case 'dota':
-                    game.abbriviature = 'dota';
-                    game.name = 'Dota 2';
-                break;
-                case 'counter-strike':
-                    game.abbriviature = 'cs';
-                    game.name = 'Counter Strike:GO';
-                break;
-                case 'rocket-league':
-                    game.abbriviature = 'rl';
-                    game.name = 'Rocket League';
-                break;
-                case 'heroes-of-the-storm':
-                    game.abbriviature = 'hots';
-                    game.name = 'Heroes of the Storm';
-                break;
-                case 'league-of-legends':
-                    game.abbriviature = 'lol';
-                    game.name = 'League of Legends';
-                break;
-                case 'hearthstone':
-                    game.abbriviature = 'hs';
-                    game.name = 'Hearthstone';
-                break;
-                case 'overwatch':
-                    game.abbriviature = 'ow';
-                    game.name = 'Overwatch';
-                break;
-                default:
-                    game.abbriviature = 'lol';
-                    game.name = 'League of Legends';
-                break;
-            }
-
-            return game;
-        },
         correctDate: function(timeStamp) {
             const currentDate = new Date();
             const timezoneOffset = currentDate.getTimezoneOffset() * 60;

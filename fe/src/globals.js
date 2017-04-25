@@ -62,6 +62,113 @@ const pce = {
         }
 
         return true;
+    },
+    getGameData: (name) => {
+        const game = {};
+
+        switch(name) {
+            case 'smite':
+                game.abbriviature = 'smite';
+                game.name = 'Smite';
+                game.link = 'smite';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'dota':
+                game.abbriviature = 'dota';
+                game.name = 'Dota 2';
+                game.link = 'dota';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'euw': 'Europe West',
+                    'eune': 'Europe East'
+                };
+            break;
+            case 'cs':
+            case 'counter-strike':
+                game.abbriviature = 'cs';
+                game.name = 'Counter Strike:GO';
+                game.link = 'counter-strike';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'rl':
+            case 'rocket-league':
+                game.abbriviature = 'rl';
+                game.name = 'Rocket League';
+                game.link = 'rocket-league';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'hots':
+            case 'heroes-of-the-storm':
+                game.abbriviature = 'hots';
+                game.name = 'Heroes of the Storm';
+                game.link = 'heroes-of-the-storm';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'lol':
+            case 'league-of-legends':
+                game.abbriviature = 'lol';
+                game.name = 'League of Legends';
+                game.link = 'league-of-legends';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'euw': 'Europe West',
+                    'eune': 'Europe East'
+                };
+            break;
+            case 'hs':
+            case 'hearthstone':
+                game.abbriviature = 'hs';
+                game.name = 'Hearthstone';
+                game.link = 'hearthstone';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'ow':
+            case 'overwatch':
+                game.abbriviature = 'ow';
+                game.name = 'Overwatch';
+                game.link = 'overwatch';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            default:
+                game.abbriviature = 'lol';
+                game.name = 'League of Legends';
+                game.link = 'league-of-legends';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'euw': 'Europe West',
+                    'eune': 'Europe East'
+                };
+            break;
+        }
+
+        return game;
     }
 };
 

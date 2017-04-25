@@ -1,49 +1,17 @@
 const Home = {
     template: '#home-template',
     data: function() {
-        const games = [
-            {
-                gameName: 'League of Legends',
-                cssClass: 'game-lol',
-                link: '../events/league-of-legends/'
-            },
-            {
-                gameName: 'Hearthstone',
-                cssClass: 'game-hs',
-                link: '../events/hearthstone/'
-            },
-            {
-                gameName: 'Overwatch',
-                cssClass: 'game-ow',
-                link: '../events/overwatch/'
-            },
-            {
-                gameName: 'Heroes of the Storm',
-                cssClass: 'game-hots',
-                link: '../events/heroes-of-the-storm'
-            },
-            {
-                gameName: 'Rocket League',
-                cssClass: 'game-rl',
-                link: '../events/rocket-league'
-            },
-            {
-                gameName: 'Dota 2',
-                cssClass: 'game-dota',
-                link: '../events/dota'
-            },
-            {
-                gameName: 'Counter-Strike: GO',
-                cssClass: 'game-cs',
-                link: '../events/counter-strike'
-            },
-            {
-                gameName: 'Smite',
-                cssClass: 'game-smite',
-                link: '../events/smite'
-            }
-        ];
+        let games = [];
+        const gameOrder = ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'];
 
+        for (game of gameOrder) {
+            games.push({
+                gameName: game.name,
+                cssClass: 'game-' + game.abbriviature,
+                link: '../events/' + game.link
+            });
+        }
+        
         return {
             loading: true,
             posts: 0,
