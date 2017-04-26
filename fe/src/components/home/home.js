@@ -5,6 +5,8 @@ const Home = {
         const gameOrder = ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'];
 
         for (game of gameOrder) {
+            game = pce.getGameData(game);
+            
             games.push({
                 gameName: game.name,
                 cssClass: 'game-' + game.abbriviature,
