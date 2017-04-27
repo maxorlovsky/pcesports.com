@@ -10,7 +10,7 @@ gulp.task('watch', ['serve'], () => {
 		.on("change", watchChange)
 		.on("error", watchError);
 
-	gulp.watch('./fe/src/**/*.html', ['copy', browserSync.reload])
+	gulp.watch(['./fe/index.html', './fe/src/**/*.html'], ['copy', browserSync.reload])
 		.on("change", watchChange)
 		.on("error", watchError);
 });

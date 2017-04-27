@@ -5,5 +5,5 @@
 # Folders
 node_modules
 public/dist/
-public/be/*
+public/index.html
 vendor
