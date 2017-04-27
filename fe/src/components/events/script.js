@@ -45,7 +45,7 @@ const Events = {
             let filter = '?';
 
             if (this.$route.params.game) {
-                this.currentGame = this.getGameData(this.$route.params.game);
+                this.currentGame = pce.getGameData(this.$route.params.game);
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
             } else {
@@ -107,88 +107,6 @@ const Events = {
                 self.loading = false;
                 self.loadingMore = false;
             });
-        },
-        getGameData: function(gameName) {
-            const game = {};
-
-            switch(gameName) {
-                case 'smite':
-                    game.abbriviature = 'smite';
-                    game.name = 'Smite';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                case 'dota':
-                    game.abbriviature = 'dota';
-                    game.name = 'Dota 2';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'euw': 'Europe West',
-                        'eune': 'Europe East'
-                    };
-                break;
-                case 'counter-strike':
-                    game.abbriviature = 'cs';
-                    game.name = 'Counter Strike:GO';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                case 'rocket-league':
-                    game.abbriviature = 'rl';
-                    game.name = 'Rocket League';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                case 'heroes-of-the-storm':
-                    game.abbriviature = 'hots';
-                    game.name = 'Heroes of the Storm';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                case 'overwatch':
-                    game.abbriviature = 'ow';
-                    game.name = 'Overwatch';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                case 'hearthstone':
-                    game.abbriviature = 'hs';
-                    game.name = 'Hearthstone';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'eu': 'Europe'
-                    };
-                break;
-                default:
-                    game.abbriviature = 'lol';
-                    game.name = 'League of Legends';
-                    game.regions = {
-                        'all': 'All',
-                        'na': 'North America',
-                        'euw': 'Europe West',
-                        'eune': 'Europe East'
-                    };
-                break;
-            }
-
-            return game;
         },
         cleanSearch: function(keyAction) {
             if (keyAction && !this.searchString) {

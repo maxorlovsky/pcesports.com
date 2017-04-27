@@ -1,6 +1,3 @@
 User-agent: *
-
 Allow: /
-
-#Sitemap Reference
-#Sitemap: https://www.pcesports.com/sitemap.xml
+Sitemap: https://www.pcesports.com/sitemap.xml

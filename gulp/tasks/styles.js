@@ -5,7 +5,7 @@ const sassGlob = require('gulp-sass-glob');
 const uglifycss = require('gulp-uglifycss');
 
 gulp.task('styles', () => {
-    gulp.src('./fe/styles/global.scss')
+    return gulp.src('./fe/styles/global.scss')
 		.pipe(sassGlob())
     	.pipe(sass().on('error', sass.logError))
     	.pipe(uglifycss({
