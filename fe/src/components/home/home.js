@@ -4,7 +4,7 @@ const Home = {
         let games = [];
         const gameOrder = ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'];
 
-        for (game of gameOrder) {
+        for (let game of gameOrder) {
             game = pce.getGameData(game);
             
             games.push({
