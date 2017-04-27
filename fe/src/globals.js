@@ -8,7 +8,8 @@ const dynamicTemplates = {
 };
 
 const pce = {
-    version: '2.4.0',
+    version: '%version%',
+    canRunAds: false,
     // Local storage
     storage: (func, key, json) => {
         // setItem

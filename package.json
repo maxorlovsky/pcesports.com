@@ -1,6 +1,7 @@
 {
   "name": "pcesports",
   "description": "PC eSports website",
+  "version": "2.5.0",
   "license": "unlicensed",
   "private": true,
   "repository": {
@@ -9,9 +10,8 @@
   },
   "scripts": {
     "build": "gulp build",
-    "release": "git pull && yarn install && gulp build && gulp minify"
+    "release": "git pull && yarn install && gulp build"
   },
-  "version": "2.3.0",
   "dependencies": {
     "axios": "0.16.1",
     "bootstrap": "4.0.0-alpha.6",

@@ -9,5 +9,7 @@ gulp.task('build', (cb) => {
 		'lint:script',
 		'copy',
 		['styles', 'scripts'],
+		'bump-ver',
+		'minify',
 	cb);
 });
