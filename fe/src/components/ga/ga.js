@@ -2,7 +2,7 @@ Vue.component('adsense', {
     template: dynamicTemplates.ga,
     data: function() {
         return {
-            canRunAds: canRunAds
+            canRunAds: pce.canRunAds
         };
     },
     mounted() {

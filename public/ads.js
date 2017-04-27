@@ -1,1 +1,1 @@
-var canRunAds = true;
+pce.canRunAds = true;
