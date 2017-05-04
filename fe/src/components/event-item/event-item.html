@@ -7,7 +7,9 @@
         <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
     </router-link>
     <div class="event-organizer">
-        <img v-if="game.platform && game.platform != 'lol-event'" :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.png'" />
+        <img v-if="game.platform && game.platform != 'lol-event'"
+            :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.png'"
+            :title="game.platformName" />
     </div>
     <div class="event-status-links">
         <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>

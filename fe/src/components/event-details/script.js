@@ -13,7 +13,7 @@ const EventDetails = {
         this.currentGame = pce.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
 
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournament/?game=' + this.currentGame.abbriviature + '&id='+this.eventId)
+        axios.get('https://api.pcesports.com/tournament/' + this.currentGame.abbriviature + '/' + this.eventId)
         .then(function (response) {
             self.game = response.data;
 
@@ -52,7 +52,9 @@ const EventDetails = {
             self.loading = false;
         })
         .catch(function (error) {
-            self.pageError = error.response.data.message;
+            if (error.response.data.message !== undefined) {
+                self.pageError = error.response.data.message;
+            }
             self.loading = false;
         });
     },
@@ -68,6 +70,10 @@ const EventDetails = {
             return date;
         },
         correctDescription: function(description, markedEnable) {
+            if (!description) {
+                return '';
+            }
+
             if (markedEnable) {
                 description = marked(description);
             }

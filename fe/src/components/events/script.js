@@ -70,7 +70,7 @@ const Events = {
                 filter += '&offset=' + this.offset;
             }
 
-            axios.get('https://api.pcesports.com/wp/wp-json/pce-api/tournaments/' + filter)
+            axios.get('https://api.pcesports.com/tournaments' + filter)
             .then(function (response) {
                 let gamesFiltered = response.data;
 
