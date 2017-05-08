@@ -157,6 +157,10 @@ const EventDetails = {
                 fullName.name = 'Go4 ESL';
                 fullName.image = 'esl';
             }
+            else if (platform === 'egl') {
+                fullName.name = 'European Gaming League';
+                fullName.image = 'egl';
+            }
 
             return fullName;
         }
