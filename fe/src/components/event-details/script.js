@@ -35,7 +35,10 @@ const EventDetails = {
             } else {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
             }
-            self.game.platform = self.correctPlatform(self.game.platform);
+            self.game.platform = {
+                name: self.game.platformName,
+                image: self.game.platformName === 'Custom' ? false : self.game.platform
+            };
             self.game.start_datetime = self.correctDate(self.game.start_datetime);
             self.game.meta_data.elimination = self.correctEventFormat(self.game.meta_data.elimination);
             if (self.game.meta_data.free) {
@@ -130,39 +133,6 @@ const EventDetails = {
             }
 
             return status;
-        },
-        correctPlatform: function(platform) {
-            let fullName = {
-                name: 'Custom',
-                image: false
-            };
-
-            if (platform === 'battlefy') {
-                fullName.name = 'Battlefy';
-                fullName.image = 'battlefy';
-            }
-            else if (platform === 'strive-wire') {
-                fullName.name = 'StriveWire';
-                fullName.image = 'strive-wire';
-            }
-            else if (platform === 'toornament') {
-                fullName.name = 'Toornament';
-                fullName.image = 'toornament';
-            }
-            else if (platform === 'esportswall') {
-                fullName.name = 'eSports Wall';
-                fullName.image = 'esportswall';
-            }
-            else if (platform === 'esl') {
-                fullName.name = 'Go4 ESL';
-                fullName.image = 'esl';
-            }
-            else if (platform === 'egl') {
-                fullName.name = 'European Gaming League';
-                fullName.image = 'egl';
-            }
-
-            return fullName;
         }
     }
 };
