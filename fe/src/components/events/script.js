@@ -73,7 +73,6 @@ const Events = {
             axios.get('https://api.pcesports.com/tournaments' + filter)
             .then(function (response) {
                 let gamesFiltered = response.data;
-
                 let currentDate = new Date();
                 let timezoneOffset = currentDate.getTimezoneOffset() * 60;
 
@@ -97,7 +96,7 @@ const Events = {
                     self.games = gamesFiltered;
                 }
 
-                if (gamesFiltered.length < self.limit) {
+                if (gamesFiltered.length < self.limit || response.data.message === 'no-events') {
                     self.hideLoadMore = true;
                 }
                 else {
