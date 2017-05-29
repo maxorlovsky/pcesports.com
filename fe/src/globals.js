@@ -39,7 +39,7 @@ const pce = {
             let returnValue = JSON.parse(localStorage.getItem(key));
 
             // If more than 30 min, cleanup
-            if ((returnValue.time * 1800000) <= new Date().getTime()) {
+            if ((returnValue.time + 1800000) <= new Date().getTime()) {
                 pce.storage('remove', key);
             }
 
