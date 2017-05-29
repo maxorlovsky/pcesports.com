@@ -16,7 +16,7 @@ header {
         display: none;
 
         .open & {
-            display: none;
+            visibility: hidden;
         }
         
         @media (max-width: 768px) {

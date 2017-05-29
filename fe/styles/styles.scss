@@ -1,15 +1,5 @@
 .open {
     overflow: hidden;
-
-    header,
-    section.page,
-    footer {
-		transform: translate(25%, 0);
-
-        @media (max-width: 425px) {
-            transform: translate(50%, 0);
-        }
-    }
 }
 
 a {
