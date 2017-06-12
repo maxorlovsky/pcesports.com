@@ -4,6 +4,7 @@ const dynamicTemplates = {
     eventItem: document.createElement('script'),
     //eventsFilters: document.createElement('script')
     ga: document.createElement('script'),
+    login: document.createElement('script'),
     sideMenu: document.createElement('script')
 };
 
