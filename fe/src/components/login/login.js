@@ -19,11 +19,15 @@ Vue.component('login', {
     },
     methods: {
         submit: function() {
-            console.log(this.login);
-
-            axios.get(`http://dev.api.pcesports.com/login/${this.login}/${this.pass}`)
+            axios.post('http://dev.api.pcesports.com/login', {
+                login: this.login,
+                pass: this.pass
+            })
             .then(function (response) {
-                console.log(response.data);
+                pce.storage('set', 'token', response.data);
+            })
+            .catch(function (error) {
+                console.log(error.response.data.message);
             });
         }
     }
