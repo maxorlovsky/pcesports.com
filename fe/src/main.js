@@ -170,6 +170,8 @@ function loadApp(menu) {
             // If back button is clicked and menu is open, we need to close menu first
             window.addEventListener("hashchange", this.checkMenu);
 
+            delete Hammer.defaults.cssProps.userSelect;
+
             Hammer(document.getElementById('app'))
             .on('swiperight', function(ev) {
                 if (ev.pointerType !== 'touch') {
