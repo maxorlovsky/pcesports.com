@@ -5,7 +5,8 @@ const dynamicTemplates = {
     //eventsFilters: document.createElement('script')
     ga: document.createElement('script'),
     login: document.createElement('script'),
-    sideMenu: document.createElement('script')
+    leftSideMenu: document.createElement('script'),
+    rightSideMenu: document.createElement('script')
 };
 
 const pce = {

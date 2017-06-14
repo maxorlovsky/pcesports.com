@@ -89,7 +89,8 @@ if (checkStorage) {
     dynamicTemplates.footer.appendChild(document.createTextNode(checkStorage.templates.footer));
     dynamicTemplates.eventItem.appendChild(document.createTextNode(checkStorage.templates.eventItem));
     dynamicTemplates.ga.appendChild(document.createTextNode(checkStorage.templates.ga));
-    dynamicTemplates.sideMenu.appendChild(document.createTextNode(checkStorage.templates.sideMenu));
+    dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(checkStorage.templates.leftSideMenu));
+    dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(checkStorage.templates.rightSideMenu));
     dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
 
     loadApp(checkStorage.menu);
@@ -101,18 +102,28 @@ else {
         axios.get('/dist/html/event-item.html'),
         //axios.get('/dist/html/events-filters.html'),
         axios.get('/dist/html/ga.html'),
-        axios.get('/dist/html/side-menu.html'),
+        axios.get('/dist/html/left-side-menu.html'),
+        axios.get('/dist/html/right-side-menu.html'),
         axios.get('/dist/html/login.html'),
         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
     ])
-    .then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate, sideMenuTemplate, loginTemplate, menuData) {
+    .then(axios.spread(function (
+        headerTemplate,
+        footerTemplate,
+        eventItemTemplate,
+        gaTemplate,
+        leftSideMenuTemplate,
+        rightSideMenuTemplate,
+        loginTemplate,
+        menuData) {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
         dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
         dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
         //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
         dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
         dynamicTemplates.login.appendChild(document.createTextNode(loginTemplate.data));
-        dynamicTemplates.sideMenu.appendChild(document.createTextNode(sideMenuTemplate.data));
+        dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(leftSideMenuTemplate.data));
+        dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(rightSideMenuTemplate.data));
 
         let returnMenu = {};
         if (menuData.data) {
@@ -145,7 +156,8 @@ else {
                 footer: footerTemplate.data,
                 eventItem: eventItemTemplate.data,
                 ga: gaTemplate.data,
-                sideMenu: sideMenuTemplate.data,
+                leftSideMenu: leftSideMenuTemplate.data,
+                rightSideMenu: rightSideMenuTemplate.data,
                 login: loginTemplate.data
             },
             menu: returnMenu
