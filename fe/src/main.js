@@ -175,7 +175,8 @@ function loadApp(menu) {
         router: router,
         data: {
             menu: menu,
-            sideMenu: false
+            leftSideMenu: false,
+            rightSideMenu: false,
         },
         mounted() {
             let self = this;
@@ -190,7 +191,7 @@ function loadApp(menu) {
                     return false;
                 }
                 
-                if (self.sideMenu === false) {
+                if (self.leftSideMenu === false) {
                     self.burgerMenu();
                 }
             })
@@ -199,24 +200,34 @@ function loadApp(menu) {
                     return false;
                 }
 
-                if (self.sideMenu === true) {
+                if (self.leftSideMenu === true) {
                     self.burgerMenu();
                 }
             });
         },
         methods: {
             burgerMenu: function() {
-                if (this.sideMenu) {
-                    this.sideMenu = false;
-                    document.querySelector('body').className = document.querySelector('body').className.replace('open', '').trim();
+                if (this.leftSideMenu) {
+                    this.leftSideMenu = false;
+                    document.querySelector('body').className = document.querySelector('body').className.replace('open left', '').trim();
                 } else {
-                    this.sideMenu = true;
+                    this.leftSideMenu = true;
                     window.location.hash = '#side-menu-open';
-                    document.querySelector('body').className = document.querySelector('body').className + ' open'.trim();
+                    document.querySelector('body').className = document.querySelector('body').className + ' open left'.trim();
+                }
+            },
+            openRightMenu: function() {
+                if (this.rightSideMenu) {
+                    this.rightSideMenu = false;
+                    document.querySelector('body').className = document.querySelector('body').className.replace('open right', '').trim();
+                } else {
+                    this.rightSideMenu = true;
+                    window.location.hash = '#right-side-menu-open';
+                    document.querySelector('body').className = document.querySelector('body').className + ' open right'.trim();
                 }
             },
             checkMenu: function(e) {
-                if (this.sideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
+                if (this.leftSideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
                     this.burgerMenu();
                 }
             }

@@ -2,22 +2,22 @@
     nav {
         position: fixed;
         top: 0;
-        left: 0;
-        background-color: rgba(25,25,25,0.97);
+        right: 0;
+        background-color: rgba(10,10,10,0.98);
         width: 25%;
         height: 100%;
         z-index: 50;
         transition: .5s;
-        transform: translate(-100%, 0);
+        transform: translate(100%, 0);
         overflow-y: auto;
 
         @media (max-width: 425px) {
             width: 50%;
         }
 
-        .open & {
+        .open.right & {
             display: block;
-            transform: translate(0, 0);
+            transform: translate(0%, 0);
         }
     }
 
@@ -52,19 +52,19 @@
     .side-menu-cover {
         position: fixed;
         top: 0;
-        right: 0;
+        left: 0;
         background-color: rgba(0, 0, 0, 0.80);
         width: 75%;
         height: 100%;
         z-index: 50;
         transition: .5s;
-        transform: translate(100%, 0);
+        transform: translate(-100%, 0);
 
         @media (max-width: 425px) {
             width: 50%;
         }
 
-        .open & {
+        .open.right & {
             transform: translate(0%, 0);
         }
     }
@@ -75,5 +75,6 @@
         margin: 0 10px;
         line-height: 60px;
         color: #fff;
+        float: right;
     }
 }

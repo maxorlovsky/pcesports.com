@@ -6,8 +6,8 @@ Vue.component('left-side-menu-component', {
         };
     },
     methods: {
-         triggerClick: function() {
+        triggerClick: function() {
             this.$emit('nav-menu');
-         }
+        }
     }
 });

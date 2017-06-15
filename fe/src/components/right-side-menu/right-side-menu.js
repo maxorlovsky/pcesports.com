@@ -1,13 +1,13 @@
 Vue.component('right-side-menu-component', {
-    template: dynamicTemplates.leftSideMenu,
+    template: dynamicTemplates.rightSideMenu,
     data: function() {
         return {
-            menu: this.$parent.menu
+            
         };
     },
     methods: {
-         triggerClick: function() {
-            this.$emit('nav-menu');
-         }
+        triggerClick: function() {
+            this.$emit('right-menu');
+        }
     }
 });
