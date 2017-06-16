@@ -4,7 +4,8 @@ Vue.component('header-component', {
         return {
             mood: '',
             logoSmall: false,
-            burgerStatus: this.$parent.sideMenu,
+            burgerStatus: this.$parent.leftSideMenu,
+            rightMenuStatus: this.$parent.rightSideMenu,
             menu: {}
         };
     },
@@ -40,6 +41,9 @@ Vue.component('header-component', {
         },
         burgerMenu: function() {
             this.$emit('nav-menu');
+        },
+        openRightMenu: function(form) {
+            this.$emit('right-menu');
         }
     }
 });
