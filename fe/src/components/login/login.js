@@ -19,7 +19,7 @@ Vue.component('login', {
     },
     methods: {
         submit: function() {
-            axios.post('http://dev.api.pcesports.com/login', {
+            axios.post('https://dev.api.pcesports.com/login', {
                 login: this.login,
                 pass: this.pass
             })
