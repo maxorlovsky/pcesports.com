@@ -23,7 +23,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # fetching all links params in one variable and breaking it down in index.php
+RewriteRule /404/? /404 [R=404,L,QSA]
 RewriteRule (.*) index.html?params=$1 [L,QSA]
+
+ErrorPage 404 /404
 
 <IfModule mod_headers.c>
     RequestHeader set X-Prerender-Token "YOUR_TOKENeWVGax3T4SgL1MOHfAxU"
@@ -35,6 +38,6 @@ RewriteRule (.*) index.html?params=$1 [L,QSA]
         RewriteCond %{QUERY_STRING} _escaped_fragment_
         
         # Only proxy the request to Prerender if it's a request for HTML
-        RewriteRule ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff))(.*) http://service.prerender.io/http://example.com/$2 [P,L]
+        RewriteRule ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff))(.*) http://service.prerender.io/https://pcesports.com/$2 [P,L]
     </IfModule>
 </IfModule>
