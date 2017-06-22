@@ -29,7 +29,7 @@ RewriteRule (.*) index.html?params=$1 [L,QSA]
 ErrorPage 404 /404
 
 <IfModule mod_headers.c>
-    RequestHeader set X-Prerender-Token "YOUR_TOKENeWVGax3T4SgL1MOHfAxU"
+    RequestHeader set X-Prerender-Token "eWVGax3T4SgL1MOHfAxU"
 </IfModule>
 
 <IfModule mod_rewrite.c>
