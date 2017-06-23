@@ -204,6 +204,11 @@ function loadApp(menu) {
                     self.burgerMenu();
                 }
             });
+
+            setTimeout(() => {
+                alert('should run at the end');
+                window.prerenderReady = true;
+            }, 3000);
         },
         methods: {
             burgerMenu: function() {
