@@ -206,7 +206,7 @@ function loadApp(menu) {
             });
 
             setTimeout(() => {
-                alert('should run at the end');
+                console.log('should run at the end');
                 window.prerenderReady = true;
             }, 3000);
         },
