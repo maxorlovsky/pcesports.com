@@ -205,10 +205,10 @@ function loadApp(menu) {
                 }
             });
 
-            setTimeout(() => {
+            /*setTimeout(() => {
                 console.log('should run at the end');
                 window.prerenderReady = true;
-            }, 3000);
+            }, 3000);*/
         },
         methods: {
             burgerMenu: function() {

@@ -44,6 +44,7 @@ const Home = {
                 pce.storage('set', 'blogs-posts', self.posts);
 
                 self.loading = false;
+                window.prerenderReady = true;
             });
         }
 
