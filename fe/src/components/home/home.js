@@ -48,8 +48,6 @@ const Home = {
 
                 pce.storage('set', 'blogs-posts', self.posts);
 
-                window.prerenderReady = true;
-
                 self.loading = false;
             });
         }
