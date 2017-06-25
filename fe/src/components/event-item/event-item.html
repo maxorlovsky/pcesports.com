@@ -1,6 +1,6 @@
 <div class="event-item">
     <router-link :to="'/events/' + getGameLink(game.game) + '/' + game.id" class="event-image">
-        <img :src="'../../dist/assets/images/' + game.game +'.png'" />
+        <img :src="'/dist/assets/images/' + game.game +'.png'" />
     </router-link>
     <router-link :to="'/events/' + getGameLink(game.game) + '/' + game.id" class="event-name-info">
         <h4 class="event-name" :title="game.name">{{game.name}}</h4>
@@ -9,7 +9,8 @@
     <div class="event-organizer">
         <img v-if="game.platform && game.platform != 'lol-event'"
             :src="'/dist/assets/images/tournament-platforms/' + game.platform + '.png'"
-            :title="game.platformName" />
+            :title="game.platformName"
+            :alt="game.platformName" />
     </div>
     <div class="event-status-links">
         <div class="event-status" :class="game.eventStatus.toLowerCase()">{{game.eventStatus}}</div>
