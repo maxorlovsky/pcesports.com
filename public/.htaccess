@@ -30,11 +30,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 #    </IfModule>
 #</IfModule>
 
-# fetching all links params in one variable and breaking it down in index.php
-#RewriteRule 404/? /404 [R=404,L,QSA]
-#RewriteRule (.*) index.html?params=$1 [L,QSA]
-#ErrorDocument 404 /404
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule 404/? /404 [R=404,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.html [L]
+
+ErrorDocument 404 /404.html
