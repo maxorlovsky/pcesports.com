@@ -5,7 +5,7 @@ const runSequence = require('run-sequence');
 
 gulp.task('copy', (cb) => {
 	return runSequence(
-		['copy:assets', 'copy:html', 'copy:vue', 'copy:index', 'copy:hammerjsmap'],
+		['copy:assets', 'copy:html', 'copy:vue', 'copy:index', 'copy:hammerjsmap', 'copy:polyfills'],
 		'copy:fontawesome',
 	cb);
 });
@@ -47,6 +47,17 @@ gulp.task('copy:index', () => {
 			'./fe/index.html',
 		])
         .pipe(gulp.dest('./public/'));
+});
+
+// Polyfills
+gulp.task('copy:polyfills', () => {
+	return gulp.src([
+			'./node_modules/babel-polyfill/dist/polyfill.min.js',
+			'./node_modules/promise-polyfill/promise.min.js',
+			'./node_modules/whatwg-fetch/fetch.js'
+		])
+    	.pipe(concat('polyfills.js'))
+        .pipe(gulp.dest('./public/dist/js/'));
 });
 
 // FontAwesome fonts
