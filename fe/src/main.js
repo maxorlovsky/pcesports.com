@@ -102,8 +102,9 @@ else {
         '/dist/html/footer.html',
         '/dist/html/event-item.html',
         '/dist/html/ga.html',
-        '/dist/html/side-menu.html',
-        'https://api.pcesports.com/wp/wp-json/pce-api/menu'
+        '/dist/html/left-side-menu.html',
+        'https://api.pcesports.com/wp/wp-json/pce-api/menu',
+        '/dist/html/right-side-menu.html',
     ];
 
     const grabContent = url => fetch(url)
@@ -118,7 +119,8 @@ else {
         dynamicTemplates.footer.appendChild(document.createTextNode(response[1]));
         dynamicTemplates.eventItem.appendChild(document.createTextNode(response[2]));
         dynamicTemplates.ga.appendChild(document.createTextNode(response[3]));
-        dynamicTemplates.sideMenu.appendChild(document.createTextNode(response[4]));
+        dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(response[4]));
+        dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(response[6]));
 
         const returnMenu = {};
         if (response[5]) {
@@ -151,7 +153,8 @@ else {
                 footer: response[1],
                 eventItem: response[2],
                 ga: response[3],
-                sideMenu: response[4]
+                leftSideMenu: response[4],
+                rightSideMenu: response[6]
             },
             menu: returnMenu
         };
