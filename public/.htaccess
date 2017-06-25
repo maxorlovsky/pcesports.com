@@ -5,6 +5,8 @@
     Require all denied
 </Files>
 
+DirectoryIndex index.html
+
 # Rewritting rules
 RewriteEngine On
 RewriteBase /
