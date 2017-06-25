@@ -19,14 +19,14 @@ Vue.component('login', {
     },
     methods: {
         submit: function() {
-            axios.post('https://dev.api.pcesports.com/login', {
+            axios.post('http://dev.api.pcesports.com/login', {
                 login: this.login,
                 pass: this.pass
             })
             .then(function (response) {
                 pce.storage('set', 'token', response.data);
-                console.log(response.data.sessionToken);
-                //axios.defaults.headers.common['sessionToken'] = response.data.sessionToken;
+                axios.defaults.headers.common.sessionToken = response.data.sessionToken;
+                pce.loggedIn = true;
             })
             .catch(function (error) {
                 console.log(error.response.data.message);

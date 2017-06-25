@@ -1,0 +1,22 @@
+.login-form {
+    margin: 2rem auto;
+    width: 85%;
+
+    .login-wrapper,
+    .pass-wrapper {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            border: 0;
+        }
+    }
+
+    .btn {
+        width: 100%;
+        cursor: pointer;
+    }
+}

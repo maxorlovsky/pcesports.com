@@ -105,6 +105,7 @@ else {
         '/dist/html/left-side-menu.html',
         'https://api.pcesports.com/wp/wp-json/pce-api/menu',
         '/dist/html/right-side-menu.html',
+        '/dist/html/login.html'
     ];
 
     const grabContent = url => fetch(url)
@@ -121,6 +122,7 @@ else {
         dynamicTemplates.ga.appendChild(document.createTextNode(response[3]));
         dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(response[4]));
         dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(response[6]));
+        dynamicTemplates.login.appendChild(document.createTextNode(response[7]));
 
         const returnMenu = {};
         if (response[5]) {
@@ -154,7 +156,8 @@ else {
                 eventItem: response[2],
                 ga: response[3],
                 leftSideMenu: response[4],
-                rightSideMenu: response[6]
+                rightSideMenu: response[6],
+                login: response[7]
             },
             menu: returnMenu
         };
@@ -176,9 +179,11 @@ function loadApp(menu) {
             menu: menu,
             leftSideMenu: false,
             rightSideMenu: false,
+            loggedIn: pce.checkUserAuth()
         },
         mounted() {
             let self = this;
+            
             // If back button is clicked and menu is open, we need to close menu first
             window.addEventListener("hashchange", this.checkMenu);
 

@@ -1,5 +1,10 @@
-<div class="">
-    <label>Login</label> <input type="text" v-model="login" />
-    <label>Pass</label> <input type="password" v-model="pass" />
-    <button v-on:click="submit()">Send</button>
+<div class="login-form">
+    {{loggedIn}}
+    <div class="login-wrapper">
+        <input type="text" v-model="login" placeholder="Login" />
+    </div>
+    <div class="pass-wrapper">
+        <input type="password" v-model="pass" placeholder="Password" />
+    </div>
+    <button class="btn btn-primary" v-on:click="submit()">Login</button>
 </div>
