@@ -74,9 +74,10 @@ router.beforeEach((to, from, next) => {
     // Loading html template for component
     let element = document.getElementById('template-holder');
 
-    axios.get('/dist/html/' + to.meta.template + '.html')
-    .then(function(template) {
-        element.innerHTML = template.data;
+    fetch('/dist/html/' + to.meta.template + '.html')
+    .then(res => res.text())
+    .then((template) => {
+        element.innerHTML = template;
 
         next();
     });
@@ -94,27 +95,34 @@ if (checkStorage) {
     loadApp(checkStorage.menu);
 }
 else {
-    axios.all([
-        axios.get('/dist/html/header.html'),
-        axios.get('/dist/html/footer.html'),
-        axios.get('/dist/html/event-item.html'),
-        //axios.get('/dist/html/events-filters.html'),
-        axios.get('/dist/html/ga.html'),
-        axios.get('/dist/html/side-menu.html'),
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
-    ])
-    .then(axios.spread(function (headerTemplate, footerTemplate, eventItemTemplate, gaTemplate, sideMenuTemplate, menuData) {
-        dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
-        dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
-        dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
-        //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
-        dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
-        dynamicTemplates.sideMenu.appendChild(document.createTextNode(sideMenuTemplate.data));
+    const urls = [
+        '/dist/html/header.html',
+        '/dist/html/footer.html',
+        '/dist/html/event-item.html',
+        '/dist/html/ga.html',
+        '/dist/html/side-menu.html',
+        'https://api.pcesports.com/wp/wp-json/pce-api/menu'
+    ];
 
-        let returnMenu = {};
-        if (menuData.data) {
-            for (let value of menuData.data) {
-                if (value.menu_item_parent == '0') {
+    const grabContent = url => fetch(url)
+    .then(res => res.text())
+    .then(html => {
+        return html;
+    });
+
+    Promise.all(urls.map(grabContent))
+    .then((response) => {
+        dynamicTemplates.header.appendChild(document.createTextNode(response[0]));
+        dynamicTemplates.footer.appendChild(document.createTextNode(response[1]));
+        dynamicTemplates.eventItem.appendChild(document.createTextNode(response[2]));
+        dynamicTemplates.ga.appendChild(document.createTextNode(response[3]));
+        dynamicTemplates.sideMenu.appendChild(document.createTextNode(response[4]));
+
+        const returnMenu = {};
+        if (response[5]) {
+            response[5] = JSON.parse(response[5]);
+            for (let value of response[5]) {
+                if (value.menu_item_parent === '0') {
                     returnMenu['link-' + value.ID] = {
                         'title': value.title,
                         'url': (value.url?value.url:''),
@@ -123,8 +131,7 @@ else {
                         'slug': value.post_name,
                         'sublinks': {}
                     };
-                }
-                else {
+                } else {
                     returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
                         'title': value.title,
                         'url': value.url.replace('http://', ''),
@@ -138,11 +145,11 @@ else {
 
         let store = {
             templates: {
-                header: headerTemplate.data,
-                footer: footerTemplate.data,
-                eventItem: eventItemTemplate.data,
-                ga: gaTemplate.data,
-                sideMenu: sideMenuTemplate.data
+                header: response[0],
+                footer: response[1],
+                eventItem: response[2],
+                ga: response[3],
+                sideMenu: response[4]
             },
             menu: returnMenu
         };
@@ -150,7 +157,10 @@ else {
         pce.storage('set', 'structure-data', store);
 
         loadApp(returnMenu);
-    }));
+    })
+    .catch((error) => {
+        console.log('Error fetching main resources: ' + error);
+    });
 }
 
 function loadApp(menu) {
@@ -186,10 +196,10 @@ function loadApp(menu) {
                 }
             });
 
-            setTimeout(() => {
-                alert('should run at the end');
-                window.prerenderReady = true;
-            }, 3000);
+            //setTimeout(() => {
+            //    console.log('should run at the end');
+            //    window.prerenderReady = true;
+            //}, 3000);
         },
         methods: {
             burgerMenu: function() {
