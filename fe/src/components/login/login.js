@@ -26,7 +26,7 @@ Vue.component('login', {
             .then(function (response) {
                 pce.storage('set', 'token', response.data);
                 console.log(response.data.sessionToken);
-                axios.defaults.headers.common['sessionToken'] = response.data.sessionToken;
+                //axios.defaults.headers.common['sessionToken'] = response.data.sessionToken;
             })
             .catch(function (error) {
                 console.log(error.response.data.message);
