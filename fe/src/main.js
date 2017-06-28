@@ -195,7 +195,7 @@ function loadApp(menu) {
                     return false;
                 }
                 
-                if (self.leftSideMenu === false) {
+                if (self.sideMenu === false) {
                     self.burgerMenu();
                 }
             })
@@ -204,7 +204,7 @@ function loadApp(menu) {
                     return false;
                 }
 
-                if (self.leftSideMenu === true) {
+                if (self.sideMenu === true) {
                     self.burgerMenu();
                 }
             });
@@ -236,7 +236,7 @@ function loadApp(menu) {
                 }
             },
             checkMenu: function(e) {
-                if (this.leftSideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
+                if (this.sideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
                     this.burgerMenu();
                 }
             }

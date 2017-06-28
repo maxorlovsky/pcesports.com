@@ -12,12 +12,8 @@
                         class="game-block"
                         v-for="game in games"
                         v-bind:class="game.cssClass">
-                        <button class="btn btn-primary view-tournament">View {{game.gameName}} tournaments</button>
+                        <button class="btn btn-primary">View {{game.gameName}} events</button>
                     </router-link>
-
-                    <router-link
-                        :to="'../events'"
-                        class="view-all btn btn-lg btn-secondary">View all tournaments</router-link>
                 </div>
             </div>
         </div>
