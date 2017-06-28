@@ -242,20 +242,4 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             background-color: #006600;
         }
     }
-
-    .seo-about {
-        h1 {
-            font-size: 1.4rem;
-        }
-
-        .block-content {
-            background-color: rgba(15, 15, 15, 0.95);
-            color: #ddd;
-        }
-
-        .seo-content {
-            width: 90%;
-            margin: 0 auto;
-        }
-    }
 }

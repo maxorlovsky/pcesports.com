@@ -5,7 +5,8 @@ const dynamicTemplates = {
     ga: document.createElement('script'),
     leftSideMenu: document.createElement('script'),
     rightSideMenu: document.createElement('script'),
-    login: document.createElement('script')
+    login: document.createElement('script'),
+    seo: document.createElement('script')
 };
 
 const pce = {

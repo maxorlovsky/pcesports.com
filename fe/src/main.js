@@ -93,6 +93,7 @@ if (checkStorage) {
     dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(checkStorage.templates.leftSideMenu));
     dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(checkStorage.templates.rightSideMenu));
     dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
+    dynamicTemplates.seo.appendChild(document.createTextNode(checkStorage.templates.seo));
 
     loadApp(checkStorage.menu);
 }
@@ -105,7 +106,8 @@ else {
         '/dist/html/left-side-menu.html',
         'https://api.pcesports.com/wp/wp-json/pce-api/menu',
         '/dist/html/right-side-menu.html',
-        '/dist/html/login.html'
+        '/dist/html/login.html',
+        '/dist/html/seo.html'
     ];
 
     const grabContent = url => fetch(url)
@@ -123,6 +125,7 @@ else {
         dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(response[4]));
         dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(response[6]));
         dynamicTemplates.login.appendChild(document.createTextNode(response[7]));
+        dynamicTemplates.seo.appendChild(document.createTextNode(response[8]));
 
         const returnMenu = {};
         if (response[5]) {
@@ -157,7 +160,8 @@ else {
                 ga: response[3],
                 leftSideMenu: response[4],
                 rightSideMenu: response[6],
-                login: response[7]
+                login: response[7],
+                seo: response[8]
             },
             menu: returnMenu
         };
