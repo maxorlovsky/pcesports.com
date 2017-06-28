@@ -39,6 +39,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.html [L]
 
-RewriteRule ^/web/static/images/logo.png /dist/assets/images/logo.png
+Redirect 301 /web/static/images/logo.png /dist/assets/images/logo.png
 
 ErrorDocument 404 /404.html
