@@ -136,8 +136,6 @@ const Events = {
         loadSeo: function(game) {
             let text = '';
 
-            console.log(game);
-
             switch(game) {
                 case 'smite':
                     text = '<h1>Smite tournaments</h1>\
@@ -203,8 +201,6 @@ const Events = {
                     <p>Tournaments are gathered from all around popular platforms and list provide you will the most relevant data and links that you might need to start you participation as fast and easy as possible</p>';
                 break;
             }
-
-            console.log(text);
 
             return text;
         }

@@ -160,7 +160,8 @@ else {
                 ga: response[3],
                 leftSideMenu: response[4],
                 rightSideMenu: response[6],
-                login: response[7]
+                login: response[7],
+                seo: response[8]
             },
             menu: returnMenu
         };
