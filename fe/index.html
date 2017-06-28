@@ -49,12 +49,19 @@
 <body>
 
 <div class="wrapper" id="app">
-    <header-component v-on:nav-menu="burgerMenu()"></header-component>
+    <header-component
+        v-on:nav-menu="burgerMenu()"
+        v-on:right-menu="openRightMenu()"></header-component>
+
     <section class="page">
         <router-view></router-view>
     </section>
+
     <footer-component></footer-component>
-    <side-menu-component v-on:nav-menu="burgerMenu()"></side-menu-component>
+
+    <left-side-menu-component v-on:nav-menu="burgerMenu()"></left-side-menu-component>
+    
+    <right-side-menu-component v-on:right-menu="openRightMenu()"></right-side-menu-component>
 </div>
 
 <div id="template-holder" class="template-holder"></div>

@@ -5,7 +5,7 @@ const runSequence = require('run-sequence');
 
 gulp.task('copy', (cb) => {
 	return runSequence(
-		['copy:assets', 'copy:html', 'copy:vue', 'copy:index', 'copy:polyfills'],
+		['copy:assets', 'copy:html', 'copy:vue', 'copy:index', 'copy:hammerjsmap', 'copy:polyfills'],
 		'copy:fontawesome',
 	cb);
 });
@@ -64,4 +64,10 @@ gulp.task('copy:polyfills', () => {
 gulp.task('copy:fontawesome', () => {
 	return gulp.src('./node_modules/font-awesome/fonts/*')
         .pipe(gulp.dest('./public/dist/assets/font/'));
+});
+
+// HammerJS Map file
+gulp.task('copy:hammerjsmap', () => {
+	return gulp.src('./node_modules/hammerjs/hammer.min.js.map')
+        .pipe(gulp.dest('./public/dist/js/'));
 });

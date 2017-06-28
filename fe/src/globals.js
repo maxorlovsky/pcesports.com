@@ -2,14 +2,16 @@ const dynamicTemplates = {
     header: document.createElement('script'),
     footer: document.createElement('script'),
     eventItem: document.createElement('script'),
-    //eventsFilters: document.createElement('script')
     ga: document.createElement('script'),
-    sideMenu: document.createElement('script')
+    leftSideMenu: document.createElement('script'),
+    rightSideMenu: document.createElement('script'),
+    login: document.createElement('script')
 };
 
 const pce = {
     version: '%version%',
     canRunAds: false,
+    loggedIn: false,
     // Local storage
     storage: (func, key, json) => {
         // setItem
@@ -27,7 +29,7 @@ const pce = {
             localStorage.setItem(key, JSON.stringify(saveData));
         } else if (func === 'get') {
             // If it's a development environment, we ignoring localStorage cache
-            if (location.href.indexOf('dev') !== -1) {
+            if (location.href.indexOf('dev') !== -1 && key !== 'token') {
                 return false;
             }
 
@@ -170,6 +172,13 @@ const pce = {
         }
 
         return game;
+    },
+    checkUserAuth: () => {
+        if (pce.storage('get', 'token')) {
+            pce.loggedIn = true;
+        }
+
+        return pce.loggedIn;
     }
 };
 

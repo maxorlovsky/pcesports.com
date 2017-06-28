@@ -90,7 +90,9 @@ if (checkStorage) {
     dynamicTemplates.footer.appendChild(document.createTextNode(checkStorage.templates.footer));
     dynamicTemplates.eventItem.appendChild(document.createTextNode(checkStorage.templates.eventItem));
     dynamicTemplates.ga.appendChild(document.createTextNode(checkStorage.templates.ga));
-    dynamicTemplates.sideMenu.appendChild(document.createTextNode(checkStorage.templates.sideMenu));
+    dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(checkStorage.templates.leftSideMenu));
+    dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(checkStorage.templates.rightSideMenu));
+    dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
 
     loadApp(checkStorage.menu);
 }
@@ -100,8 +102,10 @@ else {
         '/dist/html/footer.html',
         '/dist/html/event-item.html',
         '/dist/html/ga.html',
-        '/dist/html/side-menu.html',
-        'https://api.pcesports.com/wp/wp-json/pce-api/menu'
+        '/dist/html/left-side-menu.html',
+        'https://api.pcesports.com/wp/wp-json/pce-api/menu',
+        '/dist/html/right-side-menu.html',
+        '/dist/html/login.html'
     ];
 
     const grabContent = url => fetch(url)
@@ -116,7 +120,9 @@ else {
         dynamicTemplates.footer.appendChild(document.createTextNode(response[1]));
         dynamicTemplates.eventItem.appendChild(document.createTextNode(response[2]));
         dynamicTemplates.ga.appendChild(document.createTextNode(response[3]));
-        dynamicTemplates.sideMenu.appendChild(document.createTextNode(response[4]));
+        dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(response[4]));
+        dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(response[6]));
+        dynamicTemplates.login.appendChild(document.createTextNode(response[7]));
 
         const returnMenu = {};
         if (response[5]) {
@@ -149,7 +155,9 @@ else {
                 footer: response[1],
                 eventItem: response[2],
                 ga: response[3],
-                sideMenu: response[4]
+                leftSideMenu: response[4],
+                rightSideMenu: response[6],
+                login: response[7]
             },
             menu: returnMenu
         };
@@ -169,12 +177,17 @@ function loadApp(menu) {
         router: router,
         data: {
             menu: menu,
-            sideMenu: false
+            leftSideMenu: false,
+            rightSideMenu: false,
+            loggedIn: pce.checkUserAuth()
         },
         mounted() {
             let self = this;
+            
             // If back button is clicked and menu is open, we need to close menu first
             window.addEventListener("hashchange", this.checkMenu);
+
+            delete Hammer.defaults.cssProps.userSelect;
 
             Hammer(document.getElementById('app'))
             .on('swiperight', function(ev) {
@@ -182,7 +195,7 @@ function loadApp(menu) {
                     return false;
                 }
                 
-                if (self.sideMenu === false) {
+                if (self.leftSideMenu === false) {
                     self.burgerMenu();
                 }
             })
@@ -191,7 +204,7 @@ function loadApp(menu) {
                     return false;
                 }
 
-                if (self.sideMenu === true) {
+                if (self.leftSideMenu === true) {
                     self.burgerMenu();
                 }
             });
@@ -203,17 +216,27 @@ function loadApp(menu) {
         },
         methods: {
             burgerMenu: function() {
-                if (this.sideMenu) {
-                    this.sideMenu = false;
-                    document.querySelector('body').className = document.querySelector('body').className.replace('open', '').trim();
+                if (this.leftSideMenu) {
+                    this.leftSideMenu = false;
+                    document.querySelector('body').className = document.querySelector('body').className.replace('open left', '').trim();
                 } else {
-                    this.sideMenu = true;
+                    this.leftSideMenu = true;
                     window.location.hash = '#side-menu-open';
-                    document.querySelector('body').className = document.querySelector('body').className + ' open'.trim();
+                    document.querySelector('body').className = document.querySelector('body').className + ' open left'.trim();
+                }
+            },
+            openRightMenu: function() {
+                if (this.rightSideMenu) {
+                    this.rightSideMenu = false;
+                    document.querySelector('body').className = document.querySelector('body').className.replace('open right', '').trim();
+                } else {
+                    this.rightSideMenu = true;
+                    window.location.hash = '#right-side-menu-open';
+                    document.querySelector('body').className = document.querySelector('body').className + ' open right'.trim();
                 }
             },
             checkMenu: function(e) {
-                if (this.sideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
+                if (this.leftSideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
                     this.burgerMenu();
                 }
             }

@@ -1,4 +1,4 @@
-.side-menu {
+.left-side-menu {
     nav {
         position: fixed;
         top: 0;
@@ -15,7 +15,7 @@
             width: 50%;
         }
 
-        .open & {
+        .open.left & {
             display: block;
             transform: translate(0, 0);
         }
@@ -64,7 +64,7 @@
             width: 50%;
         }
 
-        .open & {
+        .open.left & {
             transform: translate(0%, 0);
         }
     }
