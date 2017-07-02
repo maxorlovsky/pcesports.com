@@ -16,9 +16,9 @@ Vue.component('right-side-menu-component', {
         },
         logout: function() {
             let self = this;
-            
+
             // Exiting in both cases
-            axios.post('http://dev.api.pcesports.com/logout')
+            axios.post('https://api.pcesports.com/logout')
             .then(function (response) {
                 self.$emit('logout');
             })
