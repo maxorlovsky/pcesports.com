@@ -175,8 +175,11 @@ const pce = {
         return game;
     },
     checkUserAuth: () => {
-        if (pce.storage('get', 'token')) {
+        const token = pce.storage('get', 'token');
+
+        if (token.sessionToken) {
             pce.loggedIn = true;
+            axios.defaults.headers.common.sessionToken = token.sessionToken;
         }
 
         return pce.loggedIn;

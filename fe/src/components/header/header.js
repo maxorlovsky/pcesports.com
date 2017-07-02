@@ -1,12 +1,18 @@
 Vue.component('header-component', {
     template: dynamicTemplates.header,
+    props: {
+        loggedIn: {
+            type: 'boolean'
+        }
+    },
     data: function() {
         return {
             mood: '',
             logoSmall: false,
             burgerStatus: this.$parent.leftSideMenu,
             rightMenuStatus: this.$parent.rightSideMenu,
-            menu: {}
+            menu: {},
+            loggedIn: false
         };
     },
     created: function() {

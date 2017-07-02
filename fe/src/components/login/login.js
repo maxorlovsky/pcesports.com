@@ -1,35 +1,37 @@
 Vue.component('login', {
     template: dynamicTemplates.login,
-    props: {
-        login: {
-            type: 'String'
-        },
-        pass: {
-            type: 'String'
-        }
-    },
     data: function() {
         return {
             login: '',
-            pass: ''
+            pass: '',
+            loginError: '',
+            loading: false
         };
-    },
-    mounted() {
-        
     },
     methods: {
         submit: function() {
+            let self = this;
+
+            this.loading = true;
+
+            if (!this.login || !this.pass) {
+                this.loginError = 'Please fill in the form';
+                this.loading = false;
+                return false;
+            }
+
             axios.post('http://dev.api.pcesports.com/login', {
                 login: this.login,
                 pass: this.pass
             })
             .then(function (response) {
                 pce.storage('set', 'token', response.data);
-                axios.defaults.headers.common.sessionToken = response.data.sessionToken;
-                pce.loggedIn = true;
+                self.$parent.$parent.login();
+                self.loading = false;
             })
             .catch(function (error) {
-                console.log(error.response.data.message);
+                self.loginError = error.response.data.message;
+                self.loading = false;
             });
         }
     }

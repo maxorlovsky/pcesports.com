@@ -243,6 +243,15 @@ function loadApp(menu) {
                 if (this.leftSideMenu === true && e.oldURL.indexOf('#side-menu-open') !== -1) {
                     this.burgerMenu();
                 }
+            },
+            login: function() {
+                this.loggedIn = pce.checkUserAuth();
+            },
+            logout: function() {
+                pce.storage('remove', 'token');
+                delete(axios.defaults.headers.common.sessionToken);
+                pce.loggedIn = false;
+                this.loggedIn = false;
             }
         }
     });

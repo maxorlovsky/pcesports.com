@@ -1,6 +1,7 @@
 <side class="right-side-menu">
-    <nav>
-        <login v-if="!loggedIn"></login>    
-    </nav>
+    <section class="right-side-wrapper">
+        <login v-if="!loggedIn"></login>
+        <button v-if="loggedIn" class="btn btn-danger" v-on:click="logout()">Logout</button>
+    </section>
     <div class="side-menu-cover" v-on:click="triggerClick()"><i class="fa fa-times burger-closer"></i></div>
 </side>
