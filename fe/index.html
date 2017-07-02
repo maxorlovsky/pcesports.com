@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="PC eSports is a catalog of events for online competitive gaming." />
-    <meta name="keywords" content="esports, competitive gaming, league of legends, hearthstone, gaming, tournaments, community, csgo, counter-strike global offensive, smite, european esports, lol tournaments" />
+    <meta name="keywords" content="esports, competitive gaming, esports online tournaments, esports online events, lol tournaments, gaming online tournaments, gaming online events" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="/robots.txt"/>
     <meta name="fragment" content="!"> 
@@ -38,11 +38,7 @@
     <link rel="manifest" href="/manifest.json">
 
     <!-- Critical css/js -->
-    <style>
-    body{background-color:#000}
-    .pre-loading{width:100%;height:100%;background-color:rgba(0,0,0,0.99);display:flex;align-items:center;justify-content:center;position:fixed;top:0;left:0;z-index:50;}
-    header,footer,.page{visibility:hidden;height:0;}
-    </style>
+    <style>body{background-color:#000}.pre-loading{width:100%;height:100%;background-color:rgba(0,0,0,0.99);display:flex;align-items:center;justify-content:center;position:fixed;top:0;left:0;z-index:50;}header,footer,.page{visibility:hidden;height:0;}</style>
     
 </head>
 
@@ -51,7 +47,9 @@
 <div class="wrapper" id="app">
     <header-component
         v-on:nav-menu="burgerMenu()"
-        v-on:right-menu="openRightMenu()"></header-component>
+        v-on:right-menu="openRightMenu()"
+        v-on:auth-action="authAction()"
+        v-bind:logged-in="loggedIn"></header-component>
 
     <section class="page">
         <router-view></router-view>
@@ -59,9 +57,13 @@
 
     <footer-component></footer-component>
 
-    <left-side-menu-component v-on:nav-menu="burgerMenu()"></left-side-menu-component>
+    <left-side-menu-component
+        v-on:nav-menu="burgerMenu()"></left-side-menu-component>
     
-    <right-side-menu-component v-on:right-menu="openRightMenu()"></right-side-menu-component>
+    <right-side-menu-component
+        v-on:right-menu="openRightMenu()"
+        v-on:logout="logout()"
+        v-bind:logged-in="loggedIn"></right-side-menu-component>
 </div>
 
 <div id="template-holder" class="template-holder"></div>
