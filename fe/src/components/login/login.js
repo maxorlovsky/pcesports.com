@@ -20,12 +20,12 @@ Vue.component('login', {
                 return false;
             }
 
-            axios.post('https://api.pcesports.com/login', {
+            axios.post('http://dev.api.pcesports.com/login', {
                 login: this.login,
                 pass: this.pass
             })
             .then(function (response) {
-                pce.storage('set', 'token', response.data);
+                pce.storage('set', 'token', response.data, 604800000); // 7 days
                 self.$parent.$parent.login();
                 self.loading = false;
             })
