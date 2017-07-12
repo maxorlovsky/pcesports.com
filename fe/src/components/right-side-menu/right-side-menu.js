@@ -3,11 +3,19 @@ Vue.component('right-side-menu-component', {
     props: {
         loggedIn: {
             type: 'boolean'
+        },
+        menu: {
+            type: 'object'
+        },
+        userData: {
+            type: 'object'
         }
     },
     data: function() {
         return {
-            loggedIn: false
+            loggedIn: false,
+            menu: {},
+            userData: {}
         };
     },
     methods: {
@@ -15,10 +23,10 @@ Vue.component('right-side-menu-component', {
             this.$emit('right-menu');
         },
         logout: function() {
-            let self = this;
+            const self = this;
 
             // Exiting in both cases
-            axios.post('https://api.pcesports.com/logout')
+            axios.post('http://dev.api.pcesports.com/logout')
             .then(function (response) {
                 self.$emit('logout');
             })

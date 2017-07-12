@@ -74,10 +74,9 @@ router.beforeEach((to, from, next) => {
     // Loading html template for component
     let element = document.getElementById('template-holder');
 
-    fetch('/dist/html/' + to.meta.template + '.html')
-    .then(res => res.text())
+    axios.get('/dist/html/' + to.meta.template + '.html')
     .then((template) => {
-        element.innerHTML = template;
+        element.innerHTML = template.data;
 
         next();
     });
@@ -98,70 +97,54 @@ if (checkStorage) {
     loadApp(checkStorage.menu);
 }
 else {
-    const urls = [
-        '/dist/html/header.html',
-        '/dist/html/footer.html',
-        '/dist/html/event-item.html',
-        '/dist/html/ga.html',
-        '/dist/html/left-side-menu.html',
-        'https://api.pcesports.com/wp/wp-json/pce-api/menu',
-        '/dist/html/right-side-menu.html',
-        '/dist/html/login.html',
-        '/dist/html/seo.html'
-    ];
+    axios.all([
+        axios.get('/dist/html/header.html'),
+        axios.get('/dist/html/footer.html'),
+        axios.get('/dist/html/event-item.html'),
+        //axios.get('/dist/html/events-filters.html'),
+        axios.get('/dist/html/ga.html'),
+        axios.get('/dist/html/left-side-menu.html'),
+        axios.get('/dist/html/right-side-menu.html'),
+        axios.get('/dist/html/login.html'),
+        axios.get('/dist/html/seo.html'),
+        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
+    ])
+    .then(axios.spread((
+        headerTemplate,
+        footerTemplate,
+        eventItemTemplate,
+        gaTemplate,
+        leftSideMenuTemplate,
+        rightSideMenuTemplate,
+        loginTemplate,
+        seoTemplate,
+        menuData
+    ) => {
+        dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
+        dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
+        dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
+        //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
+        dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
+        dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(leftSideMenuTemplate.data));
+        dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(rightSideMenuTemplate.data));
+        dynamicTemplates.login.appendChild(document.createTextNode(loginTemplate.data));
+        dynamicTemplates.seo.appendChild(document.createTextNode(seoTemplate.data));
 
-    const grabContent = url => fetch(url)
-    .then(res => res.text())
-    .then(html => {
-        return html;
-    });
-
-    Promise.all(urls.map(grabContent))
-    .then((response) => {
-        dynamicTemplates.header.appendChild(document.createTextNode(response[0]));
-        dynamicTemplates.footer.appendChild(document.createTextNode(response[1]));
-        dynamicTemplates.eventItem.appendChild(document.createTextNode(response[2]));
-        dynamicTemplates.ga.appendChild(document.createTextNode(response[3]));
-        dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(response[4]));
-        dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(response[6]));
-        dynamicTemplates.login.appendChild(document.createTextNode(response[7]));
-        dynamicTemplates.seo.appendChild(document.createTextNode(response[8]));
-
-        const returnMenu = {};
-        if (response[5]) {
-            response[5] = JSON.parse(response[5]);
-            for (let value of response[5]) {
-                if (value.menu_item_parent === '0') {
-                    returnMenu['link-' + value.ID] = {
-                        'title': value.title,
-                        'url': (value.url?value.url:''),
-                        'css_classes': value.classes.join(' '),
-                        'target': (value.target?value.target:''),
-                        'slug': value.post_name,
-                        'sublinks': {}
-                    };
-                } else {
-                    returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
-                        'title': value.title,
-                        'url': value.url.replace('http://', ''),
-                        'css_classes': value.classes.join(' '),
-                        'target': value.target,
-                        'slug': value.post_name,
-                    };
-                }
-            }
+        let returnMenu = {};
+        if (menuData.data) {
+            returnMenu = pce.prepareMenu(menuData.data);
         }
 
         let store = {
             templates: {
-                header: response[0],
-                footer: response[1],
-                eventItem: response[2],
-                ga: response[3],
-                leftSideMenu: response[4],
-                rightSideMenu: response[6],
-                login: response[7],
-                seo: response[8]
+                header: headerTemplate.data,
+                footer: footerTemplate.data,
+                eventItem: eventItemTemplate.data,
+                ga: gaTemplate.data,
+                leftSideMenu: leftSideMenuTemplate.data,
+                rightSideMenu: rightSideMenuTemplate.data,
+                login: loginTemplate.data,
+                seo: seoTemplate.data
             },
             menu: returnMenu
         };
@@ -169,7 +152,7 @@ else {
         pce.storage('set', 'structure-data', store);
 
         loadApp(returnMenu);
-    })
+    }))
     .catch((error) => {
         console.log('Error fetching main resources: ' + error);
     });
@@ -181,9 +164,11 @@ function loadApp(menu) {
         router: router,
         data: {
             menu: menu,
+            userMenu: {},
             leftSideMenu: false,
             rightSideMenu: false,
-            loggedIn: pce.checkUserAuth()
+            loggedIn: pce.checkUserAuth(),
+            userData: {}
         },
         mounted() {
             let self = this;
@@ -212,6 +197,10 @@ function loadApp(menu) {
                     self.burgerMenu();
                 }
             });
+
+            if (this.loggedIn) {
+                this.fetchLoggedInData();
+            }
 
             //setTimeout(() => {
             //    console.log('should run at the end');
@@ -246,12 +235,59 @@ function loadApp(menu) {
             },
             login: function() {
                 this.loggedIn = pce.checkUserAuth();
+                this.fetchLoggedInData();
             },
             logout: function() {
                 pce.storage('remove', 'token');
+                pce.storage('remove', 'structure-user-data');
                 delete(axios.defaults.headers.common.sessionToken);
                 pce.loggedIn = false;
                 this.loggedIn = false;
+            },
+            fetchLoggedInData: function() {
+                const checkStorage = pce.storage('get', 'structure-user-data');
+                let self = this;
+
+                if (checkStorage) {
+                    //dynamicTemplates.header.appendChild(document.createTextNode(checkStorage.templates.header));
+                    this.userMenu = checkStorage.menu;
+                    this.userData = checkStorage.userProfileData;
+                } else {
+                    axios.all([
+                        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/user-menu'),
+                        axios.get('http://dev.api.pcesports.com/user-data')
+                    ])
+                    .then(axios.spread((
+                        userMenuData,
+                        profileData
+                    ) => {
+                        let returnMenu = {};
+
+                        if (userMenuData.data) {
+                            returnMenu = pce.prepareMenu(userMenuData.data);
+                        }
+
+                        let store = {
+                            templates: {
+                                //header: response[0],
+                            },
+                            menu: returnMenu,
+                            userProfileData: profileData.data
+                        };
+
+                        pce.storage('set', 'structure-user-data', store);
+
+                        this.userMenu = returnMenu;
+                        this.userData = profileData.data;
+                    }))
+                    .catch((error) => {
+                        // If catched error, that means that user is probably not authorized.
+                        // Trigger logout
+                        self.logout();
+                        alert('logout');
+                        console.log('Error fetching user resources: ' + error);
+                    });
+                }
             }
         }
     });

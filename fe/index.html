@@ -63,7 +63,9 @@
     <right-side-menu-component
         v-on:right-menu="openRightMenu()"
         v-on:logout="logout()"
-        v-bind:logged-in="loggedIn"></right-side-menu-component>
+        v-bind:logged-in="loggedIn"
+        v-bind:user-data="userData"
+        v-bind:menu="userMenu"></right-side-menu-component>
 </div>
 
 <div id="template-holder" class="template-holder"></div>
