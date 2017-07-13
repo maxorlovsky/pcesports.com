@@ -2,10 +2,10 @@
     <div class="alert alert-danger" v-if="loginError">{{loginError}}</div>
 
     <form method="post" v-on:submit.prevent="submit()">
-        <div class="login-wrapper">
-            <input type="text" v-model="login" placeholder="Login" />
+        <div class="input-wrapper">
+            <input type="text" v-model="login" placeholder="Email" />
         </div>
-        <div class="pass-wrapper">
+        <div class="input-wrapper">
             <input type="password" v-model="pass" placeholder="Password" />
         </div>
 
