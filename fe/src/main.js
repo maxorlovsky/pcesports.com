@@ -93,6 +93,7 @@ if (checkStorage) {
     dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(checkStorage.templates.rightSideMenu));
     dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
     dynamicTemplates.seo.appendChild(document.createTextNode(checkStorage.templates.seo));
+    dynamicTemplates.register.appendChild(document.createTextNode(checkStorage.templates.register));
 
     loadApp(checkStorage.menu);
 }
@@ -107,6 +108,7 @@ else {
         axios.get('/dist/html/right-side-menu.html'),
         axios.get('/dist/html/login.html'),
         axios.get('/dist/html/seo.html'),
+        axios.get('/dist/html/register.html'),
         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
     ])
     .then(axios.spread((
@@ -118,6 +120,7 @@ else {
         rightSideMenuTemplate,
         loginTemplate,
         seoTemplate,
+        registerTemplate,
         menuData
     ) => {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
@@ -129,6 +132,7 @@ else {
         dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(rightSideMenuTemplate.data));
         dynamicTemplates.login.appendChild(document.createTextNode(loginTemplate.data));
         dynamicTemplates.seo.appendChild(document.createTextNode(seoTemplate.data));
+        dynamicTemplates.register.appendChild(document.createTextNode(registerTemplate.data));
 
         let returnMenu = {};
         if (menuData.data) {
@@ -144,7 +148,8 @@ else {
                 leftSideMenu: leftSideMenuTemplate.data,
                 rightSideMenu: rightSideMenuTemplate.data,
                 login: loginTemplate.data,
-                seo: seoTemplate.data
+                seo: seoTemplate.data,
+                register: registerTemplate.data
             },
             menu: returnMenu
         };
@@ -167,6 +172,7 @@ function loadApp(menu) {
             userMenu: {},
             leftSideMenu: false,
             rightSideMenu: false,
+            rightSideMenuForm: '',
             loggedIn: pce.checkUserAuth(),
             userData: {}
         },
@@ -218,7 +224,8 @@ function loadApp(menu) {
                     document.querySelector('body').className = document.querySelector('body').className + ' open left'.trim();
                 }
             },
-            openRightMenu: function() {
+            openRightMenu: function(test) {
+                //console.log(test);
                 if (this.rightSideMenu) {
                     this.rightSideMenu = false;
                     document.querySelector('body').className = document.querySelector('body').className.replace('open right', '').trim();

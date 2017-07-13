@@ -1,6 +1,7 @@
 <side class="right-side-menu">
     <section class="right-side-wrapper">
-        <login v-if="!loggedIn"></login>
+        <login v-if="!loggedIn && (form === 'login' || !form) "></login>
+        <register v-if="!loggedIn && form === 'register'"></register>
         <div class="right-side-logged-in-menu" v-if="loggedIn">
             <loading v-if="!menu"></loading>
             <nav v-else>
@@ -32,5 +33,6 @@
             </nav>
         </div>
     </section>
+
     <div class="side-menu-cover" v-on:click="triggerClick()"><i class="fa fa-times burger-closer"></i></div>
 </side>

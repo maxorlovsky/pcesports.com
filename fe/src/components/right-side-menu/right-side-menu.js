@@ -4,6 +4,9 @@ Vue.component('right-side-menu-component', {
         loggedIn: {
             type: 'boolean'
         },
+        form: {
+            type: 'string',
+        },
         menu: {
             type: 'object'
         },
@@ -14,6 +17,7 @@ Vue.component('right-side-menu-component', {
     data: function() {
         return {
             loggedIn: false,
+            form: '',
             menu: {},
             userData: {}
         };

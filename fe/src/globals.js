@@ -6,7 +6,8 @@ const dynamicTemplates = {
     leftSideMenu: document.createElement('script'),
     rightSideMenu: document.createElement('script'),
     login: document.createElement('script'),
-    seo: document.createElement('script')
+    seo: document.createElement('script'),
+    register: document.createElement('script')
 };
 
 const pce = {
@@ -31,7 +32,7 @@ const pce = {
 
             let saveData = {
                 data: args[0],
-                time: new Date().getTime()
+                time: (new Date().getTime() + timeoutSeconds)
             };
 
             localStorage.setItem(key, JSON.stringify(saveData));
@@ -49,7 +50,7 @@ const pce = {
             let returnValue = JSON.parse(localStorage.getItem(key));
 
             // If more than 30 min, cleanup
-            if ((returnValue.time + timeoutSeconds) <= new Date().getTime()) {
+            if (returnValue.time <= new Date().getTime()) {
                 pce.storage('remove', key);
             }
 

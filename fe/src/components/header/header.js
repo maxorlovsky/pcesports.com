@@ -49,6 +49,7 @@ Vue.component('header-component', {
             this.$emit('nav-menu');
         },
         openRightMenu: function(form) {
+            this.$parent.rightSideMenuForm = form;
             this.$emit('right-menu');
         }
     }

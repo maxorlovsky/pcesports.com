@@ -1,0 +1,27 @@
+.register-form {
+    margin: 1.4rem auto;
+    width: 85%;
+
+    .input-wrapper {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            border: 0;
+        }
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 1em;
+        cursor: pointer;
+    }
+
+    .g-recaptcha {
+        transform:scale(0.60);
+        transform-origin: 0 0;
+    }
+}
