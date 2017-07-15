@@ -8,7 +8,7 @@ const EventDetails = {
         };
     },
     created: function() {
-        var self = this;
+        const self = this;
 
         this.currentGame = pce.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
