@@ -58,6 +58,22 @@ let router = new VueRouter({
                 template: 'event-details'
             }
         },
+        {
+            path: '/registration/:code',
+            component: RegistrationApproval,
+            meta: {
+                title: 'Registration Approval',
+                template: 'registration-approval'
+            }
+        },
+        {
+            path: '/profile',
+            component: Profile,
+            meta: {
+                title: 'Profile',
+                template: 'profile'
+            }
+        },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
         { path: '*', redirect: '/404' }
     ]
@@ -174,7 +190,8 @@ function loadApp(menu) {
             rightSideMenu: false,
             rightSideMenuForm: '',
             loggedIn: pce.checkUserAuth(),
-            userData: {}
+            userData: {},
+            floatingMessage: {}
         },
         mounted() {
             let self = this;
@@ -295,6 +312,16 @@ function loadApp(menu) {
                         console.log('Error fetching user resources: ' + error);
                     });
                 }
+            },
+            displayMessage: function(message, type) {
+                if (!type) {
+                    type = 'info';
+                }
+
+                this.floatingMessage = {
+                    message: message,
+                    type: type
+                };
             }
         }
     });
