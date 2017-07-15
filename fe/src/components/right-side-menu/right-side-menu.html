@@ -13,7 +13,7 @@
                     <p class="nav-points">Points: <span class="achievementsPoints">{{userData.experience}}</span></p>
                 </div>
                 
-                <ul>
+                <ul v-on:click="triggerClick()">
                     <li :class="'nav-link ' + link.css_classes" v-for="(link, key) in menu">
                         <a v-if="link.target" :href="link.url" :target="link.target">{{link.title}}</a>
                         <router-link v-else :to="link.url" :target="link.target" exact>{{link.title}}</router-link>
