@@ -12,6 +12,10 @@
             padding: 0.5em;
             border: 0;
         }
+
+        &.error {
+            outline: 1px solid #d00;
+        }
     }
 
     .btn {
@@ -21,7 +25,7 @@
     }
 
     .g-recaptcha {
-        transform:scale(0.60);
-        transform-origin: 0 0;
+        width: 100%;
+        overflow: hidden;
     }
 }
