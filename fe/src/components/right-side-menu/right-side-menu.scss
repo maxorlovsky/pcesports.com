@@ -1,10 +1,10 @@
 .right-side-menu {
-    nav {
+    .right-side-wrapper {
         position: fixed;
         top: 0;
         right: 0;
         background-color: rgba(10,10,10,0.98);
-        width: 25%;
+        width: 35%;
         height: 100%;
         z-index: 50;
         transition: .5s;
@@ -37,6 +37,10 @@
             color: #fff;
             font-size: 1rem;
         }
+        
+        &:first-child {
+            border-top: 2px solid #fff;
+        }
     }
 
     .nav-sublink  {
@@ -54,7 +58,7 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.80);
-        width: 75%;
+        width: 65%;
         height: 100%;
         z-index: 50;
         transition: .5s;
@@ -76,5 +80,46 @@
         line-height: 60px;
         color: #fff;
         float: right;
+    }
+
+    .nav-user {
+        color: #eee;
+        margin-bottom: 0.8em;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        .nav-avatar {
+            width: 30%;
+            outline: 3px solid $mainColor;
+            border: 1px solid #fff;
+            box-sizing: border-box;
+            margin: 7px 5%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .nav-username {
+            width: 60%;
+            padding: 1.5em 0 1.5em 0.5em;
+            margin: 3px 0;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-points {
+            margin: 0 0 0 5%;
+            font-size: 0.8em;
+        }
+    }
+
+    .logout-link {
+        border-top: 2px solid $mainColor;
+        border-bottom: 0;
     }
 }

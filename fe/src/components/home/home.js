@@ -21,7 +21,7 @@ const Home = {
         };
     },
     created: function() {
-        var self = this;
+        const self = this;
 
         this.loading = true;
 

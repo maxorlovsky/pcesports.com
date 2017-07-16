@@ -1,0 +1,34 @@
+<div class="register-form">
+    <div class="alert alert-success" v-if="registerSuccess" v-html="registerSuccess"></div>
+    <div class="alert alert-danger" v-if="registerError" v-html="registerError"></div>
+
+    <form method="post"
+        v-on:submit.prevent="submit()"
+        v-if="!registerSuccess">
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.name }">
+            <input type="text" v-model="form.name" placeholder="Name" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.login }">
+            <input type="text" v-model="form.login" placeholder="Email" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.pass }">
+            <input type="password" v-model="form.pass" placeholder="Password" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.repeatPass }">
+            <input type="password" v-model="form.repeatPass" placeholder="Repeat password" />
+        </div>
+
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.captcha }">
+            <div class="g-recaptcha" id="reg-g-recaptcha" :data-sitekey="captchaKey"></div>
+        </div>
+
+        <button class="btn btn-primary">Register</button>
+    </form>
+
+    <loading v-if="loading"></loading>
+</div>

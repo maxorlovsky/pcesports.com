@@ -8,7 +8,7 @@ const EventDetails = {
         };
     },
     created: function() {
-        var self = this;
+        const self = this;
 
         this.currentGame = pce.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
@@ -55,10 +55,7 @@ const EventDetails = {
             self.loading = false;
         })
         .catch(function (error) {
-            if (error.response.data.message !== undefined) {
-                self.pageError = error.response.data.message;
-            }
-            self.loading = false;
+            window.location.href = "/tournament-not-found.html";
         });
     },
     methods: {

@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="PC eSports is a catalog of events for online competitive gaming." />
-    <meta name="keywords" content="esports, competitive gaming, esports online tournaments, esports online events, lol tournaments, gaming online tournaments, gaming online events" />
+    <meta name="description" content="PC eSports 404 page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <meta name="robots" content="/robots.txt"/>
-    <meta name="fragment" content="!"> 
+    <meta name="prerender-status-code" content="404">
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="PC eSports" />
@@ -16,7 +15,7 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#3a64b2">
     
-    <title>PC eSports</title>
+    <title>PC eSports - Tournament not Found</title>
     
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin' rel='stylesheet' type='text/css' async>
     <link href='//fonts.googleapis.com/css?family=Nunito:400,700&amp;subset=latin' rel='stylesheet' type='text/css' async>
@@ -36,52 +35,33 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/dist/assets/images/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/dist/assets/images/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
-
-    <!-- Critical css/js -->
-    <style>body{background-color:#000}.pre-loading{width:100%;height:100%;background-color:rgba(0,0,0,0.99);display:flex;align-items:center;justify-content:center;position:fixed;top:0;left:0;z-index:50;}header,footer,.page{visibility:hidden;height:0;}</style>
-    
 </head>
 
 <body>
 
-<div class="wrapper" id="app">
-    <header-component
-        v-on:nav-menu="burgerMenu()"
-        v-on:right-menu="openRightMenu()"
-        v-on:auth-action="authAction()"
-        v-bind:logged-in="loggedIn"></header-component>
-
+<div class="wrapper">
+    <header class="">
+        <a href="/" class="logo">
+            <img src="/dist/assets/images/logo.png">
+        </a>
+    </header>
     <section class="page">
-        <router-view></router-view>
+        <div class="error block">
+            <div class="maintenance block-content">
+                <h2>Tournament not found</h2>
+                <img src="./dist/assets/images/maintenance.png" />
+                <a href="../events">
+                    <button class="btn btn-primary btn-lg">Go to tournaments page</button>
+                </a>
+            </div>
+        </div>
     </section>
 
-    <footer-component></footer-component>
-
-    <left-side-menu-component
-        v-on:nav-menu="burgerMenu()"></left-side-menu-component>
-    
-    <right-side-menu-component
-        v-on:right-menu="openRightMenu()"
-        v-on:logout="logout()"
-        v-bind:logged-in="loggedIn"
-        v-bind:user-data="userData"
-        v-bind:form="rightSideMenuForm"
-        v-bind:menu="userMenu"></right-side-menu-component>
-
-    <float-message v-bind:parameters="floatingMessage"></float-message>
+    <footer><p class="copyrights">© 2014 - 2017 PCeSports.com / <a href="https://maxorlovsky.com" target="_blank">Maxtream</a>.</p> <div class="footer-links"><a href="https://twitter.com/pcesports"><i class="fa fa-twitter"></i></a> <a href="https://www.reddit.com/r/pcesports/"><i class="fa fa-reddit"></i></a> <a href="https://www.youtube.com/user/pentaclickesports"><i class="fa fa-youtube"></i></a></div></footer>
 </div>
 
-<div id="template-holder" class="template-holder"></div>
-<section class="pre-loading loading" id="pre-loading"></section>
-
-<script src="/dist/js/polyfills.js?v=%version%"></script>
-<script src="/dist/js/libs.js?v=%version%"></script>
-<script src="/dist/js/components.js?v=%version%"></script>
-<script src="/dist/js/scripts.js?v=%version%"></script>
-<script src="/ads.js"></script>
-<link async rel="stylesheet" type="text/css" href="/dist/styles/combined.css?v=%version%" />
-<script async src='https://www.google.com/recaptcha/api.js'></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<link async rel="stylesheet" type="text/css" href="/dist/styles/combined.css" />
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

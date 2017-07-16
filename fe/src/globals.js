@@ -6,7 +6,8 @@ const dynamicTemplates = {
     leftSideMenu: document.createElement('script'),
     rightSideMenu: document.createElement('script'),
     login: document.createElement('script'),
-    seo: document.createElement('script')
+    seo: document.createElement('script'),
+    register: document.createElement('script')
 };
 
 const pce = {
@@ -14,17 +15,24 @@ const pce = {
     canRunAds: false,
     loggedIn: false,
     // Local storage
-    storage: (func, key, json) => {
+    storage: (func, key, ...args) => {
+        let timeoutSeconds = 1800000;
+
+        if (args[1]) {
+            timeoutSeconds = args[1];
+        }
+
         // setItem
         if (func === 'set') {
             // If any parameter is empty, we don't do anything
-            if (!func || !key || !json) {
+            if (!func || !key || !args[0]) {
+                console.log('false');
                 return false;
             }
 
             let saveData = {
-                data: json,
-                time: new Date().getTime()
+                data: args[0],
+                time: (new Date().getTime() + timeoutSeconds)
             };
 
             localStorage.setItem(key, JSON.stringify(saveData));
@@ -42,7 +50,7 @@ const pce = {
             let returnValue = JSON.parse(localStorage.getItem(key));
 
             // If more than 30 min, cleanup
-            if ((returnValue.time + 1800000) <= new Date().getTime()) {
+            if (returnValue.time <= new Date().getTime()) {
                 pce.storage('remove', key);
             }
 
@@ -175,11 +183,40 @@ const pce = {
         return game;
     },
     checkUserAuth: () => {
-        if (pce.storage('get', 'token')) {
+        const token = pce.storage('get', 'token');
+
+        if (token.sessionToken) {
             pce.loggedIn = true;
+            axios.defaults.headers.common.sessionToken = token.sessionToken;
         }
 
         return pce.loggedIn;
+    },
+    prepareMenu: function(menu) {
+        const returnMenu = {};
+
+        for (let value of menu) {
+            if (value.menu_item_parent === '0') {
+                returnMenu['link-' + value.ID] = {
+                    'title': value.title,
+                    'url': (value.url?value.url:''),
+                    'css_classes': value.classes.join(' '),
+                    'target': (value.target?value.target:''),
+                    'slug': value.post_name,
+                    'sublinks': {}
+                };
+            } else {
+                returnMenu['link-' + value.menu_item_parent].sublinks['sublink-' + value.ID] = {
+                    'title': value.title,
+                    'url': value.url.replace('http://', ''),
+                    'css_classes': value.classes.join(' '),
+                    'target': value.target,
+                    'slug': value.post_name,
+                };
+            }
+        }
+
+        return returnMenu;
     }
 };
 

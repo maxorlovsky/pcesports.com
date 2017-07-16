@@ -1,10 +1,16 @@
 <div class="login-form">
-    <!--{{loggedIn}}-->
-    <div class="login-wrapper">
-        <input type="text" v-model="login" placeholder="Login" />
-    </div>
-    <div class="pass-wrapper">
-        <input type="password" v-model="pass" placeholder="Password" />
-    </div>
-    <button class="btn btn-primary" v-on:click="submit()">Login</button>
+    <div class="alert alert-danger" v-if="loginError">{{loginError}}</div>
+
+    <form method="post" v-on:submit.prevent="submit()">
+        <div class="input-wrapper">
+            <input type="text" v-model="login" placeholder="Email" />
+        </div>
+        <div class="input-wrapper">
+            <input type="password" v-model="pass" placeholder="Password" />
+        </div>
+
+        <button class="btn btn-primary">Login</button>
+    </form>
+
+    <loading v-if="loading"></loading>
 </div>

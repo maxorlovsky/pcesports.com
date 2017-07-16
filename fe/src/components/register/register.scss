@@ -1,4 +1,4 @@
-.login-form {
+.register-form {
     margin: 1.4rem auto;
     width: 85%;
 
@@ -12,11 +12,20 @@
             padding: 0.5em;
             border: 0;
         }
+
+        &.error {
+            outline: 1px solid #d00;
+        }
     }
 
     .btn {
         width: 100%;
         margin-bottom: 1em;
         cursor: pointer;
+    }
+
+    .g-recaptcha {
+        width: 100%;
+        overflow: hidden;
     }
 }

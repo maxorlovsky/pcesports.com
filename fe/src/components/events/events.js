@@ -49,6 +49,8 @@ const Events = {
                 this.currentGame = pce.getGameData(this.$route.params.game);
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
+
+                document.title += ' - ' + this.currentGame.name;
             } else {
                 this.currentGame.name = 'All';
             }
