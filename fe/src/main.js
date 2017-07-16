@@ -110,6 +110,7 @@ if (checkStorage) {
     dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
     dynamicTemplates.seo.appendChild(document.createTextNode(checkStorage.templates.seo));
     dynamicTemplates.register.appendChild(document.createTextNode(checkStorage.templates.register));
+    dynamicTemplates.forgotPassword.appendChild(document.createTextNode(checkStorage.templates.forgotPassword));
 
     loadApp(checkStorage.menu);
 }
@@ -125,6 +126,7 @@ else {
         axios.get('/dist/html/login.html'),
         axios.get('/dist/html/seo.html'),
         axios.get('/dist/html/register.html'),
+        axios.get('/dist/html/forgot-password.html'),
         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
     ])
     .then(axios.spread((
@@ -137,6 +139,7 @@ else {
         loginTemplate,
         seoTemplate,
         registerTemplate,
+        forgotPasswordTemplate,
         menuData
     ) => {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
@@ -149,6 +152,7 @@ else {
         dynamicTemplates.login.appendChild(document.createTextNode(loginTemplate.data));
         dynamicTemplates.seo.appendChild(document.createTextNode(seoTemplate.data));
         dynamicTemplates.register.appendChild(document.createTextNode(registerTemplate.data));
+        dynamicTemplates.forgotPassword.appendChild(document.createTextNode(forgotPasswordTemplate.data));
 
         let returnMenu = {};
         if (menuData.data) {
@@ -165,7 +169,8 @@ else {
                 rightSideMenu: rightSideMenuTemplate.data,
                 login: loginTemplate.data,
                 seo: seoTemplate.data,
-                register: registerTemplate.data
+                register: registerTemplate.data,
+                forgotPassword: forgotPasswordTemplate.data
             },
             menu: returnMenu
         };

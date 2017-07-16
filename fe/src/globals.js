@@ -7,7 +7,8 @@ const dynamicTemplates = {
     rightSideMenu: document.createElement('script'),
     login: document.createElement('script'),
     seo: document.createElement('script'),
-    register: document.createElement('script')
+    register: document.createElement('script'),
+    forgotPassword: document.createElement('script')
 };
 
 const pce = {

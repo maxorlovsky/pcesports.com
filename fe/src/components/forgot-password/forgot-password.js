@@ -1,10 +1,9 @@
-Vue.component('login', {
-    template: dynamicTemplates.login,
+Vue.component('forgot-password', {
+    template: dynamicTemplates.forgotPassword,
     data: function() {
         return {
             login: '',
-            pass: '',
-            loginError: '',
+            restoreError: '',
             loading: false
         };
     },
@@ -14,13 +13,13 @@ Vue.component('login', {
 
             this.loading = true;
 
-            if (!this.login || !this.pass) {
-                this.loginError = 'Please fill in the form';
+            if (!this.login) {
+                this.restoreError = 'Please fill in the form';
                 this.loading = false;
                 return false;
             }
 
-            axios.post('http://dev.api.pcesports.com/login', {
+            axios.post('http://dev.api.pcesports.com/forgot-password', {
                 login: this.login,
                 pass: this.pass
             })
@@ -34,8 +33,8 @@ Vue.component('login', {
                 self.loading = false;
             });
         },
-        openForgotPassMenu: function() {
-            this.$parent.$parent.rightSideMenuForm = 'forgot-pass';
+        openLoginMenu: function() {
+            this.$parent.$parent.rightSideMenuForm = 'login';
             this.$emit('right-menu');
         }
     }
