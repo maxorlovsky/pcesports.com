@@ -15,6 +15,7 @@ const pce = {
     version: '%version%',
     canRunAds: false,
     loggedIn: false,
+    apiUrl: 'https://api.pcesports.com',
     // Local storage
     storage: (func, key, ...args) => {
         let timeoutSeconds = 1800000;
@@ -222,3 +223,7 @@ const pce = {
 };
 
 pce.storageCacheBuster();
+
+if (location.host.indexOf('dev') != 1) {
+    pce.apiUrl = 'http://dev.api.pcesports.com';
+}

@@ -60,7 +60,7 @@ Vue.component('register', {
 
             const recaptcha_response = grecaptcha.getResponse(this.rcapt_id);
 
-            axios.post('http://dev.api.pcesports.com/register', {
+            axios.post(`${pce.apiUrl}/register`, {
                 name: this.form.name,
                 login: this.form.login,
                 pass: this.form.pass,

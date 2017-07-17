@@ -20,7 +20,7 @@ Vue.component('login', {
                 return false;
             }
 
-            axios.post('http://dev.api.pcesports.com/login', {
+            axios.post(`${pce.apiUrl}/login`, {
                 login: this.login,
                 pass: this.pass
             })

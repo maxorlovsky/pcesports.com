@@ -284,7 +284,7 @@ function loadApp(menu) {
                 } else {
                     axios.all([
                         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/user-menu'),
-                        axios.get('http://dev.api.pcesports.com/user-data')
+                        axios.get(`${pce.apiUrl}/user-data`)
                     ])
                     .then(axios.spread((
                         userMenuData,
@@ -313,7 +313,7 @@ function loadApp(menu) {
                         // If catched error, that means that user is probably not authorized.
                         // Trigger logout
                         self.logout();
-                        alert('logout');
+                        self.displayMessage('Error, logging out', 'danger');
                         console.log('Error fetching user resources: ' + error);
                     });
                 }
