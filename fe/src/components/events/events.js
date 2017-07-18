@@ -51,6 +51,10 @@ const Events = {
                 this.region.list = this.currentGame.regions;
 
                 document.title += ' - ' + this.currentGame.name;
+
+                // Set custom made meta description
+                const metaDescription = `Find all competitive ${this.currentGame.name} tournaments around North America and Europe. Find tournaments of a different skill level that will suit your team or you personally.`;
+                document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
             } else {
                 this.currentGame.name = 'All';
             }

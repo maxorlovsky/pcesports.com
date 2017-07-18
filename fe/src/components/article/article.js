@@ -24,7 +24,13 @@ const Article = {
             post.title = post.title.rendered;
             post.content = post.content.rendered;
 
+            // Set custom made meta title
             document.title += ' - '+ post.title;
+
+            // Set custom made meta description
+            const cutDownDescription = post.excerpt.rendered.substring(0, 100);
+            const metaDescription = `${post.title} | ${cutDownDescription}...`;
+            document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
 
             self.post = post;
             self.loading = false;

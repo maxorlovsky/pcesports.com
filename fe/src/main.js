@@ -5,7 +5,8 @@ let router = new VueRouter({
             path: '/',
             component: Home,
             meta: {
-                template: 'home'
+                template: 'home',
+                description: 'PC Esports is a catalog of events for online competitive gaming.'
             },
         },
         {
@@ -13,14 +14,16 @@ let router = new VueRouter({
             component: Blog,
             meta: {
                 title: 'Blog',
-                template: 'blog'
+                template: 'blog',
+                description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
             },
             children: [
                 {
                     path: 'page/:page',
                     meta: {
                         title: 'Blog',
-                        template: 'blog'
+                        template: 'blog',
+                        description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
                     }
                 }
             ]
@@ -38,7 +41,8 @@ let router = new VueRouter({
             component: Events,
             meta: {
                 title: 'Events List',
-                template: 'events'
+                template: 'events',
+                description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
             },
             children: [
                 {
@@ -63,7 +67,8 @@ let router = new VueRouter({
             component: RegistrationApproval,
             meta: {
                 title: 'Registration Approval',
-                template: 'registration-approval'
+                template: 'registration-approval',
+                description: 'Complete your registration process on PC Esports website'
             }
         },
         {
@@ -71,10 +76,11 @@ let router = new VueRouter({
             component: Profile,
             meta: {
                 title: 'Profile',
-                template: 'profile'
+                template: 'profile',
+                description: 'User profile'
             }
         },
-        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
+        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404', } },
         { path: '*', redirect: '/404' }
     ]
 });
@@ -82,10 +88,20 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
     
-    document.title = 'PC eSports';
+    // Set up meta title
+    document.title = 'PC Eports';
     if (to.meta.title) {
         document.title += ' - ' + to.meta.title;
     }
+
+    // Set up meta description
+    // Default description used on home page
+    let metaDescription = 'PC Esports is a catalog of events for online competitive gaming.';
+    // If there is meta description in a router, we update it
+    if (to.meta.description) {
+        metaDescription = to.meta.description;
+    }
+    document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
     
     // Loading html template for component
     let element = document.getElementById('template-holder');
