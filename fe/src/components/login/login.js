@@ -20,7 +20,7 @@ Vue.component('login', {
                 return false;
             }
 
-            axios.post('http://dev.api.pcesports.com/login', {
+            axios.post(`${pce.apiUrl}/login`, {
                 login: this.login,
                 pass: this.pass
             })
@@ -33,6 +33,10 @@ Vue.component('login', {
                 self.loginError = error.response.data.message;
                 self.loading = false;
             });
+        },
+        openForgotPassMenu: function() {
+            this.$parent.$parent.rightSideMenuForm = 'forgot-pass';
+            this.$emit('right-menu');
         }
     }
 });

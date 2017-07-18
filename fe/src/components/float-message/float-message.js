@@ -7,7 +7,8 @@ Vue.component('float-message', {
 	},
    	data: function() {
    		return {
-            parameters: {}
+            parameters: {},
+            timeout: null
         };
 	},
     created: function() {
@@ -17,7 +18,11 @@ Vue.component('float-message', {
         render: function() {
             this.parameters.type = `alert-${this.parameters.type}`;
 
-            setTimeout(() => {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+
+            this.timeout = setTimeout(() => {
                 this.$parent.displayMessage('');
             }, 5000);
         }

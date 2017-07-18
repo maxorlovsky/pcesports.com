@@ -1,6 +1,7 @@
 <side class="right-side-menu">
     <section class="right-side-wrapper">
         <login v-if="!loggedIn && (form === 'login' || !form) "></login>
+        <forgot-password v-if="!loggedIn && form === 'forgot-pass'"></forgot-password>
         <register v-if="!loggedIn && form === 'register'"></register>
         <div class="right-side-logged-in-menu" v-if="loggedIn">
             <loading v-if="!menu"></loading>

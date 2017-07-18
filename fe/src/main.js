@@ -5,7 +5,8 @@ let router = new VueRouter({
             path: '/',
             component: Home,
             meta: {
-                template: 'home'
+                template: 'home',
+                description: 'PC Esports is a catalog of events for online competitive gaming.'
             },
         },
         {
@@ -13,14 +14,16 @@ let router = new VueRouter({
             component: Blog,
             meta: {
                 title: 'Blog',
-                template: 'blog'
+                template: 'blog',
+                description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
             },
             children: [
                 {
                     path: 'page/:page',
                     meta: {
                         title: 'Blog',
-                        template: 'blog'
+                        template: 'blog',
+                        description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
                     }
                 }
             ]
@@ -38,7 +41,8 @@ let router = new VueRouter({
             component: Events,
             meta: {
                 title: 'Events List',
-                template: 'events'
+                template: 'events',
+                description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
             },
             children: [
                 {
@@ -63,7 +67,8 @@ let router = new VueRouter({
             component: RegistrationApproval,
             meta: {
                 title: 'Registration Approval',
-                template: 'registration-approval'
+                template: 'registration-approval',
+                description: 'Complete your registration process on PC Esports website'
             }
         },
         {
@@ -71,7 +76,8 @@ let router = new VueRouter({
             component: Profile,
             meta: {
                 title: 'Profile',
-                template: 'profile'
+                template: 'profile',
+                description: 'User profile'
             }
         },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
@@ -82,10 +88,20 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
     
-    document.title = 'PC eSports';
+    // Set up meta title
+    document.title = 'PC Esports';
     if (to.meta.title) {
         document.title += ' - ' + to.meta.title;
     }
+
+    // Set up meta description
+    // Default description used on home page
+    let metaDescription = 'PC Esports is a catalog of events for online competitive gaming.';
+    // If there is meta description in a router, we update it
+    if (to.meta.description) {
+        metaDescription = to.meta.description;
+    }
+    document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
     
     // Loading html template for component
     let element = document.getElementById('template-holder');
@@ -110,6 +126,7 @@ if (checkStorage) {
     dynamicTemplates.login.appendChild(document.createTextNode(checkStorage.templates.login));
     dynamicTemplates.seo.appendChild(document.createTextNode(checkStorage.templates.seo));
     dynamicTemplates.register.appendChild(document.createTextNode(checkStorage.templates.register));
+    dynamicTemplates.forgotPassword.appendChild(document.createTextNode(checkStorage.templates.forgotPassword));
 
     loadApp(checkStorage.menu);
 }
@@ -125,6 +142,7 @@ else {
         axios.get('/dist/html/login.html'),
         axios.get('/dist/html/seo.html'),
         axios.get('/dist/html/register.html'),
+        axios.get('/dist/html/forgot-password.html'),
         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
     ])
     .then(axios.spread((
@@ -137,6 +155,7 @@ else {
         loginTemplate,
         seoTemplate,
         registerTemplate,
+        forgotPasswordTemplate,
         menuData
     ) => {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
@@ -149,6 +168,7 @@ else {
         dynamicTemplates.login.appendChild(document.createTextNode(loginTemplate.data));
         dynamicTemplates.seo.appendChild(document.createTextNode(seoTemplate.data));
         dynamicTemplates.register.appendChild(document.createTextNode(registerTemplate.data));
+        dynamicTemplates.forgotPassword.appendChild(document.createTextNode(forgotPasswordTemplate.data));
 
         let returnMenu = {};
         if (menuData.data) {
@@ -165,7 +185,8 @@ else {
                 rightSideMenu: rightSideMenuTemplate.data,
                 login: loginTemplate.data,
                 seo: seoTemplate.data,
-                register: registerTemplate.data
+                register: registerTemplate.data,
+                forgotPassword: forgotPasswordTemplate.data
             },
             menu: returnMenu
         };
@@ -279,7 +300,7 @@ function loadApp(menu) {
                 } else {
                     axios.all([
                         axios.get('https://api.pcesports.com/wp/wp-json/pce-api/user-menu'),
-                        axios.get('http://dev.api.pcesports.com/user-data')
+                        axios.get(`${pce.apiUrl}/user-data`)
                     ])
                     .then(axios.spread((
                         userMenuData,
@@ -308,7 +329,7 @@ function loadApp(menu) {
                         // If catched error, that means that user is probably not authorized.
                         // Trigger logout
                         self.logout();
-                        alert('logout');
+                        self.displayMessage('Error, logging out', 'danger');
                         console.log('Error fetching user resources: ' + error);
                     });
                 }

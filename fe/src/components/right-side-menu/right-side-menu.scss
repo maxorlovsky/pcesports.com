@@ -4,12 +4,16 @@
         top: 0;
         right: 0;
         background-color: rgba(10,10,10,0.98);
-        width: 35%;
+        width: 25%;
         height: 100%;
         z-index: 50;
         transition: .5s;
         transform: translate(100%, 0);
         overflow-y: auto;
+
+        @media (max-width: 1023px) {
+            width: 35%;
+        }
 
         @media (max-width: 425px) {
             width: 50%;
@@ -58,12 +62,16 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.80);
-        width: 65%;
+        width: 75%;
         height: 100%;
         z-index: 50;
         transition: .5s;
         transform: translate(-100%, 0);
 
+        @media (max-width: 1023px) {
+            width: 65%;
+        }
+        
         @media (max-width: 425px) {
             width: 50%;
         }

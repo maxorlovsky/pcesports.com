@@ -30,7 +30,7 @@ Vue.component('right-side-menu-component', {
             const self = this;
 
             // Exiting in both cases
-            axios.post('http://dev.api.pcesports.com/logout')
+            axios.post(`${pce.apiUrl}/logout`)
             .then(function (response) {
                 self.$emit('logout');
             })

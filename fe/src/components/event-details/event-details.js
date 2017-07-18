@@ -23,9 +23,15 @@ const EventDetails = {
                 .replace(/&lt;/g, "<")
                 .replace(/&quot;"/g, "\"");
 
+            // Set up meta title
             document.title += ' - '+ self.game.name;
 
             self.game.meta_data = JSON.parse(self.game.meta_data);
+
+            // Set up meta description
+            const cutDownDescription = self.game.meta_data.description.substring(0, 100);
+            const metaDescription = `${self.game.name} | ${cutDownDescription}...`;
+            document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
 
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
             if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {

@@ -7,13 +7,15 @@ const dynamicTemplates = {
     rightSideMenu: document.createElement('script'),
     login: document.createElement('script'),
     seo: document.createElement('script'),
-    register: document.createElement('script')
+    register: document.createElement('script'),
+    forgotPassword: document.createElement('script')
 };
 
 const pce = {
     version: '%version%',
     canRunAds: false,
     loggedIn: false,
+    apiUrl: 'https://api.pcesports.com',
     // Local storage
     storage: (func, key, ...args) => {
         let timeoutSeconds = 1800000;
@@ -221,3 +223,7 @@ const pce = {
 };
 
 pce.storageCacheBuster();
+
+if (location.host.indexOf('dev') != 1) {
+    pce.apiUrl = 'http://dev.api.pcesports.com';
+}
