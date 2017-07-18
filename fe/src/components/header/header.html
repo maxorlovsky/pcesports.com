@@ -23,39 +23,13 @@
         </ul>
     </nav>
 
-    <div class="nav-user" v-if="!loggedIn">
+    <!-- <div class="nav-user" v-if="!loggedIn">
         <button class="btn btn-primary" v-on:click="openRightMenu('login')">Login</button>
         <button class="btn btn-success" v-on:click="openRightMenu('register')">Sign up</button>
     </div>
     <div class="nav-user" v-else>
         <button class="btn btn-info fa fa-user" v-on:click="openRightMenu()"></button>
-    </div>
-
-    <!--<ul class="nav-user">
-        <li class="nav-link">
-            <div class="nav-avatar"><a href="/<?=str_replace('%user%', $this->data->user->name, $v->link)?>"><img src="<?=_cfg('avatars')?>/<?=$this->data->user->avatar?>.jpg" /></a></div>
-            <a href="<?=_cfg('href')?>/<?=str_replace('%user%', $this->data->user->name, $v->link)?>">
-                <?=$this->data->user->name?><?//=t($v->value)?>
-                <p><?=t('points')?>: <span class="achievementsPoints"><?=$this->data->user->experience?></span></p>
-            </a>
-            <ul class="nav-sub">
-            <?
-            if ($v->sublinks) {
-                foreach($v->sublinks as $v2) {
-                    ?>
-                    <li class="nav-sublink" id="<?=$v2->link?>">
-                        <a href="<?=_cfg('href')?>/<?=$v2->link?>"><?=t($v2->value)?></a>
-                    </li>
-                    <?
-                }
-            }
-            ?>
-                <li class="nav-sublink" id="logout">
-                    <a href="<?=_cfg('site')?>/run/logout"><?=t('logout')?></a>
-                </li>
-            </ul>
-        </li>
-    </ul>-->
+    </div> -->
 
     <div v-if="mood">
         <ul class="snow">
