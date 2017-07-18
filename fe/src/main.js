@@ -80,7 +80,7 @@ let router = new VueRouter({
                 description: 'User profile'
             }
         },
-        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404', } },
+        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
         { path: '*', redirect: '/404' }
     ]
 });
@@ -89,7 +89,7 @@ router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
     
     // Set up meta title
-    document.title = 'PC Eports';
+    document.title = 'PC Esports';
     if (to.meta.title) {
         document.title += ' - ' + to.meta.title;
     }
