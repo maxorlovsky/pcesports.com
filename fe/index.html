@@ -52,7 +52,7 @@
         v-bind:logged-in="loggedIn"></header-component>
 
     <section class="page">
-        <router-view></router-view>
+        <router-view v-bind:user-data="userData"></router-view>
     </section>
 
     <footer-component></footer-component>

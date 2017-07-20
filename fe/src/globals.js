@@ -15,6 +15,7 @@ const pce = {
     version: '%version%',
     canRunAds: false,
     loggedIn: false,
+    loginCheckError: false,
     apiUrl: 'https://api.pcesports.com',
     // Local storage
     storage: (func, key, ...args) => {
