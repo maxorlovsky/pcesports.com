@@ -15,6 +15,12 @@ Vue.component('forgot-password', {
                 code: '',
                 pass: '',
                 repeatPass: ''
+            },
+            errorClasses: {
+                login: false,
+                code: false,
+                pass: false,
+                repeatPass: false
             }
         };
     },
@@ -30,10 +36,12 @@ Vue.component('forgot-password', {
             this.loading = true;
             this.restoreSuccess = '';
             this.restoreError = '';
+            this.errorClasses.login = false;
 
             if (!this.form.login) {
                 this.restoreError = 'Please fill in the form';
                 this.loading = false;
+                this.errorClasses.login = true;
                 return false;
             }
 
@@ -50,6 +58,7 @@ Vue.component('forgot-password', {
             .catch(function (error) {
                 self.restoreError = error.response.data.message;
                 self.loading = false;
+                self.errorClasses.login = true;
                 self.checkCaptcha();
             });
         },
@@ -59,10 +68,22 @@ Vue.component('forgot-password', {
             this.loading = true;
             this.restoreSuccess = '';
             this.restoreError = '';
+            this.errorClasses = {
+                login: false,
+                code: false,
+                pass: false,
+                repeatPass: false
+            };
 
             if (!this.resetForm.code || !this.resetForm.pass || !this.resetForm.repeatPass) {
                 this.restoreError = 'Please fill in the form';
                 this.loading = false;
+                this.errorClasses = {
+                    login: true,
+                    code: !this.form.code ? true : false,
+                    pass: !this.form.pass ? true : false,
+                    repeatPass: !this.form.repeatPass ? true : false
+                };
                 return false;
             }
 
@@ -73,13 +94,27 @@ Vue.component('forgot-password', {
                 repeatPass: this.resetForm.repeatPass
             })
             .then(function (response) {
-                self.restoreSuccess = response.data.message;
-                self.showForm = 0;
-                self.loading = false;
+                pce.storage('set', 'token', { "sessionToken": response.data.sessionToken }, 604800000); // 7 days
+                self.$parent.$emit('right-menu');
+                self.$parent.$parent.login();
+                self.$parent.$parent.displayMessage(response.data.message, 'success');
+                self.$router.push('/profile');
             })
             .catch(function (error) {
                 self.restoreError = error.response.data.message;
                 self.loading = false;
+
+                let errorFields = error.response.data.fields;
+
+                // In some cases slim return array as json, we need to convert it
+                if (errorFields.constructor !== Array) {
+                    errorFields = Object.keys(errorFields).map(key => errorFields[key]);
+                }
+
+                // Mark fields with error class
+                for (let i = 0; i < errorFields.length; ++i) {
+                    self.errorClasses[errorFields[i]] = true;
+                }
             });
         },
         openLoginMenu: function() {
