@@ -1,26 +1,36 @@
 const Profile = {
     template: '#profile-template',
+    props: {
+        loggedIn: {
+            type: 'boolean'
+        },
+        userData: {
+            type: 'object'
+        }
+    },
     data: function() {
         return {
-            loading: true
+            loading: true,
+            user: {}
         };
     },
+    watch: {
+        'userData': function() {
+            return this.fillUserData();
+        }
+    },
     created: function() {
-        this.loading = false;
+        this.fillUserData();
+    },
+    methods: {
+        fillUserData: function() {
+            this.user = this.userData;
 
-        /* const self = this;
+            if (!this.user) {
+                this.$parent.authRequired();
+            }
 
-        axios.get(`http://dev.api.pcesports.com/register/${this.$route.params.code}`)
-        .then((response) => {
-            self.message.success = response.data.message;
-            pce.storage('set', 'token', response.data.sessionToken, 604800000); // 7 days
-            self.$parent.login();
-            self.loading = false;
-            self.$route.router.go('/profile'); 
-        })
-        .catch((error) => {
-            self.message.error = error.response.data.message;
-            self.loading = false;
-        }); */
+            this.loading = false;
+        }
     }
 };

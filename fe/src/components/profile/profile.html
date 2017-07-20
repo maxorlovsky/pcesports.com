@@ -4,7 +4,10 @@
             <div class="block-content">
                 <loading v-if="loading"></loading>
 
-                <h4>Profile</h4>
+                <section class="profile-wrapper" v-if="!loading">
+                    <h4>Profile</h4>
+                    {{user}}
+                </section>
             </div>
         </div>
     </div>
