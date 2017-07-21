@@ -11,7 +11,16 @@ const Profile = {
     data: function() {
         return {
             loading: true,
-            user: {}
+            user: {},
+            formSuccess: '',
+            formError: '',
+            errorClasses: {
+                name: false,
+                battletag: false,
+                timestyle: false,
+                avatar: false,
+                subscribe: false
+            }
         };
     },
     watch: {
