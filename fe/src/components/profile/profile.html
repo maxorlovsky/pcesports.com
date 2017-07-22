@@ -7,27 +7,26 @@
                 <section class="profile-wrapper" v-if="!loading">
                     <h4>Profile</h4>
 
-                    <div class="alert alert-success" v-if="formSuccess" v-html="formSuccess"></div>
                     <div class="alert alert-danger" v-if="formError" v-html="formError"></div>
 
                     <form method="post" v-on:submit.prevent="submit()">
-                        <div class="heading-text">This is basic info of you, that might be displayed to the public. Name can be changed, but must be always unique. Also be careful, if you change your name, link to your public profile will change as well.</div>
+                        <div class="heading-text">This is basic, public information of you, that is displayed to all. Name can be changed, but must be always unique, so if you change it and someone else take it, you wouldn't be able to take it back. Also be careful, if you change your name, link to your public profile will change as well.</div>
 
                         <div class="input-wrapper input-group form-group"
                             :class="{ error: errorClasses.name }">
-                            <div class="input-group-addon">Name</div>
+                            <div class="input-group-addon fa fa-user"></div>
                             <input class="form-control" type="text" v-model="user.name" placeholder="Name" />
                         </div>
 
                         <div class="input-wrapper input-group form-group"
                             :class="{ error: errorClasses.battletag }">
-                            <div class="input-group-addon">Battle Tag</div>
+                            <div class="input-group-addon icon-battlenet"></div>
                             <input class="form-control" type="text" v-model="user.battletag" placeholder="Battle Tag" />
                         </div>
 
                         <div class="input-wrapper input-group form-group"
                             :class="{ error: errorClasses.avatar }">
-                            <div class="input-group-addon">Avatar</div>
+                            <div class="input-group-addon fa fa-picture-o"></div>
                             <div class="holder form-control">
                                 <div class="avatars-list">
                                     <div class="avatar-block"
@@ -41,111 +40,10 @@
                             <input class="form-control" type="hidden" v-model="user.avatar" placeholder="Avatar" />
                         </div>
 
-                        <div class="input-wrapper input-group form-group"
-                            :class="{ error: errorClasses.timestyle }">
-                            <div class="input-group-addon">Time style</div>
-                            <select class="custom-select" v-model="user.timestyle">
-                                <option value="0">12:00 AM/PM</option>
-                                <option value="1" :selected="user.timestyle === 1">24:00</option>
-                            </select>
-                        </div>
-
-                        <!-- <div class="input-wrapper input-group form-group"
-                            :class="{ error: errorClasses.subscribe }">
-                            <div class="input-group-addon">Receive email for</div>
-                            <select class="custom-select" v-model="user.subscribe">
-                                <option value="all" :selected="user./"<?=($subscribeStatus=='all'?'selected':null)?>><?=t('all')?></option>
-                                <option value="lol" <?=($subscribeStatus=='lol'?'selected':null)?>><?=t('only_about_lol')?></option>
-                                <option value="hs" <?=($subscribeStatus=='hs'?'selected':null)?>><?=t('only_about_hs')?></option>
-                                <option value="none" <?=($subscribeStatus=='none'?'selected':null)?>><?=t('turn_off')?></option>
-                            </select>
-                        </div> -->
-
-                        <button class="btn btn-primary btn-lg">Update profile data</button>
+                        <button class="btn btn-primary btn-lg" :disabled="formLoading">Update profile data</button>
                     </form>
                 </section>
             </div>
         </div>
-                
-        <!-- <div class="block half">
-            <div class="block-header-wrapper">
-                <h1><?=t('update_email')?></h1>
-            </div>
-            <form class="block-content contact-form update-email" name="updateEmail" novalidate>
-                <div id="success"><p></p></div>
-                <div id="error"><p></p></div>
-                
-                <? if (!$this->data->user->email) { ?>
-                    <p class="error-add" id="email_not_set"><?=t('email_not_set_add')?></p>
-                <? } ?>
-                <div class="fields">
-                    <label for="email">Email</label>
-                    <input name="email" id="email" type="email" value="<?=$this->data->user->email?>" placeholder="Email" />
-                </div>
-                
-                <? if ($this->data->user->password != 'social') { ?>
-                    <div class="fields">
-                        <label for="password"><?=t('current_password')?></label>
-                        <input name="password" id="password" type="password" value="" placeholder="<?=t('current_password')?>" />
-                    </div>
-                <? } ?>
-                
-                <a href="javascript:void(0);" class="button" id="updateEmail"><?=t('update_email')?></a>
-            </form>
-        </div>
-        
-        <div class="block half">
-            <div class="block-header-wrapper">
-                <h1><?=t('update_password')?></h1>
-            </div>
-            <form class="block-content contact-form update-password" name="updatePassword" novalidate>
-                <div id="success"><p></p></div>
-                <div id="error"><p></p></div>
-                
-                <? if ($this->data->user->password != 'social') { ?>
-                    <div class="fields">
-                        <label for="password"><?=t('current_password')?></label>
-                        <input name="password" id="password" type="password" value="" placeholder="<?=t('current_password')?>" />
-                    </div>
-                <? } ?>
-                
-                <div class="fields">
-                    <label for="new_password"><?=t('new_password')?></label>
-                    <input name="new_password" id="new_password" type="password" value="" placeholder="<?=t('new_password')?>" />
-                </div>
-                
-                <div class="fields">
-                    <label for="new_repeat_password"><?=t('repeat_password')?></label>
-                    <input name="new_repeat_password" id="new_repeat_password" type="password" value="" placeholder="<?=t('repeat_password')?>" />
-                </div>
-                
-                <a href="javascript:void(0);" class="button" id="updatePassword"><?=t('update_password')?></a>
-            </form>
-        </div> -->
-        
-        <!-- <div class="block connections">
-            <div class="block-header-wrapper">
-                <h1 class="bordered"><?=t('connections')?></h1>
-            </div>
-            <div class="block-content">
-                <? foreach(_cfg('social') as $k => $v) { ?>
-                    <div class="status-holder">
-                        <img src="<?=_cfg('img')?>/<?=$k?>-login.png" />
-                        <? if (in_array($k, $this->data->user->socials->connected)) { ?>
-                            <div class="connect-line"></div>
-                            <div class="status">
-                                <a href="javascript:void(0);" class="connected socialDisconnect" id="<?=$k?>"><?=t('connected')?></a>
-                            </div>
-                        <? } else {?>
-                            <div class="connect-line dashed"></div>
-                            <div class="status">
-                                <a href="javascript:void(0);" class="disconnected socialConnect" id="<?=$k?>"><?=t('disconnected')?></a>
-                            </div>
-                        <? } ?>
-                    </div>
-                <? } ?>
-            </div>
-        </div> -->
-
     </div>
 </script>

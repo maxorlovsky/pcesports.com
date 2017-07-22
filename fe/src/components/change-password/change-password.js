@@ -1,5 +1,5 @@
-const Profile = {
-    template: '#profile-template',
+const ChangePassword = {
+    template: '#change-password-template',
     props: {
         userData: {
             type: 'object'
@@ -9,13 +9,16 @@ const Profile = {
         return {
             loading: true,
             formLoading: false,
-            user: {},
-            formSuccess: '',
             formError: '',
+            form: {
+                oldPass: '',
+                pass: '',
+                repeatPass: ''
+            },
             errorClasses: {
-                name: false,
-                battletag: false,
-                avatar: false
+                oldPass: false,
+                pass: false,
+                repeatPass: false
             }
         };
     },
@@ -44,35 +47,40 @@ const Profile = {
             this.formError = '';
 
             this.errorClasses = {
-                name: false,
-                battletag: false,
-                avatar: false
+                oldPass: false,
+                pass: false,
+                repeatPass: false
             };
 
             // Frontend check
-            if (!this.user.name || !this.user.battletag || !this.user.avatar) {
+            if (!this.form.oldPass || !this.form.pass || !this.form.repeatPass) {
                 // Generic error message
                 this.formError = 'Please fill in the form';
                 this.formLoading = false;
 
                 // Mark specific fields as empty ones
                 this.errorClasses = {
-                    name: !this.user.name ? true : false,
-                    battletag: false,
-                    avatar: !this.user.avatar ? true : false
+                    oldPass: !this.form.oldPass ? true : false,
+                    pass: !this.form.pass ? true : false,
+                    repeatPass: !this.form.repeatPass ? true : false
                 };
 
                 return false;
             }
 
-            axios.put(`${pce.apiUrl}/user-data/profile`, {
-                name: this.user.name,
-                battletag: this.user.battletag,
-                avatar: this.user.avatar
+            axios.put(`${pce.apiUrl}/user-data/change-password`, {
+                oldPass: this.form.oldPass,
+                pass: this.form.pass,
+                repeatPass: this.form.repeatPass
             })
             .then(function (response) {
                 self.$parent.displayMessage(response.data.message, 'success');
                 self.formLoading = false;
+                self.form = {
+                    oldPass: '',
+                    pass: '',
+                    repeatPass: ''
+                };
             })
             .catch(function (error) {
                 self.formLoading = false;

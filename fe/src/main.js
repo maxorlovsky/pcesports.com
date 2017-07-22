@@ -82,6 +82,28 @@ let router = new VueRouter({
                 description: 'User profile'
             }
         },
+        {
+            path: '/profile/change-password',
+            component: ChangePassword,
+            props: true,
+            meta: {
+                loggedIn: true,
+                title: 'Change Password - Profile',
+                template: 'change-password',
+                description: 'User page to change password'
+            }
+        },
+        {
+            path: '/profile/settings',
+            component: Settings,
+            props: true,
+            meta: {
+                loggedIn: true,
+                title: 'Settings - Profile',
+                template: 'settings',
+                description: 'User page to change password and personal settings'
+            }
+        },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
         { path: '*', redirect: '/404' }
     ]
@@ -324,7 +346,7 @@ function loadApp(menu) {
                         let returnMenu = {};
 
                         if (userMenuData.data) {
-                            returnMenu = pce.prepareMenu(userMenuData.data);
+                            returnMenu = pce.prepareMenu(userMenuData.data, profileData.data.name);
                         }
 
                         let store = {
