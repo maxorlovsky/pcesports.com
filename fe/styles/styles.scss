@@ -4,8 +4,23 @@
 }
 
 /* Required for all forms */
-.input-wrapper.error {
-    outline: 1px solid #d00;
+.input-wrapper {
+    &.error {
+        outline: 1px solid #d00;
+    }
+
+    &.custom-control {
+        padding-left: 2.5rem;
+
+        .custom-control-indicator {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .custom-control-description {
+            line-height: 2.5rem;
+        }
+    }
 }
     
 .open {
