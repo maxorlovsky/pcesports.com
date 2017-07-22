@@ -5,18 +5,19 @@ Vue.component('login', {
             login: '',
             pass: '',
             loginError: '',
-            loading: false
+            loading: false,
+            formLoading: false
         };
     },
     methods: {
         submit: function() {
             let self = this;
 
-            this.loading = true;
+            this.formLoading = true;
 
             if (!this.login || !this.pass) {
                 this.loginError = 'Please fill in the form';
-                this.loading = false;
+                this.formLoading = false;
                 return false;
             }
 
@@ -27,11 +28,11 @@ Vue.component('login', {
             .then(function (response) {
                 pce.storage('set', 'token', response.data, 604800000); // 7 days
                 self.$parent.$parent.login();
-                self.loading = false;
+                self.formLoading = false;
             })
             .catch(function (error) {
                 self.loginError = error.response.data.message;
-                self.loading = false;
+                self.formLoading = false;
             });
         },
         openForgotPassMenu: function() {

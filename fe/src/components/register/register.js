@@ -11,6 +11,7 @@ Vue.component('register', {
             registerError: '',
             registerSuccess: '',
             loading: false,
+            formLoading: false,
             rcapt_id: 0,
             captchaKey: '6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z',
             errorClasses: {
@@ -31,7 +32,7 @@ Vue.component('register', {
         submit: function() {
             let self = this;
 
-            this.loading = true;
+            this.formLoading = true;
 
             this.errorClasses = {
                 name: false,
@@ -45,7 +46,7 @@ Vue.component('register', {
             if (!this.form.login || !this.form.pass || !this.form.repeatPass || !this.form.name) {
                 // Generic error message
                 this.registerError = 'Please fill in the form';
-                this.loading = false;
+                this.formLoading = false;
 
                 // Mark specific fields as empty ones
                 this.errorClasses = {
@@ -69,10 +70,10 @@ Vue.component('register', {
             })
             .then(function (response) {
                 self.registerSuccess = response.data.message;
-                self.loading = false;
+                self.formLoading = false;
             })
             .catch(function (error) {
-                self.loading = false;
+                self.formLoading = false;
 
                 // Display error message from API
                 self.registerError = error.response.data.message;

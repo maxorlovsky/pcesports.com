@@ -7,6 +7,7 @@ Vue.component('forgot-password', {
             captchaId: 0,
             captchaKey: '6LcwJ_8SAAAAAL2SgH-NYduvEp9DLUlndHrlMs7Z',
             loading: false,
+            formLoading: false,
             showForm: 1,
             form: {
                 login: ''
@@ -33,14 +34,14 @@ Vue.component('forgot-password', {
         submit: function() {
             let self = this;
 
-            this.loading = true;
+            this.formLoading = true;
             this.restoreSuccess = '';
             this.restoreError = '';
             this.errorClasses.login = false;
 
             if (!this.form.login) {
                 this.restoreError = 'Please fill in the form';
-                this.loading = false;
+                this.formLoading = false;
                 this.errorClasses.login = true;
                 return false;
             }
@@ -52,12 +53,12 @@ Vue.component('forgot-password', {
             .then(function (response) {
                 self.restoreSuccess = response.data.message;
                 self.showForm = 2;
-                self.loading = false;
+                self.formLoading = false;
                 self.checkCaptcha();
             })
             .catch(function (error) {
                 self.restoreError = error.response.data.message;
-                self.loading = false;
+                self.formLoading = false;
                 self.errorClasses.login = true;
                 self.checkCaptcha();
             });
@@ -65,7 +66,7 @@ Vue.component('forgot-password', {
         submitReset: function() {
             let self = this;
 
-            this.loading = true;
+            this.formLoading = true;
             this.restoreSuccess = '';
             this.restoreError = '';
             this.errorClasses = {
@@ -77,7 +78,7 @@ Vue.component('forgot-password', {
 
             if (!this.resetForm.code || !this.resetForm.pass || !this.resetForm.repeatPass) {
                 this.restoreError = 'Please fill in the form';
-                this.loading = false;
+                this.formLoading = false;
                 this.errorClasses = {
                     login: true,
                     code: !this.form.code ? true : false,
@@ -102,7 +103,7 @@ Vue.component('forgot-password', {
             })
             .catch(function (error) {
                 self.restoreError = error.response.data.message;
-                self.loading = false;
+                self.formLoading = false;
 
                 let errorFields = error.response.data.fields;
 

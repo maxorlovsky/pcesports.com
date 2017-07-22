@@ -27,8 +27,6 @@
             <div class="g-recaptcha" id="reg-g-recaptcha" :data-sitekey="captchaKey"></div>
         </div>
 
-        <button class="btn btn-primary">Register</button>
+        <button class="btn btn-primary" :disabled="formLoading">Register</button>
     </form>
-
-    <loading v-if="loading"></loading>
 </div>
