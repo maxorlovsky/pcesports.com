@@ -195,10 +195,12 @@ const pce = {
 
         return pce.loggedIn;
     },
-    prepareMenu: function(menu) {
+    prepareMenu: function(menu, userName) {
         const returnMenu = {};
 
         for (let value of menu) {
+            value.url = value.url.replace(':user_id', userName);
+
             if (value.menu_item_parent === '0') {
                 returnMenu['link-' + value.ID] = {
                     'title': value.title,
