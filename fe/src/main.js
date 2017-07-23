@@ -74,10 +74,41 @@ let router = new VueRouter({
         {
             path: '/profile',
             component: Profile,
+            props: true,
             meta: {
+                loggedIn: true,
                 title: 'Profile',
                 template: 'profile',
                 description: 'User profile'
+            }
+        },
+        {
+            path: '/profile/change-password',
+            component: ChangePassword,
+            props: true,
+            meta: {
+                loggedIn: true,
+                title: 'Change Password - Profile',
+                template: 'change-password',
+                description: 'User page to change password'
+            }
+        },
+        {
+            path: '/profile/settings',
+            component: Settings,
+            props: true,
+            meta: {
+                loggedIn: true,
+                title: 'Settings - Profile',
+                template: 'settings',
+                description: 'User page to change password and personal settings'
+            }
+        },
+        {
+            path: '/user/:name',
+            component: User,
+            meta: {
+                template: 'user',
             }
         },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
@@ -86,6 +117,10 @@ let router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    pce.loginCheckError = false;
+    if (to.meta.loggedIn && !pce.loggedIn) {
+        pce.loginCheckError = true;
+    }
     window.scrollTo(0, 0);
     
     // Set up meta title
@@ -112,6 +147,14 @@ router.beforeEach((to, from, next) => {
 
         next();
     });
+});
+
+router.afterEach((to, from) => {
+    if (pce.loginCheckError) {
+        // Displaying error message to the user
+        router.app.authRequired();
+        return false;
+    }
 });
 
 const checkStorage = pce.storage('get', 'structure-data');
@@ -288,6 +331,7 @@ function loadApp(menu) {
                 delete(axios.defaults.headers.common.sessionToken);
                 pce.loggedIn = false;
                 this.loggedIn = false;
+                this.$router.push('/');
             },
             fetchLoggedInData: function() {
                 const checkStorage = pce.storage('get', 'structure-user-data');
@@ -309,7 +353,7 @@ function loadApp(menu) {
                         let returnMenu = {};
 
                         if (userMenuData.data) {
-                            returnMenu = pce.prepareMenu(userMenuData.data);
+                            returnMenu = pce.prepareMenu(userMenuData.data, profileData.data.name);
                         }
 
                         let store = {
@@ -343,6 +387,13 @@ function loadApp(menu) {
                     message: message,
                     type: type
                 };
+            },
+            authRequired: function() {
+                // Displaying error message to the user
+                this.displayMessage('You must be logged in to enter this page', 'danger');
+
+                // Redirect to home page
+                this.$router.push('/');
             }
         }
     });

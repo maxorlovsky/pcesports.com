@@ -24,9 +24,7 @@ Vue.component('header-component', {
         window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
-        $parent: function() {
-            console.log('test');
-        }
+        
     },
     methods: {
         fetchData: function() {

@@ -1,5 +1,5 @@
-const Profile = {
-    template: '#profile-template',
+const Settings = {
+    template: '#settings-template',
     props: {
         userData: {
             type: 'object'
@@ -9,13 +9,14 @@ const Profile = {
         return {
             loading: true,
             formLoading: false,
-            user: {},
-            formSuccess: '',
             formError: '',
+            form: {
+                timestyle: null,
+                subscription: false
+            },
             errorClasses: {
-                name: false,
-                battletag: false,
-                avatar: false
+                timestyle: false,
+                subscription: false
             }
         };
     },
@@ -25,13 +26,14 @@ const Profile = {
         }
     },
     created: function() {
-        this.fillUserData();
+        return this.fillUserData();  
     },
     methods: {
         fillUserData: function() {
-            this.user = this.userData;
+            this.form.timestyle = this.userData.timestyle;
+            this.form.subscription = this.userData.subscription.removed === "0" ? true : false;
 
-            if (!this.user) {
+            if (!this.userData) {
                 this.$parent.authRequired();
             }
 
@@ -44,31 +46,28 @@ const Profile = {
             this.formError = '';
 
             this.errorClasses = {
-                name: false,
-                battletag: false,
-                avatar: false
+                timestyle: false,
+                subscription: false
             };
 
             // Frontend check
-            if (!this.user.name || !this.user.battletag || !this.user.avatar) {
+            /*if (!this.form.timestyle || !this.form.subscription) {
                 // Generic error message
                 this.formError = 'Please fill in the form';
                 this.formLoading = false;
 
                 // Mark specific fields as empty ones
                 this.errorClasses = {
-                    name: !this.user.name ? true : false,
-                    battletag: false,
-                    avatar: !this.user.avatar ? true : false
+                    timestyle: !this.form.timestyle ? true : false,
+                    subscription: !this.form.subscription ? true : false
                 };
 
                 return false;
-            }
+            }*/
 
-            axios.put(`${pce.apiUrl}/user-data/profile`, {
-                name: this.user.name,
-                battletag: this.user.battletag,
-                avatar: this.user.avatar
+            axios.put(`${pce.apiUrl}/user-data/settings`, {
+                timestyle: this.form.timestyle,
+                subscription: this.form.subscription
             })
             .then(function (response) {
                 self.$parent.displayMessage(response.data.message, 'success');

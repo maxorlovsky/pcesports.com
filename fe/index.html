@@ -52,7 +52,7 @@
         v-bind:logged-in="loggedIn"></header-component>
 
     <section class="page">
-        <router-view></router-view>
+        <router-view v-bind:user-data="userData"></router-view>
     </section>
 
     <footer-component></footer-component>
@@ -80,7 +80,7 @@
 <script src="/dist/js/scripts.js?v=%version%"></script>
 <script src="/ads.js"></script>
 <link async rel="stylesheet" type="text/css" href="/dist/styles/combined.css?v=%version%" />
-<script async src='https://www.google.com/recaptcha/api.js'></script>
+<script async defer src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <script>

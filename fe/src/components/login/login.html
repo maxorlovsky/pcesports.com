@@ -9,10 +9,8 @@
             <input type="password" v-model="pass" placeholder="Password" />
         </div>
 
-        <button class="btn btn-primary">Login</button>
+        <button class="btn btn-primary" :disabled="formLoading">Login</button>
     </form>
 
     <a href="javascript:;" v-on:click="openForgotPassMenu()">Forgot password?</a>
-
-    <loading v-if="loading"></loading>
 </div>
