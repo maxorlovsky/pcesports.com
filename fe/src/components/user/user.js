@@ -22,7 +22,7 @@ const User = {
             self.loading = false;
         })
         .catch(function (error) {
-            self.userError = error.response.data.message
+            self.userError = error.response.data.message;
             self.loading = false;
         });
     },
