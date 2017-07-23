@@ -372,11 +372,35 @@ function loadApp(menu) {
                     .catch((error) => {
                         // If catched error, that means that user is probably not authorized.
                         // Trigger logout
-                        self.logout();
+                        if (pce.env !== 'dev') {
+                            self.logout();
+                        }
                         self.displayMessage('Error, logging out', 'danger');
                         console.log('Error fetching user resources: ' + error);
                     });
                 }
+            },
+            // When updating user data in profile forms, we need to recache user data
+            recacheLoggedInData: function() {
+                let self = this;
+
+                axios.get(`${pce.apiUrl}/user-data`)
+                .then((profileData) => {
+                    const store = pce.storage('get', 'structure-user-data');
+                    store.userProfileData = profileData.data;
+                    pce.storage('set', 'structure-user-data', store);
+
+                    this.userData = profileData.data;
+                })
+                .catch((error) => {
+                    // If catched error, that means that user is probably not authorized.
+                    // Trigger logout
+                    if (pce.env !== 'dev') {
+                        self.logout();
+                    }
+                    self.displayMessage('Error, logging out (2)', 'danger');
+                    console.log('Error fetching user resources: ' + error);
+                });
             },
             displayMessage: function(message, type) {
                 if (!type) {

@@ -72,6 +72,7 @@ const Profile = {
             })
             .then(function (response) {
                 self.$parent.displayMessage(response.data.message, 'success');
+                self.$parent.recacheLoggedInData();
                 self.formLoading = false;
             })
             .catch(function (error) {
