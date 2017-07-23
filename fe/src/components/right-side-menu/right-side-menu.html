@@ -8,7 +8,7 @@
             <nav v-else>
                 <div class="nav-user" v-if="userData.avatar">
                     <div class="nav-avatar">
-                        <img v-bind:src="'/dist/assets/images/avatar/'+userData.avatar+'.jpg'" />
+                        <img v-bind:src="`/dist/assets/images/avatar/${userData.avatar}.jpg`" alt="Avatar" />
                     </div>
                     <div class="nav-username">{{userData.name}}</div>
                     <p class="nav-points">Points: <span class="achievementsPoints">{{userData.experience}}</span></p>

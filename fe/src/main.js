@@ -104,6 +104,13 @@ let router = new VueRouter({
                 description: 'User page to change password and personal settings'
             }
         },
+        {
+            path: '/user/:name',
+            component: User,
+            meta: {
+                template: 'user',
+            }
+        },
         { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
         { path: '*', redirect: '/404' }
     ]
