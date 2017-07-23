@@ -35,8 +35,8 @@ Vue.component('login', {
                 self.formLoading = false;
             });
         },
-        openForgotPassMenu: function() {
-            this.$parent.$parent.rightSideMenuForm = 'forgot-pass';
+        openRightMenu: function(menu) {
+            this.$parent.$parent.rightSideMenuForm = menu;
             this.$emit('right-menu');
         }
     }

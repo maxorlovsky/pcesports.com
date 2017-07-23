@@ -19,4 +19,12 @@
         margin-bottom: 1em;
         cursor: pointer;
     }
+
+    .small-scren-reg {
+        display: none;
+        padding-top: 1rem;
+        @media (max-width: 525px) {
+            display: block;
+        }
+    }
 }

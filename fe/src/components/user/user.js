@@ -17,7 +17,7 @@ const User = {
             self.user = response.data.user;
 
             // Set up meta title
-            document.title += `${self.user.name} | User Profile |`;
+            document.title += ` - User Profile - ${self.user.name}`;
 
             self.loading = false;
         })
