@@ -17,6 +17,7 @@ const pce = {
     loggedIn: false,
     loginCheckError: false,
     apiUrl: 'https://api.pcesports.com',
+    env: '',
     // Local storage
     storage: (func, key, ...args) => {
         let timeoutSeconds = 1800000;
@@ -229,4 +230,5 @@ pce.storageCacheBuster();
 
 if (location.host.indexOf('dev') === 0) {
     pce.apiUrl = 'http://dev.api.pcesports.com';
+    pce.env = 'dev';
 }
