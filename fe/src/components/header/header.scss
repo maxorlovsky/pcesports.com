@@ -164,6 +164,12 @@ header {
         .btn {
             cursor: pointer;
         }
+
+        @media (max-width: 525px) {
+            .register-button {
+                display: none;
+            }
+        }
     }
 
     /*.nav-userz {

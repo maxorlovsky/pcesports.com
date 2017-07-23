@@ -12,5 +12,6 @@
         <button class="btn btn-primary" :disabled="formLoading">Login</button>
     </form>
 
-    <a href="javascript:;" v-on:click="openForgotPassMenu()">Forgot password?</a>
+    <a href="javascript:;" v-on:click="openRightMenu('forgot-pass')">Forgot password?</a>
+    <a href="javascript:;" v-on:click="openRightMenu('register')" class="small-scren-reg">Sign up</a>
 </div>
