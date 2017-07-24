@@ -12,7 +12,7 @@ const RegistrationApproval = {
     created: function() {
         const self = this;
 
-        axios.get(`http://dev.api.pcesports.com/register/${this.$route.params.code}`)
+        axios.get(`${pce.apiUrl}/register/${this.$route.params.code}`)
         .then((response) => {
             self.message.success = response.data.message;
             pce.storage('set', 'token', { "sessionToken": response.data.sessionToken }, 604800000); // 7 days
