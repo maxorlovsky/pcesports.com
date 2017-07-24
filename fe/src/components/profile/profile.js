@@ -50,7 +50,7 @@ const Profile = {
             };
 
             // Frontend check
-            if (!this.user.name || !this.user.battletag || !this.user.avatar) {
+            if (!this.user.name || !this.user.avatar) {
                 // Generic error message
                 this.formError = 'Please fill in the form';
                 this.formLoading = false;
