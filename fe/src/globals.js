@@ -36,7 +36,8 @@ const pce = {
 
             let saveData = {
                 data: args[0],
-                time: (new Date().getTime() + timeoutSeconds)
+                time: (new Date().getTime() + timeoutSeconds),
+                version: pce.version
             };
 
             localStorage.setItem(key, JSON.stringify(saveData));
@@ -46,17 +47,23 @@ const pce = {
                 return false;
             }
 
+            if (
+                // If older than 30 min
+                (returnValue.time <= new Date().getTime()) ||
+                // Or if version is now different
+                (returnValue.version !== pce.version)
+               ) {
+                // Cleanup
+                pce.storage('remove', key);
+                return false;
+            }
+
             // Check if there is something for specified key
             if (!localStorage.getItem(key)) {
                 return false;
             }
 
             let returnValue = JSON.parse(localStorage.getItem(key));
-
-            // If more than 30 min, cleanup
-            if (returnValue.time <= new Date().getTime()) {
-                pce.storage('remove', key);
-            }
 
             return returnValue.data;
         } else if (func === 'remove') {
