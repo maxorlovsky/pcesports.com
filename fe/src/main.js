@@ -387,8 +387,8 @@ function loadApp(menu) {
                 axios.get(`${pce.apiUrl}/user-data`)
                 .then((profileData) => {
                     const store = pce.storage('get', 'structure-user-data');
-                    //store.userProfileData = profileData.data;
-                    //pce.storage('set', 'structure-user-data', store);
+                    store.userProfileData = profileData.data;
+                    pce.storage('set', 'structure-user-data', store);
 
                     self.userData = profileData.data;
                 })
