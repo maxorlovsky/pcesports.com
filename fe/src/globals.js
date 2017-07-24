@@ -196,12 +196,10 @@ const pce = {
 
         return pce.loggedIn;
     },
-    prepareMenu: function(menu, userName) {
+    prepareMenu: function(menu) {
         const returnMenu = {};
 
         for (let value of menu) {
-            value.url = value.url.replace(':user_id', userName);
-
             if (value.menu_item_parent === '0') {
                 returnMenu['link-' + value.ID] = {
                     'title': value.title,
