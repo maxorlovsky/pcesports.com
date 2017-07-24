@@ -353,7 +353,7 @@ function loadApp(menu) {
                         let returnMenu = {};
 
                         if (userMenuData.data) {
-                            returnMenu = pce.prepareMenu(userMenuData.data, profileData.data.name);
+                            returnMenu = pce.prepareMenu(userMenuData.data);
                         }
 
                         let store = {
@@ -387,10 +387,10 @@ function loadApp(menu) {
                 axios.get(`${pce.apiUrl}/user-data`)
                 .then((profileData) => {
                     const store = pce.storage('get', 'structure-user-data');
-                    store.userProfileData = profileData.data;
-                    pce.storage('set', 'structure-user-data', store);
+                    //store.userProfileData = profileData.data;
+                    //pce.storage('set', 'structure-user-data', store);
 
-                    this.userData = profileData.data;
+                    self.userData = profileData.data;
                 })
                 .catch((error) => {
                     // If catched error, that means that user is probably not authorized.

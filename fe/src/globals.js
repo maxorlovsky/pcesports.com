@@ -196,12 +196,10 @@ const pce = {
 
         return pce.loggedIn;
     },
-    prepareMenu: function(menu, userName) {
+    prepareMenu: function(menu) {
         const returnMenu = {};
 
         for (let value of menu) {
-            value.url = value.url.replace(':user_id', userName);
-
             if (value.menu_item_parent === '0') {
                 returnMenu['link-' + value.ID] = {
                     'title': value.title,
@@ -229,6 +227,6 @@ const pce = {
 pce.storageCacheBuster();
 
 if (location.host.indexOf('dev') === 0) {
-    pce.apiUrl = 'http://dev.api.pcesports.com';
+    //pce.apiUrl = 'http://dev.api.pcesports.com';
     pce.env = 'dev';
 }
