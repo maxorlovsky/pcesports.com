@@ -373,9 +373,9 @@ function loadApp(menu) {
                         // If catched error, that means that user is probably not authorized.
                         // Trigger logout
                         if (pce.env !== 'dev') {
-                            self.logout();
+                            //self.logout();
                         }
-                        self.displayMessage('Error, logging out', 'danger');
+                        self.displayMessage('Error, during the process of updating user data, please repeat the process or re-login', 'danger');
                         console.log('Error fetching user resources: ' + error);
                     });
                 }
@@ -396,9 +396,9 @@ function loadApp(menu) {
                     // If catched error, that means that user is probably not authorized.
                     // Trigger logout
                     if (pce.env !== 'dev') {
-                        self.logout();
+                        //self.logout();
                     }
-                    self.displayMessage('Error, logging out (2)', 'danger');
+                    self.displayMessage('Error, during the process of updating user data, please repeat the process or re-login (2)', 'danger');
                     console.log('Error fetching user resources: ' + error);
                 });
             },
