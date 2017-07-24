@@ -227,6 +227,6 @@ const pce = {
 pce.storageCacheBuster();
 
 if (location.host.indexOf('dev') === 0) {
-    //pce.apiUrl = 'http://dev.api.pcesports.com';
+    pce.apiUrl = 'http://dev.api.pcesports.com';
     pce.env = 'dev';
 }
