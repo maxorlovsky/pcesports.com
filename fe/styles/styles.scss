@@ -22,11 +22,26 @@
         }
     }
 }
+
+/* For block-content blocks to look better and not always 100% */
+.semi-widths {
+    width: 87%;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        width: 80%;
+    }
+
+    @media (max-width: 425px) {
+        width: 100%;
+    }
+}
     
 .open {
     overflow: hidden;
 }
 
+/* for smooth :hover transitions */
 a {
     transition: .5s;
 }

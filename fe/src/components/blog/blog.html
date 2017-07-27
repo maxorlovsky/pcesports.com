@@ -3,7 +3,7 @@
         <div class="block">
             <loading v-if="loading"></loading>
 
-            <div class="block-content blog-block" v-for="post in posts">
+            <div class="block-content blog-block semi-widths" v-for="post in posts">
                 <div class="date" v-html="post.date"></div>
                 <div class="image-holder"
                     v-html="post.image"></div>
@@ -15,7 +15,7 @@
                     v-bind:to="'/article/'+post.slug">Read more</router-link>
             </div>
 
-            <div class="pages">
+            <div class="pages semi-widths">
                 <pagination v-bind:page="page"
                     v-bind:amount="amount"
                     :amount-per-page="5"
