@@ -1,5 +1,5 @@
 # hiding all packages files
-<Files ~ "(composer.json|composer.lock|composer.phar|Gruntfile.js|package.json|server.js)">
+<Files ~ "(config-tm.php)">
     Order allow,deny
     Deny from all
     Require all denied
@@ -27,6 +27,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
         
         # Only proxy the request to Prerender if it's a request for HTML
         RewriteRule ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff))(.*) http://service.prerender.io/https://www.pcesports.com/$2 [P,L]
+        # This is required for dev environment
+        #RewriteRule ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff))(.*) http://localhost:3000/http://dev.pcesports.com/$2 [P,L]
     </IfModule>
 </IfModule>
 
