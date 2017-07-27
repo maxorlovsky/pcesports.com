@@ -37,9 +37,22 @@ RewriteRule 404/? /404 [R=404,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^en/member/(.*)/?$ /user/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.html [L]
 
 Redirect 301 /web/static/images/logo.png /dist/assets/images/logo.png
 Redirect 301 /tournament-not-found /tournament-not-found.html
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^/en/member/(.*)/?$ /user/$1 [L,QSA]
+#RewriteRule ^(.*)/en/member/(.*)$ $1/user/$2 [R,L]
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#https://www.pcesports.com/en/member/gladial
 
 ErrorDocument 404 /404.html
