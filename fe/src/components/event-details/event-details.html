@@ -1,12 +1,31 @@
 <script type="text/x-template" id="event-details-template">
-    <div class="event-details">
+    <div class="event-details"
+        :class="{ 'editable': editable }">
         <div class="block">
             <div class="block-content" v-if="!pageError">
                 <loading v-if="loading"></loading>
 
                 <div class="event-details-header" v-if="!loading && game">
-                    <h1>{{game.name}}</h1>
-                    <router-link class="game-image"
+                    <textarea
+                        v-if="editable"
+                        class="game-name"
+                        v-on:keyup="fullTextHeight()">{{game.name}}</textarea>
+                    <h1 v-else>{{game.name}}</h1>
+
+                    <div v-if="addable" class="games-list">
+                        <div class="games-list-block"
+                            :class="{ picked: currentGame.abbriviature === gameIcon }"
+                            v-for="gameIcon in gamesList"
+                            v-on:click="currentGame.abbriviature = gameIcon">
+                            <img :src="'../../../dist/assets/images/' + gameIcon + '.png'" />
+                        </div>
+                    </div>
+                    <div v-if="editable" class="game-image">
+                        <img :src="'../../../dist/assets/images/' + game.game +'-logo-big.png'" />
+                    </div>
+                    <router-link
+                        v-else
+                        class="game-image"
                         :to="'/events/' + $route.params.game">
                         <img :src="'../../dist/assets/images/' + game.game +'-logo-big.png'" />
                     </router-link>
@@ -14,7 +33,72 @@
 
                 <div class="event-details-wrapper" v-if="!loading && game">
                     <div class="event-details-data">
-                        <div class="event-details-params">
+                        <div class="event-details-params" v-if="editable">
+                            <p v-if="game.platform" class="event-details-platform">
+                                <label>Platform: <span class="fa fa-exclamation-circle" v-tooltip.top="hints.platform"></span></label>
+                                {{game.platform.name}} 
+                                <img
+                                    v-if="game.platform.image"
+                                    :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" />
+                                <!-- <span v-if="editable && game.platform.name !== 'Custom'"></span> -->
+                            </p>
+                            <p>
+                                <label>Region:</label>
+                                <select v-model="game.region">
+                                    <option
+                                        v-for="(value, key) in currentGame.regions"
+                                        :value="key">{{key}}</option>
+                                    <option>other</option>
+                                </select>
+                                </p>
+                            <p>
+                                <label>Participants limit:</label>
+                                <input type="number" v-model="game.participants_limit" />
+                            </p>
+                            <p class="edit-start-date">
+                                <label>Start date:</label>
+                                <span class="date-wrapper">
+                                    <select v-model="form.day">
+                                        <option v-for="i in 31">{{i}}</option>
+                                    </select>
+                                    <select v-model="form.month">
+                                        <option v-for="i in months">{{i}}</option>
+                                    </select>
+                                    <select v-model="form.year">
+                                        <option v-for="i in years">{{i}}</option>
+                                    </select>
+                                </span>
+                            </p>
+                            <p>
+                                <label>Best of (*):</label> 
+                                <input type="text" v-model="game.meta_data.best_of" />
+                            </p>
+                            <p>
+                                <label>Start time:</label>
+                                <input type="text" v-model="form.time" />
+                            </p>
+                            <p>
+                                <label>Tournament format:</label> 
+                                <input type="text" v-model="game.meta_data.elimination" />
+                            </p>
+                            <p>
+                                <label>Payment:</label>
+                                <select v-model="game.meta_data.free">
+                                    <option></option>
+                                    <option>Free</option>
+                                    <option>Payment required</option>
+                                </select>
+                            </p>
+                            <p>
+                                <label>Online:</label>
+                                <select v-model="game.meta_data.online">
+                                    <option></option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </p>
+                        </div>
+                        <div class="event-details-params" v-else>
                             <p v-if="game.platform" class="event-details-platform"><label>Platform:</label> {{game.platform.name}} <img v-if="game.platform.image" :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" /></p>
                             <p v-if="game.region"><label>Region:</label> {{game.region.toUpperCase()}}</p>
                             <p v-if="game.participants_limit"><label>Participants limit:</label> {{game.participants_limit}}</p>
@@ -28,10 +112,47 @@
                         <div class="event-additiona-data">
                             <div class="event-prizes">
                                 <h4>Prizes</h4>
-                                <p v-html="game.meta_data.prizes"></p>
+                                <textarea
+                                    v-if="editable"
+                                    v-model="form.prizes"
+                                    class="textarea-prizes"
+                                    v-on:keyup="fullTextHeight()"></textarea>
+                                <p v-else v-html="game.meta_data.prizes"></p>
                             </div>
 
-                            <div class="event-links">
+                            <div class="event-links" v-if="editable">
+                                <h4>Links</h4>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-external-link"> Link to platform
+                                    <input type="text" v-model="game.link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-external-link"> Home page
+                                    <input type="text" v-model="game.meta_data.home_link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-external-link"> Registration link
+                                    <input type="text" v-model="game.meta_data.registration_link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-facebook"> Facebook
+                                    <input type="text" v-model="game.meta_data.facebook_link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-youtube"> YouTube
+                                    <input type="text" v-model="game.meta_data.youtube_link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-twitch"> Twitch.TV
+                                    <input type="text" v-model="game.meta_data.twitch_link" />
+                                </div>
+                                <div class="event-link-wrapper">
+                                    <i class="fa fa-comments"> Discord chat
+                                    <input type="text" v-model="game.meta_data.discord_link" />
+                                </div>
+                            </div>
+
+                            <div class="event-links" v-else>
                                 <h4>Links</h4>
                                 <a :href="game.link" target="_blank" v-if="game.link"><i class="fa fa-external-link"> Link to platform</a>
                                 <a :href="game.meta_data.home_link" target="_blank" v-if="game.meta_data.home_link"><i class="fa fa-external-link"> Home page</a>
@@ -43,13 +164,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="event-description">
-                        <h4>Event description</h4>
-                        <p v-html="game.meta_data.description"></p>
+                    <div
+                        class="event-description"
+                        :class="{ 'editable': editable }">
+                        <h4>
+                            Event description
+                            <span class="fa fa-exclamation-circle"
+                                v-if="form.formatting"
+                                v-tooltip.left="hints.description"></span>
+                        </h4>
+                        <textarea
+                            v-if="editable"
+                            v-model="form.description"
+                            class="textarea-description"
+                            v-on:keyup="fullTextHeight()"></textarea>
+                        <p v-else v-html="game.meta_data.description"></p>
                     </div>
                 </div>
 
-                <router-link :to="'/events/' + $route.params.game">
+                <div class="buttons-wrapper" v-if="editable">
+                    <div class="btn-wrapper-width">
+                        <button
+                            class="btn btn-success btn-lg edit-btn"
+                            v-on:click="submitEditForm()">Edit tournament</button>
+                    </div>
+                    <router-link :to="'/tournaments'">
+                        <button class="btn btn-primary btn-lg back-btn">Back to list</button>
+                    </router-link>
+                </div>
+                <router-link :to="'/events/' + $route.params.game" v-else>
                     <button class="btn btn-primary btn-lg back-btn">Back to list</button>
                 </router-link>
 

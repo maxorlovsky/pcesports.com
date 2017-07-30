@@ -6,6 +6,10 @@
     padding: 10px 0;
     min-width: 900px;
 
+    &.editable {
+        min-width: 990px;
+    }
+
     .event-image {
         min-width: 94px;
         padding: 0 15px;
@@ -65,6 +69,10 @@
 
         .btn {
             cursor: pointer;
+        }
+
+        &.double-width {
+            min-width: 180px;
         }
     }
 }

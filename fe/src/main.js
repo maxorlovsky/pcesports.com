@@ -55,7 +55,7 @@ let router = new VueRouter({
             ]
         },
         {
-            path: '/events/:game/:event',
+            path: '/events/:game/:event/:edit?',
             component: EventDetails,
             meta: {
                 title: 'Event Details',
@@ -102,6 +102,17 @@ let router = new VueRouter({
                 title: 'Settings - Profile',
                 template: 'settings',
                 description: 'User page to change password and personal settings'
+            }
+        },
+        {
+            path: '/tournaments',
+            component: Tournaments,
+            props: true,
+            meta: {
+                loggedIn: true,
+                title: 'Tournaments List',
+                template: 'tournaments',
+                description: 'User page to add, update and remove tournaments'
             }
         },
         {

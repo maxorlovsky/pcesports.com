@@ -5,6 +5,14 @@ const EventDetails = {
             loading: true,
             pageError: '',
             game: {},
+            currentGame: {},
+            addable: false,
+            editable: false,
+            form: {},
+            gamesList: ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'],
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            years: [],
+            hints: {}
         };
     },
     created: function() {
@@ -12,6 +20,11 @@ const EventDetails = {
 
         this.currentGame = pce.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
+        if (this.$route.params.edit === 'edit' && pce.loggedIn) {
+            this.editable = true;
+        }
+
+        this.years = this.populateYears();
 
         axios.get('https://api.pcesports.com/tournament/' + this.currentGame.abbriviature + '/' + this.eventId)
         .then(function (response) {
@@ -33,11 +46,17 @@ const EventDetails = {
             const metaDescription = `${self.game.name} | ${cutDownDescription}...`;
             document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
 
+            self.form.prizes = self.game.meta_data.prizes;
+            self.form.description = self.game.meta_data.description;
             self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
             if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
+                self.form.formatting = true;
+                self.form.description = self.game.meta_data.description;
             } else if (self.game.platform === 'esl') {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
+                self.form.formatting = true;
+                self.form.description = self.game.meta_data.description;
             } else {
                 self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
             }
@@ -59,10 +78,25 @@ const EventDetails = {
             }
             
             self.loading = false;
+
+            if (self.editable) {
+                setTimeout(() => self.fullTextHeight(), 150);
+
+                // Run function for edit form
+                self.game.meta_data.free = self.correctPayment(self.game.meta_data.free);
+                self.game.meta_data.online = self.correctOnline(self.game.meta_data.online);
+
+                self.form.day = self.game.start_datetime.substring(5, 7);
+                self.form.month = self.game.start_datetime.substring(8, 11);
+                self.form.year = self.game.start_datetime.substring(12, 16);
+                self.form.time = self.game.start_datetime.substring(17, self.game.start_datetime.length);
+
+                self.hints = self.populateHints();
+            }
         })
-        .catch(function (error) {
+        /* .catch(function (error) {
             window.location.href = "/tournament-not-found.html";
-        });
+        }) */;
     },
     methods: {
         correctDate: function(timeStamp) {
@@ -136,6 +170,42 @@ const EventDetails = {
             }
 
             return status;
+        },
+        fullTextHeight: function() {
+            if (document.querySelector('.game-name')) {
+                document.querySelector('.game-name').style.height = 0;
+
+                const scrollHeigth = document.querySelector('.game-name').scrollHeight;
+                document.querySelector('.game-name').style.height = `${scrollHeigth}px`;
+            }
+
+            if (document.querySelector('.textarea-prizes')) {
+                document.querySelector('.textarea-prizes').style.height = 0;
+
+                const scrollHeigth = document.querySelector('.textarea-prizes').scrollHeight;
+                document.querySelector('.textarea-prizes').style.height = `${scrollHeigth}px`;
+            }
+
+            if (document.querySelector('.textarea-description')) {
+                document.querySelector('.textarea-description').style.height = 0;
+                
+                const scrollHeigth = document.querySelector('.textarea-description').scrollHeight;
+                document.querySelector('.textarea-description').style.height = `${scrollHeigth}px`;
+            }
+        },
+        populateHints: function() {
+            return {
+                platform: 'If you update this tournament it will be moved from current platform to "Custom"',
+                description: 'In this event formatting is set as HTML, if you edit your event, formatting is going to be changed to "wiki/reddit markup" format.'
+            };
+        },
+        populateYears: function() {
+            const years = [
+                new Date().getFullYear(),
+                (new Date().getFullYear() + 1)
+            ];
+
+            return years;
         }
     }
 };
