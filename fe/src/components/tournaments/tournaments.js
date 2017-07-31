@@ -78,7 +78,7 @@ const Tournaments = {
                 filter += '&offset=' + this.offset;
             }
 
-            axios.get('http://dev.api.pcesports.com/tournaments' + filter)
+            axios.get(`${pce.apiUrl}/tournaments${filter}`)
             .then(function (response) {
                 let gamesFiltered = response.data;
                 let currentDate = new Date();
