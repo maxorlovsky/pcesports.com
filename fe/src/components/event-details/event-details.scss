@@ -168,7 +168,8 @@
         }
     }
 
-    &.editable {
+    &.editable,
+    &.addable {
         .fa-exclamation-circle {
             color: #c00;
             font-size: 2rem;
@@ -211,6 +212,7 @@
             border-right: 1px dotted #aaa;
             border-bottom: 0;
             width: 100%;
+            resize: none;
             overflow: hidden;
             
             option {
@@ -229,6 +231,7 @@
             .games-list-block {
                 display: inline-block;
                 padding: 0.5rem;
+                cursor: pointer;
 
                 &.picked {
                     outline: 2px solid $mainColor;

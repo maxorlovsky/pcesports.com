@@ -8,9 +8,13 @@ const EventDetails = {
             currentGame: {},
             addable: false,
             editable: false,
-            form: {},
+            form: {
+                game: 'lol'
+            },
+            errorClasses: {},
             gamesList: ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'],
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            days: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
             years: [],
             hints: {}
         };
@@ -18,85 +22,40 @@ const EventDetails = {
     created: function() {
         const self = this;
 
-        this.currentGame = pce.getGameData(this.$route.params.game);
-        this.eventId = parseInt(this.$route.params.event);
-        if (this.$route.params.edit === 'edit' && pce.loggedIn) {
-            this.editable = true;
+        if (this.$route.params.addition) {
+            if (this.$route.params.addition === 'edit' && pce.loggedIn) {
+                this.editable = true;
+            }
+            else if (this.$route.params.addition === 'add' && pce.loggedIn) {
+                this.addable = true;
+            }
+            else {
+                // In case if not logged in, not edit/add and still addition is there, redirect
+                const path = this.$route.path.substring(0, this.$route.path.length - this.$route.params.addition.length - 1);
+                this.$router.push(path);
+            }
         }
 
-        this.years = this.populateYears();
+        if (this.addable) {
+            this.loading = false;
+        } else {
+            this.currentGame = pce.getGameData(this.$route.params.game);
+            this.eventId = parseInt(this.$route.params.event);
 
-        axios.get('https://api.pcesports.com/tournament/' + this.currentGame.abbriviature + '/' + this.eventId)
-        .then(function (response) {
-            self.game = response.data;
+            axios.get('https://api.pcesports.com/tournament/' + this.currentGame.abbriviature + '/' + this.eventId)
+            .then(function (response) {
+                self.prepareView(response);
+                
+                if (self.editable) {
+                    self.prepareEditForm();
+                }
 
-            self.game.name = self.game.name
-                .replace(/&amp;/g, "&")
-                .replace(/&gt;/g, ">")
-                .replace(/&lt;/g, "<")
-                .replace(/&quot;"/g, "\"");
-
-            // Set up meta title
-            document.title += ' - '+ self.game.name;
-
-            self.game.meta_data = JSON.parse(self.game.meta_data);
-
-            // Set up meta description
-            const cutDownDescription = self.game.meta_data.description.substring(0, 100);
-            const metaDescription = `${self.game.name} | ${cutDownDescription}...`;
-            document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
-
-            self.form.prizes = self.game.meta_data.prizes;
-            self.form.description = self.game.meta_data.description;
-            self.game.meta_data.prizes = self.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            if (self.game.platform === 'battlefy' && (self.game.game === 'ow' || self.game.game === 'hots')) {
-                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
-                self.form.formatting = true;
-                self.form.description = self.game.meta_data.description;
-            } else if (self.game.platform === 'esl') {
-                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, false);
-                self.form.formatting = true;
-                self.form.description = self.game.meta_data.description;
-            } else {
-                self.game.meta_data.description = self.correctDescription(self.game.meta_data.description, true);
-            }
-            self.game.platform = {
-                name: self.game.platformName,
-                image: self.game.platformName === 'Custom' ? false : self.game.platform
-            };
-            self.game.start_datetime = self.correctDate(self.game.start_datetime);
-            self.game.meta_data.elimination = self.correctEventFormat(self.game.meta_data.elimination);
-            if (self.game.meta_data.free) {
-                self.game.meta_data.free = self.correctPayment(self.game.meta_data.free);
-            }
-            if (self.game.meta_data.online) {
-                self.game.meta_data.online = self.correctOnline(self.game.meta_data.online);
-            }
-
-            if (self.game.participants_limit === '0') {
-                self.game.participants_limit = 'Unlimited';
-            }
-            
-            self.loading = false;
-
-            if (self.editable) {
-                setTimeout(() => self.fullTextHeight(), 150);
-
-                // Run function for edit form
-                self.game.meta_data.free = self.correctPayment(self.game.meta_data.free);
-                self.game.meta_data.online = self.correctOnline(self.game.meta_data.online);
-
-                self.form.day = self.game.start_datetime.substring(5, 7);
-                self.form.month = self.game.start_datetime.substring(8, 11);
-                self.form.year = self.game.start_datetime.substring(12, 16);
-                self.form.time = self.game.start_datetime.substring(17, self.game.start_datetime.length);
-
-                self.hints = self.populateHints();
-            }
-        })
-        /* .catch(function (error) {
-            window.location.href = "/tournament-not-found.html";
-        }) */;
+                self.loading = false;
+            })
+            /* .catch(function (error) {
+                window.location.href = "/tournament-not-found.html";
+            }) */;
+        }
     },
     methods: {
         correctDate: function(timeStamp) {
@@ -206,6 +165,126 @@ const EventDetails = {
             ];
 
             return years;
+        },
+        prepareView: function(response) {
+            this.game = response.data;
+
+            this.game.name = this.game.name
+                .replace(/&amp;/g, "&")
+                .replace(/&gt;/g, ">")
+                .replace(/&lt;/g, "<")
+                .replace(/&quot;"/g, "\"");
+
+            // Set up meta title
+            document.title += ' - '+ this.game.name;
+
+            this.game.meta_data = JSON.parse(this.game.meta_data);
+
+            // Set up meta description
+            const cutDownDescription = this.game.meta_data.description.substring(0, 100);
+            const metaDescription = `${this.game.name} | ${cutDownDescription}...`;
+            document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
+
+            // Settings those sooner, before they will be changed, for edit form
+            if (this.editable) {
+                this.form.prizes = this.game.meta_data.prizes;
+                this.form.description = this.game.meta_data.description;
+            }
+
+            this.game.meta_data.prizes = this.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            if (this.game.platform === 'battlefy' && (this.game.game === 'ow' || this.game.game === 'hots')) {
+                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
+                this.form.formatting = true;
+                this.form.description = this.game.meta_data.description;
+            } else if (this.game.platform === 'esl') {
+                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
+                this.form.formatting = true;
+                this.form.description = this.game.meta_data.description;
+            } else {
+                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, true);
+            }
+            this.game.platform = {
+                name: this.game.platformName,
+                image: this.game.platformName === 'Custom' ? false : this.game.platform
+            };
+            this.game.start_datetime = this.correctDate(this.game.start_datetime);
+            this.game.meta_data.elimination = this.correctEventFormat(this.game.meta_data.elimination);
+            if (this.game.meta_data.free) {
+                this.game.meta_data.free = this.correctPayment(this.game.meta_data.free);
+            }
+            if (this.game.meta_data.online) {
+                this.game.meta_data.online = this.correctOnline(this.game.meta_data.online);
+            }
+
+            if (this.game.participants_limit === '0') {
+                this.game.participants_limit = 'Unlimited';
+            }
+        },
+        prepareEditForm: function() {
+            this.form.name = this.game.name;
+            this.form.region = this.game.region;
+            this.form.participants_limit = this.game.participants_limit;
+            this.form.best_of = this.game.meta_data.best_of;
+            this.form.elimination = this.game.meta_data.elimination;
+            this.form.free = this.correctPayment(this.game.meta_data.free);
+            this.form.online = this.correctOnline(this.game.meta_data.online);
+
+            this.form.day = this.game.start_datetime.substring(5, 7);
+            this.form.month = this.game.start_datetime.substring(8, 11);
+            this.form.year = this.game.start_datetime.substring(12, 16);
+            this.form.time = this.game.start_datetime.substring(17, this.game.start_datetime.length);
+
+            this.form.link = this.game.link;
+            this.form.home_link = this.game.meta_data.home_link;
+            this.form.registration_link = this.game.meta_data.registration_link;
+            this.form.facebook_link = this.game.meta_data.facebook_link;
+            this.form.youtube_link = this.game.meta_data.youtube_link;
+            this.form.twitch_link = this.game.meta_data.twitch_link;
+            this.form.discord_link = this.game.meta_data.discord_link;
+
+            this.hints = this.populateHints();
+            this.years = this.populateYears();
+            setTimeout(() => this.fullTextHeight(), 150);
+        },
+        submitEditForm: function() {
+            let self = this;
+
+            axios.post(`${pce.apiUrl}/tournament/edit`, {
+                form: this.form
+            })
+            .then(function (response) {
+                /* self.restoreSuccess = response.data.message;
+                self.showForm = 2;
+                self.formLoading = false;
+                self.checkCaptcha(); */
+            })
+            .catch(function (error) {
+                /* self.restoreError = error.response.data.message;
+                self.formLoading = false;
+                self.errorClasses.login = true;
+                self.checkCaptcha(); */
+                console.log('error');
+            });
+        },
+        submitForm: function() {
+            let self = this;
+
+            axios.post(`${pce.apiUrl}/tournament/add`, {
+                form: this.form
+            })
+            .then(function (response) {
+                /* self.restoreSuccess = response.data.message;
+                self.showForm = 2;
+                self.formLoading = false;
+                self.checkCaptcha(); */
+            })
+            .catch(function (error) {
+                /* self.restoreError = error.response.data.message;
+                self.formLoading = false;
+                self.errorClasses.login = true;
+                self.checkCaptcha(); */
+                console.log('error');
+            });
         }
     }
 };

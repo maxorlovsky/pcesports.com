@@ -8,7 +8,9 @@
 
                 <div class="heading-wrapper">
                     <div class="heading-text">Here you can add, edit or delete tournaments added by you</div>
-                    <button class="btn btn-success">Add new tournament</button>
+                    <router-link :to="'/events/any/0/add'">
+                        <button class="btn btn-success">Add new tournament</button>
+                    </router-link>
                 </div>
 
                 <!--<events-filters :status="status"

@@ -55,7 +55,7 @@ let router = new VueRouter({
             ]
         },
         {
-            path: '/events/:game/:event/:edit?',
+            path: '/events/:game/:event/:addition?',
             component: EventDetails,
             meta: {
                 title: 'Event Details',
