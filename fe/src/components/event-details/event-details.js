@@ -42,7 +42,7 @@ const EventDetails = {
             this.currentGame = pce.getGameData(this.$route.params.game);
             this.eventId = parseInt(this.$route.params.event);
 
-            axios.get('https://api.pcesports.com/tournament/' + this.currentGame.abbriviature + '/' + this.eventId)
+            axios.get(`${pce.apiUrl}/tournament/${this.currentGame.abbriviature}/${this.eventId}`)
             .then(function (response) {
                 self.prepareView(response);
                 
@@ -90,17 +90,13 @@ const EventDetails = {
 
             switch(format) {
                 case 'single-elim':
-                case 'Standard':
                     fullName = 'Single Elimination';
                 break;
                 case 'double-elim':
                     fullName = 'Double Elimination';
                 break;
-                case 'Last Hero Standing':
-                    fullName = 'Last Hero Standing';
-                break;
                 default:
-                    fullName = 'Not specified';
+                    fullName = format;
                 break;
             }
 
