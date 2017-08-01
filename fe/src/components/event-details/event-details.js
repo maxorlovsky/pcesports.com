@@ -232,7 +232,26 @@ const EventDetails = {
             let self = this;
 
             axios.post(`${pce.apiUrl}/tournament/edit`, {
-                form: this.form
+                name: this.form.name,
+                region: this.form.region,
+                participants_limit: parseInt(this.form.participants_limit),
+                best_of: this.form.best_of,
+                elimination: this.form.elimination,
+                free: this.form.free,
+                online: this.form.online,
+                day: this.form.day,
+                month: this.form.month,
+                year: this.form.year,
+                time: this.form.time,
+                link: this.form.link,
+                home_link: this.form.home_link,
+                registration_link: this.form.registration_link,
+                facebook_link: this.form.facebook_link,
+                youtube_link: this.form.youtube_link,
+                twitch_link: this.form.twitch_link,
+                discord_link: this.form.discord_link,
+                prizes: this.form.prizes,
+                description: this.form.description
             })
             .then(function (response) {
                 /* self.restoreSuccess = response.data.message;
@@ -252,7 +271,26 @@ const EventDetails = {
             let self = this;
 
             axios.post(`${pce.apiUrl}/tournament/add`, {
-                form: this.form
+                name: this.form.name,
+                region: this.form.region,
+                participants_limit: parseInt(this.form.participants_limit),
+                best_of: this.form.best_of,
+                elimination: this.form.elimination,
+                free: this.form.free,
+                online: this.form.online,
+                day: this.form.day,
+                month: this.form.month,
+                year: this.form.year,
+                time: this.form.time,
+                link: this.form.link,
+                home_link: this.form.home_link,
+                registration_link: this.form.registration_link,
+                facebook_link: this.form.facebook_link,
+                youtube_link: this.form.youtube_link,
+                twitch_link: this.form.twitch_link,
+                discord_link: this.form.discord_link,
+                prizes: this.form.prizes,
+                description: this.form.description
             })
             .then(function (response) {
                 /* self.restoreSuccess = response.data.message;
