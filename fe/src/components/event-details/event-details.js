@@ -131,26 +131,10 @@ const EventDetails = {
             return status;
         },
         fullTextHeight: function() {
-            if (document.querySelector('.game-name')) {
-                document.querySelector('.game-name').style.height = 0;
-
-                const scrollHeigth = document.querySelector('.game-name').scrollHeight;
-                document.querySelector('.game-name').style.height = `${scrollHeigth}px`;
-            }
-
-            if (document.querySelector('.textarea-prizes')) {
-                document.querySelector('.textarea-prizes').style.height = 0;
-
-                const scrollHeigth = document.querySelector('.textarea-prizes').scrollHeight;
-                document.querySelector('.textarea-prizes').style.height = `${scrollHeigth}px`;
-            }
-
-            if (document.querySelector('.textarea-description')) {
-                document.querySelector('.textarea-description').style.height = 0;
-                
-                const scrollHeigth = document.querySelector('.textarea-description').scrollHeight;
-                document.querySelector('.textarea-description').style.height = `${scrollHeigth}px`;
-            }
+            document.querySelectorAll('textarea').forEach(() => {
+                this.style.height = 0;
+                this.style.height = `${this.scrollHeight}px`;
+            });
         },
         populateHints: function() {
             return {
