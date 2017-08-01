@@ -133,7 +133,7 @@ const EventDetails = {
         fullTextHeight: function() {
             const textareas = document.querySelectorAll('textarea');
 
-            for (let textarea of textarea) {
+            for (let textarea of textareas) {
                 textarea.style.height = 0;
                 textarea.style.height = `${textarea.scrollHeight}px`;
             }
