@@ -131,10 +131,12 @@ const EventDetails = {
             return status;
         },
         fullTextHeight: function() {
-            document.querySelectorAll('textarea').forEach(() => {
-                this.style.height = 0;
-                this.style.height = `${this.scrollHeight}px`;
-            });
+            const textareas = document.querySelectorAll('textarea');
+
+            for (let textarea of textarea) {
+                textarea.style.height = 0;
+                textarea.style.height = `${textarea.scrollHeight}px`;
+            }
         },
         populateHints: function() {
             return {
