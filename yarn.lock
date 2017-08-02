@@ -3720,7 +3720,7 @@ vinyl@^2.0.0:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
-vue-directive-tooltip@^1.2.5:
+vue-directive-tooltip@1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/vue-directive-tooltip/-/vue-directive-tooltip-1.2.5.tgz#b3b94dc82cb37c367324406d4521bdbba8a5ec17"
   dependencies:

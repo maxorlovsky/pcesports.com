@@ -218,6 +218,10 @@
             option {
                 color: #000;
             }
+
+            &.error {
+                outline: 1px solid #d00;
+            }
         }
 
         textarea {

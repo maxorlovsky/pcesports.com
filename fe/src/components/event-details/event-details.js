@@ -37,6 +37,9 @@ const EventDetails = {
         }
 
         if (this.addable) {
+            this.switchGame('lol');
+            this.years = this.populateYears();
+            setTimeout(() => this.fullTextHeight(), 150);
             this.loading = false;
         } else {
             this.currentGame = pce.getGameData(this.$route.params.game);
@@ -52,9 +55,9 @@ const EventDetails = {
 
                 self.loading = false;
             })
-            /* .catch(function (error) {
+            .catch(function (error) {
                 window.location.href = "/tournament-not-found.html";
-            }) */;
+            });
         }
     },
     methods: {
@@ -148,6 +151,10 @@ const EventDetails = {
 
             return years;
         },
+        switchGame: function(game) {
+            this.form.game = game;
+            this.currentGame = pce.getGameData(game);
+        },
         prepareView: function(response) {
             this.game = response.data;
 
@@ -231,6 +238,26 @@ const EventDetails = {
         submitEditForm: function() {
             let self = this;
 
+            this.formLoading = true;
+            this.errorClasses = {};
+
+            if (!this.form.name || !this.form.region || !this.form.prizes || !this.form.description  || !this.form.day || !this.form.month || !this.form.year || !this.form.time) {
+                self.$parent.displayMessage('Please fill in the form', 'danger');
+                this.formLoading = false;
+                this.errorClasses = {
+                    name: !this.form.name ? true : false,
+                    region: !this.form.region ? true : false,
+                    prizes: !this.form.prizes ? true : false,
+                    description: !this.form.description ? true : false,
+                    day: !this.form.day ? true : false,
+                    month: !this.form.month ? true : false,
+                    year: !this.form.year ? true : false,
+                    time: !this.form.time ? true : false
+                };
+
+                return false;
+            }
+
             axios.post(`${pce.apiUrl}/tournament/edit`, {
                 name: this.form.name,
                 region: this.form.region,
@@ -260,18 +287,37 @@ const EventDetails = {
                 self.checkCaptcha(); */
             })
             .catch(function (error) {
-                /* self.restoreError = error.response.data.message;
+                self.formError = error.response.data.message;
                 self.formLoading = false;
                 self.errorClasses.login = true;
-                self.checkCaptcha(); */
-                console.log('error');
             });
         },
         submitForm: function() {
             let self = this;
 
+            this.formLoading = true;
+
+            /* if (!this.form.name || !this.form.region || !this.form.prizes || !this.form.description  || !this.form.day || !this.form.month || !this.form.year || !this.form.time || !this.form.link) {
+                self.$parent.displayMessage('Please fill in the form', 'danger');
+                this.formLoading = false;
+                this.errorClasses = {
+                    name: !this.form.name ? true : false,
+                    region: !this.form.region ? true : false,
+                    prizes: !this.form.prizes ? true : false,
+                    description: !this.form.description ? true : false,
+                    day: !this.form.day ? true : false,
+                    month: !this.form.month ? true : false,
+                    year: !this.form.year ? true : false,
+                    time: !this.form.time ? true : false,
+                    link: !this.form.link ? true : false
+                };
+
+                return false;
+            } */
+
             axios.post(`${pce.apiUrl}/tournament/add`, {
                 name: this.form.name,
+                game: this.form.game,
                 region: this.form.region,
                 participants_limit: parseInt(this.form.participants_limit),
                 best_of: this.form.best_of,
@@ -299,11 +345,22 @@ const EventDetails = {
                 self.checkCaptcha(); */
             })
             .catch(function (error) {
-                /* self.restoreError = error.response.data.message;
                 self.formLoading = false;
-                self.errorClasses.login = true;
-                self.checkCaptcha(); */
-                console.log('error');
+
+                self.$parent.displayMessage(error.response.data.message, 'danger');
+                
+                let errorFields = error.response.data.fields;
+
+                // In some cases slim return array as json, we need to convert it
+                if (errorFields.constructor !== Array) {
+                    errorFields = Object.keys(errorFields).map(key => errorFields[key]);
+                }
+
+                // Mark fields with error class
+                self.errorClasses = {};
+                for (let i = 0; i < errorFields.length; ++i) {
+                    self.errorClasses[errorFields[i]] = true;
+                }
             });
         }
     }

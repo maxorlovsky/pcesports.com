@@ -7,17 +7,18 @@
 
                 <div class="event-details-header" v-if="!loading && game">
                     <textarea class="game-name"
-                        placeholder="Event name"
+                        placeholder="Event name *"
                         v-if="editable || addable"
                         v-on:keyup="fullTextHeight()"
-                        v-model="form.name"></textarea>
+                        v-model="form.name"
+                        :class="{ error: errorClasses.name }"></textarea>
                     <h1 v-else>{{game.name}}</h1>
 
                     <div v-if="addable" class="games-list">
                         <div class="games-list-block"
                             :class="{ picked: form.game === gameIcon }"
                             v-for="gameIcon in gamesList"
-                            v-on:click="form.game = gameIcon">
+                            v-on:click="switchGame(gameIcon)">
                             <img :src="'../../../dist/assets/images/' + gameIcon + '.png'" />
                         </div>
                     </div>
@@ -42,47 +43,56 @@
                                     :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" />
                             </p>
                             <p>
-                                <label>Region:</label>
-                                <select v-model="form.region">
+                                <label>Region *:</label>
+                                <select v-model="form.region" :class="{ error: errorClasses.region }">
                                     <option
                                         v-for="(value, key) in currentGame.regions"
-                                        :value="key">{{key}}</option>
-                                    <option>other</option>
+                                        :value="key"
+                                        v-if="key !== 'all'">{{value}}</option>
+                                    <option>Other</option>
                                 </select>
                                 </p>
                             <p>
-                                <label>Participants limit:</label>
-                                <input type="number" v-model="form.participants_limit" />
+                                <label>Participants limit *:</label>
+                                <input type="number"
+                                    v-model="form.participants_limit"
+                                    :class="{ error: errorClasses.participants_limit }" />
                             </p>
                             <p class="edit-start-date">
-                                <label>Start date:</label>
+                                <label>Start date *:</label>
                                 <span class="date-wrapper">
-                                    <select v-model="form.day">
+                                    <select v-model="form.day" :class="{ error: errorClasses.day }">
                                         <option v-for="i in days">{{i}}</option>
                                     </select>
-                                    <select v-model="form.month">
+                                    <select v-model="form.month" :class="{ error: errorClasses.month }">
                                         <option v-for="i in months">{{i}}</option>
                                     </select>
-                                    <select v-model="form.year">
+                                    <select v-model="form.year" :class="{ error: errorClasses.year }">
                                         <option v-for="i in years">{{i}}</option>
                                     </select>
                                 </span>
                             </p>
                             <p>
                                 <label>Best of:</label> 
-                                <input type="text" v-model="form.best_ofbest_of" />
+                                <input type="text"
+                                    v-model="form.best_of"
+                                    :class="{ error: errorClasses.best_of }" />
                             </p>
                             <p>
-                                <label>Start time:</label>
-                                <input type="text" v-model="form.time" />
+                                <label>Start time *:</label>
+                                <input type="text"
+                                    v-model="form.time"
+                                    :class="{ error: errorClasses.time }" />
                             </p>
                             <p>
                                 <label>Tournament format:</label> 
-                                <input type="text" v-model="form.elimination" />
+                                <input type="text"
+                                    v-model="form.elimination"
+                                    :class="{ error: errorClasses.elimination }" />
                             </p>
                             <p>
                                 <label>Payment:</label>
-                                <select v-model="form.free">
+                                <select v-model="form.free" :class="{ error: errorClasses.free }">
                                     <option></option>
                                     <option>Free</option>
                                     <option>Payment required</option>
@@ -90,7 +100,7 @@
                             </p>
                             <p>
                                 <label>Online:</label>
-                                <select v-model="form.online">
+                                <select v-model="form.online" :class="{ error: errorClasses.online }">
                                     <option></option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -115,7 +125,8 @@
                                     v-if="editable || addable"
                                     v-model="form.prizes"
                                     class="textarea-prizes"
-                                    v-on:keyup="fullTextHeight()"></textarea>
+                                    v-on:keyup="fullTextHeight()"
+                                    :class="{ error: errorClasses.prizes }"></textarea>
                                 <p v-else v-html="game.meta_data.prizes"></p>
                             </div>
 
@@ -123,31 +134,45 @@
                                 <h4>Links</h4>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-external-link"> Link to platform
-                                    <input type="text" v-model="form.link" />
+                                    <input type="text"
+                                        v-model="form.link"
+                                        :class="{ error: errorClasses.link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-external-link"> Home page
-                                    <input type="text" v-model="form.home_link" />
+                                    <input type="text"
+                                        v-model="form.home_link"
+                                        :class="{ error: errorClasses.home_link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-external-link"> Registration link
-                                    <input type="text" v-model="form.registration_link" />
+                                    <input type="text"
+                                        v-model="form.registration_link"
+                                        :class="{ error: errorClasses.registration_link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-facebook"> Facebook
-                                    <input type="text" v-model="form.facebook_link" />
+                                    <input type="text"
+                                        v-model="form.facebook_link"
+                                        :class="{ error: errorClasses.facebook_link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-youtube"> YouTube
-                                    <input type="text" v-model="form.youtube_link" />
+                                    <input type="text"
+                                        v-model="form.youtube_link"
+                                        :class="{ error: errorClasses.youtube_link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-twitch"> Twitch.TV
-                                    <input type="text" v-model="form.twitch_link" />
+                                    <input type="text"
+                                        v-model="form.twitch_link"
+                                        :class="{ error: errorClasses.twitch_link }" />
                                 </div>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-comments"> Discord chat
-                                    <input type="text" v-model="form.discord_link" />
+                                    <input type="text"
+                                        v-model="form.discord_link"
+                                        :class="{ error: errorClasses.discord_link }" />
                                 </div>
                             </div>
 
@@ -176,7 +201,8 @@
                             v-if="editable || addable"
                             v-model="form.description"
                             class="textarea-description"
-                            v-on:keyup="fullTextHeight()"></textarea>
+                            v-on:keyup="fullTextHeight()"
+                            :class="{ error: errorClasses.description }"></textarea>
                         <p v-else v-html="form.description"></p>
                     </div>
                 </div>
