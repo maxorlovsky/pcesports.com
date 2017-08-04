@@ -1,4 +1,4 @@
-.event-details {
+.event-add {
     .block-content {
         width: 90%;
         margin: 0 auto;
@@ -168,7 +168,8 @@
         }
     }
 
-    &.editable {
+    &.editable,
+    &.addable {
         label {
             position: relative;
             display: inline-block;

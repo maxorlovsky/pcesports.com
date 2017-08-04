@@ -55,11 +55,19 @@ let router = new VueRouter({
             ]
         },
         {
-            path: '/events/:game/:event/:addition?',
+            path: '/events/:game/:event',
             component: EventDetails,
             meta: {
                 title: 'Event Details',
                 template: 'event-details'
+            }
+        },
+        {
+            path: '/event/add/:addition?',
+            component: EventAdd,
+            meta: {
+                title: 'Event Add',
+                template: 'event-add'
             }
         },
         {

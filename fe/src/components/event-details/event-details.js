@@ -6,7 +6,6 @@ const EventDetails = {
             pageError: '',
             game: {},
             currentGame: {},
-            addable: false,
             editable: false,
             form: {
                 game: 'lol'
@@ -20,28 +19,23 @@ const EventDetails = {
         };
     },
     created: function() {
-        const self = this;
+        this.fetchData();
+    },
+    methods: {
+        fetchData: function() {
+            const self = this;
 
-        if (this.$route.params.addition) {
-            if (this.$route.params.addition === 'edit' && pce.loggedIn) {
-                this.editable = true;
+            if (this.$route.params.addition) {
+                if (this.$route.params.addition === 'edit' && pce.loggedIn) {
+                    this.editable = true;
+                }
+                else {
+                    // In case if not logged in, not edit/add and still addition is there, redirect
+                    const path = this.$route.path.substring(0, this.$route.path.length - this.$route.params.addition.length - 1);
+                    this.$router.push(path);
+                }
             }
-            else if (this.$route.params.addition === 'add' && pce.loggedIn) {
-                this.addable = true;
-            }
-            else {
-                // In case if not logged in, not edit/add and still addition is there, redirect
-                const path = this.$route.path.substring(0, this.$route.path.length - this.$route.params.addition.length - 1);
-                this.$router.push(path);
-            }
-        }
 
-        if (this.addable) {
-            this.switchGame('lol');
-            this.years = this.populateYears();
-            setTimeout(() => this.fullTextHeight(), 150);
-            this.loading = false;
-        } else {
             this.currentGame = pce.getGameData(this.$route.params.game);
             this.eventId = parseInt(this.$route.params.event);
 
@@ -58,9 +52,7 @@ const EventDetails = {
             .catch(function (error) {
                 window.location.href = "/tournament-not-found.html";
             });
-        }
-    },
-    methods: {
+        },
         correctDate: function(timeStamp) {
             const currentDate = new Date();
             const timezoneOffset = currentDate.getTimezoneOffset() * 60;
@@ -140,7 +132,8 @@ const EventDetails = {
         populateHints: function() {
             return {
                 platform: 'If you update this tournament it will be moved from current platform to "Custom"',
-                description: 'In this event formatting is set as HTML, if you edit your event, formatting is going to be changed to "wiki/reddit markup" format.'
+                description: 'In this event formatting is set as HTML, if you edit your event, formatting is going to be changed to "wiki/reddit markup" format.',
+                time: 'Time must be in format either 14:30 or 2:30PM'
             };
         },
         populateYears: function() {
@@ -150,10 +143,6 @@ const EventDetails = {
             ];
 
             return years;
-        },
-        switchGame: function(game) {
-            this.form.game = game;
-            this.currentGame = pce.getGameData(game);
         },
         prepareView: function(response) {
             this.game = response.data;
@@ -290,77 +279,6 @@ const EventDetails = {
                 self.formError = error.response.data.message;
                 self.formLoading = false;
                 self.errorClasses.login = true;
-            });
-        },
-        submitForm: function() {
-            let self = this;
-
-            this.formLoading = true;
-
-            /* if (!this.form.name || !this.form.region || !this.form.prizes || !this.form.description  || !this.form.day || !this.form.month || !this.form.year || !this.form.time || !this.form.link) {
-                self.$parent.displayMessage('Please fill in the form', 'danger');
-                this.formLoading = false;
-                this.errorClasses = {
-                    name: !this.form.name ? true : false,
-                    region: !this.form.region ? true : false,
-                    prizes: !this.form.prizes ? true : false,
-                    description: !this.form.description ? true : false,
-                    day: !this.form.day ? true : false,
-                    month: !this.form.month ? true : false,
-                    year: !this.form.year ? true : false,
-                    time: !this.form.time ? true : false,
-                    link: !this.form.link ? true : false
-                };
-
-                return false;
-            } */
-
-            axios.post(`${pce.apiUrl}/tournament/add`, {
-                name: this.form.name,
-                game: this.form.game,
-                region: this.form.region,
-                participants_limit: parseInt(this.form.participants_limit),
-                best_of: this.form.best_of,
-                elimination: this.form.elimination,
-                free: this.form.free,
-                online: this.form.online,
-                day: this.form.day,
-                month: this.form.month,
-                year: this.form.year,
-                time: this.form.time,
-                link: this.form.link,
-                home_link: this.form.home_link,
-                registration_link: this.form.registration_link,
-                facebook_link: this.form.facebook_link,
-                youtube_link: this.form.youtube_link,
-                twitch_link: this.form.twitch_link,
-                discord_link: this.form.discord_link,
-                prizes: this.form.prizes,
-                description: this.form.description
-            })
-            .then(function (response) {
-                /* self.restoreSuccess = response.data.message;
-                self.showForm = 2;
-                self.formLoading = false;
-                self.checkCaptcha(); */
-            })
-            .catch(function (error) {
-                self.formLoading = false;
-
-                self.$parent.displayMessage(error.response.data.message, 'danger');
-                
-                let errorFields = error.response.data.fields;
-
-                // In some cases slim return array as json, we need to convert it
-                if (errorFields.constructor !== Array) {
-                    errorFields = Object.keys(errorFields).map(key => errorFields[key]);
-                }
-
-                // Mark fields with error class
-                self.errorClasses = {};
-                for (let i = 0; i < errorFields.length; ++i) {
-                    self.errorClasses[errorFields[i]] = true;
-                }
             });
         }
     }

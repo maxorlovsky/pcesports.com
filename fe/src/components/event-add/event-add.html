@@ -1,33 +1,33 @@
-<script type="text/x-template" id="event-details-template">
-    <div class="event-details"
-        :class="{ 'editable': editable }">
+<script type="text/x-template" id="event-add-template">
+    <div class="event-add"
+        :class="{ 'editable': editable || addable }">
         <div class="block">
-            <div class="block-content" v-if="!pageError">
+            <div class="block-content">
                 <loading v-if="loading"></loading>
 
                 <div class="event-details-header" v-if="!loading && game">
                     <textarea class="game-name"
                         placeholder="Event name *"
-                        v-if="editable"
                         v-on:keyup="fullTextHeight()"
                         v-model="form.name"
                         :class="{ error: errorClasses.name }"></textarea>
-                    <h1 v-else>{{game.name}}</h1>
 
-                    <div v-if="editable" class="game-image">
+                    <div v-if="addable" class="games-list">
+                        <div class="games-list-block"
+                            :class="{ picked: form.game === gameIcon }"
+                            v-for="gameIcon in gamesList"
+                            v-on:click="switchGame(gameIcon)">
+                            <img :src="'../../../dist/assets/images/' + gameIcon + '.png'" />
+                        </div>
+                    </div>
+                    <div v-else class="game-image">
                         <img :src="'../../../dist/assets/images/' + game.game +'-logo-big.png'" />
                     </div>
-                    <router-link
-                        v-else
-                        class="game-image"
-                        :to="'/events/' + $route.params.game">
-                        <img :src="'../../dist/assets/images/' + game.game +'-logo-big.png'" />
-                    </router-link>
                 </div>
 
                 <div class="event-details-wrapper" v-if="!loading && game">
                     <div class="event-details-data">
-                        <div class="event-details-params" v-if="editable">
+                        <div class="event-details-params">
                             <p v-if="game.platform" class="event-details-platform">
                                 <label>Platform: <span class="fa fa-exclamation-circle" v-tooltip.top="hints.platform"></span></label>
                                 {{game.platform.name}} 
@@ -99,30 +99,18 @@
                                 </select>
                             </p>
                         </div>
-                        <div class="event-details-params" v-else>
-                            <p v-if="game.platform" class="event-details-platform"><label>Platform:</label> {{game.platform.name}} <img v-if="game.platform.image" :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" /></p>
-                            <p v-if="game.region"><label>Region:</label> {{game.region.toUpperCase()}}</p>
-                            <p v-if="game.participants_limit"><label>Participants limit:</label> {{game.participants_limit}}</p>
-                            <p v-if="game.start_datetime"><label>Start time:</label> {{game.start_datetime}}</p>
-                            <p v-if="game.meta_data.best_of"><label>Best of:</label> {{game.meta_data.best_of}}</p>
-                            <p v-if="game.meta_data.elimination"><label>Tournament format:</label> {{game.meta_data.elimination}}</p>
-                            <p v-if="game.meta_data.free"><label>Payment:</label> {{game.meta_data.free}}</p>
-                            <p v-if="game.meta_data.online"><label>Online:</label> {{game.meta_data.online}}</p>
-                        </div>
 
                         <div class="event-additiona-data">
                             <div class="event-prizes">
                                 <h4>Prizes</h4>
                                 <textarea
-                                    v-if="editable"
                                     v-model="form.prizes"
                                     class="textarea-prizes"
                                     v-on:keyup="fullTextHeight()"
                                     :class="{ error: errorClasses.prizes }"></textarea>
-                                <p v-else v-html="game.meta_data.prizes"></p>
                             </div>
 
-                            <div class="event-links" v-if="editable">
+                            <div class="event-links">
                                 <h4>Links</h4>
                                 <div class="event-link-wrapper">
                                     <i class="fa fa-external-link"> Link to platform
@@ -167,22 +155,9 @@
                                         :class="{ error: errorClasses.discord_link }" />
                                 </div>
                             </div>
-
-                            <div class="event-links" v-else>
-                                <h4>Links</h4>
-                                <a :href="game.link" target="_blank" v-if="game.link"><i class="fa fa-external-link"> Link to platform</a>
-                                <a :href="game.meta_data.home_link" target="_blank" v-if="game.meta_data.home_link"><i class="fa fa-external-link"> Home page</a>
-                                <a :href="game.meta_data.registration_link" target="_blank" v-if="game.meta_data.registration_link"><i class="fa fa-external-link"> Registration link</a>
-                                <a :href="game.meta_data.facebook_link" target="_blank" v-if="game.meta_data.facebook_link"><i class="fa fa-facebook"> Facebook</a>
-                                <a :href="game.meta_data.youtube_link" target="_blank" v-if="game.meta_data.youtube_link"><i class="fa fa-youtube"> YouTube</a>
-                                <a :href="game.meta_data.twitch_link" target="_blank" v-if="game.meta_data.twitch_link"><i class="fa fa-twitch"> Twitch.TV</a>
-                                <a :href="game.meta_data.discord_link" target="_blank" v-if="game.meta_data.discord_link"><i class="fa fa-comments"> Discord chat</a>
-                            </div>
                         </div>
                     </div>
-                    <div
-                        class="event-description"
-                        :class="{ 'editable': editable }">
+                    <div class="event-description editable">
                         <h4>
                             Event description
                             <span class="fa fa-exclamation-circle"
@@ -190,16 +165,19 @@
                                 v-tooltip.left="hints.description"></span>
                         </h4>
                         <textarea
-                            v-if="editable"
                             v-model="form.description"
                             class="textarea-description"
                             v-on:keyup="fullTextHeight()"
                             :class="{ error: errorClasses.description }"></textarea>
-                        <p v-else v-html="game.meta_data.description"></p>
                     </div>
                 </div>
 
-                <div class="buttons-wrapper" v-if="editable">
+                <div class="buttons-wrapper">
+                    <div class="btn-wrapper-width" v-if="addable">
+                        <button
+                            class="btn btn-success btn-lg add-btn"
+                            v-on:click="submitForm()">Add tournament</button>
+                    </div>
                     <div class="btn-wrapper-width" v-if="editable">
                         <button
                             class="btn btn-success btn-lg edit-btn"
@@ -209,16 +187,8 @@
                         <button class="btn btn-primary btn-lg back-btn">Back to list</button>
                     </router-link>
                 </div>
-                <router-link :to="'/events/' + $route.params.game" v-else>
-                    <button class="btn btn-primary btn-lg back-btn">Back to list</button>
-                </router-link>
 
                 <adsense></adsense>
-            </div>
-
-            <div class="maintenance block-content" v-if="pageError">
-                <h2>{{pageError}}</h2>
-                <img src="/dist/assets/images/maintenance.png" />
             </div>
         </div>
     </div>
