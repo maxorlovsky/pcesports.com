@@ -41,6 +41,12 @@ const Tournaments = {
         fetchEventData: function() {
             this.loading = true;
 
+            if (!pce.loggedIn) {
+                this.$parent.displayMessage('You must be logged in to enter this page', 'danger');
+                this.$router.push('/');
+                return false;
+            }
+
             let self = this;
             let filter = '?';
 
@@ -58,7 +64,8 @@ const Tournaments = {
                 this.currentGame.name = 'All';
             }
 
-            filter += '&user=1';
+            // Enable to display only user tournaments with problems
+            filter += '&user=1&problems=1';
 
             filter += '&limit=' + this.limit;
 

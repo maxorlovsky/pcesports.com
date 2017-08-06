@@ -16,8 +16,7 @@ Vue.component('event-item', {
 
         return {
             game: this.game,
-            enableEdit: this.editable ? true : false,
-            editLink: this.editable ? '/edit' : ''
+            enableEdit: this.editable ? true : false
         };
     },
     methods: {

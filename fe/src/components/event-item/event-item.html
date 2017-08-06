@@ -1,9 +1,9 @@
 <div class="event-item"
     :class="{ 'editable': editable }">
-    <router-link :to="'/events/' + getGameLink(game.game) + '/' + game.id + editLink" class="event-image">
+    <router-link :to="'/event/add/' + getGameLink(game.game) + '/' + game.id" class="event-image">
         <img :src="'/dist/assets/images/' + game.game +'.png'" />
     </router-link>
-    <router-link :to="'/events/' + getGameLink(game.game) + '/' + game.id + editLink" class="event-name-info">
+    <router-link :to="'/event/add/' + getGameLink(game.game) + '/' + game.id" class="event-name-info">
         <h4 class="event-name" :title="game.name">{{game.name}}</h4>
         <div><i class="fa fa-globe"></i> {{game.region}} | <i class="fa fa-calendar"></i> {{game.startTime}} | <i class="fa fa-users"></i> {{game.participantsLimit}}</div>
     </router-link>
@@ -26,7 +26,7 @@
     <div class="event-details"
         :class="{ 'double-width': editable }">
         <router-link
-            :to="'/events/' + getGameLink(game.game) + '/' + game.id + editLink">
+            :to="'/event/add/' + getGameLink(game.game) + '/' + game.id">
             <button class="btn btn-success">Edit</button>
         </router-link>
         <button class="btn btn-danger" v-if="enableEdit">Delete</button>

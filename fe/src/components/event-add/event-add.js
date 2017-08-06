@@ -24,11 +24,18 @@ const EventAdd = {
             this.$router.push('/');
             return false;
         }
-        this.addable = true;
-        this.switchGame('lol');
+
+        if (this.$route.params.addition) {
+            this.editable = true;
+        } else {
+            this.addable = true;
+            this.switchGame('lol');
+        }
+
         this.hints = this.populateHints();
         this.years = this.populateYears();
         setTimeout(() => this.fullTextHeight(), 150);
+
         this.loading = false;
     },
     methods: {

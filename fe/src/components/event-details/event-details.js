@@ -2,57 +2,32 @@ const EventDetails = {
     template: '#event-details-template',
     data: function() {
         return {
-            loading: true,
-            pageError: '',
+            loading: false,
             game: {},
-            currentGame: {},
-            editable: false,
-            form: {
-                game: 'lol'
-            },
-            errorClasses: {},
-            gamesList: ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'],
-            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            days: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-            years: [],
-            hints: {}
+            currentGame: {}
         };
     },
     created: function() {
-        this.fetchData();
-    },
-    methods: {
-        fetchData: function() {
-            const self = this;
+        const self = this;
 
-            if (this.$route.params.addition) {
-                if (this.$route.params.addition === 'edit' && pce.loggedIn) {
-                    this.editable = true;
-                }
-                else {
-                    // In case if not logged in, not edit/add and still addition is there, redirect
-                    const path = this.$route.path.substring(0, this.$route.path.length - this.$route.params.addition.length - 1);
-                    this.$router.push(path);
-                }
+        this.currentGame = pce.getGameData(this.$route.params.game);
+        this.eventId = parseInt(this.$route.params.event);
+
+        axios.get(`${pce.apiUrl}/tournament/${this.currentGame.abbriviature}/${this.eventId}`)
+        .then(function (response) {
+            self.prepareView(response);
+
+            if (self.editable) {
+                self.prepareEditForm();
             }
 
-            this.currentGame = pce.getGameData(this.$route.params.game);
-            this.eventId = parseInt(this.$route.params.event);
-
-            axios.get(`${pce.apiUrl}/tournament/${this.currentGame.abbriviature}/${this.eventId}`)
-            .then(function (response) {
-                self.prepareView(response);
-                
-                if (self.editable) {
-                    self.prepareEditForm();
-                }
-
-                self.loading = false;
-            })
-            .catch(function (error) {
-                window.location.href = "/tournament-not-found.html";
-            });
-        },
+            self.loading = false;
+        })
+        .catch(function (error) {
+            window.location.href = "/tournament-not-found.html";
+        });
+    },
+    methods: {
         correctDate: function(timeStamp) {
             const currentDate = new Date();
             const timezoneOffset = currentDate.getTimezoneOffset() * 60;
@@ -145,6 +120,7 @@ const EventDetails = {
             return years;
         },
         prepareView: function(response) {
+            
             this.game = response.data;
 
             this.game.name = this.game.name

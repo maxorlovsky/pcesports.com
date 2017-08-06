@@ -63,7 +63,7 @@ let router = new VueRouter({
             }
         },
         {
-            path: '/event/add/:addition?',
+            path: '/event/add/:game?/:event?',
             component: EventAdd,
             meta: {
                 title: 'Event Add',
