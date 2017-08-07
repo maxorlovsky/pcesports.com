@@ -1,6 +1,7 @@
 # Specific project files and logs
 *.sublime-*
 *.log
+web.config
 
 # Folders
 node_modules
