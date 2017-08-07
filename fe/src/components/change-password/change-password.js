@@ -103,3 +103,16 @@ const ChangePassword = {
         }
     },
 };
+
+// Routing
+pce.routes.push({
+    path: '/profile/change-password',
+    component: ChangePassword,
+    props: true,
+    meta: {
+        loggedIn: true,
+        title: 'Change Password - Profile',
+        template: 'change-password',
+        description: 'User page to change password'
+    }
+});

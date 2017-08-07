@@ -44,3 +44,24 @@ const Blog = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/blog',
+    component: Blog,
+    meta: {
+        title: 'Blog',
+        template: 'blog',
+        description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
+    },
+    children: [
+        {
+            path: 'page/:page',
+            meta: {
+                title: 'Blog',
+                template: 'blog',
+                description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
+            }
+        }
+    ]
+});

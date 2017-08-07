@@ -30,3 +30,12 @@ const User = {
         
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/user/:name',
+    component: User,
+    meta: {
+        template: 'user',
+    }
+});

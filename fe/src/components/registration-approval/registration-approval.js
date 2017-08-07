@@ -31,3 +31,14 @@ const RegistrationApproval = {
         });
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/registration/:code',
+    component: RegistrationApproval,
+    meta: {
+        title: 'Registration Approval',
+        template: 'registration-approval',
+        description: 'Complete your registration process on PC Esports website'
+    }
+});
