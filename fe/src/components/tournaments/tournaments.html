@@ -13,11 +13,13 @@
                     </router-link>
                 </div>
 
-                <!--<events-filters :status="status"
+                <!--<events-filters-component
+                    :status="status"
                     :region="region"
                     :search-string="searchString"
                     :current-game="currentGame"
-                    ></events-filters>-->
+                    v-on:update-filter="fetchEventData"
+                ></events-filters-component>-->
 
                 <!-- <div class="events-filters">
                     <input class="filter-input"

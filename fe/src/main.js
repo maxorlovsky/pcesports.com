@@ -72,7 +72,7 @@ else {
         axios.get('/dist/html/header.html'),
         axios.get('/dist/html/footer.html'),
         axios.get('/dist/html/event-item.html'),
-        //axios.get('/dist/html/events-filters.html'),
+        axios.get('/dist/html/events-filters.html'),
         axios.get('/dist/html/ga.html'),
         axios.get('/dist/html/left-side-menu.html'),
         axios.get('/dist/html/right-side-menu.html'),
@@ -86,6 +86,7 @@ else {
         headerTemplate,
         footerTemplate,
         eventItemTemplate,
+        eventsFiltersTemplate,
         gaTemplate,
         leftSideMenuTemplate,
         rightSideMenuTemplate,
@@ -98,7 +99,7 @@ else {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
         dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
         dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
-        //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
+        dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
         dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
         dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(leftSideMenuTemplate.data));
         dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(rightSideMenuTemplate.data));
@@ -117,6 +118,7 @@ else {
                 header: headerTemplate.data,
                 footer: footerTemplate.data,
                 eventItem: eventItemTemplate.data,
+                eventsFilters: eventsFiltersTemplate.data,
                 ga: gaTemplate.data,
                 leftSideMenu: leftSideMenuTemplate.data,
                 rightSideMenu: rightSideMenuTemplate.data,
