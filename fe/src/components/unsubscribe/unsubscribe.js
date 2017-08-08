@@ -12,7 +12,7 @@ const Unsubscribe = {
     created: function() {
         const self = this;
 
-        axios.get(`${pce.apiUrl}/unsubscribe/${this.$route.params.unsublink}`)
+        axios.get(`${pce.apiUrl}/unsubscribe/${this.$route.params.email}/${this.$route.params.unsublink}`)
         .then((response) => {
             self.message.success = response.data.message;
 
@@ -33,7 +33,7 @@ const Unsubscribe = {
 
 // Routing
 pce.routes.push({
-    path: '/unsubscribe/:unsublink',
+    path: '/unsubscribe/:email/:unsublink',
     component: Unsubscribe,
     meta: {
         title: 'Unsubscribe',
