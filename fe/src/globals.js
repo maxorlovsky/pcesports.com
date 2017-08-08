@@ -58,8 +58,8 @@ const pce = {
             if (
                 // If older than 30 min
                 (returnValue.time <= new Date().getTime()) ||
-                // Or if version is now different
-                (returnValue.version !== pce.version)
+                // Or if version is now different, ignoring session token
+                (returnValue.version !== pce.version && key !== 'token')
                ) {
                 // Cleanup
                 pce.storage('remove', key);
@@ -76,11 +76,13 @@ const pce = {
         return true;
     },
     storageCacheBuster: () => {
-        let storagesKeys = ['structure-data', 'blogs-posts'];
+        const storagesKeys = ['structure-data', 'blogs-posts', 'structure-user-data'];
 
         // If version was bumped, we might still use outdated localStorage data, doing full cleanup
         if (localStorage.getItem('version') !== pce.version) {
-            localStorage.clear();
+            for (let value of storagesKeys) {
+                localStorage.removeItem(value);
+            }
             // Saving version to not cleaup everything again until the next bump
             localStorage.setItem('version', pce.version);
         }
