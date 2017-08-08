@@ -20,7 +20,6 @@ const Events = {
                 current: 'all'
             },
             searchString: '',
-            searchStatus: false,
             hideLoadMore: true,
             limit: 40,
             offset: 0,
@@ -39,8 +38,15 @@ const Events = {
         }
     },
     methods: {
-        fetchEventData: function() {
+        fetchEventData: function(filters = {}) {
             this.loading = true;
+
+            if (Object.keys(filters).length > 0) {
+                this.status = filters.status;
+                this.region = filters.region;
+                this.searchString = filters.searchString;
+                this.currentGame = filters.currentGame;
+            }
 
             let self = this;
             let filter = '?';
@@ -115,23 +121,6 @@ const Events = {
             });
 
             this.seoText = this.loadSeo(this.$route.params.game);
-        },
-        cleanSearch: function(keyAction) {
-            if (keyAction && !this.searchString) {
-                this.searchStatus = false;
-                return false;
-            }
-            else if (keyAction) {
-                this.searchStatus = true;
-                return false;
-            }
-            
-            if (this.searchString.length === 0 && this.searchStatus) {
-                // Need to delay the function call
-                setTimeout(() => {
-                    this.fetchEventData();
-                });
-            }
         },
         loadMore: function() {
             this.loadingMore = true;
