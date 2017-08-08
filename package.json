@@ -2,11 +2,10 @@
   "name": "pcesports",
   "description": "PC Esports website",
   "version": "2.14.1",
-  "license": "unlicensed",
-  "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/maxtream/pce-fe"
+    "url": "https://github.com/Maxtream/pce-fe"
   },
   "scripts": {
     "build": "gulp build",
