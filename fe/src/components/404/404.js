@@ -5,3 +5,13 @@ const PageNotFound = {
         return {};
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/404',
+    component: PageNotFound,
+    meta: {
+        title: 'Page not found',
+        template: '404'
+    }
+});

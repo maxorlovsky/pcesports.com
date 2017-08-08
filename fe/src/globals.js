@@ -18,6 +18,7 @@ const pce = {
     loginCheckError: false,
     apiUrl: 'https://api.pcesports.com',
     env: '',
+    routes: [],
     // Local storage
     storage: (func, key, ...args) => {
         let timeoutSeconds = 1800000;

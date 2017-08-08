@@ -96,3 +96,16 @@ const Profile = {
         }
     },
 };
+
+// Routing
+pce.routes.push({
+    path: '/profile',
+    component: Profile,
+    props: true,
+    meta: {
+        loggedIn: true,
+        title: 'Profile',
+        template: 'profile',
+        description: 'User profile'
+    }
+});

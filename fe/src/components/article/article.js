@@ -41,3 +41,13 @@ const Article = {
         });
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/article/:post',
+    component: Article,
+    meta: {
+        title: 'Article',
+        template: 'article'
+    }
+});

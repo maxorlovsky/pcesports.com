@@ -259,3 +259,13 @@ const EventDetails = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/events/:game/:event',
+    component: EventDetails,
+    meta: {
+        title: 'Event Details',
+        template: 'event-details'
+    }
+});

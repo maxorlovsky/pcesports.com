@@ -140,3 +140,13 @@ const EventAdd = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/event/add/:game?/:event?',
+    component: EventAdd,
+    meta: {
+        title: 'Event Add',
+        template: 'event-add'
+    }
+});

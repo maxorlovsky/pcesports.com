@@ -212,3 +212,23 @@ const Events = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/events',
+    component: Events,
+    meta: {
+        title: 'Events List',
+        template: 'events',
+        description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
+    },
+    children: [
+        {
+            path: ':game',
+            meta: {
+                title: 'Events List',
+                template: 'events'
+            }
+        }
+    ]
+});

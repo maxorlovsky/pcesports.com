@@ -55,3 +55,13 @@ const Home = {
         document.title = document.title + ' - Home';
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/',
+    component: Home,
+    meta: {
+        template: 'home',
+        description: 'PC Esports is a catalog of events for online competitive gaming.'
+    },
+});

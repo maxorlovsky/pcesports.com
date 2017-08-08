@@ -147,3 +147,16 @@ const Tournaments = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/tournaments',
+    component: Tournaments,
+    props: true,
+    meta: {
+        loggedIn: true,
+        title: 'Tournaments List',
+        template: 'tournaments',
+        description: 'User page to add, update and remove tournaments'
+    }
+});

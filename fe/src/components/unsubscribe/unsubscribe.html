@@ -1,0 +1,12 @@
+<script type="text/x-template" id="unsubscribe-template">
+    <div class="unsubscribe">
+        <div class="block">
+            <div class="block-content">
+                <loading v-if="loading"></loading>
+
+                <h4 class="alert alert-danger" v-if="message.error">{{message.error}}</h4>
+                <h4 class="alert alert-success" v-if="message.success">{{message.success}}</h4>
+            </div>
+        </div>
+    </div>
+</script>

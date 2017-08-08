@@ -95,3 +95,16 @@ const Settings = {
         }
     },
 };
+
+// Routing
+pce.routes.push({
+    path: '/profile/settings',
+    component: Settings,
+    props: true,
+    meta: {
+        loggedIn: true,
+        title: 'Settings - Profile',
+        template: 'settings',
+        description: 'User page to change password and personal settings'
+    }
+});
