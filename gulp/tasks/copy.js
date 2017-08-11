@@ -34,6 +34,7 @@ gulp.task('copy:vue', () => {
 			'./node_modules/vue/dist/vue.min.js',
 			'./node_modules/vue-*/dist/vue-*.min.js',
 			'./node_modules/vue-directive-tooltip/dist/vueDirectiveTooltip.min.js',
+			'./node_modules/vue-disqus/vue-disqus.js',
 			'./node_modules/axios/dist/axios.min.js',
 			'./node_modules/marked/marked.min.js',
 			'./node_modules/hammerjs/hammer.min.js'
