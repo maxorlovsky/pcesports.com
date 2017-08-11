@@ -15,6 +15,14 @@
                 <router-link role="button"
                     class="btn btn-info"
                     v-bind:to="'/blog'">Back to blog</router-link>
+
+                <div class="comments">
+                    <vue-disqus shortname="https-www-pcesports-com"></vue-disqus>
+                </div>
+
+                <router-link role="button"
+                    class="btn btn-info"
+                    v-bind:to="'/blog'">Back to blog</router-link>
             </div>
 
             <div class="maintenance block-content" v-if="pageError">
@@ -22,6 +30,5 @@
                 <img src="/dist/assets/images/maintenance.png" />
             </div>
         </div>
-        
     </div>
 </script>
