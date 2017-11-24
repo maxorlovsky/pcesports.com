@@ -12,17 +12,15 @@
 
     <select class="form-control form-control-lg btn-secondary"
         v-model="status.current"
-        v-on:change="updateFilter()">
-        <option :value="value" v-for="value in status.list">
-                {{status.name}}: {{value}}
-        </option>
+        v-on:change="updateFilter()"
+    >
+        <option :value="value" v-for="value in status.list">{{status.name}}: {{value}}</option>
     </select>
 
     <select class="form-control form-control-lg btn-primary"
         v-model="region.current"
-        v-on:change="updateFilter()">
-        <option :value="key" v-for="(value, key) in region.list">
-                {{region.name}}: {{value}}
-        </option>
+        v-on:change="updateFilter()"
+    >
+        <option :value="key" v-for="(value, key) in region.list">{{region.name}}: {{value}}</option>
     </select>
 </div>

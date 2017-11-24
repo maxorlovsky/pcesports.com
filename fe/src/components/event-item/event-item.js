@@ -6,7 +6,8 @@ Vue.component('event-item', {
             required: true
         },
         'editable': {
-            type: Boolean
+            type: Boolean,
+            default: false
         }
     },
     data: function() {
@@ -16,7 +17,7 @@ Vue.component('event-item', {
 
         return {
             game: this.game,
-            enableEdit: this.editable ? true : false
+            link: this.editable ? '/event/add' : '/events'
         };
     },
     methods: {
