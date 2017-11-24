@@ -123,6 +123,15 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                     margin-top: 10px;
                 }
             }
+
+            .game-available-count {
+                position: absolute;
+                top: 0.2em;
+                right: 0.4em;
+                font-size: 2em;
+                color: #fff;
+                text-shadow: 2px 2px 1px #000;
+            }
         }
 
         $game-block-width: 32%;

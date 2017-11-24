@@ -10,13 +10,14 @@ const Home = {
             games.push({
                 gameName: game.name,
                 cssClass: 'game-' + game.abbriviature,
-                link: '../events/' + game.link
+                link: '../events/' + game.link,
+                abbriviature: game.abbriviature
             });
         }
         
         return {
             loading: true,
-            posts: 0,
+            posts: [],
             games: games
         };
     },
@@ -25,31 +26,45 @@ const Home = {
 
         this.loading = true;
 
-        const checkStorage = pce.storage('get', 'blogs-posts');
-        
+        const checkStorage = pce.storage('get', 'home-data');
         if (checkStorage) {
-            this.posts = checkStorage;
+            this.posts = checkStorage.posts;
+
+            for(const game of this.games) {
+                game.count = checkStorage.tournamentsCount[game.abbriviature];
+            }
+
             this.loading = false;
         }
         else {
-            fetch('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?per_page=4',{
-                method: 'GET',
-                headers: new Headers(),
-                mode: 'cors'
-            })
-            .then((response) => response.json())
-            .then((response) => {
-                for (let i = 0; i < response.length; ++i) {
-                    let date = (new Date(response[i].date));
-                    response[i].date = date.toLocaleString('en-us', { month: "short" })+'<br />'+date.getDate();
+            axios.all([
+                axios.get('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?per_page=4'),
+                axios.get('https://api.pcesports.com/tournaments/count')
+            ])
+            .then(axios.spread((
+                postsData,
+                tournamentsCountData
+            ) => {
+                for (let i = 0; i < postsData.data.length; ++i) {
+                    let date = (new Date(postsData.data[i].date));
+                    postsData.data[i].date = date.toLocaleString('en-us', { month: "short" })+'<br />'+date.getDate();
                 }
 
-                self.posts = response;
+                self.posts = postsData.data;
 
-                pce.storage('set', 'blogs-posts', self.posts);
+                for(const game of self.games) {
+                    game.count = tournamentsCountData.data[game.abbriviature];
+                }
+
+                const homeData = {
+                    posts: self.posts,
+                    tournamentsCount: tournamentsCountData.data
+                };
+
+                pce.storage('set', 'home-data', homeData);
 
                 self.loading = false;
-            });
+            }));
         }
 
         document.title = document.title + ' - Home';

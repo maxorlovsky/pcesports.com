@@ -12,6 +12,7 @@
                         class="game-block"
                         v-for="game in games"
                         v-bind:class="game.cssClass">
+                        <span class="game-available-count">{{game.count}}</span>
                         <button class="btn btn-primary view-tournament">View {{game.gameName}} tournaments</button>
                     </router-link>
 
