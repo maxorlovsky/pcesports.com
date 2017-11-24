@@ -134,7 +134,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             }
         }
 
-        $game-block-width: 32%;
+        $game-block-width: 24%;
         .game-block {
             width: $game-block-width;
             box-shadow: inset 0px 0px 180px -12px rgba(0,0,0,100);
@@ -150,9 +150,9 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 width: 31.8%;
             }
 
-            &:first-child {
+            /* &:first-child {
                 width: 65%;
-            }
+            } */
 
             $game-block-width-mobile: 49%;
             @media (max-width: 425px) {
@@ -172,6 +172,9 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             }
 
             .btn {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                
                 @media (max-width: 768px) {
                     font-size: 0.9rem;
                 }
@@ -187,6 +190,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 color: #000;
                 transition: all .5s ease;
                 font-size: 1.3rem;
+                white-space: unset;
 
                 @media (max-width: 768px) {
                     font-size: 1.1rem;
