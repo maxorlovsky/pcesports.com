@@ -1,15 +1,17 @@
 {
   "name": "pcesports",
   "description": "PC Esports website",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Maxtream/pce-fe"
+    "url": "https://github.com/maxorlovsky/pce-fe"
   },
   "scripts": {
-    "build": "gulp build",
-    "release": "git pull && yarn install && gulp build"
+    "build": "node_modules/.bin/gulp build",
+    "watch": "node_modules/.bin/gulp watch",
+    "release": "git pull && yarn && node_modules/.bin/gulp build",
+    "serve": "node_modules/.bin/ws --https --spa index.html"
   },
   "dependencies": {
     "axios": "0.16.2",
@@ -37,15 +39,11 @@
     "gulp-uglify": "^3.0.0",
     "gulp-uglifycss": "1.0.8",
     "jshint": "2.9.5",
+    "local-web-server": "^2.3.0",
     "marked": "0.3.6",
     "promise-polyfill": "^6.0.2",
     "require-dir": "0.3.2",
     "run-sequence": "2.1.0",
     "whatwg-fetch": "^2.0.3"
-  },
-  "engines": {
-    "node": "7.3.0",
-    "npm": "3.10.8",
-    "yarn": "0.19.1"
   }
 }

@@ -1,5 +1,5 @@
-const RegistrationApproval = {
-    template: '#registration-approval-template',
+const Unsubscribe = {
+    template: '#unsubscribe-template',
     data: function() {
         return {
             loading: true,
@@ -12,13 +12,11 @@ const RegistrationApproval = {
     created: function() {
         const self = this;
 
-        axios.get(`${pce.apiUrl}/register/${this.$route.params.code}`)
+        axios.get(`${pce.apiUrl}/unsubscribe/${this.$route.params.email}/${this.$route.params.unsublink}`)
         .then((response) => {
             self.message.success = response.data.message;
-            pce.storage('set', 'token', { "sessionToken": response.data.sessionToken }, 604800000); // 7 days
-            self.$parent.login();
-            this.$parent.displayMessage('Registration successful', 'success');
-            self.$router.push('/profile');
+
+            self.loading = false;
         })
         .catch((error) => {
             if (error.response.data.message) {
@@ -27,6 +25,7 @@ const RegistrationApproval = {
                 self.message.error = 'System error';
                 console.log(error);
             }
+
             self.loading = false;
         });
     }
@@ -34,11 +33,11 @@ const RegistrationApproval = {
 
 // Routing
 pce.routes.push({
-    path: '/registration/:code',
-    component: RegistrationApproval,
+    path: '/unsubscribe/:email/:unsublink',
+    component: Unsubscribe,
     meta: {
-        title: 'Registration Approval',
-        template: 'registration-approval',
-        description: 'Complete your registration process on PC Esports website'
+        title: 'Unsubscribe',
+        template: 'unsubscribe',
+        description: 'User unsubscribe page'
     }
 });

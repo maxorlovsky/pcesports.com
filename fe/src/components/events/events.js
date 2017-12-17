@@ -20,7 +20,6 @@ const Events = {
                 current: 'all'
             },
             searchString: '',
-            searchStatus: false,
             hideLoadMore: true,
             limit: 40,
             offset: 0,
@@ -39,8 +38,15 @@ const Events = {
         }
     },
     methods: {
-        fetchEventData: function() {
+        fetchEventData: function(filters = {}) {
             this.loading = true;
+
+            if (Object.keys(filters).length > 0) {
+                this.status = filters.status;
+                this.region = filters.region;
+                this.searchString = filters.searchString;
+                this.currentGame = filters.currentGame;
+            }
 
             let self = this;
             let filter = '?';
@@ -77,7 +83,7 @@ const Events = {
                 filter += '&offset=' + this.offset;
             }
 
-            axios.get('https://api.pcesports.com/tournaments' + filter)
+            axios.get(`${pce.apiUrl}/tournaments${filter}`)
             .then(function (response) {
                 let gamesFiltered = response.data;
                 let currentDate = new Date();
@@ -115,23 +121,6 @@ const Events = {
             });
 
             this.seoText = this.loadSeo(this.$route.params.game);
-        },
-        cleanSearch: function(keyAction) {
-            if (keyAction && !this.searchString) {
-                this.searchStatus = false;
-                return false;
-            }
-            else if (keyAction) {
-                this.searchStatus = true;
-                return false;
-            }
-            
-            if (this.searchString.length === 0 && this.searchStatus) {
-                // Need to delay the function call
-                setTimeout(() => {
-                    this.fetchEventData();
-                });
-            }
         },
         loadMore: function() {
             this.loadingMore = true;
@@ -212,3 +201,23 @@ const Events = {
         }
     }
 };
+
+// Routing
+pce.routes.push({
+    path: '/events',
+    component: Events,
+    meta: {
+        title: 'Events List',
+        template: 'events',
+        description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
+    },
+    children: [
+        {
+            path: ':game',
+            meta: {
+                title: 'Events List',
+                template: 'events'
+            }
+        }
+    ]
+});

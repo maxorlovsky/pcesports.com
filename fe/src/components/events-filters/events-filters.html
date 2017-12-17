@@ -3,56 +3,24 @@
         type="text"
         placeholder="Input name of event and press enter"
         v-model="searchString"
-        v-on:keyup.enter="searchString.length >= 3 ? fetchEventData() : false"
+        v-on:keyup.enter="searchString.length >= 3 ? updateFilter() : false"
         v-on:keydown.8="cleanSearch(true)"
         v-on:keydown.46="cleanSearch(true)"
         v-on:keyup.8="cleanSearch(false)"
         v-on:keyup.46="cleanSearch(false)"
-            />
+    />
 
-    <div class="btn-group" :class="{ 'show': status.open }">
-        <button class="btn btn-secondary dropdown-toggle"
-            v-on:click="status.open ? status.open = false : status.open = true">
-            <i class="fa fa-check-circle-o"></i> {{status.name}}: <span>{{status.current}}</span></i>
-        </button>
+    <select class="form-control form-control-lg btn-secondary"
+        v-model="status.current"
+        v-on:change="updateFilter()"
+    >
+        <option :value="value" v-for="value in status.list">{{status.name}}: {{value}}</option>
+    </select>
 
-        <div class="dropdown-menu" v-on:mouseout="closeDropdown(event);">
-            <button type="link"
-                class="dropdown-item"
-                :class="{ 'active': status.current === 'All' }"
-                v-on:click="status.open = false; status.current = 'All'; fetchEventData();">All</button>
-
-            <div class="dropdown-divider"></div>
-
-            <button type="link"
-                class="dropdown-item"
-                :class="{ 'active': status.current == value }"
-                v-for="value in status.list"
-                v-on:click="status.open = false; status.current = value; fetchEventData();">{{value}}</button>
-        </div>
-    </div>
-
-    <div class="btn-group"
-        v-if="currentGame.name.toLowerCase() !== 'all'"
-        :class="{ 'show': region.open }">
-        <button class="btn btn-primary dropdown-toggle"
-            v-on:click="region.open ? region.open = false : region.open = true">
-            <i class="fa fa-globe"></i> {{region.name}}: <span>{{region.current}}</span> <i class="fa fa-chevron-down"></i>
-        </button>
-
-        <div class="dropdown-menu" v-on:mouseout="closeDropdown(event);">
-            <button type="link"
-                class="dropdown-item"
-                :class="{ 'active': region.current === 'All' }"
-                v-on:click="region.open = false; region.current = 'All'; fetchEventData();">All</button>
-
-            <div class="dropdown-divider"></div>
-
-            <button type="link"
-                class="dropdown-item"
-                :class="{ 'active': region.current == key }"
-                v-for="value, key in region.list"
-                v-on:click="region.open = false; region.current = key; fetchEventData();">{{value}}</button>
-        </div>
-    </div>
+    <select class="form-control form-control-lg btn-primary"
+        v-model="region.current"
+        v-on:change="updateFilter()"
+    >
+        <option :value="key" v-for="(value, key) in region.list">{{region.name}}: {{value}}</option>
+    </select>
 </div>

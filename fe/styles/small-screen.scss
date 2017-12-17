@@ -135,16 +135,16 @@ header {
 .winter {
     .snow {
         &:last-of-type {
-            height: 55px;
+            height: 60px;
         }
         &:before {
             background-position: inherit;
-            height: 56px;
+            height: 60px;
         }
     }
 
     .lights {
-        top: 25px;
+        top: 30px;
     }
 }
 

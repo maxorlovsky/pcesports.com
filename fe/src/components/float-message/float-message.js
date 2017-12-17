@@ -1,5 +1,5 @@
 Vue.component('float-message', {
-    template: '<div class="float-message alert" v-if="parameters.message" :class="parameters.type">{{parameters.message}}</div>',
+    template: '<div class="float-message alert" v-if="parameters.message" :class="parameters.type" v-html="parameters.message"></div>',
     props: {
         parameters: {
             type: 'object'

@@ -152,14 +152,14 @@ a {
         &:before {
             content: " ";
             display: block;
-            height: 81px;
+            height: 61px;
             background-image: url('../assets/images/christmas-snow.png');
             background-repeat: repeat-x;
             background-position: bottom;
         }
         &:last-of-type {
             width: 100%;
-            height: 81px;
+            height: 61px;
             position: absolute;
             top: 0;
             left: 0;
@@ -215,7 +215,7 @@ a {
         display: block;
         background-image: url('../assets/images/christmas-lights.png');
         background-repeat: repeat-x;
-        top: 50px;
+        top: 30px;
         left: 0;
     }
 }

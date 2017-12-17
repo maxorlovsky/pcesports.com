@@ -1,119 +1,13 @@
+// Add <any> URLs to router, to push to /404
+pce.routes.push({
+    path: '*',
+    redirect: '/404'
+});
+
+// Initiate the router
 let router = new VueRouter({
     mode: 'history',
-    routes: [
-        {
-            path: '/',
-            component: Home,
-            meta: {
-                template: 'home',
-                description: 'PC Esports is a catalog of events for online competitive gaming.'
-            },
-        },
-        {
-            path: '/blog',
-            component: Blog,
-            meta: {
-                title: 'Blog',
-                template: 'blog',
-                description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
-            },
-            children: [
-                {
-                    path: 'page/:page',
-                    meta: {
-                        title: 'Blog',
-                        template: 'blog',
-                        description: 'PC Esports blog, know about new features, development, thought on eSports and just news about the project from the blog'
-                    }
-                }
-            ]
-        },
-        {
-            path: '/article/:post',
-            component: Article,
-            meta: {
-                title: 'Article',
-                template: 'article'
-            }
-        },
-        {
-            path: '/events',
-            component: Events,
-            meta: {
-                title: 'Events List',
-                template: 'events',
-                description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
-            },
-            children: [
-                {
-                    path: ':game',
-                    meta: {
-                        title: 'Events List',
-                        template: 'events'
-                    }
-                }
-            ]
-        },
-        {
-            path: '/events/:game/:event',
-            component: EventDetails,
-            meta: {
-                title: 'Event Details',
-                template: 'event-details'
-            }
-        },
-        {
-            path: '/registration/:code',
-            component: RegistrationApproval,
-            meta: {
-                title: 'Registration Approval',
-                template: 'registration-approval',
-                description: 'Complete your registration process on PC Esports website'
-            }
-        },
-        {
-            path: '/profile',
-            component: Profile,
-            props: true,
-            meta: {
-                loggedIn: true,
-                title: 'Profile',
-                template: 'profile',
-                description: 'User profile'
-            }
-        },
-        {
-            path: '/profile/change-password',
-            component: ChangePassword,
-            props: true,
-            meta: {
-                loggedIn: true,
-                title: 'Change Password - Profile',
-                template: 'change-password',
-                description: 'User page to change password'
-            }
-        },
-        {
-            path: '/profile/settings',
-            component: Settings,
-            props: true,
-            meta: {
-                loggedIn: true,
-                title: 'Settings - Profile',
-                template: 'settings',
-                description: 'User page to change password and personal settings'
-            }
-        },
-        {
-            path: '/user/:name',
-            component: User,
-            meta: {
-                template: 'user',
-            }
-        },
-        { path: '/404', component: PageNotFound, meta: { title: 'Page not found', template: '404' } },
-        { path: '*', redirect: '/404' }
-    ]
+    routes: pce.routes
 });
 
 router.beforeEach((to, from, next) => {
@@ -178,7 +72,7 @@ else {
         axios.get('/dist/html/header.html'),
         axios.get('/dist/html/footer.html'),
         axios.get('/dist/html/event-item.html'),
-        //axios.get('/dist/html/events-filters.html'),
+        axios.get('/dist/html/events-filters.html'),
         axios.get('/dist/html/ga.html'),
         axios.get('/dist/html/left-side-menu.html'),
         axios.get('/dist/html/right-side-menu.html'),
@@ -186,12 +80,13 @@ else {
         axios.get('/dist/html/seo.html'),
         axios.get('/dist/html/register.html'),
         axios.get('/dist/html/forgot-password.html'),
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
+        axios.get(`${pce.apiUrl}/wp/wp-json/pce-api/menu`)
     ])
     .then(axios.spread((
         headerTemplate,
         footerTemplate,
         eventItemTemplate,
+        eventsFiltersTemplate,
         gaTemplate,
         leftSideMenuTemplate,
         rightSideMenuTemplate,
@@ -204,7 +99,7 @@ else {
         dynamicTemplates.header.appendChild(document.createTextNode(headerTemplate.data));
         dynamicTemplates.footer.appendChild(document.createTextNode(footerTemplate.data));
         dynamicTemplates.eventItem.appendChild(document.createTextNode(eventItemTemplate.data));
-        //dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
+        dynamicTemplates.eventsFilters.appendChild(document.createTextNode(eventsFiltersTemplate.data));
         dynamicTemplates.ga.appendChild(document.createTextNode(gaTemplate.data));
         dynamicTemplates.leftSideMenu.appendChild(document.createTextNode(leftSideMenuTemplate.data));
         dynamicTemplates.rightSideMenu.appendChild(document.createTextNode(rightSideMenuTemplate.data));
@@ -223,6 +118,7 @@ else {
                 header: headerTemplate.data,
                 footer: footerTemplate.data,
                 eventItem: eventItemTemplate.data,
+                eventsFilters: eventsFiltersTemplate.data,
                 ga: gaTemplate.data,
                 leftSideMenu: leftSideMenuTemplate.data,
                 rightSideMenu: rightSideMenuTemplate.data,
@@ -343,7 +239,7 @@ function loadApp(menu) {
                     this.userData = checkStorage.userProfileData;
                 } else {
                     axios.all([
-                        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/user-menu'),
+                        axios.get(`${pce.apiUrl}/wp/wp-json/pce-api/user-menu`),
                         axios.get(`${pce.apiUrl}/user-data`)
                     ])
                     .then(axios.spread((
