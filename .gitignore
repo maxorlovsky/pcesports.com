@@ -7,4 +7,3 @@ web.config
 node_modules
 public/dist/
 public/index.html
-vendor
