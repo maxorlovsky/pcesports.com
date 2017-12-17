@@ -12,7 +12,7 @@ const Article = {
 
         this.loading = true;
 
-        axios.get('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?slug='+this.$route.params.post)
+        axios.get(`${pce.apiUrl}/wp/wp-json/wp/v2/posts/?slug=${this.$route.params.post}`)
         .then(function (response) {
             if (response.data === []) {
                 return false;

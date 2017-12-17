@@ -38,8 +38,8 @@ const Home = {
         }
         else {
             axios.all([
-                axios.get('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?per_page=4'),
-                axios.get('https://api.pcesports.com/tournaments/count')
+                axios.get(`${pce.apiUrl}/wp/wp-json/wp/v2/posts/?per_page=4`),
+                axios.get(`${pce.apiUrl}/tournaments/count`)
             ])
             .then(axios.spread((
                 postsData,

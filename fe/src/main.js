@@ -80,7 +80,7 @@ else {
         axios.get('/dist/html/seo.html'),
         axios.get('/dist/html/register.html'),
         axios.get('/dist/html/forgot-password.html'),
-        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/menu')
+        axios.get(`${pce.apiUrl}/wp/wp-json/pce-api/menu`)
     ])
     .then(axios.spread((
         headerTemplate,
@@ -239,7 +239,7 @@ function loadApp(menu) {
                     this.userData = checkStorage.userProfileData;
                 } else {
                     axios.all([
-                        axios.get('https://api.pcesports.com/wp/wp-json/pce-api/user-menu'),
+                        axios.get(`${pce.apiUrl}/wp/wp-json/pce-api/user-menu`),
                         axios.get(`${pce.apiUrl}/user-data`)
                     ])
                     .then(axios.spread((

@@ -23,8 +23,8 @@ const Blog = {
             var self = this;
             
             axios.all([
-                axios.get('https://api.pcesports.com/wp/wp-json/pce-api/post-count'),
-                axios.get('https://api.pcesports.com/wp/wp-json/wp/v2/posts/?per_page=5&page='+this.$route.params.page)
+                axios.get(`${pce.apiUrl}/wp/wp-json/pce-api/post-count`),
+                axios.get(`${pce.apiUrl}/wp/wp-json/wp/v2/posts/?per_page=5&page=${this.$route.params.page}`)
             ])
             .then(axios.spread(function (amount, posts) {
                 self.amount = amount.data.publish;
