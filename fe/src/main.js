@@ -18,9 +18,9 @@ router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
     
     // Set up meta title
-    document.title = 'PC Esports';
+    document.title = 'eSports online tournaments list | PC Esports';
     if (to.meta.title) {
-        document.title += ' - ' + to.meta.title;
+        document.title = `${to.meta.title} | ${document.title}`;
     }
 
     // Set up meta description
