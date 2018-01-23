@@ -18,7 +18,7 @@ gulp.task('scripts:components', () => {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-    	//.pipe(uglify())
+    	.pipe(uglify())
     	.pipe(concat('components.js'))
         .pipe(gulp.dest('./public/dist/js/'));
 });
@@ -28,7 +28,7 @@ gulp.task('scripts:scripts', () => {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-    	//.pipe(uglify())
+    	.pipe(uglify())
     	.pipe(concat('scripts.js'))
         .pipe(gulp.dest('./public/dist/js/'));
 });

@@ -148,19 +148,25 @@ const EventDetails = {
             this.game.meta_data.prizes = this.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
             if (this.game.platform === 'battlefy' && (this.game.game === 'ow' || this.game.game === 'hots')) {
                 this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
-                this.form.formatting = true;
-                this.form.description = this.game.meta_data.description;
+                if (this.editable) {
+                    this.form.formatting = true;
+                    this.form.description = this.game.meta_data.description;
+                }
             } else if (this.game.platform === 'esl') {
                 this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
-                this.form.formatting = true;
-                this.form.description = this.game.meta_data.description;
+                if (this.editable) {
+                    this.form.formatting = true;
+                    this.form.description = this.game.meta_data.description;
+                }
             } else {
                 this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, true);
             }
+
             this.game.platform = {
                 name: this.game.platformName,
                 image: this.game.platformName === 'Custom' ? false : this.game.platform
             };
+            
             this.game.start_datetime = this.correctDate(this.game.start_datetime);
             this.game.meta_data.elimination = this.correctEventFormat(this.game.meta_data.elimination);
             if (this.game.meta_data.free) {

@@ -56,7 +56,7 @@ const Events = {
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
 
-                document.title += ' - ' + this.currentGame.name;
+                document.title = `${this.currentGame.name} | ${document.title}`;
 
                 // Set custom made meta description
                 const metaDescription = `Find all competitive ${this.currentGame.name} tournaments around North America and Europe. Find tournaments of a different skill level that will suit your team or you personally.`;

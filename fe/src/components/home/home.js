@@ -66,8 +66,6 @@ const Home = {
                 self.loading = false;
             }));
         }
-
-        document.title = document.title + ' - Home';
     }
 };
 
@@ -76,6 +74,7 @@ pce.routes.push({
     path: '/',
     component: Home,
     meta: {
+        title: 'Choose a game, League of Legends, Hearthstone, Dota2, CS:GO, Rocket League, Overwatch',
         template: 'home',
         description: 'PC Esports is a catalog of events for online competitive gaming.'
     },
