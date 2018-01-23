@@ -1,7 +1,14 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 const rename = require("gulp-rename");
 const runSequence = require('run-sequence');
+
+let release = false;
+
+if (process.argv.indexOf("--release") > -1) {
+    release = true;
+}
 
 gulp.task('copy', (cb) => {
 	return runSequence(
@@ -39,6 +46,7 @@ gulp.task('copy:vue', () => {
 			'./node_modules/marked/marked.min.js',
 			'./node_modules/hammerjs/hammer.min.js'
 		])
+		.pipe(uglify())
     	.pipe(concat('libs.js'))
         .pipe(gulp.dest('./public/dist/js/'));
 });
@@ -58,6 +66,7 @@ gulp.task('copy:polyfills', () => {
 			'./node_modules/promise-polyfill/promise.min.js',
 			'./node_modules/whatwg-fetch/fetch.js'
 		])
+		.pipe(uglify())
     	.pipe(concat('polyfills.js'))
         .pipe(gulp.dest('./public/dist/js/'));
 });
