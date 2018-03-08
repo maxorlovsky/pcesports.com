@@ -2,7 +2,7 @@ const Home = {
     template: '#home-template',
     data: function() {
         let games = [];
-        const gameOrder = ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs', 'smite'];
+        const gameOrder = ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs'];
 
         for (let game of gameOrder) {
             game = pce.getGameData(game);

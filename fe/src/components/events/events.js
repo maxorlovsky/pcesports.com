@@ -53,6 +53,11 @@ const Events = {
 
             if (this.$route.params.game) {
                 this.currentGame = pce.getGameData(this.$route.params.game);
+                if (!this.currentGame.abbriviature) {
+                    this.$router.push('/404');
+                    return false;
+                }
+
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
 
@@ -132,13 +137,6 @@ const Events = {
             let text = '';
 
             switch(game) {
-                case 'smite':
-                    text = '<h1>Upcoming Smite tournaments</h1>\
-                    <h2>List of Competitive Smite tournaments</h2>\
-                    <p>Find all competitive Smite tournaments around North America and Europe.</p>\
-                    <p>Find tournaments of a different skill level that will suit your team or you personally.</p>\
-                    <p>Tournaments are gathered from all around popular platforms and list provide you will the most relevant data and links that you might need to start you participation as fast and easy as possible</p>';
-                break;
                 case 'dota':
                     text = '<h1>Upcoming Dota 2 tournaments</h1>\
                     <h2>List of Competitive Dota 2 tournaments</h2>\
@@ -191,7 +189,7 @@ const Events = {
                 default:
                     text = '<h1>List of Upcoming competitive gaming tournaments</h1>\
                     <p>Find all competitive gaming tournaments around North America and Europe.</p>\
-                    <p>List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need</p>\
+                    <p>List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, full list of what gamer might need</p>\
                     <p>Get your team to find the perfect competitive esports tournament for you all around North America or Europe region</p>\
                     <p>Tournaments are gathered from all around popular platforms and list provide you will the most relevant data and links that you might need to start you participation as fast and easy as possible</p>';
                 break;
@@ -209,7 +207,7 @@ pce.routes.push({
     meta: {
         title: 'Events List',
         template: 'events',
-        description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, Smite, full list of what gamer might need'
+        description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, full list of what gamer might need'
     },
     children: [
         {

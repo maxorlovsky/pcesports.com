@@ -94,16 +94,6 @@ const pce = {
         const game = {};
 
         switch(name) {
-            case 'smite':
-                game.abbriviature = 'smite';
-                game.name = 'Smite';
-                game.link = 'smite';
-                game.regions = {
-                    'all': 'All',
-                    'na': 'North America',
-                    'eu': 'Europe'
-                };
-            break;
             case 'dota':
                 game.abbriviature = 'dota';
                 game.name = 'Dota 2';
@@ -180,17 +170,6 @@ const pce = {
                     'all': 'All',
                     'na': 'North America',
                     'eu': 'Europe'
-                };
-            break;
-            default:
-                game.abbriviature = 'lol';
-                game.name = 'League of Legends';
-                game.link = 'league-of-legends';
-                game.regions = {
-                    'all': 'All',
-                    'na': 'North America',
-                    'euw': 'Europe West',
-                    'eune': 'Europe East'
                 };
             break;
         }
