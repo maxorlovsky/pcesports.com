@@ -3,11 +3,13 @@ const EventDetails = {
     data: function() {
         return {
             loading: false,
-            game: {},
+            game: {
+                meta_data: {}
+            },
             currentGame: {}
         };
     },
-    created: function() {
+    mounted: function() {
         const self = this;
 
         this.currentGame = pce.getGameData(this.$route.params.game);
@@ -15,7 +17,7 @@ const EventDetails = {
 
         axios.get(`${pce.apiUrl}/tournament/${this.currentGame.abbriviature}/${this.eventId}`)
         .then(function (response) {
-            self.prepareView(response);
+            self.game = self.prepareView(response);
 
             if (self.editable) {
                 self.prepareEditForm();
@@ -121,65 +123,66 @@ const EventDetails = {
             return years;
         },
         prepareView: function(response) {
-            
-            this.game = response.data;
+            const game = response.data;
 
-            this.game.name = this.game.name
+            game.name = game.name
                 .replace(/&amp;/g, "&")
                 .replace(/&gt;/g, ">")
                 .replace(/&lt;/g, "<")
                 .replace(/&quot;"/g, "\"");
 
             // Set up meta title
-            document.title += ' - '+ this.game.name;
+            document.title += ' - '+ game.name;
 
-            this.game.meta_data = JSON.parse(this.game.meta_data);
+            game.meta_data = JSON.parse(game.meta_data);
 
             // Set up meta description
-            const cutDownDescription = this.game.meta_data.description.substring(0, 100);
-            const metaDescription = `${this.game.name} | ${cutDownDescription}...`;
+            const cutDownDescription = game.meta_data.description.substring(0, 100);
+            const metaDescription = `${game.name} | ${cutDownDescription}...`;
             document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
 
             // Settings those sooner, before they will be changed, for edit form
             if (this.editable) {
-                this.form.prizes = this.game.meta_data.prizes;
-                this.form.description = this.game.meta_data.description;
+                this.form.prizes = game.meta_data.prizes;
+                this.form.description = game.meta_data.description;
             }
 
-            this.game.meta_data.prizes = this.game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            if (this.game.platform === 'battlefy' && (this.game.game === 'ow' || this.game.game === 'hots')) {
-                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
+            game.meta_data.prizes = game.meta_data.prizes.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            if (game.platform === 'battlefy' && (game.game === 'ow' || game.game === 'hots')) {
+                game.meta_data.description = this.correctDescription(game.meta_data.description, false);
                 if (this.editable) {
                     this.form.formatting = true;
-                    this.form.description = this.game.meta_data.description;
+                    this.form.description = game.meta_data.description;
                 }
-            } else if (this.game.platform === 'esl') {
-                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, false);
+            } else if (game.platform === 'esl') {
+                game.meta_data.description = this.correctDescription(game.meta_data.description, false);
                 if (this.editable) {
                     this.form.formatting = true;
-                    this.form.description = this.game.meta_data.description;
+                    this.form.description = game.meta_data.description;
                 }
             } else {
-                this.game.meta_data.description = this.correctDescription(this.game.meta_data.description, true);
+                game.meta_data.description = this.correctDescription(game.meta_data.description, true);
             }
 
-            this.game.platform = {
-                name: this.game.platformName,
-                image: this.game.platformName === 'Custom' ? false : this.game.platform
+            game.platform = {
+                name: game.platformName,
+                image: game.platformName === 'Custom' ? false : game.platform
             };
             
-            this.game.start_datetime = this.correctDate(this.game.start_datetime);
-            this.game.meta_data.elimination = this.correctEventFormat(this.game.meta_data.elimination);
-            if (this.game.meta_data.free) {
-                this.game.meta_data.free = this.correctPayment(this.game.meta_data.free);
+            game.start_datetime = this.correctDate(game.start_datetime);
+            game.meta_data.elimination = this.correctEventFormat(game.meta_data.elimination);
+            if (game.meta_data.free) {
+                game.meta_data.free = this.correctPayment(game.meta_data.free);
             }
-            if (this.game.meta_data.online) {
-                this.game.meta_data.online = this.correctOnline(this.game.meta_data.online);
+            if (game.meta_data.online) {
+                game.meta_data.online = this.correctOnline(game.meta_data.online);
             }
 
-            if (this.game.participants_limit === '0') {
-                this.game.participants_limit = 'Unlimited';
+            if (game.participants_limit === '0') {
+                game.participants_limit = 'Unlimited';
             }
+
+            return game;
         },
         prepareEditForm: function() {
             this.form.name = this.game.name;

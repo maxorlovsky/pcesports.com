@@ -37,7 +37,21 @@ gulp.task('copy:html', () => {
 
 // VueJS files
 gulp.task('copy:vue', () => {
-	return gulp.src([
+	if (release) {
+		return gulp.src([
+				'./node_modules/vue/dist/vue.min.js',
+				'./node_modules/vue-*/dist/vue-*.min.js',
+				'./node_modules/vue-directive-tooltip/dist/vueDirectiveTooltip.min.js',
+				'./node_modules/vue-disqus/vue-disqus.js',
+				'./node_modules/axios/dist/axios.min.js',
+				'./node_modules/marked/marked.min.js',
+				'./node_modules/hammerjs/hammer.min.js'
+			])
+			.pipe(uglify())
+			.pipe(concat('libs.js'))
+			.pipe(gulp.dest('./public/dist/js/'));
+	} else {
+		return gulp.src([
 			'./node_modules/vue/dist/vue.min.js',
 			'./node_modules/vue-*/dist/vue-*.min.js',
 			'./node_modules/vue-directive-tooltip/dist/vueDirectiveTooltip.min.js',
@@ -46,9 +60,9 @@ gulp.task('copy:vue', () => {
 			'./node_modules/marked/marked.min.js',
 			'./node_modules/hammerjs/hammer.min.js'
 		])
-		.pipe(uglify())
-    	.pipe(concat('libs.js'))
-        .pipe(gulp.dest('./public/dist/js/'));
+			.pipe(concat('libs.js'))
+			.pipe(gulp.dest('./public/dist/js/'));
+	}
 });
 
 // index.html

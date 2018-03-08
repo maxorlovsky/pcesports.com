@@ -16,7 +16,6 @@ gulp.task('build', (cb) => {
 			'copy',
 			['styles', 'scripts'],
 			'bump-ver',
-			'minify',
 		cb);
 	} else {
 		return runSequence(
@@ -25,7 +24,6 @@ gulp.task('build', (cb) => {
 			'copy',
 			['styles', 'scripts'],
 			'bump-ver',
-			'minify',
 		cb);
 	}
 });
