@@ -150,9 +150,9 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 width: 31.8%;
             }
 
-            /* &:first-child {
-                width: 65%;
-            } */
+            &:first-child {
+                width: 48.5%;
+            }
 
             $game-block-width-mobile: 49%;
             @media (max-width: 425px) {
@@ -160,15 +160,15 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
                 height: $game-block-height - 100;
                 margin: 1px;
 
-                /*&:first-child {
+                &:first-child {
                     width: 98.5%;
                     margin: 0 1px;
-                }*/
+                }
 
-                &:first-child {
+                /* &:first-child {
                     width: $game-block-width-mobile;
                     margin: 1px;
-                }
+                } */
             }
 
             .btn {
@@ -248,11 +248,6 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         .game-dota {
             background-image: url('../assets/images/dota-logo-big.png');
             background-color: #800000;
-        }
-
-        .game-smite {
-            background-image: url('../assets/images/smite-logo-big.png');
-            background-color: #006600;
         }
     }
 }

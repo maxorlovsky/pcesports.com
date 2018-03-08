@@ -24,7 +24,8 @@ const EventDetails = {
             self.loading = false;
         })
         .catch(function (error) {
-            window.location.href = "/tournament-not-found.html";
+            self.$router.push('/404');
+            return false;
         });
     },
     methods: {
