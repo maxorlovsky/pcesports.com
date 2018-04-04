@@ -1,7 +1,6 @@
 # Specific project files and logs
-*.sublime-*
 *.log
-web.config
+.stylelintcache
 
 # Folders
 node_modules

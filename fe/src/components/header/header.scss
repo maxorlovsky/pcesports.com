@@ -7,10 +7,10 @@ header {
     width: 100%;
     top: 0;
     z-index: 50;
-    box-shadow: 0 1px 2px rgba(0,0,0,.6);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
     visibility: visible;
     height: auto;
-    transition: .5s;
+    transition: 0.5s;
 
     .burger {
         display: none;
@@ -24,7 +24,7 @@ header {
             float: left;
             color: #fff;
             margin: 0 10px;
-            transition: .5s;
+            transition: 0.5s;
             line-height: 60px;
             cursor: pointer;
             font-size: 1.5rem;
@@ -50,10 +50,10 @@ header {
             position: absolute;
             width: 113px;
             height: 80px;
-            transition: .5s;
+            transition: 0.5s;
         }
 
-        &.logoSmall {
+        &.logo-small {
             @media (max-width: 768px) {
                 margin: 0 0 0 calc(50% - 43px - 40px);
             }
@@ -106,7 +106,7 @@ header {
                 }
 
                 &.router-link-active:before {
-                    content: ' ';
+                    content: " ";
                     border-bottom: 2px solid #fff;
                     position: absolute;
                     bottom: -2px;
@@ -179,7 +179,7 @@ header {
                 content: " ";
                 display: block;
                 height: 61px;
-                background-image: url('../assets/images/christmas-snow.png');
+                background-image: url("../assets/images/christmas-snow.png");
                 background-repeat: repeat-x;
                 background-position: bottom;
 
@@ -218,7 +218,7 @@ header {
 
                 li {
                     display: block;
-                    background-image: url('../assets/images/snow.png');
+                    background-image: url("../assets/images/snow.png");
                     height: 1200px;
                     width: 200%;
                     margin-left: -50%;
@@ -244,10 +244,29 @@ header {
                 }
             }
     
-            @keyframes snowfall {to{transform:translateY(0)}}
-            @keyframes snowfallZ{to{transform:translateY(0) translateZ(150px)}}
-            @keyframes snowfallX{to{transform:translateY(0) translateZ(250px)}}
-            @keyframes snowfallY{to{transform:translateY(0) translateZ(-150px)}}
+            @keyframes snowfall {
+                to {
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes snowfallZ {
+                to {
+                    transform: translateY(0) translateZ(150px);
+                }
+            }
+
+            @keyframes snowfallX {
+                to {
+                    transform: translateY(0) translateZ(250px);
+                }
+            }
+
+            @keyframes snowfallY {
+                to {
+                    transform: translateY(0) translateZ(-150px);
+                }
+            }
         }
     
         .lights {
@@ -256,7 +275,7 @@ header {
             height: 58px;
             position: fixed;
             display: block;
-            background-image: url('../assets/images/christmas-lights.png');
+            background-image: url("../assets/images/christmas-lights.png");
             background-repeat: repeat-x;
             top: 30px;
             left: 0;
