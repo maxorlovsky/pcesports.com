@@ -1,11 +1,18 @@
-Vue.component('pagination', {
-    template: '<div class="pagination">'+
-                '<router-link v-for="page in pages"'+
-                    'class="btn btn-info"'+
-                    'role="button"'+
-                    ':class="page.disabled?\'disabled\':false"'+
-                    'v-bind:to="\'/\'+pageUrl+\'/page/\'+page.url">{{page.value}}</router-link>'+
-              '</div>',
+<template>
+<div class="pagination">
+    <router-link v-for="value in pages"
+        class="btn btn-info"
+        role="button"
+        :class="{ 'disabled': value.disabled }"
+        :to="'/' + pageUrl + '/page/' + value.url"
+        :key="value.value"
+    >{{value.value}}</router-link>
+</div>
+</template>
+
+<script>
+export default {
+    name: 'pagination',
     props: {
 		page: Number,
 		amount: Number,
@@ -16,7 +23,9 @@ Vue.component('pagination', {
 		}
 	},
    	data: function() {
-   		return { pages: {} };
+   		return {
+            pages: {}
+        };
 	},
     created: function() {
         this.render();
@@ -65,8 +74,6 @@ Vue.component('pagination', {
 		    }
 
 		    this.pages = pages;
-            
-		    return pages;
         }
     },
 	watch: {
@@ -77,4 +84,5 @@ Vue.component('pagination', {
 			this.render();
 		}
 	}
-});
+}
+</script>
