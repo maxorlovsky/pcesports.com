@@ -1,13 +1,21 @@
-Vue.component('float-message', {
-    template: '<div class="float-message alert" v-if="parameters.message" :class="parameters.type" v-html="parameters.message"></div>',
+<template>
+<div class="float-message alert"
+    v-if="parameters.message"
+    :class="parameters.type"
+    v-html="parameters.message"
+></div>
+</template>
+
+<script>
+export default {
+    name: 'float-message',
     props: {
         parameters: {
-            type: 'object'
+            type: Object
         }
 	},
    	data: function() {
    		return {
-            parameters: {},
             timeout: null
         };
 	},
@@ -32,4 +40,5 @@ Vue.component('float-message', {
 			this.render();
 		}
 	}
-});
+}
+</script>
