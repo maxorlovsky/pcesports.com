@@ -136,7 +136,7 @@ const tournamentsPage = {
             let filter = '?';
 
             if (this.$route.params.game) {
-                this.currentGame = pce.getGameData(this.$route.params.game);
+                this.currentGame = functions.getGameData(this.$route.params.game);
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
 
