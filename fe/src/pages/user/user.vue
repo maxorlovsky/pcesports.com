@@ -1,43 +1,42 @@
-<script type="text/x-template" id="user-template">
-    <div class="user">
-        <div class="block">
-            <div class="block-content semi-widths">
-                <loading v-if="loading"></loading>
+<template>
+<div class="user">
+    <div class="block">
+        <div class="block-content semi-widths">
+            <loading v-if="loading"></loading>
 
-                <div class="alert alert-danger" v-if="userError" v-html="userError"></div>
+            <div class="alert alert-danger" v-if="userError" v-html="userError"></div>
 
-                <section class="profile-wrapper" v-if="Object.keys(user).length">
-                    <h4>{{user.name}} | User profile</h4>
+            <section class="profile-wrapper" v-if="Object.keys(user).length">
+                <h4>{{user.name}} | User profile</h4>
 
-                    <div class="avatar">
-                        <img v-bind:src="'/dist/assets/images/avatar/' +  user.avatar + '.jpg'" alt="Avatar" />
-                    </div>
-                    <div class="information">
-                        <p><label>Name</label> {{user.name}}</p>
-                        <p v-if="user.battletag"><label>Battle Tag</label> {{user.battletag}}</p>
-                        <p><label>Registration date</label> {{user.registration_date}}</p>
-                        <p><label>Points</label> {{user.experience}}</p>
-                    </div>
+                <div class="avatar">
+                    <img v-bind:src="'/dist/assets/images/avatar/' +  user.avatar + '.jpg'" alt="Avatar" />
+                </div>
+                <div class="information">
+                    <p><label>Name</label> {{user.name}}</p>
+                    <p v-if="user.battletag"><label>Battle Tag</label> {{user.battletag}}</p>
+                    <p><label>Registration date</label> {{user.registration_date}}</p>
+                    <p><label>Points</label> {{user.experience}}</p>
+                </div>
 
-                    <!-- <div class="summoners">
-                        <a href="http://<?=$v->region?>.op.gg/summoner/?userName=<?=$v->name?>"
-                            target="_blank"
-                            class="block-content summoner"
-                            v-for="value in user.summoners">
-                            <? if ($v->league) { ?>
-                                <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
-                            <? } else { ?>
-                                <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />
-                            <? } ?>
-                            <label class="summoner-name"><?=$v->name?></label>
-                            <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
-                        </a>
-                    </div> -->
-                </section>
-            </div>
+                <!-- <div class="summoners">
+                    <a href="http://<?=$v->region?>.op.gg/summoner/?userName=<?=$v->name?>"
+                        target="_blank"
+                        class="block-content summoner"
+                        v-for="value in user.summoners">
+                        <? if ($v->league) { ?>
+                            <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/<?=strtolower($v->league)?>_<?=$this->convertDivision($v->division)?>.png" />
+                        <? } else { ?>
+                            <img class="game-logo" src="<?=_cfg('img')?>/leagues_small/unranked.png" />
+                        <? } ?>
+                        <label class="summoner-name"><?=$v->name?></label>
+                        <span href="javascript:void(0);" class="region right"><?=$v->regionName?></span>
+                    </a>
+                </div> -->
+            </section>
         </div>
     </div>
-</script>
+</div>
 
 <!--
 <div class="members">
@@ -118,3 +117,56 @@
 
 </div>
 -->
+</template>
+
+<script>
+// 3rd party libs
+import axios from 'axios';
+
+// Global functions
+import { functions } from '../../functions.js';
+
+// Components
+import loading from '../../components/loading/loading.vue';
+
+const userPage = {
+    components: {
+        loading
+    },
+    data: function() {
+        return {
+            loading: true,
+            userError: '',
+            user: {},
+        };
+    },
+    created: function() {
+        const userName = this.$route.params.name;
+
+        axios.get(`${pce.apiUrl}/user-data/${userName}`)
+        .then((response) => {
+            this.user = response.data.user;
+
+            functions.setUpCustomMeta(`${this.user.name} profile`, `${this.user.name} profile`)
+
+            this.loading = false;
+        })
+        .catch((error) => {
+            this.userError = error.response.data.message;
+            this.loading = false;
+        });
+    }
+};
+
+// Routing
+pce.routes.push({
+    path: '/user/:name',
+    component: userPage,
+    meta: {
+        title: '',
+        description: 'User profile'
+    }
+});
+
+export default userPage;
+</script>
