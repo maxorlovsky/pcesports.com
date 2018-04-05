@@ -1,0 +1,11 @@
+{
+    "esversion": 6,
+    "multistr": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+        "pce": true,
+        "console": true
+    },
+    "browser": true
+}
