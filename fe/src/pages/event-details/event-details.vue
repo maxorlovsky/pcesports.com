@@ -1,5 +1,81 @@
-const EventDetails = {
-    template: '#event-details-template',
+<template>
+<div class="event-details">
+    <div class="block">
+        <div class="block-content">
+            <loading v-if="loading"></loading>
+
+            <div class="event-details-header" v-if="!loading && game">
+                <h1>{{game.name}}</h1>
+
+                <router-link
+                    v-if="game.game"
+                    class="game-image"
+                    :to="'/events/' + $route.params.game">
+                    <img :src="'../../dist/assets/images/' + game.game +'-logo-big.png'" />
+                </router-link>
+            </div>
+
+            <div class="event-details-wrapper" v-if="!loading && game">
+                <div class="event-details-data">
+                    <div class="event-details-params">
+                        <p v-if="game.platform" class="event-details-platform"><label>Platform:</label> {{game.platform.name}} <img v-if="game.platform.image" :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" /></p>
+                        <p v-if="game.region"><label>Region:</label> {{game.region.toUpperCase()}}</p>
+                        <p v-if="game.participants_limit"><label>Participants limit:</label> {{game.participants_limit}}</p>
+                        <p v-if="game.start_datetime"><label>Start time:</label> {{game.start_datetime}}</p>
+                        <p v-if="game.meta_data.best_of"><label>Best of:</label> {{game.meta_data.best_of}}</p>
+                        <p v-if="game.meta_data.elimination"><label>Tournament format:</label> {{game.meta_data.elimination}}</p>
+                        <p v-if="game.meta_data.free"><label>Payment:</label> {{game.meta_data.free}}</p>
+                        <p v-if="game.meta_data.online"><label>Online:</label> {{game.meta_data.online}}</p>
+                    </div>
+
+                    <div class="event-additiona-data">
+                        <div class="event-prizes">
+                            <h4>Prizes</h4>
+                            <p v-html="game.meta_data.prizes"></p>
+                        </div>
+
+                        <div class="event-links">
+                            <h4>Links</h4>
+                            <a :href="game.link" target="_blank" v-if="game.link"><i class="fa fa-external-link"></i> Link to platform</a>
+                            <a :href="game.meta_data.home_link" target="_blank" v-if="game.meta_data.home_link"><i class="fa fa-external-link"></i> Home page</a>
+                            <a :href="game.meta_data.registration_link" target="_blank" v-if="game.meta_data.registration_link"><i class="fa fa-external-link"></i> Registration link</a>
+                            <a :href="game.meta_data.facebook_link" target="_blank" v-if="game.meta_data.facebook_link"><i class="fa fa-facebook"></i> Facebook</a>
+                            <a :href="game.meta_data.youtube_link" target="_blank" v-if="game.meta_data.youtube_link"><i class="fa fa-youtube"></i> YouTube</a>
+                            <a :href="game.meta_data.twitch_link" target="_blank" v-if="game.meta_data.twitch_link"><i class="fa fa-twitch"></i> Twitch.TV</a>
+                            <a :href="game.meta_data.discord_link" target="_blank" v-if="game.meta_data.discord_link"><i class="fa fa-comments"></i> Discord chat</a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="event-description">
+                    <h4>Event description</h4>
+                    <p v-html="game.meta_data.description"></p>
+                </div>
+            </div>
+
+            <router-link :to="'/events/' + $route.params.game" v-else>
+                <button class="btn btn-primary btn-lg back-btn">Back to list</button>
+            </router-link>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+// 3rd party libs
+import axios from 'axios';
+import marked from 'marked';
+
+// Global functions
+import { functions } from '../../functions.js';
+
+// Components
+import loading from '../../components/loading/loading.vue';
+
+const eventDetailsPage = {
+    components: {
+        loading
+    },
     data: function() {
         return {
             loading: false,
@@ -10,23 +86,22 @@ const EventDetails = {
         };
     },
     mounted: function() {
-        const self = this;
-
-        this.currentGame = pce.getGameData(this.$route.params.game);
+        this.currentGame = functions.getGameData(this.$route.params.game);
         this.eventId = parseInt(this.$route.params.event);
 
         axios.get(`${pce.apiUrl}/tournament/${this.currentGame.abbriviature}/${this.eventId}`)
-        .then(function (response) {
-            self.game = self.prepareView(response);
+        .then((response) => {
+            this.game = this.prepareView(response);
 
-            if (self.editable) {
-                self.prepareEditForm();
+            if (this.editable) {
+                this.prepareEditForm();
             }
 
-            self.loading = false;
+            this.loading = false;
         })
-        .catch(function (error) {
-            self.$router.push('/404');
+        .catch((error) => {
+            this.$router.push('/404');
+            console.log(error);
             return false;
         });
     },
@@ -131,15 +206,13 @@ const EventDetails = {
                 .replace(/&lt;/g, "<")
                 .replace(/&quot;"/g, "\"");
 
-            // Set up meta title
-            document.title += ' - '+ game.name;
-
             game.meta_data = JSON.parse(game.meta_data);
 
             // Set up meta description
             const cutDownDescription = game.meta_data.description.substring(0, 100);
             const metaDescription = `${game.name} | ${cutDownDescription}...`;
-            document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
+
+            functions.setUpCustomMeta(game.name, metaDescription);
 
             // Settings those sooner, before they will be changed, for edit form
             if (this.editable) {
@@ -255,16 +328,16 @@ const EventDetails = {
                 prizes: this.form.prizes,
                 description: this.form.description
             })
-            .then(function (response) {
-                /* self.restoreSuccess = response.data.message;
-                self.showForm = 2;
-                self.formLoading = false;
-                self.checkCaptcha(); */
+            .then((response) => {
+                /* this.restoreSuccess = response.data.message;
+                this.showForm = 2;
+                this.formLoading = false;
+                this.checkCaptcha(); */
             })
-            .catch(function (error) {
-                self.formError = error.response.data.message;
-                self.formLoading = false;
-                self.errorClasses.login = true;
+            .catch((error) => {
+                this.formError = error.response.data.message;
+                this.formLoading = false;
+                this.errorClasses.login = true;
             });
         }
     }
@@ -273,9 +346,12 @@ const EventDetails = {
 // Routing
 pce.routes.push({
     path: '/events/:game/:event',
-    component: EventDetails,
+    component: eventDetailsPage,
     meta: {
-        title: 'Event Details',
-        template: 'event-details'
+        title: '',
+        description: ''
     }
 });
+
+export default eventDetailsPage;
+</script>
