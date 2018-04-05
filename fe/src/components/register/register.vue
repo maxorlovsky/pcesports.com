@@ -1,5 +1,44 @@
-Vue.component('register', {
-    template: dynamicTemplates.register,
+<template>
+<div class="register-form">
+    <div class="alert alert-success" v-if="registerSuccess" v-html="registerSuccess"></div>
+    <div class="alert alert-danger" v-if="registerError" v-html="registerError"></div>
+
+    <form method="post"
+        v-on:submit.prevent="submit()"
+        v-if="!registerSuccess">
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.name }">
+            <input type="text" v-model="form.name" placeholder="Name" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.login }">
+            <input type="text" v-model="form.login" placeholder="Email" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.pass }">
+            <input type="password" v-model="form.pass" placeholder="Password" />
+        </div>
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.repeatPass }">
+            <input type="password" v-model="form.repeatPass" placeholder="Repeat password" />
+        </div>
+
+        <div class="input-wrapper"
+            :class="{ error: errorClasses.captcha }">
+            <div class="g-recaptcha" id="reg-g-recaptcha" :data-sitekey="captchaKey"></div>
+        </div>
+
+        <button class="btn btn-primary" :disabled="formLoading">Register</button>
+    </form>
+</div>
+</template>
+
+<script>
+// 3rd party libs
+import axios from 'axios';
+
+export default {
+    name: 'register',
     data: function() {
         return {
             form: {
@@ -30,8 +69,6 @@ Vue.component('register', {
     },
     methods: {
         submit: function() {
-            let self = this;
-
             this.formLoading = true;
 
             this.errorClasses = {
@@ -56,6 +93,7 @@ Vue.component('register', {
                     repeatPass: !this.form.repeatPass ? true : false,
                     captcha: false
                 };
+
                 return false;
             }
 
@@ -68,15 +106,15 @@ Vue.component('register', {
                 repeatPass: this.form.repeatPass,
                 captcha: recaptcha_response
             })
-            .then(function (response) {
-                self.registerSuccess = response.data.message;
-                self.formLoading = false;
+            .then((response) => {
+                this.registerSuccess = response.data.message;
+                this.formLoading = false;
             })
-            .catch(function (error) {
-                self.formLoading = false;
+            .catch((error) => {
+                this.formLoading = false;
 
                 // Display error message from API
-                self.registerError = error.response.data.message;
+                this.registerError = error.response.data.message;
 
                 // Update recaptcha on error, new data required every time
                 grecaptcha.reset();
@@ -90,9 +128,10 @@ Vue.component('register', {
 
                 // Mark fields with error class
                 for (let i = 0; i < errorFields.length; ++i) {
-                    self.errorClasses[errorFields[i]] = true;
+                    this.errorClasses[errorFields[i]] = true;
                 }
             });
         }
     }
-});
+}
+</script>
