@@ -64,12 +64,13 @@ if (window.navigator.userAgent.toLowerCase().indexOf('prerender') === -1) {
 }
 
 router.beforeEach((to, from, next) => {
-    pce.loginCheckError = false;
-    if (to.meta.loggedIn && !pce.loggedIn) {
-        pce.loginCheckError = true;
-    }
-
     window.scrollTo(0, 0);
+    
+    if (to.meta.loggedIn && !pce.loggedIn) {
+        console.log('Authentication failure');
+        next('/');
+        return false;
+    }
 
     // Set up meta title
     document.title = '';
@@ -90,14 +91,6 @@ router.beforeEach((to, from, next) => {
     functions.setUpCustomMeta(metaTitle, metaDescription);
     
     next();
-});
-
-router.afterEach(() => {
-    if (pce.loginCheckError) {
-        // Displaying error message to the user
-        router.app.authRequired();
-        return false;
-    }
 });
 
 const checkStorage = functions.storage('get', 'structure-data');
