@@ -5,6 +5,7 @@ import { functions } from './functions.js';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueAnalytics from 'vue-analytics';
+import VueTooltip from 'v-tooltip';
 
 // 3rd party libs
 import axios from 'axios';
@@ -54,6 +55,7 @@ const router = new VueRouter({
 });
 
 Vue.use(VueRouter);
+Vue.use(VueTooltip);
 
 // If it's not prerender, enabling google analytics
 if (window.navigator.userAgent.toLowerCase().indexOf('prerender') === -1) {
@@ -65,7 +67,7 @@ if (window.navigator.userAgent.toLowerCase().indexOf('prerender') === -1) {
 
 router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
-    
+
     if (to.meta.loggedIn && !pce.loggedIn) {
         console.log('Authentication failure');
         next('/');

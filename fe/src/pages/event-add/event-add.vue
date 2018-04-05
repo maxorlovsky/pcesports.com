@@ -29,7 +29,7 @@
                 <div class="event-details-data">
                     <div class="event-details-params">
                         <p v-if="game.platform" class="event-details-platform">
-                            <label>Platform: <span class="fa fa-exclamation-circle" v-tooltip.top="hints.platform"></span></label>
+                            <label>Platform: <span class="fa fa-exclamation-circle" v-tooltip="hints.platform"></span></label>
                             {{game.platform.name}} 
                             <img v-if="game.platform.image"
                                 :src="'/dist/assets/images/tournament-platforms/' + game.platform.image + '.png'" />
@@ -72,7 +72,7 @@
                                 :class="{ error: errorClasses.best_of }" />
                         </p>
                         <p>
-                            <label>Start time *: <span class="fa fa-exclamation-circle" v-tooltip.top="hints.time"></span></label>
+                            <label>Start time *: <span class="fa fa-exclamation-circle" v-tooltip="hints.time"></span></label>
                             <input type="text"
                                 v-model="form.time"
                                 :class="{ error: errorClasses.time }" />
@@ -163,7 +163,7 @@
                         Event description
                         <span class="fa fa-exclamation-circle"
                             v-if="form.formatting && editable"
-                            v-tooltip.left="hints.description"></span>
+                            v-tooltip="hints.description"></span>
                     </h4>
                     <textarea
                         v-model="form.description"
@@ -196,6 +196,9 @@
 <script>
 // 3rd party libs
 import axios from 'axios';
+
+// Global functions
+import { functions } from '../../functions.js';
 
 // Components
 import loading from '../../components/loading/loading.vue';
@@ -268,7 +271,7 @@ const eventAddPage = {
         },
         switchGame: function(game) {
             this.form.game = game;
-            this.currentGame = pce.getGameData(game);
+            this.currentGame = functions.getGameData(game);
         },
         submitForm: function() {
             this.formLoading = true;
@@ -317,7 +320,7 @@ const eventAddPage = {
             })
             .then((response) => {
                 this.$parent.displayMessage(response.data.message, 'success');
-                const gameLink = pce.getGameData(this.form.game);
+                const gameLink = functions.getGameData(this.form.game);
                 const url = `/events/${gameLink.link}/${response.data.id}`;
                 this.$router.push(url);
             })
