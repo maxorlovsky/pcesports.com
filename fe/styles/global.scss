@@ -14,7 +14,7 @@ $nav-link-padding: 0;
 $table-border-width: 0;
 
 /* Font-Awesome variables */
-$fa-font-path: '../assets/font/';
+$fa-font-path: '/dist/assets/font';
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
@@ -24,3 +24,4 @@ $fa-font-path: '../assets/font/';
 @import './styles.scss';
 
 @import '../src/components/**/*.scss';
+@import '../src/pages/**/*.scss';
