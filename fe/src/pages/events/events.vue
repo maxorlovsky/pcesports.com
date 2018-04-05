@@ -1,5 +1,62 @@
-const Events = {
-    template: '#events-template',
+<template>
+<div class="events">
+    <div class="block">
+        <div class="block-content">
+            <loading v-if="loading"></loading>
+
+            <h2>{{currentGame.name}} tournaments</h2>
+
+            <events-filters
+                :status="status"
+                :region="region"
+                :search-string="searchString"
+                :current-game="currentGame"
+                v-on:update-filter="fetchEventData"
+            ></events-filters>
+
+            <div class="event-table-notification alert alert-info">Table can be scrolled horizontally</div>
+            <div class="event-list-wrapper" v-if="games.length">
+                <event-item :game="game"
+                    :key="game.id"
+                    v-for="game in games"></event-item>
+            </div>
+            <div class="event-list-wrapper" v-else>
+                <div class="event-none col-12">There are no tournaments tournaments matching criteria</div>
+            </div>
+
+            <button class="load-more btn btn-lg btn-primary"
+                v-on:click="loadMore()"
+                v-if="!hideLoadMore"
+                :disabled="loadingMore">Load more</button>
+        </div>
+    </div>
+
+    <div class="block seo-about">
+        <seo v-html="seoText"></seo>
+    </div>
+</div>
+</template>
+
+<script>
+// 3rd party libs
+import axios from 'axios';
+
+// Global functions
+import { functions } from '../../functions.js';
+
+// Components
+import loading from '../../components/loading/loading.vue';
+import eventItem from '../../components/event-item/event-item.vue';
+import eventsFilters from '../../components/events-filters/events-filters.vue';
+import seo from '../../components/seo/seo.vue';
+
+const eventsPage = {
+    components: {
+        loading,
+        eventsFilters,
+        eventItem,
+        seo
+    },
     data: function() {
         return {
             loading: true,
@@ -48,11 +105,10 @@ const Events = {
                 this.currentGame = filters.currentGame;
             }
 
-            let self = this;
             let filter = '?';
 
             if (this.$route.params.game) {
-                this.currentGame = pce.getGameData(this.$route.params.game);
+                this.currentGame = functions.getGameData(this.$route.params.game);
                 if (!this.currentGame.abbriviature) {
                     this.$router.push('/404');
                     return false;
@@ -61,11 +117,10 @@ const Events = {
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
 
-                document.title = `${this.currentGame.name} | ${document.title}`;
-
                 // Set custom made meta description
                 const metaDescription = `Find all competitive ${this.currentGame.name} tournaments around North America and Europe. Find tournaments of a different skill level that will suit your team or you personally.`;
-                document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
+                
+                functions.setUpCustomMeta(this.currentGame.name, metaDescription);
             } else {
                 this.currentGame.name = 'All';
             }
@@ -89,7 +144,7 @@ const Events = {
             }
 
             axios.get(`${pce.apiUrl}/tournaments${filter}`)
-            .then(function (response) {
+            .then((response) => {
                 let gamesFiltered = response.data;
                 let currentDate = new Date();
                 let timezoneOffset = currentDate.getTimezoneOffset() * 60;
@@ -106,23 +161,23 @@ const Events = {
                     gamesFiltered[i].startTime = date.substring(0, (date.length - 7));
                 }
 
-                if (self.offset) {
-                    let combinedArray = self.games.concat(gamesFiltered);
-                    self.games = combinedArray;
+                if (this.offset) {
+                    let combinedArray = this.games.concat(gamesFiltered);
+                    this.games = combinedArray;
                 }
                 else {
-                    self.games = gamesFiltered;
+                    this.games = gamesFiltered;
                 }
 
-                if (gamesFiltered.length < self.limit || response.data.message === 'no-events') {
-                    self.hideLoadMore = true;
+                if (gamesFiltered.length < this.limit || response.data.message === 'no-events') {
+                    this.hideLoadMore = true;
                 }
                 else {
-                    self.hideLoadMore = false;
+                    this.hideLoadMore = false;
                 }
 
-                self.loading = false;
-                self.loadingMore = false;
+                this.loading = false;
+                this.loadingMore = false;
             });
 
             this.seoText = this.loadSeo(this.$route.params.game);
@@ -203,19 +258,20 @@ const Events = {
 // Routing
 pce.routes.push({
     path: '/events',
-    component: Events,
+    component: eventsPage,
     meta: {
-        title: 'Events List',
-        template: 'events',
+        title: 'Tournaments',
         description: 'Find all competitive gaming tournaments around North America and Europe. List include games like League of Legends, Hearthstone, Overwatch, Rocket League, Heroes of the Storm, Dota 2, Counter-Strike: Global Offensive, full list of what gamer might need'
     },
     children: [
         {
             path: ':game',
             meta: {
-                title: 'Events List',
-                template: 'events'
+                title: 'tournaments'
             }
         }
     ]
 });
+
+export default eventsPage;
+</script>
