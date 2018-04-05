@@ -1,8 +1,10 @@
 module.exports = {
-    /* rewrite: [
-        { from: '/*', to: 'index.html' }
-    ], */
+    rewrite: [
+        { from: '/api/*', to: 'https://api.pcesports.com/$1' },
+        { from: '/wp-api/*', to: 'https://api.pcesports.com/wp/wp-json/$1' },
+    ],
     directory: 'public',
-    port: 8095,
-    https: true
+    spa: 'index.html',
+    https: true,
+    port: 8095
 }
