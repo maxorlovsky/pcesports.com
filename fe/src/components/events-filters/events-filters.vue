@@ -1,23 +1,58 @@
-Vue.component('events-filters-component', {
-    template: dynamicTemplates.eventsFilters,
+<template>
+<div class="events-filters">
+    <input class="filter-input"
+        type="text"
+        placeholder="Input name of event and press enter"
+        v-model="searchString"
+        v-on:keyup.enter="searchString.length >= 3 ? updateFilter() : false"
+        v-on:keydown.8="cleanSearch(true)"
+        v-on:keydown.46="cleanSearch(true)"
+        v-on:keyup.8="cleanSearch(false)"
+        v-on:keyup.46="cleanSearch(false)"
+    />
+
+    <select class="form-control form-control-lg btn-secondary"
+        v-model="status.current"
+        v-on:change="updateFilter()"
+    >
+        <option :value="value"
+            :key="value"
+            v-for="value in status.list"
+        >{{status.name}}: {{value}}</option>
+    </select>
+
+    <select class="form-control form-control-lg btn-primary"
+        v-model="region.current"
+        v-on:change="updateFilter()"
+    >
+        <option :value="key"
+            :key="value"
+            v-for="(value, key) in region.list"
+        >{{region.name}}: {{value}}</option>
+    </select>
+</div>
+</template>
+
+<script>
+export default {
+    name: 'events-filters',
     props: {
         region: {
-            type: 'String'
+            type: Object
         },
         status: {
-            type: 'String'
+            type: Object
         },
         searchString: {
-            type: 'String'
+            type: String
         },
         currentGame: {
-            type: 'String'
+            type: Object
         }
     },
     data: function() {
         return {
             filters: {},
-            searchString: '',
             searchStatus: false
         };
     },
@@ -55,4 +90,5 @@ Vue.component('events-filters-component', {
             }
         }
     }
-});
+}
+</script>
