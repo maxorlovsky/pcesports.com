@@ -1,25 +1,7 @@
-const dynamicTemplates = {
-    header: document.createElement('script'),
-    footer: document.createElement('script'),
-    eventItem: document.createElement('script'),
-    eventsFilters: document.createElement('script'),
-    ga: document.createElement('script'),
-    leftSideMenu: document.createElement('script'),
-    rightSideMenu: document.createElement('script'),
-    login: document.createElement('script'),
-    seo: document.createElement('script'),
-    register: document.createElement('script'),
-    forgotPassword: document.createElement('script')
-};
+// 3rd party libs
+import axios from 'axios';
 
-const pce = {
-    version: '%version%',
-    canRunAds: false,
-    loggedIn: false,
-    loginCheckError: false,
-    apiUrl: 'https://api.pcesports.com',
-    env: '',
-    routes: [],
+const functions = {
     // Local storage
     storage: (func, key, ...args) => {
         let timeoutSeconds = 1800000;
@@ -63,7 +45,7 @@ const pce = {
                 (returnValue.version !== pce.version && key !== 'token')
                ) {
                 // Cleanup
-                pce.storage('remove', key);
+                functions.storage('remove', key);
                 return false;
             }
 
@@ -177,7 +159,7 @@ const pce = {
         return game;
     },
     checkUserAuth: () => {
-        const token = pce.storage('get', 'token');
+        const token = functions.storage('get', 'token');
 
         if (token.sessionToken) {
             pce.loggedIn = true;
@@ -211,12 +193,16 @@ const pce = {
         }
 
         return returnMenu;
+    },
+    setUpCustomMeta: (title, description) => {
+        // Set document meta title
+        document.title = (title + ' ' + document.title).replace(/<\/?[^>]+(>|$)/g, '');
+        document.querySelector('meta[property="og:title"]').content = document.title;
+
+        // Set document meta description
+        document.querySelector('meta[name="description"]').content = description.replace(/<\/?[^>]+(>|$)/g, '');
+        document.querySelector('meta[property="og:description"]').content = document.querySelector('meta[name="description"]').content;
     }
 };
 
-pce.storageCacheBuster();
-
-if (location.host.indexOf('dev') === 0) {
-    pce.apiUrl = 'http://dev.api.pcesports.com';
-    pce.env = 'dev';
-}
+export { functions };
