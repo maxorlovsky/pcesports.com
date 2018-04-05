@@ -1,5 +1,91 @@
-const Tournaments = {
-    template: '#tournaments-template',
+<template>
+<div class="tournaments">
+    <div class="block">
+        <div class="block-content">
+            <loading v-if="loading"></loading>
+
+            <h2>My tournaments</h2>
+
+            <div class="heading-wrapper">
+                <div class="heading-text">Here you can add, edit or delete tournaments added by you</div>
+                <router-link :to="'/event/add'">
+                    <button class="btn btn-success">Add new tournament</button>
+                </router-link>
+            </div>
+
+            <!--<events-filters-component
+                :status="status"
+                :region="region"
+                :search-string="searchString"
+                :current-game="currentGame"
+                v-on:update-filter="fetchEventData"
+            ></events-filters-component>-->
+
+            <!-- <div class="events-filters">
+                <input class="filter-input"
+                    type="text"
+                    placeholder="Input name of event and press enter"
+                    v-model="searchString"
+                    v-on:keyup.enter="searchString.length >= 3 ? fetchEventData() : false"
+                    v-on:keydown.8="cleanSearch(true)"
+                    v-on:keydown.46="cleanSearch(true)"
+                    v-on:keyup.8="cleanSearch(false)"
+                    v-on:keyup.46="cleanSearch(false)"
+                        />
+
+                <select class="form-control form-control-lg btn-secondary"
+                    v-model="status.current"
+                    v-on:change="fetchEventData()">
+                    <option :value="value" v-for="value in status.list">
+                            {{status.name}}: {{value}}
+                    </option>
+                </select>
+
+                <select class="form-control form-control-lg btn-primary"
+                    v-model="region.current"
+                    v-on:change="fetchEventData()">
+                    <option :value="key" v-for="(value, key) in region.list">
+                            {{region.name}}: {{value}}
+                    </option>
+                </select>
+            </div>-->
+
+            <div class="event-table-notification alert alert-info">Table can be scrolled horizontally</div>
+            <div class="event-list-wrapper" v-if="games.length">
+                <event-item
+                    :game="game"
+                    :editable="true"
+                    :key="game.id"
+                    v-for="game in games"
+                ></event-item>
+            </div>
+            <div class="event-list-wrapper" v-else>
+                <div class="event-none col-12">There are no tournaments tournaments matching criteria</div>
+            </div>
+
+            <button class="load-more btn btn-lg btn-primary"
+                v-on:click="loadMore()"
+                v-if="!hideLoadMore"
+                :disabled="loadingMore">Load more</button>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+// 3rd party libs
+import axios from 'axios';
+
+// Global functions
+import { functions } from '../../functions.js';
+
+// Components
+import loading from '../../components/loading/loading.vue';
+
+const tournamentsPage = {
+    components: {
+        loading
+    },
     data: function() {
         return {
             loading: true,
@@ -46,8 +132,7 @@ const Tournaments = {
                 this.$router.push('/');
                 return false;
             }
-
-            let self = this;
+            
             let filter = '?';
 
             if (this.$route.params.game) {
@@ -55,11 +140,9 @@ const Tournaments = {
                 filter += '&game=' + this.currentGame.abbriviature;
                 this.region.list = this.currentGame.regions;
 
-                document.title += ' - ' + this.currentGame.name;
-
-                // Set custom made meta description
                 const metaDescription = `Find all competitive ${this.currentGame.name} tournaments around North America and Europe. Find tournaments of a different skill level that will suit your team or you personally.`;
-                document.querySelector('meta[name="description"]').setAttribute("content", metaDescription);
+
+                functions.setUpCustomMeta(' - ' + this.currentGame.name, metaDescription);
             } else {
                 this.currentGame.name = 'All';
             }
@@ -86,7 +169,7 @@ const Tournaments = {
             }
 
             axios.get(`${pce.apiUrl}/tournaments${filter}`)
-            .then(function (response) {
+            .then((response) => {
                 let gamesFiltered = response.data;
                 let currentDate = new Date();
                 let timezoneOffset = currentDate.getTimezoneOffset() * 60;
@@ -103,23 +186,23 @@ const Tournaments = {
                     gamesFiltered[i].startTime = date.substring(0, (date.length - 7));
                 }
 
-                if (self.offset) {
-                    let combinedArray = self.games.concat(gamesFiltered);
-                    self.games = combinedArray;
+                if (this.offset) {
+                    let combinedArray = this.games.concat(gamesFiltered);
+                    this.games = combinedArray;
                 }
                 else {
-                    self.games = gamesFiltered;
+                    this.games = gamesFiltered;
                 }
 
-                if (gamesFiltered.length < self.limit || response.data.message === 'no-events') {
-                    self.hideLoadMore = true;
+                if (gamesFiltered.length < this.limit || response.data.message === 'no-events') {
+                    this.hideLoadMore = true;
                 }
                 else {
-                    self.hideLoadMore = false;
+                    this.hideLoadMore = false;
                 }
 
-                self.loading = false;
-                self.loadingMore = false;
+                this.loading = false;
+                this.loadingMore = false;
             });
         },
         cleanSearch: function(keyAction) {
@@ -151,12 +234,13 @@ const Tournaments = {
 // Routing
 pce.routes.push({
     path: '/tournaments',
-    component: Tournaments,
-    props: true,
+    component: tournamentsPage,
     meta: {
         loggedIn: true,
         title: 'Tournaments List',
-        template: 'tournaments',
         description: 'User page to add, update and remove tournaments'
     }
 });
+
+export default tournamentsPage;
+</script>
