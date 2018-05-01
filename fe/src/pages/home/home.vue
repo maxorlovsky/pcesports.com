@@ -31,7 +31,7 @@
 
             <h2 v-if="!loading">Latest blogs</h2>
 
-            <adsense></adsense>
+            <!-- <adsense></adsense> -->
 
             <div class="small-blog-block"
                 v-for="post in posts"
@@ -74,13 +74,13 @@ import { functions } from '../../functions.js';
 // Components
 import seo from '../../components/seo/seo.vue';
 import loading from '../../components/loading/loading.vue';
-import adsense from '../../components/adsense/adsense.vue';
+//import adsense from '../../components/adsense/adsense.vue';
 
 const homePage = {
     components: {
         seo,
-        loading,
-        adsense
+        loading
+        //adsense
     },
     data: function() {
         return {
