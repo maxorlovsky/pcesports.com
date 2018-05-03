@@ -84,7 +84,7 @@ export default {
             let game = functions.getGameData(gameAbbriviature);
             
             return game.link;
-        },
+        }
     }
 }
 </script>

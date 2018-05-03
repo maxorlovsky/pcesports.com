@@ -60,7 +60,7 @@ const eventsPage = {
     data: function() {
         return {
             loading: true,
-            games: {},
+            games: [],
             currentGame: {},
             status: {
                 name: 'Status',
