@@ -1,4 +1,4 @@
-$game-block-height: 270px;
+$game-block-height: 150px;
 $game-block-height-button: 38px;
 $game-block-height-full: ($game-block-height + $game-block-height-button);
 
@@ -103,9 +103,19 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
     .home-games-categories {
         width: 100%;
+        display: flex;
+
+        @media (max-width: 768px) {
+            display: block;
+        }
         
         .block-content {
+            width: 50%;
             background-color: #222;
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
         }
 
         h2 {
@@ -133,7 +143,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             }
         }
 
-        $game-block-width: 24%;
+        $game-block-width: 23%;
         .game-block {
             width: $game-block-width;
             box-shadow: inset 0px 0px 180px -12px rgba(0, 0, 0, 100);
@@ -147,10 +157,6 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
             @media (max-width: 768px) {
                 width: 31.8%;
-            }
-
-            &:first-child {
-                width: 48.5%;
             }
 
             $game-block-width-mobile: 49%;
@@ -247,6 +253,55 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         .game-dota {
             background-image: url("../dist/assets/images/dota-logo-big.png");
             background-color: #800000;
+        }
+    }
+
+    .tournaments-latest {
+        background-color: #222;
+
+        .event-list-wrapper {
+            overflow: auto;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: #eee;
+        }
+    }
+
+    .watch-tournaments {
+        width: 100%;
+
+        .block-content {
+            background-color: #222;
+        }
+
+        h2 {
+            color: #eee;
+        }
+
+        .watch-item {
+            @extend .event-item;
+            background-color: #ffe988;
+
+            .watch-dates {
+                min-width: 300px;
+            }
+
+            .event-status .live {
+                display: inline-block;
+                border-radius: 50%;
+                background-color: #f00;
+                width: 0.85rem;
+                height: 0.85rem;
+            }
+
+            &.live {
+                background-color: #b0ff88;
+            }
         }
     }
 }
