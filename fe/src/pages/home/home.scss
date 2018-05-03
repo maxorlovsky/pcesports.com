@@ -283,12 +283,21 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             color: #eee;
         }
 
+        .event-list-wrapper {
+            overflow: auto;
+        }
+
         .watch-item {
             @extend .event-item;
             background-color: #ffe988;
+            min-width: 975px;
+
+            .event-status-links {
+                min-width: 110px;
+            }
 
             .watch-dates {
-                min-width: 300px;
+                min-width: 230px;
             }
 
             .event-status .live {

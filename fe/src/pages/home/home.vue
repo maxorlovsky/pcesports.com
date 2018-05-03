@@ -6,58 +6,59 @@
 
             <loading v-if="tournamentsLoading"></loading>
 
-            <div v-if="watchTournaments.length"
-                v-for="game in watchTournaments"
-                :key="game.id"
-                class="event-list-wrapper"
-            >
-                <div :class="{ 'live': game.live == 1 }"
-                    class="watch-item"
+            <div class="event-list-wrapper">
+                <div v-if="watchTournaments.length"
+                    v-for="game in watchTournaments"
+                    :key="game.id"
                 >
-                    <a :href="game.home_link"
-                        target="_blank"
-                        class="event-image"
-                        rel="noopener"
+                    <div :class="{ 'live': game.live == 1 }"
+                        class="watch-item"
                     >
-                        <img :src="'/dist/assets/images/' + getGameAbbr(game.game) +'.png'" />
-                    </a>
-
-                    <a :href="game.home_link"
-                        target="_blank"
-                        class="event-name-info"
-                        rel="noopener"
-                    >
-                        <h4 class="event-name" :title="game.name">{{game.name}}</h4>
-                        <div>
-                            <i class="fa fa-trophy"></i> {{game.prize}}
-                        </div>
-                    </a>
-
-                    <div class="watch-dates">
-                        <div><i class="fa fa-calendar"></i> <i class="fa fa-step-forward"></i> {{game.startTime}}</div>
-                        <div><i class="fa fa-calendar"></i> <i class="fa fa-times"></i> {{game.endTime}}</div>
-                    </div>
-
-                    <div class="event-status-links">
-                        <a v-if="game.live == 1"
-                            :href="game.twitch_link"
+                        <a :href="game.home_link"
                             target="_blank"
+                            class="event-image"
                             rel="noopener"
-                            class="event-status"
-                        ><i class="live"></i> LIVE NOW</a>
+                        >
+                            <img :src="'/dist/assets/images/' + getGameAbbr(game.game) +'.png'" />
+                        </a>
 
-                        <div class="event-links">
-                            <a :href="game.home_link"
+                        <a :href="game.home_link"
+                            target="_blank"
+                            class="event-name-info"
+                            rel="noopener"
+                        >
+                            <h4 class="event-name" :title="game.name">{{game.name}}</h4>
+                            <div>
+                                <i class="fa fa-trophy"></i> {{game.prize}}
+                            </div>
+                        </a>
+
+                        <div class="watch-dates">
+                            <div><i class="fa fa-calendar"></i> <i class="fa fa-step-forward"></i> {{game.startTime}}</div>
+                            <div><i class="fa fa-calendar"></i> <i class="fa fa-times"></i> {{game.endTime}}</div>
+                        </div>
+
+                        <div class="event-status-links">
+                            <a v-if="game.live == 1"
+                                :href="game.twitch_link"
                                 target="_blank"
                                 rel="noopener"
-                                title="External source link"
-                            ><i class="fa fa-external-link"></i></a>
+                                class="event-status"
+                            ><i class="live"></i> LIVE NOW</a>
 
-                            <a :href="game.twitch_link"
-                                target="_blank"
-                                rel="noopener"
-                                title="Twitch"
-                            ><i class="fa fa-twitch"></i></a>
+                            <div class="event-links">
+                                <a :href="game.home_link"
+                                    target="_blank"
+                                    rel="noopener"
+                                    title="External source link"
+                                ><i class="fa fa-external-link"></i></a>
+
+                                <a :href="game.twitch_link"
+                                    target="_blank"
+                                    rel="noopener"
+                                    title="Twitch"
+                                ><i class="fa fa-twitch"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
