@@ -6,5 +6,5 @@ module.exports = {
     directory: 'public',
     spa: 'index.html',
     https: true,
-    port: 8095
+    port: 8080
 }
