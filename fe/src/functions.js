@@ -77,6 +77,7 @@ const functions = {
 
         switch(name) {
             case 'dota':
+            case 'dota2':
                 game.abbriviature = 'dota';
                 game.name = 'Dota 2';
                 game.link = 'dota';
@@ -89,6 +90,7 @@ const functions = {
             break;
             case 'cs':
             case 'counter-strike':
+            case 'counterstrike':
                 game.abbriviature = 'cs';
                 game.name = 'Counter Strike:GO';
                 game.link = 'counter-strike';
@@ -100,6 +102,7 @@ const functions = {
             break;
             case 'rl':
             case 'rocket-league':
+            case 'rocketleague':
                 game.abbriviature = 'rl';
                 game.name = 'Rocket League';
                 game.link = 'rocket-league';
@@ -111,6 +114,8 @@ const functions = {
             break;
             case 'hots':
             case 'heroes-of-the-storm':
+            case 'heroesofthestorm':
+            case 'heroes':
                 game.abbriviature = 'hots';
                 game.name = 'Heroes of the Storm';
                 game.link = 'heroes-of-the-storm';
@@ -122,6 +127,7 @@ const functions = {
             break;
             case 'lol':
             case 'league-of-legends':
+            case 'leagueoflegends':
                 game.abbriviature = 'lol';
                 game.name = 'League of Legends';
                 game.link = 'league-of-legends';
@@ -148,6 +154,17 @@ const functions = {
                 game.abbriviature = 'ow';
                 game.name = 'Overwatch';
                 game.link = 'overwatch';
+                game.regions = {
+                    'all': 'All',
+                    'na': 'North America',
+                    'eu': 'Europe'
+                };
+            break;
+            case 'sc2':
+            case 'starcraft2':
+                game.abbriviature = 'sc2';
+                game.name = 'StarCraft II';
+                game.link = 'starcraft';
                 game.regions = {
                     'all': 'All',
                     'na': 'North America',
