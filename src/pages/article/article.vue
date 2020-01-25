@@ -39,10 +39,9 @@ import loading from '../../components/loading/loading.vue';
 
 const articlePage = {
     components: {
-        loading,
-        vueDisqus
+        loading
     },
-    data: function () {
+    data() {
         return {
             loading: true,
             pageError: '',
