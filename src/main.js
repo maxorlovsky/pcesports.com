@@ -52,7 +52,6 @@ const router = new VueRouter({
 });
 
 Vue.use(VueRouter);
-Vue.use(VueTooltip);
 
 // If it's not prerender, enabling google analytics
 if (window.navigator.userAgent.toLowerCase().indexOf('prerender') === -1) {
