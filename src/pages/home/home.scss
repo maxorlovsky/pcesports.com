@@ -6,99 +6,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
     .view-all {
         text-transform: uppercase;
         margin: 0 auto;
-    }
-
-    .blog-home-page {
-        max-width: 90%;
-        margin: 0 auto;
-        text-align: center;
-
-        .block-content {
-            background-color: #f5f5dc;
-            @include clearfix();
-        }
-
-        .small-blog-block {
-            float: left;
-            width: 24%;
-            min-height: 150px;
-            margin-right: 1%;
-            position: relative;
-
-            @media (max-width: 768px) {
-                float: none;
-                width: auto;
-                margin-right: 0;
-            }
-
-            .blog-link-wrapper {
-                cursor: pointer;
-                display: block;
-            }
-
-            .title {
-                border-top: 1px solid #fff;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                background-color: rgba(0, 0, 0, 0.9);
-                padding: 5px 10px 10px 10px;
-                text-overflow: ellipsis;
-                max-height: 100px;
-                width: 100%;
-
-                @media (max-width: 768px) {
-                    margin: 0;
-                }
-            }
-
-            .dates {
-                position: absolute;
-                top: 10px;
-                left: 0;
-                text-align: center;
-                font-size: 1rem;
-                font-weight: bold;
-                padding: 0.5rem;
-                color: #fff;
-                background: linear-gradient(to bottom, #27c6d0 0%, #217fbb 100%);
-                opacity: 0.85;
-            }
-
-            .image-holder {
-                background-color: #444;
-                height: 170px;
-                overflow: hidden;
-                margin-bottom: 10px;
-
-                @media (max-width: 768px) {
-                    width: auto;
-                }
-
-                > div {
-                    background-size: cover;
-                    background-position: center center;
-                    height: 170px;
-                }
-
-                p {
-                    display: block;
-                    padding-top: 75px;
-                    color: #fff;
-                    font-weight: bold;
-                    text-align: center;
-                }
-
-                img {
-                    max-width: 275px;
-                    max-height: 170px;
-                }
-            }
-
-            &:nth-last-child(1) {
-                margin-right: 0;
-            }
-        }
+        width: 100%;
     }
 
     .home-games-categories {
@@ -111,7 +19,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         
         .block-content {
             width: 50%;
-            background-color: #222;
+            background-color: rgba(25, 25, 25, 0.9);
 
             @media (max-width: 768px) {
                 width: 100%;
@@ -143,7 +51,7 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             }
         }
 
-        $game-block-width: 23%;
+        $game-block-width: 45%;
         .game-block {
             width: $game-block-width;
             box-shadow: inset 0px 0px 180px -12px rgba(0, 0, 0, 100);
@@ -162,18 +70,18 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
             $game-block-width-mobile: 49%;
             @media (max-width: 425px) {
                 width: $game-block-width-mobile;
-                height: $game-block-height - 100;
+                height: $game-block-height - 50;
                 margin: 1px;
 
-                &:first-child {
+                /* &:first-child {
                     width: 98.5%;
                     margin: 0 1px;
-                }
+                } */
 
-                /* &:first-child {
+                &:first-child {
                     width: $game-block-width-mobile;
                     margin: 1px;
-                } */
+                }
             }
 
             .btn {
@@ -221,67 +129,74 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         }
 
         .game-lol {
-            background-image: url("../dist/assets/images/lol-logo-big.png");
+            background-image: url("#{$assets}/images/lol-logo-big.png");
             background-color: #5bc0de;
         }
 
         .game-hs {
-            background-image: url("../dist/assets/images/hs-logo-big.png");
+            background-image: url("#{$assets}/images/hs-logo-big.png");
             background-color: #ec971f;
         }
 
-        .game-hots {
-            background-image: url("../dist/assets/images/hots-logo-big.png");
-            background-color: #9b4fe2;
-        }
-
         .game-ow {
-            background-image: url("../dist/assets/images/ow-logo-big.png");
+            background-image: url("#{$assets}/images/ow-logo-big.png");
             background-color: #636c72;
         }
 
         .game-rl {
-            background-image: url("../dist/assets/images/rl-logo-big.png");
+            background-image: url("#{$assets}/images/rl-logo-big.png");
             background-color: #023;
         }
 
         .game-cs {
-            background-image: url("../dist/assets/images/cs-logo-big.png");
+            background-image: url("#{$assets}/images/cs-logo-big.png");
             background-color: #222;
         }
 
         .game-dota {
-            background-image: url("../dist/assets/images/dota-logo-big.png");
+            background-image: url("#{$assets}/images/dota-logo-big.png");
             background-color: #800000;
         }
     }
 
-    .tournaments-latest {
-        background-color: #222;
-
-        .event-list-wrapper {
-            overflow: auto;
-        }
-
-        .event-item:last-child {
-            border-bottom: none;
-        }
-
-        h2 {
-            color: #eee;
-        }
-    }
-
-    .watch-tournaments {
+    .tournaments-lists {
         width: 100%;
+        background-color: rgba(25, 25, 25, 0.9);
+        display: flex;
+
+        @media (max-width: 768px) {
+            flex-wrap: wrap;
+        }
 
         .block-content {
-            background-color: #222;
+            background-color: transparent;
         }
 
         h2 {
             color: #eee;
         }
+
+        .tournaments-to-watch,
+        .tournaments-latest {
+            width: 49.5%;
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+
+        .tournaments-latest {
+            .event-list-wrapper {
+                overflow: auto;
+            }
+    
+            .event-item:last-child {
+                border-bottom: none;
+            }
+    
+            h2 {
+                color: #eee;
+            }
+        }    
 
         .event-list-wrapper {
             overflow: auto;
@@ -290,7 +205,14 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
         .watch-item {
             @extend .event-item;
             background-color: #ffe988;
-            min-width: 975px;
+            min-width: 635px;
+
+            .event-name-info {
+                max-width: 400px;
+                min-width: auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
             .event-status-links {
                 min-width: 110px;
@@ -310,6 +232,82 @@ $game-block-height-full: ($game-block-height + $game-block-height-button);
 
             &.live {
                 background-color: #b0ff88;
+            }
+        }
+    }
+
+    .reddit-posts {
+        &__wrapper,
+        &--no-posts {
+            background-color: #1a1a1b;
+            color: #9c9d9e;
+            border: 1px solid #343536;
+            border-radius: 4px;
+            overflow: auto;
+        }
+
+        &__post {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #343536;
+            min-width: 460px;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+
+            &__score {
+                font-weight: bold;
+                padding: 0 0.4rem;
+                min-width: 3rem;
+                font-size: 0.85rem;
+                text-align: center;
+                color: #9c9d9e;
+            }
+
+            &__image {
+                min-width: 80px;
+                height: 60px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                border-radius: 4px;
+                margin-right: 1rem;
+            }
+        }
+
+        .links-content {
+            display: flex;
+            flex-wrap: wrap;
+            
+            &__title {
+                display: block;
+                width: 100%;
+                color: #9c9d9e;
+            }
+
+            &__external-url {
+                font-size: 0.8rem;
+                display: flex;
+                align-items: center;
+
+                &__url {
+                    width: 300px;
+                    display: inline-block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-right: 0.3rem;
+
+                    &:hover {
+                        color: #3a64b2;
+                    }
+                }
+
+                .fa:hover {
+                    color: #3a64b2;
+                }
             }
         }
     }

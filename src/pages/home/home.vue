@@ -1,7 +1,7 @@
 <template>
 <div class="home">
-    <div class="block watch-tournaments">
-        <div class="block-content">
+    <div class="block tournaments-lists">
+        <div class="block-content tournaments-to-watch">
             <h2>Tournaments to watch</h2>
 
             <loading v-if="tournamentsLoading"></loading>
@@ -64,9 +64,7 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="block home-games-categories">
         <div class="block-content tournaments-latest">
             <h2>Upcoming tournaments to play</h2>
 
@@ -77,6 +75,51 @@
                     :key="game.id"
                     v-for="game in upcomingTournaments"></event-item>
             </div>
+        </div>
+    </div>
+
+    <div class="block home-games-categories">
+        <div class="block-content reddit-posts">
+            <h2>Top topics per day from /r/esports</h2>
+
+            <loading v-if="redditLoading"></loading>
+            <div v-else-if="reddits"
+                class="reddit-posts__wrapper"
+            >
+                <a v-for="post in reddits"
+                    :key="post.redditUrl"
+                    :href="`https://www.reddit.com${post.redditUrl}`"
+                    target="_blank"
+                    rel="noopener"
+                    class="reddit-posts__post"
+                >
+                    <div class="reddit-posts__post__score">{{ post.karma }}</div>
+                    <div :style="{'background-image': `url(${post.image})`}"
+                        class="reddit-posts__post__image"
+                    />
+                    <div class="reddit-posts__post__links links-content">
+                        <div class="links-content__title">{{ post.title }}</div>
+                        <div class="links-content__external-url">
+                            <a :href="post.externalUrl"
+                                class="links-content__external-url__url"
+                                target="_blank"
+                                rel="noopener"
+                            >{{ post.externalUrl }}</a>
+                            <a :href="post.externalUrl"
+                                class="fa fa-external-link"
+                                target="_blank"
+                                rel="noopener"
+                            />
+                        </div>
+                    </div>
+                    <!-- 
+                        timePost: post.data.created_utc,
+                        comments: post.data.num_comments-->
+                </a>
+            </div>
+            <div v-else
+                class="reddit-posts--no-posts"
+            >No reddit topics to load ;(</div>
         </div>
 
         <div v-if="!loading"
@@ -103,39 +146,10 @@
         </div>
     </div>
 
-    <div class="block blog-home-page">
-        <div class="block-content">
-            <loading v-if="loading"></loading>
-
-            <h2 v-if="!loading">Latest blogs</h2>
-
-            <!-- <adsense></adsense> -->
-
-            <div class="small-blog-block"
-                v-for="post in posts"
-                v-if="!loading"
-                :key="post.slug"
-            >
-                <router-link :to="'../article/'+post.slug" class="blog-link-wrapper">
-                    <div class="image-holder">
-                        <div v-if="post.bg_image" :style="{ backgroundImage: 'url(' + post.bg_image + ')' }"></div>
-                        <p v-else>No image</p>
-                    </div>
-                    <h5 class="title">{{post.title.rendered}}</h5>
-                    <div class="dates" v-html="post.date"></div>
-                </router-link>
-            </div>
-
-            <router-link
-                :to="'../blog'"
-                class="view-all btn btn-lg btn-secondary">View all blog posts</router-link>
-        </div>
-    </div>
-
     <div class="block seo-about">
         <seo>
-            <h1>eSports online tournaments list for PC games</h1>
-            <p>"PC Esports" provide list of tournament events, played on PC, mostly online, for North America and Europe. Catalog created with the idea to help amateur and semi-pro teams to find tournaments easily on centralized platform. Catalog displaying informations for games such as <router-link :to="'../events/league-of-legends'">League of Legends</router-link>, <router-link :to="'../events/hearthstone'">Hearthstone</router-link> from many platforms such as <a href="http://events.na.leagueoflegends.com/" target="_blank">LoL Events page</a>, <a href="https://battlefy.com/" target="_blank">Battlefy</a>, <a href="https://strivewire.com/" target="_blank">StriveWire</a>, <a href="https://esportswall.com/" target="_blank">eSports Wall</a>, <a href="https://play.eslgaming.com" target="_blank">ESL</a>, <a href="https://www.toornament.com/" target="_blank">Toornament</a>.</p>
+            <h1>Esports online tournaments list for PC games</h1>
+            <p>"PC Esports" provide list of tournament events, played on PC, mostly online, for North America and Europe. Catalog created with the idea to help amateur and semi-pro teams to find tournaments easily on centralized platform. Catalog displaying informations for games such as <router-link :to="'../events/league-of-legends'">League of Legends</router-link>, <router-link :to="'../events/hearthstone'">Hearthstone</router-link> from many platforms such as <a href="http://events.na.leagueoflegends.com/" target="_blank">LoL Events page</a>, <a href="https://battlefy.com/" target="_blank">Battlefy</a>, <a href="https://strivewire.com/" target="_blank">StriveWire</a>, <a href="https://esportswall.com/" target="_blank">Eports Wall</a>, <a href="https://play.eslgaming.com" target="_blank">ESL</a>, <a href="https://www.toornament.com/" target="_blank">Toornament</a>.</p>
             <p>PC Esports is not in any way connected to tournament organizers specified in catalog. PC Esports is not responsible for organizers actions and updates that can happen to event.</p>
         </seo>
     </div>
@@ -153,27 +167,26 @@ import { functions } from '../../functions.js';
 import seo from '../../components/seo/seo.vue';
 import loading from '../../components/loading/loading.vue';
 import eventItem from '../../components/event-item/event-item.vue';
-//import adsense from '../../components/adsense/adsense.vue';
 
 const homePage = {
     components: {
         seo,
         loading,
         eventItem
-        //adsense
     },
     data: function() {
         return {
             loading: true,
             tournamentsLoading: true,
-            posts: [],
+            redditLoading: true,
+            reddits: [],
             games: [],
             upcomingTournaments: [],
             watchTournaments: [],
-            gameOrder: ['lol', 'hs', 'ow', 'hots', 'rl', 'dota', 'cs']
+            gameOrder: ['lol', 'hs', 'ow', 'rl', 'dota', 'cs']
         };
     },
-    created: function() {
+    created() {
         let games = [];
 
         for (const game of this.gameOrder) {
@@ -191,10 +204,10 @@ const homePage = {
 
         this.fetchTournaments();
 
+        this.fetchReddits();
+
         const checkStorage = functions.storage('get', 'home-data');
         if (checkStorage) {
-            this.posts = checkStorage.posts;
-
             for(const game of this.games) {
                 game.count = checkStorage.tournamentsCount[game.abbriviature];
             }
@@ -203,26 +216,16 @@ const homePage = {
         }
         else {
             axios.all([
-                axios.get(`${pce.wpApiUrl}/wp/v2/posts/?per_page=4`),
                 axios.get(`${pce.apiUrl}/tournaments/count`)
             ])
             .then(axios.spread((
-                postsData,
                 tournamentsCountData
             ) => {
-                for (let i = 0; i < postsData.data.length; ++i) {
-                    let date = (new Date(postsData.data[i].date));
-                    postsData.data[i].date = date.toLocaleString('en-us', { month: "short" })+'<br />'+date.getDate();
-                }
-
-                this.posts = postsData.data;
-
                 for(const game of this.games) {
                     game.count = tournamentsCountData.data[game.abbriviature];
                 }
 
                 const homeData = {
-                    posts: this.posts,
                     tournamentsCount: tournamentsCountData.data
                 };
 
@@ -233,6 +236,29 @@ const homePage = {
         }
     },
     methods: {
+        async fetchReddits() {
+            try {
+                const response = await axios.get('https://www.reddit.com/r/esports/top/.json?limit=5&t=day');
+
+                for (const post of response.data.data.children) {
+                    console.log(post.data);
+
+                    this.reddits.push({
+                        title: post.data.title,
+                        image: post.data.thumbnail,
+                        redditUrl: post.data.permalink,
+                        externalUrl: post.data.url,
+                        timePost: post.data.created_utc,
+                        karma: post.data.score,
+                        comments: post.data.num_comments
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                this.redditLoading = false;
+            }
+        },
         fetchTournaments: function() {
             axios.all([
                 axios.get(`${pce.apiUrl}/tournaments?limit=5`),
