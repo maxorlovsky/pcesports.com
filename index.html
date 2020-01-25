@@ -59,8 +59,7 @@ var pce = {
 <body>
 
 <div class="wrapper" id="app">
-    <header-component
-        v-on:nav-menu="burgerMenu()"
+    <header-component v-on:nav-menu="burgerMenu()"
         v-on:right-menu="openRightMenu()"
         v-on:auth-action="authAction()"
         v-bind:logged-in="loggedIn"
@@ -72,12 +71,9 @@ var pce = {
 
     <footer-component></footer-component>
 
-    <left-side-menu-component
-        v-on:nav-menu="burgerMenu()"
-    ></left-side-menu-component>
+    <left-side-menu-component v-on:nav-menu="burgerMenu()"></left-side-menu-component>
     
-    <right-side-menu-component
-        v-on:right-menu="openRightMenu()"
+    <right-side-menu-component v-on:right-menu="openRightMenu()"
         v-on:logout="logout()"
         v-bind:logged-in="loggedIn"
         v-bind:user-data="userData"

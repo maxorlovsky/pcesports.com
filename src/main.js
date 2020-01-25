@@ -5,7 +5,6 @@ import { functions } from './functions.js';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueAnalytics from 'vue-analytics';
-import VueTooltip from 'v-tooltip';
 
 // 3rd party libs
 import axios from 'axios';
@@ -19,22 +18,20 @@ import rightSideMenuComponent from './components/right-side-menu/right-side-menu
 import floatMessage from './components/float-message/float-message.vue';
 
 // Pages
-/* jshint ignore:start */
-import articlePage from './pages/article/article.vue';
-import blogPage from './pages/blog/blog.vue';
-import changePasswordPage from './pages/change-password/change-password.vue';
-import eventAddPage from './pages/event-add/event-add.vue';
-import eventDetailsPage from './pages/event-details/event-details.vue';
-import eventsPage from './pages/events/events.vue';
-import homePage from './pages/home/home.vue';
-import pageNotFound from './pages/404/404.vue';
-import userPage from './pages/user/user.vue';
-import unsubscribePage from './pages/unsubscribe/unsubscribe.vue';
-import tournamentsPage from './pages/tournaments/tournaments.vue';
-import settingsPage from './pages/settings/settings.vue';
-import registrationApprovalPage from './pages/registration-approval/registration-approval.vue';
-import profilePage from './pages/profile/profile.vue';
-/* jshint ignore:end */
+import './pages/article/article.vue';
+import './pages/blog/blog.vue';
+import './pages/change-password/change-password.vue';
+import './pages/event-add/event-add.vue';
+import './pages/event-details/event-details.vue';
+import './pages/events/events.vue';
+import './pages/home/home.vue';
+import './pages/404/404.vue';
+import './pages/user/user.vue';
+import './pages/unsubscribe/unsubscribe.vue';
+import './pages/tournaments/tournaments.vue';
+import './pages/settings/settings.vue';
+import './pages/registration-approval/registration-approval.vue';
+import './pages/profile/profile.vue';
 
 functions.storageCacheBuster();
 

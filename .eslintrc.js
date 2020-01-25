@@ -14,7 +14,7 @@ module.exports = {
         "vue"
     ],
     "globals": {
-        "mo": true
+        "pce": true
     },
     "parserOptions": {
         "sourceType": "module",

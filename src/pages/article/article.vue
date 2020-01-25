@@ -14,10 +14,6 @@
                 class="btn btn-info"
                 v-bind:to="'/blog'">Back to blog</router-link>
 
-            <div class="comments">
-                <vue-disqus shortname="https-www-pcesports-com" url="https://www.pcesports.com"></vue-disqus>
-            </div>
-
             <router-link role="button"
                 class="btn btn-info"
                 v-bind:to="'/blog'">Back to blog</router-link>
@@ -34,7 +30,6 @@
 <script>
 // 3rd party libs
 import axios from 'axios';
-import vueDisqus from 'vue-disqus';
 
 // Global functions
 import { functions } from '../../functions.js';

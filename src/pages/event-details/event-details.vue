@@ -64,7 +64,6 @@
 <script>
 // 3rd party libs
 import axios from 'axios';
-import marked from 'marked';
 
 // Global functions
 import { functions } from '../../functions.js';
@@ -119,10 +118,6 @@ const eventDetailsPage = {
         correctDescription: function(description, markedEnable) {
             if (!description) {
                 return '';
-            }
-
-            if (markedEnable) {
-                description = marked(description);
             }
 
             description = description

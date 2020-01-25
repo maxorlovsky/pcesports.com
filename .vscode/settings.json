@@ -9,5 +9,13 @@
         "**/dist": true,
         "node_modules/": true,
         "**/public/web/assets": true
-    }
+    },
+    "git.ignoreLimitWarning": true,
+    "git.inputValidationSubjectLength": 120,
+    "eslint.validate": [
+        "javascript",
+        {
+            "language": "vue"
+        }
+    ]
 }
