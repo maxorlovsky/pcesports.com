@@ -21,7 +21,7 @@
     "@babel/core": "7.4.4",
     "@babel/polyfill": "7.4.4",
     "@babel/preset-env": "7.4.4",
-    "axios": "0.18.0",
+    "axios": "0.18.1",
     "babel-loader": "8.0.5",
     "bootstrap": "4.3.1",
     "copy-webpack-plugin": "5.0.3",
