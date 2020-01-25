@@ -116,13 +116,13 @@ const config = {
                 }
             },
             '/wp-api': {
-                target: 'http://localhost:8325/public',
+                target: 'https://api.pcesports.com/wp/wp-json',
                 secure: false,
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/wp/wp-json/': ''
+                    '^/wp-api': ''
                 }
-            }
+            },
         }
     },
     performance: {

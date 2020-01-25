@@ -41,14 +41,6 @@
 
     <!-- Critical css/js -->
     <style>body{background-color:#000}.pre-loading{width:100%;height:100%;background-color:rgba(0,0,0,0.99);display:flex;align-items:center;justify-content:center;position:fixed;top:0;left:0;z-index:50;}header,footer,.page{visibility:hidden;height:0;}</style>
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-9080099154901572",
-        enable_page_level_ads: true
-    });
-    </script>
 </head>
 
 <script async>
@@ -71,7 +63,8 @@ var pce = {
         v-on:nav-menu="burgerMenu()"
         v-on:right-menu="openRightMenu()"
         v-on:auth-action="authAction()"
-        v-bind:logged-in="loggedIn"></header-component>
+        v-bind:logged-in="loggedIn"
+    ></header-component>
 
     <section class="page">
         <router-view v-bind:user-data="userData"></router-view>
@@ -80,7 +73,8 @@ var pce = {
     <footer-component></footer-component>
 
     <left-side-menu-component
-        v-on:nav-menu="burgerMenu()"></left-side-menu-component>
+        v-on:nav-menu="burgerMenu()"
+    ></left-side-menu-component>
     
     <right-side-menu-component
         v-on:right-menu="openRightMenu()"
@@ -88,23 +82,26 @@ var pce = {
         v-bind:logged-in="loggedIn"
         v-bind:user-data="userData"
         v-bind:form="rightSideMenuForm"
-        v-bind:menu="userMenu"></right-side-menu-component>
+        v-bind:menu="userMenu"
+    ></right-side-menu-component>
 
     <float-message v-bind:parameters="floatingMessage"></float-message>
 </div>
 
 <section class="pre-loading loading" id="pre-loading"></section>
 
-<link type="text/css" href="/dist/combined.css?v=%version%" defer rel="stylesheet">
+<link type="text/css" href="/dist/styles.css?v=%version%" defer rel="stylesheet">
 <link type="text/css" href='//fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin' defer rel="stylesheet">
 <link type="text/css" href='//fonts.googleapis.com/css?family=Nunito:400,700&amp;subset=latin' defer rel="stylesheet">
 
-<script src="/ads.js" async></script>
 <script src="/dist/vendors.js?v=%version%"></script>
 <script src="/dist/bundle.js?v=%version%" async></script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script async defer src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
+
+<!-- dev -->
+<script src="//pcesports-fe-web.maxorlovsky.net/webpack-dev-server.js"></script>
+<!-- !dev -->
 
 </body>
 </html>

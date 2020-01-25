@@ -1,7 +1,7 @@
 {
- "name": "PCE eSports",
+ "name": "PCEsports",
  "short_name": "PCE",
- "description": "PCE eSports - events catalog",
+ "description": "PCEsports - events catalog",
  "icons": [
   {
    "src": "/dist/assets/images\/android-icon-36x36.png",

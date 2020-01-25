@@ -179,7 +179,7 @@ header {
                 content: " ";
                 display: block;
                 height: 61px;
-                background-image: url("../assets/images/christmas-snow.png");
+                background-image: url("#{$assets}/images/christmas-snow.png");
                 background-repeat: repeat-x;
                 background-position: bottom;
 
@@ -218,7 +218,7 @@ header {
 
                 li {
                     display: block;
-                    background-image: url("../assets/images/snow.png");
+                    background-image: url("#{$assets}/images/snow.png");
                     height: 1200px;
                     width: 200%;
                     margin-left: -50%;
@@ -275,7 +275,7 @@ header {
             height: 58px;
             position: fixed;
             display: block;
-            background-image: url("../assets/images/christmas-lights.png");
+            background-image: url("#{$assets}/images/christmas-lights.png");
             background-repeat: repeat-x;
             top: 30px;
             left: 0;

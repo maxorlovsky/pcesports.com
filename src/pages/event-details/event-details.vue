@@ -11,7 +11,7 @@
                     v-if="game.game"
                     class="game-image"
                     :to="'/events/' + $route.params.game">
-                    <img :src="'../../dist/assets/images/' + game.game +'-logo-big.png'" />
+                    <img :src="'/dist/assets/images/' + game.game +'-logo-big.png'" />
                 </router-link>
             </div>
 

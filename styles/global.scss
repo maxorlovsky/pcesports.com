@@ -14,11 +14,13 @@ $nav-link-padding: 0;
 $table-border-width: 0;
 
 /* Font-Awesome variables */
-$fa-font-path: '/dist/assets/font';
+$fa-font-path: '/dist/assets/fonts';
+$icomoon-font-path: "/dist/assets/fonts/";
+$assets: "/dist/assets" !default;
 
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
-@import '../../node_modules/font-awesome/scss/font-awesome.scss';
-@import '../../node_modules/vue-directive-tooltip/src/css/index.scss';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/font-awesome/scss/font-awesome.scss';
+@import '../node_modules/vue-directive-tooltip/src/css/index.scss';
 
 @import './fonts.scss';
 @import './styles.scss';

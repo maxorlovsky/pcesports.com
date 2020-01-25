@@ -17,11 +17,11 @@
                         v-for="gameIcon in gamesList"
                         :key="gameIcon"
                         v-on:click="switchGame(gameIcon)">
-                        <img :src="'../../../dist/assets/images/' + gameIcon + '.png'" />
+                        <img :src="'/dist/assets/images/' + gameIcon + '.png'" />
                     </div>
                 </div>
                 <div v-else class="game-image">
-                    <img :src="'../../../dist/assets/images/' + game.game +'-logo-big.png'" />
+                    <img :src="'/dist/assets/images/' + game.game +'-logo-big.png'" />
                 </div>
             </div>
 
