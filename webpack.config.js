@@ -5,7 +5,7 @@ const version = JSON.parse(packageFile).version;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-const TextReplaceHtmlWebpackPlugin = require('text-replace-html-webpack-plugin');
+const ReplaceInFileWebpackPlugin = require('replace-in-file-webpack-plugin');
 const globImporter = require('node-sass-glob-importer');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -179,9 +179,13 @@ module.exports = (env = {}) => {
         });
     }
 
-    config.plugins.push(new TextReplaceHtmlWebpackPlugin({
-        replacementArray: replaceInFileRules
-    }));
+    config.plugins.push(new ReplaceInFileWebpackPlugin([
+        {
+            dir: path.resolve('./public/'),
+            files: ['index.html'],
+            rules: replaceInFileRules
+        }
+    ]));
 
     return config;
 };
