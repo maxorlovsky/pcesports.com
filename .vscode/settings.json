@@ -7,15 +7,11 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/dist": true,
-        "node_modules/": true,
+        "**/build": true,
+        "**/node_modules/": true,
         "**/public/web/assets": true
     },
     "git.ignoreLimitWarning": true,
     "git.inputValidationSubjectLength": 120,
-    "eslint.validate": [
-        "javascript",
-        {
-            "language": "vue"
-        }
-    ]
+    "editor.tabSize": 2
 }
