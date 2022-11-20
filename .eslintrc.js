@@ -106,7 +106,7 @@ module.exports = {
         "id-length": "off",
         "id-match": "error",
         "implicit-arrow-linebreak": "off",
-        "indent": ["error", 4, {
+        "indent": ["error", 2, {
             "SwitchCase": 1
         }],
         "indent-legacy": "off",
@@ -318,6 +318,6 @@ module.exports = {
             "never"
         ],
         "indent": "off",
-        "@typescript-eslint/indent": ["error"]
+        "@typescript-eslint/indent": ["error", 2]
     }
 };

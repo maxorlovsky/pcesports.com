@@ -8,10 +8,10 @@
         "**/.DS_Store": true,
         "**/dist": true,
         "**/build": true,
-        "**/node_modules/": true,
-        "**/public/web/assets": true
+        "**/node_modules/": true
     },
     "git.ignoreLimitWarning": true,
     "git.inputValidationSubjectLength": 120,
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
