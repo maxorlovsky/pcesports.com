@@ -2,29 +2,39 @@
 // 3rd party libs
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Components
 import Header from './components/header';
 import Footer from './components/footer';
-import Loading from './components/loading';
-import App from './App.tsx';
+
+// Pages
+import Home from './pages/home';
+import NotFound from './pages/not-found';
+
+// SCSS
 import './styles/index.scss';
 
 // Images
 import bgImage from '../src/assets/bg.jpg';
 
+// Update body's background
+document.body.style.backgroundImage = `url("${bgImage}")`;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Header />
-      <div className="body-content"
-        style={{backgroundImage: `url("${bgImage}")`}}
-      >
-        <App />
-        <Loading />
+      <div className="body-content">
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </div>
+
+      <div className="body-fader" />
       <Footer />
     </BrowserRouter>
   </StrictMode>,
