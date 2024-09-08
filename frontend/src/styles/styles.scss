@@ -2,10 +2,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: $font;
-  background-color: $bgColor;
   min-width: 360px;
   font-size: 10px;
   line-height: 1.5;
+  background-color: #000;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0px -100px;
 }
 
 .body-content {
@@ -13,11 +16,27 @@ body {
   height: calc(100vh - 45px);
   // Height of header
   padding-top: 62px;
-  background-image: url("assets/images/bg.jpg");
-  background-color: #000;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: 0px -100px;
+  font-size: 1rem;
+  color: #fff;
+  z-index: 2;
+  position: relative;
+}
+
+.body-fader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 45px);
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1;
+}
+
+.container {
+  max-width: 1040px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2rem;
 }
 
 a {
@@ -34,34 +53,8 @@ a {
   cursor: pointer;
 }
 
-/* Required for all forms */
-.input-wrapper {
-  &.error {
-    outline: 1px solid #d00;
-  }
-
-  &.custom-control {
-    padding-left: 2.5rem;
-
-    .custom-control-indicator {
-      width: 2rem;
-      height: 2rem;
-    }
-
-    .custom-control-description {
-      line-height: 2.5rem;
-    }
-  }
-}
-
-.page {
-  width: 100%;
-  flex: 1;
-  position: relative;
-  margin: 62px auto 0px auto;
-  visibility: visible;
-  height: auto;
-  transition: .5s;
+p {
+  margin-bottom: 0;
 }
 
 .block-content {
