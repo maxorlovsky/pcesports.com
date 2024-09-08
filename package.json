@@ -9,9 +9,10 @@
     "url": "https://github.com/maxorlovsky/pcesports.com"
   },
   "scripts": {
-    "eslint": "node_modules/.bin/eslint --ext .ts ./frontend/src/ --ext .ts ./backend/src/",
+    "eslint": "node_modules/.bin/eslint ./frontend/src/",
+    "stylelint": "stylelint \"./frontend/**/*.scss\"",
     "dev": "cd frontend && vite",
-    "build": "tsc -b && vite build",
+    "build": "cd frontend && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -55,6 +56,9 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "postcss-scss": "^4.0.9",
+    "stylelint": "16.9.0",
+    "stylelint-config-standard": "36.0.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"

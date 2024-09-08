@@ -11,7 +11,7 @@ function Footer() {
       </p>
 
       <div className="footer-links">
-          <a href="https://twitter.com/pcesports" target="_blank" rel="noreferrer noopener"><i className="icon icon-twitter"></i></a>
+        <a href="https://twitter.com/pcesports" target="_blank" rel="noreferrer noopener"><i className="icon icon-twitter"></i></a>
       </div>
     </footer>
   );

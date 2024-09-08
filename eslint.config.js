@@ -8,14 +8,15 @@ export default tseslint.config(
   { ignores: ['dist'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    parserOptions: {
-      sourceType: 'module',
-      ecmaVersion: 8
-    },
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -39,6 +40,14 @@ export default tseslint.config(
         'error',
         'last'
       ],
+      indent: ['error', 2, {
+        SwitchCase: 1
+      }],
     },
+    ignores: [
+      '**/*{.,-}min.js',
+      '**/dist/*',
+      '.eslintrc.js'
+    ]
   },
 )
