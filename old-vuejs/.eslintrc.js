@@ -6,21 +6,23 @@ module.exports = {
         "jest": true
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:vue/recommended",
-        "plugin:vue/base"
+        "eslint:recommended"
     ],
-    "plugins": [
-        "vue"
-    ],
-    "globals": {
-        "pce": true
-    },
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 8
     },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["plugin:@typescript-eslint/recommended"],
     "rules": {
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/array-type": "off",
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-extra-semi": "off",
         "accessor-pairs": "error",
         "array-bracket-newline": "error",
         "array-bracket-spacing": [
@@ -49,9 +51,9 @@ module.exports = {
         ],
         "callback-return": "off",
         "camelcase": "error",
-        "capitalized-comments": "error",
-        "class-methods-use-this": "error",
-        "comma-dangle": "off",
+        "capitalized-comments": "off",
+        "class-methods-use-this": "off",
+        "comma-dangle": "error",
         "comma-spacing": [
             "error",
             {
@@ -94,7 +96,7 @@ module.exports = {
             "error",
             "declaration"
         ],
-        "function-paren-newline": "error",
+        "function-paren-newline": "off",
         "generator-star-spacing": "error",
         "getter-return": "error",
         "global-require": "off",
@@ -103,11 +105,8 @@ module.exports = {
         "id-blacklist": "error",
         "id-length": "off",
         "id-match": "error",
-        "implicit-arrow-linebreak": [
-            "error",
-            "beside"
-        ],
-        "indent": ["error", 4, {
+        "implicit-arrow-linebreak": "off",
+        "indent": ["error", 2, {
             "SwitchCase": 1
         }],
         "indent-legacy": "off",
@@ -130,8 +129,8 @@ module.exports = {
             "beforeBlockComment": false
         }],
         "lines-around-directive": "error",
-        "lines-between-class-members": "error",
-        "max-depth": "error",
+        "lines-between-class-members": "off",
+        "max-depth": "off",
         "max-len": "off",
         "max-lines": "off",
         "max-nested-callbacks": "error",
@@ -142,10 +141,10 @@ module.exports = {
         "new-parens": "error",
         "newline-after-var": "error",
         "newline-before-return": "error",
-        "newline-per-chained-call": "error",
-        "no-alert": "error",
+        "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 5 }],
+        "no-alert": "off",
         "no-array-constructor": "error",
-        "no-await-in-loop": "error",
+        "no-await-in-loop": "off",
         "no-bitwise": "error",
         "no-buffer-constructor": "error",
         "no-caller": "error",
@@ -169,7 +168,7 @@ module.exports = {
         "no-extra-label": "error",
         "no-extra-parens": ["error", "functions"],
         "no-floating-decimal": "error",
-        "no-implicit-coercion": "off",
+        "no-implicit-coercion": "error",
         "no-implicit-globals": "error",
         "no-implied-eval": "error",
         "no-inline-comments": "error",
@@ -188,7 +187,7 @@ module.exports = {
         "no-multi-str": "error",
         "no-multiple-empty-lines": "error",
         "no-native-reassign": "error",
-        "no-negated-condition": "error",
+        "no-negated-condition": "off",
         "no-negated-in-lhs": "error",
         "no-nested-ternary": "error",
         "no-new": "error",
@@ -210,7 +209,7 @@ module.exports = {
         "no-restricted-properties": "error",
         "no-restricted-syntax": "error",
         "no-return-assign": "error",
-        "no-return-await": "error",
+        "no-return-await": "off",
         "no-script-url": "error",
         "no-self-compare": "error",
         "no-sequences": "error",
@@ -227,7 +226,7 @@ module.exports = {
         "no-undefined": "error",
         "no-underscore-dangle": "error",
         "no-unmodified-loop-condition": "error",
-        "no-unneeded-ternary": "error",
+        "no-unneeded-ternary": "off",
         "no-unused-expressions": "error",
         "no-use-before-define": "off",
         "no-useless-call": "error",
@@ -286,10 +285,7 @@ module.exports = {
         "sort-keys": "off",
         "sort-vars": "error",
         "space-before-blocks": "error",
-        "space-before-function-paren": [
-            "error",
-            "never"
-        ],
+        "space-before-function-paren": "off",
         "space-in-parens": [
             "error",
             "never"
@@ -314,37 +310,14 @@ module.exports = {
         ],
         "valid-jsdoc": "error",
         "vars-on-top": "error",
-        "vue/html-closing-bracket-newline": ["error", {
-            "singleline": "never",
-            "multiline": "always"
-        }],
-        "vue/html-closing-bracket-spacing": ["error", {
-            "startTag": "never",
-            "endTag": "never",
-            "selfClosingTag": "always"
-        }],
-        "vue/html-indent": ["error", 4, {
-            "attribute": 1,
-            "closeBracket": 0,
-            "alignAttributesVertically": true,
-            "ignores": ["VAttribute"]
-        }],
-        "vue/max-attributes-per-line": [2, {
-            "singleline": 1,
-            "multiline": {
-                "max": 1,
-                "allowFirstLine": true
-            }
-        }],
-        "vue/multiline-html-element-content-newline": "off",
-        "vue/name-property-casing": ["error", "kebab-case"],
-        "vue/singleline-html-element-content-newline": "off",
         "wrap-iife": "error",
         "wrap-regex": "error",
         "yield-star-spacing": "error",
         "yoda": [
             "error",
             "never"
-        ]
+        ],
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 2]
     }
 };

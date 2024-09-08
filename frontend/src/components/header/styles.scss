@@ -1,0 +1,85 @@
+@import '../../styles/variables.scss';
+
+header {
+    display: flex;
+    padding: 0;
+    background-color: rgba(25, 25, 25, 0.9);
+    border-bottom: 2px solid $mainColor;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    visibility: visible;
+    height: auto;
+    transition: 0.5s;
+
+    .logo {
+        margin: 0 2rem;
+        float: left;
+        width: 113px;
+        height: 60px;
+        position: relative;
+
+        img {
+            position: absolute;
+            width: 113px;
+            height: 80px;
+            transition: 0.5s;
+        }
+
+        &.logo-small {
+            img {
+                width: 85px;
+                height: 60px;
+            }
+        }
+    }
+    
+    nav {
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-link {
+            display: inline-block;
+            position: relative;
+            padding: 0;
+
+            img {
+                position: absolute;
+                left: 10px;
+                top: 30px;
+            }
+
+            a {
+                line-height: 60px;
+                opacity: 0.8;
+                padding: 0 20px;
+                display: block;
+                font-size: 15px;
+                text-transform: uppercase;
+                font-weight: bold;
+                text-decoration: none;
+                color: #fff;
+                font-family: $font;
+
+                &:hover,
+                &.router-link-active {
+                    background: $mainColor;
+                    opacity: 1;
+                }
+
+                &.router-link-active:before {
+                    content: " ";
+                    border-bottom: 2px solid #fff;
+                    position: absolute;
+                    bottom: -2px;
+                    width: 100%;
+                    left: 0;
+                }
+            }
+        }
+    }
+}

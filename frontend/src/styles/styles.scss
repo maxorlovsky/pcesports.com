@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $font;
+    background-color: $bgColor;
+    min-width: 360px;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.body-content {
+    // 100vh - header height - footer height
+    height: calc(100vh - 62px - 47px);
+    // Height of header
+    padding-top: 62px;
+}
+
+a {
+    transition: 0.3s;
+    text-decoration: none;
+    color: $mainColor;
+
+    &:hover {
+        color: $secondaryColor;
+    }
+}
+
+.btn {
+    cursor: pointer;
+}
+
+/* Required for all forms */
+.input-wrapper {
+    &.error {
+        outline: 1px solid #d00;
+    }
+
+    &.custom-control {
+        padding-left: 2.5rem;
+
+        .custom-control-indicator {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .custom-control-description {
+            line-height: 2.5rem;
+        }
+    }
+}
+
+
+.page {
+    width: 100%;
+    flex: 1;
+    position: relative;
+    margin: 62px auto 0px auto;
+    visibility: visible;
+    height: auto;
+    transition: .5s;
+
+    @include clearfix();
+}
+
+.block-content {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+    font-size: 1rem;
+
+    @media (max-width: 425px) {
+        padding: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        margin: 10px 0 30px 0;
+        text-transform: uppercase;
+        font-family: 'Nunito';
+        font-weight: bold;
+    }
+}
