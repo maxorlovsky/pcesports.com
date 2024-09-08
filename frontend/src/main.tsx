@@ -17,9 +17,18 @@ import './styles/index.scss';
 
 // Images
 import bgImage from '../src/assets/bg.jpg';
+import faviconImage from '../src/assets/favicon.ico';
 
 // Update body's background
 document.body.style.backgroundImage = `url("${bgImage}")`;
+
+// Add favicon
+const favicon = document.createElement('link');
+
+favicon.rel = 'shortcut icon';
+favicon.href = faviconImage;
+
+document.getElementsByTagName('head')[0].appendChild(favicon);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
