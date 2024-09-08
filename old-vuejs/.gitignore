@@ -1,8 +1,0 @@
-# Specific project files and logs
-*.log
-.stylelintcache
-
-# Folders
-node_modules
-public/dist/
-public/index.html
