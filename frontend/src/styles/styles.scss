@@ -6,9 +6,13 @@ body {
   font-size: 10px;
   line-height: 1.5;
   background-color: #000;
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: 0px -100px;
+
+  @media (min-width: $mobileSize) {
+    background-size: 100%;
+  }
 }
 
 .body-content {
@@ -16,10 +20,15 @@ body {
   height: calc(100vh - 45px);
   // Height of header
   padding-top: 62px;
+  margin-bottom: 1rem;
   font-size: 1rem;
   color: #fff;
   z-index: 2;
   position: relative;
+
+  @media (min-width: $mobileSize) {
+    margin-bottom: 0;
+  }
 }
 
 .body-fader {
@@ -33,10 +42,15 @@ body {
 }
 
 .container {
-  max-width: 1040px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 2rem;
+  margin-right: 2rem;
   padding-top: 2rem;
+
+  @media (min-width: $mobileSize) {
+    max-width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 a {
