@@ -1,53 +1,36 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
+import pluginVue from 'eslint-plugin-vue';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['.output/**', '.nuxt/**', 'node_modules/**', 'experiments/**', 'frontend-react/**', 'old-vuejs/**', 'site/**', '.releases/**'] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...pluginVue.configs['flat/recommended'],
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.vue'],
+    languageOptions: { parserOptions: { parser: tseslint.parser } },
+  },
+  {
     languageOptions: {
-      ecmaVersion: 2022,
-      globals: globals.browser,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
-        }
-      }
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      ecmaVersion: 2024,
+      sourceType: 'module',
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-      'comma-dangle': 'off',
-      'comma-spacing': [
-        'error',
-        {
-          'after': true,
-          'before': false
-        }
-      ],
-      'comma-style': [
-        'error',
-        'last'
-      ],
-      indent: ['error', 2, {
-        SwitchCase: 1
-      }],
+      // Nuxt auto-imports (usePageSeo, SITE_URL…) are checked by `npm run typecheck` instead
+      'no-undef': 'off',
+      // Nuxt's file-based routes and layouts are single words (index, privacy, default, error)
+      'vue/multi-word-component-names': 'off',
+      'vue/max-attributes-per-line': 'off',
+      'vue/singleline-html-element-content-newline': 'off',
+      'vue/html-self-closing': ['error', { html: { void: 'never', normal: 'always', component: 'always' } }],
+      'comma-spacing': ['error', { after: true, before: false }],
+      'comma-style': ['error', 'last'],
+      indent: ['error', 2, { SwitchCase: 1 }],
+      quotes: ['error', 'single', { avoidEscape: true }],
+      semi: ['error', 'always'],
     },
-    ignores: [
-      '**/*{.,-}min.js',
-      '**/dist/*',
-      '.eslintrc.js'
-    ]
   },
-)
+);

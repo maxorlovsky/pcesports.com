@@ -1,0 +1,89 @@
+name: CI
+
+# Pull requests into master: the validators (README.md, "Checks"). A push to master (a merged pull request) runs them
+# too, then deploys: the deploy job SSHes into max-cloud with the deploy key, whose forced command,
+# tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master, builds and switches the site.
+# Actions -> CI -> Run workflow, on master, re-deploys. README.md, "Deploy", has the setup.
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push to the same pull request cancels the run it replaces. Pushes to master never cancel a running deploy;
+# GitHub keeps only the newest one waiting, which deploys the newest master anyway
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: Validators
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: npm run lint
+        run: npm run lint
+
+      - name: npm run typecheck
+        run: npm run typecheck
+
+      - name: npm test
+        run: npm test
+
+      - name: npm run generate
+        run: npm run generate
+
+      - name: npm run check:build
+        run: npm run check:build
+
+      # npm run nginx:test needs the /etc/nginx/snippets the vhost includes, which a runner lacks: run it on the
+      # factory machine before a pull request (README.md, "Checks")
+
+      - name: Check that the working tree is unchanged
+        run: |
+          git status --short
+          test -z "$(git status --porcelain)"
+
+  deploy:
+    name: Deploy production
+    needs: check
+    if: ${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+
+    steps:
+      # The key may only run tools/deploy/ssh.sh (README.md, "Deploy"), which deploys whatever command it is sent:
+      # `deploy` names it. The server's output is this step's log
+      - name: Run npm run deploy in the live clone
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
+        with:
+          host: ${{ secrets.PROD_DEPLOY_HOST }}
+          username: ${{ secrets.PROD_DEPLOY_SSH_USER }}
+          key: ${{ secrets.PROD_DEPLOY_SSH_KEY }}
+          port: ${{ secrets.PROD_DEPLOY_SSH_PORT || '22' }}
+          command_timeout: 15m
+          script: deploy

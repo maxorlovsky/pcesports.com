@@ -2,5 +2,15 @@ node_modules
 *.log
 dist
 *.local
+.output
+.nuxt
+.data
+.env
+# What a deploy writes in the live clone (tools/deploy/deploy.mjs)
+/site
+/site.next
+/.releases
+/.deploy.lock
+# Local copies of the old apps, kept out of git
 frontend-react
 old-vuejs

@@ -1,35 +1,32 @@
 {
   "name": "pcesports.com",
-  "description": "PCE",
-  "version": "5.0.1",
+  "description": "PCesports: esports for people who don't have time to follow everything",
+  "version": "6.0.0",
+  "private": true,
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/maxorlovsky/pcesports.com"
   },
-  "scripts": {
-    "eslint": "eslint ./frontend/src/",
-    "stylelint": "stylelint \"./frontend/**/*.scss\"",
-    "dev": "cd frontend && vite",
-    "build": "cd frontend && tsc -b && vite build",
-    "release": "git pull && npm install && npm run build",
-    "preview": "vite preview"
+  "engines": {
+    "node": ">=24"
   },
-  "dependencies": {
-    "bootstrap": "5.3.3",
-    "eslint": "^8.28.0",
-    "git-commit-msg": "^0.3.0",
-    "pre-commit": "^1.2.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-router-dom": "6.26.1",
-    "sass-embedded": "1.78.0",
-    "typescript": "5.5.4"
+  "scripts": {
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "node tools/preview.mjs",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint . && stylelint \"app/**/*.{css,vue}\"",
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "check:build": "node tools/check-build.mjs .output/public",
+    "check": "npm run lint && npm run typecheck && npm test && npm run generate && npm run check:build",
+    "nginx:test": "sh tools/nginx/test.sh",
+    "deploy": "node tools/deploy/deploy.mjs"
   },
   "pre-commit": [
-    "eslint",
-    "stylelint"
+    "lint"
   ],
   "git-commit-hook": {
     "types": [
@@ -46,22 +43,31 @@
     ],
     "lineLength": 120
   },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "nuxt": "^4.6.4",
+    "vue": "^3.5.45",
+    "vue-router": "^5.4.0"
+  },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "8.4.0",
-    "@typescript-eslint/parser": "8.4.0",
-    "@vitejs/plugin-react": "^4.5.0",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "globals": "^15.9.0",
-    "postcss-scss": "^4.0.9",
-    "stylelint": "16.9.0",
-    "stylelint-config-standard": "36.0.1",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^6.3.5"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-vue": "^10.12.0",
+    "git-commit-msg": "^0.3.0",
+    "globals": "^17.14.0",
+    "postcss-html": "^2.0.0",
+    "pre-commit": "^2.0.0",
+    "stylelint": "^18.0.0",
+    "stylelint-config-html": "^2.0.0",
+    "stylelint-config-standard": "^41.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vue-tsc": "^3.3.14"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "git-commit-msg@0.3.0": true,
+    "pre-commit@2.0.0": true
   }
 }
