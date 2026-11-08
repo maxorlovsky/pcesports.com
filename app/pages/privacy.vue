@@ -20,7 +20,7 @@ usePageSeo({
       <h2>What we collect</h2>
       <ul>
         <li>No accounts, no sign-up and no forms.</li>
-        <li>No cookies and no local storage.</li>
+        <li>No cookies, and nothing about you is stored in your browser.</li>
         <li>No analytics, no tracking and no ads.</li>
         <li>
           Our server keeps no access logs, so your visits are not recorded with your address or browser. Like any web
