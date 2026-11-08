@@ -5,7 +5,7 @@
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 
 export const DATA_BRANCH = 'data';
 const REMOTE_REF = `refs/remotes/origin/${DATA_BRANCH}`;
@@ -42,13 +42,15 @@ export function fetchData(cwd) {
 
 /**
  * Removes the replaced data commits from the clone. Nothing keeps them: the remote-tracking ref writes no reflog
- * (fetchData, publishData), so once the branch moves on they are unreachable, and this deletes the unreachable loose
- * objects older than `expire` (a fetch or commit of a few files leaves loose objects). Their YouTube ids would
- * otherwise sit in .git well past YouTube's 30 days.
+ * (fetchData, publishData), so once the branch moves on they are unreachable, and `git gc --prune` deletes the
+ * unreachable objects older than `expire`, loose or packed (a bare `git prune` leaves packed ones, as in a fresh
+ * clone or after an earlier gc). Their YouTube ids would otherwise sit in .git well past YouTube's 30 days.
+ * PCESPORTS_DATA_PRUNE_EXPIRE sets `expire` (the tests use `now`).
  */
-export function pruneData(cwd, expire = '2.days.ago') {
-  rmSync(join(git(cwd, ['rev-parse', '--absolute-git-dir']), 'logs', ...REMOTE_REF.split('/')), { force: true });
-  git(cwd, ['prune', `--expire=${expire}`]);
+export function pruneData(cwd, expire = process.env.PCESPORTS_DATA_PRUNE_EXPIRE || '2.days.ago') {
+  const common = resolve(cwd, git(cwd, ['rev-parse', '--git-common-dir']));
+  rmSync(join(common, 'logs', ...REMOTE_REF.split('/')), { force: true });
+  git(cwd, ['gc', '--quiet', `--prune=${expire}`]);
 }
 
 /** The files of a data commit, path -> text. A path outside `DATA_PATH` or a file that isn't JSON is an error. */

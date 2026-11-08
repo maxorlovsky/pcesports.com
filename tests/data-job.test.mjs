@@ -113,19 +113,37 @@ test('two clones that read the same data branch can never both replace it', asyn
   assert.equal(git(origin, 'rev-parse', 'data'), won);
 });
 
-test('the data commits a clone replaced leave no trace in it: no reflog, and the prune deletes them', async () => {
-  const { clone, state } = scratch('prune');
+const has = (cwd, object) => spawnSync('git', ['cat-file', '-e', object], { cwd }).status === 0;
+const reflog = (clone) => join(clone, '.git', 'logs', 'refs', 'remotes', 'origin', 'data');
+
+test('the data commits a clone replaced leave no trace in it, packed or loose: no reflog, and the prune deletes them', async () => {
+  const { clone, origin, state } = scratch('prune');
   const data = world();
   const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: fakeApis(data).fetch, push: true, deploy: async () => {} };
   await runJob({ ...options, now: later(6) });
   const old = git(clone, 'rev-parse', 'refs/remotes/origin/data');
+  // A clone over file:// has the first data commit in a pack, with the reflog a plain clone writes
+  const packed = join(dir, 'prune', 'packed');
+  git(join(dir, 'prune'), 'clone', '-q', `file://${origin}`, packed);
+  for (const to of ['HEAD', old]) git(packed, 'update-ref', '--create-reflog', 'refs/remotes/origin/data', to);
+  assert.ok(existsSync(reflog(packed)) && has(packed, old));
   data.uploads[ESL_ARCHIVES] = [];
   data.matches.pop();
   await runJob({ ...options, now: later(7) });
   assert.notEqual(git(clone, 'rev-parse', 'refs/remotes/origin/data'), old);
-  assert.equal(existsSync(join(clone, '.git', 'logs', 'refs', 'remotes', 'origin', 'data')), false);
+  assert.equal(existsSync(reflog(clone)), false);
   pruneData(clone, 'now');
-  assert.notEqual(spawnSync('git', ['cat-file', '-e', old], { cwd: clone }).status, 0, 'the replaced commit is gone');
+  assert.equal(has(clone, old), false, 'the replaced commit is gone from the job clone');
+  // The job prunes its own clone daily (its first run in a state folder included): in the packed clone, with its
+  // reflog, a run leaves the old commit nowhere
+  process.env.PCESPORTS_DATA_PRUNE_EXPIRE = 'now';
+  try {
+    await runJob({ ...options, cwd: packed, stateDir: join(dir, 'prune', 'packed-state'), now: later(8) });
+  } finally {
+    delete process.env.PCESPORTS_DATA_PRUNE_EXPIRE;
+  }
+  assert.equal(existsSync(reflog(packed)), false);
+  assert.equal(has(packed, old), false, 'the replaced commit is gone from the packed clone');
 });
 
 test('a failed videos.list loses no upload: the next run reads the same ones again and links them', async () => {
@@ -336,6 +354,26 @@ test('pull.mjs takes no code from the data branch: anything but a domain data fi
     assert.match(result.stderr, /Data pull stopped/);
     assert.equal(existsSync(join(clone, VODS_FILE)), false, name);
   }
+});
+
+test('pull.mjs drops the data commits it fetched before, even packed in a fresh clone', () => {
+  const clone = pullScratch('pull-prune', { [VODS_FILE]: '{"vods":[]}\n' });
+  const origin = join(dir, 'pull-prune', 'origin.git');
+  const live = join(dir, 'pull-prune', 'live');
+  git(join(dir, 'pull-prune'), 'clone', '-q', `file://${origin}`, live);
+  cpSync(join(clone, 'tools'), join(live, 'tools'), { recursive: true });
+  cpSync(join(clone, 'app'), join(live, 'app'), { recursive: true });
+  assert.equal(pull(live).status, 0);
+  const old = git(live, 'rev-parse', 'refs/remotes/origin/data');
+  // The data job publishes a new data commit, and the next deploy pulls it
+  const files = new Map([[VODS_FILE, '{"vods":[{"matchId":1}]}\n']]);
+  publishData(clone, files, { base: fetchData(clone), now: new Date(), minGapMs: 0 });
+  for (const to of ['HEAD', old]) git(live, 'update-ref', '--create-reflog', 'refs/remotes/origin/data', to);
+  const result = spawnSync('node', ['tools/data-job/pull.mjs'], { cwd: live, encoding: 'utf8', env: { ...process.env, PCESPORTS_DATA_PRUNE_EXPIRE: 'now' } });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(readFileSync(join(live, VODS_FILE), 'utf8'), '{"vods":[{"matchId":1}]}\n');
+  assert.equal(existsSync(reflog(live)), false);
+  assert.equal(has(live, old), false, 'the deploy clone keeps no replaced data commit');
 });
 
 test('pull.mjs builds without data when origin has no data branch yet, and stops when origin cannot be read', () => {

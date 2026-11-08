@@ -129,7 +129,7 @@ YouTube (for the VOD side)
 
 ### Official channel whitelist
 
-Only these channels are read (`channels.json`). Every one was verified the same way:
+Only these channels are read (the experiment's `channels.json`; the data job's whitelist is `app/domains/vods/channels.json`). Every one was verified the same way:
 1. The organiser's own website links the main channel.
 2. That main channel's own "featured channels" section (`channelSections.list`, set by the channel owner) lists the VOD channel. The script re-checks step 2 on every run and stops if a link disappears.
 
