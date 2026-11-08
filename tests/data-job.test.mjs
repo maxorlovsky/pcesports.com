@@ -183,15 +183,16 @@ test('a rejected push keeps the run: state, report and log are written, and the 
   const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => deploys++ };
   const run = await runJob({ ...options, now: later(6) });
   assert.equal(run.published.status, 'push failed');
-  // The push may have landed before the error, so a deploy is owed
-  assert.equal(deploys, 1);
+  assert.equal((await runJob({ ...options, now: later(6.25) })).published.status, 'push failed');
+  assert.equal(deploys, 0, 'a refused push owes no deploy, run after run');
   assert.match(run.errors.join('\n'), /publish: .*denied/s);
   assert.ok(existsSync(join(state, 'state.json')) && existsSync(join(state, 'report.md')));
   const checks = () => apis.calls.filter((call) => call.endpoint === 'channelSections').length;
   const before = checks();
   rmSync(hook);
-  const next = await runJob({ ...options, now: later(6.25) });
+  const next = await runJob({ ...options, now: later(6.5) });
   assert.equal(next.published.status, 'pushed');
+  assert.equal(deploys, 1);
   assert.equal(checks(), before, 'the whitelist check was not redone');
 });
 
@@ -209,6 +210,22 @@ test('a run by hand leaves its clone as it was: no ref to the data branch, no gc
   await runJob({ cwd: dev, stateDir: join(dir, 'by-hand', 'dev-state'), now: later(7), secrets: SECRETS, fetch: fakeApis(world()).fetch, push: false });
   assert.equal(spawnSync('git', ['rev-parse', '-q', '--verify', 'refs/remotes/origin/data'], { cwd: dev }).status, 1);
   assert.equal(has(dev, dangling), true);
+});
+
+test('a data commit the run did not make (a push that landed before its error) still gets its deploy', async () => {
+  const { clone, origin, state } = scratch('landed');
+  const data = world();
+  let deploys = 0;
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: fakeApis(data).fetch, push: true, deploy: async () => deploys++ };
+  await runJob({ ...options, now: later(6) });
+  // The commit lands on origin, but this state never learns of it, as when the push's answer is lost
+  const other = join(dir, 'landed', 'other');
+  git(join(dir, 'landed'), 'clone', '-q', origin, other);
+  publishData(other, new Map([[VODS_FILE, '{"vods":[]}\n']]), { base: fetchData(other), now: later(6.6), minGapMs: 0 });
+  await runJob({ ...options, now: later(6.75) });
+  assert.equal(deploys, 2);
+  await runJob({ ...options, now: later(7) });
+  assert.equal(deploys, 2, 'and only once');
 });
 
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {

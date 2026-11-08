@@ -28,7 +28,7 @@ export const MATCHES_FILE = 'app/domains/matches/data/matches.json';
 export const VODS_FILE = 'app/domains/vods/data/vods.json';
 
 export function emptyState() {
-  return { channels: {}, uploads: {}, refreshed: {}, whitelist: { checkedAt: null, failed: {} }, quota: { day: null, units: 0 }, deployPending: null, prunedAt: null };
+  return { channels: {}, uploads: {}, refreshed: {}, whitelist: { checkedAt: null, failed: {} }, quota: { day: null, units: 0 }, deployPending: null, knownData: null, prunedAt: null };
 }
 
 export function loadState(dir) {
@@ -129,7 +129,13 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   const errors = [];
 
   const base = fetchData(cwd);
-  const stored = storedData(cwd, base);
+  let stored;
+  try {
+    stored = storedData(cwd, base);
+  } finally {
+    // A run by hand leaves no ref to the data branch behind, so that clone's own gc drops what it fetched.
+    if (!push) forgetData(cwd);
+  }
 
   const window = fetchWindow(now, since);
   let pandascore = { matches: [], requests: 0 };
@@ -197,10 +203,12 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
     } catch (error) {
       errors.push(`publish: ${error.message}`);
       published = { status: 'push failed' };
-      // The push may have landed before the error (a dropped connection): a deploy is owed until one runs.
-      state.deployPending ??= 'after a failed push';
     }
     if (published.status === 'pushed') state.deployPending = published.commit;
+    // A data commit this state never saw (a push that landed before its error, or another clone's) owes a deploy too;
+    // a refused push leaves the branch where it was, and owes none.
+    else if (base && state.knownData && base !== state.knownData) state.deployPending ??= base;
+    state.knownData = published.status === 'pushed' ? published.commit : base;
     if (state.deployPending) {
       try {
         await deploy();
@@ -222,8 +230,6 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   } else {
     mkdirSync(join(stateDir, 'out'), { recursive: true });
     for (const [path, text] of files) writeAtomic(join(stateDir, 'out', path.split('/').pop()), text);
-    // A run by hand leaves no ref to the data branch behind, so that clone's own gc drops what it fetched.
-    forgetData(cwd);
   }
 
   // What goes to the files below may quote a git or gh error: no secret goes with it.
