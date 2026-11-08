@@ -3,11 +3,12 @@
 // the data job's dispatch, under the deploy's lock (tools/deploy/deploy.mjs); CI runs it before building master.
 //   node tools/data-job/pull.mjs
 // It clears the data folders first, so a failed fetch stops the build instead of shipping the last deploy's data, and
-// it takes nothing from the branch but data files (data-branch.mjs, DATA_PATH): never code.
+// it takes nothing from the branch but data files (data-branch.mjs, DATA_PATH): never code. It also drops the data
+// commits the clone fetched before (pruneData).
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DATA_BRANCH, fetchData, readData } from './data-branch.mjs';
+import { DATA_BRANCH, fetchData, pruneData, readData } from './data-branch.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const DOMAINS = join(ROOT, 'app', 'domains');
@@ -26,6 +27,13 @@ try {
   files = commit ? readData(ROOT, commit) : new Map();
 } catch (error) {
   fail(error.message);
+}
+// The data commits this clone fetched before go too: their YouTube ids would outlive YouTube's 30 days in .git. A
+// failure here doesn't stop the build; the next deploy tries again.
+try {
+  pruneData(ROOT);
+} catch (error) {
+  console.error(`Data pull: the old data commits were not pruned: ${error.message}`);
 }
 if (!commit) {
   console.log(`No ${DATA_BRANCH} branch on origin yet: building without data.`);

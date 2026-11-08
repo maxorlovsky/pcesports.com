@@ -36,8 +36,19 @@ export function fetchData(cwd) {
     spawnSync('git', ['update-ref', '-d', REMOTE_REF], { cwd });
     return null;
   }
-  git(cwd, ['fetch', '--quiet', '--no-tags', 'origin', `+refs/heads/${DATA_BRANCH}:${REMOTE_REF}`]);
+  git(cwd, ['-c', 'core.logAllRefUpdates=false', 'fetch', '--quiet', '--no-tags', 'origin', `+refs/heads/${DATA_BRANCH}:${REMOTE_REF}`]);
   return git(cwd, ['rev-parse', REMOTE_REF]);
+}
+
+/**
+ * Removes the replaced data commits from the clone. Nothing keeps them: the remote-tracking ref writes no reflog
+ * (fetchData, publishData), so once the branch moves on they are unreachable, and this deletes the unreachable loose
+ * objects older than `expire` (a fetch or commit of a few files leaves loose objects). Their YouTube ids would
+ * otherwise sit in .git well past YouTube's 30 days.
+ */
+export function pruneData(cwd, expire = '2.days.ago') {
+  rmSync(join(git(cwd, ['rev-parse', '--absolute-git-dir']), 'logs', ...REMOTE_REF.split('/')), { force: true });
+  git(cwd, ['prune', `--expire=${expire}`]);
 }
 
 /** The files of a data commit, path -> text. A path outside `DATA_PATH` or a file that isn't JSON is an error. */
@@ -92,7 +103,7 @@ export function publishData(cwd, files, { base, now, minGapMs }) {
     GIT_COMMITTER_NAME: IDENTITY.name, GIT_COMMITTER_EMAIL: IDENTITY.email, GIT_COMMITTER_DATE: now.toISOString(),
   };
   const commit = git(cwd, ['commit-tree', tree, '-m', `data: ${now.toISOString()}`], { env });
-  git(cwd, ['push', '--quiet', `--force-with-lease=refs/heads/${DATA_BRANCH}:${base ?? ''}`, 'origin', `${commit}:refs/heads/${DATA_BRANCH}`]);
-  git(cwd, ['update-ref', REMOTE_REF, commit]);
+  git(cwd, ['-c', 'core.logAllRefUpdates=false', 'push', '--quiet', `--force-with-lease=refs/heads/${DATA_BRANCH}:${base ?? ''}`, 'origin', `${commit}:refs/heads/${DATA_BRANCH}`]);
+  git(cwd, ['-c', 'core.logAllRefUpdates=false', 'update-ref', REMOTE_REF, commit]);
   return { status: 'pushed', commit };
 }

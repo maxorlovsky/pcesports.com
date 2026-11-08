@@ -9,11 +9,13 @@ import {
   CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods, missingVods,
   pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
-import { fetchData, publishData, readData } from './data-branch.mjs';
+import { fetchData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
 /** At most one data commit per this many minutes, so a busy event day makes at most 48 deploys. */
 export const MIN_GAP_MINUTES = 30;
+/** How often the job's clone drops the data commits it replaced (pruneData). */
+const PRUNE_HOURS = 24;
 /** The whitelist's featured-channels links and uploads playlists are re-checked this often. */
 export const WHITELIST_CHECK_HOURS = 24;
 /** Each read of an uploads playlist starts this long before the last one, so an upload published meanwhile isn't missed. */
@@ -26,7 +28,7 @@ export const MATCHES_FILE = 'app/domains/matches/data/matches.json';
 export const VODS_FILE = 'app/domains/vods/data/vods.json';
 
 export function emptyState() {
-  return { channels: {}, uploads: {}, refreshed: {}, whitelist: { checkedAt: null, failed: {} }, quota: { day: null, units: 0 }, deployPending: null };
+  return { channels: {}, uploads: {}, refreshed: {}, whitelist: { checkedAt: null, failed: {} }, quota: { day: null, units: 0 }, deployPending: null, prunedAt: null };
 }
 
 export function loadState(dir) {
@@ -196,6 +198,14 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
         state.deployPending = null;
       } catch (error) {
         errors.push(`deploy: ${error.message} (the next run tries again)`);
+      }
+    }
+    if (!state.prunedAt || now.getTime() - Date.parse(state.prunedAt) >= PRUNE_HOURS * HOUR) {
+      try {
+        pruneData(cwd);
+        state.prunedAt = now.toISOString();
+      } catch (error) {
+        errors.push(`prune: ${error.message}`);
       }
     }
   } else {

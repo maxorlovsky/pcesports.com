@@ -13,7 +13,7 @@
 // The secrets come from the env file, never from the repository: PANDASCORE_TOKEN, YOUTUBE_API_KEY and GH_TOKEN (for
 // the push and the deploy; without it, git and gh use the machine's own GitHub login).
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,6 +22,8 @@ import { appendLog, runJob } from './job.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const LOCKED = 'PCESPORTS_DATA_JOB_LOCKED';
+/** Set in the job that the self-update started, which runs what it pulled without pulling again. */
+const PULLED = 'PCESPORTS_DATA_JOB_PULLED';
 const BUSY = 75;
 const SECRETS = ['PANDASCORE_TOKEN', 'YOUTUBE_API_KEY', 'GH_TOKEN'];
 const DEFAULT_ENV_FILE = join(homedir(), '.config', 'pcesports', 'data-job.env');
@@ -74,7 +76,7 @@ if (!process.env[LOCKED]) {
   process.exit(locked.status ?? 1);
 }
 
-if (push && !args.includes('--pulled')) {
+if (push && !process.env[PULLED]) {
   const branch = git('rev-parse', '--abbrev-ref', 'HEAD');
   if (branch !== 'master') fail(`publishing runs on master only, and this checkout is on ${branch} (--no-push runs anywhere)`);
   if (git('status', '--porcelain')) fail('the checkout has changes: the job runs master as it is');
@@ -83,19 +85,24 @@ if (push && !args.includes('--pulled')) {
   git('fetch', '--quiet', '--no-tags', 'origin', 'master');
   git('merge', '--quiet', '--ff-only', 'origin/master');
   if (git('rev-parse', 'HEAD') !== before) {
-    const again = spawnSync(process.execPath, [fileURLToPath(import.meta.url), ...args, '--pulled'], { stdio: 'inherit', env: process.env });
+    const again = spawnSync(process.execPath, [fileURLToPath(import.meta.url), ...args], { stdio: 'inherit', env: { ...process.env, [PULLED]: '1' } });
     process.exit(again.status ?? 1);
   }
 }
 
-// The env file: outside the repository, readable by its owner only. Its values win over the environment's, so a
-// variable exported in the shell can't stand in for it unnoticed.
+// The env file: outside the repository (links followed), readable by its owner only, and the only source of the
+// secrets: one it leaves out is unset, whatever the shell exports, so git and gh fall back to the machine's own
+// GitHub login rather than a token from the environment.
 const envFile = resolve(option('--env') || process.env.PCESPORTS_DATA_JOB_ENV || DEFAULT_ENV_FILE);
-const fromRoot = relative(ROOT, envFile);
-if (fromRoot !== '..' && !fromRoot.startsWith(`..${sep}`)) fail(`the env file ${envFile} is inside the repository: keep it outside`);
 if (!existsSync(envFile)) fail(`no env file at ${envFile}: the secrets come from there only`);
+const fromRoot = relative(realpathSync(ROOT), realpathSync(envFile));
+if (fromRoot !== '..' && !fromRoot.startsWith(`..${sep}`)) fail(`the env file ${envFile} is inside the repository: keep it outside`);
 if (statSync(envFile).mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
-Object.assign(process.env, parseEnv(readFileSync(envFile, 'utf8')));
+const fromFile = parseEnv(readFileSync(envFile, 'utf8'));
+for (const name of [...SECRETS, 'GITHUB_TOKEN']) {
+  if (SECRETS.includes(name) && fromFile[name]) process.env[name] = fromFile[name];
+  else delete process.env[name];
+}
 for (const name of ['PANDASCORE_TOKEN', 'YOUTUBE_API_KEY']) if (!process.env[name]) fail(`${name} is not set (${envFile})`);
 
 let since;

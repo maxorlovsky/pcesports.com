@@ -7,7 +7,7 @@ import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rm
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { after, before, test } from 'node:test';
-import { fetchData, publishData } from '../tools/data-job/data-branch.mjs';
+import { fetchData, pruneData, publishData } from '../tools/data-job/data-branch.mjs';
 import { MATCHES_FILE, VODS_FILE, runJob } from '../tools/data-job/job.mjs';
 import { BLAST_VODS, ESL_ARCHIVES, PGL_VODS, fakeApis, rawMatch, upload } from './fixtures/cs2.mjs';
 
@@ -113,6 +113,21 @@ test('two clones that read the same data branch can never both replace it', asyn
   assert.equal(git(origin, 'rev-parse', 'data'), won);
 });
 
+test('the data commits a clone replaced leave no trace in it: no reflog, and the prune deletes them', async () => {
+  const { clone, state } = scratch('prune');
+  const data = world();
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: fakeApis(data).fetch, push: true, deploy: async () => {} };
+  await runJob({ ...options, now: later(6) });
+  const old = git(clone, 'rev-parse', 'refs/remotes/origin/data');
+  data.uploads[ESL_ARCHIVES] = [];
+  data.matches.pop();
+  await runJob({ ...options, now: later(7) });
+  assert.notEqual(git(clone, 'rev-parse', 'refs/remotes/origin/data'), old);
+  assert.equal(existsSync(join(clone, '.git', 'logs', 'refs', 'remotes', 'origin', 'data')), false);
+  pruneData(clone, 'now');
+  assert.notEqual(spawnSync('git', ['cat-file', '-e', old], { cwd: clone }).status, 0, 'the replaced commit is gone');
+});
+
 test('a failed videos.list loses no upload: the next run reads the same ones again and links them', async () => {
   const { clone, state } = scratch('videos-down');
   const data = { ...world(), fail: ['videos'] };
@@ -135,7 +150,7 @@ test('an upload first seen live is read again until it is over, then linked', as
   await runJob({ ...options, now: later(4) });
   const vods = () => JSON.parse(readFileSync(join(state, 'out', 'vods.json'), 'utf8')).vods;
   assert.deepEqual(vods(), []);
-  // Over now, and the playlist no longer lists it as new (its item time stays before this run's read window)
+  // Over now: the playlist lists it again, but as known, so only the re-read of live uploads can pick up its new state
   Object.assign(stream, { duration: 'PT1H45M', liveBroadcastContent: 'none' });
   await runJob({ ...options, now: later(9) });
   assert.deepEqual(vods().map((link) => link.videoId), ['vod1']);
@@ -250,7 +265,8 @@ test('the env file must live outside the repository and be readable by its owner
   assert.match(open.stderr, /readable by others: chmod 600/);
   chmodSync(env, 0o600);
   writeFileSync(env, 'PANDASCORE_TOKEN=ps-secret\n');
-  const missing = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state, YOUTUBE_API_KEY: '' });
+  // A secret the file leaves out is not taken from the shell
+  const missing = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state, YOUTUBE_API_KEY: 'shell-yt-key' });
   assert.equal(missing.status, 1);
   assert.match(missing.stderr, /YOUTUBE_API_KEY is not set/);
   assert.ok(!(missing.stderr + missing.stdout).includes('ps-secret'));

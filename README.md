@@ -88,7 +88,8 @@ replaces it, with a push that only succeeds if the branch is still what the run 
 branches and history never collect data, and YouTube's ids don't pile up in history (YouTube's 30-day rule). Every
 deploy, from a push to master or from the job, builds master's code with the branch's current files:
 `tools/deploy/deploy.mjs` runs `tools/data-job/pull.mjs`, which empties the data folders, fetches the branch and
-takes nothing but data files. Both deploys share the deploy's lock (`.deploy.lock`) and CI's concurrency group, so
+takes nothing but data files. The clones keep no replaced data commit: the job's clone and every deploy prune them
+(no reflog holds them), so old YouTube ids don't linger in `.git`. Both deploys share the deploy's lock (`.deploy.lock`) and CI's concurrency group, so
 they never overlap. CI's runs on master pull the data too; pull requests build without it.
 
 **What it stores.** Committed: the matches (PandaScore's data, credited "Source: PandaScore" wherever shown) and,
@@ -100,7 +101,8 @@ the tier-1 leagues left out, and every link, for hand checks.
 **YouTube quota:** measured per run with the 4 VOD channels: 4 units (one `playlistItems.list` each), plus 1 when
 there are uploads to read (`videos.list`), plus 1 when linked videos fall due for their weekly refresh (per 50), plus
 4 once a day for the whitelist check. A cold first run cost 9 and a 15-day backfill 10. A day of 15-minute runs is
-96 x 4 = 384 units when nothing is new, 580 at most: under 6% of the 10,000-unit daily quota. `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
+96 x 4 = 384 units when nothing is new, about 580 on a busy day: under 6% of the 10,000-unit daily quota (a failing
+whitelist check retries every run, up to 4 units more each, still under 10%). `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
 run, about 20 an hour of its 1,000.
 
 **The env file**, `~/.config/pcesports/data-job.env` (or `--env <path>`, or `PCESPORTS_DATA_JOB_ENV`), outside the
@@ -122,8 +124,9 @@ instead of publishing; `--since <date>` reads uploads and matches back to that d
 check). `PCESPORTS_DATA_JOB_STATE` points it at another state folder.
 
 **Stopping it:** remove the cron line. The site keeps the data of its last deploy, and later deploys pull the data
-branch as it was, so if the job stays off for good, delete the branch within 30 days (`git push origin --delete
-data`): its YouTube ids are no longer refreshed.
+branch as it was, so if the job stays off for good, within 30 days delete the branch (`git push origin --delete
+data`), the state folder (`state.json` holds titles and ids) and the job's clone: their YouTube data is no longer
+refreshed.
 
 ## Deploy
 
