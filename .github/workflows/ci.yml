@@ -1,13 +1,15 @@
 name: CI
 
-# Pull requests into master: the validators (README.md, "Checks"). A push to master (a merged pull request) runs them
-# too, then deploys: the deploy job SSHes into max-cloud with the deploy key, whose forced command,
-# tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master, builds and switches the site.
+# Pull requests into dev or master: the validators (README.md, "Checks"). Work goes into dev, the owner merges dev into
+# master, and a push to master runs the validators too, then deploys: the deploy job SSHes into max-cloud with the
+# deploy key, whose forced command, tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master,
+# builds and switches the site.
 # Actions -> CI -> Run workflow, on master, re-deploys. README.md, "Deploy", has the setup.
 
 on:
   pull_request:
     branches:
+      - dev
       - master
   push:
     branches:

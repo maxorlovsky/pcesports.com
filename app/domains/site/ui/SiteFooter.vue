@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DATA_CREDITS } from '../site.ts';
+
 // The year of the build; every deploy rebuilds the site
 const year = new Date().getFullYear();
 </script>
