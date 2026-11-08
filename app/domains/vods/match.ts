@@ -92,13 +92,20 @@ export function isVodLength(upload: Upload): boolean {
 
 const pairKey = (match: Match) => match.teams.map((team) => team.id).sort((a, b) => a - b).join('-');
 
-/** A match that was or is being played: canceled, postponed and forfeited ones have no VOD and bound no other's. */
+/** A match that was or is being played, the only kind with a VOD: not one yet to start, postponed, canceled or forfeited. */
 const played = (match: Match) => ['running', 'finished'].includes(match.status) && !match.forfeit;
+/**
+ * A match that may have been played, as far as the stored data can tell: all but a canceled or forfeited one. A
+ * status can be behind (PandaScore down for a while), so a rematch still marked as yet to start may well have its VOD
+ * up already.
+ */
+const mayBePlayed = (match: Match) => match.status !== 'canceled' && !match.forfeit;
 
 /**
  * Where a match's VOD may have been published: from its start to `PUBLISH_WINDOW_HOURS` later, and before the same two
  * teams next play each other. Without that guard a rematch's VOD would be linked to the first meeting when the first
- * VOD is missing. Only a rematch that was played ends the window: a canceled or forfeited one has no VOD to confuse.
+ * VOD is missing. Any rematch that may have been played ends the window (a missing VOD beats a wrong one); only a
+ * canceled or forfeited one has no VOD to confuse.
  */
 function publishWindow(match: Match, matches: Match[]): { from: number; to: number } | null {
   const start = startOf(match);
@@ -108,7 +115,7 @@ function publishWindow(match: Match, matches: Match[]): { from: number; to: numb
   const pair = pairKey(match);
   for (const other of matches) {
     const otherStart = startOf(other);
-    if (other.id === match.id || other.teams.length !== 2 || !played(other) || pairKey(other) !== pair || !otherStart) continue;
+    if (other.id === match.id || other.teams.length !== 2 || !mayBePlayed(other) || pairKey(other) !== pair || !otherStart) continue;
     const at = Date.parse(otherStart);
     if (at > from && at < to) to = at;
   }
@@ -146,23 +153,35 @@ export interface LinkResult {
 }
 
 /**
- * Every match's VOD link. A stored link stays as long as its match does and its channel is whitelisted (the job keeps
- * titles only for a while, so an old link can't be re-derived); the refresh drops it when YouTube no longer returns the video. Each other match gets
- * the earliest candidate no other match holds. `channelIds` are the VOD channels the whitelist check let through.
+ * Every match's VOD link. A stored link stays while it still fits its match, as far as the job can still tell: the
+ * match is there and was played, the channel is whitelisted, and, while the upload is still kept locally, it went
+ * public in the match's publish window, which a rematch PandaScore reported late can now cut short. After that the
+ * link stays as it is (the job keeps titles only for a while, so an old link can't be re-derived), and the refresh
+ * drops it when YouTube no longer returns the video. With `assign` on, each other match gets the earliest candidate no
+ * other match holds; the job turns it off when PandaScore failed, as stale matches could take a rematch's VOD.
+ * `channelIds` are the VOD channels the whitelist check let through.
  */
-export function linkVods(matches: Match[], uploads: Upload[], stored: VodLink[], channelIds: Set<string>): LinkResult {
-  const present = new Set(matches.map((match) => match.id));
+export function linkVods(matches: Match[], uploads: Upload[], stored: VodLink[], channelIds: Set<string>, { assign = true } = {}): LinkResult {
+  const byId = new Map(matches.map((match) => [match.id, match]));
+  const uploadsById = new Map(uploads.map((upload) => [upload.id, upload]));
   const whitelisted = new Set(VOD_CHANNELS.map((channel) => channel.id));
-  // A link goes with its match, or with its channel leaving the whitelist; only its ids are carried over.
-  const links = stored
-    .filter((link) => present.has(link.matchId) && whitelisted.has(link.channelId))
-    .map(({ matchId, videoId, channelId }) => ({ matchId, videoId, channelId }));
+  const fits = (link: VodLink) => {
+    const match = byId.get(link.matchId);
+    if (!match || !played(match) || !whitelisted.has(link.channelId)) return false;
+    const upload = uploadsById.get(link.videoId);
+    if (!upload) return true;
+    const window = publishWindow(match, matches);
+    const at = Date.parse(upload.publishedAt);
+    return window !== null && at >= window.from && at < window.to;
+  };
+  // Only a stored link's ids are carried over.
+  const links = stored.filter(fits).map(({ matchId, videoId, channelId }) => ({ matchId, videoId, channelId }));
   const linkedMatches = new Set(links.map((link) => link.matchId));
   const used = new Set(links.map((link) => link.videoId));
   const ambiguous: LinkResult['ambiguous'] = [];
   const byStart = [...matches].sort((a, b) => (startOf(a) ?? '').localeCompare(startOf(b) ?? '') || a.id - b.id);
   for (const match of byStart) {
-    if (linkedMatches.has(match.id)) continue;
+    if (!assign || linkedMatches.has(match.id)) continue;
     const found = candidates(match, matches, uploads, channelIds).filter((upload) => !used.has(upload.id));
     const pick = found[0];
     if (!pick) continue;

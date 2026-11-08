@@ -309,6 +309,25 @@ test('PandaScore down: the stored matches stay, the VOD side still runs, and the
   assert.ok(!run.errors.join('\n').includes('ps-secret'));
 });
 
+test('PandaScore down: no new VOD is linked, so a rematch it has not reported yet keeps its VOD', async () => {
+  const { clone, origin, state } = scratch('pandascore-down-rematch');
+  const data = world();
+  data.uploads[ESL_ARCHIVES] = [];
+  const apis = fakeApis(data);
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  await runJob({ ...options, now: later(6) });
+  // The first meeting has no VOD; the rematch is played while PandaScore is down, and its VOD goes up
+  data.matches.push(rawMatch({ id: 3, start: later(30).toISOString() }));
+  data.uploads[ESL_ARCHIVES] = [upload({ id: 'rematch', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: later(33).toISOString() })];
+  data.fail = ['matches'];
+  const down = await runJob({ ...options, now: later(34) });
+  assert.match(down.errors.join('\n'), /PandaScore/);
+  assert.deepEqual(dataFile(origin, VODS_FILE).vods, []);
+  data.fail = [];
+  await runJob({ ...options, now: later(35) });
+  assert.deepEqual(dataFile(origin, VODS_FILE).vods.map((link) => [link.matchId, link.videoId]), [[3, 'rematch']]);
+});
+
 /** The job's command in a scratch copy of the repository's tools, with its own state folder and env file. */
 function command(name) {
   const root = join(dir, name);

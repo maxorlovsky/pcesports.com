@@ -115,6 +115,31 @@ test('a canceled or forfeited rematch neither takes the first meeting VOD nor cu
   assert.deepEqual(linkVods([first, canceled], [vod], [], ALL_CHANNELS).links.map((link) => [link.matchId, link.videoId]), [[1, 'first']]);
 });
 
+test('a rematch whose status is behind still ends the first meeting window; postponed is no exception', () => {
+  const first = match(1);
+  const secondVod = upload({ id: 'second', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 33) });
+  for (const status of ['not_started', 'postponed']) {
+    const second = match(2, { start: at(START, 30), status });
+    assert.deepEqual(linkVods([first, second], [secondVod], [], ALL_CHANNELS).links, [], status);
+  }
+});
+
+test('a stored link that no longer fits its match goes, and its VOD can move to the right one', () => {
+  const first = match(1);
+  const second = match(2, { start: at(START, 30) });
+  const secondVod = upload({ id: 'second', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 33) });
+  // Linked to the first meeting while the rematch was unknown: the rematch now ends that window, and takes its VOD
+  const wrong = [{ matchId: 1, videoId: 'second', channelId: ESL_ARCHIVES }];
+  assert.deepEqual(linkVods([first, second], [secondVod], wrong, ALL_CHANNELS).links.map((link) => [link.matchId, link.videoId]), [[2, 'second']]);
+  // A match that turned out canceled or forfeited loses its link, kept upload or not
+  const kept = [{ matchId: 1, videoId: 'old', channelId: ESL_ARCHIVES }];
+  assert.deepEqual(linkVods([match(1, { status: 'canceled' })], [], kept, ALL_CHANNELS).links, []);
+  assert.deepEqual(linkVods([{ ...first, forfeit: true }], [], kept, ALL_CHANNELS).links, []);
+  // With new links off (PandaScore failed), the stored ones that fit stay and nothing new is linked
+  const vod = upload({ id: 'vod', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 3) });
+  assert.deepEqual(linkVods([first, match(3, { teams: ['mouz', 'vitality'] })], [vod], [{ matchId: 3, videoId: 'v3', channelId: ESL_ARCHIVES }], ALL_CHANNELS, { assign: false }).links.map((link) => link.videoId), ['v3']);
+});
+
 test('a stored link stays while its match does; a channel the whitelist check stopped links nothing new', () => {
   const stored = [{ matchId: 1, videoId: 'kept', channelId: ESL_ARCHIVES }, { matchId: 9, videoId: 'gone', channelId: ESL_ARCHIVES }];
   const vod = upload({ id: 'vod', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 3) });

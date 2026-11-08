@@ -22,8 +22,13 @@ Invariants:
   uploads playlist is the listed one, and stops reading a channel that fails, saying so.
 - **The matcher:** a video from the organiser's VOD channel, published from the match's start until 72 h later and
   before the same two teams meet again (the rematch guard), titled `A vs B - <event words> ...` with both teams in
-  either order, and 20 min to 6 h long (no clips, no broadcast days, no stream still live). The earliest one wins, and
-  a video links one match only. A link stays as long as its match does.
+  either order, and 20 min to 6 h long (no clips, no broadcast days, no stream still live). Only a played match
+  (running or finished, no forfeit) gets one. Any rematch not canceled or forfeited ends the window, even one still
+  marked as yet to start, as a status can lag: a missing VOD beats a wrong one. The earliest one wins, and a video
+  links one match only. A run whose PandaScore read failed links nothing new: its matches may be stale.
+- **Stored links:** a link stays while its match is there and played and its channel is listed. While its upload is
+  still kept locally, it must also still fall in the match's window, so a rematch that PandaScore reported late takes
+  its VOD back. Once the upload is gone, the link stays as it is: it can't be re-derived without a title.
 - **Committed data holds YouTube's ids only:** `matchId`, `videoId`, `channelId`. Titles, lengths and publish times
   stay in the job's local state, are used only to match, and go `KEEP_UPLOADS_DAYS` (14) after they were last read.
   Nothing is computed from YouTube data beyond that match (no lengths turned into map counts, nothing from chapters).

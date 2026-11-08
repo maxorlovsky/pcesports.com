@@ -140,12 +140,15 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   const window = fetchWindow(now, since);
   let pandascore = { matches: [], requests: 0 };
   let matchesWindow = window;
+  let matchesFresh = true;
   try {
     pandascore = await fetchPandaScoreMatches({ token: secrets.pandascore, from: window.from, to: window.to, fetch });
   } catch (error) {
-    // The stored matches stay as they are, and the VOD side still runs.
+    // The stored matches stay as they are, and the VOD side still runs, but links no new VOD: a rematch the stored
+    // matches don't know of yet could lose its VOD to the first meeting.
     errors.push(error.message);
     matchesWindow = { from: now, to: now };
+    matchesFresh = false;
   }
   const fetched = pandascore.matches.map(toMatch).filter(Boolean);
   const unknownLeagues = new Map();
@@ -178,7 +181,7 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   for (const { link } of refresh.dropped) delete state.uploads[link.videoId];
 
   const uploads = Object.values(state.uploads);
-  const { links, ambiguous } = linkVods(matches, uploads, refresh.links, new Set(active.map((channel) => channel.id)));
+  const { links, ambiguous } = linkVods(matches, uploads, refresh.links, new Set(active.map((channel) => channel.id)), { assign: matchesFresh });
   // A kept link keeps its last refresh (none when it was never read in this state and the refresh failed: the next run
   // asks again); a new link was read from YouTube when its upload was.
   const kept = new Set(refresh.links.map((link) => link.videoId));

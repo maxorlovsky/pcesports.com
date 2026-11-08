@@ -81,7 +81,8 @@ Each run:
 3. reads PandaScore's matches scheduled from 3 days ago to 14 days ahead, keeps the tier-1 ones (tier `s` or `a` from a
    league in `app/domains/matches/leagues.json`), and merges them into the stored list (30 days back);
 4. reads the new uploads of each whitelisted VOD channel through its uploads playlist, re-reads the uploads it first saw
-   live, re-checks the whitelist once a day, refreshes every linked video weekly, and links each match to its VOD;
+   live, re-checks the whitelist once a day, refreshes every linked video weekly, and links each match to its VOD
+   (`app/domains/vods/README.md`, "The matcher"; a run whose PandaScore read failed links nothing new);
 5. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the deploy
    (`gh workflow run ci.yml --ref master`);
 6. writes `report.md`, `state.json` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`.
