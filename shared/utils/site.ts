@@ -1,7 +1,6 @@
 /** The site's one address: canonical URLs, Open Graph and the sitemap are built on it, and nginx 301s the bare domain here. */
 export const SITE_URL = 'https://www.pcesports.com';
 export const SITE_NAME = 'PCesports';
-export const SITE_TAGLINE = 'Esports for people who don\'t have time to follow everything';
 export const CONTACT_EMAIL = 'pentaclickesports@gmail.com';
 
 /** Every page the sitemap lists. The 404 page stays out. */

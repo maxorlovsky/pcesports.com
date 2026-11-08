@@ -12,7 +12,7 @@ Node.js 24 (`package.json`'s `engines`).
 npm ci              # install
 npm run dev         # dev server with hot reload, http://localhost:3000
 npm run generate    # the static site, into .output/public (`dist` links to it)
-npm run preview     # serve that build locally
+npm run preview     # serve that build as nginx would, http://localhost:3000 (tools/preview.mjs)
 ```
 
 ## Checks
