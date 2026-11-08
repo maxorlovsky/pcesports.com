@@ -25,7 +25,7 @@ The Liquipedia data was fetched on 2026-11-08 under the API terms read on 2026-1
 So the Liquipedia client now refuses any network call unless `LIQUIPEDIA_MEDIAWIKI_OK=1` is set, which should only happen once the owner has cleared it.
 
 - Runs that the local `cache/` already covers, such as the report's run below on this machine, still work and make no Liquipedia call.
-- A fresh window needs that decision, or a switch to the paid LPDB API.
+- A fresh window with the Liquipedia source needs that decision, or a switch to the paid LPDB API. `--source pandascore` fetches a fresh window without any Liquipedia call (the comparison with Liquipedia is then skipped).
 
 ## Run it
 

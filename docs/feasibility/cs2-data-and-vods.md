@@ -14,7 +14,7 @@ Research date: 2026-11-08. Experiment code: [`experiments/cs2-vod-feasibility/`]
   - PandaScore's top two tiers held exactly the same 69 matches as Liquipedia's S-Tier.
   - Winner, series score, maps played and best-of agreed on all 69, and every record was final within 30 minutes of the match ending.
   - Linking VODs from PandaScore's list picked the same 69 videos.
-  - **Open question:** PandaScore's terms are written for "any professional, to the exclusion of any consumer as well as any non-professional". They also list results under the paid plan although the free API returns them, and they exclude "any marketing of said data". The owner decided to go ahead without asking PandaScore (section 6, item 1), so this stays an accepted risk (section 4).
+  - **Terms risk (accepted):** PandaScore's terms are written for "any professional, to the exclusion of any consumer as well as any non-professional". They also list results under the paid plan although the free API returns them, and they exclude "any marketing of said data". The owner decided to go ahead without asking PandaScore (section 6, item 1), so this stays an accepted risk (section 4).
 - **Liquipedia's free API is out:**
   - Its MediaWiki API, which the experiment first used, now says "Use of the API for non-editing purposes is not supported".
   - Its data API (LPDB) is free only for sites that "do not monetize", and paid plans started at $49/month per data type per game in June 2026.
@@ -324,6 +324,6 @@ Polling every 15 min is plenty, because the VODs appeared 2 to 6 h after the sta
 4. **Whitelist scope.** Verify the remaining S-Tier organisers (StarLadder, Perfect World, FISSURE, GAM3RS_X, BLAST in practice) the same two-step way before launch.
 5. **YouTube's derived-data rule** [Y5]. Accept my reading that linking a match to its VOD by title is not a "derived metric" (the product shows YouTube's data as returned and computes no metrics from it), or ask YouTube's API team before launch.
 6. **Next cards** this report suggests, now that item 1 is decided:
-   - (a) rerun the experiment on BLAST Rivals Fall 2026 and the PGL Major Singapore, with PandaScore (`run.js --source pandascore`)
+   - (a) rerun the experiment on BLAST Rivals Fall 2026 and the PGL Major Singapore, with PandaScore (`run.js --source pandascore`). With the Liquipedia client off there are no reference VOD links, so that card hand-checks the links (at least 20, as here)
    - (b) a scheduled fetcher (match source + VOD channels, 15-minute polling, 30-day refresh) that writes match/VOD records
    - (c) the "What should I watch?" ranking on top of that data
