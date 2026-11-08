@@ -1,0 +1,6 @@
+{
+    "_comment": "Spellings organisers use in VOD titles that Liquipedia's names don't produce. Keys are Liquipedia team template ids. Run match.js with --no-manual-aliases to measure without them.",
+    "aliases": {
+        "parivision": ["PVISION"]
+    }
+}

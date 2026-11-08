@@ -1,0 +1,12 @@
+{
+    "_comment": "Whitelist of official organiser channels; only these are read. organizers = Liquipedia infobox organizer values. linkedFrom = the organiser web page that links the channel (checked by hand, see the report). featuredBy = a whitelisted channel whose own 'featured channels' section lists this one; fetch-vods.js re-checks that on every run and fails if it no longer holds.",
+    "channels": [
+        { "id": "UCPq2ETz4aAGo2Z-8JisDPIA", "name": "ESL Counter-Strike", "handle": "@eslcs", "organizers": ["ESL"], "role": "streams", "linkedFrom": "https://pro.eslgaming.com/tour/cs/" },
+        { "id": "UCoxKq27R4jcotw4pLjb1jZQ", "name": "ESL Counter-Strike B", "handle": "@eslcsb", "organizers": ["ESL"], "role": "streams", "linkedFrom": "https://pro.eslgaming.com/tour/cs/", "featuredBy": "UCPq2ETz4aAGo2Z-8JisDPIA" },
+        { "id": "UCXQexglLCaJyTImYLmSO9Ng", "name": "ESL Archives", "handle": "@eslarchives", "organizers": ["ESL"], "role": "vods", "linkedFrom": "https://pro.eslgaming.com/tour/cs/", "featuredBy": "UCPq2ETz4aAGo2Z-8JisDPIA" },
+        { "id": "UC5jpxDZx4yoBo324pMQ91Ww", "name": "PGL", "handle": "@pgl", "organizers": ["PGL"], "role": "streams", "linkedFrom": "https://www.pglesports.com/" },
+        { "id": "UC5nM2vKeikf6_gk45gyM87g", "name": "PGL VOD's", "handle": "@pgl_vods", "organizers": ["PGL"], "role": "vods", "featuredBy": "UC5jpxDZx4yoBo324pMQ91Ww" },
+        { "id": "UC9k--dE_UE0Faxzgb_DDkYQ", "name": "BLAST Premier", "handle": "@blastpremier", "organizers": ["BLAST"], "role": "streams", "linkedFrom": "https://blastpremier.com/" },
+        { "id": "UC9O88aQhTVtoxVrCVQalTLQ", "name": "BLAST Premier VOD Archive", "handle": "@blastpremiervod", "organizers": ["BLAST"], "role": "vods", "featuredBy": "UC9k--dE_UE0Faxzgb_DDkYQ" }
+    ]
+}
