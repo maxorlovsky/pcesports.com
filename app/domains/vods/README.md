@@ -22,20 +22,20 @@ Invariants:
   uploads playlist is the listed one, and stops reading a channel that fails, saying so.
 - **The matcher:** a video from the organiser's VOD channel, published from the match's start until 72 h later and
   before the same two teams meet again (the rematch guard), titled `A vs B - <event words> ...` with both teams in
-  either order, and 20 min to 6 h long (no clips, no broadcast days, no stream still live). Only a played match
-  (running or finished, no forfeit) gets one. Any rematch not canceled or forfeited ends the window, even one still
-  marked as yet to start, as a status can lag: a missing VOD beats a wrong one. The earliest one wins, and a video
-  links one match only. A run whose PandaScore read failed links nothing new: its matches may be stale.
-- **Stored links:** a link stays while its match is there and played and its channel is listed. While its upload is
-  still kept locally, it must also still fall in the match's window, so a rematch that PandaScore reported late takes
-  its VOD back. Once the upload is gone, the link stays as it is: it can't be re-derived without a title.
+  either order, and 20 min to 6 h long (no clips, no broadcast days, no live stream). Only a played match (running or
+  finished, no forfeit) gets one; any rematch not canceled or forfeited ends the window, even one not yet started (a
+  missing VOD beats a wrong one). The earliest wins, one match per video. A run whose PandaScore read failed links
+  nothing new.
+- **Stored links** stay while their match is there and played and their channel listed, and, while the upload is
+  kept, inside the match's window (a late-reported rematch takes its VOD back). Once it is gone, they stay as they are.
 - **Committed data holds YouTube's ids only:** `matchId`, `videoId`, `channelId`. Titles, lengths and publish times
   stay in the job's local state, are used only to match, and go `KEEP_UPLOADS_DAYS` (14) after they were last read.
   Nothing is computed from YouTube data beyond that match (no lengths turned into map counts, nothing from chapters).
 - **YouTube's 30-day rule:** each linked video is re-read with `videos.list` every `REFRESH_DAYS` (7). One YouTube no
   longer returns (deleted, private) or that moved channel is dropped, and any link last read `MAX_AGE_DAYS` (30) ago
-  is dropped even when the refresh fails. A new link is held to the same bar: an upload read `REFRESH_DAYS` ago or
-  more (one that waited out a PandaScore outage, say) is read again before it is linked, and an upload past
-  `KEEP_UPLOADS_DAYS` is pruned before the run matches anything.
+  is dropped even when the refresh fails. A new link meets the same bar: an upload read `REFRESH_DAYS` ago is read
+  again first, and one past `KEEP_UPLOADS_DAYS` is pruned before matching.
+- **Stale data is how this breaks:** a status that lags, one API down while the other answers, the job off for days,
+  a video deleted since its read. A change to the matcher or the job checks each and tests the ones it touches.
 - **No spoilers before the click:** what shows a VOD shows the site's own card and a deep link, never YouTube's
   thumbnail, length or chapters (`AGENTS.md`).
