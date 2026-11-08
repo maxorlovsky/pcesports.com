@@ -1,4 +1,4 @@
-// Renders public/og.png, the 1200x630 Open Graph image every page names (app/composables/usePageSeo.ts), with the
+// Renders public/og.png, the 1200x630 Open Graph image every page names (app/domains/site/ui/usePageSeo.ts), with the
 // factory machine's Playwright and chrome-headless-shell. Run it again after a brand change:
 //   node tools/og-image.mjs public/logo.png node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2 public/og.png
 const { chromium } = await import(process.env.HOME + '/.local/opt/playwright/node_modules/playwright/index.mjs');

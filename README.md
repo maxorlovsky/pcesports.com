@@ -18,30 +18,38 @@ npm run preview     # serve that build as nginx would, http://localhost:3000 (to
 ## Checks
 
 Run them all before a pull request: `npm run check`, then `npm run nginx:test`. CI runs the same on every pull
-request into master (`.github/workflows/ci.yml`), except the nginx one.
+request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 
 | Command | What it checks |
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`: the build check and the deploy script, with Node's test runner |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check and the deploy script |
 | `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, and nothing of the old site (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are
 
-- `app/`: the Nuxt app. `pages/` (home, privacy), `error.vue` (the 404 page), `layouts/default.vue` (header and
-  footer), `composables/usePageSeo.ts` (every page's title, description, canonical URL and Open Graph tags).
+- `app/domains/`: the domains, each owning its rules, data and UI (`docs/architecture.md`). Today only `site`: the
+  site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`), the layout,
+  header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags), and the home,
+  privacy and 404 pages' content. Its `README.md` lists what it owns.
+- `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed places; each
+  file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
   take their colours, fonts and spacing from. The brand colours are `--color-main` `#5587e4` and `--color-secondary` `#e5dc2d`, on black.
-- `shared/utils/site.ts`: the site's address (`https://www.pcesports.com`, the canonical host), the sitemap's pages,
-  the footer's data credits and the contact address.
 - `server/routes/sitemap.xml.ts`: prerendered into `sitemap.xml` at build time.
 - `public/`: copied as is: the logo, the favicon, `robots.txt` and `og.png`, the Open Graph image
   (`tools/og-image.mjs` renders it).
 - `tools/nginx/`: production's vhost and the old URLs' redirects (`docs/old-urls.md`).
 - `tools/deploy/`: the deploy and its SSH forced command.
-- `docs/`: the feasibility report and the old URLs. `experiments/`: the data experiments (not part of the site).
+- `docs/`: the architecture, the feasibility report and the old URLs. `experiments/`: the data experiments (not part
+  of the site).
+- `AGENTS.md` (`CLAUDE.md` imports it): the rules coding agents work by.
+
+## Branches
+
+Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` deploys.
 
 ## Deploy
 
