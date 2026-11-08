@@ -43,11 +43,13 @@ export async function channel(id) {
 }
 
 /**
- * Uploads newer than `since`, newest first. The uploads playlist is ordered by the item's
- * snippet.publishedAt (when it went public; for a stream, its start time), so the first older item
- * ends the scan. contentDetails.videoPublishedAt is not used: for a scheduled stream it is the day
- * the stream was created, days earlier (seen on @eslcs), and would put it out of order. Pages are
- * cached per page token, which makes a rerun reproducible; delete cache/youtube for fresh uploads.
+ * Ids of uploads newer than `since`, newest first. The uploads playlist is ordered by the item's
+ * snippet.publishedAt, when it went public, so the first older item ends the scan. That time moves
+ * for a stream: it is the live start while the stream runs, and a later time once the recording is
+ * published. While a scheduled stream is live, contentDetails.videoPublishedAt (and videos.list's
+ * publishedAt) still hold the day it was created, days earlier (seen on @eslcs), so neither is
+ * used here. Pages are cached per page token, which makes a rerun reproducible; delete
+ * cache/youtube for fresh uploads.
  */
 export async function uploadsSince(playlistId, since) {
     const out = [];
@@ -57,9 +59,8 @@ export async function uploadsSince(playlistId, since) {
         if (pageToken) params.pageToken = pageToken;
         const json = await get('playlistItems', params);
         for (const item of json.items) {
-            const { publishedAt } = item.snippet;
-            if (new Date(publishedAt) < since) return out;
-            out.push({ id: item.contentDetails.videoId, publishedAt });
+            if (new Date(item.snippet.publishedAt) < since) return out;
+            out.push(item.contentDetails.videoId);
         }
         pageToken = json.nextPageToken;
         if (!pageToken) return out;

@@ -243,7 +243,7 @@ YouTube Data API v3 gives each project 10,000 units per day by default ("Project
 
 **Estimated daily use for the site.** It polls only the VOD channels:
 
-- **Per poll:** 1 `playlistItems.list` per channel, which returns the newest 50 uploads, plus 1 `videos.list` for all new ids together (only when there are new ones). The uploads playlist is ordered by each item's `snippet.publishedAt` (when it went public; for a stream, its start time), so a poller can stop at the first item older than its last poll. It must not use `contentDetails.videoPublishedAt` for that: for a scheduled stream it is the day the stream was created, days earlier (seen on @eslcs).
+- **Per poll:** 1 `playlistItems.list` per channel, which returns the newest 50 uploads, plus 1 `videos.list` for all new ids together (only when there are new ones). The uploads playlist is ordered by each item's `snippet.publishedAt`, when it went public, so a poller can stop at the first item older than its last poll. For a stream that time moves: it is the live start while the stream runs, and a later time once the recording is published. While a scheduled stream is live, `contentDetails.videoPublishedAt` and `videos.list`'s `publishedAt` still hold the day it was created, days earlier (seen on @eslcs), so neither can be the stop key, and a poller must re-read an id it first saw live (length 0).
 - **Once a day:** 1 `channelSections.list` per VOD channel's parent, to re-check the whitelist.
 - **For the 30-day storage rule (see risks):** `videos.list` on stored VODs costs 1 unit per 50 videos. 1,000 stored VODs = 20 units per refresh.
 

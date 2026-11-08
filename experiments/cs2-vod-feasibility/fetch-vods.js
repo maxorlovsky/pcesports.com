@@ -20,7 +20,7 @@ export async function fetchVods({ from }) {
         }
         const info = await channel(c.id);
         const uploads = await uploadsSince(info.uploads, from);
-        const details = await videos(uploads.map((u) => u.id));
+        const details = await videos(uploads);
         out.channels.push({ ...c, ...info, uploadsInWindow: uploads.length });
         out.videos.push(...details.map((v) => ({ ...v, organizers: c.organizers })));
     }
