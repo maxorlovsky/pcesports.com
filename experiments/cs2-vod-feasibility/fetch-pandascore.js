@@ -31,11 +31,13 @@ export async function fetchPandaScore({ from, to }, tiers = DEFAULT_TIERS) {
             event: `${x.league.name} ${x.serie.full_name}`,
             organizer,
             tier: x.tournament.tier,
-            stage: x.tournament.name,
+            // tournament.name is the stage ("Playoffs"); the match name carries the round ("Lower Bracket Final: A vs B").
+            stage: `${x.tournament.name}: ${x.name.split(':')[0]}`,
             team1: o1.slug,
             team2: o2.slug,
             start: x.begin_at,
-            scheduledAt: x.original_scheduled_at || x.scheduled_at,
+            // scheduled_at is the latest schedule; original_scheduled_at is the first one, often a day off.
+            scheduledAt: x.scheduled_at,
             bestOf: x.number_of_games,
             maps,
             seriesScore: [score(o1.id), score(o2.id)],

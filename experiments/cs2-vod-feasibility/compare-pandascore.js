@@ -2,22 +2,19 @@
 // Reads out/matches.json, out/results.json, out/matches-pandascore.json, out/results-pandascore.json;
 // writes out/compare-pandascore.json.
 import { readJson, writeJson } from './lib/cache.js';
-import { aliases } from './match.js';
+import { aliases, median } from './match.js';
 
 const HOUR = 3600 * 1000;
 const PAIR_WINDOW_MS = 12 * HOUR;
 
 const sameTeam = (a, b) => [...aliases(a)].some((x) => aliases(b).has(x));
 
-const median = (xs) => {
-    if (!xs.length) return null;
-    const s = [...xs].sort((a, b) => a - b);
-    return s[Math.floor(s.length / 2)];
-};
-
 export async function compare() {
     const lp = await readJson('matches.json');
     const ps = await readJson('matches-pandascore.json');
+    if (lp.window.from !== ps.window.from || lp.window.to !== ps.window.to) {
+        throw new Error(`out/matches.json covers ${lp.window.from}..${lp.window.to}, PandaScore ${ps.window.from}..${ps.window.to}; run both sources on the same window`);
+    }
     const lpRes = Object.fromEntries((await readJson('results.json')).results.map((r) => [r.id, r]));
     const psRes = Object.fromEntries((await readJson('results-pandascore.json')).results.map((r) => [r.id, r]));
 
@@ -46,13 +43,13 @@ export async function compare() {
             // Liquipedia's time is the scheduled start; PandaScore's begin_at is when it actually began.
             beginMinusLiquipediaMin: Math.round((new Date(b.start) - new Date(a.start)) / 60000),
             scheduledMinusLiquipediaMin: b.scheduledAt ? Math.round((new Date(b.scheduledAt) - new Date(a.start)) / 60000) : null,
-            winnerAgrees: psWinner === a.winner,
+            winnerAgrees: Boolean(a.winner) && psWinner === a.winner,
             scoreAgrees: psScore.join('-') === a.seriesScore.join('-'),
             mapsPlayedAgree: b.maps.filter((x) => x.played).length === a.maps.filter((x) => x.played).length,
             bestOfAgrees: b.bestOf === a.bestOf,
             // Upper bound on how late the final result landed: the record's last change after the end.
             lastEditAfterEndMin: b.endAt ? Math.round((new Date(b.modifiedAt) - new Date(b.endAt)) / 60000) : null,
-            sameVod: (lpRes[a.id]?.vod?.id ?? null) === (psRes[b.id]?.vod?.id ?? null),
+            sameVod: Boolean(lpRes[a.id]?.vod) && lpRes[a.id].vod.id === psRes[b.id]?.vod?.id,
             lpVod: lpRes[a.id]?.vod?.id ?? null,
             psVod: psRes[b.id]?.vod?.id ?? null,
         });

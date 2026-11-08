@@ -10,11 +10,11 @@ import { compare } from './compare-pandascore.js';
 import { fetchVods } from './fetch-vods.js';
 import { stats } from './lib/liquipedia.js';
 import { quota } from './lib/youtube.js';
-import { matchAll, writeResults } from './match.js';
+import { matchAll, sourceArg, writeResults } from './match.js';
 
 const w = runWindow(process.argv.slice(2));
 console.log(`Window ${w.from.toISOString().slice(0, 10)} .. ${w.to.toISOString().slice(0, 10)} (exclusive)`);
-const source = process.argv.includes('--source') ? process.argv[process.argv.indexOf('--source') + 1] : 'liquipedia';
+const source = sourceArg();
 if (source === 'pandascore') {
     const ps = await fetchPandaScore(w);
     await writeJson('matches-pandascore.json', ps);

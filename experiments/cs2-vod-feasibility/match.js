@@ -1,6 +1,7 @@
 // Step 3: link each match to a full-match VOD from the whitelisted channels, check every link
 // against Liquipedia's own per-map VOD links, and measure what each VOD gives away.
-// Reads out/matches.json + out/videos.json, writes out/results.json + out/results.md.
+// Reads out/matches.json + out/videos.json, writes out/results.json + out/results.md
+// (with --source pandascore: out/matches-pandascore.json -> out/results-pandascore.*).
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ROOT, readJson, writeJson } from './lib/cache.js';
@@ -96,7 +97,7 @@ function spoilers(match, pick) {
 }
 
 // --source pandascore matches PandaScore's list (out/matches-pandascore.json) instead of Liquipedia's.
-const sourceArg = () => {
+export const sourceArg = () => {
     const i = process.argv.indexOf('--source');
     const s = i >= 0 ? process.argv[i + 1] : 'liquipedia';
     if (!['liquipedia', 'pandascore'].includes(s)) throw new Error(`Unknown --source ${s}`);
@@ -194,7 +195,7 @@ function spoilerSummary(results) {
 
 const maximum = (xs) => (xs.length ? Math.max(...xs) : null);
 
-const median = (xs) => {
+export const median = (xs) => {
     if (!xs.length) return null;
     const s = [...xs].sort((a, b) => a - b);
     return s[Math.floor(s.length / 2)];

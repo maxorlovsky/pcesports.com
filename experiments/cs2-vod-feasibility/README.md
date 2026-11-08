@@ -29,7 +29,7 @@ So the Liquipedia client now refuses any network call unless `LIQUIPEDIA_MEDIAWI
 
 ## Run it
 
-You need a YouTube Data API v3 key in `YOUTUBE_API_KEY`, and for the PandaScore steps a PandaScore token in `PANDASCORE_TOKEN`. The owner keeps it in the repo-root `.env.local`, which the root `.gitignore` already ignores (`*.local`). Never commit a key.
+You need a YouTube Data API v3 key in `YOUTUBE_API_KEY`, and for the PandaScore steps a PandaScore token in `PANDASCORE_TOKEN`. The owner keeps both in the repo-root `.env.local`, which the root `.gitignore` already ignores (`*.local`). Never commit a key.
 
 ```bash
 cd experiments/cs2-vod-feasibility
@@ -40,7 +40,8 @@ node --env-file=../../.env.local run.js --from 2026-10-24 --to 2026-11-08 --sour
 ```
 
 - `--to` is exclusive. Without arguments the window is the 14 days before today, so matches played today (no VOD yet) stay out.
-- Output goes to `out/` (`matches.json`, `videos.json`, `results.json`, `results.md`).
+- Output goes to `out/` (`matches.json`, `videos.json`, `results.json`, `results.md`; with `--source pandascore` also `matches-pandascore.json`, `results-pandascore.*` and `compare-pandascore.json`).
+- The comparison needs a Liquipedia run on the same window first; if `out/matches.json` covers another window it is skipped with a message.
 
 ## Cache
 

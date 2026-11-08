@@ -1,7 +1,7 @@
 import { cached } from './cache.js';
 
 // PandaScore REST API, free "Fixtures" plan: 1,000 requests per hour, token on every request.
-// Only the list endpoint /csgo/matches/past is used (the per-match endpoint needs a paid plan).
+// Only the list endpoint /csgo/matches/past is used.
 const API = 'https://api.pandascore.co';
 const PER_PAGE = 100;
 export const stats = { requests: 0, cacheHits: 0 };
@@ -29,7 +29,7 @@ async function page(path, query, n) {
 
 /** Every finished-or-not CS match that began in [from, to), oldest first. */
 export async function pastMatches(from, to) {
-    const query = { 'range[begin_at]': `${from.toISOString()},${new Date(to - 1000).toISOString()}`, sort: 'begin_at' };
+    const query = { 'range[begin_at]': `${from.toISOString()},${new Date(to - 1000).toISOString()}`, sort: 'begin_at,id' };
     const out = [];
     for (let n = 1; ; n++) {
         const items = await page('/csgo/matches/past', query, n);
