@@ -73,7 +73,7 @@ checks the same and prints the steps without running them.
 
   Whatever command it is sent, it deploys, except `dry-run`, which checks that git reaches GitHub from that shell and
   then runs the dry run: `ssh -i <key> max@<host> dry-run` ends in `Dry run: nothing ran.` A forced command runs in a
-  shell that read no login profile, so node, npm and git must be on that shell's own PATH (the script adds
+  shell that read no login profile, so node, npm, git and flock must be on that shell's own PATH (the script adds
   `~/.local/bin`), and the clone's GitHub access must work without an SSH agent.
 - The repository secrets: `PROD_DEPLOY_HOST`, `PROD_DEPLOY_SSH_USER` (`max`), `PROD_DEPLOY_SSH_KEY` (the deploy key's
   private half) and, if SSH isn't on port 22, `PROD_DEPLOY_SSH_PORT`.

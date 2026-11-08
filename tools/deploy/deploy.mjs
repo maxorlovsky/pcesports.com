@@ -5,7 +5,7 @@
 // then points `site` (what nginx serves, tools/nginx/nginx.prod.conf) at it in one step, keeping the releases before
 // it to go back to. --dry-run checks the same and prints the steps without running them.
 import { spawnSync } from 'node:child_process';
-import { cpSync, existsSync, lstatSync, readdirSync, readFileSync, readlinkSync, renameSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, lstatSync, readdirSync, readFileSync, readlinkSync, renameSync, rmSync, symlinkSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,8 +17,12 @@ const SITE = join(ROOT, 'site');
 const RELEASES = join(ROOT, '.releases');
 /** Releases kept besides the one the site shows, to go back to (README.md, "Going back"). */
 const KEEP = 2;
-/** Holds the running deploy's process id, so a second deploy started meanwhile stops before it touches anything. */
+/** The file flock(1) locks while a deploy runs, so a second deploy started meanwhile stops before it touches anything. */
 const LOCK = join(ROOT, '.deploy.lock');
+/** Set in the deploy that holds the lock. */
+const LOCKED = 'PCESPORTS_DEPLOY_LOCKED';
+/** flock's exit code when another deploy holds the lock. */
+const BUSY = 75;
 /** What `npm run generate` writes (nuxt.config.ts). */
 const BUILD = join(ROOT, '.output', 'public');
 
@@ -48,15 +52,6 @@ function run(command, args) {
   if (result.error || result.status !== 0) fail(`${command} ${args.join(' ')} failed${result.error ? `: ${result.error.message}` : ''}`);
 }
 
-function running(pid) {
-  try {
-    process.kill(pid, 0);
-    return true;
-  } catch (error) {
-    return error.code === 'EPERM';
-  }
-}
-
 /** Points `link` at `to` in one step: a new link renamed over the old one, so nginx never sees a half-built site. */
 function point(link, to) {
   const next = `${link}.next`;
@@ -71,26 +66,18 @@ if (branch !== BRANCH) fail(`deploy from ${BRANCH} only, and this checkout is on
 const changes = git('status', '--porcelain');
 if (changes) fail(`the checkout has changes, which would ship unreviewed:\n${changes}`);
 
-// One deploy at a time: two would share node_modules and .output. The lock file is created only if it isn't there
-// (`wx`), so of two deploys started together one gets it. A lock whose process is gone (a deploy stopped with Ctrl-C)
-// is taken over. The deploy run again after the pull holds its caller's.
-function lock() {
-  try {
-    writeFileSync(LOCK, String(process.pid), { flag: 'wx' });
-    return true;
-  } catch (error) {
-    if (error.code !== 'EEXIST') throw error;
-    return false;
-  }
-}
-if (!dryRun && !flags.includes('--pulled')) {
-  if (!lock()) {
-    const holder = Number(readFileSync(LOCK, 'utf8'));
-    if (holder && running(holder)) fail(`another deploy is running (process ${holder}): wait for it`);
-    rmSync(LOCK, { force: true });
-    if (!lock()) fail('another deploy took the lock just now: wait for it');
-  }
-  process.on('exit', () => rmSync(LOCK, { force: true }));
+// One deploy at a time: two would share node_modules and .output. The deploy runs itself again under flock(1),
+// whose lock the kernel holds until that deploy, and the one it runs after the pull, end, and drops even when one is
+// killed: no lock is ever left behind. The lock file itself stays (git ignores it).
+if (spawnSync('flock', ['--version'], { stdio: 'ignore' }).error) fail('flock (util-linux) is not on PATH');
+if (!dryRun && !process.env[LOCKED]) {
+  const locked = spawnSync('flock', ['--nonblock', '--conflict-exit-code', String(BUSY), LOCK, process.execPath, fileURLToPath(import.meta.url), ...flags], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: { ...process.env, [LOCKED]: '1' },
+  });
+  if (locked.status === BUSY) fail('another deploy is running: wait for it');
+  process.exit(locked.status ?? 1);
 }
 
 // Pull master, then run the script again from what was pulled, so a change to the deploy itself applies at once.

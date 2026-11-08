@@ -162,6 +162,10 @@ check https $www /assets/bg-BC430sfB.jpg 410
 check https $www /api/ 410
 check https $www /wp-api/pce-api/menu 410
 check https $www /images/x.png 410
+# Every page the sitemap lists answers 200: a line of old-urls.conf never shadows a page of the site
+for loc in $(sed -n 's#.*<loc>\([^<]*\)</loc>.*#\1#p' "$build_dir/sitemap.xml"); do
+  check https $www "${loc#"$canon"}" 200
+done
 # Built files: a page's own script, kept a year
 asset=$(cd "$build_dir" && ls _nuxt/*.js | head -n 1)
 check https $www "/$asset" 200

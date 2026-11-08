@@ -1,8 +1,7 @@
 // tools/deploy/deploy.mjs and ssh.sh, the forced command, in a scratch live clone of a scratch origin. Only what runs
-// no build: the refusals and the dry run (a real deploy runs npm ci and nuxt generate; README.md, "Deploy", says how
-// to try one in a scratch clone).
+// no build: the refusals, the lock and the dry run (a real deploy runs npm ci and nuxt generate).
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -95,14 +94,27 @@ test('it refuses a site folder that is not a link to a release', () => {
   assert.match(result.stderr, /is not a link to a release/);
 });
 
-test('it refuses a second deploy while one runs', () => {
-  // This test's own process stands in for the running deploy
-  writeFileSync(join(clone, '.deploy.lock'), String(process.pid));
+test('it refuses a second deploy while one runs', async () => {
+  // flock holding the lock stands in for the running deploy
+  // (its own process group, so the kill below ends sleep too, which holds the lock as well)
+  const holder = spawn('flock', [join(clone, '.deploy.lock'), 'sleep', '30'], { stdio: 'ignore', detached: true });
+  while (sh('flock', ['--nonblock', join(clone, '.deploy.lock'), 'true'], clone).status === 0) await new Promise((done) => setTimeout(done, 20));
   const result = sh('node', ['tools/deploy/deploy.mjs'], clone);
-  rmSync(join(clone, '.deploy.lock'), { force: true });
+  process.kill(-holder.pid);
   assert.equal(result.status, 1);
   assert.match(result.stderr, /another deploy is running/);
   assert.equal(existsSync(join(clone, 'node_modules')), false);
+});
+
+test('a lock file left by a stopped deploy does not stop the next', () => {
+  writeFileSync(join(clone, '.deploy.lock'), '12345');
+  // The scratch site has no package-lock.json, so this deploy gets past the lock and the pull, then stops at npm ci
+  const result = sh('node', ['tools/deploy/deploy.mjs'], clone);
+  rmSync(join(clone, '.deploy.lock'), { force: true });
+  assert.equal(result.status, 1);
+  assert.doesNotMatch(result.stderr, /another deploy is running/);
+  assert.match(result.stderr, /npm ci failed/);
+  assert.match(result.stdout, /> git merge --ff-only origin\/master/);
 });
 
 test('git ignores what a deploy writes, so the next deploy sees a clean checkout', () => {
