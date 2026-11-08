@@ -103,6 +103,18 @@ test('rematch guard: with the first meeting VOD missing, the second meeting VOD 
   assert.deepEqual(linkVods([first, second], [secondVod, firstVod], [], ALL_CHANNELS).links.map((link) => [link.matchId, link.videoId]), [[1, 'first'], [2, 'second']]);
 });
 
+test('a canceled or forfeited rematch neither takes the first meeting VOD nor cuts its window short', () => {
+  const first = match(1);
+  const vod = upload({ id: 'first', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 4) });
+  const forfeited = { ...match(2, { start: at(START, 3) }), forfeit: true };
+  assert.deepEqual(linkVods([first, forfeited], [vod], [], ALL_CHANNELS).links.map((link) => [link.matchId, link.videoId]), [[1, 'first']]);
+  // A forfeit has no VOD of its own, whatever upload names its teams
+  const after = upload({ id: 'later', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 6) });
+  assert.deepEqual(linkVods([forfeited], [after], [], ALL_CHANNELS).links, []);
+  const canceled = match(3, { start: at(START, 3), status: 'canceled' });
+  assert.deepEqual(linkVods([first, canceled], [vod], [], ALL_CHANNELS).links.map((link) => [link.matchId, link.videoId]), [[1, 'first']]);
+});
+
 test('a stored link stays while its match does; a channel the whitelist check stopped links nothing new', () => {
   const stored = [{ matchId: 1, videoId: 'kept', channelId: ESL_ARCHIVES }, { matchId: 9, videoId: 'gone', channelId: ESL_ARCHIVES }];
   const vod = upload({ id: 'vod', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 3) });

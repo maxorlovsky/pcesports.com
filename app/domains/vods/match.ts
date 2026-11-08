@@ -92,9 +92,13 @@ export function isVodLength(upload: Upload): boolean {
 
 const pairKey = (match: Match) => match.teams.map((team) => team.id).sort((a, b) => a - b).join('-');
 
+/** A match that was or is being played: canceled, postponed and forfeited ones have no VOD and bound no other's. */
+const played = (match: Match) => ['running', 'finished'].includes(match.status) && !match.forfeit;
+
 /**
  * Where a match's VOD may have been published: from its start to `PUBLISH_WINDOW_HOURS` later, and before the same two
- * teams meet again. Without that guard a rematch's VOD would be linked to the first meeting when the first VOD is missing.
+ * teams next play each other. Without that guard a rematch's VOD would be linked to the first meeting when the first
+ * VOD is missing. Only a rematch that was played ends the window: a canceled or forfeited one has no VOD to confuse.
  */
 function publishWindow(match: Match, matches: Match[]): { from: number; to: number } | null {
   const start = startOf(match);
@@ -104,7 +108,7 @@ function publishWindow(match: Match, matches: Match[]): { from: number; to: numb
   const pair = pairKey(match);
   for (const other of matches) {
     const otherStart = startOf(other);
-    if (other.id === match.id || other.teams.length !== 2 || pairKey(other) !== pair || !otherStart) continue;
+    if (other.id === match.id || other.teams.length !== 2 || !played(other) || pairKey(other) !== pair || !otherStart) continue;
     const at = Date.parse(otherStart);
     if (at > from && at < to) to = at;
   }
@@ -114,7 +118,7 @@ function publishWindow(match: Match, matches: Match[]): { from: number; to: numb
 /** The uploads that could be this match's VOD, earliest first. */
 export function candidates(match: Match, matches: Match[], uploads: Upload[], channelIds: Set<string>): Upload[] {
   const [teamA, teamB] = match.teams;
-  if (!teamA || !teamB || match.teams.length !== 2 || !['running', 'finished'].includes(match.status)) return [];
+  if (!teamA || !teamB || match.teams.length !== 2 || !played(match)) return [];
   const window = publishWindow(match, matches);
   if (!window) return [];
   const first = spellings(teamA);
