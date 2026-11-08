@@ -95,8 +95,17 @@ function spoilers(match, pick) {
     };
 }
 
-export async function matchAll() {
-    const m = await readJson('matches.json');
+// --source pandascore matches PandaScore's list (out/matches-pandascore.json) instead of Liquipedia's.
+const sourceArg = () => {
+    const i = process.argv.indexOf('--source');
+    const s = i >= 0 ? process.argv[i + 1] : 'liquipedia';
+    if (!['liquipedia', 'pandascore'].includes(s)) throw new Error(`Unknown --source ${s}`);
+    return s;
+};
+const suffix = (source) => (source === 'liquipedia' ? '' : `-${source}`);
+
+export async function matchAll(source = sourceArg()) {
+    const m = await readJson(`matches${suffix(source)}.json`);
     const v = await readJson('videos.json');
     const manualAliases = JSON.parse(await readFile(join(ROOT, 'aliases.json'), 'utf8')).aliases;
     const useManual = !process.argv.includes('--no-manual-aliases');
@@ -105,6 +114,7 @@ export async function matchAll() {
         const cands = candidatesFor(match, v.videos, m.teams, useManual ? manualAliases : {});
         const vods = cands.filter((c) => c.kind === 'vod').sort((a, b) => a.delayH - b.delayH);
         const pick = vods[0] || null;
+        // Liquipedia's editors add per-map VOD links; PandaScore has none, so its matches have no reference.
         const reference = new Set(match.maps.filter((x) => x.vod).map((x) => x.vod.id));
         if (match.matchVod) reference.add(match.matchVod.id);
         let check = 'no-reference';
@@ -155,7 +165,7 @@ export async function matchAll() {
             matches: n((r) => r.event === e), matched: n((r) => r.event === e && r.vod),
         }])),
     };
-    return { window: m.window, quota: v.quota, summary, results, unusedVodUploads };
+    return { source, window: m.window, quota: v.quota, summary, results, unusedVodUploads };
 }
 
 function spoilerSummary(results) {
@@ -207,8 +217,8 @@ function markdown({ window: w, summary: s, results }) {
 }
 
 export async function writeResults(data) {
-    await writeJson('results.json', data);
-    await writeFile(join(ROOT, 'out', 'results.md'), markdown(data));
+    await writeJson(`results${suffix(data.source)}.json`, data);
+    await writeFile(join(ROOT, 'out', `results${suffix(data.source)}.md`), markdown(data));
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

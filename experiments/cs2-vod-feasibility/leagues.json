@@ -1,0 +1,13 @@
+{
+    "_comment": "PandaScore league name -> organiser (the `organizers` values in channels.json). PandaScore has no organiser field. A league missing here is listed as unknown and gets no VOD.",
+    "leagues": {
+        "IEM": "ESL",
+        "ESL Pro League": "ESL",
+        "PGL Masters": "PGL",
+        "PGL Major": "PGL",
+        "BLAST Premier": "BLAST",
+        "BLAST Rivals": "BLAST",
+        "BLAST Open": "BLAST",
+        "BLAST Bounty": "BLAST"
+    }
+}

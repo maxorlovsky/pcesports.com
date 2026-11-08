@@ -4,19 +4,22 @@ Research date: 2026-11-08. Experiment code: [`experiments/cs2-vod-feasibility/`]
 
 **Question.** Can a hobby site get tier-1 CS2 match data and the matching official full-match VODs reliably, legally and for free?
 
-**Short answer: the VOD side, yes. The match-data side, not for free as of 2026-11-08.**
+**Short answer: yes, with PandaScore's free plan for the match data, once one terms question is settled.**
 
 - **VODs: feasible.** The organisers' own YouTube VOD channels, read through their upload playlists, gave 69 of 69 tier-1 matches over 15 days their full-match VOD:
   - 0 wrong links
   - each VOD up 2 to 6 hours after the match started
   - 25 quota units for the whole backfill
-- **Match data: no free source with clear terms for an ad-supported site.**
-  - The experiment got its match list from Liquipedia's MediaWiki API, which Liquipedia's terms offered "for use in your own projects" when I read them on 2026-11-07.
-  - Read again on 2026-11-08, those terms say "Use of the API for non-editing purposes is not supported" and point to Liquipedia's data API (LPDB).
-  - LPDB's free plan is "strictly reserved" for uses that include non-commercial sites that "do not monetize". Its paid plans started at $49/month per data type per game in June 2026.
-  - PandaScore's free plan is the only other free candidate, and its terms are unclear for a hobby site.
-  - HLTV and Strafe forbid it.
-- **The decision this needs from the owner** is section 6, item 1: pay for LPDB, or check PandaScore's terms with them first.
+- **Match data: PandaScore's free plan works for this.** Tested with the owner's token on the same 15 days:
+  - PandaScore's top two tiers held exactly the same 69 matches as Liquipedia's S-Tier.
+  - Winner, series score, maps played and best-of agreed on all 69, and every record was final within 30 minutes of the match ending.
+  - Linking VODs from PandaScore's list picked the same 69 videos.
+  - **Open question:** PandaScore's terms are written for "any professional, to the exclusion of any consumer as well as any non-professional", and they list results under the paid plan even though the free API returns them. Whether a one-person ad-supported site may show them is for PandaScore to confirm (section 6, item 1).
+- **Liquipedia's free API is out:**
+  - Its MediaWiki API, which the experiment first used, now says "Use of the API for non-editing purposes is not supported".
+  - Its data API (LPDB) is free only for sites that "do not monetize", and paid plans started at $49/month per data type per game in June 2026.
+  - That makes LPDB the paid fallback.
+- **HLTV and Strafe forbid this use.**
 
 The other caveats are a narrow event sample, and spoilers that come from the VODs' length and chapters rather than their titles. Details below.
 
@@ -28,7 +31,7 @@ All terms were read on 2026-11-08 from each source's own pages (Liquipedia's als
 |---|---|---|---|---|---|---|---|---|
 | **Liquipedia MediaWiki API** (used by the experiment) | Yes / yes, per map with scores / yes: `liquipediatier`, stage headings, plus editors' per-map VOD links / yes | Volunteer-edited live: on 2026-11-07 the IEM Beijing playoff section was edited 10 times between 08:24 and 11:36 UTC while both semi-finals were played (revision history). The PGL grand-final VOD link was still missing 8 days later | 1 request per 2 s, `action=parse` 1 per 30 s, custom User-Agent with contact info, no scraping of HTML pages [L2, L3, L4] | None | Free [L1] | **No longer for this use.** On 2026-11-07 the terms offered it "for use in your own projects" [L1]. On 2026-11-08 they say it is for editing and "Use of the API for non-editing purposes is not supported" [L10]. The content license itself, CC-BY-SA 3.0, allows commercial use with attribution and share-alike [L5, L6, L7] | Required: "content is from Liquipedia" plus a link [L6] | **Not for the product** under the current terms. The experiment's data was fetched on 2026-11-08 (see section 6) |
 | Liquipedia LPDB API ("data API") | Same data as structured queries (matches, tournaments, teams and more, per game) [L11] | Same | "the rate limit your plan provides" [L8]: 1,000 requests per hour on Basic [L11] | "Upon approved request" [L8], an application form [L11] | **Free only for** educational, non-commercial ("do not monetize") and community-feature projects, with open-source code [L12]. **Paid:** Basic "$49/month per Data Type", per game [L11] (June 2026 snapshot) | Allowed on a paid plan; the free plan excludes monetized sites [L12] | Same license [L5] | **The clean paid option.** One CS data type at the June 2026 price is $49/month, about 25 to 50 % of the site's revenue target |
-| PandaScore (free "Fixtures" plan) | Schedule, tournaments with an in-house S-D tier, teams [P3, P5, P6]. **Results unclear on the free plan:** the docs say fixtures carry "the final match score and the winning team" [P3], the terms put "Post-match data: results" in the paid Historical plan [P7] | Results "in real-time" [P4] | 1,000 requests per hour [P1]; no browser calls (server only) [P4] | Token on every request [P8]; sign-up needed. `app.pandascore.co/signup` works, `pandascore.co/signup` is a 404 | Free plan 0 EUR, paid "From 400€ per videogame per month" [P2] | **Unclear.** Showing data "only on its website, for information purposes" is allowed [P10], but the terms are for "any professional, to the exclusion of any consumer as well as any non-professional" [P9], and rights come "By taking out a Subscription and paying its price" [P11] | Required: "Source: PandaScore" [P12] | Not tested (no token; owner couldn't register). Option 2 in section 5, only after PandaScore confirms its terms cover a hobby site |
+| PandaScore (free "Fixtures" plan, **tested**) | **Measured on the 15-day window:** schedule, results (winner, series score, winner per map), best-of, teams with acronyms, league/serie/tournament names. The top two tiers held the same 69 matches as Liquipedia's S-Tier. **No map names, per-map scores or VOD links** in the free list. Stage is coarse ("Group Stage", "Playoffs", "Group A"). Tiers are in-house [P5]: IEM Beijing "s", PGL Masters Bucharest "a" (Liquipedia: both S-Tier) | Every one of the 69 records was last edited 30 min or less after its match ended (median 5 min); "in real-time" per its docs [P4] | 1,000 requests per hour [P1]; the window took 7 requests; no browser calls (server only) [P4] | Token on every request [P8] (the owner signed up) | Free plan 0 EUR, paid "From 400€ per videogame per month" [P2] | **Unclear on one point.** Showing data "only on its website, for information purposes" is allowed [P10], but the terms are for "any professional, to the exclusion of any consumer as well as any non-professional" [P9], and rights come "By taking out a Subscription and paying its price" [P11] | Required: "Source: PandaScore" [P12] | **Recommended**, once PandaScore confirms its terms cover the site (section 6). The free plan does return results, as its docs say [P3]; the terms list results only under the paid Historical plan [P6, P7], so that goes into the same question |
 | Valve Regional Standings ([GitHub repo](https://github.com/ValveSoftware/counter-strike_regional_standings)) | **No schedule.** Monthly standings in Markdown, plus per-roster tables of matches (date, opponent, W/L, weights) with no event, score, stage or tier. A one-year match sample JSON (2022-08 to 2023-08) is never updated | Monthly, around the first Monday (2026 commits from 01-05 to 11-02, one in September on a Tuesday/Wednesday); the 2026-11-02 release holds matches up to the last days of October (the #1 roster's newest is 2026-10-31), so it lags a few days at release and up to 5 weeks before the next | GitHub's own | None | Free | **Unclear:** no license file (GitHub reports none) and no reuse terms in the README. Every file credits HLTV as the event-data provider [V1] | None stated | Not a match source. Useful later for the Regional Standings guides, license to be settled first |
 | HLTV.org | Everything (schedule, results, stats) | Live | No official API found; Cloudflare blocks automated clients | - | - | **Forbidden:** no commercial exploitation, no scraping or data mining, no similar website [H1, H2, H3], "personal use only" [H4] | - | **Ruled out**, not used |
 | GRID (grid.gg) | Tier-1 CS2 circuits incl. IEM, ESL Pro League, BLAST [G2] | - | Old Open Access: 10 requests per minute, never real time [G4] | Application | Open Access page now redirects to plans; "Every plan on this page is commercial and custom-priced to the use case." [G1] | Old Open Access terms: only for the stated purpose, up to 10,000 EUR yearly revenue, data treated as confidential [G3] | - | Not usable today |
@@ -173,6 +176,21 @@ Every link was then compared with the per-map VOD links that Liquipedia's editor
 - **Stage labels aren't reliable.** ESL titled its third-place VOD `NAVI vs. BB Team - IEM Beijing 2026 -`, with the stage left empty. PGL titled the playoff-deciding Swiss matches (the high pool of rounds 3 and 4, and round 5) "Playoffs". The matcher therefore never relies on the stage in a title.
 - **Liquipedia flags aren't fully reliable either.** The match-level `finished=` flag was blank on one finished match (9z vs BetBoom). The script counts a match as played once one team has won the majority of maps, not by that flag.
 
+### The same matching from PandaScore's data
+
+`run.js --source pandascore` took the match list from PandaScore instead (tiers `s` and `a`; league names mapped to organisers in `leagues.json`), and `compare-pandascore.js` paired it with Liquipedia's.
+
+| | Result |
+|---|---|
+| Matches in the window (PandaScore, all tiers) | 654: 28 "s", 41 "a", 14 "b", 183 "c", 388 "d" |
+| Kept (`s` + `a`) / paired with Liquipedia's 69 | 69 / 69, none extra on either side |
+| Winner, series score, maps played, best-of | agree on 69 / 69 each |
+| Start time | PandaScore's `begin_at` (actual start) is 1 min before to 19 min after Liquipedia's scheduled start, median +4 min |
+| VODs linked from PandaScore's list | 69 / 69, and the same video as the Liquipedia run for all 69 |
+| Result freshness | each record last edited 1 to 30 min after its `end_at` (median 5 min). This is an upper bound on when the result landed |
+
+PandaScore's free list has no per-map VOD links, so a PandaScore-only product loses the Liquipedia cross-check. That check agreed on all 68 links it could cover here.
+
 ### Hand-checked sample (28 matches)
 
 For each match I compared:
@@ -260,7 +278,7 @@ Polling every 15 min is plenty, because the VODs appeared 2 to 6 h after the sta
 | Risk | What could happen | Mitigation |
 |---|---|---|
 | **License: Liquipedia CC-BY-SA 3.0** | Attribution is mandatory [L5, L6]. Share-alike applies to "derivative works" [L6]. If the site's match pages count as adaptations of Liquipedia content, that content has to be offered under CC-BY-SA too. Bare facts (who played whom, the score) are usually not copyrightable, but I can't tell you for sure how far share-alike reaches here; this is not legal advice. Team logos and other images on Liquipedia have separate licenses [L6] | Credit Liquipedia with a link on every page that shows its data; don't copy its images or logos; keep the site's own rankings and explanations as separate, own text. Owner decision 2 |
-| **Single source: Liquipedia** | The API can change or stop "at any time, without notice" [L9], and its terms did change during this experiment [L1, L10]. Results are entered by volunteers (fast at S-Tier events, see Freshness), and a tier can be downgraded after the fact (Liquipedia's S-Tier page notes a possible downgrade "depending on the average rank of attending teams") | Use LPDB on a paid plan, not the MediaWiki API; cache everything; alert when an event stops changing during its dates. A second source (PandaScore) would need its terms settled first |
+| **Single match-data source** | PandaScore can change the free plan, its terms or its tiers; its tiers are its own [P5] (PGL Masters Bucharest was "a"). Liquipedia's API can change or stop "at any time, without notice" [L9], and its terms did change during this experiment [L1, L10]. Liquipedia's results are entered by volunteers (fast at S-Tier events, see Freshness), and a tier can be downgraded after the fact (Liquipedia's S-Tier page notes a possible downgrade "depending on the average rank of attending teams") | Keep the source behind one adapter, as `run.js --source` already does, so PandaScore and LPDB are interchangeable; pick tier-1 by organiser plus tier rather than tier alone; cache everything; alert when an event stops changing during its dates |
 | **Liquipedia API rules** | Using the MediaWiki API for data is no longer supported [L10]. Breaking the rate limit, using a generic User-Agent or reading HTML pages (forbidden [L4]) can get the server's IP blocked | The experiment's client now refuses network calls unless `LIQUIPEDIA_MEDIAWIKI_OK=1` is set. It spaces requests 2.5 s / 31 s, caches every response and sends a project User-Agent with the site and repo URLs but no email, although Liquipedia's example includes one [L3] |
 | **YouTube API policies** | Stored API data must be deleted or refreshed within 30 days [Y2]. Ads are only allowed on a page with YouTube API data if the page's other content has "enough independent value" without it [Y3]. Scraping YouTube is forbidden [Y4], so there is no legal no-key fallback such as reading YouTube's HTML | Refresh stored VOD records with `videos.list` (1 unit per 50) at least every 30 days and drop deleted ones. This report itself quotes API data as evidence (video titles, lengths, publish times, chapter names): if it's kept past 2026-12-08, strip those from it or refresh them; the page's value is the ranking and explanation, the VOD link is an extra; the key stays server-side |
 | **YouTube's derived-data rule** | API clients must not "use API Data to create new or derived data or metrics" [Y5]. The product's core step, deciding from a video's title which match it shows, arguably creates new data from API data. The policy's own examples are about metrics (likes turned into percentages), so I read it as aimed at metrics rather than at linking a video, but I can't tell you for sure. This report's length and chapter analysis (section 2) is a one-off measurement for the card's spoiler question, and is exactly the kind of derived metric the product must not compute | The product shows only YouTube's own data as returned and stores no derived metrics. Owner decision 5: accept the reading above, or ask YouTube's API team before launch |
@@ -278,17 +296,17 @@ Polling every 15 min is plenty, because the VODs appeared 2 to 6 h after the sta
 - The matcher needs only teams, start time, event and organiser from the match source, so it works with any of the options below.
 - One open policy question: YouTube's rule against "new or derived data" [Y5] (section 4, owner decision 5).
 
-**Match data: none of the free sources is good enough as of 2026-11-08.** In order of preference:
+**Match data: PandaScore's free plan, with Liquipedia LPDB as the paid fallback.** In order of preference:
 
-1. **Liquipedia LPDB, paid (recommended if the owner accepts the cost).**
-   - It's the same data this experiment used: tier, stage, per-map scores and per-map VOD links, from the best-kept CS2 wiki.
-   - The license is clear (CC-BY-SA, credit Liquipedia).
-   - At the June 2026 price, one data type for CS was $49/month [L11]. Whether "matches" alone is enough, and today's price, need Liquipedia's answer (their form or Discord).
-2. **PandaScore free plan, only after PandaScore confirms two things in writing:**
-   - that a one-person ad-supported site is a "professional" Customer under their terms [P9]
-   - that the free plan returns match results [P3 vs P7]
-
-   It's free, but it needs a sign-up: `app.pandascore.co/signup` works, while the URL that 404s is `pandascore.co/signup`. Its tiers are its own, not Liquipedia's [P5].
+1. **PandaScore free plan (recommended).**
+   - Measured on this window, it has everything the matcher and a "What should I watch?" page need: the same 69 tier-1 matches, correct results, results final within 30 minutes, and the same 69 VOD links.
+   - It costs nothing and uses 7 of its 1,000 requests per hour for two weeks.
+   - Credit "Source: PandaScore" [P12].
+   - The open point is its terms: the "professional" clause [P9], and results being listed under the paid plan [P6, P7] although the free API returns them (section 6, item 1).
+   - **Limits:** its tiers are its own (PGL Masters Bucharest was "a"), so the site needs its own tier rule, e.g. "s" and "a" from known organisers. Stages are coarse, and there are no map names on the free plan.
+2. **Liquipedia LPDB, paid.**
+   - It's the richer data this experiment first used: tier, detailed stage, per-map scores and per-map VOD links. The license is clear (CC-BY-SA, credit Liquipedia).
+   - At the June 2026 price it was $49/month per data type [L11]; today's price is unconfirmed.
 3. **Not HLTV, Strafe:** their terms forbid it [H1-H4, ST1].
 4. **Not the Liquipedia MediaWiki API** under its current terms [L10], unless Liquipedia explicitly says this use is fine.
 5. **Valve's repo:** not a match source, but the official input for the later Regional Standings guides once its reuse terms are clear.
@@ -298,16 +316,16 @@ Polling every 15 min is plenty, because the VODs appeared 2 to 6 h after the sta
 ## 6. Decisions for the owner
 
 1. **Match-data source.** Choose one:
-   - **lpdb-paid:** apply for LPDB on a paid plan ($49/month per data type per game in June 2026 [L11]; confirm today's price and which data types CS2 needs)
-   - **pandascore-check:** email PandaScore the two questions in section 5 first, and sign up only if both answers are yes
-   - **none-yet:** park the product until one of these is settled
+   - **pandascore-free (recommended):** build on PandaScore's free plan with the "Source: PandaScore" credit. Two points in its terms need PandaScore's answer: they address "any professional, to the exclusion of any consumer as well as any non-professional" [P9], and they list results under the paid Historical plan [P6, P7] while the free API and docs [P3] give them. You hold the account, so ask PandaScore to confirm in writing that a site you run for ad revenue may show free-plan results with the credit. I can't tell you for sure how they read it.
+   - **lpdb-paid:** Liquipedia's data API on a paid plan, for tier, detailed stages, map names and per-map VOD links ($49/month per data type per game in June 2026 [L11]; confirm today's price)
+   - **none-yet:** park the product
 
-   Until then the experiment's Liquipedia client stays switched off (`LIQUIPEDIA_MEDIAWIKI_OK`). The experiment fetched its Liquipedia data on 2026-11-08 under the terms as read on 2026-11-07 [L1]. I can't tell exactly when that day the new text [L10] went up, so those runs may already have fallen under it. No Liquipedia call was made after I noticed the change.
+   Either way, the experiment's Liquipedia client stays switched off (`LIQUIPEDIA_MEDIAWIKI_OK`). The experiment fetched its Liquipedia data on 2026-11-08 under the terms as read on 2026-11-07 [L1]. I can't tell exactly when that day the new text [L10] went up, so those runs may already have fallen under it. No Liquipedia call was made after I noticed the change.
 2. **Liquipedia licensing** (if lpdb-paid). Accept CC-BY-SA 3.0 for the site: a visible "Data from Liquipedia" credit with a link on every page that uses it, and share-alike for anything that counts as an adaptation of Liquipedia content. If share-alike is unacceptable, get legal advice or ask Liquipedia about other terms.
 3. **Spoiler policy.** Show the VOD as the site's own card with a deep link (no YouTube thumbnail, length or chapters before the click), or accept that the YouTube page reveals the map count.
 4. **Whitelist scope.** Verify the remaining S-Tier organisers (StarLadder, Perfect World, FISSURE, GAM3RS_X, BLAST in practice) the same two-step way before launch.
 5. **YouTube's derived-data rule** [Y5]. Accept my reading that linking a match to its VOD by title is not a "derived metric" (the product shows YouTube's data as returned and computes no metrics from it), or ask YouTube's API team before launch.
 6. **Next cards** this report suggests, once item 1 is decided:
-   - (a) rerun the experiment on BLAST Rivals Fall 2026 and the PGL Major Singapore, with the chosen match source
+   - (a) rerun the experiment on BLAST Rivals Fall 2026 and the PGL Major Singapore, with the chosen match source (`run.js --source pandascore` already supports PandaScore)
    - (b) a scheduled fetcher (match source + VOD channels, 15-minute polling, 30-day refresh) that writes match/VOD records
    - (c) the "What should I watch?" ranking on top of that data
