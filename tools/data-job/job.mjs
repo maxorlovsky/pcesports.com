@@ -6,12 +6,13 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { join } from 'node:path';
 import { eventOf, fetchPandaScoreMatches, fetchWindow, mergeMatches, startOf, toMatch, TIER_ONE } from '../../app/domains/matches/index.ts';
 import {
-  CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods, missingVods,
-  pruneUploads, unmatchedUploads, youtubeClient,
+  CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, REFRESH_DAYS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods,
+  missingVods, pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
 import { fetchData, forgetData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
+const DAY = 24 * HOUR;
 /** At most one data commit per this many minutes, so a busy event day makes at most 48 deploys. */
 export const MIN_GAP_MINUTES = 30;
 /** How often the job's clone drops the data commits it replaced (pruneData). */
@@ -162,6 +163,8 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   const youtube = youtubeClient({ key: secrets.youtube, fetch });
   await checkWhitelist(youtube, state, now, errors);
   const active = VOD_CHANNELS.filter((channel) => !state.whitelist.failed[channel.id]);
+  // The uploads past KEEP_UPLOADS_DAYS go first, so none of them is matched; one its channel still lists is read again.
+  state.uploads = pruneUploads(state.uploads, now);
   const read = await pollUploads(youtube, state, active, now, since, errors);
 
   const due = dueForRefresh(stored.vods, state.refreshed, now).filter((id) => !state.uploads[id] || state.uploads[id].readAt !== now.toISOString());
@@ -180,11 +183,34 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   const refresh = applyRefresh(stored.vods, state.refreshed, [...checked, ...justRead], [...found, ...justRead.map((id) => state.uploads[id])], now);
   for (const { link } of refresh.dropped) delete state.uploads[link.videoId];
 
-  const uploads = Object.values(state.uploads);
-  const { links, ambiguous } = linkVods(matches, uploads, refresh.links, new Set(active.map((channel) => channel.id)), { assign: matchesFresh });
+  // A new link is never older YouTube data than a stored one: an upload read more than REFRESH_DAYS ago (one that
+  // waited out a PandaScore outage, say) is read again before it is linked, and a video deleted since is dropped. One
+  // that can't be read this run is left out of it.
+  const channelIds = new Set(active.map((channel) => channel.id));
+  const kept = new Set(refresh.links.map((link) => link.videoId));
+  const skipped = new Set();
+  let uploads;
+  let links;
+  let ambiguous;
+  for (;;) {
+    uploads = Object.values(state.uploads).filter((upload) => !skipped.has(upload.id));
+    ({ links, ambiguous } = linkVods(matches, uploads, refresh.links, channelIds, { assign: matchesFresh }));
+    const stale = links.map((link) => link.videoId)
+      .filter((id) => !kept.has(id) && now.getTime() - Date.parse(state.uploads[id].readAt) >= REFRESH_DAYS * DAY);
+    if (!stale.length) break;
+    try {
+      const back = new Map((await youtube.videos(stale)).map((upload) => [upload.id, upload]));
+      for (const id of stale) {
+        if (back.has(id)) state.uploads[id] = { ...back.get(id), readAt: now.toISOString() };
+        else delete state.uploads[id];
+      }
+    } catch (error) {
+      errors.push(`videos.list (re-read before linking): ${error.message}`);
+      for (const id of stale) skipped.add(id);
+    }
+  }
   // A kept link keeps its last refresh (none when it was never read in this state and the refresh failed: the next run
   // asks again); a new link was read from YouTube when its upload was.
-  const kept = new Set(refresh.links.map((link) => link.videoId));
   const refreshed = {};
   for (const link of links) {
     const at = kept.has(link.videoId) ? refresh.refreshed[link.videoId] : state.uploads[link.videoId]?.readAt;
@@ -238,7 +264,6 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
 
   // What goes to the files below may quote a git or gh error: no secret goes with it.
   errors.splice(0, errors.length, ...errors.map(redact));
-  state.uploads = pruneUploads(state.uploads, now);
   const day = now.toISOString().slice(0, 10);
   state.quota = { day, units: (state.quota.day === day ? state.quota.units : 0) + youtube.quota.units };
   writeAtomic(join(stateDir, 'state.json'), json(state));

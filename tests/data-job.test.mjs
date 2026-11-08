@@ -328,6 +328,47 @@ test('PandaScore down: no new VOD is linked, so a rematch it has not reported ye
   assert.deepEqual(dataFile(origin, VODS_FILE).vods.map((link) => [link.matchId, link.videoId]), [[3, 'rematch']]);
 });
 
+test('an upload read long ago is read again before it is linked, and one past 14 days is never matched', async () => {
+  for (const [days, exists] of [[10, false], [10, true], [15, false]]) {
+    const { clone, origin, state } = scratch(`stale-upload-${days}-${exists}`);
+    const data = world();
+    const vod = data.uploads[ESL_ARCHIVES][0];
+    data.uploads[ESL_ARCHIVES] = [];
+    const apis = fakeApis(data);
+    const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+    await runJob({ ...options, now: later(1) });
+    // The VOD is read while PandaScore is down, so it waits unlinked; then the job stops for a while
+    data.uploads[ESL_ARCHIVES] = [vod];
+    data.fail = ['matches'];
+    await runJob({ ...options, now: later(4) });
+    assert.ok(JSON.parse(readFileSync(join(state, 'state.json'), 'utf8')).uploads.vod1);
+    data.fail = [];
+    if (!exists) data.uploads[ESL_ARCHIVES] = [];
+    const run = await runJob({ ...options, now: later(4 + days * 24) });
+    const label = `${days} days, ${exists ? 'still up' : 'deleted'}`;
+    assert.deepEqual(run.errors, [], label);
+    assert.deepEqual(dataFile(origin, VODS_FILE).vods.map((link) => link.videoId), exists ? ['vod1'] : [], label);
+    const kept = JSON.parse(readFileSync(join(state, 'state.json'), 'utf8'));
+    assert.equal(Boolean(kept.uploads.vod1), exists, label);
+    if (exists) assert.equal(kept.refreshed.vod1, later(4 + days * 24).toISOString(), label);
+  }
+  // A re-read that fails leaves the upload out of this run, and says so
+  const { clone, origin, state } = scratch('stale-upload-unreadable');
+  const data = world();
+  const vod = data.uploads[ESL_ARCHIVES][0];
+  data.uploads[ESL_ARCHIVES] = [];
+  const apis = fakeApis(data);
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  await runJob({ ...options, now: later(1) });
+  data.uploads[ESL_ARCHIVES] = [vod];
+  data.fail = ['matches'];
+  await runJob({ ...options, now: later(4) });
+  data.fail = ['videos'];
+  const run = await runJob({ ...options, now: later(4 + 10 * 24) });
+  assert.match(run.errors.join('\n'), /re-read before linking/);
+  assert.deepEqual(dataFile(origin, VODS_FILE).vods, []);
+});
+
 /** The job's command in a scratch copy of the repository's tools, with its own state folder and env file. */
 function command(name) {
   const root = join(dir, name);

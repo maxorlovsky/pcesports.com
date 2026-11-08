@@ -34,6 +34,8 @@ Invariants:
   Nothing is computed from YouTube data beyond that match (no lengths turned into map counts, nothing from chapters).
 - **YouTube's 30-day rule:** each linked video is re-read with `videos.list` every `REFRESH_DAYS` (7). One YouTube no
   longer returns (deleted, private) or that moved channel is dropped, and any link last read `MAX_AGE_DAYS` (30) ago
-  is dropped even when the refresh fails.
+  is dropped even when the refresh fails. A new link is held to the same bar: an upload read `REFRESH_DAYS` ago or
+  more (one that waited out a PandaScore outage, say) is read again before it is linked, and an upload past
+  `KEEP_UPLOADS_DAYS` is pruned before the run matches anything.
 - **No spoilers before the click:** what shows a VOD shows the site's own card and a deep link, never YouTube's
   thumbnail, length or chapters (`AGENTS.md`).
