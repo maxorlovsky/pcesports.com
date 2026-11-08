@@ -2,7 +2,9 @@ import { cached } from './cache.js';
 
 // Liquipedia API terms (https://liquipedia.net/api-terms-of-use): at most 1 request per 2 s,
 // action=parse at most 1 per 30 s, a custom User-Agent with contact information, gzip support.
-// The contact is the project site and repo on purpose: no email (owner ruling on the card).
+// Since a change between 2026-11-07 and 2026-11-08 those terms say the MediaWiki API is for editing and "Use of the API for
+// non-editing purposes is not supported", so a network call needs LIQUIPEDIA_MEDIAWIKI_OK=1
+// (see the report); runs that the cache already covers make no call at all.
 const API = 'https://liquipedia.net/counterstrike/api.php';
 const USER_AGENT = 'PCesportsFeasibility/0.1 (https://www.pcesports.com/; https://github.com/maxorlovsky/pcesports.com)';
 const GAP_MS = 2500;
@@ -15,6 +17,10 @@ export const stats = { requests: 0, parses: 0, cacheHits: 0 };
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function call(params, { parse = false } = {}) {
+    if (process.env.LIQUIPEDIA_MEDIAWIKI_OK !== '1') {
+        throw new Error('Not in cache, and Liquipedia\'s MediaWiki API terms no longer support non-editing use. '
+            + 'Set LIQUIPEDIA_MEDIAWIKI_OK=1 only once the owner has cleared it (see the report, section 6).');
+    }
     const now = Date.now();
     const due = Math.max(lastRequest + GAP_MS, parse ? lastParse + PARSE_GAP_MS : 0);
     if (due > now) await wait(due - now);

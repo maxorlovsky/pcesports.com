@@ -2,7 +2,7 @@ import { cached } from './cache.js';
 
 // YouTube Data API v3. Only channels.list, channelSections.list, playlistItems.list and videos.list
 // are used, 1 quota unit per call each (https://developers.google.com/youtube/v3/determine_quota_cost).
-// search.list (100 units) is deliberately absent.
+// search.list is deliberately absent: it has its own bucket of only 100 calls per day.
 const API = 'https://www.googleapis.com/youtube/v3';
 export const quota = { units: 0, calls: {}, cacheHits: 0 };
 
@@ -12,7 +12,7 @@ function key() {
     return k;
 }
 
-async function get(endpoint, params) {
+async function get(endpoint, params, { cache = true } = {}) {
     const query = new URLSearchParams(params).toString();
     const produce = async () => {
         quota.units += 1;
@@ -22,6 +22,7 @@ async function get(endpoint, params) {
         if (!res.ok) throw new Error(`YouTube ${endpoint} ${res.status}: ${json.error?.message}`);
         return json;
     };
+    if (!cache) return produce();
     let miss = false;
     const value = await cached('youtube', `${endpoint}?${query}`, () => { miss = true; return produce(); });
     if (!miss) quota.cacheHits += 1;
@@ -71,10 +72,15 @@ const isoDuration = (d) => {
     return days * 86400 + h * 3600 + min * 60 + s;
 };
 
-/** Channel ids a channel lists in its own "featured channels" sections (1 unit). */
-export async function featuredChannels(id) {
-    const json = await get('channelSections', { part: 'contentDetails', channelId: id });
-    return json.items.flatMap((s) => s.contentDetails?.channels || []);
+/** Channel ids a channel lists in its own "featured channels" sections (1 unit, not cached on
+ * disk, so every run re-checks the whitelist; asked once per channel per run). */
+const featured = new Map();
+export function featuredChannels(id) {
+    if (!featured.has(id)) {
+        featured.set(id, get('channelSections', { part: 'contentDetails', channelId: id }, { cache: false })
+            .then((json) => json.items.flatMap((s) => s.contentDetails?.channels || [])));
+    }
+    return featured.get(id);
 }
 
 /** Video details in batches of 50 ids (1 unit per batch). */
