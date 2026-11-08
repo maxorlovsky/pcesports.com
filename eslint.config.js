@@ -19,7 +19,7 @@ export default tseslint.config(
       globals: { ...globals.browser, ...globals.node },
     },
     rules: {
-      // Nuxt auto-imports (usePageSeo, SITE_URL…) are checked by `npm run typecheck` instead
+      // Vue's and Nuxt's own auto-imports (computed, useHead, defineEventHandler…) are checked by `npm run typecheck`
       'no-undef': 'off',
       // Nuxt's file-based routes and layouts are single words (index, privacy, default, error)
       'vue/multi-word-component-names': 'off',
