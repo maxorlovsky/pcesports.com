@@ -74,17 +74,22 @@ const REACH = {
 const isUiPart = (area) => area.kind === 'domain' && ['ui-entry', 'ui', 'view'].includes(area.part);
 const isPlainPart = (area) => area.kind === 'domain' && ['entry', 'plain'].includes(area.part);
 
-/** The script blocks of a single-file component, where its imports are. */
-function scriptOf(path, text) {
-  if (!path.endsWith('.vue')) return text;
-  return [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
+/** A single-file component's blocks, as Vue's own parser reads them (an attribute holding `>`, a block in a comment). */
+function sfcOf(path, text) {
+  const { descriptor, errors } = parseSfc(text, { filename: path });
+  return { descriptor, failed: errors.length ? `the component does not parse: ${errors[0].message ?? errors[0]}` : undefined };
+}
+
+/** The script a file holds: itself, or a component's script blocks. */
+function scriptOf(path, text, sfc) {
+  if (!sfc) return text;
+  return [sfc.descriptor.script, sfc.descriptor.scriptSetup].filter(Boolean).map((block) => block.content).join('\n');
 }
 
 /** The style a file holds: a stylesheet, or a component's style blocks. */
-function styleOf(path, text) {
+function styleOf(path, text, sfc) {
   if (STYLE.test(path)) return text;
-  if (!path.endsWith('.vue')) return '';
-  return [...text.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
+  return sfc ? sfc.descriptor.styles.map((block) => block.content).join('\n') : '';
 }
 
 const EXTENSIONS = ['', '.ts', '.vue', '.mjs', '.js', '/index.ts', '/index.mjs', '/index.js'];
@@ -113,9 +118,7 @@ const ASSET = /\.(png|jpe?g|webp|avif|svg|gif|ico|woff2?|mp4|webm|mp3|ogg)$/;
  * `<use href>`…), read from Vue's own compiler so the list is Vue's. Vue drops the `~/` of `~/x`; `@/x` is the same
  * path in Nuxt, and it keeps it.
  */
-function templateAssets(path, text) {
-  const { descriptor, errors } = parseSfc(text, { filename: path });
-  if (errors.length) return { failed: `the component does not parse: ${errors[0].message}` };
+function templateAssets(path, { descriptor }) {
   const template = descriptor.template;
   if (!template || template.src) return { specs: [] }; // a <template src> is opaque (importsOf)
   const source = template.content.replace(/(=\s*["'])~~\//g, '$1@@/').replace(/(=\s*["'])~\//g, '$1@/');
@@ -141,8 +144,13 @@ function importsOf(path, text, files) {
     else opaque(`a computed ${node.expression.getText()}() path`);
     return true;
   };
+  const sfc = path.endsWith('.vue') ? sfcOf(path, text) : undefined;
+  if (sfc?.failed) {
+    opaque(sfc.failed);
+    return found;
+  }
   if (SOURCE.test(path)) {
-    const source = ts.createSourceFile(path, scriptOf(path, text), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const source = ts.createSourceFile(path, scriptOf(path, text, sfc), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
     const visit = (node) => {
       if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
         add(node.moduleSpecifier.text);
@@ -172,15 +180,16 @@ function importsOf(path, text, files) {
     };
     visit(source);
   }
-  if (path.endsWith('.vue')) {
-    for (const m of text.matchAll(/<(?:script|style)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+  if (sfc) {
+    const { script, scriptSetup, styles, template } = sfc.descriptor;
+    for (const block of [script, scriptSetup, ...styles]) if (block?.src) add(block.src);
     // An external template's own asset URLs would go unread: the template stays in the component.
-    if (/<template\b[^>]*\bsrc\s*=/.test(text)) opaque('a <template src>, whose asset URLs the check cannot read');
-    const assets = templateAssets(path, text);
+    if (template?.src) opaque('a <template src>, whose asset URLs the check cannot read');
+    const assets = templateAssets(path, sfc);
     if (assets.failed) opaque(assets.failed);
     else assets.specs.forEach(add);
   }
-  const style = styleOf(path, text).replace(/\/\*[\s\S]*?\*\//g, '');
+  const style = styleOf(path, text, sfc).replace(/\/\*[\s\S]*?\*\//g, '');
   for (const m of style.matchAll(/@import\s+["']([^"']+)["']/g)) add(m[1]);
   // url(): every file a style reaches, but public/'s own (`/logo.png`), data: and remote ones. A bare name is relative.
   for (const m of style.matchAll(/url\(\s*["']?([^"')\s]+)/g)) {

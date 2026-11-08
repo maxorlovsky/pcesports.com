@@ -146,6 +146,7 @@ describe('the architecture check', () => {
     ["a domain's plain part reads Vite's import.meta.env", { 'app/domains/low/env.ts': 'export const key = () => import.meta.env.KEY;' }, ['plain']],
     ['a tool loads a domain file through createRequire', { 'tools/req.mjs': "import { createRequire } from 'node:module';\nconst load = createRequire(import.meta.url);\nload('../app/domains/low/rule.ts');" }, ['resolve']],
     ["a component's template is another domain's file", { 'app/domains/high/views/Tpl.vue': '<template src="../../low/ui/card.html"></template>', 'app/domains/low/ui/card.html': '<b />' }, ['resolve']],
+    ['an external template hides behind an attribute holding >', { 'app/domains/low/views/Odd.vue': '<template data-note=">" src="./ext.html"></template>', 'app/domains/low/views/ext.html': '<b />' }, ['resolve']],
     ['a component keeps its template in a file of its own domain', { 'app/domains/low/views/Ext.vue': '<template src="./ext.html"></template>', 'app/domains/low/views/ext.html': '<img src="../../high/views/x.png" alt="">' }, ['resolve']],
     ["a page's image is a domain's internal file", { 'app/pages/img.vue': '<template><img src="../domains/low/ui/bg.png" alt=""></template>' }, ['public-entry']],
     ["a page's image names a domain's file through ~/", { 'app/pages/img.vue': '<template><img src="~/domains/low/ui/bg.png" alt=""></template>' }, ['public-entry']],
@@ -207,6 +208,10 @@ describe('the architecture check', () => {
     const generated = cleanGenerated();
     generated.set('.nuxt/types/nitro-imports.d.ts', "  const thing: typeof import('../../server/utils/thing').thing");
     assert.deepEqual(rulesBroken({}, generated), ['auto-import']);
+  });
+
+  test('reads no block a comment holds', () => {
+    assert.deepEqual(rulesBroken({ 'app/domains/low/views/Note.vue': '<!-- e.g. <template src="./x.html"></template> or <style src="../../high/x.css"></style> -->\n<template><b /></template>' }), []);
   });
 
   test('fails when typecheck stops failing on a component used without an import', () => {
