@@ -10,8 +10,8 @@ enforces the rules below on every `npm test`, so in CI too.
 | Domain | Owns | May depend on | State |
 |---|---|---|---|
 | `site` | the site's address, name, contact and sitemap, the footer's data credits, the layout, `usePageSeo`, the home, privacy and error pages | - | exists |
-| `matches` | CS2 fixtures and results from PandaScore (free plan): fetching, normalising, which matches the site lists | `site` | planned |
-| `vods` | the organisers' official YouTube VOD channels: the whitelist, reading their uploads, matching a VOD to its match, the 30-day refresh | `site`, `matches` | planned |
+| `matches` | CS2 fixtures and results from PandaScore (free plan): fetching, normalising, which matches the site lists | `site` | exists |
+| `vods` | the organisers' official YouTube VOD channels: the whitelist, reading their uploads, matching a VOD to its match, the 30-day refresh | `site`, `matches` | exists |
 | `watch` | the "What should I watch?" ranking and its page, with each VOD shown as the site's own card | `site`, `matches`, `vods` | planned |
 | `guides` | the guides and their pages | `site` | planned |
 
@@ -25,15 +25,18 @@ the card that gives it its first code: no empty domains.
 ### The data job
 
 The data job (fetch matches and VODs, match them, rank, commit the data, and let the deploy publish it) runs on the
-factory machine, outside Nuxt. Its rules live in the domains that own them, in their plain parts: the PandaScore client
+factory machine, outside Nuxt (`tools/data-job/`, `README.md`, "Data job"). Its rules live in the domains that own them, in their plain parts: the PandaScore client
 and normalising in `matches`, the whitelist, matcher and refresh in `vods`, the ranking in `watch`. The job itself is a
 thin script under `tools/` (as `tools/deploy/` is) that calls those domains' `index.ts` and writes their data. Node runs
 it directly: Node 24 strips TypeScript types on its own, but only erasable syntax (no `enum`, `namespace` or
 constructor parameter properties), and resolves only paths written out in full. That is why a plain part imports by
 relative path with the `.ts` or `.json` extension (`../site/index.ts`, `./data/matches.json` with
 `with { type: 'json' }`), never reaches Vue or Nuxt, and why `npm test` loads every domain's `index.ts` in Node. The
-data files it writes belong to the domain whose rules write them (for example `app/domains/matches/data/`), and the
-app reads them through that domain's entry.
+data files it writes belong to the domain whose rules write them (`app/domains/matches/data/matches.json`,
+`app/domains/vods/data/vods.json`), and the app reads them through that domain's entry. They live on the `data`
+branch, never in the code branches: the job publishes that branch, and a build gets the files from it
+(`tools/data-job/pull.mjs`), so in a checkout the `data/` folders are ignored by git and hold only what the last pull
+put there. Code that reads them handles a build with none (a pull request's, or before the job's first publish).
 
 ## Where code goes
 

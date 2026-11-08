@@ -49,7 +49,72 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 
 ## Branches
 
-Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` deploys.
+Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` deploys. The
+`data` branch is the data job's (see "Data job"): data files only, one commit, never merged.
+
+## Data job
+
+The site's CS2 data (PandaScore's tier-1 matches and the organisers' official VODs) comes from the data job,
+`tools/data-job/run.mjs` (`npm run data-job`). Cron runs it every 15 minutes on the factory machine, veilweaver2, in
+a clone of its own on master, `~/pcesports-data`, never the factory's checkout. The rules it applies are the
+`matches` and `vods` domains' (their `README.md`); the sources, terms and quota are in
+`docs/feasibility/cs2-data-and-vods.md`.
+
+Each run:
+
+1. takes a `flock` lock (`.data-job.lock`): a second run while one is going logs that it skipped and stops;
+2. pulls master (fast-forward only) and runs the job it pulled, as the deploy does;
+3. reads PandaScore's matches scheduled from 3 days ago to 14 days ahead, keeps the tier-1 ones (tier `s` or `a`
+   from a league in `app/domains/matches/leagues.json`), and merges them into the stored list (30 days back);
+4. reads the new uploads of each whitelisted VOD channel through its uploads playlist, re-reads the uploads it first
+   saw live, re-checks the whitelist once a day, refreshes every linked video weekly, and links each match to its VOD;
+5. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the
+   deploy (`gh workflow run ci.yml --ref master`);
+6. writes `report.md` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`. With
+   nothing wrong it prints nothing; a problem goes to stderr and the exit code is 1.
+
+**Batching:** at most one publish per 30 minutes, so at most 48 deploys a day, about 20 on an event day. A change waits
+for the first run after the gap, so a new VOD is live within about 45 minutes of the run that found it (15 for the
+poll, 30 for the gap, plus the deploy). The organisers upload their VODs hours after a match, so this costs little.
+
+**The `data` branch** holds data files only (`app/domains/<domain>/data/*.json`) as a single commit: each publish
+replaces it, with a push that only succeeds if the branch is still what the run read. It is never merged, so code
+branches and history never collect data, and YouTube's ids don't pile up in history (YouTube's 30-day rule). Every
+deploy, from a push to master or from the job, builds master's code with the branch's current files:
+`tools/deploy/deploy.mjs` runs `tools/data-job/pull.mjs`, which empties the data folders, fetches the branch and
+takes nothing but data files. Both deploys share the deploy's lock (`.deploy.lock`) and CI's concurrency group, so
+they never overlap. CI's runs on master pull the data too; pull requests build without it.
+
+**What it stores.** Committed: the matches (PandaScore's data, credited "Source: PandaScore" wherever shown) and,
+per match, YouTube's video and channel ids. On the machine only, in `state.json`: each upload's title, publish time and
+length, kept 14 days after they were last read, and when each linked video was last refreshed. `report.md` lists the
+finished matches with no VOD 12 hours after their start, the full-length uploads no match links, the dropped links,
+the tier-1 leagues left out, and every link, for hand checks.
+
+**YouTube quota:** measured per run with the 4 VOD channels: 4 units (one `playlistItems.list` each), plus 1 when
+there are new uploads (`videos.list`), plus 4 once a day for the whitelist check and 1 per 50 linked videos a week.
+A day of 15-minute runs is 96 x 4 = 384 units, about 480 at most with new uploads on every run: under 5% of the
+10,000-unit daily quota. `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
+run, about 20 an hour of its 1,000.
+
+**The env file**, `~/.config/pcesports/data-job.env` (or `--env-file`, or `PCESPORTS_DATA_JOB_ENV`), outside the
+repository and `chmod 600` (the job refuses anything else):
+
+```sh
+PANDASCORE_TOKEN=...   # PandaScore, free plan
+YOUTUBE_API_KEY=...    # YouTube Data API v3
+GH_TOKEN=...           # fine-grained, this repository only: Contents read and write (the push), Actions read and write (the deploy)
+```
+
+Without `GH_TOKEN`, git and gh use the machine's own GitHub login, which can push but can't start a workflow.
+
+**By hand:** `node tools/data-job/run.mjs --no-push` runs anywhere and writes the data to the state folder's `out/`
+instead of publishing; `--since <date>` reads uploads and matches back to that date (a backfill, or the data for a
+check). `PCESPORTS_DATA_JOB_STATE` points it at another state folder.
+
+**Stopping it:** remove the cron line. The site keeps the data of its last deploy, and later deploys pull the data
+branch as it was, so if the job stays off for good, delete the branch within 30 days (`git push origin --delete
+data`): its YouTube ids are no longer refreshed.
 
 ## Deploy
 
@@ -59,11 +124,14 @@ key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the l
 
 1. refuses any branch but master, a checkout with changes, and a second deploy while one runs;
 2. pulls master (fast-forward only) and runs the deploy it pulled;
-3. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
-4. copies the build into `.releases/<time>-<commit>` and points the `site` link at it in one step. nginx serves
+3. puts the data branch's files into the domains' data folders (`tools/data-job/pull.mjs`, see "Data job"); a fetch
+   that fails stops the deploy, so a release never ships older data;
+4. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
+5. copies the build into `.releases/<time>-<commit>` and points the `site` link at it in one step. nginx serves
    `site`, so a failed build leaves the site as it was. The two releases before it stay, to go back to.
 
-Actions → CI → Run workflow, on master, deploys again without a new commit. `npm run deploy -- --dry-run` in the clone
+Actions → CI → Run workflow, on master, deploys again without a new commit; the data job starts the same run after it
+publishes new data. `npm run deploy -- --dry-run` in the clone
 checks the same and prints the steps without running them.
 
 ### On max-cloud
