@@ -29,10 +29,12 @@ React page and a 200, so none of them ever told a search engine it was gone.
 - Anything else gets the normal **404**. That covers the files bots probe for (feeds, `ads.txt`, `manifest.json`,
   `/.well-known/...`), which never held content here.
 
-| Old URLs | Paths | Era | Answer |
+"Captured paths" counts the paths of `old-urls.csv` in each group, not every path a rule would match.
+
+| Old URLs | Captured paths | Era | Answer |
 |---|---|---|---|
 | `/events`, `/events/counter-strike` (with or without a trailing slash) | 2 | 2019-2024 | 301 to `/` |
-| `/en`, `/ru` (the old home pages) | 1 | 2014 | 301 to `/` |
+| `/en`, `/ru` (the old home pages; the Wayback Machine has only `/en`) | 1 | 2014 | 301 to `/` |
 | `/events/<game>` for the other 7 games, `/events/<game>/<event>`, `/events/<id>` | 1,385 | 2019-2024 | 410 |
 | `/user/<name>` | 302 | 2019-2024 | 410 |
 | `/article/...`, `/blog/...` | 51 | 2017-2023 | 410 |
