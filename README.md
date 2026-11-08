@@ -124,10 +124,11 @@ YOUTUBE_API_KEY=...    # YouTube Data API v3
 GH_TOKEN=...           # fine-grained, this repository only: Contents and Actions, read and write
 ```
 
-`GH_TOKEN` needs Contents for the push to `data` and Actions to start the deploy. The job stops without the file, and takes the secrets from it only: one the file leaves out is unset, whatever the shell
-exports. git reads `GH_TOKEN` through gh's credential helper (`gh auth setup-git`, set up on veilweaver2). Without
-`GH_TOKEN`, git and gh use the machine's own GitHub login, which can push but can't start a workflow. The job refreshes
-every linked video on its first run with a new state folder, since the refresh times live there.
+`GH_TOKEN` needs Contents for the push to `data` and Actions to start the deploy. The job stops without the file, and
+takes the secrets from it only: one the file leaves out is unset, whatever the shell exports. git reads `GH_TOKEN`
+through gh's credential helper (`gh auth setup-git`, set up on veilweaver2). Without `GH_TOKEN`, git and gh use the
+machine's own GitHub login, which can push but can't start a workflow. The job refreshes every linked video on its first
+run with a new state folder, since the refresh times live there.
 
 **Other clones:** once the `data` branch exists, every `git fetch` in a working clone stores its commits too, and only
 that clone's own `git gc` drops them. `git config --add remote.origin.fetch '^refs/heads/data' && git update-ref -d
