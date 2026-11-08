@@ -63,9 +63,8 @@ a barrel that re-exported every view put the views and the shared code in one mo
 
 - **public-entry:** from outside a domain, import only its `index.ts`, its `ui/index.ts`, or (the shell only) one of
   its `views/*.vue`. Never a file behind them (code, data, a stylesheet, an image), by any path (`~/`, `~~/`, `../`)
-  or any form (`import`, `import()`, `require()`, `new URL(…, import.meta.url)`, `<script src>`, `<style src>`,
-  `<template src>`, a template's asset URLs as Vue's compiler reads them (`<img src>`, `srcset`, `poster`), `@import`,
-  `url()`). Every source, style, HTML and JSON file in the repository is read, but for
+  or any form (`import`, `import()`, `require()`, `new URL(…, import.meta.url)`, `<script src>`, `<style src>`, a
+  template's asset URLs as Vue's compiler reads them (`<img src>`, `srcset`, `poster`), `@import`, `url()`). Every source, style, HTML and JSON file in the repository is read, but for
   dependencies, build output, the old apps and `experiments/`.
 - **reach:** outside the domains, the import column above is the whole list: a domain imports no file outside
   `app/domains/` (so no tool, page or helper can carry it up the stack or bring it Vue), the app imports no Node
@@ -78,8 +77,9 @@ a barrel that re-exported every view put the views and the shared code in one mo
   and tests import plain entries only.
 - **own-entry:** a domain never imports its own `index.ts` or `ui/index.ts`; it imports the file itself.
 - **resolve:** every import names a file, a Node built-in, a package in `package.json`, or (app code only) one of
-  Nuxt's `#app`, `#imports`, `#components`. No absolute paths, no `import.meta.glob`, and no computed `import()` or
-  `require()` but in the Node scripts `COMPUTED_IMPORTS` names, each with its reason.
+  Nuxt's `#app`, `#imports`, `#components`. No absolute paths, no `import.meta.glob`, no `<template src>` (a
+  component keeps its template), and no computed `import()` or `require()` but in the Node scripts
+  `COMPUTED_IMPORTS` names, each with its reason.
 - **layout:** source files sit only where the table above says; a domain's plain part is `.ts`.
 - **manifest:** every domain has `domain.json` (its folder's name, a non-empty `owns`, known dependencies), `README.md`
   and `index.ts`.

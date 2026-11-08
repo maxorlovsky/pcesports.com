@@ -117,7 +117,7 @@ function templateAssets(path, text) {
   const { descriptor, errors } = parseSfc(text, { filename: path });
   if (errors.length) return { failed: `the component does not parse: ${errors[0].message}` };
   const template = descriptor.template;
-  if (!template || template.src) return { specs: [] };
+  if (!template || template.src) return { specs: [] }; // a <template src> is opaque (importsOf)
   const source = template.content.replace(/(=\s*["'])~~\//g, '$1@@/').replace(/(=\s*["'])~\//g, '$1@/');
   const compiled = compileTemplate({ source, filename: path, id: 'check' });
   if (compiled.errors.length) return { failed: `the template does not compile: ${compiled.errors[0]}` };
@@ -129,7 +129,7 @@ const packageName = (spec) => spec.split('/').slice(0, spec.startsWith('@') ? 2 
 
 /** Every import a file makes: ES imports and re-exports, `import()`, `require()` (and `module.require()`),
  *  `new URL('…', import.meta.url)`, `import('…')` types, a component's `<script src>`, `<style src>` and
- *  `<template src>`, the asset URLs of its template, and `@import` and `url()` in its styles. A `require` or `createRequire` passed around is opaque. */
+ *  the asset URLs of its template, and `@import` and `url()` in its styles. A `<template src>` is opaque. A `require` or `createRequire` passed around is opaque. */
 function importsOf(path, text, files) {
   const found = [];
   const add = (spec) => found.push({ spec, target: resolve(path, spec, files) });
@@ -173,7 +173,9 @@ function importsOf(path, text, files) {
     visit(source);
   }
   if (path.endsWith('.vue')) {
-    for (const m of text.matchAll(/<(?:script|style|template)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+    for (const m of text.matchAll(/<(?:script|style)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+    // An external template's own asset URLs would go unread: the template stays in the component.
+    if (/<template\b[^>]*\bsrc\s*=/.test(text)) opaque('a <template src>, whose asset URLs the check cannot read');
     const assets = templateAssets(path, text);
     if (assets.failed) opaque(assets.failed);
     else assets.specs.forEach(add);
