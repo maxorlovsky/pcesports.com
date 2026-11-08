@@ -1,13 +1,16 @@
 name: CI
 
-# Pull requests into master: the validators (README.md, "Checks"). A push to master (a merged pull request) runs them
-# too, then deploys: the deploy job SSHes into max-cloud with the deploy key, whose forced command,
-# tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master, builds and switches the site.
-# Actions -> CI -> Run workflow, on master, re-deploys. README.md, "Deploy", has the setup.
+# Pull requests into dev or master: the validators (README.md, "Checks"). Work goes into dev, the owner merges dev into
+# master, and a push to master runs the validators too, then deploys: the deploy job SSHes into max-cloud with the
+# deploy key, whose forced command, tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master
+# and the data branch's files, builds and switches the site.
+# Actions -> CI -> Run workflow, on master, re-deploys: the data job does the same after it publishes new data
+# (tools/data-job/run.mjs). README.md, "Deploy", has the setup.
 
 on:
   pull_request:
     branches:
+      - dev
       - master
   push:
     branches:
@@ -50,6 +53,12 @@ jobs:
 
       - name: npm test
         run: npm test
+
+      # Master's runs (a push, or the data job's dispatch, which deploys new data) build with the data branch's files,
+      # as the deploy does; pull requests build without them
+      - name: Fetch the data branch's files
+        if: ${{ github.event_name != 'pull_request' }}
+        run: node tools/data-job/pull.mjs
 
       - name: npm run generate
         run: npm run generate

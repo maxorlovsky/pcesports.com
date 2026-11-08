@@ -26,6 +26,7 @@ before(() => {
   const work = join(dir, 'work');
   mkdirSync(join(work, 'tools'), { recursive: true });
   cpSync(join(REPO, 'tools', 'deploy'), join(work, 'tools', 'deploy'), { recursive: true });
+  cpSync(join(REPO, 'tools', 'data-job'), join(work, 'tools', 'data-job'), { recursive: true });
   cpSync(join(REPO, 'package.json'), join(work, 'package.json'));
   cpSync(join(REPO, '.gitignore'), join(work, '.gitignore'));
   git(dir, 'init', '-q', '-b', 'master', work);
@@ -41,7 +42,7 @@ after(() => rmSync(dir, { recursive: true, force: true }));
 test('the dry run checks, prints every step and runs none', () => {
   const result = sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], clone);
   assert.equal(result.status, 0, result.stderr);
-  for (const step of ['git fetch origin master', 'git merge --ff-only origin/master', 'npm ci', 'npm run generate', 'node tools/check-build.mjs .output/public']) {
+  for (const step of ['git fetch origin master', 'git merge --ff-only origin/master', 'node tools/data-job/pull.mjs', 'npm ci', 'npm run generate', 'node tools/check-build.mjs .output/public']) {
     assert.match(result.stdout, new RegExp(`> ${step.replace(/[.]/g, '\\.')}`));
   }
   assert.match(result.stdout, /Dry run: nothing ran\./);
@@ -108,13 +109,15 @@ test('it refuses a second deploy while one runs', async () => {
 
 test('a lock file left by a stopped deploy does not stop the next', () => {
   writeFileSync(join(clone, '.deploy.lock'), '12345');
-  // The scratch site has no package-lock.json, so this deploy gets past the lock and the pull, then stops at npm ci
+  // The scratch site has no package-lock.json, so this deploy gets past the lock, the pull and the data (origin has
+  // no data branch), then stops at npm ci
   const result = sh('node', ['tools/deploy/deploy.mjs'], clone);
   rmSync(join(clone, '.deploy.lock'), { force: true });
   assert.equal(result.status, 1);
   assert.doesNotMatch(result.stderr, /another deploy is running/);
   assert.match(result.stderr, /npm ci failed/);
   assert.match(result.stdout, /> git merge --ff-only origin\/master/);
+  assert.match(result.stdout, /No data branch on origin yet: building without data\./);
 });
 
 test('git ignores what a deploy writes, so the next deploy sees a clean checkout', () => {

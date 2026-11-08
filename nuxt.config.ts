@@ -3,6 +3,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-01',
   devtools: { enabled: false },
+  // Project code is never auto-imported, so every import between files is written out and the domain boundaries stay
+  // visible (docs/architecture.md, "Auto-imports"). Vue's and Nuxt's own APIs (computed, useHead, NuxtLink) still are.
+  components: { dirs: [] },
+  imports: { scan: false },
   css: ['@fontsource-variable/inter/wght.css', '~/assets/css/tokens.css', '~/assets/css/base.css'],
   app: {
     head: {
@@ -28,5 +32,6 @@ export default defineNuxtConfig({
   },
   // 404.html is the error page rendered at build time, readable without JavaScript, not an empty app shell.
   experimental: { prerenderErrorPages: true },
-  typescript: { strict: true },
+  // A component used in a template without an import fails `npm run typecheck`, since none is auto-registered.
+  typescript: { strict: true, tsConfig: { vueCompilerOptions: { checkUnknownComponents: true } } },
 });

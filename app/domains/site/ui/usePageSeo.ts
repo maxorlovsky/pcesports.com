@@ -1,3 +1,5 @@
+import { SITE_NAME, SITE_URL, absoluteUrl } from '../site.ts';
+
 interface PageSeo {
   title: string;
   description: string;

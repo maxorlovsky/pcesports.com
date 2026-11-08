@@ -1,0 +1,19 @@
+{
+  "_comment": "PandaScore league name -> organiser (the `organizers` of app/domains/vods/channels.json). PandaScore has no organiser field, so this is the site's tier rule's second half: a tier s or a match counts only if its league is listed here. A league missing here is left out of the data and named in the job's report.",
+  "leagues": {
+    "IEM": "ESL",
+    "ESL Pro League": "ESL",
+    "PGL": "PGL",
+    "PGL Masters": "PGL",
+    "PGL Major": "PGL",
+    "BLAST Premier": "BLAST",
+    "BLAST Rivals": "BLAST",
+    "BLAST Open": "BLAST",
+    "BLAST Bounty": "BLAST",
+    "StarLadder Major": "StarLadder",
+    "StarLadder StarSeries": "StarLadder",
+    "CS Asia Championships": "Perfect World",
+    "FISSURE PLAYGROUND": "FISSURE",
+    "Thunderpick World Championship": "GAM3RS_X"
+  }
+}
