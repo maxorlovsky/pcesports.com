@@ -174,6 +174,24 @@ test('an upload first seen live is read again until it is over, then linked', as
   assert.deepEqual(vods().map((link) => link.videoId), ['vod1']);
 });
 
+test('a rejected push keeps the run: state, report and log are written, and the next run starts warm', async () => {
+  const { clone, origin, state } = scratch('push-denied');
+  const hook = join(origin, 'hooks', 'pre-receive');
+  writeFileSync(hook, '#!/bin/sh\necho denied >&2\nexit 1\n', { mode: 0o755 });
+  const apis = fakeApis(world());
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  const run = await runJob({ ...options, now: later(6) });
+  assert.equal(run.published.status, 'push failed');
+  assert.match(run.errors.join('\n'), /publish: .*denied/s);
+  assert.ok(existsSync(join(state, 'state.json')) && existsSync(join(state, 'report.md')));
+  const checks = () => apis.calls.filter((call) => call.endpoint === 'channelSections').length;
+  const before = checks();
+  rmSync(hook);
+  const next = await runJob({ ...options, now: later(6.25) });
+  assert.equal(next.published.status, 'pushed');
+  assert.equal(checks(), before, 'the whitelist check was not redone');
+});
+
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {
   const { clone, state } = scratch('deploy-retry');
   const apis = fakeApis(world());

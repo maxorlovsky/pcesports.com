@@ -190,7 +190,14 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
 
   let published = { status: 'not pushed' };
   if (push) {
-    published = publishData(cwd, files, { base, now, minGapMs: MIN_GAP_MINUTES * 60 * 1000 });
+    // A failed push (an expired token, say) is one more problem: the run still keeps its state, report and log, and
+    // the next run publishes what the data is by then.
+    try {
+      published = publishData(cwd, files, { base, now, minGapMs: MIN_GAP_MINUTES * 60 * 1000 });
+    } catch (error) {
+      errors.push(`publish: ${error.message}`);
+      published = { status: 'push failed' };
+    }
     if (published.status === 'pushed') state.deployPending = published.commit;
     if (state.deployPending) {
       try {
@@ -200,17 +207,18 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
         errors.push(`deploy: ${error.message} (the next run tries again)`);
       }
     }
-    if (!state.prunedAt || now.getTime() - Date.parse(state.prunedAt) >= PRUNE_HOURS * HOUR) {
-      try {
-        pruneData(cwd);
-        state.prunedAt = now.toISOString();
-      } catch (error) {
-        errors.push(`prune: ${error.message}`);
-      }
-    }
   } else {
     mkdirSync(join(stateDir, 'out'), { recursive: true });
     for (const [path, text] of files) writeAtomic(join(stateDir, 'out', path.split('/').pop()), text);
+  }
+  // Any clone the job runs in fetched the data branch, so any clone drops the commits it replaced, once a day.
+  if (!state.prunedAt || now.getTime() - Date.parse(state.prunedAt) >= PRUNE_HOURS * HOUR) {
+    try {
+      pruneData(cwd);
+      state.prunedAt = now.toISOString();
+    } catch (error) {
+      errors.push(`prune: ${error.message}`);
+    }
   }
 
   // What goes to the files below may quote a git or gh error: no secret goes with it.

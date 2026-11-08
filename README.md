@@ -119,6 +119,10 @@ exports. git reads `GH_TOKEN` through gh's credential helper (`gh auth setup-git
 `GH_TOKEN`, git and gh use the machine's own GitHub login, which can push but can't start a workflow. The job refreshes
 every linked video on its first run with a new state folder, since the refresh times live there.
 
+**Other clones:** once the `data` branch exists, every `git fetch` in a working clone stores its commits too, and
+nothing prunes them there. `git config --add remote.origin.fetch '^refs/heads/data'` keeps it out of that clone's
+fetches; the data job and the deploy fetch it by name, and prune.
+
 **By hand:** `node tools/data-job/run.mjs --no-push` runs on any branch of a clone and writes the data to the state
 folder's `out/` instead of publishing; `--since <date>` reads uploads and matches back to that date (a backfill, or the
 data for a check). `PCESPORTS_DATA_JOB_STATE` points it at another state folder.
