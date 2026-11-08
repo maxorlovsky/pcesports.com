@@ -14,11 +14,11 @@ site, left as they are.
 Work goes into `dev` through a pull request. The owner merges `dev` into `master`, and every push to `master` deploys
 (`.github/workflows/ci.yml`). Never push to `dev` or `master`, never deploy, and add no version bump or release
 automation unless a card asks for it. The `data` branch is the data job's alone (`README.md`, "Data job"): data
-files only, one commit, never merged and never pushed by hand.
+files only, one commit, never merged; agents never push to it.
 
 ## Domains
 
-The app is domain-modular: `app/domains/<domain>/`, today `site` only; `matches`, `vods`, `watch` and `guides` are
+The app is domain-modular: `app/domains/<domain>/`, today `site`, `matches` and `vods`; `watch` and `guides` are
 planned (`docs/architecture.md` has their order, where the data job goes, and every rule).
 
 - Work in the domain that owns the change; read its `README.md` and `domain.json` first. A new domain comes with its

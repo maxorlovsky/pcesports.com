@@ -36,8 +36,9 @@ export function loadState(dir) {
 }
 
 function writeAtomic(file, text) {
-  writeFileSync(`${file}.tmp`, text, { mode: 0o600 });
-  renameSync(`${file}.tmp`, file);
+  const temp = `${file}.${process.pid}.tmp`;
+  writeFileSync(temp, text, { mode: 0o600 });
+  renameSync(temp, file);
 }
 
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -77,16 +78,21 @@ async function checkWhitelist(youtube, state, now, errors) {
   }
 }
 
-/** Reads each active VOD channel's new uploads, and re-reads every upload first seen live. */
+/**
+ * Reads each active VOD channel's new uploads, and re-reads every upload first seen live. A channel's read time moves
+ * on only once the details of what it listed are stored, so a failed videos.list loses nothing: the next run reads
+ * the same uploads again.
+ */
 async function pollUploads(youtube, state, channels, now, since, errors) {
   const toRead = new Set();
+  const listed = [];
   for (const channel of channels) {
     const polled = state.channels[channel.id]?.polledAt;
     let from = polled ? Date.parse(polled) - POLL_OVERLAP_HOURS * HOUR : now.getTime() - FIRST_POLL_HOURS * HOUR;
     if (since && since.getTime() < from) from = since.getTime();
     try {
       for (const id of await youtube.uploadsSince(channel.uploads, new Date(from))) if (!state.uploads[id]) toRead.add(id);
-      state.channels[channel.id] = { polledAt: now.toISOString() };
+      listed.push(channel.id);
     } catch (error) {
       errors.push(`${channel.name}: ${error.message}`);
     }
@@ -94,17 +100,20 @@ async function pollUploads(youtube, state, channels, now, since, errors) {
   for (const [id, upload] of Object.entries(state.uploads)) {
     if (upload.liveBroadcastContent !== 'none' || !durationSeconds(upload.duration)) toRead.add(id);
   }
-  if (!toRead.size) return 0;
-  try {
-    const read = await youtube.videos([...toRead]);
+  let read = [];
+  if (toRead.size) {
+    try {
+      read = await youtube.videos([...toRead]);
+    } catch (error) {
+      errors.push(`videos.list: ${error.message}`);
+      return 0;
+    }
     const returned = new Set(read.map((upload) => upload.id));
     for (const upload of read) state.uploads[upload.id] = { ...upload, readAt: now.toISOString() };
     for (const id of toRead) if (!returned.has(id)) delete state.uploads[id];
-    return read.length;
-  } catch (error) {
-    errors.push(`videos.list: ${error.message}`);
-    return 0;
   }
+  for (const id of listed) state.channels[id] = { polledAt: now.toISOString() };
+  return read.length;
 }
 
 /**
@@ -112,7 +121,7 @@ async function pollUploads(youtube, state, channels, now, since, errors) {
  * it succeeds) starts the deploy; without `push` the files go to the state folder's `out/` only. Returns what happened;
  * `errors` are problems the run carried on through.
  */
-export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch = globalThis.fetch, since, push = false, deploy }) {
+export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch = globalThis.fetch, since, push = false, deploy, redact = (text) => text }) {
   mkdirSync(stateDir, { recursive: true });
   const state = loadState(stateDir);
   const errors = [];
@@ -194,6 +203,8 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
     for (const [path, text] of files) writeAtomic(join(stateDir, 'out', path.split('/').pop()), text);
   }
 
+  // What goes to the files below may quote a git or gh error: no secret goes with it.
+  errors.splice(0, errors.length, ...errors.map(redact));
   state.uploads = pruneUploads(state.uploads, now);
   const day = now.toISOString().slice(0, 10);
   state.quota = { day, units: (state.quota.day === day ? state.quota.units : 0) + youtube.quota.units };

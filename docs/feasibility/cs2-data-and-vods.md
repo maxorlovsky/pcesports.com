@@ -136,21 +136,21 @@ Only these channels are read (`channels.json`). Every one was verified the same 
 | Organiser | Channel | Role | How it was verified |
 |---|---|---|---|
 | ESL | ESL Counter-Strike `@eslcs` (UCPq2ETz4aAGo2Z-8JisDPIA) | live streams, clips | Linked as `youtube.com/@ESLCS` from <https://pro.eslgaming.com/tour/cs/>, the `web=` link of the IEM Beijing Liquipedia page |
-| ESL | ESL Archives `@eslarchives` (UCXQexglLCaJyTImYLmSO9Ng) | **full-match VODs** | Linked as `youtube.com/channel/UCXQexglLCaJyTImYLmSO9Ng` from the same ESL page, and listed in @eslcs's "More ESL Counter-Strike!" section |
+| ESL | ESL Archives `@eslarchives` (UCXQexglLCaJyTImYLmSO9Ng) | **full-match VODs** | Linked as `youtube.com/channel/UCXQexglLCaJyTImYLmSO9Ng` from the same ESL page, and listed in @eslcs's featured-channels section |
 | ESL | ESL Counter-Strike B `@eslcsb` (UCoxKq27R4jcotw4pLjb1jZQ) | second stream | Linked as `youtube.com/@ESLCSB/streams` from the same ESL page, and listed in @eslcs's section |
 | PGL | PGL `@pgl` (UC5jpxDZx4yoBo324pMQ91Ww) | live streams, clips | Linked as `youtube.com/pgl` from <https://www.pglesports.com/>. The API reports this channel's `customUrl` as `@pgl` |
-| PGL | PGL VOD's `@pgl_vods` (UC5nM2vKeikf6_gk45gyM87g) | **full-match VODs** | Listed in @pgl's "Follow Our Channels" section. The organiser's site doesn't link it directly |
+| PGL | PGL VOD's `@pgl_vods` (UC5nM2vKeikf6_gk45gyM87g) | **full-match VODs** | Listed in @pgl's featured-channels section. The organiser's site doesn't link it directly |
 | BLAST | BLAST Premier `@blastpremier` (UC9k--dE_UE0Faxzgb_DDkYQ) | streams, clips | Linked as `youtube.com/blastpremier` from <https://blastpremier.com/>. The API reports `customUrl` `@blastpremier` |
-| BLAST | BLAST Premier VOD Archive `@blastpremiervod` (UC9O88aQhTVtoxVrCVQalTLQ) | **full-match VODs** | Listed in @blastpremier's "Featured channels" section (re-checked 2026-11-08). No BLAST event was in the window; its uploads of August and September 2026 are one full-match VOD per match, titled `A vs B - <event> - ...`. To be tested in practice on BLAST Rivals Fall 2026 (2026-11-11 to 15), with a hand-checked sample of 20 links or more |
+| BLAST | BLAST Premier VOD Archive `@blastpremiervod` (UC9O88aQhTVtoxVrCVQalTLQ) | **full-match VODs** | Listed in @blastpremier's featured-channels section (re-checked 2026-11-08). No BLAST event was in the window; its recent uploads are one full-match VOD per match, titled `A vs B - <event> - ...`. To be tested in practice on BLAST Rivals Fall 2026 (2026-11-11 to 15), with a hand-checked sample of 20 links or more |
 | StarLadder | StarLadder CS2 `@starladder_cs` (UCx1kGL8Qox1jEiHRMsnn9Ag) | **full-match VODs**, on the main channel | Not in the raw HTML of <https://starladder.com/en/>, which loads its links in the browser: the site's own socials API, <https://json-api.starladder.com/en/v1.0/newstarladder/socials>, returns `https://www.youtube.com/user/cssltv`, and the JS of <https://major.starladder.com/en/> links `https://www.youtube.com/@starladder_cs`; both resolve to this channel id. Its featured channels are a live-stream channel (whole broadcast days) and a highlights channel, neither a VOD channel. The main channel holds one full-match VOD per match next to short clips, titled `A vs B - <event> \| CS2`. Tested on StarSeries Fall 2026 (see "Numbers") |
 
-**Lookup by handle alone is not safe.** `@starladder` resolves to an unrelated personal channel ("April Knapp", 5 subscribers). `@blastcs` resolves to an empty "Blast Major" channel with 0 subscribers.
+**Lookup by handle alone is not safe.** `@starladder` resolves to an unrelated personal channel, and `@blastcs` to an empty one.
 
 **The other 2026 S-Tier organisers** (checked 2026-11-08, the same two steps; their PandaScore leagues are in `app/domains/matches/leagues.json`, so their matches are in the data, without VODs):
 
 | Organiser (PandaScore league) | Result | How |
 |---|---|---|
-| Perfect World (CS Asia Championships) | **Not a VOD source: no full-match VODs on YouTube** | Its site <https://www.pwesports.cn/> links the channel `youtube.com/channel/UC69Mepk2QzyQCL3PwJt21Eg`, which features no other channel and has uploaded nothing since November 2024. The CS Asia Championships site, <https://cac.pwesports.cn/>, names only Chinese platforms |
+| Perfect World (CS Asia Championships) | **Not a VOD source: no full-match VODs on YouTube** | Its site <https://www.pwesports.cn/> links the channel `youtube.com/channel/UC69Mepk2QzyQCL3PwJt21Eg`, which features no other channel and has no recent uploads. The CS Asia Championships site, <https://cac.pwesports.cn/>, names only Chinese platforms |
 | FISSURE (FISSURE PLAYGROUND) | **Not a VOD source: no per-match VODs** | The event page <https://fissure.pro/events/fpg2-cs> links `youtube.com/@fissure_cs2` (UCunL4ORE8hiPOJUmOQrVeaQ, Russian), which features no channel and holds whole broadcast days and highlights. An English channel, UCh4neU0C-6XB3OhOzPEAMVg, is linked by neither the site nor the main channel: **not verified**. It holds day streams and highlights, no full matches |
 | GAM3RS_X (Thunderpick World Championship) | **Not a VOD source: no per-match VODs** | GAM3RS_X's own site <https://gam3rsx.com/> links no YouTube. The event site, read from a Wayback snapshot of 2026-07-18 because it blocks automated clients, links `youtube.com/@thunderpickesports` (UCDs5D1luLRP2oo3lk71MaCA), which features no channel and holds whole broadcast days and highlights |
 
@@ -271,7 +271,7 @@ YouTube Data API v3 gives each project 10,000 units per day by default ("Project
 
 **Measured.** A cold run of the experiment cost **25 units**: 7 `channels.list`, 3 `channelSections.list`, 8 `playlistItems.list` and 7 `videos.list`. That covers a 15-day backfill of 7 channels and 195 uploads.
 
-**Measured on the data job (2026-11-08)**, which polls only the 4 VOD channels (ESL, PGL, BLAST, StarLadder): a run with nothing new costs 4 units (one `playlistItems.list` per channel), a run with new uploads 1 more (`videos.list`), the daily whitelist check 4 (`channels.list` once, `channelSections.list` per parent) and the weekly refresh 1 per 50 linked videos. A day of 15-minute runs is 96 x 4 = **384 units**, about **480** if every run found new uploads: under 5% of the 10,000. A 15-day backfill (`--since`) cost 9. The job logs each run's units and the day's total.
+**Measured on the data job (2026-11-08)**, which polls only the 4 VOD channels (ESL, PGL, BLAST, StarLadder): a run with nothing new costs 4 units (one `playlistItems.list` per channel), plus 1 when it has uploads to read (`videos.list`: new ones and those first seen live), plus 1 when a linked video is due for its weekly refresh (one `videos.list` per 50, on whichever run they fall due), plus 4 once a day for the whitelist check (`channels.list` once, `channelSections.list` per parent). A cold first run cost 9 and a 15-day backfill (`--since`) 10. A day of 15-minute runs is 96 x 4 = **384 units** when nothing is new and **580 at most** (every run at 6, plus the check): under 6% of the 10,000. The job logs each run's units and the day's total.
 
 **Estimated daily use for the site.** It polls only the VOD channels:
 
@@ -282,10 +282,10 @@ YouTube Data API v3 gives each project 10,000 units per day by default ("Project
 | Setup | Units per day | Share of 10,000 |
 |---|---|---|
 | 3 VOD channels (ESL, PGL, BLAST), every 15 min | 96 polls x (3 + 1) = 384, + 3 = **~390** | 4% |
-| 7 VOD channels (ESL, PGL, BLAST + StarLadder, Perfect World, FISSURE, GAM3RS_X), every 15 min | 96 x (7 + 1) = 768, + 7 = **~775** | 8% |
-| 7 VOD channels, every 5 min | 288 x 8 = 2,304, + 7 = **~2,311** | 23% |
+| 4 VOD channels (ESL, PGL, BLAST, StarLadder: the whitelist since 2026-11-08), every 15 min | 96 x (4 + 1 + 1) = 576, + 4 = **~580** | 6% |
+| 4 VOD channels, every 5 min | 288 x 6 = 1,728, + 4 = **~1,732** | 17% |
 
-Polling every 15 min is plenty, because the VODs appeared hours after the start. Even the worst case stays far under the free quota. These are worst-case figures that assume a `videos.list` call on every poll.
+Polling every 15 min is plenty, because the VODs appeared hours after the start. Even the worst case stays far under the free quota. These are worst-case figures that assume a `videos.list` call on every poll (and, for the data job's row, a refresh call too).
 
 ## 4. Risks
 

@@ -13,6 +13,7 @@ const REMOTE_REF = `refs/remotes/origin/${DATA_BRANCH}`;
 export const DATA_PATH = /^app\/domains\/[a-z][a-z0-9-]*\/data\/[a-z0-9-]+\.json$/;
 /** Who the data commits are by: the job, not a person. */
 const IDENTITY = { name: 'PCesports data job', email: 'data-job@pcesports.invalid' };
+const GAP_SLACK_MS = 2 * 60 * 1000;
 
 export function git(cwd, args, { env = {}, input } = {}) {
   const result = spawnSync('git', args, { cwd, encoding: 'utf8', input, env: { ...process.env, ...env } });
@@ -81,7 +82,9 @@ export function publishData(cwd, files, { base, now, minGapMs }) {
   if (base && git(cwd, ['rev-parse', `${base}^{tree}`]) === tree) return { status: 'unchanged', commit: base };
   if (base) {
     const last = Number(git(cwd, ['log', '-1', '--format=%ct', base])) * 1000;
-    if (now.getTime() - last < minGapMs) return { status: 'waiting', commit: base, lastAt: new Date(last) };
+    // Runs start every 15 minutes but take a few seconds each, so the gap allows for that: 30 minutes means the second
+    // run after a publish, not the third.
+    if (now.getTime() - last < minGapMs - GAP_SLACK_MS) return { status: 'waiting', commit: base, lastAt: new Date(last) };
   }
   const env = {
     GIT_AUTHOR_NAME: IDENTITY.name, GIT_AUTHOR_EMAIL: IDENTITY.email, GIT_AUTHOR_DATE: now.toISOString(),

@@ -1,6 +1,7 @@
 // The data job (README.md, "Data job"), run every 15 minutes by cron in its own clone on the factory machine:
 //   node tools/data-job/run.mjs [--no-push] [--since <date>] [--env-file <path>]
-// Under a lock, so two runs never overlap: the second one logs that it skipped and stops. With nothing changed it
+// Under a lock in the state folder, so two runs sharing it never overlap (a cron run and one by hand, or two clones):
+// the second one logs that it skipped and stops. With nothing changed it
 // prints nothing; problems go to stderr, and every run adds a line to job.log in the state folder.
 //
 // Publishing (the default) needs the clone on master with no changes. It pulls master first (fast-forward only) and
@@ -11,24 +12,30 @@
 // The secrets come from the env file, never from the repository: PANDASCORE_TOKEN, YOUTUBE_API_KEY and GH_TOKEN (for
 // the push and the deploy; without it, git and gh use the machine's own GitHub login).
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseEnv } from 'node:util';
 import { appendLog, runJob } from './job.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
-const LOCK = join(ROOT, '.data-job.lock');
 const LOCKED = 'PCESPORTS_DATA_JOB_LOCKED';
 const BUSY = 75;
 const SECRETS = ['PANDASCORE_TOKEN', 'YOUTUBE_API_KEY', 'GH_TOKEN'];
 const DEFAULT_ENV_FILE = join(homedir(), '.config', 'pcesports', 'data-job.env');
-const STATE_DIR = process.env.PCESPORTS_DATA_JOB_STATE || join(homedir(), '.local', 'state', 'pcesports-data-job');
+const STATE_DIR = resolve(process.env.PCESPORTS_DATA_JOB_STATE || join(homedir(), '.local', 'state', 'pcesports-data-job'));
+const LOCK = join(STATE_DIR, 'run.lock');
 
 const args = process.argv.slice(2);
 const option = (name) => {
   const at = args.indexOf(name);
-  return at >= 0 ? args[at + 1] : undefined;
+  if (at < 0) return undefined;
+  if (!args[at + 1] || args[at + 1].startsWith('--')) {
+    console.error(`Data job stopped: ${name} needs a value`);
+    process.exit(1);
+  }
+  return args[at + 1];
 };
 const push = !args.includes('--no-push');
 
@@ -54,12 +61,12 @@ function git(...gitArgs) {
 // when that run ends, even when it is killed.
 if (!process.env[LOCKED]) {
   if (spawnSync('flock', ['--version'], { stdio: 'ignore' }).error) fail('flock (util-linux) is not on PATH');
+  mkdirSync(STATE_DIR, { recursive: true, mode: 0o700 });
   const locked = spawnSync('flock', ['--nonblock', '--conflict-exit-code', String(BUSY), LOCK, process.execPath, fileURLToPath(import.meta.url), ...args], {
     stdio: 'inherit',
     env: { ...process.env, [LOCKED]: '1' },
   });
   if (locked.status === BUSY) {
-    mkdirSync(STATE_DIR, { recursive: true });
     appendLog(STATE_DIR, `${new Date().toISOString()} skipped: another run holds the lock`);
     process.exit(0);
   }
@@ -80,12 +87,13 @@ if (push && !args.includes('--pulled')) {
   }
 }
 
-// The env file: outside the repository, readable by its owner only.
+// The env file: outside the repository, readable by its owner only. Its values win over the environment's, so a
+// variable exported in the shell can't stand in for it unnoticed.
 const envFile = resolve(option('--env-file') || process.env.PCESPORTS_DATA_JOB_ENV || DEFAULT_ENV_FILE);
 if (!relative(ROOT, envFile).startsWith('..')) fail(`the env file ${envFile} is inside the repository: keep it outside`);
 if (existsSync(envFile)) {
   if (statSync(envFile).mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
-  process.loadEnvFile(envFile);
+  Object.assign(process.env, parseEnv(readFileSync(envFile, 'utf8')));
 }
 for (const name of ['PANDASCORE_TOKEN', 'YOUTUBE_API_KEY']) if (!process.env[name]) fail(`${name} is not set (${envFile})`);
 
@@ -108,6 +116,7 @@ try {
     since,
     push,
     deploy,
+    redact,
   });
   if (errors.length) {
     console.error(redact(`Data job finished with ${errors.length} problem${errors.length === 1 ? '' : 's'} (${join(STATE_DIR, 'report.md')}):\n${errors.map((error) => `- ${error}`).join('\n')}`));

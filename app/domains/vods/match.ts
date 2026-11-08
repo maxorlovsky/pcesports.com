@@ -142,13 +142,17 @@ export interface LinkResult {
 }
 
 /**
- * Every match's VOD link. A stored link stays as long as its match does (the job keeps titles only for a while, so an
- * old link can't be re-derived); the refresh drops it when YouTube no longer returns the video. Each other match gets
+ * Every match's VOD link. A stored link stays as long as its match does and its channel is whitelisted (the job keeps
+ * titles only for a while, so an old link can't be re-derived); the refresh drops it when YouTube no longer returns the video. Each other match gets
  * the earliest candidate no other match holds. `channelIds` are the VOD channels the whitelist check let through.
  */
 export function linkVods(matches: Match[], uploads: Upload[], stored: VodLink[], channelIds: Set<string>): LinkResult {
   const present = new Set(matches.map((match) => match.id));
-  const links = stored.filter((link) => present.has(link.matchId));
+  const whitelisted = new Set(VOD_CHANNELS.map((channel) => channel.id));
+  // A link goes with its match, or with its channel leaving the whitelist; only its ids are carried over.
+  const links = stored
+    .filter((link) => present.has(link.matchId) && whitelisted.has(link.channelId))
+    .map(({ matchId, videoId, channelId }) => ({ matchId, videoId, channelId }));
   const linkedMatches = new Set(links.map((link) => link.matchId));
   const used = new Set(links.map((link) => link.videoId));
   const ambiguous: LinkResult['ambiguous'] = [];

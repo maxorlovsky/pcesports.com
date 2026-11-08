@@ -24,16 +24,19 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check and the deploy script |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches` and `vods` rules and the data job (against fake APIs and a scratch origin) |
 | `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, and nothing of the old site (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are
 
-- `app/domains/`: the domains, each owning its rules, data and UI (`docs/architecture.md`). Today only `site`: the
-  site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`), the layout,
-  header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags), and the home,
-  privacy and 404 pages' content. Its `README.md` lists what it owns.
+- `app/domains/`: the domains, each owning its rules, data and UI (`docs/architecture.md`); each one's `README.md`
+  lists what it owns.
+  - `site`: the site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`),
+    the layout, header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags),
+    and the home, privacy and 404 pages' content.
+  - `matches` and `vods`: the CS2 matches from PandaScore and their official VODs, which the data job keeps current
+    (see "Data job"). No page shows them yet.
 - `app/app.vue`, `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed
   places; each file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
@@ -42,7 +45,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 - `public/`: copied as is: the logo, the favicon, `robots.txt` and `og.png`, the Open Graph image
   (`tools/og-image.mjs` renders it).
 - `tools/nginx/`: production's vhost and the old URLs' redirects (`docs/old-urls.md`).
-- `tools/deploy/`: the deploy and its SSH forced command.
+- `tools/deploy/`: the deploy and its SSH forced command. `tools/data-job/`: the data job, and `pull.mjs`, which puts
+  the data branch's files in place for a build.
 - `docs/`: the architecture, the feasibility report and the old URLs. `experiments/`: the data experiments (not part
   of the site).
 - `AGENTS.md` (`CLAUDE.md` imports it): the rules coding agents work by.
@@ -62,7 +66,8 @@ a clone of its own on master, `~/pcesports-data`, never the factory's checkout. 
 
 Each run:
 
-1. takes a `flock` lock (`.data-job.lock`): a second run while one is going logs that it skipped and stops;
+1. takes a `flock` lock in its state folder: a second run sharing that folder (a cron run and one by hand) logs that it
+   skipped and stops;
 2. pulls master (fast-forward only) and runs the job it pulled, as the deploy does;
 3. reads PandaScore's matches scheduled from 3 days ago to 14 days ahead, keeps the tier-1 ones (tier `s` or `a`
    from a league in `app/domains/matches/leagues.json`), and merges them into the stored list (30 days back);
@@ -70,15 +75,16 @@ Each run:
    saw live, re-checks the whitelist once a day, refreshes every linked video weekly, and links each match to its VOD;
 5. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the
    deploy (`gh workflow run ci.yml --ref master`);
-6. writes `report.md` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`. With
+6. writes `report.md`, `state.json` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`. With
    nothing wrong it prints nothing; a problem goes to stderr and the exit code is 1.
 
-**Batching:** at most one publish per 30 minutes, so at most 48 deploys a day, about 20 on an event day. A change waits
+**Batching:** at most one publish per 30 minutes (2 minutes' slack for how long a run takes, so it is the second run
+after a publish, never the third), so at most 48 deploys a day, about 20 on an event day. A change waits
 for the first run after the gap, so a new VOD is live within about 45 minutes of the run that found it (15 for the
 poll, 30 for the gap, plus the deploy). The organisers upload their VODs hours after a match, so this costs little.
 
 **The `data` branch** holds data files only (`app/domains/<domain>/data/*.json`) as a single commit: each publish
-replaces it, with a push that only succeeds if the branch is still what the run read. It is never merged, so code
+replaces it, with a push that only succeeds if the branch is still what the run read, so two clones can't both publish. It is never merged, so code
 branches and history never collect data, and YouTube's ids don't pile up in history (YouTube's 30-day rule). Every
 deploy, from a push to master or from the job, builds master's code with the branch's current files:
 `tools/deploy/deploy.mjs` runs `tools/data-job/pull.mjs`, which empties the data folders, fetches the branch and
@@ -92,9 +98,9 @@ finished matches with no VOD 12 hours after their start, the full-length uploads
 the tier-1 leagues left out, and every link, for hand checks.
 
 **YouTube quota:** measured per run with the 4 VOD channels: 4 units (one `playlistItems.list` each), plus 1 when
-there are new uploads (`videos.list`), plus 4 once a day for the whitelist check and 1 per 50 linked videos a week.
-A day of 15-minute runs is 96 x 4 = 384 units, about 480 at most with new uploads on every run: under 5% of the
-10,000-unit daily quota. `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
+there are uploads to read (`videos.list`), plus 1 when linked videos fall due for their weekly refresh (per 50), plus
+4 once a day for the whitelist check. A cold first run cost 9 and a 15-day backfill 10. A day of 15-minute runs is
+96 x 4 = 384 units when nothing is new, 580 at most: under 6% of the 10,000-unit daily quota. `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
 run, about 20 an hour of its 1,000.
 
 **The env file**, `~/.config/pcesports/data-job.env` (or `--env-file`, or `PCESPORTS_DATA_JOB_ENV`), outside the
@@ -106,7 +112,9 @@ YOUTUBE_API_KEY=...    # YouTube Data API v3
 GH_TOKEN=...           # fine-grained, this repository only: Contents read and write (the push), Actions read and write (the deploy)
 ```
 
-Without `GH_TOKEN`, git and gh use the machine's own GitHub login, which can push but can't start a workflow.
+The file's values win over variables already in the environment. Without `GH_TOKEN`, git and gh use the machine's own
+GitHub login, which can push but can't start a workflow. The job refreshes every linked video on its first run with a
+new state folder, since the refresh times live there.
 
 **By hand:** `node tools/data-job/run.mjs --no-push` runs anywhere and writes the data to the state folder's `out/`
 instead of publishing; `--since <date>` reads uploads and matches back to that date (a backfill, or the data for a

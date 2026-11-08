@@ -7,6 +7,7 @@ import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rm
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { after, before, test } from 'node:test';
+import { fetchData, publishData } from '../tools/data-job/data-branch.mjs';
 import { MATCHES_FILE, VODS_FILE, runJob } from '../tools/data-job/job.mjs';
 import { BLAST_VODS, ESL_ARCHIVES, PGL_VODS, fakeApis, rawMatch, upload } from './fixtures/cs2.mjs';
 
@@ -97,6 +98,33 @@ test('unchanged data commits nothing; a change waits for 30 minutes after the la
   assert.equal(deploys.length, 2);
 });
 
+test('two clones that read the same data branch can never both replace it', async () => {
+  const { clone, origin, state } = scratch('lease');
+  await runJob({ cwd: clone, stateDir: state, now: later(6), secrets: SECRETS, fetch: fakeApis(world()).fetch, push: true, deploy: async () => {} });
+  const other = join(dir, 'lease', 'other');
+  git(join(dir, 'lease'), 'clone', '-q', origin, other);
+  const base = fetchData(clone);
+  assert.equal(fetchData(other), base);
+  const files = (text) => new Map([[VODS_FILE, text]]);
+  assert.equal(publishData(clone, files('{"vods":[]}\n'), { base, now: later(7), minGapMs: 0 }).status, 'pushed');
+  const won = git(origin, 'rev-parse', 'data');
+  assert.throws(() => publishData(other, files('{"vods":[1]}\n'), { base, now: later(7), minGapMs: 0 }), /stale info|rejected/);
+  assert.equal(git(origin, 'rev-parse', 'data'), won);
+});
+
+test('a failed videos.list loses no upload: the next run reads the same ones again and links them', async () => {
+  const { clone, state } = scratch('videos-down');
+  const data = { ...world(), fail: ['videos'] };
+  const apis = fakeApis(data);
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: false };
+  const first = await runJob({ ...options, now: later(6) });
+  assert.match(first.errors.join('\n'), /videos\.list/);
+  data.fail = [];
+  const second = await runJob({ ...options, now: later(8) });
+  assert.deepEqual(second.errors, []);
+  assert.deepEqual(JSON.parse(readFileSync(join(state, 'out', 'vods.json'), 'utf8')).vods.map((link) => link.videoId), ['vod1']);
+});
+
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {
   const { clone, state } = scratch('deploy-retry');
   const apis = fakeApis(world());
@@ -174,7 +202,8 @@ const runCommand = (repo, args, env) => spawnSync('node', ['tools/data-job/run.m
 
 test('two runs at once: the second one logs that it skipped, quietly, and publishes nothing', async () => {
   const { repo, state } = command('lock');
-  const lock = join(repo, '.data-job.lock');
+  mkdirSync(state, { recursive: true });
+  const lock = join(state, 'run.lock');
   // flock holding the lock stands in for the running job (its own process group, so the kill below ends sleep too)
   const holder = spawn('flock', [lock, 'sleep', '30'], { stdio: 'ignore', detached: true });
   while (spawnSync('flock', ['--nonblock', lock, 'true']).status === 0) await new Promise((done) => setTimeout(done, 20));
