@@ -9,7 +9,7 @@ import {
   CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods, missingVods,
   pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
-import { fetchData, publishData, pruneData, readData } from './data-branch.mjs';
+import { fetchData, forgetData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
 /** At most one data commit per this many minutes, so a busy event day makes at most 48 deploys. */
@@ -197,6 +197,8 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
     } catch (error) {
       errors.push(`publish: ${error.message}`);
       published = { status: 'push failed' };
+      // The push may have landed before the error (a dropped connection): a deploy is owed until one runs.
+      state.deployPending ??= 'after a failed push';
     }
     if (published.status === 'pushed') state.deployPending = published.commit;
     if (state.deployPending) {
@@ -207,18 +209,21 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
         errors.push(`deploy: ${error.message} (the next run tries again)`);
       }
     }
+    // The job's own clone drops the data commits it replaced, once a day per state folder. Only there: the prune is
+    // a `git gc` with its own expiry, which is no business of a developer's clone.
+    if (!state.prunedAt || now.getTime() - Date.parse(state.prunedAt) >= PRUNE_HOURS * HOUR) {
+      try {
+        pruneData(cwd);
+        state.prunedAt = now.toISOString();
+      } catch (error) {
+        errors.push(`prune: ${error.message}`);
+      }
+    }
   } else {
     mkdirSync(join(stateDir, 'out'), { recursive: true });
     for (const [path, text] of files) writeAtomic(join(stateDir, 'out', path.split('/').pop()), text);
-  }
-  // Any clone the job runs in fetched the data branch, so any clone drops the commits it replaced, once a day.
-  if (!state.prunedAt || now.getTime() - Date.parse(state.prunedAt) >= PRUNE_HOURS * HOUR) {
-    try {
-      pruneData(cwd);
-      state.prunedAt = now.toISOString();
-    } catch (error) {
-      errors.push(`prune: ${error.message}`);
-    }
+    // A run by hand leaves no ref to the data branch behind, so that clone's own gc drops what it fetched.
+    forgetData(cwd);
   }
 
   // What goes to the files below may quote a git or gh error: no secret goes with it.

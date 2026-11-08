@@ -4,7 +4,7 @@
 //   node tools/data-job/pull.mjs
 // It clears the data folders first, so a failed fetch stops the build instead of shipping the last deploy's data, and
 // it takes nothing from the branch but data files (data-branch.mjs, DATA_PATH): never code. It also drops the data
-// commits the clone fetched before (pruneData).
+// commits the clone fetched before (pruneData, a `git gc`): it is meant for the deploy's and CI's clones.
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

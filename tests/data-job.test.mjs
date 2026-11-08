@@ -3,7 +3,7 @@
 // and pull.mjs, which the deploy runs.
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { after, before, test } from 'node:test';
@@ -179,9 +179,12 @@ test('a rejected push keeps the run: state, report and log are written, and the 
   const hook = join(origin, 'hooks', 'pre-receive');
   writeFileSync(hook, '#!/bin/sh\necho denied >&2\nexit 1\n', { mode: 0o755 });
   const apis = fakeApis(world());
-  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  let deploys = 0;
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => deploys++ };
   const run = await runJob({ ...options, now: later(6) });
   assert.equal(run.published.status, 'push failed');
+  // The push may have landed before the error, so a deploy is owed
+  assert.equal(deploys, 1);
   assert.match(run.errors.join('\n'), /publish: .*denied/s);
   assert.ok(existsSync(join(state, 'state.json')) && existsSync(join(state, 'report.md')));
   const checks = () => apis.calls.filter((call) => call.endpoint === 'channelSections').length;
@@ -190,6 +193,22 @@ test('a rejected push keeps the run: state, report and log are written, and the 
   const next = await runJob({ ...options, now: later(6.25) });
   assert.equal(next.published.status, 'pushed');
   assert.equal(checks(), before, 'the whitelist check was not redone');
+});
+
+test('a run by hand leaves its clone as it was: no ref to the data branch, no gc', async () => {
+  const { clone, origin, state } = scratch('by-hand');
+  await runJob({ cwd: clone, stateDir: state, now: later(6), secrets: SECRETS, fetch: fakeApis(world()).fetch, push: true, deploy: async () => {} });
+  const dev = join(dir, 'by-hand', 'dev');
+  git(join(dir, 'by-hand'), 'clone', '-q', origin, dev);
+  git(dev, 'update-ref', '-d', 'refs/remotes/origin/data');
+  // A developer's unreachable object, three days old: their own gc expiry decides when it goes
+  const dangling = git(dev, 'commit-tree', git(dev, 'write-tree'), '-m', 'dropped stash');
+  const loose = join(dev, '.git', 'objects', dangling.slice(0, 2), dangling.slice(2));
+  const old = new Date(Date.now() - 3 * 24 * 3600e3);
+  utimesSync(loose, old, old);
+  await runJob({ cwd: dev, stateDir: join(dir, 'by-hand', 'dev-state'), now: later(7), secrets: SECRETS, fetch: fakeApis(world()).fetch, push: false });
+  assert.equal(spawnSync('git', ['rev-parse', '-q', '--verify', 'refs/remotes/origin/data'], { cwd: dev }).status, 1);
+  assert.equal(has(dev, dangling), true);
 });
 
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {

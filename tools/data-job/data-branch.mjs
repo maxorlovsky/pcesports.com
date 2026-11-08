@@ -40,8 +40,14 @@ export function fetchData(cwd) {
   return git(cwd, ['rev-parse', REMOTE_REF]);
 }
 
+/** Deletes the clone's ref to the data branch (it writes no reflog), so nothing there keeps the data commits. */
+export function forgetData(cwd) {
+  spawnSync('git', ['update-ref', '-d', REMOTE_REF], { cwd });
+}
+
 /**
- * Removes the replaced data commits from the clone. Nothing keeps them: the remote-tracking ref writes no reflog
+ * Removes the replaced data commits from the clone, for the clones that exist to run the job or a deploy: it runs
+ * `git gc` with its own expiry. Nothing keeps them: the remote-tracking ref writes no reflog
  * (fetchData, publishData), so once the branch moves on they are unreachable, and `git gc --prune` deletes the
  * unreachable objects older than `expire`, loose or packed (a bare `git prune` leaves packed ones, as in a fresh
  * clone or after an earlier gc). Their YouTube ids would otherwise sit in .git well past YouTube's 30 days.
