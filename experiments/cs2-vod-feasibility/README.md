@@ -22,7 +22,7 @@ You need a YouTube Data API v3 key in `YOUTUBE_API_KEY`. The owner keeps it in t
 cd experiments/cs2-vod-feasibility
 node --env-file=../../.env.local run.js --from 2026-10-24 --to 2026-11-08   # the report's run
 node --env-file=../../.env.local run.js                                     # the 14 days before today (UTC)
-node match.js --no-manual-aliases                                           # re-match without aliases.json
+node match.js --no-manual-aliases                                           # re-match without aliases.json (overwrites out/results.*)
 ```
 
 - `--to` is exclusive. Without arguments the window is the 14 days before today, so matches played today (no VOD yet) stay out.

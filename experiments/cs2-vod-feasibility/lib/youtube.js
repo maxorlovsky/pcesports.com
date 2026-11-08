@@ -12,7 +12,7 @@ function key() {
     return k;
 }
 
-async function get(endpoint, params, { cache = true } = {}) {
+async function get(endpoint, params) {
     const query = new URLSearchParams(params).toString();
     const produce = async () => {
         quota.units += 1;
@@ -22,7 +22,6 @@ async function get(endpoint, params, { cache = true } = {}) {
         if (!res.ok) throw new Error(`YouTube ${endpoint} ${res.status}: ${json.error?.message}`);
         return json;
     };
-    if (!cache) return produce();
     let miss = false;
     const value = await cached('youtube', `${endpoint}?${query}`, () => { miss = true; return produce(); });
     if (!miss) quota.cacheHits += 1;

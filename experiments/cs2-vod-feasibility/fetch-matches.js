@@ -25,7 +25,9 @@ function parseRange(text) {
 
 async function tier1Events(from, to) {
     const events = [];
-    for (let year = from.getUTCFullYear(); year <= new Date(to - 1).getUTCFullYear(); year++) {
+    // Liquipedia lists an event under its start year, so a January window also reads the previous year.
+    const firstYear = from.getUTCFullYear() - (from.getUTCMonth() === 0 ? 1 : 0);
+    for (let year = firstYear; year <= new Date(to - 1).getUTCFullYear(); year++) {
         const html = await render(`{{TournamentsList|tier=1|tiertype=none|year=${year}}}`);
         for (const row of html.split('table2&#95;&#95;row--body').slice(1)) {
             const link = /class="column&#95;&#95;tournament"[^>]*><a href="\/counterstrike\/([^"]+)"[^>]*>([^<]+)<\/a><\/td><td[^>]*>([^<]+)<\/td>/.exec(row);
@@ -107,6 +109,7 @@ function matchesOf(event, content, zones) {
             team2,
             start: parseDate(p.date, zones)?.toISOString() || null,
             finished: p.finished === 'true',
+            // Map slots in the template (Liquipedia lists every slot of a Bo3/Bo5, played or not).
             bestOf: maps.length,
             maps,
             seriesScore: [wins1, wins2],
@@ -131,8 +134,9 @@ async function lookups(teamIds, zones) {
     }
     const offsets = {};
     for (const m of html.matchAll(/data-zone="([^"]+)">[\s\S]*?title="([^"]+)"/g)) {
-        const o = /UTC([+-−])(\d{1,2})(?::(\d{2}))?/.exec(m[2]);
-        offsets[m[1]] = o ? (o[1] === '+' ? 1 : -1) * (Number(o[2]) * 60 + Number(o[3] || 0)) : 0;
+        const o = /UTC([+\-−])(\d{1,2})(?::(\d{2}))?/.exec(m[2]);
+        if (!o) throw new Error(`No UTC offset in the title of {{Abbr/${m[1]}}}: ${m[2]}`);
+        offsets[m[1]] = (o[1] === '+' ? 1 : -1) * (Number(o[2]) * 60 + Number(o[3] || 0));
         offsets[`${m[1]}:title`] = m[2];
     }
     return { teams, offsets };
@@ -155,7 +159,8 @@ export async function fetchMatches({ from, to }) {
     const zoneNames = new Set();
     const teamIds = new Set();
     for (const { content } of pages) {
-        for (const m of content.matchAll(/\{\{Abbr\/(\w+)\}\}/g)) zoneNames.add(m[1]);
+        // Only the abbreviations used in match dates are time zones ({{Abbr/Bo3}} is not).
+        for (const m of content.matchAll(/\|date=[^|}]*\{\{Abbr\/(\w+)\}\}/g)) zoneNames.add(m[1]);
         for (const m of content.matchAll(/\{\{TeamOpponent\|([^|}]+)/g)) teamIds.add(m[1].trim().toLowerCase());
     }
     teamIds.delete('tbd');
@@ -163,13 +168,16 @@ export async function fetchMatches({ from, to }) {
 
     const all = pages.flatMap(({ e, content }) => matchesOf(e, content, offsets));
     const inWindow = all.filter((m) => m.start && new Date(m.start) >= from && new Date(m.start) < to);
-    const played = inWindow.filter((m) => m.maps.some((x) => x.played));
+    // Only decided series (one team has won the majority of maps): a match still running when the
+    // run starts has no VOD yet. The match-level |finished= flag isn't used, because editors leave it
+    // blank on some finished matches (9z vs BetBoom at IEM Beijing 2026).
+    const played = inWindow.filter((m) => Math.max(...m.seriesScore) > m.bestOf / 2);
     return {
         window: { from: from.toISOString(), to: to.toISOString() },
         events,
         timezones: Object.fromEntries(Object.entries(offsets).filter(([k]) => k.endsWith(':title'))),
         teams,
-        counts: { parsed: all.length, inWindow: inWindow.length, played: played.length },
+        counts: { parsed: all.length, inWindow: inWindow.length, played: played.length, unfinished: inWindow.length - played.length },
         matches: played,
     };
 }

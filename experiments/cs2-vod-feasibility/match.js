@@ -79,7 +79,8 @@ function spoilers(match, pick) {
     const played = match.maps.filter((m) => m.played).length;
     const chapters = [...(v.description || '').matchAll(/^\s*\d{1,2}:\d{2}(?::\d{2})?\s+(.+)$/gm)].map((m) => m[1]);
     return {
-        // A score like 2-1 or 13:7 anywhere in the title or description.
+        // A score like 2-1 or 13:7 in the title, or a series score like 2-1 in the description
+        // (map scores aren't searched there: chapter times and date ranges would match).
         scoreInText: /\b\d{1,2}\s*[-:]\s*\d{1,2}\b/.test(v.title.replace(/\b20\d\d\b/g, '')) || /\b[0-3]\s*[-:]\s*[0-3]\b(?!\d)/.test((v.description || '').replace(/\d{1,2}:\d{2}:\d{2}/g, '')),
         // Does the title list the winner first (would give the result away if it always did)?
         titleWinnerFirst: pick.titleFirst === match.winner,
@@ -127,7 +128,8 @@ export async function matchAll() {
             spoilers: pick && spoilers(match, pick),
         });
     }
-    const used = new Set(results.flatMap((r) => (r.vod ? [r.vod.id] : [])));
+    const linked = results.flatMap((r) => (r.vod ? [r.vod.id] : []));
+    const used = new Set(linked);
     const unusedVodUploads = v.videos
         .filter((x) => kind(x) === 'vod' && !used.has(x.id) && new Date(x.publishedAt) < new Date(m.window.to))
         .map((x) => ({ id: x.id, channel: x.channelTitle, title: x.title, publishedAt: x.publishedAt, durationMin: Math.round(x.durationSec / 60) }));
@@ -141,6 +143,8 @@ export async function matchAll() {
         missedButLiquipediaHasOne: n((r) => r.check === 'MISSED'),
         noLiquipediaReference: n((r) => r.check === 'no-reference'),
         ambiguous: n((r) => r.otherVodCandidates.length),
+        // One video linked to two matches would mean a rematch got the wrong VOD.
+        vodsLinkedTwice: linked.length - used.size,
         broadcastLookalikes: n((r) => r.broadcastLookalikes.length),
         manualAliases: useManual,
         unusedVodUploads: unusedVodUploads.length,
