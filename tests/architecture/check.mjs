@@ -95,8 +95,9 @@ const ASSET = /\.(png|jpe?g|webp|svg|gif|ico|woff2?)$/;
 /** `@scope/name/sub` -> `@scope/name`, `name/sub` -> `name`. */
 const packageName = (spec) => spec.split('/').slice(0, spec.startsWith('@') ? 2 : 1).join('/');
 
-/** Every import a file makes: ES imports and re-exports, `import()`, `require()`, `import('…')` types, a component's
- *  `<script src>` and `<style src>`, and `@import` in its styles. */
+/** Every import a file makes: ES imports and re-exports, `import()`, `require()` (and `module.require()`),
+ *  `new URL('…', import.meta.url)`, `import('…')` types, a component's `<script src>`, `<style src>` and
+ *  `<template src>`, and `@import` and `url()` in its styles. A `require` or `createRequire` passed around is opaque. */
 function importsOf(path, text, files) {
   const found = [];
   const add = (spec) => found.push({ spec, target: resolve(path, spec, files) });
@@ -113,12 +114,19 @@ function importsOf(path, text, files) {
     const visit = (node) => {
       if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
         add(node.moduleSpecifier.text);
-      } else if (ts.isCallExpression(node) &&
-          literalCall(node, node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === 'require'))) {
+      } else if (ts.isCallExpression(node) && literalCall(node, node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+          (ts.isIdentifier(node.expression) && node.expression.text === 'require') ||
+          (ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === 'require' &&
+            ts.isIdentifier(node.expression.expression) && node.expression.expression.text === 'module'))) {
         // handled
-      } else if (ts.isIdentifier(node) && node.text === 'createRequire') {
+      } else if (ts.isIdentifier(node) && (node.text === 'createRequire' ||
+          (node.text === 'require' && !(ts.isCallExpression(node.parent) && node.parent.expression === node) &&
+            !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node)))) {
         // A require() under another name loads what it is given; read it as a computed import.
-        opaque('createRequire');
+        opaque(`${node.text} passed around`);
+      } else if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'URL' &&
+          node.arguments?.length === 2 && ts.isStringLiteralLike(node.arguments[0]) && /import\.meta\.url/.test(node.arguments[1].getText())) {
+        add(node.arguments[0].text);
       } else if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) &&
           node.expression.keywordToken === ts.SyntaxKind.ImportKeyword && node.name.text.startsWith('glob')) {
         opaque('import.meta.glob');
@@ -135,10 +143,13 @@ function importsOf(path, text, files) {
   if (path.endsWith('.vue')) {
     for (const m of text.matchAll(/<(?:script|style|template)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
   }
-  const style = styleOf(path, text);
+  const style = styleOf(path, text).replace(/\/\*[\s\S]*?\*\//g, '');
   for (const m of style.matchAll(/@import\s+["']([^"']+)["']/g)) add(m[1]);
-  // url(): every file a style reaches, but public/'s own (`/logo.png`), data: and remote ones.
-  for (const m of style.matchAll(/url\(\s*["']?([^"')\s]+)/g)) if (!/^(\/|data:|https?:|#)/.test(m[1])) add(m[1]);
+  // url(): every file a style reaches, but public/'s own (`/logo.png`), data: and remote ones. A bare name is relative.
+  for (const m of style.matchAll(/url\(\s*["']?([^"')\s]+)/g)) {
+    const spec = m[1].replace(/[?#].*$/, '');
+    if (spec && !/^(\/|data:|https?:)/.test(m[1]) && !m[1].startsWith('#')) add(/^[.~@]/.test(spec) ? spec : `./${spec}`);
+  }
   return found;
 }
 
@@ -156,9 +167,15 @@ function unresolvedNames(path, text) {
   const checker = ts.createProgram([fileName], { noLib: true, noResolve: true, types: [] }, host).getTypeChecker();
   const names = new Set();
   const visit = (node) => {
-    if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) && node.expression.keywordToken === ts.SyntaxKind.ImportKeyword &&
-        !NODE_IMPORT_META.has(node.name.text)) {
-      names.add(`import.meta.${node.name.text}`);
+    // import.meta only as a dot access to a field Node has: `const { env } = import.meta` reaches Vite's too.
+    if (ts.isMetaProperty(node) && node.keywordToken === ts.SyntaxKind.ImportKeyword &&
+        !(ts.isPropertyAccessExpression(node.parent) && NODE_IMPORT_META.has(node.parent.name.text))) {
+      names.add(ts.isPropertyAccessExpression(node.parent) ? `import.meta.${node.parent.name.text}` : 'import.meta');
+    }
+    // `globalThis.$fetch` is the same global.
+    if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && ['globalThis', 'window', 'self'].includes(node.expression.text) &&
+        NUXT_GLOBALS.has(node.name.text)) {
+      names.add(node.name.text);
     }
     if (ts.isIdentifier(node)) {
       const parent = node.parent;
@@ -288,8 +305,8 @@ function plainProblem(spec, target) {
 }
 
 /**
- * Every rule broken in `files` (repository-relative path -> text: every source and style file of the repository, each
- * domain's domain.json and README.md, its JSON data, and package.json), given `generated` (GENERATED and
+ * Every rule broken in `files` (repository-relative path -> text: every source, style, HTML and JSON file of the
+ * repository but package-lock.json, and each domain's README.md), given `generated` (GENERATED and
  * GENERATED_TSCONFIG -> their text).
  */
 export function checkArchitecture(files, generated) {
@@ -318,7 +335,7 @@ export function checkArchitecture(files, generated) {
     }
     if (isPlainPart(area) && SOURCE.test(path)) {
       for (const name of unresolvedNames(path, text)) {
-        if (autoNames.has(name) || NUXT_GLOBALS.has(name) || name.startsWith('import.meta.')) {
+        if (autoNames.has(name) || NUXT_GLOBALS.has(name) || name.startsWith('import.meta')) {
           violations.push({ rule: 'plain', file: path, detail: `uses ${name}, which only Nuxt or Vite provide` });
         }
       }

@@ -27,7 +27,7 @@ function walk(dir) {
 
 const repoFiles = new Map(
   walk('')
-    .filter((path) => SOURCE.test(path) || /\.(css|json)$/.test(path) || /^app\/domains\/[^/]+\/README\.md$/.test(path))
+    .filter((path) => SOURCE.test(path) || /\.(css|json|html)$/.test(path) || /^app\/domains\/[^/]+\/README\.md$/.test(path))
     .filter((path) => path !== 'package-lock.json')
     .map((path) => [path, readFileSync(join(ROOT, path), 'utf8')]),
 );
@@ -146,6 +146,11 @@ describe('the architecture check', () => {
     ["a domain's plain part reads Vite's import.meta.env", { 'app/domains/low/env.ts': 'export const key = () => import.meta.env.KEY;' }, ['plain']],
     ['a tool loads a domain file through createRequire', { 'tools/req.mjs': "import { createRequire } from 'node:module';\nconst load = createRequire(import.meta.url);\nload('../app/domains/low/rule.ts');" }, ['resolve']],
     ["a component's template is another domain's file", { 'app/domains/high/views/Tpl.vue': '<template src="../../low/ui/card.html"></template>', 'app/domains/low/ui/card.html': '<b />' }, ['public-entry']],
+    ['a component takes an asset of another domain by URL', { 'app/domains/high/views/Url.vue': '<script setup lang="ts">\nconst bg = new URL(\'../../low/ui/bg.png\', import.meta.url).href;\n</script>' }, ['public-entry']],
+    ['a script passes require around', { 'tools/alias.cjs': "const load = require;\nload('../app/domains/low/rule.ts');" }, ['resolve']],
+    ['a script calls module.require', { 'tools/mod.cjs': "module.require('../app/domains/low/rule.ts');" }, ['public-entry']],
+    ["a domain's plain part destructures import.meta", { 'app/domains/low/meta.ts': 'const { env } = import.meta;\nexport const e = () => env;' }, ['plain']],
+    ["a domain's plain part calls globalThis.$fetch", { 'app/domains/low/g.ts': 'export const get = (u: string) => globalThis.$fetch(u);' }, ['plain']],
     ['a style takes an image from another domain', { 'app/domains/high/views/Bg.vue': '<template><b /></template>\n<style>\nb { background: url("~/domains/low/ui/bg.png"); }\n</style>' }, ['public-entry']],
     ["a domain's plain part imports its own UI", { 'app/domains/low/ui-back.ts': "import { useLow } from './ui/useLow.ts';\nexport const u = useLow;" }, ['plain']],
     ["a domain's plain entry exports a component", { 'app/domains/low/index.ts': "export { rule } from './rule.ts';\nexport { default as LowPage } from './views/LowPage.vue';" }, ['plain']],

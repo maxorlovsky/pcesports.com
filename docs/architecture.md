@@ -62,15 +62,16 @@ a barrel that re-exported every view put the views and the shared code in one mo
 ## Rules (`tests/architecture/check.mjs`)
 
 - **public-entry:** from outside a domain, import only its `index.ts`, its `ui/index.ts`, or (the shell only) one of
-  its `views/*.vue`. Never a file behind them (code, data, a stylesheet), by any path (`~/`, `~~/`, `../`) or any
-  form (`import`, `import()`, `require()`, `<script src>`, `<style src>`, `<template src>`, `@import`, `url()`). Every source and style file in
-  the repository is read, but for dependencies, build output, the old apps and `experiments/`.
+  its `views/*.vue`. Never a file behind them (code, data, a stylesheet, an image), by any path (`~/`, `~~/`, `../`)
+  or any form (`import`, `import()`, `require()`, `new URL(…, import.meta.url)`, `<script src>`, `<style src>`,
+  `<template src>`, `@import`, `url()`). Every source, style, HTML and JSON file in the repository is read, but for
+  dependencies, build output, the old apps and `experiments/`.
 - **domain-dependency:** a domain imports another only if its `domain.json` lists it in `allowedDomainDependencies`,
   and those lists never form a cycle.
 - **plain:** a domain's plain part imports only what the table allows, by relative path with its extension, and uses
   none of the names Nuxt auto-imports (`useHead`, `computed`, `defineEventHandler`) without declaring them, nor Nuxt's
-  `$fetch` or any `import.meta` field Node lacks (`env`, `client`, `server`, `dev`). The
-  server, tools and tests import plain entries only.
+  `$fetch`, nor `import.meta` but for the fields Node has (`url`, `dirname`, `filename`, `resolve`). The server, tools
+  and tests import plain entries only.
 - **own-entry:** a domain never imports its own `index.ts` or `ui/index.ts`; it imports the file itself.
 - **resolve:** every import names a file, a Node built-in, a package in `package.json`, or (app code only) one of
   Nuxt's `#app`, `#imports`, `#components`. No absolute paths, no `import.meta.glob`, and no computed `import()` or
