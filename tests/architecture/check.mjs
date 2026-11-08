@@ -1,20 +1,31 @@
-// The architecture rules of docs/architecture.md, checked against the real imports of every source file, the domain
-// manifests (app/domains/<domain>/domain.json) and the auto-import lists Nuxt generates in .nuxt/.
+// The architecture rules of docs/architecture.md, checked against the real imports of every source and style file, the
+// domain manifests (app/domains/<domain>/domain.json) and what Nuxt generates in .nuxt/.
 // tests/architecture.test.mjs runs it on the repository, and on a small fixture per rule to prove the rule still bites.
 //
-// A rule fails closed: an import it can't resolve, a file in a folder it doesn't know, or an import it can't read
-// (a computed path, import.meta.glob) is a violation, never a pass.
+// A rule fails closed: an import it can't resolve, a package package.json doesn't list, a file in a folder it doesn't
+// know, or an import it can't read (a computed path, import.meta.glob) is a violation, never a pass.
+import { builtinModules } from 'node:module';
 import { posix } from 'node:path';
 import ts from 'typescript';
 
-/** Source files: what the checks read. Anything else (CSS, images, JSON, Markdown) is data. */
-export const SOURCE = /\.(vue|ts|mts|tsx|js|mjs|cjs|jsx)$/;
+/** Source files: what the checks place and read. Styles are read for their imports; everything else is data. */
+export const SOURCE = /\.(vue|ts|mts|cts|tsx|js|mjs|cjs|jsx)$/;
+const STYLE = /\.css$/;
 
-/** Folders whose files the rules place; a source file under them outside a known place breaks `layout`. */
-const PLACED_ROOTS = ['app/', 'server/', 'shared/', 'layers/'];
+/** Folders Nuxt reads code from by itself; a source file under them outside a known place breaks `layout`. */
+const PLACED_ROOTS = ['app/', 'server/', 'shared/', 'layers/', 'modules/'];
 
-/** What the plain part of a domain may not import: Vue, Nuxt and their virtual modules. */
-const FRAMEWORK = /^(vue|vue-router|nuxt|h3|nitropack|@vue\/.*|@unhead\/.*|@nuxt\/.*|#app|#app\/.*|#imports|#components|#build\/.*|#internal\/.*)$/;
+/** Nuxt's virtual modules that app code may import. */
+const NUXT_VIRTUAL = /^(#app|#app\/.+|#imports|#components)$/;
+
+/** Packages a domain's plain part may import: each must run in Node without Vue or Nuxt. None so far. */
+const PLAIN_PACKAGES = new Set();
+
+/** Node scripts that load a module by a computed path, each for a stated reason. */
+const COMPUTED_IMPORTS = new Map([
+  ['tools/og-image.mjs', "Playwright, from the factory machine's own install"],
+  ['tests/architecture.test.mjs', "each domain's plain entry, to prove Node loads it"],
+]);
 
 /** Where a file sits. Paths are repository-relative with forward slashes. */
 export function areaOf(path) {
@@ -30,11 +41,12 @@ export function areaOf(path) {
     return { kind: 'domain', domain: name, part: 'plain' };
   }
   if (path === 'app/app.vue' || path === 'app/error.vue' || /^app\/(pages|layouts)\//.test(path)) return { kind: 'shell' };
+  if (path.startsWith('app/assets/')) return { kind: 'styles' };
   if (path.startsWith('server/routes/')) return { kind: 'server' };
   if (path === 'nuxt.config.ts') return { kind: 'config' };
-  if (path.startsWith('tests/')) return { kind: 'tests' };
-  if (path.startsWith('tools/')) return { kind: 'tools' };
-  return { kind: 'other' };
+  if (PLACED_ROOTS.some((root) => path.startsWith(root))) return { kind: 'unplaced' };
+  // Tests, tools, configs and any other script: Node runs them, outside the app.
+  return { kind: 'node' };
 }
 
 const isUiPart = (area) => area.kind === 'domain' && ['ui-entry', 'ui', 'view'].includes(area.part);
@@ -44,6 +56,13 @@ const isPlainPart = (area) => area.kind === 'domain' && ['entry', 'plain'].inclu
 function scriptOf(path, text) {
   if (!path.endsWith('.vue')) return text;
   return [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
+}
+
+/** The style a file holds: a stylesheet, or a component's style blocks. */
+function styleOf(path, text) {
+  if (STYLE.test(path)) return text;
+  if (!path.endsWith('.vue')) return '';
+  return [...text.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
 }
 
 const EXTENSIONS = ['', '.ts', '.vue', '.mjs', '.js', '/index.ts', '/index.mjs', '/index.js'];
@@ -56,6 +75,7 @@ export function resolve(from, spec, files) {
   else if (spec === '~' || spec === '@') base = 'app';
   else if (spec.startsWith('#shared/')) base = `shared/${spec.slice(8)}`;
   else if (spec.startsWith('.')) base = posix.normalize(posix.join(posix.dirname(from), spec));
+  else if (spec.startsWith('/')) return `absolute:${spec}`;
   else return `pkg:${spec}`;
   // `~/domains/x/` and `../` name a folder as surely as `~/domains/x` does.
   base = base.replace(/\/+$/, '');
@@ -63,64 +83,87 @@ export function resolve(from, spec, files) {
   return base;
 }
 
-/** Styles, images and fonts: imported by path, with no source file to resolve to. */
-const ASSET = /\.(css|png|jpe?g|webp|svg|gif|ico|woff2?)$/;
+/** Images and fonts: imported by path, and not read here. Styles and JSON are, so they must exist. */
+const ASSET = /\.(png|jpe?g|webp|svg|gif|ico|woff2?)$/;
 
-/** Every static import, re-export, dynamic import, `import('…')` type and `<script src>` of a file. */
+/** `@scope/name/sub` -> `@scope/name`, `name/sub` -> `name`. */
+const packageName = (spec) => spec.split('/').slice(0, spec.startsWith('@') ? 2 : 1).join('/');
+
+/** Every import a file makes: ES imports and re-exports, `import()`, `require()`, `import('…')` types, a component's
+ *  `<script src>` and `<style src>`, and `@import` in its styles. */
 function importsOf(path, text, files) {
   const found = [];
   const add = (spec) => found.push({ spec, target: resolve(path, spec, files) });
   const opaque = (why) => found.push({ spec: why, target: 'opaque', opaque: why });
-  const source = ts.createSourceFile(path, scriptOf(path, text), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const visit = (node) => {
-    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
-      add(node.moduleSpecifier.text);
-    } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
-      const [first] = node.arguments;
-      if (first && ts.isStringLiteralLike(first)) add(first.text);
-      else opaque('a dynamic import of a computed path');
-    } else if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) &&
-        node.expression.keywordToken === ts.SyntaxKind.ImportKeyword && node.name.text.startsWith('glob')) {
-      opaque('import.meta.glob');
-    } else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteralLike(node.argument.literal)) {
-      add(node.argument.literal.text);
-    } else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) &&
-        ts.isStringLiteralLike(node.moduleReference.expression)) {
-      add(node.moduleReference.expression.text);
-    }
-    ts.forEachChild(node, visit);
+  const literalCall = (node, isCallee) => {
+    if (!isCallee) return false;
+    const [first] = node.arguments;
+    if (first && ts.isStringLiteralLike(first)) add(first.text);
+    else opaque(`a computed ${node.expression.getText()}() path`);
+    return true;
   };
-  visit(source);
-  if (path.endsWith('.vue')) for (const m of text.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+  if (SOURCE.test(path)) {
+    const source = ts.createSourceFile(path, scriptOf(path, text), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const visit = (node) => {
+      if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
+        add(node.moduleSpecifier.text);
+      } else if (ts.isCallExpression(node) &&
+          literalCall(node, node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === 'require'))) {
+        // handled
+      } else if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) &&
+          node.expression.keywordToken === ts.SyntaxKind.ImportKeyword && node.name.text.startsWith('glob')) {
+        opaque('import.meta.glob');
+      } else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteralLike(node.argument.literal)) {
+        add(node.argument.literal.text);
+      } else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) &&
+          ts.isStringLiteralLike(node.moduleReference.expression)) {
+        add(node.moduleReference.expression.text);
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+  }
+  if (path.endsWith('.vue')) {
+    for (const m of text.matchAll(/<(?:script|style)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+  }
+  for (const m of styleOf(path, text).matchAll(/@import\s+(?:url\(\s*)?["']?([^"')\s;]+)/g)) add(m[1]);
   return found;
 }
 
 /**
- * The names a file uses without declaring or importing them: in a domain's plain part, one of those that Nuxt
- * auto-imports (useHead, computed, defineEventHandler) ties the code to Nuxt as surely as an import would.
+ * The names a file uses that resolve to nothing in it (no declaration or import in scope), by TypeScript's own scope
+ * rules. In a domain's plain part, one of those that Nuxt auto-imports ties the code to Nuxt as surely as an import.
  */
-function freeNames(path, text) {
-  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const declared = new Set();
-  const used = new Set();
+function unresolvedNames(path, text) {
+  const fileName = `/check/${path}`;
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const host = ts.createCompilerHost({});
+  host.getSourceFile = (name) => (name === fileName ? source : undefined);
+  host.fileExists = (name) => name === fileName;
+  host.readFile = (name) => (name === fileName ? text : undefined);
+  const checker = ts.createProgram([fileName], { noLib: true, noResolve: true, types: [] }, host).getTypeChecker();
+  const names = new Set();
   const visit = (node) => {
     if (ts.isIdentifier(node)) {
       const parent = node.parent;
-      const isDeclaration = parent && 'name' in parent && parent.name === node &&
-        !ts.isPropertyAccessExpression(parent) && !ts.isQualifiedName(parent);
-      const isMember = parent && ((ts.isPropertyAccessExpression(parent) && parent.name === node) ||
-        (ts.isQualifiedName(parent) && parent.right === node) || (ts.isPropertyAssignment(parent) && parent.name === node) ||
-        ((ts.isBindingElement(parent) || ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) && parent.propertyName === node));
-      if (isDeclaration) declared.add(node.text);
-      else if (!isMember) used.add(node.text);
+      // Member names (`a.ref`, `{ ref: 1 }`, `interface { ref }`) name no variable.
+      const isMember = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isQualifiedName(parent) && parent.right === node) ||
+        ((ts.isPropertyAssignment(parent) || ts.isPropertySignature(parent) || ts.isPropertyDeclaration(parent) ||
+          ts.isMethodDeclaration(parent) || ts.isMethodSignature(parent) || ts.isGetAccessor(parent) || ts.isSetAccessor(parent) ||
+          ts.isEnumMember(parent)) && parent.name === node) ||
+        ((ts.isBindingElement(parent) || ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) && parent.propertyName === node);
+      const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === node
+        ? checker.getShorthandAssignmentValueSymbol(parent)
+        : checker.getSymbolAtLocation(node);
+      if (!isMember && !symbol) names.add(node.text);
     }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return [...used].filter((name) => !declared.has(name));
+  return names;
 }
 
-/** The files Nuxt writes its auto-import lists to (`nuxt prepare`, which `npm ci` runs). */
+/** What Nuxt generates (`nuxt prepare`, which `npm ci` runs): its auto-import lists, and the app's tsconfig. */
 export const GENERATED = [
   '.nuxt/components.d.ts',
   '.nuxt/imports.d.ts',
@@ -129,12 +172,42 @@ export const GENERATED = [
   '.nuxt/types/nitro-imports.d.ts',
   '.nuxt/types/shared-imports.d.ts',
 ];
+export const GENERATED_TSCONFIG = '.nuxt/tsconfig.app.json';
 
 /** The names Nuxt auto-imports anywhere, read from its generated declarations: `const useHead: typeof import(…)`. */
 function autoImportedNames(generated) {
   const names = new Set();
-  for (const text of generated.values()) for (const m of text.matchAll(/^\s*const (\w+): typeof import\(/gm)) names.add(m[1]);
+  for (const path of GENERATED) for (const m of (generated.get(path) ?? '').matchAll(/^\s*const (\w+): typeof import\(/gm)) names.add(m[1]);
   return names;
+}
+
+function checkGenerated(generated, violations) {
+  for (const path of [...GENERATED, GENERATED_TSCONFIG]) {
+    if (!generated.has(path)) violations.push({ rule: 'auto-import', file: path, detail: 'missing: run `npx nuxt prepare` (npm ci does)' });
+  }
+  // Project code is never auto-imported: Nuxt's generated lists name only packages and .nuxt itself.
+  for (const path of GENERATED) {
+    for (const m of (generated.get(path) ?? '').matchAll(/(?:import\(|from\s)\s*["']([^"']+)["']/g)) {
+      const spec = m[1];
+      const at = spec.startsWith('.') ? posix.normalize(posix.join(posix.dirname(path), spec)) : spec;
+      if ((spec.startsWith('.') || spec.startsWith('/')) && !at.includes('node_modules/') && !at.startsWith('.nuxt/')) {
+        violations.push({ rule: 'auto-import', file: path, detail: `auto-imports project code: ${spec}` });
+      }
+    }
+  }
+  // Without auto-registered components, a component used without an import must fail `npm run typecheck`.
+  const tsconfig = generated.get(GENERATED_TSCONFIG);
+  if (tsconfig !== undefined) {
+    let options;
+    try {
+      options = JSON.parse(tsconfig).vueCompilerOptions;
+    } catch {
+      options = undefined;
+    }
+    if (options?.checkUnknownComponents !== true) {
+      violations.push({ rule: 'auto-import', file: GENERATED_TSCONFIG, detail: "vueCompilerOptions.checkUnknownComponents is off (nuxt.config.ts's typescript.tsConfig)" });
+    }
+  }
 }
 
 function checkManifests(files, domains, violations) {
@@ -181,63 +254,78 @@ function checkManifests(files, domains, violations) {
   return manifests;
 }
 
+/** A package import's problem, or undefined: it must be a Node built-in, a Nuxt virtual module or in package.json. */
+function packageProblem(spec, packages, area) {
+  if (spec.startsWith('node:') || builtinModules.includes(spec)) return undefined;
+  if (spec.startsWith('#')) return NUXT_VIRTUAL.test(spec) && area.kind !== 'node' ? undefined : `${spec} is no Nuxt module the app may import`;
+  return packages.has(packageName(spec)) ? undefined : `${spec} is in no package.json dependency`;
+}
+
+/** A plain-part import's problem, or undefined: Node runs this code as it is, so no Vue, Nuxt, aliases or bare paths. */
+function plainProblem(spec, target) {
+  if (spec.startsWith('node:') || builtinModules.includes(spec)) return undefined;
+  if (target.startsWith('pkg:')) return PLAIN_PACKAGES.has(packageName(spec)) ? undefined : `${spec}: a plain part imports no package that is not in PLAIN_PACKAGES (Node runs it without Vue or Nuxt)`;
+  if (!spec.startsWith('.')) return `${spec}: a plain part imports by relative path (Node knows no ~, @ or #)`;
+  if (target.endsWith('.vue')) return `${spec}: a plain part imports no component`;
+  if (!/\.(ts|json)$/.test(spec)) return `${spec}: a plain part names the file with its extension, .ts or .json (Node resolves nothing else)`;
+  return undefined;
+}
+
 /**
- * Every rule broken in `files` (repository-relative path -> text: every file under app/, server/, shared/, layers/,
- * tests/ and tools/, plus nuxt.config.ts), given `generated` (the GENERATED paths -> their text).
+ * Every rule broken in `files` (repository-relative path -> text: every source and style file of the repository, each
+ * domain's domain.json and README.md, its JSON data, and package.json), given `generated` (GENERATED and
+ * GENERATED_TSCONFIG -> their text).
  */
 export function checkArchitecture(files, generated) {
   const violations = [];
   const paths = new Set(files.keys());
   const domains = [...new Set([...paths].map((p) => p.match(/^app\/domains\/([^/]+)\//)?.[1]).filter(Boolean))].sort();
   const manifests = checkManifests(files, domains, violations);
-
-  // Project code is never auto-imported: Nuxt's generated lists name only packages.
-  for (const path of GENERATED) {
-    const text = generated.get(path);
-    if (text === undefined) {
-      violations.push({ rule: 'auto-import', file: path, detail: 'missing: run `npx nuxt prepare` (npm ci does)' });
-      continue;
-    }
-    for (const m of text.matchAll(/(?:import\(|from\s)\s*["']([^"']+)["']/g)) {
-      const spec = m[1];
-      // Relative paths point into .nuxt itself (`../fetch`) or node_modules; anything else is the project's own.
-      const at = spec.startsWith('.') ? posix.normalize(posix.join(posix.dirname(path), spec)) : spec;
-      if ((spec.startsWith('.') || spec.startsWith('/')) && !at.includes('node_modules/') && !at.startsWith('.nuxt/')) {
-        violations.push({ rule: 'auto-import', file: path, detail: `auto-imports project code: ${spec}` });
-      }
-    }
-  }
+  checkGenerated(generated, violations);
   const autoNames = autoImportedNames(generated);
+  let packages = new Set();
+  try {
+    const manifest = JSON.parse(files.get('package.json') ?? '');
+    packages = new Set([...Object.keys(manifest.dependencies ?? {}), ...Object.keys(manifest.devDependencies ?? {})]);
+  } catch {
+    violations.push({ rule: 'resolve', file: 'package.json', detail: 'missing or not JSON: no package import can be checked' });
+  }
 
   for (const [path, text] of files) {
-    if (!SOURCE.test(path)) continue;
+    if (!SOURCE.test(path) && !STYLE.test(path)) continue;
     const area = areaOf(path);
-    if (PLACED_ROOTS.some((root) => path.startsWith(root)) && (area.kind === 'other' || area.part === 'misplaced')) {
+    if (SOURCE.test(path) && (area.kind === 'unplaced' || area.kind === 'styles' || area.part === 'misplaced')) {
       violations.push({ rule: 'layout', file: path, detail: 'a source file outside the known places (docs/architecture.md, "Where code goes")' });
     }
-    if (area.kind === 'domain' && area.part === 'plain' && !/\.(ts|mts)$/.test(path)) {
+    if (area.kind === 'domain' && area.part === 'plain' && SOURCE.test(path) && !/\.(ts|mts)$/.test(path)) {
       violations.push({ rule: 'layout', file: path, detail: "a domain's plain part is TypeScript (.ts)" });
     }
-    if (isPlainPart(area)) {
-      for (const name of freeNames(path, text)) {
+    if (isPlainPart(area) && SOURCE.test(path)) {
+      for (const name of unresolvedNames(path, text)) {
         if (autoNames.has(name)) violations.push({ rule: 'plain', file: path, detail: `uses ${name}, which only Nuxt's auto-imports provide` });
       }
     }
 
     for (const imp of importsOf(path, text, paths)) {
       const { spec, target } = imp;
-      // Node scripts (tests, tools) may compute a path, e.g. to load Playwright from its machine-wide install.
-      if (imp.opaque && ['tests', 'tools'].includes(area.kind)) continue;
       if (imp.opaque) {
-        violations.push({ rule: 'resolve', file: path, detail: `${imp.opaque}: write the path out` });
+        if (!COMPUTED_IMPORTS.has(path)) violations.push({ rule: 'resolve', file: path, detail: `${imp.opaque}: write the path out` });
         continue;
       }
-      if (!target.startsWith('pkg:') && !paths.has(target) && !ASSET.test(target)) {
+      if (target.startsWith('absolute:')) {
+        violations.push({ rule: 'resolve', file: path, detail: `${spec} is an absolute path: use ~/, ~~/ or a relative one` });
+        continue;
+      }
+      if (target.startsWith('pkg:')) {
+        const problem = packageProblem(spec, packages, area);
+        if (problem) violations.push({ rule: 'resolve', file: path, detail: problem });
+      } else if (!paths.has(target) && !ASSET.test(target)) {
         violations.push({ rule: 'resolve', file: path, detail: `${spec} names no file` });
         continue;
       }
-      if (isPlainPart(area) && ((target.startsWith('pkg:') && FRAMEWORK.test(target.slice(4))) || target.endsWith('.vue'))) {
-        violations.push({ rule: 'plain', file: path, detail: `imports ${spec}: a domain's plain part runs without Vue or Nuxt` });
+      if (isPlainPart(area)) {
+        const problem = plainProblem(spec, target);
+        if (problem) violations.push({ rule: 'plain', file: path, detail: problem });
       }
       const to = areaOf(target);
       if (to.kind !== 'domain') continue;

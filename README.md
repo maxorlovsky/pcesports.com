@@ -34,8 +34,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
   site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`), the layout,
   header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags), and the home,
   privacy and 404 pages' content. Its `README.md` lists what it owns.
-- `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed places; each
-  file renders or serves one domain's view or function.
+- `app/app.vue`, `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed
+  places; each file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
   take their colours, fonts and spacing from. The brand colours are `--color-main` `#5587e4` and `--color-secondary` `#e5dc2d`, on black.
 - `server/routes/sitemap.xml.ts`: prerendered into `sitemap.xml` at build time.

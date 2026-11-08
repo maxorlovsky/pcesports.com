@@ -18,18 +18,21 @@ automation unless a card asks for it.
 ## Domains
 
 The app is domain-modular: `app/domains/<domain>/`, today `site` only; `matches`, `vods`, `watch` and `guides` are
-planned (`docs/architecture.md` has their order and where the data job goes). `npm test` enforces:
+planned (`docs/architecture.md` has their order, where the data job goes, and every rule).
 
 - Work in the domain that owns the change; read its `README.md` and `domain.json` first. A new domain comes with its
   first code, never empty, and adds itself to the table in `docs/architecture.md`.
+- Pages, layouts, `error.vue` and server routes stay thin: they import a domain and hold no logic.
+
+`npm test` (`tests/architecture.test.mjs`) enforces the rest:
+
 - From outside a domain, import only its `index.ts` (plain TypeScript), its `ui/index.ts`, or, from a page, layout or
   `error.vue`, one of its `views/*.vue`. A domain imports another only if its `domain.json` allows it, and only a lower
   one.
-- A domain's plain part (everything but `ui/` and `views/`) never touches Vue or Nuxt, and imports with explicit `.ts`
-  extensions: Node runs it as it is, for the data job.
+- A domain's plain part (everything but `ui/` and `views/`) never touches Vue or Nuxt, and imports by relative path
+  with the `.ts` or `.json` extension: Node runs it as it is, for the data job.
 - Project code is never auto-imported (`nuxt.config.ts`): import every component and function you use, written out.
   Vue's and Nuxt's own APIs (`computed`, `useHead`, `NuxtLink`) stay auto-imported.
-- Pages, layouts, `error.vue` and server routes stay thin: they import a domain and hold no logic.
 
 ## Data rules that must never break
 
@@ -37,8 +40,9 @@ From the report and the owner's decisions; a change that bends one needs the own
 
 - **Credits:** every page that shows PandaScore data shows "Source: PandaScore" (the footer's `DATA_CREDITS` in the
   `site` domain). Any other data source comes with its own credit, as its terms say.
-- **No derived YouTube metrics:** never compute new data or metrics from YouTube API data (views, likes, lengths,
-  comments); show it as returned, or not at all.
+- **No derived YouTube metrics:** compute no metrics or derived data from YouTube API data (views, likes, lengths,
+  comments); show it as YouTube returns it, or not at all. Whether matching a VOD to its match by title counts is the
+  report's open owner decision 5, to settle before launch.
 - **30-day refresh:** YouTube API data the site stores is refreshed or deleted within 30 days, and deleted videos are
   dropped.
 - **No spoilers before the click:** before a visitor clicks through to a VOD, the site shows no score, winner, map
