@@ -49,7 +49,7 @@ function eventWords(name) {
 
 export function kind(video) {
     if (video.durationSec < MIN_VOD_SEC) return 'clip';
-    if (video.durationSec > MAX_VOD_SEC || /full show/i.test(video.title)) return 'broadcast';
+    if (video.durationSec > MAX_VOD_SEC) return 'broadcast';
     return 'vod';
 }
 

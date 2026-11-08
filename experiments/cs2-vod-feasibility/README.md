@@ -33,7 +33,7 @@ node match.js --no-manual-aliases                                           # re
 Every API response is cached in `cache/`, so a rerun costs nothing and gives the same result.
 
 - **Fresh data:** delete `cache/` (or `cache/youtube` / `cache/liquipedia`) before a run that should see new matches or uploads.
-- **Delete it when you're done:** YouTube's Developer Policies allow API data to be kept for at most 30 days.
+- **Delete `cache/` and `out/` when you're done:** both hold YouTube API data (titles, descriptions, publish times), and YouTube's Developer Policies allow it to be kept for at most 30 days.
 - `cache/` and `out/` are gitignored.
 
 ## Costs of one run

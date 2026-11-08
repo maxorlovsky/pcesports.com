@@ -106,7 +106,7 @@ YouTube (for the VOD side)
   - It starts one day earlier than "the 14 days before the run" so that PGL's event is complete.
   - It stops before 2026-11-08, the day of the run, so IEM Beijing's last two matches are out. The third-place match (NAVI vs BetBoom, 04:00 UTC) already had its VOD 2.6 h after the start. The grand final was still being played when the run started.
   - **The owner's default window gives the same result.** For the 14 days before the run (`--from 2026-10-25 --to 2026-11-08`): 61 matches, all 61 linked, 60 match Liquipedia's own link and 1 has no Liquipedia link yet, 0 wrong.
-- **"Tier-1"** means Liquipedia's S-Tier (`liquipediatier=1`), as announced on the card.
+- **"Tier-1"** means Liquipedia's S-Tier (`liquipediatier=S-Tier` in the event infobox, listed by `{{TournamentsList|tier=1}}`), as announced on the card.
 - **Events in the window:** Liquipedia's S-Tier list had two, read with `{{TournamentsList|tier=1|year=2026}}`.
   - IEM Beijing 2026 (organiser ESL, 2026-11-02 to 08): 28 matches.
   - PGL Masters Bucharest 2026 (organiser PGL, 2026-10-24 to 31): 41 matches.
@@ -161,7 +161,7 @@ Every link was then compared with the per-map VOD links that Liquipedia's editor
 - **One VOD per match** at both organisers, not one per map. Per-map videos would need a different matcher.
 - **Rematches.** 2 matches had a second qualifying video: the same pair met again within 72 h (NAVI vs Falcons at IEM, Vitality vs NAVI at PGL). "Earliest after the start" picked correctly both times. If the first meeting's VOD were missing, though, the second meeting's VOD would be linked to the first match. A production matcher should also require the video to come out before the pair's next meeting starts.
 - **The trap a naive matcher falls into.** On PGL's main channel, 12 of the 41 matches had a live-stream VOD titled after that match, e.g. `[A] G2 Esports vs. Natus Vincere - PGL Masters Bucharest 2026 - Group Stage: Opening Round`. Those videos are whole broadcast days of 7 to 12 hours. Matching titles without the VOD channel and the length limit would have produced 12 wrong links. The ESL main channel names its day streams `IEM Beijing 2026 - Day N - FULL SHOW`, so it doesn't have this problem.
-- **Stage labels aren't reliable.** ESL titled its third-place VOD `NAVI vs. BB Team - IEM Beijing 2026 -`, with the stage left empty. PGL titled Swiss rounds 3 to 5 "Playoffs". The matcher therefore never relies on the stage in a title.
+- **Stage labels aren't reliable.** ESL titled its third-place VOD `NAVI vs. BB Team - IEM Beijing 2026 -`, with the stage left empty. PGL titled the playoff-deciding Swiss matches (the high pool of rounds 3 and 4, and round 5) "Playoffs". The matcher therefore never relies on the stage in a title.
 - **Liquipedia flags aren't fully reliable either.** The match-level `finished=` flag was blank on one finished match (9z vs BetBoom). The script counts a match as played once one team has won the majority of maps, not by that flag.
 
 ### Hand-checked sample (28 matches)
@@ -213,10 +213,10 @@ The site wants people to watch on their own schedule, so here is what a VOD leak
 | Score in the title or description | **None** of the 69: titles are `A vs B - Event - Stage` at both organisers | none |
 | Winner listed first in the title | 35 of 69, so a coin flip: the order doesn't follow the result | none |
 | Thumbnail | Neutral cards with both team logos and "VS" (6 of 6 checked: 3 ESL, 3 PGL), no score | none in the sample |
-| **Map chapters in the description** | **56 of 69** list one chapter per map played, e.g. `00:00:00 Ancient Round 1`, `00:39:32 Mirage Round 1`. That shows whether a Bo3 went to 2 or 3 maps. ESL's chapters also name highlight moments ("w0nderful 3k & blindfolded kill") | high: the YouTube player shows chapters on the progress bar |
+| **Map chapters in the description** | **56 of 69** list one chapter per map played, e.g. `00:00:00 Ancient Round 1`, `00:39:32 Mirage Round 1`. That shows whether a Bo3 went to 2 or 3 maps. Both organisers' chapters also name highlight moments ("w0nderful 3k & blindfolded kill") | high: the YouTube player shows chapters on the progress bar |
 | **Video length** | Bo3 VODs that ended 2-0 run 68 to 150 min, and 2-1 ones run 116 to 181 min. One cut-off at 124 min guesses the map count right for 63 of 68 Bo3 VODs (fitted on the same sample, so slightly optimistic) | high: the length shows on every thumbnail and on the player |
 | Per-map split | Neither organiser splits by map: one video per match, so the number of videos doesn't leak anything | none |
-| Stage in the title | 20 of 69 titles have a stage word ("Quarter-final", "Semi-final", "Grand Final", plus PGL's "Playoffs" on Swiss rounds). The *existence* of `MOUZ vs. BB Team - Semi-final` tells you who won both quarter-finals | medium: it leaks other matches, not this one |
+| Stage in the title | 20 of 69 titles have a stage word ("Quarter-final", "Semi-final", "Grand Final", plus PGL's "Playoffs" on playoff-deciding Swiss matches). The *existence* of `MOUZ vs. BB Team - Semi-final` tells you who won both quarter-finals | medium: it leaks other matches, not this one |
 | Same channel's other uploads | The organiser main channels post Shorts such as "The moment NAVI were eliminated from #IEM Beijing 2026" and "Another GRAND FINAL secured for MOUZ" | medium: only if the site embeds the channel or the viewer browses it. The VOD channels themselves post only full matches |
 
 **What it means for the product:**
