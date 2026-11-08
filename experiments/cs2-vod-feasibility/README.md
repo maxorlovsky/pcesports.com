@@ -42,7 +42,7 @@ node match.js --no-manual-aliases                                           # re
 Every API response is cached in `cache/`, so a rerun gives the same result. The only calls a warm run makes are the 3 `channelSections.list` whitelist checks (3 units), which are never cached.
 
 - **Fresh data:** delete `cache/youtube` before a run that should see new uploads. Don't delete `cache/liquipedia` without the owner's go-ahead (see above).
-- **Delete `cache/` and `out/` when you're done:** both hold YouTube API data (titles, descriptions, publish times), and YouTube's Developer Policies allow it to be kept for at most 30 days.
+- **Delete `cache/` and `out/` when you're done:** both hold YouTube API data (titles, descriptions, publish times), and YouTube's Developer Policies allow it to be kept for at most 30 days. The same goes for the API data quoted in the committed report (video titles, lengths, chapter names): strip or refresh it there by 2026-12-08 if the report is kept.
 - `cache/` and `out/` are gitignored.
 
 ## Costs of one run
