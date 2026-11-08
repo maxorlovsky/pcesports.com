@@ -43,8 +43,8 @@ From the report and the owner's decisions; a change that bends one needs the own
   `site` domain). Any other data source comes with its own credit, as its terms say.
 - **No derived YouTube metrics:** compute no metrics or derived data from YouTube API data (views, likes, lengths,
   comments); show it as YouTube returns it, or not at all. Matching a VOD to its match by title is allowed (the
-  owner accepted the report's reading, decision 5). Data committed anywhere holds YouTube's ids only, never titles,
-  lengths or publish times.
+  owner accepted the report's reading, decision 5). The data job commits YouTube's ids only (video, channel), never
+  titles, lengths or publish times.
 - **30-day refresh:** YouTube API data the site stores is refreshed or deleted within 30 days, and deleted videos are
   dropped.
 - **No spoilers before the click:** before a visitor clicks through to a VOD, the site shows no score, winner, map

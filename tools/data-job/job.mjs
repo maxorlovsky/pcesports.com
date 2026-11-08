@@ -232,7 +232,7 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
 export function appendLog(stateDir, line) {
   const file = join(stateDir, 'job.log');
   const lines = existsSync(file) ? readFileSync(file, 'utf8').split('\n').filter(Boolean) : [];
-  lines.push(line);
+  lines.push(line.replace(/\s*\n\s*/g, ' '));
   writeAtomic(file, `${lines.slice(-LOG_LINES).join('\n')}\n`);
 }
 

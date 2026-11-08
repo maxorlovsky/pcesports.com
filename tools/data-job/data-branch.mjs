@@ -23,7 +23,8 @@ export function git(cwd, args, { env = {}, input } = {}) {
 
 /** Whether origin has a `data` branch; an unreachable origin is an error, never "no". */
 export function remoteHasData(cwd) {
-  const result = spawnSync('git', ['ls-remote', '--exit-code', '--heads', 'origin', DATA_BRANCH], { cwd, encoding: 'utf8' });
+  // The full ref: a bare `data` would also match `fix/data`.
+  const result = spawnSync('git', ['ls-remote', '--exit-code', 'origin', `refs/heads/${DATA_BRANCH}`], { cwd, encoding: 'utf8' });
   if (result.status === 0) return true;
   if (result.status === 2) return false;
   throw new Error(`git ls-remote origin: ${(result.stderr || result.error?.message || '').trim()}`);

@@ -108,6 +108,11 @@ test('a stored link stays while its match does; a channel the whitelist check st
   const vod = upload({ id: 'vod', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: at(START, 3) });
   assert.deepEqual(linkVods([match(1)], [vod], stored, ALL_CHANNELS).links.map((link) => link.videoId), ['kept']);
   assert.deepEqual(linkVods([match(2)], [vod], [], new Set([PGL_VODS])).links, []);
+  // A channel taken out of channels.json takes its links with it, and only the ids of a stored link are carried
+  const extra = [{ matchId: 1, videoId: 'unlisted', channelId: 'UCnotWhitelisted' }];
+  assert.deepEqual(linkVods([match(1)], [], extra, ALL_CHANNELS).links, []);
+  const padded = [{ matchId: 1, videoId: 'kept', channelId: ESL_ARCHIVES, title: 'leaked' }];
+  assert.deepEqual(linkVods([match(1)], [], padded, ALL_CHANNELS).links, [{ matchId: 1, videoId: 'kept', channelId: ESL_ARCHIVES }]);
 });
 
 test('the report lists finished matches with no VOD after 12 h and full-length uploads no match links', () => {

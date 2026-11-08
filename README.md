@@ -80,7 +80,7 @@ Each run:
 
 **Batching:** at most one publish per 30 minutes (2 minutes' slack for how long a run takes, so it is the second run
 after a publish, never the third), so at most 48 deploys a day, about 20 on an event day. A change waits
-for the first run after the gap, so a new VOD is live within about 45 minutes of the run that found it (15 for the
+for the first run after the gap, so a new VOD is live within about 45 minutes of its upload (15 for the
 poll, 30 for the gap, plus the deploy). The organisers upload their VODs hours after a match, so this costs little.
 
 **The `data` branch** holds data files only (`app/domains/<domain>/data/*.json`) as a single commit: each publish
@@ -103,7 +103,7 @@ there are uploads to read (`videos.list`), plus 1 when linked videos fall due fo
 96 x 4 = 384 units when nothing is new, 580 at most: under 6% of the 10,000-unit daily quota. `job.log` gives each run's units and the day's total (`today=`). PandaScore: 5 requests per
 run, about 20 an hour of its 1,000.
 
-**The env file**, `~/.config/pcesports/data-job.env` (or `--env-file`, or `PCESPORTS_DATA_JOB_ENV`), outside the
+**The env file**, `~/.config/pcesports/data-job.env` (or `--env <path>`, or `PCESPORTS_DATA_JOB_ENV`), outside the
 repository and `chmod 600` (the job refuses anything else):
 
 ```sh
@@ -112,11 +112,12 @@ YOUTUBE_API_KEY=...    # YouTube Data API v3
 GH_TOKEN=...           # fine-grained, this repository only: Contents read and write (the push), Actions read and write (the deploy)
 ```
 
-The file's values win over variables already in the environment. Without `GH_TOKEN`, git and gh use the machine's own
-GitHub login, which can push but can't start a workflow. The job refreshes every linked video on its first run with a
+The job stops without the file, and the file's values win over variables already in the environment. git reads
+`GH_TOKEN` through gh's credential helper (`gh auth setup-git`, set up on veilweaver2). Without `GH_TOKEN`, git and gh
+use the machine's own GitHub login, which can push but can't start a workflow. The job refreshes every linked video on its first run with a
 new state folder, since the refresh times live there.
 
-**By hand:** `node tools/data-job/run.mjs --no-push` runs anywhere and writes the data to the state folder's `out/`
+**By hand:** `node tools/data-job/run.mjs --no-push` runs on any branch of a clone and writes the data to the state folder's `out/`
 instead of publishing; `--since <date>` reads uploads and matches back to that date (a backfill, or the data for a
 check). `PCESPORTS_DATA_JOB_STATE` points it at another state folder.
 

@@ -1,5 +1,6 @@
 // The data job (README.md, "Data job"), run every 15 minutes by cron in its own clone on the factory machine:
-//   node tools/data-job/run.mjs [--no-push] [--since <date>] [--env-file <path>]
+//   node tools/data-job/run.mjs [--no-push] [--since <date>] [--env <path>]
+// (--env, not --env-file: Node acts on --env-file itself, even after the script's name)
 // Under a lock in the state folder, so two runs sharing it never overlap (a cron run and one by hand, or two clones):
 // the second one logs that it skipped and stops. With nothing changed it
 // prints nothing; problems go to stderr, and every run adds a line to job.log in the state folder.
@@ -14,7 +15,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseEnv } from 'node:util';
 import { appendLog, runJob } from './job.mjs';
@@ -89,12 +90,12 @@ if (push && !args.includes('--pulled')) {
 
 // The env file: outside the repository, readable by its owner only. Its values win over the environment's, so a
 // variable exported in the shell can't stand in for it unnoticed.
-const envFile = resolve(option('--env-file') || process.env.PCESPORTS_DATA_JOB_ENV || DEFAULT_ENV_FILE);
-if (!relative(ROOT, envFile).startsWith('..')) fail(`the env file ${envFile} is inside the repository: keep it outside`);
-if (existsSync(envFile)) {
-  if (statSync(envFile).mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
-  Object.assign(process.env, parseEnv(readFileSync(envFile, 'utf8')));
-}
+const envFile = resolve(option('--env') || process.env.PCESPORTS_DATA_JOB_ENV || DEFAULT_ENV_FILE);
+const fromRoot = relative(ROOT, envFile);
+if (fromRoot !== '..' && !fromRoot.startsWith(`..${sep}`)) fail(`the env file ${envFile} is inside the repository: keep it outside`);
+if (!existsSync(envFile)) fail(`no env file at ${envFile}: the secrets come from there only`);
+if (statSync(envFile).mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
+Object.assign(process.env, parseEnv(readFileSync(envFile, 'utf8')));
 for (const name of ['PANDASCORE_TOKEN', 'YOUTUBE_API_KEY']) if (!process.env[name]) fail(`${name} is not set (${envFile})`);
 
 let since;

@@ -90,7 +90,8 @@ test('unchanged data commits nothing; a change waits for 30 minutes after the la
   assert.equal((await runJob({ ...options, now: later(6.4) })).published.status, 'waiting');
   assert.equal(git(origin, 'rev-parse', 'data'), first);
   assert.equal(deploys.length, 1);
-  const run = await runJob({ ...options, now: later(6.5) });
+  // 29.5 minutes: a run starts a few seconds earlier in its slot than the one that published, and still publishes
+  const run = await runJob({ ...options, now: later(6 + 29.5 / 60) });
   assert.equal(run.published.status, 'pushed');
   assert.notEqual(git(origin, 'rev-parse', 'data'), first);
   assert.equal(git(origin, 'rev-list', '--count', 'data'), '1');
@@ -123,6 +124,21 @@ test('a failed videos.list loses no upload: the next run reads the same ones aga
   const second = await runJob({ ...options, now: later(8) });
   assert.deepEqual(second.errors, []);
   assert.deepEqual(JSON.parse(readFileSync(join(state, 'out', 'vods.json'), 'utf8')).vods.map((link) => link.videoId), ['vod1']);
+});
+
+test('an upload first seen live is read again until it is over, then linked', async () => {
+  const { clone, state } = scratch('live');
+  const data = world();
+  const stream = upload({ id: 'vod1', title: 'NAVI vs. Falcons - IEM Beijing 2026 - Group A', publishedAt: later(3).toISOString(), duration: 'P0D', live: 'live' });
+  data.uploads[ESL_ARCHIVES] = [stream];
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: fakeApis(data).fetch, push: false };
+  await runJob({ ...options, now: later(4) });
+  const vods = () => JSON.parse(readFileSync(join(state, 'out', 'vods.json'), 'utf8')).vods;
+  assert.deepEqual(vods(), []);
+  // Over now, and the playlist no longer lists it as new (its item time stays before this run's read window)
+  Object.assign(stream, { duration: 'PT1H45M', liveBroadcastContent: 'none' });
+  await runJob({ ...options, now: later(9) });
+  assert.deepEqual(vods().map((link) => link.videoId), ['vod1']);
 });
 
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {
@@ -216,22 +232,34 @@ test('two runs at once: the second one logs that it skipped, quietly, and publis
 
 test('the env file must live outside the repository and be readable by its owner only', () => {
   const { repo, state, env } = command('env');
+  const noFile = runCommand(repo, ['--no-push', '--env', join(dir, 'env', 'missing.env')], { PCESPORTS_DATA_JOB_STATE: state, PANDASCORE_TOKEN: 'ps-secret', YOUTUBE_API_KEY: 'yt-secret' });
+  assert.equal(noFile.status, 1);
+  assert.match(noFile.stderr, /no env file at .*: the secrets come from there only/);
+  const lookalike = join(repo, '..env');
+  writeFileSync(lookalike, 'PANDASCORE_TOKEN=ps-secret\n', { mode: 0o600 });
+  assert.match(runCommand(repo, ['--no-push', '--env', lookalike], { PCESPORTS_DATA_JOB_STATE: state }).stderr, /inside the repository/);
   const inside = join(repo, 'data-job.env');
   writeFileSync(inside, 'PANDASCORE_TOKEN=ps-secret\n', { mode: 0o600 });
-  const refused = runCommand(repo, ['--no-push', '--env-file', inside], { PCESPORTS_DATA_JOB_STATE: state });
+  const refused = runCommand(repo, ['--no-push', '--env', inside], { PCESPORTS_DATA_JOB_STATE: state });
   assert.equal(refused.status, 1);
   assert.match(refused.stderr, /inside the repository/);
   writeFileSync(env, 'PANDASCORE_TOKEN=ps-secret\nYOUTUBE_API_KEY=yt-secret\n');
   chmodSync(env, 0o644);
-  const open = runCommand(repo, ['--no-push', '--env-file', env], { PCESPORTS_DATA_JOB_STATE: state });
+  const open = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state });
   assert.equal(open.status, 1);
   assert.match(open.stderr, /readable by others: chmod 600/);
   chmodSync(env, 0o600);
   writeFileSync(env, 'PANDASCORE_TOKEN=ps-secret\n');
-  const missing = runCommand(repo, ['--no-push', '--env-file', env], { PCESPORTS_DATA_JOB_STATE: state, YOUTUBE_API_KEY: '' });
+  const missing = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state, YOUTUBE_API_KEY: '' });
   assert.equal(missing.status, 1);
   assert.match(missing.stderr, /YOUTUBE_API_KEY is not set/);
   assert.ok(!(missing.stderr + missing.stdout).includes('ps-secret'));
+  // Whatever the job prints is redacted, even its own messages
+  writeFileSync(env, 'PANDASCORE_TOKEN=ps-secret\nYOUTUBE_API_KEY=yt-secret\n');
+  const echoed = runCommand(repo, ['--no-push', '--env', env, '--since', 'ps-secret'], { PCESPORTS_DATA_JOB_STATE: state });
+  assert.equal(echoed.status, 1);
+  assert.match(echoed.stderr, /--since <PANDASCORE_TOKEN> is not a date/);
+  assert.ok(!echoed.stderr.includes('ps-secret'));
 });
 
 test('publishing runs only on master with no changes', () => {
@@ -296,6 +324,8 @@ test('pull.mjs takes no code from the data branch: anything but a domain data fi
 
 test('pull.mjs builds without data when origin has no data branch yet, and stops when origin cannot be read', () => {
   const clone = pullScratch('pull-none');
+  // A branch whose name only ends in `data` is not the data branch
+  git(clone, 'push', '-q', 'origin', 'HEAD:refs/heads/fix/data');
   const none = pull(clone);
   assert.equal(none.status, 0, none.stderr);
   assert.match(none.stdout, /No data branch on origin yet/);
