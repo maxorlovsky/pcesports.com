@@ -46,9 +46,9 @@ app reads them through that domain's entry.
 | `app/domains/<domain>/views/<Name>.vue` | what the shell renders: a page's content, a layout, the error page; one file each, each a public entry for the shell only | like `ui/` |
 | `app/domains/<domain>/domain.json` | `name` (its folder), `owns`, `allowedDomainDependencies` | |
 | `app/domains/<domain>/README.md` | what it owns, its entries and its invariants | |
-| `app/pages/`, `app/layouts/`, `app/app.vue`, `app/error.vue` | the shell: Nuxt's routes and layouts, each importing one domain view and holding no logic | domain views and entries |
+| `app/pages/`, `app/layouts/`, `app/app.vue`, `app/error.vue` | the shell: Nuxt's routes and layouts, each importing one domain view and holding no logic | domain views and entries, `app/assets/` |
 | `server/routes/` | prerendered files such as `sitemap.xml`, each a few lines over a domain's plain entry | domain plain entries |
-| `app/assets/css/` | the global stylesheet (`nuxt.config.ts`'s `css`): the design tokens and base styles, which every domain's components read as CSS variables. It stays in the shell because no single domain owns it | |
+| `app/assets/css/` | the global stylesheet (`nuxt.config.ts`'s `css`): the design tokens and base styles, which every domain's components read as CSS variables. It stays in the shell because no single domain owns it | other stylesheets in `app/assets/`, packages |
 | `public/` | files copied as they are | |
 | `tools/`, `tests/`, any other script | Node scripts and tests | domain plain entries |
 
@@ -66,6 +66,9 @@ a barrel that re-exported every view put the views and the shared code in one mo
   or any form (`import`, `import()`, `require()`, `new URL(…, import.meta.url)`, `<script src>`, `<style src>`,
   `<template src>`, `@import`, `url()`). Every source, style, HTML and JSON file in the repository is read, but for
   dependencies, build output, the old apps and `experiments/`.
+- **reach:** outside the domains, the import column above is the whole list: a domain imports no file outside
+  `app/domains/` (so no tool, page or helper can carry it up the stack or bring it Vue), the app imports no Node
+  script, and Node scripts import no app code but the domains' plain entries.
 - **domain-dependency:** a domain imports another only if its `domain.json` lists it in `allowedDomainDependencies`,
   and those lists never form a cycle.
 - **plain:** a domain's plain part imports only what the table allows, by relative path with its extension, and uses

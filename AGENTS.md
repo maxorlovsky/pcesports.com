@@ -28,7 +28,7 @@ planned (`docs/architecture.md` has their order, where the data job goes, and ev
 
 - From outside a domain, import only its `index.ts` (plain TypeScript), its `ui/index.ts`, or, from a page, layout or
   `error.vue`, one of its `views/*.vue`. A domain imports another only if its `domain.json` allows it, and only a lower
-  one.
+  one, and it imports no project file outside `app/domains/`.
 - A domain's plain part (everything but `ui/` and `views/`) never touches Vue or Nuxt, and imports by relative path
   with the `.ts` or `.json` extension: Node runs it as it is, for the data job.
 - Project code is never auto-imported (`nuxt.config.ts`): import every component and function you use, written out.

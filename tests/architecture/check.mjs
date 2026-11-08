@@ -55,6 +55,21 @@ export function areaOf(path) {
   return { kind: 'node' };
 }
 
+/**
+ * Which project files each area may import, outside the domains (whose own rules follow). A domain reaches nothing but
+ * domains, so no file elsewhere can carry it up the stack or bring Vue into its plain part; the app reaches no Node
+ * script; Node scripts reach no app code but the domains' plain entries.
+ */
+const REACH = {
+  domain: ['domain'],
+  shell: ['domain', 'styles'],
+  server: ['domain'],
+  styles: ['styles'],
+  config: ['node'],
+  node: ['node', 'domain'],
+  unplaced: [],
+};
+
 const isUiPart = (area) => area.kind === 'domain' && ['ui-entry', 'ui', 'view'].includes(area.part);
 const isPlainPart = (area) => area.kind === 'domain' && ['entry', 'plain'].includes(area.part);
 
@@ -363,6 +378,9 @@ export function checkArchitecture(files, generated) {
         if (problem) violations.push({ rule: 'plain', file: path, detail: problem });
       }
       const to = areaOf(target);
+      if (!target.startsWith('pkg:') && !(REACH[area.kind] ?? []).includes(to.kind)) {
+        violations.push({ rule: 'reach', file: path, detail: `imports ${spec}: ${area.kind} code imports no ${to.kind} file (docs/architecture.md, "Where code goes")` });
+      }
       if (to.kind !== 'domain') continue;
 
       if (area.kind === 'domain' && area.domain === to.domain) {
