@@ -13,7 +13,7 @@
 // The secrets come from the env file, never from the repository: PANDASCORE_TOKEN, YOUTUBE_API_KEY and GH_TOKEN (for
 // the push and the deploy; without it, git and gh use the machine's own GitHub login).
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
+import { accessSync, constants, mkdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -64,15 +64,26 @@ function git(...gitArgs) {
 // when that run ends, even when it is killed.
 if (!process.env[LOCKED]) {
   if (spawnSync('flock', ['--version'], { stdio: 'ignore' }).error) fail('flock (util-linux) is not on PATH');
-  mkdirSync(STATE_DIR, { recursive: true, mode: 0o700 });
+  try {
+    mkdirSync(STATE_DIR, { recursive: true, mode: 0o700 });
+    accessSync(STATE_DIR, constants.W_OK | constants.X_OK);
+  } catch (error) {
+    fail(`the state folder ${STATE_DIR} can't be used: ${error.code ?? error.message}`);
+  }
   const locked = spawnSync('flock', ['--nonblock', '--conflict-exit-code', String(BUSY), LOCK, process.execPath, fileURLToPath(import.meta.url), ...args], {
     stdio: 'inherit',
     env: { ...process.env, [LOCKED]: '1' },
   });
   if (locked.status === BUSY) {
-    appendLog(STATE_DIR, `${new Date().toISOString()} skipped: another run holds the lock`);
+    try {
+      appendLog(STATE_DIR, `${new Date().toISOString()} skipped: another run holds the lock`);
+    } catch (error) {
+      fail(`skipped (another run holds the lock), and job.log can't be written: ${error.code ?? error.message}`);
+    }
     process.exit(0);
   }
+  // flock's own failures (it printed why; the job never ran) use the sysexits codes, 64 to 78; the job exits 0 or 1
+  if (locked.status >= 64 && locked.status <= 78) fail(`flock failed on ${LOCK} (exit ${locked.status})`);
   process.exit(locked.status ?? 1);
 }
 
@@ -94,11 +105,19 @@ if (push && !process.env[PULLED]) {
 // secrets: one it leaves out is unset, whatever the shell exports, so git and gh fall back to the machine's own
 // GitHub login rather than a token from the environment.
 const envFile = resolve(option('--env') || process.env.PCESPORTS_DATA_JOB_ENV || DEFAULT_ENV_FILE);
-if (!existsSync(envFile)) fail(`no env file at ${envFile}: the secrets come from there only`);
-const fromRoot = relative(realpathSync(ROOT), realpathSync(envFile));
-if (fromRoot !== '..' && !fromRoot.startsWith(`..${sep}`)) fail(`the env file ${envFile} is inside the repository: keep it outside`);
-if (statSync(envFile).mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
-const fromFile = parseEnv(readFileSync(envFile, 'utf8'));
+const root = realpathSync(ROOT);
+let fromFile;
+try {
+  const stat = statSync(envFile);
+  const fromRoot = relative(root, realpathSync(envFile));
+  if (fromRoot !== '..' && !fromRoot.startsWith(`..${sep}`)) fail(`the env file ${envFile} is inside the repository: keep it outside`);
+  if (!stat.isFile()) fail(`the env file ${envFile} is not a file`);
+  if (stat.mode & 0o077) fail(`${envFile} is readable by others: chmod 600 it`);
+  fromFile = parseEnv(readFileSync(envFile, 'utf8'));
+} catch (error) {
+  if (error.code === 'ENOENT') fail(`no env file at ${envFile}: the secrets come from there only`);
+  fail(`the env file ${envFile} can't be read: ${error.code ?? error.message}`);
+}
 for (const name of [...SECRETS, 'GITHUB_TOKEN']) {
   if (SECRETS.includes(name) && fromFile[name]) process.env[name] = fromFile[name];
   else delete process.env[name];

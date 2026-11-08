@@ -413,6 +413,38 @@ test('the env file must live outside the repository and be readable by its owner
   assert.equal(open.status, 1);
   assert.match(open.stderr, /readable by others: chmod 600/);
   chmodSync(env, 0o600);
+  // A folder or a file it can't read stops it with its own message, never a stack trace
+  const folder = join(dir, 'env', 'folder.env');
+  mkdirSync(folder, { mode: 0o700 });
+  const notFile = runCommand(repo, ['--no-push', '--env', folder], { PCESPORTS_DATA_JOB_STATE: state });
+  assert.equal(notFile.status, 1);
+  assert.match(notFile.stderr, /^Data job stopped: the env file .* is not a file\n$/);
+  // So does a state folder it can't use, before anything else runs
+  const stateFile = join(dir, 'env', 'state-file');
+  writeFileSync(stateFile, '');
+  const badState = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: stateFile });
+  assert.equal(badState.status, 1);
+  assert.match(badState.stderr, /^Data job stopped: the state folder .* can't be used: EEXIST\n$/);
+  // The mode checks mean nothing to root
+  if (process.getuid?.() !== 0) {
+    const readOnly = join(dir, 'env', 'read-only-state');
+    mkdirSync(readOnly, { mode: 0o500 });
+    const noWrite = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: readOnly });
+    assert.equal(noWrite.status, 1);
+    assert.match(noWrite.stderr, /^Data job stopped: the state folder .* can't be used: EACCES\n$/);
+    chmodSync(env, 0o000);
+    const locked = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state });
+    assert.equal(locked.status, 1);
+    assert.match(locked.stderr, /^Data job stopped: the env file .* can't be read: EACCES\n$/);
+    chmodSync(env, 0o600);
+    // flock failing on its own (a lock file it can't open) is a stop too, with flock's own reason first
+    const lockState = join(dir, 'env', 'lock-state');
+    mkdirSync(lockState, { mode: 0o700 });
+    writeFileSync(join(lockState, 'run.lock'), '', { mode: 0o000 });
+    const noLock = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: lockState });
+    assert.equal(noLock.status, 1);
+    assert.match(noLock.stderr, /flock: cannot open lock file[^\n]*\nData job stopped: flock failed on .* \(exit 66\)\n$/);
+  }
   writeFileSync(env, 'PANDASCORE_TOKEN=ps-secret\n');
   // A secret the file leaves out is not taken from the shell
   const missing = runCommand(repo, ['--no-push', '--env', env], { PCESPORTS_DATA_JOB_STATE: state, YOUTUBE_API_KEY: 'shell-yt-key' });
