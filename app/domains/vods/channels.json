@@ -1,0 +1,12 @@
+{
+  "_comment": "The whitelist: only these channels are read. organizers = the organiser names of app/domains/matches/leagues.json. role vods = the channel holding full-match VODs, the only role the job polls (StarLadder keeps them on its main channel); streams = an organiser's main channel that only vouches for its VOD channel. uploads = the channel's uploads playlist (channels.list, contentDetails.relatedPlaylists.uploads). linkedFrom = the organiser's own page that links the channel; featuredBy = the whitelisted channel whose own featured-channels section lists this one, which the job re-checks daily. verified = when and how, docs/feasibility/cs2-data-and-vods.md section 2.",
+  "channels": [
+    { "id": "UCPq2ETz4aAGo2Z-8JisDPIA", "name": "ESL Counter-Strike", "handle": "@eslcs", "organizers": ["ESL"], "role": "streams", "uploads": "UUPq2ETz4aAGo2Z-8JisDPIA", "linkedFrom": "https://pro.eslgaming.com/tour/cs/", "verified": "2026-11-08" },
+    { "id": "UCXQexglLCaJyTImYLmSO9Ng", "name": "ESL Archives", "handle": "@eslarchives", "organizers": ["ESL"], "role": "vods", "uploads": "UUXQexglLCaJyTImYLmSO9Ng", "linkedFrom": "https://pro.eslgaming.com/tour/cs/", "featuredBy": "UCPq2ETz4aAGo2Z-8JisDPIA", "verified": "2026-11-08" },
+    { "id": "UC5jpxDZx4yoBo324pMQ91Ww", "name": "PGL", "handle": "@pgl", "organizers": ["PGL"], "role": "streams", "uploads": "UU5jpxDZx4yoBo324pMQ91Ww", "linkedFrom": "https://www.pglesports.com/", "verified": "2026-11-08" },
+    { "id": "UC5nM2vKeikf6_gk45gyM87g", "name": "PGL VOD's", "handle": "@pgl_vods", "organizers": ["PGL"], "role": "vods", "uploads": "UU5nM2vKeikf6_gk45gyM87g", "featuredBy": "UC5jpxDZx4yoBo324pMQ91Ww", "verified": "2026-11-08" },
+    { "id": "UC9k--dE_UE0Faxzgb_DDkYQ", "name": "BLAST Premier", "handle": "@blastpremier", "organizers": ["BLAST"], "role": "streams", "uploads": "UU9k--dE_UE0Faxzgb_DDkYQ", "linkedFrom": "https://blastpremier.com/", "verified": "2026-11-08" },
+    { "id": "UC9O88aQhTVtoxVrCVQalTLQ", "name": "BLAST Premier VOD Archive", "handle": "@blastpremiervod", "organizers": ["BLAST"], "role": "vods", "uploads": "UU9O88aQhTVtoxVrCVQalTLQ", "featuredBy": "UC9k--dE_UE0Faxzgb_DDkYQ", "verified": "2026-11-08" },
+    { "id": "UCx1kGL8Qox1jEiHRMsnn9Ag", "name": "StarLadder CS2", "handle": "@starladder_cs", "organizers": ["StarLadder"], "role": "vods", "uploads": "UUx1kGL8Qox1jEiHRMsnn9Ag", "linkedFrom": "https://starladder.com/en/", "verified": "2026-11-08" }
+  ]
+}

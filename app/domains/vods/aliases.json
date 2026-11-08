@@ -1,0 +1,7 @@
+{
+  "_comment": "Spellings organisers use in VOD titles that PandaScore's names, acronyms and slugs don't produce. Keys are PandaScore team slugs. The job's report lists unmatched uploads: add the spelling here.",
+  "aliases": {
+    "parivision": ["PVISION"],
+    "mibr": ["MIBR.LOS"]
+  }
+}

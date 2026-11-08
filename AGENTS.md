@@ -13,11 +13,12 @@ site, left as they are.
 
 Work goes into `dev` through a pull request. The owner merges `dev` into `master`, and every push to `master` deploys
 (`.github/workflows/ci.yml`). Never push to `dev` or `master`, never deploy, and add no version bump or release
-automation unless a card asks for it.
+automation unless a card asks for it. The `data` branch is the data job's alone (`README.md`, "Data job"): data
+files only, one commit, never merged; agents never push to it.
 
 ## Domains
 
-The app is domain-modular: `app/domains/<domain>/`, today `site` only; `matches`, `vods`, `watch` and `guides` are
+The app is domain-modular: `app/domains/<domain>/`, today `site`, `matches` and `vods`; `watch` and `guides` are
 planned (`docs/architecture.md` has their order, where the data job goes, and every rule).
 
 - Work in the domain that owns the change; read its `README.md` and `domain.json` first. A new domain comes with its
@@ -41,8 +42,9 @@ From the report and the owner's decisions; a change that bends one needs the own
 - **Credits:** every page that shows PandaScore data shows "Source: PandaScore" (the footer's `DATA_CREDITS` in the
   `site` domain). Any other data source comes with its own credit, as its terms say.
 - **No derived YouTube metrics:** compute no metrics or derived data from YouTube API data (views, likes, lengths,
-  comments); show it as YouTube returns it, or not at all. Whether matching a VOD to its match by title counts is the
-  report's open owner decision 5, to settle before launch.
+  comments); show it as YouTube returns it, or not at all. Matching a VOD to its match by title is allowed (the
+  owner accepted the report's reading, decision 5). The data job commits YouTube's ids only (video, channel), never
+  titles, lengths or publish times.
 - **30-day refresh:** YouTube API data the site stores is refreshed or deleted within 30 days, and deleted videos are
   dropped.
 - **No spoilers before the click:** before a visitor clicks through to a VOD, the site shows no score, winner, map

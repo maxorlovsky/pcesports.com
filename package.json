@@ -23,7 +23,8 @@
     "check:build": "node tools/check-build.mjs .output/public",
     "check": "npm run lint && npm run typecheck && npm test && npm run generate && npm run check:build",
     "nginx:test": "sh tools/nginx/test.sh",
-    "deploy": "node tools/deploy/deploy.mjs"
+    "deploy": "node tools/deploy/deploy.mjs",
+    "data-job": "node tools/data-job/run.mjs"
   },
   "pre-commit": [
     "lint"
