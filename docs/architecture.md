@@ -64,7 +64,8 @@ a barrel that re-exported every view put the views and the shared code in one mo
 - **public-entry:** from outside a domain, import only its `index.ts`, its `ui/index.ts`, or (the shell only) one of
   its `views/*.vue`. Never a file behind them (code, data, a stylesheet, an image), by any path (`~/`, `~~/`, `../`)
   or any form (`import`, `import()`, `require()`, `new URL(…, import.meta.url)`, `<script src>`, `<style src>`,
-  `<template src>`, `@import`, `url()`). Every source, style, HTML and JSON file in the repository is read, but for
+  `<template src>`, a template's asset URLs as Vue's compiler reads them (`<img src>`, `srcset`, `poster`), `@import`,
+  `url()`). Every source, style, HTML and JSON file in the repository is read, but for
   dependencies, build output, the old apps and `experiments/`.
 - **reach:** outside the domains, the import column above is the whole list: a domain imports no file outside
   `app/domains/` (so no tool, page or helper can carry it up the stack or bring it Vue), the app imports no Node

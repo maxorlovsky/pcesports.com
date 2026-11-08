@@ -7,6 +7,7 @@
 import { builtinModules } from 'node:module';
 import { posix } from 'node:path';
 import ts from 'typescript';
+import { compileTemplate, parse as parseSfc } from 'vue/compiler-sfc';
 
 /** Source files: what the checks place and read. Styles are read for their imports; everything else is data. */
 export const SOURCE = /\.(vue|ts|mts|cts|tsx|js|mjs|cjs|jsx)$/;
@@ -105,14 +106,30 @@ export function resolve(from, spec, files) {
 }
 
 /** Images and fonts: imported by path, and not read here. Styles and JSON are, so they must exist. */
-const ASSET = /\.(png|jpe?g|webp|svg|gif|ico|woff2?)$/;
+const ASSET = /\.(png|jpe?g|webp|avif|svg|gif|ico|woff2?|mp4|webm|mp3|ogg)$/;
+
+/**
+ * The asset URLs a component's template turns into imports (`<img src>`, `srcset`, `<video poster>`, `<source src>`,
+ * `<use href>`…), read from Vue's own compiler so the list is Vue's. Vue drops the `~/` of `~/x`; `@/x` is the same
+ * path in Nuxt, and it keeps it.
+ */
+function templateAssets(path, text) {
+  const { descriptor, errors } = parseSfc(text, { filename: path });
+  if (errors.length) return { failed: `the component does not parse: ${errors[0].message}` };
+  const template = descriptor.template;
+  if (!template || template.src) return { specs: [] };
+  const source = template.content.replace(/(=\s*["'])~~\//g, '$1@@/').replace(/(=\s*["'])~\//g, '$1@/');
+  const compiled = compileTemplate({ source, filename: path, id: 'check' });
+  if (compiled.errors.length) return { failed: `the template does not compile: ${compiled.errors[0]}` };
+  return { specs: [...compiled.code.matchAll(/^import _imports_\d+ from ['"]([^'"]+)['"]/gm)].map((m) => m[1]) };
+}
 
 /** `@scope/name/sub` -> `@scope/name`, `name/sub` -> `name`. */
 const packageName = (spec) => spec.split('/').slice(0, spec.startsWith('@') ? 2 : 1).join('/');
 
 /** Every import a file makes: ES imports and re-exports, `import()`, `require()` (and `module.require()`),
  *  `new URL('…', import.meta.url)`, `import('…')` types, a component's `<script src>`, `<style src>` and
- *  `<template src>`, and `@import` and `url()` in its styles. A `require` or `createRequire` passed around is opaque. */
+ *  `<template src>`, the asset URLs of its template, and `@import` and `url()` in its styles. A `require` or `createRequire` passed around is opaque. */
 function importsOf(path, text, files) {
   const found = [];
   const add = (spec) => found.push({ spec, target: resolve(path, spec, files) });
@@ -157,6 +174,9 @@ function importsOf(path, text, files) {
   }
   if (path.endsWith('.vue')) {
     for (const m of text.matchAll(/<(?:script|style|template)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+    const assets = templateAssets(path, text);
+    if (assets.failed) opaque(assets.failed);
+    else assets.specs.forEach(add);
   }
   const style = styleOf(path, text).replace(/\/\*[\s\S]*?\*\//g, '');
   for (const m of style.matchAll(/@import\s+["']([^"']+)["']/g)) add(m[1]);
