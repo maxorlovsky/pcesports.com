@@ -63,8 +63,13 @@ The site's CS2 data (PandaScore's tier-1 matches and the organisers' official VO
 clone of its own on master, `~/pcesports-data`, never the factory's checkout. The rules it applies are the `matches` and
 `vods` domains' (their `README.md`); the sources, terms and quota are in `docs/feasibility/cs2-data-and-vods.md`.
 
-The job's clone is a plain one, and the factory user's crontab holds its line (`node`, `git`, `gh` and `flock` are
-in `/usr/bin`, on the crontab's PATH):
+The job's clone is a plain one (`-b master`: the repository's default branch is `dev`):
+
+```
+git clone -b master https://github.com/maxorlovsky/pcesports.com.git ~/pcesports-data
+```
+
+The factory user's crontab holds its line (`node`, `git`, `gh` and `flock` are in `/usr/bin`, on the crontab's PATH):
 
 ```
 */15 * * * * cd "$HOME/pcesports-data" && node tools/data-job/run.mjs >> "$HOME/pcesports-data-job.log" 2>&1
