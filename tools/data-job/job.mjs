@@ -119,8 +119,8 @@ async function pollUploads(youtube, state, channels, now, since, errors) {
 }
 
 /**
- * Runs the job once. `push` publishes the data branch and `deploy` (called after a push, and again on later runs until
- * it succeeds) starts the deploy; without `push` the files go to the state folder's `out/` only. Returns what happened;
+ * Runs the job once. `push` publishes the data branch and `deploy` starts the deploy: after a push, or for a data
+ * commit on origin this state never saw, and again on later runs until it succeeds; without `push` the files go to the state folder's `out/` only. Returns what happened;
  * `errors` are problems the run carried on through.
  */
 export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch = globalThis.fetch, since, push = false, deploy, redact = (text) => text }) {
@@ -206,8 +206,9 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
     }
     if (published.status === 'pushed') state.deployPending = published.commit;
     // A data commit this state never saw (a push that landed before its error, or another clone's) owes a deploy too;
-    // a refused push leaves the branch where it was, and owes none.
-    else if (base && state.knownData && base !== state.knownData) state.deployPending ??= base;
+    // a refused push leaves the branch where it was, and owes none. A new state folder owes one for what it finds,
+    // which also covers a deploy its lost predecessor still owed.
+    else if (base && base !== state.knownData) state.deployPending ??= base;
     state.knownData = published.status === 'pushed' ? published.commit : base;
     if (state.deployPending) {
       try {

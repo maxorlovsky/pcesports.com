@@ -228,6 +228,23 @@ test('a data commit the run did not make (a push that landed before its error) s
   assert.equal(deploys, 2, 'and only once');
 });
 
+test('the first push landing before its error still gets its deploy', async () => {
+  const { clone, origin, state } = scratch('first-landed');
+  let deploys = 0;
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: fakeApis(world()).fetch, push: true, deploy: async () => deploys++ };
+  // A stale lock makes the local ref update after the push fail: the commit is on origin, the run sees an error
+  const lock = join(clone, '.git', 'refs', 'remotes', 'origin', 'data.lock');
+  mkdirSync(join(lock, '..'), { recursive: true });
+  writeFileSync(lock, '');
+  const first = await runJob({ ...options, now: later(6) });
+  assert.equal(first.published.status, 'push failed');
+  assert.doesNotThrow(() => git(origin, 'rev-parse', 'data'));
+  assert.equal(deploys, 0);
+  rmSync(lock);
+  await runJob({ ...options, now: later(6.25) });
+  assert.equal(deploys, 1);
+});
+
 test('a failed deploy start is tried again on the next run, even with nothing new to publish', async () => {
   const { clone, state } = scratch('deploy-retry');
   const apis = fakeApis(world());
