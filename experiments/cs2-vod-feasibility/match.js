@@ -149,7 +149,7 @@ export async function matchAll() {
         manualAliases: useManual,
         unusedVodUploads: unusedVodUploads.length,
         medianUploadDelayH: median(results.filter((r) => r.vod).map((r) => r.vod.delayH)),
-        maxUploadDelayH: Math.max(...results.filter((r) => r.vod).map((r) => r.vod.delayH)),
+        maxUploadDelayH: maximum(results.filter((r) => r.vod).map((r) => r.vod.delayH)),
         spoilers: spoilerSummary(results),
         byEvent: Object.fromEntries([...new Set(results.map((r) => r.event))].map((e) => [e, {
             matches: n((r) => r.event === e), matched: n((r) => r.event === e && r.vod),
@@ -181,6 +181,8 @@ function spoilerSummary(results) {
         lengthGuessesMapCount: `${best.correct}/${two.length + three.length} Bo3 VODs (cut-off ${best.cutMin} min)`,
     };
 }
+
+const maximum = (xs) => (xs.length ? Math.max(...xs) : null);
 
 const median = (xs) => {
     if (!xs.length) return null;

@@ -5,6 +5,7 @@ import { fetchMatches } from './fetch-matches.js';
 import { fetchVods } from './fetch-vods.js';
 import { stats } from './lib/liquipedia.js';
 import { quota } from './lib/youtube.js';
+import { matchAll, writeResults } from './match.js';
 
 const w = runWindow(process.argv.slice(2));
 console.log(`Window ${w.from.toISOString().slice(0, 10)} .. ${w.to.toISOString().slice(0, 10)} (exclusive)`);
@@ -14,8 +15,6 @@ console.log(`Liquipedia: ${matches.events.length} S-Tier events, ${matches.match
 const vods = await fetchVods(w);
 await writeJson('videos.json', vods);
 console.log(`YouTube: ${vods.videos.length} uploads from ${vods.channels.length} channels, ${quota.units} quota units (${JSON.stringify(quota.calls)}, cache hits ${quota.cacheHits})`);
-await import('./match.js').then(async ({ matchAll, writeResults }) => {
-    const data = await matchAll();
-    await writeResults(data);
-    console.log(JSON.stringify(data.summary, null, 2));
-});
+const data = await matchAll();
+await writeResults(data);
+console.log(JSON.stringify(data.summary, null, 2));

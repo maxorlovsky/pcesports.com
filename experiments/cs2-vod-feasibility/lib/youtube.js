@@ -43,9 +43,11 @@ export async function channel(id) {
 }
 
 /**
- * Uploads newer than `since`, newest first. The uploads playlist is ordered by publish date, so
- * paging stops at the first page that reaches back past `since`. Pages are cached per page token,
- * which makes a rerun reproducible; delete cache/youtube to read fresh uploads.
+ * Uploads newer than `since`. The uploads playlist runs newest first, except that a scheduled
+ * stream or premiere can sit out of date order near the top (seen on @eslcs: a stream created
+ * 10 days earlier between that day's uploads). So an old item is skipped, not a stop signal, and
+ * paging stops only when a page's last item is older than `since`. Pages are cached per page
+ * token, which makes a rerun reproducible; delete cache/youtube to read fresh uploads.
  */
 export async function uploadsSince(playlistId, since) {
     const out = [];
@@ -54,14 +56,14 @@ export async function uploadsSince(playlistId, since) {
         const params = { part: 'snippet,contentDetails', playlistId, maxResults: '50' };
         if (pageToken) params.pageToken = pageToken;
         const json = await get('playlistItems', params);
-        let reachedEnd = false;
+        let lastIsOld = false;
         for (const item of json.items) {
             const publishedAt = item.contentDetails.videoPublishedAt || item.snippet.publishedAt;
-            if (new Date(publishedAt) < since) { reachedEnd = true; continue; }
-            out.push({ id: item.contentDetails.videoId, publishedAt });
+            lastIsOld = new Date(publishedAt) < since;
+            if (!lastIsOld) out.push({ id: item.contentDetails.videoId, publishedAt });
         }
         pageToken = json.nextPageToken;
-        if (reachedEnd || !pageToken) return out;
+        if (lastIsOld || !pageToken) return out;
     }
 }
 
