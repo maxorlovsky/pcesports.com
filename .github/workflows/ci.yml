@@ -17,7 +17,8 @@ on:
 permissions:
   contents: read
 
-# A newer push to the same pull request cancels the run it replaces; pushes to master queue instead
+# A newer push to the same pull request cancels the run it replaces. Pushes to master never cancel a running deploy;
+# GitHub keeps only the newest one waiting, which deploys the newest master anyway
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -56,8 +57,8 @@ jobs:
       - name: npm run check:build
         run: npm run check:build
 
-      # npm run nginx:test needs the /etc/nginx/snippets the vhost includes, which a runner lacks: it runs on the
-      # factory machine before each pull request instead
+      # npm run nginx:test needs the /etc/nginx/snippets the vhost includes, which a runner lacks: run it on the
+      # factory machine before a pull request (README.md, "Checks")
 
       - name: Check that the working tree is unchanged
         run: |

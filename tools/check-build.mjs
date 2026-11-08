@@ -15,7 +15,7 @@ export const PAGES = [
   { file: '404.html', path: null, text: 'This page is not here' },
 ];
 /** What the old site had and the new one must not: the deleted Twitter account, the LoL background, the icon font. */
-const BANNED = [/twitter\.com\/pcesports/i, /icomoon/i, /bg\.jpg/i, /fonts\.googleapis\.com/i];
+const BANNED = [/(twitter|x)\.com\/pcesports/i, /icomoon/i, /bg\.jpg/i, /fonts\.googleapis\.com/i];
 
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {

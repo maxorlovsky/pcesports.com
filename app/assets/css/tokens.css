@@ -1,6 +1,6 @@
 /*
  * Design tokens: the site's colours, fonts, type sizes, spacing and radii. Components take these from here rather
- * than repeating a value, so a later card restyles the site in one place.
+ * than repeating a value, so the site is restyled in one place.
  */
 :root {
   /* Brand */

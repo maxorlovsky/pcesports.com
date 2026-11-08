@@ -17,8 +17,8 @@ npm run preview     # serve that build locally
 
 ## Checks
 
-Run them all before a pull request with `npm run check`; CI runs the same on every pull request into master
-(`.github/workflows/ci.yml`), except the nginx one.
+Run them all before a pull request: `npm run check`, then `npm run nginx:test`. CI runs the same on every pull
+request into master (`.github/workflows/ci.yml`), except the nginx one.
 
 | Command | What it checks |
 |---|---|

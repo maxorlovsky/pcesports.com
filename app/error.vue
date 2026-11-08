@@ -6,7 +6,7 @@ const notFound = computed(() => props.error.statusCode === 404);
 
 usePageSeo({
   title: notFound.value ? 'Page not found' : 'Something went wrong',
-  description: 'This page does not exist on PCesports.',
+  description: notFound.value ? 'This page does not exist on PCesports.' : 'Something went wrong on PCesports.',
   path: '/404',
   noindex: true,
 });

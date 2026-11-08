@@ -125,6 +125,7 @@ if ! grep -q '^HTTP/1.1 301' "$work_dir/headers" || grep -q "$(printf '\r')Set-C
   failures=$((failures + 1))
 fi
 check https $www /index.html 301 "$canon/"
+check https $www '/index.html?a=1' 301 "$canon/?a=1"
 # Not found
 check https $www /no-such-page 404 'This page is not here'
 check https $www /404 404

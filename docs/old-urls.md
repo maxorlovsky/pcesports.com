@@ -9,7 +9,7 @@ nginx does it, in `tools/nginx/old-urls.conf`, which `tools/nginx/nginx.prod.con
   (`http://web.archive.org/cdx/search/cdx?url=pcesports.com/*&output=json&fl=original,statuscode,timestamp,mimetype&collapse=urlkey`).
   That gave 2,107 distinct paths, with the query strings dropped. They are all in [`old-urls.csv`](old-urls.csv), with
   the date each was first captured.
-- **Google Search Console** was not used: no export was added to the card. Its list of URLs that still get clicks or
+- **Google Search Console** was not used: no export of it was available. Its list of URLs that still get clicks or
   links would show which old pages still bring visitors. Add those here, and to `old-urls.conf` if they need a line.
 
 The site has had four lives: the 2014-2016 tournament platform (`/en/...`, `/ru/...`, `/web/static/...`), the
