@@ -1,0 +1,11 @@
+{
+  "name": "site",
+  "owns": [
+    "the site's address, name and contact, and the sitemap",
+    "the data credits the footer shows",
+    "the layout: header, footer, skip link",
+    "every page's title, description, canonical URL and Open Graph tags (usePageSeo)",
+    "the home page's content, the privacy page and the error page"
+  ],
+  "allowedDomainDependencies": []
+}
