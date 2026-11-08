@@ -41,7 +41,7 @@ All terms were read on 2026-11-08 from each source's own pages (Liquipedia's als
 | Abios (now Kambi) | Calendars, results, brackets [A1] | - | 3 requests per s [A1] | Sales contact | Not published | Not found | - | Commercial, sales-only |
 | Strafe | - | - | No API found | - | - | **Forbidden:** "not for any commercial use" [ST1] | - | **Ruled out** |
 
-The script uses only the Liquipedia MediaWiki API and the YouTube Data API. No source whose terms forbid scraping or commercial use was touched by it.
+The script uses only the Liquipedia MediaWiki API, the PandaScore API and the YouTube Data API. No source whose terms forbid scraping or commercial use was touched by it.
 
 ### Quotes
 
