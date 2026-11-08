@@ -1,0 +1,10 @@
+{
+  "name": "matches",
+  "owns": [
+    "CS2 fixtures and results from PandaScore's free plan: the client and the stored match record",
+    "the site's tier rule: PandaScore tier s or a, from a league leagues.json maps to a known organiser",
+    "how each run's fetch merges into the stored list, and how long a match stays (30 days after its start)",
+    "the matches data file the data job commits to the data branch (data/matches.json)"
+  ],
+  "allowedDomainDependencies": ["site"]
+}

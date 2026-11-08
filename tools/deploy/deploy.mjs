@@ -1,9 +1,9 @@
 // The production deploy (README.md, "Deploy"), run in the live clone on master, whatever its folder:
 //   node tools/deploy/deploy.mjs [--dry-run]   (npm run deploy, npm run deploy -- --dry-run)
 // It refuses another branch, a checkout with changes and a second deploy while one runs. It pulls master
-// (fast-forward only) and runs the deploy it pulled, installs with npm ci, builds the static site, checks the build,
-// then points `site` (what nginx serves, tools/nginx/nginx.prod.conf) at it in one step, keeping the releases before
-// it to go back to. --dry-run checks the same and prints the steps without running them.
+// (fast-forward only) and runs the deploy it pulled, fetches the data branch's files, installs with npm ci, builds the
+// static site, checks the build, then points `site` (what nginx serves, tools/nginx/nginx.prod.conf) at it in one
+// step, keeping the releases before it to go back to. --dry-run checks the same and prints the steps without running them.
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, lstatSync, readdirSync, readFileSync, readlinkSync, renameSync, rmSync, symlinkSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
@@ -109,6 +109,9 @@ if (existsSync(release)) fail(`${release} is there already`);
 
 // No tests here: they ran on the change's pull request (.github/workflows/ci.yml), and this server serves other
 // sites too. The build check stays: it is what stops a broken page from going live.
+// The newest data first, from the data branch: whether a push to master or the data job started this deploy, it builds
+// master's code with origin's data as it is now, never older data and never code from that branch.
+run('node', ['tools/data-job/pull.mjs']);
 run('npm', ['ci']);
 run('npm', ['run', 'generate']);
 run('node', ['tools/check-build.mjs', relative(ROOT, BUILD)]);

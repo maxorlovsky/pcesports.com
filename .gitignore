@@ -11,6 +11,9 @@ dist
 /site.next
 /.releases
 /.deploy.lock
+# The data branch's files, which tools/data-job/pull.mjs puts there for a build, and the data job's lock
+/app/domains/*/data/
+/.data-job.lock
 # Local copies of the old apps, kept out of git
 frontend-react
 old-vuejs

@@ -1,0 +1,11 @@
+{
+  "name": "vods",
+  "owns": [
+    "the whitelist of the organisers' official YouTube channels (channels.json) and its daily re-check",
+    "reading the VOD channels' uploads through their uploads playlists, never search.list",
+    "matching a VOD to its match, with the team aliases (aliases.json) and the rematch guard",
+    "YouTube's 30-day rule: the weekly refresh that drops deleted videos, and how long uploads are kept locally",
+    "the VOD links data file the data job commits to the data branch (data/vods.json): YouTube's ids only"
+  ],
+  "allowedDomainDependencies": ["site", "matches"]
+}
