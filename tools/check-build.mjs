@@ -44,13 +44,14 @@ export function checkBuild(dir) {
     if (!title) problem(`${file}: no <title>`);
     if (!attr(html, /<meta name="description" content="([^"]+)"/)) problem(`${file}: no meta description`);
     // The content is in the HTML, not built by a script: what a reader with JavaScript off and a crawler see
-    if (!html.replace(/<[^>]+>/g, '').replace(/&#39;|&#x27;/g, '\'').includes(text)) problem(`${file}: "${text}" is not in its HTML`);
+    const visible = html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '');
+    if (!visible.replace(/&#39;|&#x27;/g, '\'').includes(text)) problem(`${file}: "${text}" is not in its HTML`);
     for (const property of ['og:title', 'og:description', 'og:image', 'og:type']) {
       if (!attr(html, new RegExp(`<meta property="${property}" content="([^"]+)"`))) problem(`${file}: no ${property}`);
     }
     const canonical = attr(html, /<link rel="canonical" href="([^"]+)"/);
     if (path) {
-      const expected = path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+      const expected = `${SITE_URL}${path}`;
       if (canonical !== expected) problem(`${file}: canonical is ${canonical ?? 'missing'}, expected ${expected}`);
       if (attr(html, /<meta property="og:url" content="([^"]+)"/) !== expected) problem(`${file}: og:url is not ${expected}`);
       if (/<meta name="robots" content="[^"]*noindex/.test(html)) problem(`${file}: noindex on an indexable page`);
@@ -64,7 +65,7 @@ export function checkBuild(dir) {
   if (!existsSync(sitemapFile)) problem('sitemap.xml is missing');
   else {
     const listed = [...readFileSync(sitemapFile, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]).sort();
-    const expected = PAGES.filter((page) => page.path).map((page) => (page.path === '/' ? `${SITE_URL}/` : `${SITE_URL}${page.path}`)).sort();
+    const expected = PAGES.filter((page) => page.path).map((page) => `${SITE_URL}${page.path}`).sort();
     if (JSON.stringify(listed) !== JSON.stringify(expected)) problem(`sitemap.xml lists ${listed.join(', ') || 'nothing'}, expected ${expected.join(', ')}`);
   }
   const robotsFile = join(dir, 'robots.txt');

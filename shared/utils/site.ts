@@ -10,7 +10,7 @@ export const SITEMAP_PATHS = ['/', '/privacy'];
 /** Credits the footer shows for the data the pages use, e.g. `{ label: 'Source: PandaScore', url: 'https://pandascore.co' }`. */
 export const DATA_CREDITS: { label: string; url: string }[] = [];
 
-/** `/privacy` -> `https://www.pcesports.com/privacy`. */
+/** `/privacy` -> `https://www.pcesports.com/privacy`, `/` -> `https://www.pcesports.com/`. */
 export function absoluteUrl(path: string): string {
-  return path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+  return `${SITE_URL}${path}`;
 }

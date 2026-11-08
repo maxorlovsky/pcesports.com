@@ -10,7 +10,7 @@ const SITE = 'https://www.pcesports.com';
 let dir;
 
 function page({ title = 'A page', path, body, noindex = false }) {
-  const url = path === '/' ? `${SITE}/` : `${SITE}${path}`;
+  const url = `${SITE}${path}`;
   return `<!DOCTYPE html><html><head><title>${title}</title><meta name="description" content="About it">`
     + (path ? `<link rel="canonical" href="${url}"><meta property="og:url" content="${url}">` : '')
     + (noindex ? '<meta name="robots" content="noindex">' : '')
@@ -48,6 +48,7 @@ test('a whole build passes', () => {
 const broken = [
   ['a missing page', { 'privacy.html': null }, /privacy\.html is missing/],
   ['content built by a script only', { 'index.html': page({ path: '/', body: '<div id="app"></div>' }) }, /"What should I watch\?" is not in its HTML/],
+  ['content only in an inline script', { 'index.html': page({ path: '/', body: '<script>window.data = "What should I watch?"</script>' }) }, /"What should I watch\?" is not in its HTML/],
   ['a wrong canonical', { 'privacy.html': page({ path: '/privacy/', body: 'What we collect' }) }, /canonical is .*\/privacy\/, expected/],
   ['a page without a title', { 'index.html': page({ path: '/', body: 'What should I watch?' }).replace(/<title>.*<\/title>/, '') }, /index\.html: no <title>/],
   ['an indexable 404 page', { '404.html': page({ body: 'This page is not here' }) }, /the 404 page is not noindex/],

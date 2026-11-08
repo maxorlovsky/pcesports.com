@@ -19,7 +19,7 @@
   position: sticky;
   top: 0;
   z-index: 5;
-  background: rgba(0, 0, 0, 0.82);
+  background: var(--color-header-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
 }

@@ -15,7 +15,6 @@ usePageSeo({
 <template>
   <NuxtLayout>
     <div class="container error-page">
-      <p class="code" aria-hidden="true">{{ error.statusCode }}</p>
       <h1>{{ notFound ? 'This page is not here' : 'Something went wrong' }}</h1>
       <p class="text">
         {{ notFound
@@ -31,14 +30,6 @@ usePageSeo({
 .error-page {
   padding-block: var(--space-8);
   text-align: center;
-}
-
-.code {
-  margin-bottom: var(--space-2);
-  color: var(--color-secondary);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  line-height: 1;
 }
 
 .text {

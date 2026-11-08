@@ -20,22 +20,23 @@ React page and a 200, so none of them ever told a search engine it was gone.
 ## The rule
 
 - A URL whose topic lives on in a page of the new site gets a **301** there. Today that is the home page, the future
-  "What should I watch?": the event listings and the old homes, tournament lists and live-stream lists.
+  "What should I watch?" for CS2: the old event listing, its Counter-Strike listing and the old home pages.
 - A URL whose content is gone for good gets a **410 Gone**, so search engines drop it instead of retrying it as they
   do a 404. The 404 page is its body, so a visitor still sees a page with a link home. There is no blanket redirect
-  to the home page: a single 2018 Hearthstone cup or a user profile redirected home would be a soft 404 to Google.
+  to the home page: a single 2018 Hearthstone cup, a user profile or the Overwatch listing redirected to a CS2 page
+  would be a soft 404 to Google. The other games' listings can move to their own pages when the site covers those
+  games again.
 - Anything else gets the normal **404**. That covers the files bots probe for (feeds, `ads.txt`, `manifest.json`,
   `/.well-known/...`), which never held content here.
 
 | Old URLs | Paths | Era | Answer |
 |---|---|---|---|
-| `/events`, `/events/` | 1 | 2019-2024 | 301 to `/` |
-| `/events/<game>` for the 8 games listed (counter-strike, dota, hearthstone, heroes-of-the-storm, league-of-legends, overwatch, rocket-league, smite) | 8 | 2019-2024 | 301 to `/` |
-| `/en`, `/ru`, `/en/tournaments`, `/en/streams/...` | 11 | 2014-2016 | 301 to `/` |
-| `/events/<game>/<event>`, `/events/<id>` | 1,378 | 2019-2024 | 410 |
+| `/events`, `/events/counter-strike` (with or without a trailing slash) | 2 | 2019-2024 | 301 to `/` |
+| `/en`, `/ru` (the old home pages) | 1 | 2014 | 301 to `/` |
+| `/events/<game>` for the other 7 games, `/events/<game>/<event>`, `/events/<id>` | 1,385 | 2019-2024 | 410 |
 | `/user/<name>` | 302 | 2019-2024 | 410 |
 | `/article/...`, `/blog/...` | 51 | 2017-2023 | 410 |
-| every other `/en/...` and `/ru/...` (members, teams, boards, blogs, news, game pages) | 125 | 2014-2016 | 410 |
+| every other `/en/...` and `/ru/...` (tournaments, streams, members, teams, boards, blogs, news, game pages) | 135 | 2014-2016 | 410 |
 | `/web/...`, `/dist/...`, `/assets/...` (old sites' files) | 205 | 2014-2024 | 410 |
 | `/api/...`, `/wp-api/...`, `/images/...` (the old backend at api.pcesports.com, which nginx proxied to) | 1 | 2021 | 410 |
 | `/`, `/favicon.ico`, `/robots.txt`, `/sitemap.xml` | 4 | | 200, the new files |

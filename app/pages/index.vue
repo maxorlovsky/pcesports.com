@@ -73,7 +73,7 @@ const promises = [
   margin-bottom: var(--space-5);
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-border-strong);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
@@ -114,7 +114,7 @@ const promises = [
 
 .badge {
   padding: var(--space-1) var(--space-3);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--color-secondary);
   color: var(--color-bg);
   font-size: var(--font-size-xs);

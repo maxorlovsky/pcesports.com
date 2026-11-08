@@ -62,7 +62,6 @@ http {
 CONF
 
 echo '== nginx -t'
-# nginx >= 1.25.1 warns that `listen ... http2` is deprecated; production's own config uses it, so it stays
 "$nginx_bin" -t -e stderr -p "$work_dir" -c "$work_dir/conf/nginx.conf" 2>&1 | sed "s#$work_dir#<tmp>#g"
 "$nginx_bin" -t -q -e stderr -p "$work_dir" -c "$work_dir/conf/nginx.conf" 2>/dev/null
 
@@ -80,7 +79,8 @@ failures=0
 check() {
   port=$https_port
   [ "$1" = http ] && port=$http_port
-  out=$(curl -sk -o "$work_dir/body" -w '%{http_code} %{redirect_url}' --resolve "$2:$port:127.0.0.1" "$1://$2:$port$3")
+  # A response curl refuses (a broken header) counts as status 000, a failure, rather than stopping the script
+  out=$(curl -sk -o "$work_dir/body" -w '%{http_code} %{redirect_url}' --resolve "$2:$port:127.0.0.1" "$1://$2:$port$3") || out="${out:-000 }"
   code=${out%% *}
   location=${out#* }
   ok=1
@@ -114,10 +114,22 @@ check https $www /og.png 200
 # One address per page
 check https $www /privacy/ 301 "$canon/privacy"
 check https $www /privacy.html 301 "$canon/privacy"
+check https $www '/privacy.html?a=1' 301 "$canon/privacy?a=1"
+# A carriage return in the address stays escaped in the redirect, never a header of its own. curl's redirect_url
+# escapes it either way, so the raw HTTP/1.1 headers are read too
+check https $www '/a%0dSet-Cookie:%20x=1.html' 301 "$canon/a%0DSet-Cookie:%20x=1"
+: > "$work_dir/headers"
+curl --http1.1 -sk -o /dev/null -D "$work_dir/headers" --resolve "$www:$https_port:127.0.0.1" "https://$www:$https_port/a%0dSet-Cookie:%20x=1.html" || true
+if ! grep -q '^HTTP/1.1 301' "$work_dir/headers" || grep -q "$(printf '\r')Set-Cookie" "$work_dir/headers"; then
+  echo 'FAIL /a%0dSet-Cookie:%20x=1.html puts a raw carriage return in its Location header'
+  failures=$((failures + 1))
+fi
 check https $www /index.html 301 "$canon/"
 # Not found
 check https $www /no-such-page 404 'This page is not here'
 check https $www /404 404
+check https $www /200 404
+check https $www /index 404
 check https $www /404.html 404
 check https $www /200.html 404
 check https $www /_nuxt/no-such-file.js 404
@@ -125,12 +137,13 @@ check https $www /_nuxt/no-such-file.js 404
 check https $www /events 301 "$canon/"
 check https $www /events/ 301 "$canon/"
 check https $www /events/counter-strike 301 "$canon/"
-check https $www /events/league-of-legends/ 301 "$canon/"
+check https $www /events/counter-strike/ 301 "$canon/"
 check https $www /en 301 "$canon/"
 check https $www /en/ 301 "$canon/"
 check https $www /ru 301 "$canon/"
-check https $www /en/tournaments 301 "$canon/"
-check https $www /en/streams/1 301 "$canon/"
+check https $www /events/league-of-legends/ 410
+check https $www /en/tournaments 410
+check https $www /en/streams/1 410
 # Old URLs gone for good, with the 404 page as their body
 check https $www /events/counter-strike/1234-some-cup 410 'This page is not here'
 check https $www /events/yEUAMbM 410
@@ -166,9 +179,9 @@ if [ -n "${OLD_URLS:-}" ]; then
   echo "Answers for $OLD_URLS written to $OLD_URLS.answers.csv"
 fi
 
-if grep -v -e 'http2' -e 'ssl_stapling' "$work_dir/error.log" | grep -q .; then
+if grep -v -e 'ssl_stapling' "$work_dir/error.log" | grep -q .; then
   echo '== nginx error log'
-  grep -v -e 'http2' -e 'ssl_stapling' "$work_dir/error.log" | sed "s#$work_dir#<tmp>#g"
+  grep -v -e 'ssl_stapling' "$work_dir/error.log" | sed "s#$work_dir#<tmp>#g"
 fi
 if [ "$failures" -gt 0 ]; then
   echo "$failures URL check(s) failed"

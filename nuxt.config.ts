@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', href: '/favicon.ico', sizes: '16x16' }],
     },
   },
-  // The pages' content is plain HTML and CSS; the Vue runtime only takes over links once loaded.
+  // Each page's component styles go into its HTML, so it renders without waiting for a stylesheet request
   features: { inlineStyles: true },
   nitro: {
     prerender: {

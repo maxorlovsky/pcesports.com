@@ -56,8 +56,8 @@ jobs:
       - name: npm run check:build
         run: npm run check:build
 
-      # npm run nginx:test needs this server's /etc/nginx/snippets, which a runner lacks: it runs on the factory
-      # machine before each pull request instead
+      # npm run nginx:test needs the /etc/nginx/snippets the vhost includes, which a runner lacks: it runs on the
+      # factory machine before each pull request instead
 
       - name: Check that the working tree is unchanged
         run: |

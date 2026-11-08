@@ -71,12 +71,25 @@ if (branch !== BRANCH) fail(`deploy from ${BRANCH} only, and this checkout is on
 const changes = git('status', '--porcelain');
 if (changes) fail(`the checkout has changes, which would ship unreviewed:\n${changes}`);
 
-// One deploy at a time: two would share node_modules and .output. A lock whose process is gone (a deploy stopped
-// with Ctrl-C) is taken over. The deploy run again after the pull holds its caller's.
+// One deploy at a time: two would share node_modules and .output. The lock file is created only if it isn't there
+// (`wx`), so of two deploys started together one gets it. A lock whose process is gone (a deploy stopped with Ctrl-C)
+// is taken over. The deploy run again after the pull holds its caller's.
+function lock() {
+  try {
+    writeFileSync(LOCK, String(process.pid), { flag: 'wx' });
+    return true;
+  } catch (error) {
+    if (error.code !== 'EEXIST') throw error;
+    return false;
+  }
+}
 if (!dryRun && !flags.includes('--pulled')) {
-  const holder = existsSync(LOCK) ? Number(readFileSync(LOCK, 'utf8')) : 0;
-  if (holder && running(holder)) fail(`another deploy is running (process ${holder}): wait for it`);
-  writeFileSync(LOCK, String(process.pid));
+  if (!lock()) {
+    const holder = Number(readFileSync(LOCK, 'utf8'));
+    if (holder && running(holder)) fail(`another deploy is running (process ${holder}): wait for it`);
+    rmSync(LOCK, { force: true });
+    if (!lock()) fail('another deploy took the lock just now: wait for it');
+  }
   process.on('exit', () => rmSync(LOCK, { force: true }));
 }
 

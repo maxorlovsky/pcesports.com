@@ -26,14 +26,14 @@ Run them all before a pull request with `npm run check`; CI runs the same on eve
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
 | `npm test` | `tests/`: the build check and the deploy script, with Node's test runner |
 | `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, and nothing of the old site (`tools/check-build.mjs`) |
-| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and this server's `/etc/nginx/snippets`, so it runs on the factory machine, not in CI |
+| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are
 
 - `app/`: the Nuxt app. `pages/` (home, privacy), `error.vue` (the 404 page), `layouts/default.vue` (header and
   footer), `composables/usePageSeo.ts` (every page's title, description, canonical URL and Open Graph tags).
-- `app/assets/css/tokens.css`: the design tokens (colours, type, spacing) as CSS variables. Components use these and
-  never hard-code a value. The brand colours are `--color-main` `#5587e4` and `--color-secondary` `#e5dc2d`, on black.
+- `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
+  take their colours, fonts and spacing from. The brand colours are `--color-main` `#5587e4` and `--color-secondary` `#e5dc2d`, on black.
 - `shared/utils/site.ts`: the site's address (`https://www.pcesports.com`, the canonical host), the sitemap's pages,
   the footer's data credits and the contact address.
 - `server/routes/sitemap.xml.ts`: prerendered into `sitemap.xml` at build time.
