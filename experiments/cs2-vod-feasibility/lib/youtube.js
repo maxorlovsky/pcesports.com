@@ -45,10 +45,13 @@ export async function channel(id) {
 /**
  * Uploads newer than `since`. The uploads playlist runs newest first, except that a scheduled
  * stream or premiere can sit out of date order near the top (seen on @eslcs: a stream created
- * 10 days earlier between that day's uploads). So an old item is skipped, not a stop signal, and
- * paging stops only when a page's last item is older than `since`. Pages are cached per page
- * token, which makes a rerun reproducible; delete cache/youtube to read fresh uploads.
+ * 10 days earlier between that day's uploads). So old items are skipped, and paging stops only
+ * when the last STOP_TAIL items of a page are all older than `since`: one stray item can't end it,
+ * wherever on the page it sits. Pages are cached per page token, which makes a rerun
+ * reproducible; delete cache/youtube to read fresh uploads.
  */
+const STOP_TAIL = 3;
+
 export async function uploadsSince(playlistId, since) {
     const out = [];
     let pageToken;
@@ -56,14 +59,15 @@ export async function uploadsSince(playlistId, since) {
         const params = { part: 'snippet,contentDetails', playlistId, maxResults: '50' };
         if (pageToken) params.pageToken = pageToken;
         const json = await get('playlistItems', params);
-        let lastIsOld = false;
-        for (const item of json.items) {
+        const old = json.items.map((item) => {
             const publishedAt = item.contentDetails.videoPublishedAt || item.snippet.publishedAt;
-            lastIsOld = new Date(publishedAt) < since;
-            if (!lastIsOld) out.push({ id: item.contentDetails.videoId, publishedAt });
-        }
+            const isOld = new Date(publishedAt) < since;
+            if (!isOld) out.push({ id: item.contentDetails.videoId, publishedAt });
+            return isOld;
+        });
+        const tail = old.slice(-STOP_TAIL);
         pageToken = json.nextPageToken;
-        if (lastIsOld || !pageToken) return out;
+        if ((tail.length && tail.every(Boolean)) || !pageToken) return out;
     }
 }
 
