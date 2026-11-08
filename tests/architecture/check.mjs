@@ -81,7 +81,7 @@ function sfcOf(path, text) {
 }
 
 /** The script a file holds: itself, or a component's script blocks. */
-function scriptOf(path, text, sfc) {
+function scriptOf(text, sfc) {
   if (!sfc) return text;
   return [sfc.descriptor.script, sfc.descriptor.scriptSetup].filter(Boolean).map((block) => block.content).join('\n');
 }
@@ -131,7 +131,7 @@ function templateAssets(path, { descriptor }) {
 const packageName = (spec) => spec.split('/').slice(0, spec.startsWith('@') ? 2 : 1).join('/');
 
 /** Every import a file makes: ES imports and re-exports, `import()`, `require()` (and `module.require()`),
- *  `new URL('…', import.meta.url)`, `import('…')` types, a component's `<script src>`, `<style src>` and
+ *  `new URL('…', import.meta.url)`, `import('…')` types, a component's `<script src>`, `<style src>`, a custom block's src,
  *  the asset URLs of its template, and `@import` and `url()` in its styles. A `<template src>` is opaque. A `require` or `createRequire` passed around is opaque. */
 function importsOf(path, text, files) {
   const found = [];
@@ -150,7 +150,7 @@ function importsOf(path, text, files) {
     return found;
   }
   if (SOURCE.test(path)) {
-    const source = ts.createSourceFile(path, scriptOf(path, text, sfc), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const source = ts.createSourceFile(path, scriptOf(text, sfc), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
     const visit = (node) => {
       if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)) {
         add(node.moduleSpecifier.text);
@@ -181,8 +181,9 @@ function importsOf(path, text, files) {
     visit(source);
   }
   if (sfc) {
-    const { script, scriptSetup, styles, template } = sfc.descriptor;
-    for (const block of [script, scriptSetup, ...styles]) if (block?.src) add(block.src);
+    const { script, scriptSetup, styles, customBlocks, template } = sfc.descriptor;
+    // Vite's Vue plugin loads a custom block's src (<i18n src>) too, whether or not a plugin handles the block.
+    for (const block of [script, scriptSetup, ...styles, ...customBlocks]) if (block?.src) add(block.src);
     // An external template's own asset URLs would go unread: the template stays in the component.
     if (template?.src) opaque('a <template src>, whose asset URLs the check cannot read');
     const assets = templateAssets(path, sfc);
@@ -390,7 +391,7 @@ export function checkArchitecture(files, generated) {
     for (const imp of importsOf(path, text, paths)) {
       const { spec, target } = imp;
       if (imp.opaque) {
-        if (!COMPUTED_IMPORTS.has(path)) violations.push({ rule: 'resolve', file: path, detail: `${imp.opaque}: write the path out` });
+        if (!COMPUTED_IMPORTS.has(path)) violations.push({ rule: 'resolve', file: path, detail: `${imp.opaque}: the check can't read it` });
         continue;
       }
       if (target.startsWith('absolute:')) {
