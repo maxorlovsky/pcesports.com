@@ -12,18 +12,23 @@ const ROOT = join(import.meta.dirname, '..');
 /** Not the project's code: dependencies, build output, the old apps (git-ignored) and the report's experiments. */
 const SKIP = new Set(['.git', 'node_modules', '.nuxt', '.output', '.data', 'dist', 'site', 'site.next', '.releases', 'experiments', 'frontend-react', 'old-vuejs']);
 
+/** Links the walk can't follow without leaving the tree: each is a test failure, since Nuxt follows them. */
+const links = [];
+
 function walk(dir) {
   return readdirSync(join(ROOT, dir), { withFileTypes: true }).flatMap((entry) => {
     const path = dir ? posix.join(dir, entry.name) : entry.name;
-    if (entry.isDirectory()) return SKIP.has(path) ? [] : walk(path);
+    if (SKIP.has(path)) return [];
+    if (entry.isSymbolicLink()) links.push(path);
+    if (entry.isDirectory()) return walk(path);
     return entry.isFile() ? [path] : [];
   });
 }
 
 const repoFiles = new Map(
   walk('')
-    .filter((path) => SOURCE.test(path) || path.endsWith('.css') || path === 'package.json' ||
-      /^app\/domains\/[^/]+\/(.+\.json|README\.md)$/.test(path))
+    .filter((path) => SOURCE.test(path) || /\.(css|json)$/.test(path) || /^app\/domains\/[^/]+\/README\.md$/.test(path))
+    .filter((path) => path !== 'package-lock.json')
     .map((path) => [path, readFileSync(join(ROOT, path), 'utf8')]),
 );
 const repoGenerated = new Map([...GENERATED, GENERATED_TSCONFIG].filter((path) => existsSync(join(ROOT, path)))
@@ -33,6 +38,10 @@ const domains = [...new Set([...repoFiles.keys()].map((path) => path.match(/^app
 describe('the repository', () => {
   test('keeps every architecture rule', () => {
     assert.deepEqual(checkArchitecture(repoFiles, repoGenerated), []);
+  });
+
+  test('holds no symbolic link the check would not read', () => {
+    assert.deepEqual(links, []);
   });
 
   // The data job runs in Node, outside Nuxt: each domain's plain entry must load there as it is.
@@ -132,6 +141,12 @@ describe('the architecture check', () => {
     ["a domain's plain part uses an auto-imported name an interface also has", { 'app/domains/low/r.ts': 'interface R { ref: string }\nexport const r = (x: R) => ref(x.ref);' }, ['plain']],
     ["a domain's plain part uses an auto-imported name an object key also has", { 'app/domains/low/h.ts': 'const keys = { useHead: 1 };\nexport const h = () => useHead({ title: String(keys.useHead) });' }, ['plain']],
     ["a domain's plain part uses an auto-imported name another function declares", { 'app/domains/low/s.ts': 'function local() { const ref = 1; return ref; }\nexport const s = () => ref(local());' }, ['plain']],
+    ["a domain's plain part calls Nuxt's $fetch", { 'app/domains/low/client.ts': 'export const getJson = (url: string) => $fetch(url);' }, ['plain']],
+    ["a domain's plain part reads Nuxt's import.meta.client", { 'app/domains/low/where.ts': 'export const inBrowser = () => import.meta.client;' }, ['plain']],
+    ["a domain's plain part reads Vite's import.meta.env", { 'app/domains/low/env.ts': 'export const key = () => import.meta.env.KEY;' }, ['plain']],
+    ['a tool loads a domain file through createRequire', { 'tools/req.mjs': "import { createRequire } from 'node:module';\nconst load = createRequire(import.meta.url);\nload('../app/domains/low/rule.ts');" }, ['resolve']],
+    ["a component's template is another domain's file", { 'app/domains/high/views/Tpl.vue': '<template src="../../low/ui/card.html"></template>', 'app/domains/low/ui/card.html': '<b />' }, ['public-entry']],
+    ['a style takes an image from another domain', { 'app/domains/high/views/Bg.vue': '<template><b /></template>\n<style>\nb { background: url("~/domains/low/ui/bg.png"); }\n</style>' }, ['public-entry']],
     ["a domain's plain part imports its own UI", { 'app/domains/low/ui-back.ts': "import { useLow } from './ui/useLow.ts';\nexport const u = useLow;" }, ['plain']],
     ["a domain's plain entry exports a component", { 'app/domains/low/index.ts': "export { rule } from './rule.ts';\nexport { default as LowPage } from './views/LowPage.vue';" }, ['plain']],
     ["the server imports a domain's UI entry", { 'server/routes/ui.ts': "import { useLow } from '~~/app/domains/low/ui';\nexport default defineEventHandler(() => useLow());" }, ['plain']],

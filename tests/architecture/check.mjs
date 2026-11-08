@@ -21,6 +21,12 @@ const NUXT_VIRTUAL = /^(#app|#app\/.+|#imports|#components)$/;
 /** Packages a domain's plain part may import: each must run in Node without Vue or Nuxt. None so far. */
 const PLAIN_PACKAGES = new Set();
 
+/** Globals Nuxt and Nitro declare outside the auto-import lists (.nuxt/fetch.d.ts). Node has none of them. */
+const NUXT_GLOBALS = new Set(['$fetch']);
+
+/** The `import.meta` fields Node itself provides; Vite's and Nuxt's (`env`, `client`, `server`, `dev`…) it lacks. */
+const NODE_IMPORT_META = new Set(['url', 'dirname', 'filename', 'resolve']);
+
 /** Node scripts that load a module by a computed path, each for a stated reason. */
 const COMPUTED_IMPORTS = new Map([
   ['tools/og-image.mjs', "Playwright, from the factory machine's own install"],
@@ -110,6 +116,9 @@ function importsOf(path, text, files) {
       } else if (ts.isCallExpression(node) &&
           literalCall(node, node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === 'require'))) {
         // handled
+      } else if (ts.isIdentifier(node) && node.text === 'createRequire') {
+        // A require() under another name loads what it is given; read it as a computed import.
+        opaque('createRequire');
       } else if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) &&
           node.expression.keywordToken === ts.SyntaxKind.ImportKeyword && node.name.text.startsWith('glob')) {
         opaque('import.meta.glob');
@@ -124,9 +133,12 @@ function importsOf(path, text, files) {
     visit(source);
   }
   if (path.endsWith('.vue')) {
-    for (const m of text.matchAll(/<(?:script|style)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
+    for (const m of text.matchAll(/<(?:script|style|template)\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/g)) add(m[1]);
   }
-  for (const m of styleOf(path, text).matchAll(/@import\s+(?:url\(\s*)?["']?([^"')\s;]+)/g)) add(m[1]);
+  const style = styleOf(path, text);
+  for (const m of style.matchAll(/@import\s+["']([^"']+)["']/g)) add(m[1]);
+  // url(): every file a style reaches, but public/'s own (`/logo.png`), data: and remote ones.
+  for (const m of style.matchAll(/url\(\s*["']?([^"')\s]+)/g)) if (!/^(\/|data:|https?:|#)/.test(m[1])) add(m[1]);
   return found;
 }
 
@@ -144,6 +156,10 @@ function unresolvedNames(path, text) {
   const checker = ts.createProgram([fileName], { noLib: true, noResolve: true, types: [] }, host).getTypeChecker();
   const names = new Set();
   const visit = (node) => {
+    if (ts.isPropertyAccessExpression(node) && ts.isMetaProperty(node.expression) && node.expression.keywordToken === ts.SyntaxKind.ImportKeyword &&
+        !NODE_IMPORT_META.has(node.name.text)) {
+      names.add(`import.meta.${node.name.text}`);
+    }
     if (ts.isIdentifier(node)) {
       const parent = node.parent;
       // Member names (`a.ref`, `{ ref: 1 }`, `interface { ref }`) name no variable.
@@ -302,7 +318,9 @@ export function checkArchitecture(files, generated) {
     }
     if (isPlainPart(area) && SOURCE.test(path)) {
       for (const name of unresolvedNames(path, text)) {
-        if (autoNames.has(name)) violations.push({ rule: 'plain', file: path, detail: `uses ${name}, which only Nuxt's auto-imports provide` });
+        if (autoNames.has(name) || NUXT_GLOBALS.has(name) || name.startsWith('import.meta.')) {
+          violations.push({ rule: 'plain', file: path, detail: `uses ${name}, which only Nuxt or Vite provide` });
+        }
       }
     }
 
