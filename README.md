@@ -63,6 +63,16 @@ The site's CS2 data (PandaScore's tier-1 matches and the organisers' official VO
 clone of its own on master, `~/pcesports-data`, never the factory's checkout. The rules it applies are the `matches` and
 `vods` domains' (their `README.md`); the sources, terms and quota are in `docs/feasibility/cs2-data-and-vods.md`.
 
+On veilweaver2 the job's clone is a plain clone of this repository on master, `~/pcesports-data`, and the factory
+user's crontab holds its line (cron's own PATH finds `node`, `git`, `gh` and `flock` in `/usr/bin`):
+
+```
+*/15 * * * * cd "$HOME/pcesports-data" && node tools/data-job/run.mjs >> "$HOME/pcesports-data-job.log" 2>&1
+```
+
+`~/pcesports-data-job.log` stays empty while nothing goes wrong: the job prints only problems. Check it, and the last
+lines of `~/.local/state/pcesports-data-job/job.log` (one per run, with the day's YouTube units).
+
 Each run:
 
 1. takes a `flock` lock in its state folder: a second run sharing that folder (a cron run and one by hand) logs that it
