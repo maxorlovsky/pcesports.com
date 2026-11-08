@@ -72,8 +72,12 @@ git clone -b master https://github.com/maxorlovsky/pcesports.com.git ~/pcesports
 The factory user's crontab holds its line (`node`, `git`, `gh` and `flock` are in `/usr/bin`, on the crontab's PATH):
 
 ```
-*/15 * * * * cd "$HOME/pcesports-data" && node tools/data-job/run.mjs >> "$HOME/pcesports-data-job.log" 2>&1
+*/15 * * * * cd "$HOME/pcesports-data" && { { test -f tools/data-job/run.mjs || git pull -q --ff-only --no-tags origin master; } && test -f tools/data-job/run.mjs && node tools/data-job/run.mjs; } >> "$HOME/pcesports-data-job.log" 2>&1
 ```
+
+While the clone has no job, the line pulls master by name and runs nothing, so it could go in before the job reached
+master. Once the job is there, the line only starts it, and every git step runs inside the job's lock (step 2 pulls).
+A bare `git pull` would fetch the `data` branch too, outside the lock and with a reflog.
 
 `~/pcesports-data-job.log` stays empty while nothing goes wrong: the job prints only problems. Check it, and the last
 lines of `~/.local/state/pcesports-data-job/job.log` (one per run that reaches the job, with the day's YouTube units).
