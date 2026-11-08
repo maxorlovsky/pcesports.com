@@ -32,7 +32,7 @@ export async function fetchPandaScore({ from, to }, tiers = DEFAULT_TIERS) {
             organizer,
             tier: x.tournament.tier,
             // tournament.name is the stage ("Playoffs"); the match name carries the round ("Lower Bracket Final: A vs B").
-            stage: `${x.tournament.name}: ${x.name.split(':')[0]}`,
+            stage: x.name.includes(': ') ? `${x.tournament.name}: ${x.name.split(': ')[0]}` : x.tournament.name,
             team1: o1.slug,
             team2: o2.slug,
             start: x.begin_at,

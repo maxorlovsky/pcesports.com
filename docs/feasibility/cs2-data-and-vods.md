@@ -25,7 +25,7 @@ The other caveats are a narrow event sample, and spoilers that come from the VOD
 
 ## 1. Data sources
 
-All terms were read on 2026-11-08 from each source's own pages (Liquipedia's also on 2026-11-07, see below); every terms claim below links its quote ([L1] etc., listed after the table). Pages that block automated clients were read from a dated Wayback snapshot, noted with the quote. No account was registered and no keys were used other than the owner's YouTube key and, in the latest round, the owner's PandaScore token.
+All terms were read on 2026-11-08 from each source's own pages (Liquipedia's also on 2026-11-07, see below); every terms claim below links its quote ([L1] etc., listed after the table). Pages that block automated clients were read from a dated Wayback snapshot, noted with the quote. I registered no account. The only keys used were the owner's: a YouTube API key and a PandaScore token (the owner registered with PandaScore).
 
 | Source | Covers (schedule / results / tier + stage / teams) | Freshness | Limits | Key / sign-up | Cost | Commercial use on an ad-supported site | Attribution | Verdict |
 |---|---|---|---|---|---|---|---|---|
