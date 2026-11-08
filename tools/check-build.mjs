@@ -1,0 +1,97 @@
+// Checks a static build (`npm run generate` writes .output/public) before it ships: run by `npm run check:build`,
+// by the deploy before the site's link moves (tools/deploy/deploy.mjs), and in CI.
+//   node tools/check-build.mjs <dir>
+// Each page must carry its content in the HTML itself (readable with JavaScript off) and its SEO tags; the sitemap
+// must list exactly the indexable pages, at the canonical host; nothing of the old site may come back.
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { join, relative } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const SITE_URL = 'https://www.pcesports.com';
+/** Each page the build must have: its file, its path, and a sentence its HTML must hold without JavaScript. */
+export const PAGES = [
+  { file: 'index.html', path: '/', text: 'What should I watch?' },
+  { file: 'privacy.html', path: '/privacy', text: 'What we collect' },
+  { file: '404.html', path: null, text: 'This page is not here' },
+];
+/** What the old site had and the new one must not: the deleted Twitter account, the LoL background, the icon font. */
+const BANNED = [/twitter\.com\/pcesports/i, /icomoon/i, /bg\.jpg/i, /fonts\.googleapis\.com/i];
+
+function files(dir) {
+  return readdirSync(dir).flatMap((name) => {
+    const path = join(dir, name);
+    return statSync(path).isDirectory() ? files(path) : [path];
+  });
+}
+
+function attr(html, pattern) {
+  return html.match(pattern)?.[1];
+}
+
+export function checkBuild(dir) {
+  const problems = [];
+  const problem = (message) => problems.push(message);
+  if (!existsSync(dir)) return [`${dir} does not exist: run npm run generate first`];
+
+  for (const { file, path, text } of PAGES) {
+    const where = join(dir, file);
+    if (!existsSync(where)) {
+      problem(`${file} is missing`);
+      continue;
+    }
+    const html = readFileSync(where, 'utf8');
+    const title = attr(html, /<title>([^<]+)<\/title>/);
+    if (!title) problem(`${file}: no <title>`);
+    if (!attr(html, /<meta name="description" content="([^"]+)"/)) problem(`${file}: no meta description`);
+    // The content is in the HTML, not built by a script: what a reader with JavaScript off and a crawler see
+    if (!html.replace(/<[^>]+>/g, '').replace(/&#39;|&#x27;/g, '\'').includes(text)) problem(`${file}: "${text}" is not in its HTML`);
+    for (const property of ['og:title', 'og:description', 'og:image', 'og:type']) {
+      if (!attr(html, new RegExp(`<meta property="${property}" content="([^"]+)"`))) problem(`${file}: no ${property}`);
+    }
+    const canonical = attr(html, /<link rel="canonical" href="([^"]+)"/);
+    if (path) {
+      const expected = path === '/' ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+      if (canonical !== expected) problem(`${file}: canonical is ${canonical ?? 'missing'}, expected ${expected}`);
+      if (attr(html, /<meta property="og:url" content="([^"]+)"/) !== expected) problem(`${file}: og:url is not ${expected}`);
+      if (/<meta name="robots" content="[^"]*noindex/.test(html)) problem(`${file}: noindex on an indexable page`);
+    } else {
+      if (canonical) problem(`${file}: the 404 page has a canonical URL`);
+      if (!/<meta name="robots" content="noindex"/.test(html)) problem(`${file}: the 404 page is not noindex`);
+    }
+  }
+
+  const sitemapFile = join(dir, 'sitemap.xml');
+  if (!existsSync(sitemapFile)) problem('sitemap.xml is missing');
+  else {
+    const listed = [...readFileSync(sitemapFile, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]).sort();
+    const expected = PAGES.filter((page) => page.path).map((page) => (page.path === '/' ? `${SITE_URL}/` : `${SITE_URL}${page.path}`)).sort();
+    if (JSON.stringify(listed) !== JSON.stringify(expected)) problem(`sitemap.xml lists ${listed.join(', ') || 'nothing'}, expected ${expected.join(', ')}`);
+  }
+  const robotsFile = join(dir, 'robots.txt');
+  if (!existsSync(robotsFile)) problem('robots.txt is missing');
+  else if (!readFileSync(robotsFile, 'utf8').includes(`Sitemap: ${SITE_URL}/sitemap.xml`)) problem('robots.txt does not name the sitemap');
+  if (!existsSync(join(dir, 'og.png'))) problem('og.png, the Open Graph image, is missing');
+
+  for (const path of files(dir)) {
+    const name = relative(dir, path);
+    if (name.endsWith('.map')) problem(`${name}: a source map in the build`);
+    if (!/\.(html|js|css|json|xml|txt)$/.test(name)) continue;
+    const content = readFileSync(path, 'utf8');
+    for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
+  }
+  return problems;
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const dir = process.argv[2];
+  if (!dir) {
+    console.error('usage: node tools/check-build.mjs <dir>');
+    process.exit(2);
+  }
+  const problems = checkBuild(dir);
+  if (problems.length) {
+    console.error(`Build check failed for ${dir}:\n${problems.map((p) => `- ${p}`).join('\n')}`);
+    process.exit(1);
+  }
+  console.log(`Build check passed: ${dir}`);
+}
