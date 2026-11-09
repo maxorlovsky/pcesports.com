@@ -27,11 +27,14 @@ export interface PandaScoreMatch {
   winner_id: number | null;
   forfeit: boolean | null;
   modified_at: string;
+  tournament_id: number;
   league: { name: string };
   serie: { full_name: string };
   tournament: { name: string; tier: string | null };
   opponents: { opponent: { id: number; slug: string; name: string; acronym: string | null } }[];
   results: { team_id: number; score: number }[];
+  /** The maps, played or not: `length` is a played map's length in seconds. */
+  games?: { position: number; status: string; length: number | null }[];
 }
 
 export interface Team {
@@ -64,6 +67,8 @@ export interface Match {
   winnerId: number | null;
   /** Maps won, in the order of `teams`. */
   score: number[];
+  /** Each played map's length in seconds (null when PandaScore has none), map 1 first. A result: never shown. */
+  mapSeconds: (number | null)[];
   forfeit: boolean;
   modifiedAt: string;
 }
@@ -102,6 +107,7 @@ export function toMatch(raw: PandaScoreMatch): Match | null {
     teams,
     winnerId: raw.winner_id,
     score: teams.map((team) => raw.results.find((result) => result.team_id === team.id)?.score ?? 0),
+    mapSeconds: (raw.games ?? []).filter((game) => game.status === 'finished').sort((a, b) => a.position - b.position).map((game) => game.length ?? null),
     forfeit: Boolean(raw.forfeit),
     modifiedAt: raw.modified_at,
   };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HomePage from '~/domains/site/views/HomePage.vue';
+import HomePage from '~/domains/watch/views/HomePage.vue';
 </script>
 
 <template>

@@ -6,8 +6,8 @@ export const CONTACT_EMAIL = 'pentaclickesports@gmail.com';
 /** Every page the sitemap lists. The 404 page stays out. */
 export const SITEMAP_PATHS = ['/', '/privacy'];
 
-/** Credits the footer shows for the data the pages use, e.g. `{ label: 'Source: PandaScore', url: 'https://pandascore.co' }`. */
-export const DATA_CREDITS: { label: string; url: string }[] = [];
+/** Credits the footer shows, on every page, for the data the pages use. PandaScore's terms ask for its credit. */
+export const DATA_CREDITS: { label: string; url: string }[] = [{ label: 'Source: PandaScore', url: 'https://pandascore.co' }];
 
 /** `/privacy` -> `https://www.pcesports.com/privacy`, `/` -> `https://www.pcesports.com/`. */
 export function absoluteUrl(path: string): string {

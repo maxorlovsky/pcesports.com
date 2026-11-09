@@ -3,7 +3,7 @@
 The organisers' official full-match VODs on YouTube: which channels count, reading their uploads, linking each VOD to
 its match, and YouTube's 30-day rule. The data job (`tools/data-job/`) runs it. Depends on `matches`.
 
-- `index.ts` (plain TypeScript, for the data job and later the app):
+- `index.ts` (plain TypeScript, for the data job and the `watch` domain):
   - `youtubeClient`: `channels.list`, `channelSections.list`, `playlistItems.list` and `videos.list`, 1 unit each,
     counted. `search.list` is never called.
   - `linkVods`, `candidates`, `missingVods`, `unmatchedUploads`: the matcher and what the job's report lists.
