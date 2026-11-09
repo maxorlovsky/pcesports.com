@@ -58,8 +58,7 @@ export function strengthPoints(average: number, scale: StrengthScale): number {
 
 /**
  * What closeness reads. Only PandaScore's free plan for now: each map's length and the winner's chance before the
- * match.
- * A per-map round score (a paid source) would come in here as one more field of `maps`.
+ * match. A per-map round score (a paid source) would come in here as one more field of `maps`.
  */
 export interface ClosenessInput {
   bestOf: number | null;

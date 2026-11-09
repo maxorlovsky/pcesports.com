@@ -142,6 +142,9 @@ const spoiled = [
   ['the map count after an equals sign', { '_payload.json': '[{"t":1},"maps = 3"]' }, /_payload\.json: holds the score or map count of listed match 7/],
   ['the map count with an em dash', { 'index.html': listedPage('<p>a 3—map series</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the map count with a minus sign', { 'index.html': listedPage('<p>a 3−map series</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count across nested tags', { 'index.html': listedPage('<span><b>3</b></span> <span>maps</span>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count across list items', { 'index.html': listedPage('<li><span>3</span></li> <li>maps</li>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count across lines', { '_payload.json': '[{"t":1},"3\\n      maps"]' }, /_payload\.json: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

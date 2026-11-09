@@ -39,14 +39,14 @@ function files(dir) {
  *   the data), read for a score or a map count.
  */
 function parts(name, content) {
-  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(content) };
+  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(unescapeData(content)) };
   if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
   const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
   const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
   const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)];
   const values = attributes.filter((match) => /^(data-|value$)/.test(match[1])).map((match) => match[3]);
   const comments = [...markup.matchAll(/<!--([\s\S]*?)-->/g)].map((match) => match[1]);
-  const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), data];
+  const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), unescapeData(data)];
   return { data, code: '', values, text: decode(text.join(' ')) };
 }
 
@@ -65,8 +65,14 @@ const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
 /** Between a score's two numbers, entities decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
 const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
-/** Text with its character references written out as a browser shows them (`&#45;`, `&#150;`, `&nbsp`, `&thinsp;`). */
-const decode = (text) => decodeHTML(text);
+/**
+ * Text as a browser shows it: character references written out (`&#45;`, `&#150;`, `&nbsp`, `&thinsp;`) and every run
+ * of white space one space, as the tags each turned into one leave it ("<b>3</b> <span>maps</span>").
+ */
+const decode = (text) => decodeHTML(text).replace(/\s+/g, ' ');
+
+/** Data's strings as they read: JSON's and scripts' escapes written out (`\n`, `\u002F`). */
+const unescapeData = (data) => data.replace(/\\u([\da-f]{4})/gi, (escape, hex) => String.fromCharCode(Number.parseInt(hex, 16))).replace(/\\[nrt]/g, ' ');
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -98,7 +104,7 @@ function spoilers({ matches, entries }) {
     const maps = match.mapSeconds?.length ?? 0;
     // The count however it is worded: its number within a few characters of "map", either side ("3 maps", "3—mapper",
     // "Maps: 3", "Map count = 3", "map 3"). Fails safe: "Best of 3 maps" on a match that went to 3 stops the build too.
-    if (maps) scores.push(`${maps}[^\\w\\d]{0,3}maps?\\w*`, `maps?\\b[^\\d]{0,15}?${maps}`);
+    if (maps) scores.push(`${maps}\\W{0,3}maps?\\w*`, `maps?\\b\\D{0,15}${maps}`);
     const list = numbers.join('|');
     return {
       match: `match ${match.id}`,
