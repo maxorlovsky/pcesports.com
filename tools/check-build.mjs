@@ -36,17 +36,20 @@ function files(dir) {
  * - `code`: a script bundle, which holds unrelated keys and numbers of its own;
  * - `values`: the attributes that carry values for a script (`data-*`, `value`), read for ids and lengths;
  * - `text`: all a reader, a screen reader or a script gets (the page's text and comments, its text-bearing attributes,
- *   the data), read for a score or a map count.
+ *   the data's strings with any markup in them, the text a stylesheet's `content` shows), read for a score or a map
+ *   count.
  */
 function parts(name, content) {
-  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(unescapeData(content)) };
+  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(readData(content)) };
   if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
+  if (name.endsWith('.css')) return { data: '', code: '', values: [], text: decode(shownByStyles(content)) };
   const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
+  const styles = [...content.matchAll(/<style[^>]*>([\s\S]*?)<\/style>|\sstyle\s*=\s*(["'])([\s\S]*?)\2/g)].map((match) => match[1] ?? match[3]);
   const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
   const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)];
   const values = attributes.filter((match) => /^(data-|value$)/.test(match[1])).map((match) => match[3]);
   const comments = [...markup.matchAll(/<!--([\s\S]*?)-->/g)].map((match) => match[1]);
-  const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), unescapeData(data)];
+  const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), readData(data), ...styles.map(shownByStyles)];
   return { data, code: '', values, text: decode(text.join(' ')) };
 }
 
@@ -71,8 +74,24 @@ const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
  */
 const decode = (text) => decodeHTML(text).replace(/\s+/g, ' ');
 
-/** Data's strings as they read: JSON's and scripts' escapes written out (`\n`, `\u002F`). */
-const unescapeData = (data) => data.replace(/\\u([\da-f]{4})/gi, (escape, hex) => String.fromCharCode(Number.parseInt(hex, 16))).replace(/\\[nrt]/g, ' ');
+/**
+ * Data's strings as they would show: their escapes written out (JSON's `\n`, `\u002F`, a script's `\x20`, `\f`), then
+ * any markup in them dropped, as a page would render it ("<b>3</b> maps").
+ */
+function readData(data) {
+  return data
+    .replace(/\\u([\da-f]{4})|\\x([\da-f]{2})/gi, (escape, u, x) => String.fromCharCode(Number.parseInt(u ?? x, 16)))
+    .replace(/\\[nrtfbv]/g, ' ')
+    .replace(/<[^>]+>/g, ' ');
+}
+
+/** The text a stylesheet shows: its `content` strings (`::after { content: "…" }`), custom properties' strings too. */
+function shownByStyles(css) {
+  return [...css.matchAll(/(["'])((?:\\.|(?!\1).)*)\1/g)].map((match) => match[2].replace(/\\[\da-f]{1,6}\s?/gi, (escape) => {
+    const code = Number.parseInt(escape.slice(1), 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : ' ';
+  })).join(' ');
+}
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -90,8 +109,9 @@ export function buildData(root = ROOT) {
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
  * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets,
- * decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps"). The page's own
- * guarantee is what it is given: only the shown fields.
+ * decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps", "Maps in this
+ * series: 3"), an unquoted attribute, an `iframe`'s `srcdoc`, or invisible characters between the digits. The page's
+ * own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -173,7 +193,7 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     if (!/\.(html|js|css|json|xml|txt)$/.test(name)) continue;
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
-    if (!/\.(html|js|json)$/.test(name)) continue;
+    if (!/\.(html|js|json|css)$/.test(name)) continue;
     const { data, code, values, text } = parts(name, content);
     const key = data.match(RESULT_KEY) ?? code.match(RESULT_KEY_IN_CODE);
     if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);

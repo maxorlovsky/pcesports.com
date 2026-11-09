@@ -145,6 +145,13 @@ const spoiled = [
   ['the map count across nested tags', { 'index.html': listedPage('<span><b>3</b></span> <span>maps</span>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the map count across list items', { 'index.html': listedPage('<li><span>3</span></li> <li>maps</li>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the map count across lines', { '_payload.json': '[{"t":1},"3\\n      maps"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the map count across lines in an inline script', { 'index.html': listedPage('<script type="application/json">["3\\n      maps"]</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count as markup in the payload', { '_payload.json': '[{"t":1},"\\u003Cb>3\\u003C/b> maps"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the map count as markup in an inline script', { 'index.html': listedPage('<script>window.x="<b>3</b> maps"</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count with a script escape', { 'index.html': listedPage('<script>window.x="3\\x20maps"</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count in a stylesheet\'s content', { 'index.html': listedPage('<style>.x::after{content:"3 maps"}</style>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score in a style attribute', { 'index.html': listedPage('<p style="--c:\'2-1\'">MOUZ</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score in a CSS file', { '_nuxt/entry.css': '.x::after{content:"2\\2d 1"}' }, /_nuxt\/entry\.css: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];
