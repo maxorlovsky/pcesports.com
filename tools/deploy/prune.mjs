@@ -16,41 +16,49 @@ function userName(uid) {
   return `uid ${uid}`;
 }
 
-/** The files in `dir` (itself included) that `uid` doesn't own; a folder another user owns is named, not entered. */
-function foreignFiles(dir, uid, ownerOf, found = []) {
-  if (found.length >= NAMED) return found;
+/**
+ * Who owns what in `dir` (itself included): the files `uid` doesn't own (a folder another user owns is named, not
+ * entered), and the ones it can't read, whose files stay unknown.
+ */
+function scan(dir, uid, ownerOf, found = { foreign: [], unread: [] }) {
+  if (found.foreign.length + found.unread.length >= NAMED) return found;
   let owner;
   try {
     owner = ownerOf(dir);
   } catch {
+    found.unread.push(dir);
     return found;
   }
   if (owner !== uid) {
-    found.push({ path: dir, owner });
+    found.foreign.push({ path: dir, owner });
     return found;
   }
   let entries = [];
   try {
     if (lstatSync(dir).isDirectory()) entries = readdirSync(dir);
   } catch {
-    // a folder the deploy user can't read: what is in it stays unnamed
+    found.unread.push(dir);
   }
-  for (const entry of entries) foreignFiles(join(dir, entry), uid, ownerOf, found);
+  for (const entry of entries) scan(join(dir, entry), uid, ownerOf, found);
   return found;
 }
 
+const CERTBOT = 'A root-owned .well-known is certbot\'s: its webroot belongs in the acme folder, outside the releases '
+  + '(README.md, "On max-cloud")';
+
 /** Why `path` could not be deleted, for the person who reads the deploy's log. */
 function explain(path, error, uid, ownerOf) {
-  const foreign = foreignFiles(path, uid, ownerOf);
+  const { foreign, unread } = scan(path, uid, ownerOf);
+  const user = userName(uid);
+  const cantRead = unread.length ? `${user} can't read ${unread.join(', ')}, so whose files are in it is unknown` : '';
   if (!foreign.length) {
-    return `${path}: ${error.message}. No file in it belongs to another user: check the permissions of its folders`;
+    if (!cantRead) return `${path}: ${error.message}. No file in it belongs to another user: check the permissions of its folders`;
+    return `${path}: ${error.message}. ${cantRead}: a file there may be another user's (\`sudo ls -laR ${path}\` shows). ${CERTBOT}`;
   }
   const list = foreign.map((file) => `${file.path} (owned by ${userName(file.owner)})`).join(', ');
-  const certbot = foreign.some((file) => file.owner === 0 && basename(file.path) === '.well-known')
-    ? '. A root-owned .well-known is certbot\'s: its webroot belongs in the acme folder, outside the releases (README.md, "On max-cloud")'
-    : '';
+  const certbot = foreign.some((file) => file.owner === 0 && basename(file.path) === '.well-known') ? `. ${CERTBOT}` : '';
   return `${path}: ${error.code ?? error.message}. ${list} ${foreign.length === 1 ? 'is' : 'are'} not the deploy user's `
-    + `(${userName(uid)}), who can't delete it: delete the release as root, \`sudo rm -rf ${path}\`${certbot}`;
+    + `(${user}), who can't delete it: delete the release as root, \`sudo rm -rf ${path}\`${cantRead ? `. ${cantRead}` : ''}${certbot}`;
 }
 
 /**

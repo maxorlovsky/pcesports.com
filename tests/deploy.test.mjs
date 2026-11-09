@@ -192,6 +192,23 @@ test('a release the deploy user owns but can\'t delete is named, and the message
   }
 });
 
+test('a release with a folder the deploy user can\'t read never claims that no other user owns a file in it', (t) => {
+  if (process.getuid() === 0) return t.skip('root can read anything');
+  const folder = releases('prune-unread', ['r1', 'r2', 'r3', 'r4']);
+  const unread = join(folder, 'r1', '.well-known');
+  mkdirSync(join(unread, 'acme-challenge'), { recursive: true });
+  writeFileSync(join(unread, 'acme-challenge', 'token'), 'x');
+  chmodSync(unread, 0o300);
+  try {
+    const failures = pruneReleases(folder, 'r4', 2);
+    assert.equal(failures.length, 1);
+    assert.match(failures[0], new RegExp(`can't read ${unread}, so whose files are in it is unknown: a file there may be another user's`));
+    assert.doesNotMatch(failures[0], /No file in it belongs to another user/);
+  } finally {
+    chmodSync(unread, 0o755);
+  }
+});
+
 test('a whole deploy whose prune fails switches the site, then ends red and says so', (t) => {
   if (process.getuid() === 0) return t.skip('root can delete anything');
   // A site whose build is a stub: an npm that only writes .output/public, and a build check that passes
