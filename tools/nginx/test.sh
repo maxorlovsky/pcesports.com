@@ -5,7 +5,7 @@
 #   2. with a build (`npm run generate` -> .output/public, or the folder given as $1), it also runs that nginx on the
 #      build and checks what each URL answers: pages, the 404 page, the redirects to www, old-urls.conf's 301s and
 #      410s (docs/old-urls.md), Let's Encrypt's challenge, served from a scratch `acme` folder, and the three headers
-#      of every HTTPS answer.
+#      of every HTTPS 2xx and 3xx answer (404s and 410s carry none: the headers have no `always`).
 # Run it before committing an edit to either file: `npm run nginx:test`. It needs nginx and curl, not root.
 set -eu
 
@@ -194,7 +194,7 @@ check() {
     'https 20'[0146] | 'https 30'[123478])
       for header in 'strict-transport-security: max-age=63072000; includeSubdomains' 'x-frame-options: DENY' \
         'x-content-type-options: nosniff'; do
-        grep -qiF "$header" "$work_dir/headers" || missing="$missing, no ${header%%:*}"
+        tr -d '\r' < "$work_dir/headers" | grep -qixF "$header" || missing="$missing, no ${header%%:*}"
       done
       [ -z "$missing" ] || ok=0
       ;;
@@ -281,7 +281,7 @@ done
 # Built files: a page's own script, kept a year
 asset=$(cd "$build_dir" && ls _nuxt/*.js | head -n 1)
 check https $www "/$asset" 200
-if ! curl -sk -o /dev/null -D - --resolve "$www:$https_port:127.0.0.1" "https://$www:$https_port/$asset" | grep -qi '^cache-control: max-age=31536000'; then
+if ! curl -sk -o /dev/null -D - --resolve "$www:$https_port:127.0.0.1" "https://$www:$https_port/$asset" | tr -d '\r' | grep -qix 'cache-control: max-age=31536000'; then
   echo "FAIL /$asset is not cached for a year"
   failures=$((failures + 1))
 fi
