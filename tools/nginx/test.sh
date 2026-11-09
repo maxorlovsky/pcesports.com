@@ -92,6 +92,7 @@ rule_failures=$(cd "$repo_root/tools/nginx" && awk -v want="$tls_protocols" -v o
         if (c == "\"") { dq = 1; continue }
         if (c == "'"'"'") { sq = 1; continue }
         variable = c == "$"
+        escaped = c == "\\"
         word = word c
         continue
       }
