@@ -1,11 +1,13 @@
 // tools/deploy/deploy.mjs and ssh.sh, the forced command, in a scratch live clone of a scratch origin. Only what runs
-// no build: the refusals, the lock and the dry run (a real deploy runs npm ci and nuxt generate).
+// no build: the refusals, the lock and the dry run (a real deploy runs npm ci and nuxt generate), and the pruning of
+// old releases on its own (tools/deploy/prune.mjs).
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { after, before, test } from 'node:test';
+import { pruneReleases } from '../tools/deploy/prune.mjs';
 
 const REPO = resolve(import.meta.dirname, '..');
 let dir;
@@ -125,10 +127,96 @@ test('git ignores what a deploy writes, so the next deploy sees a clean checkout
   symlinkSync('.releases/r1', join(clone, 'site'));
   writeFileSync(join(clone, '.deploy.lock'), '1');
   mkdirSync(join(clone, '.output', 'public'), { recursive: true });
+  // A challenge token certbot left in its webroot (tools/nginx/nginx.prod.conf)
+  mkdirSync(join(clone, 'acme', '.well-known', 'acme-challenge'), { recursive: true });
+  writeFileSync(join(clone, 'acme', '.well-known', 'acme-challenge', 'token'), 'x');
   const status = git(clone, 'status', '--porcelain');
+  rmSync(join(clone, 'acme'), { recursive: true });
   rmSync(join(clone, '.releases'), { recursive: true });
   rmSync(join(clone, 'site'));
   rmSync(join(clone, '.deploy.lock'));
   rmSync(join(clone, '.output'), { recursive: true });
   assert.equal(status, '');
+});
+
+/** A scratch .releases folder holding `names`, each with an index.html. */
+function releases(name, names) {
+  const folder = join(dir, name);
+  for (const release of names) {
+    mkdirSync(join(folder, release), { recursive: true });
+    writeFileSync(join(folder, release, 'index.html'), release);
+  }
+  return folder;
+}
+
+test('the prune keeps the release shown and the two newest besides it, and deletes the rest, a stopped build included', () => {
+  const folder = releases('prune-plain', ['r1', 'r2', 'r3', 'r4', 'r5', '.building-r6']);
+  assert.deepEqual(pruneReleases(folder, 'r5', 2), []);
+  assert.deepEqual(readdirSync(folder).sort(), ['r3', 'r4', 'r5']);
+});
+
+// A folder the deploy user can't write into stands in for certbot's root-owned .well-known: deleting what is in it
+// fails with EACCES, as on max-cloud. Run as root, the folder is no obstacle and these two tests prove nothing.
+function stuckReleases(name) {
+  const folder = releases(name, ['r1', 'r2', 'r3', 'r4', 'r5']);
+  const stuck = join(folder, 'r1', '.well-known');
+  mkdirSync(join(stuck, 'acme-challenge'), { recursive: true });
+  chmodSync(stuck, 0o555);
+  return { folder, stuck };
+}
+
+test('a release another user\'s file keeps on disk is named with that file and its owner; the other old ones go', (t) => {
+  if (process.getuid() === 0) return t.skip('root can delete anything');
+  const { folder, stuck } = stuckReleases('prune-foreign');
+  try {
+    const failures = pruneReleases(folder, 'r5', 2, { ownerOf: (path) => (path === stuck ? 0 : process.getuid()) });
+    assert.equal(failures.length, 1);
+    assert.match(failures[0], new RegExp(`^${join(folder, 'r1')}: EACCES\\. ${stuck} \\(owned by root\\) is not the deploy user's`));
+    assert.match(failures[0], new RegExp(`sudo rm -rf ${join(folder, 'r1')}\``));
+    assert.match(failures[0], /certbot/);
+    assert.deepEqual(readdirSync(folder).sort(), ['r1', 'r3', 'r4', 'r5']);
+  } finally {
+    chmodSync(stuck, 0o755);
+  }
+});
+
+test('a release the deploy user owns but can\'t delete is named, and the message says no other user is involved', (t) => {
+  if (process.getuid() === 0) return t.skip('root can delete anything');
+  const { folder, stuck } = stuckReleases('prune-own');
+  try {
+    const failures = pruneReleases(folder, 'r5', 2);
+    assert.equal(failures.length, 1);
+    assert.match(failures[0], new RegExp(`^${join(folder, 'r1')}: EACCES.*No file in it belongs to another user`));
+  } finally {
+    chmodSync(stuck, 0o755);
+  }
+});
+
+test('a whole deploy whose prune fails switches the site, then ends red and says so', (t) => {
+  if (process.getuid() === 0) return t.skip('root can delete anything');
+  // A site whose build is a stub: an npm that only writes .output/public, and a build check that passes
+  const work = join(dir, 'full-work');
+  git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
+  writeFileSync(join(work, 'tools', 'check-build.mjs'), '');
+  git(work, 'add', '-A');
+  git(work, 'commit', '-q', '-m', 'test: a build check that passes');
+  git(dir, 'clone', '-q', '--bare', work, join(dir, 'full-origin.git'));
+  const live = join(dir, 'full-live');
+  git(dir, 'clone', '-q', join(dir, 'full-origin.git'), live);
+  const bin = join(dir, 'full-bin');
+  mkdirSync(bin);
+  writeFileSync(join(bin, 'npm'), '#!/bin/sh\nif [ "$1" = run ] && [ "$2" = generate ]; then mkdir -p .output/public && echo built > .output/public/index.html; fi\n', { mode: 0o755 });
+  const { stuck } = stuckReleases(join('full-live', '.releases'));
+  symlinkSync('.releases/r5', join(live, 'site'));
+  try {
+    const result = sh('node', ['tools/deploy/deploy.mjs'], live, { PATH: `${bin}:${process.env.PATH}` });
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, /Deployed master at \w+ into \.releases\/[^,]+, and the site shows it, but an older release could not be deleted:\n- .*\/r1: EACCES/);
+    assert.doesNotMatch(result.stdout, /Deployed master/);
+    const shown = sh('readlink', [join(live, 'site')], live).stdout.trim();
+    assert.notEqual(shown, '.releases/r5');
+    assert.deepEqual(readdirSync(join(live, '.releases')).sort(), ['r1', 'r4', 'r5', shown.replace('.releases/', '')].sort());
+  } finally {
+    chmodSync(stuck, 0o755);
+  }
 });

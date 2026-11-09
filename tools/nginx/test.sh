@@ -3,8 +3,8 @@
 #   1. `nginx -t` on the file as it is, with test ports and a self-signed certificate in place of the Let's Encrypt
 #      ones, and copies of the snippets it includes from /etc/nginx/snippets;
 #   2. with a build (`npm run generate` -> .output/public, or the folder given as $1), it also runs that nginx on the
-#      build and checks what each URL answers: pages, the 404 page, the redirects to www, and old-urls.conf's 301s and
-#      410s (docs/old-urls.md).
+#      build and checks what each URL answers: pages, the 404 page, the redirects to www, old-urls.conf's 301s and
+#      410s (docs/old-urls.md), and Let's Encrypt's challenge, served from a scratch `acme` folder.
 # Run it before committing an edit to either file: `npm run nginx:test`. It needs nginx and curl, not root.
 set -eu
 
@@ -22,7 +22,8 @@ trap cleanup EXIT
 http_port=${NGINX_TEST_HTTP_PORT:-18580}
 https_port=${NGINX_TEST_HTTPS_PORT:-18543}
 
-mkdir -p "$work_dir/conf/snippets" "$work_dir/temp"
+mkdir -p "$work_dir/conf/snippets" "$work_dir/temp" "$work_dir/acme/.well-known/acme-challenge"
+echo 'challenge answer' > "$work_dir/acme/.well-known/acme-challenge/test-token"
 openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=nginx-test \
   -keyout "$work_dir/conf/test.key" -out "$work_dir/conf/test.crt" 2>/dev/null
 
@@ -42,6 +43,7 @@ sed -E \
   -e "s#^([[:space:]]*ssl_certificate[[:space:]]+)[^;]+;#\\1$work_dir/conf/test.crt;#" \
   -e "s#^([[:space:]]*ssl_certificate_key[[:space:]]+)[^;]+;#\\1$work_dir/conf/test.key;#" \
   -e "s#/var/www/pcesports.com/site#$build_dir#g" \
+  -e "s#/var/www/pcesports.com/acme#$work_dir/acme#g" \
   -e "s#/var/www/pcesports.com/tools/nginx/#$repo_root/tools/nginx/#g" \
   "$repo_root/tools/nginx/nginx.prod.conf" > "$work_dir/conf/site.conf"
 
@@ -105,6 +107,10 @@ canon=https://www.pcesports.com
 check http pcesports.com /privacy?a=1 301 "$canon/privacy?a=1"
 check http $www / 301 "$canon/"
 check https pcesports.com /events/dota 301 "$canon/events/dota"
+# Let's Encrypt's challenge, over plain HTTP for both names, from the acme folder, never from the build
+check http pcesports.com /.well-known/acme-challenge/test-token 200 'challenge answer'
+check http $www /.well-known/acme-challenge/test-token 200 'challenge answer'
+check http $www /.well-known/acme-challenge/no-such-token 404
 # Pages, readable without JavaScript
 check https $www / 200 'What should I watch?'
 check https $www /privacy 200 'What we collect'
