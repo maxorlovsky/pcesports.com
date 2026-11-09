@@ -46,7 +46,10 @@ export interface StrengthScale {
   top: number;
 }
 
-/** The two teams' strength: their average rating, -0.5 for the weakest, 0 at the median, 1 at the 90th percentile and above. */
+/**
+ * The two teams' strength: their average rating, -0.5 for the weakest, 0 at the median, 1 at the 90th percentile and
+ * above.
+ */
 export function strengthPoints(average: number, scale: StrengthScale): number {
   const spread = scale.top - scale.median;
   if (spread <= 0) return 0;
@@ -54,7 +57,8 @@ export function strengthPoints(average: number, scale: StrengthScale): number {
 }
 
 /**
- * What closeness reads. Only PandaScore's free plan for now: each map's length and the winner's chance before the match.
+ * What closeness reads. Only PandaScore's free plan for now: each map's length and the winner's chance before the
+ * match.
  * A per-map round score (a paid source) would come in here as one more field of `maps`.
  */
 export interface ClosenessInput {

@@ -79,9 +79,8 @@ export function buildData(root = ROOT) {
 
 /**
  * The results of the listed matches, as they could leak: each winner's team id and each map's length (as values in
- * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "Maps: 3", "map 3"
- * past the maps every series plays). A listed match with no record is a problem of its own: the check can't know its
- * result.
+ * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "Maps: 3"). A listed
+ * match with no record is a problem of its own: the check can't know its result.
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
  * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets,
@@ -97,9 +96,9 @@ function spoilers({ matches, entries }) {
     const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 1000);
     const scores = a === undefined ? [] : [`${a}(?:${SCORE_SEPARATOR})${b}`, `${b}(?:${SCORE_SEPARATOR})${a}`];
     const maps = match.mapSeconds?.length ?? 0;
-    // The count, any way round: "3 maps", "a 3-map series", "Maps: 3", "Maps played: 3"
-    if (maps) scores.push(`${maps}[\\s‐‑–-]*maps?(?:per)?`, `maps?(?:\\s+played)?\\s*:\\s*${maps}`);
-    if (maps > Math.ceil((match.bestOf ?? 1) / 2)) scores.push(`maps?\\s+${maps}`);
+    // The count however it is worded: its number within a few characters of "map", either side ("3 maps", "3—mapper",
+    // "Maps: 3", "Map count = 3", "map 3"). Fails safe: "Best of 3 maps" on a match that went to 3 stops the build too.
+    if (maps) scores.push(`${maps}[^\\w\\d]{0,3}maps?\\w*`, `maps?\\b[^\\d]{0,15}?${maps}`);
     const list = numbers.join('|');
     return {
       match: `match ${match.id}`,

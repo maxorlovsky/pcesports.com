@@ -136,7 +136,12 @@ const spoiled = [
   ['the map count as a compound', { 'index.html': listedPage('<p>a 3-map series</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the map count as a 3-mapper', { 'index.html': listedPage('<p>a 3-mapper</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the score in a Windows-1252 reference', { 'index.html': listedPage('<p>2&#150;1</p>') }, /index\.html: holds the score or map count of listed match 7/],
-  ['the map count with a hair space', { 'index.html': listedPage('<p>3&numsp;maps</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count with a figure space', { 'index.html': listedPage('<p>3&numsp;maps</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count as a count', { 'index.html': listedPage('<p>Map count: 3</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count after an em dash', { 'index.html': listedPage('<p>Maps — 3</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count after an equals sign', { '_payload.json': '[{"t":1},"maps = 3"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the map count with an em dash', { 'index.html': listedPage('<p>a 3—map series</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count with a minus sign', { 'index.html': listedPage('<p>a 3−map series</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];
