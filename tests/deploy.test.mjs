@@ -156,7 +156,7 @@ test('the prune keeps the release shown and the two newest besides it, and delet
 });
 
 // A folder the deploy user can't write into stands in for certbot's root-owned .well-known: deleting what is in it
-// fails with EACCES, as on max-cloud. Run as root, the folder is no obstacle and these two tests prove nothing.
+// fails with EACCES, as on max-cloud. Root can delete it anyway, so the tests that use it skip as root.
 function stuckReleases(name) {
   const folder = releases(name, ['r1', 'r2', 'r3', 'r4', 'r5']);
   const stuck = join(folder, 'r1', '.well-known');

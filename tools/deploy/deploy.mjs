@@ -129,8 +129,8 @@ if (!dryRun) {
   unfinished = null;
   const stuck = pruneReleases(RELEASES, basename(readlinkSync(SITE)), KEEP);
   if (stuck.length) {
-    console.error(`\nDeployed ${BRANCH} at ${sha} into ${relative(ROOT, release)}, and the site shows it, but an older release `
-      + `could not be deleted:\n${stuck.map((why) => `- ${why}`).join('\n')}`);
+    console.error(`\nDeployed ${BRANCH} at ${sha} into ${relative(ROOT, release)}, and the site shows it, but `
+      + `${stuck.length === 1 ? 'an older release' : 'older releases'} could not be deleted:\n${stuck.map((why) => `- ${why}`).join('\n')}`);
     process.exit(1);
   }
 }

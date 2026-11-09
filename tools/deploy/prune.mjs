@@ -46,7 +46,7 @@ function explain(path, error, uid, ownerOf) {
     return `${path}: ${error.message}. No file in it belongs to another user: check the permissions of its folders`;
   }
   const list = foreign.map((file) => `${file.path} (owned by ${userName(file.owner)})`).join(', ');
-  const certbot = foreign.some((file) => basename(file.path) === '.well-known')
+  const certbot = foreign.some((file) => file.owner === 0 && basename(file.path) === '.well-known')
     ? '. A root-owned .well-known is certbot\'s: its webroot belongs in the acme folder, outside the releases (README.md, "On max-cloud")'
     : '';
   return `${path}: ${error.code ?? error.message}. ${list} ${foreign.length === 1 ? 'is' : 'are'} not the deploy user's `
