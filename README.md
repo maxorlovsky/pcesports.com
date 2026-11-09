@@ -194,9 +194,10 @@ them.
   `nginx.prod.conf`, which includes no shared `/etc/nginx/snippets` file: a change to one would reach every site that
   includes it. Every HTTPS site on the server shares port 443, and one site's TLS settings can break another's
   handshakes, so they match the other sites' and change only together with them. `npm run nginx:test` holds
-  `ssl_protocols` to the agreed line, and fails on a snippet include or a `default_server`. A change takes effect at
-  nginx's next reload, whatever starts it (certbot's renewals too), so reload right after the deploy that brings it
-  (`sudo nginx -t && sudo systemctl reload nginx`), then check every site on the server answers:
+  `ssl_protocols` to the agreed line, and fails on a snippet include, a `default_server` or a TLS setting in
+  `old-urls.conf`. A change takes effect at nginx's next reload, whatever starts it (certbot's renewals too), so reload
+  right after the deploy that brings it (`sudo nginx -t && sudo systemctl reload nginx`), then check every site on the
+  server answers:
   `curl -sk -o /dev/null -w '%{http_code}\n' --resolve <host>:443:127.0.0.1 https://<host>/` for each host.
 - The vhost serves `https://www.pcesports.com`; plain HTTP and the bare domain redirect there. Cloudflare's proxy sits
   in front. No server block keeps an access log (the privacy page says so).

@@ -25,13 +25,14 @@ https_port=${NGINX_TEST_HTTPS_PORT:-18543}
 
 conf="$repo_root/tools/nginx/nginx.prod.conf"
 
-# The TLS protocols every site on max-cloud's port 443 runs. Sites on one port can break each other's handshakes, so
-# this matches the other sites' configs and changes only together with them (README.md, "On max-cloud").
+# The TLS protocols every site on max-cloud's port 443 runs: they match the other sites' and change only together with
+# them (README.md, "On max-cloud").
 tls_protocols='TLSv1 TLSv1.1 TLSv1.2'
 
 echo '== TLS rules'
 # Every HTTPS server block sets ssl_protocols itself, to the line above, and nothing sets it outside one, where it
-# would reach every site on the server. Comments are skipped; the file's braces are all nginx's own.
+# would reach every site on the server, or inside a location. Comments are skipped; the file's braces are all nginx's
+# own.
 rule_failures=$(awk -v want="$tls_protocols" '
   { line = $0; sub(/#.*/, "", line) }
   depth == 0 && line ~ /^[[:space:]]*server[[:space:]]*\{/ { block = NR; https = 0; protocols = 0 }
@@ -41,7 +42,7 @@ rule_failures=$(awk -v want="$tls_protocols" '
     sub(/^[[:space:]]*ssl_protocols[[:space:]]+/, "", value)
     sub(/[[:space:]]*;[[:space:]]*$/, "", value)
     gsub(/[[:space:]]+/, " ", value)
-    if (depth != 1) print "line " NR ": ssl_protocols outside a server block"
+    if (depth != 1) print "line " NR ": ssl_protocols not directly in a server block"
     else protocols++
     if (depth == 1 && value != want) print "line " NR ": ssl_protocols " value ", expected " want
   }
@@ -54,15 +55,19 @@ rule_failures=$(awk -v want="$tls_protocols" '
     if (closed > 0 && depth == 0) block = 0
   }
 ' "$conf")
-# A shared snippet (/etc/nginx/snippets) changes with the server, not with this file; default_server would make this
-# site's TLS settings the port's for every name no site claims
-rule_failures="$rule_failures$(grep -nE '^[^#]*include[[:space:]]+[^;#]*snippets/' "$conf" | sed 's/^\([0-9]*\):.*/\nline \1: includes a snippet/')"
-rule_failures="$rule_failures$(cd "$repo_root/tools/nginx" && grep -nE '^[^#]*default_server' nginx.prod.conf old-urls.conf | sed 's/^\([^:]*\):\([0-9]*\):.*/\n\1 line \2: default_server/')"
+# The same for old-urls.conf, which the www block includes: it sets no TLS setting at all. A shared snippet
+# (/etc/nginx/snippets) changes with the server, not with these files; default_server would make this site's TLS
+# settings the port's for every name no site claims.
+rule_failures="$rule_failures$(cd "$repo_root/tools/nginx" && {
+  grep -nE '^[^#]*include[[:space:]]+[^;#]*snippets/' nginx.prod.conf old-urls.conf | sed 's/^\([^:]*\):\([0-9]*\):.*/\n\1 line \2: includes a snippet/'
+  grep -nE '^[^#]*default_server' nginx.prod.conf old-urls.conf | sed 's/^\([^:]*\):\([0-9]*\):.*/\n\1 line \2: default_server/'
+  grep -nE '^[^#]*(^|[[:space:];{])ssl_' old-urls.conf | sed 's/^\([0-9]*\):.*/\nold-urls.conf line \1: a TLS setting, which belongs in nginx.prod.conf/'
+})"
 if [ -n "$rule_failures" ]; then
   echo "$rule_failures" | sed '/^$/d; s/^/FAIL /'
   exit 1
 fi
-echo "ok   ssl_protocols $tls_protocols in every HTTPS server block, no snippets, no default_server"
+echo "ok   ssl_protocols $tls_protocols in every HTTPS server block, none in old-urls.conf, no snippets, no default_server"
 
 mkdir -p "$work_dir/conf" "$work_dir/temp" "$work_dir/acme/.well-known/acme-challenge"
 echo 'challenge answer' > "$work_dir/acme/.well-known/acme-challenge/test-token"
