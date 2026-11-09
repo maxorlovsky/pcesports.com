@@ -235,9 +235,12 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   state.refreshed = refreshed;
 
   // While the results leave a gap (a first run or a run after days off, whose read failed), the ratings would miss
-  // teams' matches: the list keeps its entries (those whose VOD link still stands) rather than relabel them.
-  const linked = new Set(links.map((link) => link.videoId));
-  const entries = resultsComplete ? watchEntries(matches, links, state.results.list, now) : stored.watch.filter((entry) => linked.has(entry.videoId) && inList(entry.start, now));
+  // teams' matches: the list keeps its entries (those whose VOD link to that same match still stands) rather than
+  // relabel them.
+  const linked = new Set(links.map((link) => `${link.matchId} ${link.videoId}`));
+  const entries = resultsComplete
+    ? watchEntries(matches, links, state.results.list, now)
+    : stored.watch.filter((entry) => linked.has(`${entry.matchId} ${entry.videoId}`) && inList(entry.start, now));
   const files = new Map([
     [MATCHES_FILE, json({ source: 'PandaScore', matches })],
     [VODS_FILE, json({ vods: links })],

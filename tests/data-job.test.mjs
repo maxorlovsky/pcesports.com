@@ -361,6 +361,22 @@ test('while the results leave a gap, a failed read keeps the list as it was: a f
   assert.deepEqual(entries(), [4]);
 });
 
+test('while the results leave a gap, an entry whose VOD now links to another match leaves the list', async () => {
+  const { clone, origin, state } = scratch('watch-relinked');
+  const data = world();
+  const apis = fakeApis(data);
+  const options = { cwd: clone, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  await runJob({ ...options, stateDir: state, now: later(6) });
+  assert.deepEqual(dataFile(origin, WATCH_FILE).entries.map((entry) => [entry.matchId, entry.videoId]), [[1, 'vod1']]);
+
+  // PandaScore replaces match 1 with match 99 while a fresh state's read of the results fails: vod1 is now 99's
+  data.matches[0] = { ...data.matches[0], id: 99 };
+  data.fail = ['tournaments'];
+  await runJob({ ...options, stateDir: join(dir, 'watch-relinked', 'state-2'), now: later(7) });
+  assert.deepEqual(dataFile(origin, VODS_FILE).vods.map((link) => [link.matchId, link.videoId]), [[99, 'vod1']]);
+  assert.deepEqual(dataFile(origin, WATCH_FILE).entries, []);
+});
+
 test('a stored match from before map lengths were kept takes them from the year of results', async () => {
   const { clone, origin, state } = scratch('watch-map-lengths');
   const apis = fakeApis(world());

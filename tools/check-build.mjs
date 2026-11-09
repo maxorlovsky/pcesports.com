@@ -35,9 +35,9 @@ function files(dir) {
  *   JSON or as `window.__NUXT__ = {…}`);
  * - `code`: a script bundle, which holds unrelated keys and numbers of its own;
  * - `values`: the attributes that carry values for a script (`data-*`, `value`), read for ids and lengths;
- * - `text`: all a reader, a screen reader or a script gets (the page's text and comments, its text-bearing attributes,
- *   the data's strings with any markup in them, the text a stylesheet's `content` shows), read for a score or a map
- *   count.
+ * - `text`: all a reader or a screen reader gets from a page, its data and its styles (the page's text and comments, its
+ *   text-bearing attributes, the data's strings with any markup in them, the text a stylesheet's `content` shows), read
+ *   for a score or a map count; a script bundle's own strings are not read.
  */
 function parts(name, content) {
   if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(readData(content)) };
@@ -117,9 +117,10 @@ export function buildData(root = ROOT) {
  * match with no record is a problem of its own: the check can't know its result.
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
- * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets,
- * decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps", "Maps in this
- * series: 3"), an unquoted attribute, an `iframe`'s `srcdoc`, or invisible characters between the digits. The page's
+ * attributes, and for a score or a map count, in upper or lower case, in all the text of a page, its data and its
+ * styles, decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps", "Maps in this
+ * series: 3"), a script bundle's strings, an unquoted attribute, an `iframe`'s `srcdoc`, or invisible characters
+ * between the digits. The page's
  * own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
