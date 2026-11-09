@@ -26,7 +26,7 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
 | `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
 | `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
-| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
+| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www, the old URLs and Let's Encrypt's challenge (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are
 
@@ -176,7 +176,9 @@ key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the l
    fails stops the deploy, so a release never ships older data;
 4. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
 5. copies the build into `.releases/<time>-<commit>` and points the `site` link at it in one step. nginx serves `site`,
-   so a failed build leaves the site as it was. The two releases before it stay, to go back to.
+   so a failed build leaves the site as it was. The two releases before it stay, to go back to, and older ones are
+   deleted. One it can't delete leaves the site switched but ends the run red, naming the files in it that another user
+   owns (a root-owned `.well-known` is certbot's: see "On max-cloud").
 
 Actions → CI → Run workflow, on master, deploys again without a new commit; the data job starts the same run after it
 publishes new data. `npm run deploy -- --dry-run` in the clone checks the same and prints the steps without running
@@ -189,6 +191,12 @@ them.
   reload nginx: after one that changed either nginx file, run `sudo nginx -t && sudo systemctl reload nginx`.
 - The vhost serves `https://www.pcesports.com`; plain HTTP and the bare domain redirect there. Cloudflare's proxy sits
   in front. No server block keeps an access log (the privacy page says so).
+- The certificate, `pcesports.com` for both names, is Let's Encrypt's, renewed by certbot with the webroot method. Its
+  webroot for both names (`webroot_map` in `/etc/letsencrypt/renewal/pcesports.com.conf`) is
+  `/var/www/pcesports.com/acme`, which the vhost serves at `http://<name>/.well-known/acme-challenge/`. That folder is
+  in the clone, ignored by git, and outside `.releases` on purpose: certbot runs as root, and a root-owned `.well-known`
+  inside a release would stop the deploy that prunes that release, which the deploy user can't delete.
+  `sudo certbot renew --dry-run --cert-name pcesports.com` checks a renewal.
 - The deploy key, in `~max/.ssh/authorized_keys`, can run nothing but the forced command:
 
   ```

@@ -4,10 +4,13 @@
 // (fast-forward only) and runs the deploy it pulled, fetches the data branch's files, installs with npm ci, builds the
 // static site, checks the build, then points `site` (what nginx serves, tools/nginx/nginx.prod.conf) at it in one
 // step, keeping the releases before it to go back to. --dry-run checks the same and prints the steps without running them.
+// An older release it can't delete leaves the site switched but ends the run red (exit 1): a green run's log is never
+// read, and the same release would stay stuck on disk deploy after deploy.
 import { spawnSync } from 'node:child_process';
-import { cpSync, existsSync, lstatSync, readdirSync, readFileSync, readlinkSync, renameSync, rmSync, symlinkSync } from 'node:fs';
+import { cpSync, existsSync, lstatSync, readFileSync, readlinkSync, renameSync, rmSync, symlinkSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pruneReleases } from './prune.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const BRANCH = 'master';
@@ -124,11 +127,11 @@ if (!dryRun) {
   unfinished = release;
   point(SITE, release);
   unfinished = null;
-  const shown = basename(readlinkSync(SITE));
-  const all = readdirSync(RELEASES).sort();
-  const kept = all.filter((entry) => !entry.startsWith('.') && entry !== shown).slice(-KEEP);
-  for (const entry of all) {
-    if (entry !== shown && !kept.includes(entry)) rmSync(join(RELEASES, entry), { recursive: true, force: true });
+  const stuck = pruneReleases(RELEASES, basename(readlinkSync(SITE)), KEEP);
+  if (stuck.length) {
+    console.error(`\nDeployed ${BRANCH} at ${sha} into ${relative(ROOT, release)}, and the site shows it, but `
+      + `${stuck.length === 1 ? 'an older release' : 'older releases'} could not be deleted:\n${stuck.map((why) => `- ${why}`).join('\n')}`);
+    process.exit(1);
   }
 }
 console.log(`\n${dryRun ? 'Dry run: nothing ran.' : `Deployed ${BRANCH} at ${sha} into ${relative(ROOT, release)}.`}`);

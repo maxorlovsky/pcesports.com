@@ -11,6 +11,8 @@ dist
 /site.next
 /.releases
 /.deploy.lock
+# certbot's webroot for the HTTP challenge (tools/nginx/nginx.prod.conf)
+/acme
 # The data branch's files, which tools/data-job/pull.mjs puts there for a build
 /app/domains/*/data/
 # Local copies of the old apps, kept out of git
