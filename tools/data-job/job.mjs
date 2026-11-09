@@ -9,7 +9,7 @@ import {
   CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, REFRESH_DAYS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods,
   missingVods, pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
-import { LABELS, RESULTS_DAYS, WATCH_DATA, inList, mergeResults, toResult, watchEntries } from '../../app/domains/watch/index.ts';
+import { LABELS, RESULTS_DAYS, WATCH_DATA, inList, mergeResults, watchEntries } from '../../app/domains/watch/index.ts';
 import { fetchData, forgetData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
@@ -329,11 +329,11 @@ async function updateResults(state, fetchedRaw, window, now, pandascore, errors)
       ({ matches: backfill, requests } = await fetchPandaScoreTierResults({ ...pandascore, from, to: now, tiers: TIER_ONE }));
     } catch (error) {
       errors.push(`results for the team ratings: ${error.message}`);
-      state.results.list = mergeResults(state.results.list, fetchedRaw.map(toResult).filter(Boolean), now);
+      state.results.list = mergeResults(state.results.list, fetchedRaw, now);
       return done();
     }
   }
-  state.results.list = mergeResults(state.results.list, [...backfill, ...fetchedRaw].map(toResult).filter(Boolean), now);
+  state.results.list = mergeResults(state.results.list, [...backfill, ...fetchedRaw], now);
   state.results.readTo = now.toISOString();
   return done();
 }

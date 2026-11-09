@@ -30,9 +30,14 @@ test('a result is a finished, played tier s or a series between two teams; a lat
   const now = new Date(at(1));
   const old = toResult(rawMatch({ id: 6, start: at(-RESULTS_DAYS - 1) }));
   const first = toResult(rawMatch({ id: 7, start: START }));
-  const corrected = { ...first, winnerId: FALCONS };
-  const earlier = toResult(rawMatch({ id: 8, start: at(-1) }));
-  assert.deepEqual(mergeResults([old, first], [corrected, earlier], now), [earlier, corrected]);
+  const corrected = rawMatch({ id: 7, start: START, teams: ['falcons', 'navi'] });
+  const earlier = rawMatch({ id: 8, start: at(-1) });
+  assert.deepEqual(mergeResults([old, first], [corrected, earlier], now), [toResult(earlier), toResult(corrected)]);
+  // A match read again that is no result now leaves: a forfeit, a tier dropped to b
+  const forfeit = toResult(rawMatch({ id: 9, start: START }));
+  const demoted = toResult(rawMatch({ id: 10, start: START }));
+  const read = [{ ...rawMatch({ id: 9, start: START }), forfeit: true }, rawMatch({ id: 10, start: START, tier: 'b' })];
+  assert.deepEqual(mergeResults([forfeit, demoted, first], read, now), [first]);
 });
 
 test('the replay rates each team before each series, and counts its wins and losses in that tournament', () => {

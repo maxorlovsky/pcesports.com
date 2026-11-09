@@ -7,6 +7,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { tokenizer } from 'acorn';
 import { decodeHTML } from 'entities';
 import { MATCHES_FILE, WATCH_FILE } from './data-job/job.mjs';
 
@@ -33,15 +34,16 @@ function files(dir) {
  * A built file as the spoiler check reads it:
  * - `data`: what may carry a match's record: a JSON file, and every script a page holds inline (Nuxt's payload, as
  *   JSON or as `window.__NUXT__ = {…}`);
- * - `code`: a script bundle, which holds unrelated keys and numbers of its own;
+ * - `code`: a script bundle, which holds unrelated keys and numbers of its own, read for result keys and a listed
+ *   match's own `score: [2, 1]` or `maps: 3`;
  * - `values`: the attributes that carry values for a script (`data-*`, `value`), read for ids and lengths;
- * - `text`: all a reader or a screen reader gets from a page, its data and its styles (the page's text and comments, its
- *   text-bearing attributes, the data's strings with any markup in them, the text a stylesheet's `content` shows), read
- *   for a score or a map count; a script bundle's own strings are not read.
+ * - `text`: all a reader, a screen reader or a script can put on a page (the page's text and comments, its text-bearing
+ *   attributes, the data's strings and a bundle's, with any markup in them, the text a stylesheet's `content` shows),
+ *   read for a score, a map count or the winner.
  */
 function parts(name, content) {
   if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(readData(content)) };
-  if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
+  if (name.endsWith('.js')) return { data: '', code: content, values: [], text: decode(withMarkupDropped(stringsOf(content))) };
   if (name.endsWith('.css')) return { data: '', code: '', values: [], text: decode(shownByStyles(content)) };
   const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
   // A style attribute's value reaches the CSS parser with its entities decoded (Vue writes a bound style's quotes so)
@@ -64,7 +66,7 @@ function attr(html, pattern) {
  * neither.
  */
 const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|maps|games|forfeit)\b["']?\s*:/;
-const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
+const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|winner|mapSeconds)\b["']?\s*:/;
 /** The attributes that carry text or data a reader, a screen reader or a script gets; never SVG geometry or classes. */
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
 /** Between a score's two numbers, entities decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
@@ -85,7 +87,24 @@ function readData(data) {
     .replace(/\\u([\da-f]{4})|\\x([\da-f]{2})/gi, (escape, u, x) => String.fromCharCode(Number.parseInt(u ?? x, 16)))
     .replace(/\\[nrtfbv]/g, ' ')
     .replace(/\\([\s\S])/g, '$1');
-  return `${text} ${text.replace(/<[^>]+>/g, ' ')}`;
+  return withMarkupDropped(text);
+}
+
+/** Text as it is and again with any markup in it dropped ("<b>3</b> maps"). */
+const withMarkupDropped = (text) => `${text} ${text.replace(/<[^>]+>/g, ' ')}`;
+
+/**
+ * A script bundle's strings and template literals, their escapes written out: the text it can put on a page (its code
+ * holds digits of its own). A bundle that doesn't tokenize is read whole, which fails safe.
+ */
+function stringsOf(script) {
+  try {
+    return [...tokenizer(script, { ecmaVersion: 'latest', sourceType: 'module' })]
+      .filter((token) => token.type.label === 'string' || token.type.label === 'template')
+      .map((token) => token.value ?? '').join('\n');
+  } catch {
+    return script;
+  }
 }
 
 /**
@@ -113,15 +132,15 @@ export function buildData(root = ROOT) {
 
 /**
  * The results of the listed matches, as they could leak: each winner's team id and each map's length (as values in
- * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "Maps: 3"). A listed
- * match with no record is a problem of its own: the check can't know its result.
+ * data or attributes), each series score or map count as text ("2-1", "1 to 2", "3 maps", "Maps: 3") or in a bundle's
+ * code (`score: [2, 1]`, `maps: 3`), and the winner by name ("Winner: MOUZ", "MOUZ won"). A listed match with no record
+ * is a problem of its own: the check can't know its result.
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
- * attributes, and for a score or a map count, in upper or lower case, in all the text of a page, its data and its
- * styles, decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps", "Maps in this
- * series: 3"), a script bundle's strings, an unquoted attribute, an `iframe`'s `srcdoc`, or invisible characters
- * between the digits. The page's
- * own guarantee is what it is given: only the shown fields.
+ * attributes, and for a score, a map count or the winner, in upper or lower case, in all the text a page, its data, its
+ * styles and its scripts' strings put on it, decoded as a browser shows it. It can't read a sentence ("the second team
+ * went through", "three maps", "Maps in this series: 3"), an unquoted attribute, an `iframe`'s `srcdoc`, or invisible
+ * characters between the digits. The page's own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -136,6 +155,10 @@ function spoilers({ matches, entries }) {
     // "Maps: 3", "Map count = 3", "map 3"). Fails safe: "Best of 3 maps" on a match that went to 3 stops the build too.
     if (maps) scores.push(`${maps}\\W{0,3}maps?\\w*`, `maps?\\b\\D{0,15}${maps}`);
     const list = numbers.join('|');
+    const winner = (match.teams ?? []).find((team) => team.id === match.winnerId);
+    const names = [winner?.name, winner?.acronym].filter(Boolean).map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const named = `(?:${names.join('|')})`;
+    const values = [...(a === undefined ? [] : [`scores?["']?\\s*:\\s*\\[\\s*${a}\\s*,\\s*${b}\\s*\\]`]), ...(maps ? [`maps\\w*["']?\\s*:\\s*${maps}(?![\\d.])`] : [])];
     return {
       match: `match ${match.id}`,
       // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`, `w=3216`, `f(3216)`).
@@ -145,6 +168,10 @@ function spoilers({ matches, entries }) {
       // Not inside a word, a number, a date or a time ("12-1", "2-10", "10:2-1", "1.2-1", "2-1:30"), but next to a
       // full stop or a colon ("won 2-1.", "Score:2-1").
       score: scores.length ? new RegExp(`(?<![\\w‐‑–—−-]|\\d[.:])(${scores.join('|')})(?![\\w‐‑–—−-]|[.:]\\d)`, 'i') : null,
+      // The winner by name, next to a word that says so.
+      winner: names.length ? new RegExp(`(?<!\\w)(?:winners?\\W{0,3}${named}|${named}\\W{0,3}(?:won|wins|beat|beats|defeated|advances?))(?!\\w)`, 'i') : null,
+      // In a bundle's code, this match's own score or map count as values.
+      code: values.length ? new RegExp(`\\b(?:${values.join('|')})`) : null,
     };
   });
   return { leaks, missing };
@@ -212,7 +239,8 @@ export function checkBuild(dir, { data = buildData() } = {}) {
       if (leak.number?.test(data) || values.some((value) => leak.inAttribute?.test(value))) {
         problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
       }
-      if (leak.score?.test(text)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
+      if (leak.score?.test(text) || leak.code?.test(code)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
+      if (leak.winner?.test(text)) problem(`${name}: holds the winner of listed ${leak.match}, a spoiler`);
     }
   }
   return problems;

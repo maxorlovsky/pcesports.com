@@ -25,7 +25,7 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
 | `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
-| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id, a map length, a score or map count on a page) (`tools/check-build.mjs`) |
+| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are

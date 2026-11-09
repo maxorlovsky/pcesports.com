@@ -377,6 +377,30 @@ test('while the results leave a gap, an entry whose VOD now links to another mat
   assert.deepEqual(dataFile(origin, WATCH_FILE).entries, []);
 });
 
+test('a result PandaScore turns into a forfeit leaves the ratings\' results, on a full read and on a failed one', async () => {
+  const { clone, state } = scratch('watch-forfeit');
+  const data = world();
+  const options = { cwd: clone, secrets: SECRETS, fetch: fakeApis(data).fetch, push: false, stateDir: state };
+  const results = () => JSON.parse(readFileSync(join(state, 'state.json'), 'utf8')).results.list.map((result) => result.id);
+  await runJob({ ...options, now: later(6) });
+  assert.ok(results().includes(1));
+  data.matches[0] = { ...data.matches[0], forfeit: true };
+  await runJob({ ...options, now: later(7) });
+  assert.ok(!results().includes(1));
+
+  // Back, then a forfeit again, read while the year's read is due and fails: the window's read still drops it
+  data.matches[0] = { ...data.matches[0], forfeit: false };
+  await runJob({ ...options, now: later(8) });
+  assert.ok(results().includes(1));
+  const stored = JSON.parse(readFileSync(join(state, 'state.json'), 'utf8'));
+  writeFileSync(join(state, 'state.json'), JSON.stringify({ ...stored, results: { ...stored.results, readTo: null } }));
+  data.matches[0] = { ...data.matches[0], forfeit: true };
+  data.fail = ['tournaments'];
+  const failed = await runJob({ ...options, now: later(9) });
+  assert.match(failed.errors.join('\n'), /results for the team ratings/);
+  assert.ok(!results().includes(1));
+});
+
 test('a stored match from before map lengths were kept takes them from the year of results', async () => {
   const { clone, origin, state } = scratch('watch-map-lengths');
   const apis = fakeApis(world());

@@ -79,15 +79,18 @@ const listedPage = (body) => page({
     + `<a aria-label="Watch the VOD: IEM Beijing 2026, Playoffs · Semifinal 1, on YouTube" href="https://www.youtube.com/watch?v=v7">Watch the VOD</a>${body}`,
 }).replace('</head>', '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></head>');
 
+// A bundle's own code: the router's score field, digits around a minus, `.map(` with a number, and the page's strings
+const BUNDLE = 'return{re:o,score:r};const n=e.length-2-1;t.map(e=>e*3);x(`How it works: Never the score.`,"2026-11-02")';
+
 test('a build that lists a match without its result passes, years, sizes and the router\'s own score field and all', () => {
   // A time and a decimal around the score's digits are neither a score nor a spoiler
-  const index = listedPage('<p>Kick-off 10:2-1 slot, 1.2-1 odds, 2-1:30 runtime</p><p>© 2014-2026</p><p>3125 fans</p><p>The result: a list of matches.</p><svg><path d="M3 0-3 4 2-1z"/></svg>'
+  const index = listedPage('<p>Natus Vincere won their quarterfinal; winners of the week: none</p><p>Kick-off 10:2-1 slot, 1.2-1 odds, 2-1:30 runtime</p><p>© 2014-2026</p><p>3125 fans</p><p>The result: a list of matches.</p><svg><path d="M3 0-3 4 2-1z"/></svg>'
     + '<script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/"}}</script>');
   // Map lengths that are also the event's year and the Open Graph image's width
   const data = { ...LISTED, matches: [{ ...LISTED.matches[0], mapSeconds: [2026, 1200, 3962] }] };
   // A CSS string that a backslash carries over a line break goes on as one word: "2-10", not a score
   const css = '.x::after{content:"Since 2-1\\\n0 BC"}';
-  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}', '_nuxt/entry.css': css }, data), []);
+  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': BUNDLE, '_nuxt/entry.css': css }, data), []);
   // A listed match with no number to look for: nothing to find, and no crash
   const unnumbered = listedPage('<p data-x="1">MOUZ &#99999999;</p>');
   assert.deepEqual(build({ 'index.html': unnumbered }, { ...LISTED, matches: [{ ...LISTED.matches[0], winnerId: null, mapSeconds: [] }] }), []);
@@ -159,6 +162,15 @@ const spoiled = [
   ['the map count in a style attribute as Vue writes it', { 'index.html': listedPage('<p style="--c:&quot;3 maps&quot;;">MOUZ</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the score escaped in CSS', { '_nuxt/entry.css': '.x::after{content:"2\\-1"}' }, /_nuxt\/entry\.css: holds the score or map count of listed match 7/],
   ['the score escaped in a script', { 'index.html': listedPage('<script>window.x="2\\-1"</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the winner named on the page', { 'index.html': listedPage('<p>Winner: MOUZ</p>') }, /index\.html: holds the winner of listed match 7/],
+  ['the winner in a sentence', { 'index.html': listedPage('<p>mouz won the decider</p>') }, /index\.html: holds the winner of listed match 7/],
+  ['the winner by acronym', { 'index.html': listedPage('<p>NAVI beat them</p>') }, /index\.html: holds the winner of listed match 7/,
+    { ...LISTED, matches: [{ ...LISTED.matches[0], teams: [{ id: 3240, name: 'MOUZ', acronym: null }, { id: 3216, name: 'Natus Vincere', acronym: 'NAVI' }], winnerId: 3216 }] }],
+  ['the winner in a bundle\'s string', { '_nuxt/app.js': 'const t=`${a} — MOUZ won`' }, /_nuxt\/app\.js: holds the winner of listed match 7/],
+  ['the map count in a bundle\'s string', { '_nuxt/app.js': 'x("went to \\x33 maps")' }, /_nuxt\/app\.js: holds the score or map count of listed match 7/],
+  ['the winner key in a bundle', { '_nuxt/app.js': 'window.m={winner:"MOUZ"}' }, /_nuxt\/app\.js: holds a match result field \(winner:\)/],
+  ['the score as values in a bundle', { '_nuxt/app.js': 'window.m={score:[2,1]}' }, /_nuxt\/app\.js: holds the score or map count of listed match 7/],
+  ['the map count as a value in a bundle', { '_nuxt/app.js': 'window.m={maps:3}' }, /_nuxt\/app\.js: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

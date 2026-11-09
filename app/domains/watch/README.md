@@ -54,8 +54,8 @@ Invariants:
   winner, map count, rating or stakes). The page reads it on the server at build time (`useAsyncData` with
   `import.meta.server`), so its HTML and payload get only the shown entries. `npm run check:build` fails if a listed
   match's result fields or its winner's id or map lengths are in the build's data (JSON, inline scripts, value
-  attributes), or its score or map count is written out in the usual ways in a page, its data or its styles
-  (`tools/check-build.mjs` names what it can't read, a script bundle's strings among them).
+  attributes), or its score, map count or winner is written out in the usual ways in a page, its data, its styles or
+  a script's strings (`tools/check-build.mjs` names what it can't read).
 - **Teams on tap.** Later rounds name who won earlier ones, so every entry hides its teams until the visitor taps.
 - **Closeness has one entry point.** Everything it reads comes in through `ClosenessInput`: a paid source's per-map
   round scores would be one more field of its `maps`, and no other code changes.

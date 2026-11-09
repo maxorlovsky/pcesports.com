@@ -37,10 +37,17 @@ export function toResult(raw: PandaScoreMatch): Result | null {
   return { id: raw.id, at: raw.begin_at, tournamentId: raw.tournament_id, teams: [a, b], winnerId: raw.winner_id, bestOf: raw.number_of_games };
 }
 
-/** The stored results with the fetched ones replacing theirs, minus those older than `RESULTS_DAYS`, oldest first. */
-export function mergeResults(stored: Result[], fetched: Result[], now: Date): Result[] {
+/**
+ * The stored results with what a read of PandaScore returned replacing theirs (a match read again that is no result
+ * now, a forfeit or no longer tier s or a, leaves), minus those older than `RESULTS_DAYS`, oldest first.
+ */
+export function mergeResults(stored: Result[], read: PandaScoreMatch[], now: Date): Result[] {
   const byId = new Map(stored.map((result) => [result.id, result]));
-  for (const result of fetched) byId.set(result.id, result);
+  for (const raw of read) {
+    const result = toResult(raw);
+    if (result) byId.set(raw.id, result);
+    else byId.delete(raw.id);
+  }
   const oldest = now.getTime() - RESULTS_DAYS * DAY;
 
   return [...byId.values()].filter((result) => Date.parse(result.at) >= oldest).sort((a, b) => a.at.localeCompare(b.at) || a.id - b.id);
