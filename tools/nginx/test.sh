@@ -30,26 +30,25 @@ conf="$repo_root/tools/nginx/nginx.prod.conf"
 tls_protocols='TLSv1 TLSv1.1 TLSv1.2'
 
 echo '== TLS rules'
-# Read statement by statement, as nginx does (two on one line, or one over two lines, count the same), in both files:
+# Read statement by statement, split as nginx's own reader splits them (ngx_conf_read_token: a # or a quote is special
+# only where a word starts, a backslash escapes the next character, and a statement may span lines), in both files:
 # - every HTTPS server block sets ssl_protocols once, to the line above: nginx adds up repeated ones, and one outside a
 #   server block would reach every site on the server;
 # - old-urls.conf, which the www block includes, sets no TLS setting at all;
-# - nothing includes a file outside tools/nginx, such as a shared snippet (/etc/nginx/snippets), which changes with the
-#   server, not with this repository;
-# - no default_server, which would make this site's TLS settings the port's for every name no site claims.
-rule_failures=$(cd "$repo_root/tools/nginx" && awk -v want="$tls_protocols" -v own=/var/www/pcesports.com/tools/nginx/ '
+# - the one include is old-urls.conf, so these rules read everything nginx reads: never a shared snippet
+#   (/etc/nginx/snippets), which changes with the server, not with this repository;
+# - no listen claims default_server (or `default`, its other spelling), which would make this site's TLS settings
+#   the port's for every name no site claims.
+rule_failures=$(cd "$repo_root/tools/nginx" && awk -v want="$tls_protocols" -v own=/var/www/pcesports.com/tools/nginx/old-urls.conf '
   function fail(message) { print FILENAME " line " start ": " message }
-  function statement(end,   text, name, args) {
-    text = stmt
-    gsub(/[[:space:]]+/, " ", text)
-    sub(/^ /, "", text)
-    sub(/ $/, "", text)
-    name = text
+  function add_word() { words = words (words == "" ? "" : " ") word; word = "" }
+  function statement(end,   name, args) {
+    name = words
     sub(/ .*/, "", name)
-    args = substr(text, length(name) + 2)
-    if (text != "" && end != "}") {
-      if (name == "include" && index(args, own) != 1) fail("includes " args ", a file outside tools/nginx")
-      if (text ~ /(^| )default_server( |$)/) fail("default_server")
+    args = substr(words, length(name) + 2)
+    if (words != "") {
+      if (name == "include" && args != own) fail("includes " args ": the one include is " own)
+      if (name == "listen" && args ~ /(^| )default(_server)?( |$)/) fail("a listen claims default_server")
       if (FILENAME == "old-urls.conf" && name ~ /^ssl_/) fail("a TLS setting (" name "), which belongs in nginx.prod.conf")
       if (FILENAME == "nginx.prod.conf" && end == ";" && name == "listen" && depth == 1 && args ~ /(^|:)443( |$)| ssl( |$)/) https = 1
       if (FILENAME == "nginx.prod.conf" && name == "ssl_protocols") {
@@ -69,32 +68,57 @@ rule_failures=$(cd "$repo_root/tools/nginx" && awk -v want="$tls_protocols" -v o
         block = 0
       }
     }
-    stmt = ""
+    words = ""
   }
-  FNR == 1 { depth = 0; block = 0; stmt = ""; quote = "" }
+  FNR == 1 { depth = 0; block = 0; words = ""; word = ""; at_space = 1; comment = 0; escaped = 0; dq = 0; sq = 0; variable = 0; need_space = 0 }
   {
-    for (i = 1; i <= length($0); i++) {
-      c = substr($0, i, 1)
-      if (quote != "") {
-        stmt = stmt c
-        if (c == "\\") { i++; stmt = stmt substr($0, i, 1) }
-        else if (c == quote) quote = ""
+    line = $0 "\n"
+    for (i = 1; i <= length(line); i++) {
+      c = substr(line, i, 1)
+      space = c == " " || c == "\t" || c == "\r" || c == "\n"
+      if (comment) { if (c == "\n") comment = 0; continue }
+      if (escaped) { escaped = 0; word = word c; continue }
+      if (need_space) {
+        need_space = 0
+        if (space) { at_space = 1; continue }
+        if (c == ";" || c == "{") { at_space = 1; statement(c); continue }
+      }
+      if (at_space) {
+        if (space) continue
+        if (c == ";" || c == "{" || c == "}") { statement(c); continue }
+        if (c == "#") { comment = 1; continue }
+        if (words == "") start = FNR
+        at_space = 0
+        if (c == "\"") { dq = 1; continue }
+        if (c == "'"'"'") { sq = 1; continue }
+        variable = c == "$"
+        word = word c
         continue
       }
-      if (c == "#") break
-      if (c == ";" || c == "{" || c == "}") { statement(c); continue }
-      if (stmt ~ /^[[:space:]]*$/) { if (c ~ /[[:space:]]/) continue; start = FNR }
-      if (c == "\"" || c == "'"'"'") quote = c
-      stmt = stmt c
+      if (c == "{" && variable) { word = word c; continue }
+      variable = 0
+      if (c == "\\") { escaped = 1; word = word c; continue }
+      if (c == "$") { variable = 1; word = word c; continue }
+      if (dq || sq) {
+        if ((dq && c == "\"") || (sq && c == "'"'"'")) { dq = 0; sq = 0; need_space = 1; add_word() }
+        else word = word c
+        continue
+      }
+      if (space || c == ";" || c == "{") {
+        add_word()
+        at_space = 1
+        if (!space) statement(c)
+        continue
+      }
+      word = word c
     }
-    stmt = stmt " "
   }
 ' nginx.prod.conf old-urls.conf)
 if [ -n "$rule_failures" ]; then
   echo "$rule_failures" | sed '/^$/d; s/^/FAIL /'
   exit 1
 fi
-echo "ok   ssl_protocols $tls_protocols once in every HTTPS server block, no TLS setting in old-urls.conf, no include from outside tools/nginx, no default_server"
+echo "ok   ssl_protocols $tls_protocols once in every HTTPS server block, no TLS setting in old-urls.conf, no include but old-urls.conf, no default_server"
 
 mkdir -p "$work_dir/conf" "$work_dir/temp" "$work_dir/acme/.well-known/acme-challenge"
 echo 'challenge answer' > "$work_dir/acme/.well-known/acme-challenge/test-token"
