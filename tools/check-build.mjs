@@ -2,10 +2,13 @@
 // by the deploy before the site's link moves (tools/deploy/deploy.mjs), and in CI.
 //   node tools/check-build.mjs <dir>
 // Each page must carry its content in the HTML itself (readable with JavaScript off) and its SEO tags; the sitemap
-// must list exactly the indexable pages, at the canonical host; nothing of the old site may come back.
+// must list exactly the indexable pages, at the canonical host; nothing of the old site may come back; and no result
+// of a match the home page lists (score, winner, map count) may be anywhere in it (AGENTS.md, "No spoilers").
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+
+const ROOT = resolve(import.meta.dirname, '..');
 
 const SITE_URL = 'https://www.pcesports.com';
 /** Each page the build must have: its file, its path, and a sentence its HTML must hold without JavaScript. */
@@ -24,11 +27,47 @@ function files(dir) {
   });
 }
 
+/** A page's text as a reader sees it, without its tags, scripts and styles. */
+function html(page) {
+  return page.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ');
+}
+
 function attr(html, pattern) {
   return html.match(pattern)?.[1];
 }
 
-export function checkBuild(dir) {
+/** A stored match's result fields, as an object key in JSON or JavaScript: the record must never ship. */
+const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results|mapSeconds|forfeit)\b["']?\s*:/;
+
+/** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
+export function buildData(root = ROOT) {
+  const read = (path, key) => {
+    const file = join(root, path);
+    return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8'))[key] ?? [] : [];
+  };
+  return { matches: read('app/domains/matches/data/matches.json', 'matches'), entries: read('app/domains/watch/data/watch.json', 'entries') };
+}
+
+/**
+ * The results of the listed matches, as they could leak: each winner's team id and each map's length (as numbers in
+ * HTML or JSON), and each series score or map count as text a page shows ("2-1", "1:2", "3 maps").
+ */
+function spoilers({ matches, entries }) {
+  const byId = new Map(matches.map((match) => [match.id, match]));
+  return entries.map((entry) => byId.get(entry.matchId)).filter(Boolean).map((match) => {
+    const [a, b] = match.score ?? [];
+    const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 100);
+    const scores = a === undefined ? [] : [`${a}\\s*[-–:]\\s*${b}`, `${b}\\s*[-–:]\\s*${a}`];
+    if (match.mapSeconds?.length) scores.push(`${match.mapSeconds.length}\\s+maps?`);
+    return {
+      match: `match ${match.id}`,
+      number: numbers.length ? new RegExp(`(?<![\\w.])(${numbers.join('|')})(?![\\w.])`) : null,
+      score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
+    };
+  });
+}
+
+export function checkBuild(dir, { data = buildData() } = {}) {
   const problems = [];
   const problem = (message) => problems.push(message);
   if (!existsSync(dir)) return [`${dir} does not exist: run npm run generate first`];
@@ -73,12 +112,25 @@ export function checkBuild(dir) {
   else if (!readFileSync(robotsFile, 'utf8').includes(`Sitemap: ${SITE_URL}/sitemap.xml`)) problem('robots.txt does not name the sitemap');
   if (!existsSync(join(dir, 'og.png'))) problem('og.png, the Open Graph image, is missing');
 
+  const leaks = spoilers(data);
   for (const path of files(dir)) {
     const name = relative(dir, path);
     if (name.endsWith('.map')) problem(`${name}: a source map in the build`);
     if (!/\.(html|js|css|json|xml|txt)$/.test(name)) continue;
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
+    if (/\.(html|js|json)$/.test(name)) {
+      const key = content.match(RESULT_KEY);
+      if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);
+    }
+    // Numbers only in HTML and JSON: a script bundle is full of unrelated ones.
+    if (/\.(html|json)$/.test(name)) {
+      const visible = name.endsWith('.html') ? html(content) : '';
+      for (const leak of leaks) {
+        if (leak.number?.test(content)) problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
+        if (leak.score?.test(visible)) problem(`${name}: shows the score or map count of listed ${leak.match}, a spoiler`);
+      }
+    }
   }
   return problems;
 }

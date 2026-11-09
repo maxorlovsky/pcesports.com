@@ -1,10 +1,13 @@
 # matches
 
 Tier-1 CS2 matches from PandaScore's free plan: schedule and results. The data job (`tools/data-job/`) fetches and
-stores them; the `watch` domain will rank and show them. Depends on nothing yet (`site` is allowed, for the credit).
+stores them; the `watch` domain rates them and lists them on the home page. Depends on nothing yet (`site` is allowed,
+for the credit).
 
 - `index.ts` (plain TypeScript, for the data job and later the app):
   - `fetchPandaScoreMatches`: `/csgo/matches`, every match scheduled in a window, any tier, 100 per page.
+  - `fetchPandaScoreTierResults`: every past match of the tier s and a tournaments in a window, of any league
+    (`/csgo/tournaments`, then `/csgo/matches/past` by tournament): the year the `watch` domain's team ratings read.
   - `toMatch`: the stored record of a tier-1 match, or null. `isTierOne`, `organizerOf`, `TIER_ONE`.
   - `fetchWindow`, `mergeMatches`, `KEEP_DAYS`: what one run reads and how it merges into the stored list.
   - `startOf`, `eventOf`; the types `Match`, `Team`, `PandaScoreMatch`.
@@ -20,6 +23,8 @@ Invariants:
 - A match stays in the data until `KEEP_DAYS` (30) after its start. Each run reads the matches scheduled from 3 days
   ago to 14 days ahead and replaces that part of the list; a stored match in that window that PandaScore no longer
   returns is dropped.
-- Every page that shows this data shows "Source: PandaScore": the page that first does adds it to the `site` domain's
-  `DATA_CREDITS` (no page shows it yet).
+- Every page that shows this data shows "Source: PandaScore": the `site` domain's `DATA_CREDITS`, in every page's
+  footer.
+- The record holds the result (`winnerId`, `score`, `mapSeconds`, each played map's length), which no page may ship:
+  the `watch` domain writes what the home page shows into a list of its own.
 - The token is sent in a header, server side only, and never appears in an error.

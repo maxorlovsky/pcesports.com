@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { after, before, test } from 'node:test';
 import { fetchData, pruneData, publishData } from '../tools/data-job/data-branch.mjs';
-import { MATCHES_FILE, VODS_FILE, runJob } from '../tools/data-job/job.mjs';
+import { MATCHES_FILE, VODS_FILE, WATCH_FILE, runJob } from '../tools/data-job/job.mjs';
 import { BLAST_VODS, ESL_ARCHIVES, PGL_VODS, fakeApis, rawMatch, upload } from './fixtures/cs2.mjs';
 
 const REPO = resolve(import.meta.dirname, '..');
@@ -65,7 +65,7 @@ test('a run publishes the matches and YouTube ids only, as the data branch one c
   assert.deepEqual(run.errors, []);
   assert.equal(run.published.status, 'pushed');
   assert.equal(deploys, 1);
-  assert.deepEqual(dataFiles(origin), [MATCHES_FILE, VODS_FILE]);
+  assert.deepEqual(dataFiles(origin), [MATCHES_FILE, VODS_FILE, WATCH_FILE]);
   assert.equal(git(origin, 'rev-list', '--count', 'data'), '1');
   assert.deepEqual(dataFile(origin, VODS_FILE), { vods: [{ matchId: 1, videoId: 'vod1', channelId: ESL_ARCHIVES }] });
   assert.deepEqual(dataFile(origin, MATCHES_FILE).matches.map((match) => match.id), [1, 2]);
@@ -295,6 +295,47 @@ test('a whitelisted channel its parent no longer features is not read, and the r
   assert.deepEqual(JSON.parse(readFileSync(join(state, 'out', 'vods.json'), 'utf8')), { vods: [] });
 });
 
+test('the watch list: rated from a year of results read once, with no result in what it publishes', async () => {
+  const { clone, origin, state } = scratch('watch');
+  const data = world();
+  // A result from months ago, in another league: the ratings read it, the site does not list it
+  data.matches.push(rawMatch({ id: 9, start: later(-24 * 90).toISOString(), league: 'Esports World Cup', tournamentId: 90 }));
+  const apis = fakeApis(data);
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  const first = await runJob({ ...options, now: later(6) });
+  assert.deepEqual(first.errors, []);
+  const tournaments = () => apis.calls.filter((call) => call.endpoint === 'tournaments').length;
+  assert.equal(tournaments(), 1);
+  assert.deepEqual(JSON.parse(readFileSync(join(state, 'state.json'), 'utf8')).results.list.map((result) => result.id), [9, 1]);
+  const watch = dataFile(origin, WATCH_FILE);
+  assert.deepEqual(watch.entries.map((entry) => [entry.matchId, entry.videoId, entry.teams]), [[1, 'vod1', ['Natus Vincere', 'Team Falcons']]]);
+  assert.doesNotMatch(git(origin, 'show', `data:${WATCH_FILE}`), /score|winner|mapSeconds|stakes|3216/);
+  // The window covers what follows: no second read of the year
+  await runJob({ ...options, now: later(7) });
+  assert.equal(tournaments(), 1);
+});
+
+test('the year of results failing to load keeps the list as it was, and the next run reads it; so does a gap', async () => {
+  const { clone, origin, state } = scratch('watch-backfill');
+  const data = world();
+  data.fail = ['tournaments'];
+  const apis = fakeApis(data);
+  const options = { cwd: clone, stateDir: state, secrets: SECRETS, fetch: apis.fetch, push: true, deploy: async () => {} };
+  const failed = await runJob({ ...options, now: later(6) });
+  assert.match(failed.errors.join('\n'), /results for the team ratings: PandaScore \/csgo\/tournaments/);
+  assert.deepEqual(dataFile(origin, WATCH_FILE).entries, []);
+  data.fail = [];
+  await runJob({ ...options, now: later(7) });
+  assert.deepEqual(dataFile(origin, WATCH_FILE).entries.map((entry) => entry.matchId), [1]);
+  const reads = () => apis.calls.filter((call) => call.endpoint === 'tournaments').length;
+  assert.equal(reads(), 2);
+  // The job off for a week: the window no longer reaches back to the last read, so the stretch is read again
+  await runJob({ ...options, now: later(7 + 24 * 7) });
+  assert.equal(reads(), 3);
+  const since = apis.calls.filter((call) => call.endpoint === 'past').at(-1).params['range[begin_at]'].split(',')[0];
+  assert.equal(since, later(7 - 24).toISOString());
+});
+
 test('PandaScore down: the stored matches stay, the VOD side still runs, and the run says so', async () => {
   const { clone, origin, state } = scratch('pandascore-down');
   const data = world();
@@ -374,7 +415,7 @@ function command(name) {
   const root = join(dir, name);
   mkdirSync(join(root, 'repo', 'tools'), { recursive: true });
   cpSync(join(REPO, 'tools', 'data-job'), join(root, 'repo', 'tools', 'data-job'), { recursive: true });
-  for (const domain of ['site', 'matches', 'vods']) cpSync(join(REPO, 'app', 'domains', domain), join(root, 'repo', 'app', 'domains', domain), { recursive: true });
+  for (const domain of ['site', 'matches', 'vods', 'watch']) cpSync(join(REPO, 'app', 'domains', domain), join(root, 'repo', 'app', 'domains', domain), { recursive: true });
   return { repo: join(root, 'repo'), state: join(root, 'state'), env: join(root, 'data-job.env') };
 }
 

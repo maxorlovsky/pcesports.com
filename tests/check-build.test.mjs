@@ -19,7 +19,7 @@ function page({ title = 'A page', path, body, noindex = false }) {
     + `</head><body><main>${body}</main></body></html>`;
 }
 
-function build(change = {}) {
+function build(change = {}, data = { matches: [], entries: [] }) {
   dir = mkdtempSync(join(tmpdir(), 'pce-build-'));
   const files = {
     'index.html': page({ path: '/', body: '<h2>What should I watch?</h2>' }),
@@ -36,7 +36,7 @@ function build(change = {}) {
     mkdirSync(join(dir, name, '..'), { recursive: true });
     writeFileSync(join(dir, name), content);
   }
-  return checkBuild(dir);
+  return checkBuild(dir, { data });
 }
 
 afterEach(() => rmSync(dir, { recursive: true, force: true }));
@@ -62,6 +62,35 @@ const broken = [
 for (const [name, change, expected] of broken) {
   test(`it stops ${name}`, () => {
     const problems = build(change);
+    assert.ok(problems.some((problem) => expected.test(problem)), problems.join('\n') || 'no problem found');
+  });
+}
+
+// One listed match, MOUZ 2-1 NAVI over three maps, as the data job stores it and lists it.
+const LISTED = {
+  matches: [{ id: 7, teams: [{ id: 3240, name: 'MOUZ' }, { id: 3216, name: 'Natus Vincere' }], winnerId: 3240, score: [2, 1], mapSeconds: [3125, 2710, 3962] }],
+  entries: [{ matchId: 7, start: '2026-11-02T02:00:00Z', event: 'IEM Beijing 2026', stage: 'Playoffs · Semifinal 1', teams: ['MOUZ', 'Natus Vincere'], label: 'Must watch', videoId: 'v7' }],
+};
+const listedPage = (body) => page({ path: '/', body: `<h2>What should I watch?</h2><p>IEM Beijing 2026, Playoffs · Semifinal 1, Mon 2 Nov</p><details><summary>Show teams</summary>MOUZ vs Natus Vincere</details>${body}` });
+
+test('a build that lists a match without its result passes', () => {
+  assert.deepEqual(build({ 'index.html': listedPage(''), '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]' }, LISTED), []);
+});
+
+const spoiled = [
+  ['the score on the page', { 'index.html': listedPage('<p>MOUZ 2-1 Natus Vincere</p>') }, /shows the score or map count of listed match 7/],
+  ['the score the other way round', { 'index.html': listedPage('<p>1 : 2</p>') }, /shows the score or map count of listed match 7/],
+  ['the map count on the page', { 'index.html': listedPage('<p>went to 3 maps</p>') }, /shows the score or map count of listed match 7/],
+  ['the winner in the payload', { '_payload.json': '[{"teams":1,"w":3},["MOUZ","Natus Vincere"],3240]' }, /_payload\.json: holds a winner's team id or a map length of listed match 7/],
+  ['a map length in the HTML', { 'index.html': listedPage('<span data-length="3962"></span>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
+  ['the match record in a script', { '_nuxt/app.js': 'const m={winnerId:3240,score:[2,1]}' }, /_nuxt\/app\.js: holds a match result field \(winnerId:\)/],
+  ['the score field in the payload', { '_payload.json': '[{"score":1},[2,1]]' }, /_payload\.json: holds a match result field \("score":\)/],
+  ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
+];
+
+for (const [what, change, expected] of spoiled) {
+  test(`a build with ${what} fails`, () => {
+    const problems = build(change, LISTED);
     assert.ok(problems.some((problem) => expected.test(problem)), problems.join('\n') || 'no problem found');
   });
 }

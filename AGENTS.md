@@ -18,7 +18,7 @@ files only, one commit, never merged; agents never push to it.
 
 ## Domains
 
-The app is domain-modular: `app/domains/<domain>/`, today `site`, `matches` and `vods`; `watch` and `guides` are
+The app is domain-modular: `app/domains/<domain>/`, today `site`, `matches`, `vods` and `watch`; `guides` is
 planned (`docs/architecture.md` has their order, where the data job goes, and every rule).
 
 - Work in the domain that owns the change; read its `README.md` and `domain.json` first. A new domain comes with its
@@ -47,8 +47,10 @@ From the report and the owner's decisions; a change that bends one needs the own
   titles, lengths or publish times.
 - **30-day refresh:** YouTube API data the site stores is refreshed or deleted within 30 days, and deleted videos are
   dropped.
-- **No spoilers before the click:** before a visitor clicks through to a VOD, the site shows no score, winner, map
-  count, video length, YouTube thumbnail or chapters. A VOD is the site's own card with a deep link.
+- **No spoilers before the click:** nothing shown before the click lets a visitor read off the winner, the score or the
+  map count: not a label, not the list's order, not a later round's teams (`app/domains/watch/README.md`). No video
+  length, YouTube thumbnail or chapters either, and no result in the build (`npm run check:build`). A VOD is the site's
+  own card with a deep link.
 - API keys stay on the machine that runs the data job, never in the built site or the repository.
 
 ## Validators
