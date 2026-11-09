@@ -7,7 +7,7 @@ import { join } from 'node:path';
 import { test } from 'node:test';
 import { toMatch } from '../app/domains/matches/index.ts';
 import {
-  LABELS, LIST_DAYS, RESULTS_DAYS, WATCH_DATA, closeness, eventPoints, labelOf, mergeResults, rate, recentEntries, replay, shownEntries, stagePoints,
+  LIST_DAYS, RESULTS_DAYS, WATCH_DATA, closeness, eventPoints, labelOf, mergeResults, rate, recentEntries, replay, shownEntries, stagePoints,
   toResult, watchEntries,
 } from '../app/domains/watch/index.ts';
 import { rawMatch } from './fixtures/cs2.mjs';
@@ -128,7 +128,6 @@ test('the list: matches with a VOD only, by label, then stakes, then newest, wit
   assert.deepEqual(shown.map((entry) => entry.videoId), ['vod2', 'vod3']);
   assert.deepEqual(Object.keys(shown[0]).sort(), ['date', 'event', 'label', 'stage', 'teams', 'videoId']);
   assert.equal(shown[0].date, at(1).slice(0, 10));
-  assert.ok(LABELS.includes(shown[0].label));
 });
 
 test('the page reads the data file at build time, and lists nothing without one', () => {

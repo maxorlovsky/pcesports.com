@@ -96,8 +96,9 @@ Each run:
    (`app/domains/vods/README.md`, "The matcher"; a run whose PandaScore read failed links nothing new);
 5. rates every finished match with a VOD for the home page's list (`app/domains/watch/README.md`): the team ratings
    are replayed from a year of PandaScore's tier s and a results, which the state folder keeps. The first run reads
-   that year (about a dozen requests), and so does a run after the job was off longer than the 3 days each run reads;
-   until that read succeeds the list keeps its entries;
+   that year (about a dozen requests), and a run after the job was off longer than the 3 days each run reads catches
+   up on the stretch it missed; until such a read succeeds the list keeps its entries. A stored match from before the
+   record kept map lengths takes them from that year's read;
 6. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the deploy
    (`gh workflow run ci.yml --ref master`);
 7. writes `report.md`, `state.json` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`.

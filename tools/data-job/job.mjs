@@ -9,7 +9,7 @@ import {
   CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, REFRESH_DAYS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods,
   missingVods, pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
-import { LABELS, RESULTS_DAYS, mergeResults, toResult, watchEntries } from '../../app/domains/watch/index.ts';
+import { LABELS, RESULTS_DAYS, WATCH_DATA, mergeResults, toResult, watchEntries } from '../../app/domains/watch/index.ts';
 import { fetchData, forgetData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
@@ -28,13 +28,13 @@ const LOG_LINES = 5000;
 
 export const MATCHES_FILE = 'app/domains/matches/data/matches.json';
 export const VODS_FILE = 'app/domains/vods/data/vods.json';
-export const WATCH_FILE = 'app/domains/watch/data/watch.json';
+export const WATCH_FILE = WATCH_DATA;
 
 export function emptyState() {
   return {
     channels: {}, uploads: {}, refreshed: {}, whitelist: { checkedAt: null, failed: {} }, quota: { day: null, units: 0 }, deployPending: null, knownData: null, prunedAt: null,
     // The tier s and a results the team ratings are replayed from (watch domain), and when PandaScore was last read
-    // for them without a gap: until then the list keeps what it was.
+    // for them: while that leaves a gap before this run's window, the list keeps what it was.
     results: { readTo: null, list: [] },
   };
 }
@@ -165,8 +165,16 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
       unknownLeagues.set(raw.league.name, (unknownLeagues.get(raw.league.name) ?? 0) + 1);
     }
   }
-  const matches = mergeMatches(stored.matches, fetched, matchesWindow, now);
-  if (matchesFresh) pandascore.requests += await updateResults(state, pandascore.matches, window, now, { token: secrets.pandascore, fetch }, errors);
+  let matches = mergeMatches(stored.matches, fetched, matchesWindow, now);
+  if (matchesFresh) {
+    const results = await updateResults(state, pandascore.matches, window, now, { token: secrets.pandascore, fetch }, errors);
+    pandascore.requests += results.requests;
+    // A stored match from before the record had map lengths takes them from the year just read.
+    const read = new Map(results.read.map((raw) => [raw.id, raw]));
+    matches = matches.map((match) => (match.mapSeconds === undefined && read.has(match.id) ? toMatch(read.get(match.id)) ?? match : match));
+  }
+  // The results reach this run's window with no gap: the ratings know every team's matches up to it.
+  const resultsComplete = state.results.readTo !== null && Date.parse(state.results.readTo) >= window.from.getTime();
 
   const youtube = youtubeClient({ key: secrets.youtube, fetch });
   await checkWhitelist(youtube, state, now, errors);
@@ -226,10 +234,10 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   }
   state.refreshed = refreshed;
 
-  // Until the results are read without a gap, the ratings would be missing teams' strength: the list keeps its
-  // entries (those whose VOD link still stands) rather than relabel them.
+  // While the results leave a gap (a first run or a run after days off, whose read failed), the ratings would miss
+  // teams' matches: the list keeps its entries (those whose VOD link still stands) rather than relabel them.
   const linked = new Set(links.map((link) => link.videoId));
-  const entries = state.results.readTo ? watchEntries(matches, links, state.results.list, now) : stored.watch.filter((entry) => linked.has(entry.videoId));
+  const entries = resultsComplete ? watchEntries(matches, links, state.results.list, now) : stored.watch.filter((entry) => linked.has(entry.videoId));
   const files = new Map([
     [MATCHES_FILE, json({ source: 'PandaScore', matches })],
     [VODS_FILE, json({ vods: links })],
@@ -295,7 +303,7 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   };
   const missing = missingVods(matches, links, now);
   const unmatched = unmatchedUploads(uploads.filter((upload) => state.uploads[upload.id]), links);
-  writeAtomic(join(stateDir, 'report.md'), report({ now, summary, errors, matches, links, missing, unmatched, ambiguous, unknownLeagues, dropped: refresh.dropped, state, published, entries }));
+  writeAtomic(join(stateDir, 'report.md'), report({ now, summary, errors, matches, links, missing, unmatched, ambiguous, unknownLeagues, dropped: refresh.dropped, state, published, entries, resultsComplete }));
   appendLog(stateDir, `${now.toISOString()} ${errors.length ? 'errors' : 'ok'} matches=${summary.matches} vods=${summary.vods} listed=${summary.listed} new-uploads=${read} dropped=${summary.dropped} pandascore=${summary.pandascoreRequests} units=${summary.units} today=${summary.unitsToday} data=${published.status}${published.commit ? ` ${published.commit.slice(0, 7)}` : ''}${errors.length ? ` errors=${errors.length}` : ''}`);
 
   return { summary, errors, published, files };
@@ -303,13 +311,15 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
 
 /**
  * Merges the window's tier s and a results into the stored ones. A first run, or one after a gap the window doesn't
- * cover (the job off for days), first reads the missing stretch, back to `RESULTS_DAYS`: about a dozen requests for a
- * year. A failed read leaves `readTo` where it was, so the next run tries again. Returns the requests it made.
+ * cover (the job off for days), first reads the missing stretch, back to `RESULTS_DAYS` at most: about a dozen
+ * requests for a year. A failed read leaves `readTo` where it was, so the next run tries again. Returns the requests
+ * it made and the matches that read returned.
  */
 async function updateResults(state, fetchedRaw, window, now, pandascore, errors) {
   const readTo = state.results.readTo ? Date.parse(state.results.readTo) : null;
   let backfill = [];
   let requests = 0;
+  const done = () => ({ requests, read: backfill });
   if (readTo === null || readTo < window.from.getTime()) {
     const from = new Date(Math.max(readTo === null ? 0 : readTo - DAY, now.getTime() - RESULTS_DAYS * DAY));
     try {
@@ -317,12 +327,12 @@ async function updateResults(state, fetchedRaw, window, now, pandascore, errors)
     } catch (error) {
       errors.push(`results for the team ratings: ${error.message}`);
       state.results.list = mergeResults(state.results.list, fetchedRaw.map(toResult).filter(Boolean), now);
-      return requests;
+      return done();
     }
   }
   state.results.list = mergeResults(state.results.list, [...backfill, ...fetchedRaw].map(toResult).filter(Boolean), now);
   state.results.readTo = now.toISOString();
-  return requests;
+  return done();
 }
 
 export function appendLog(stateDir, line) {
@@ -337,7 +347,7 @@ const when = (match) => (startOf(match) ?? '').slice(0, 16).replace('T', ' ');
 const cell = (text) => String(text).replace(/\|/g, '\\|');
 
 /** The local report: what to look at in a few minutes a week. It holds YouTube titles, so it is never committed. */
-function report({ now, summary, errors, matches, links, missing, unmatched, ambiguous, unknownLeagues, dropped, state, published, entries }) {
+function report({ now, summary, errors, matches, links, missing, unmatched, ambiguous, unknownLeagues, dropped, state, published, entries, resultsComplete }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
   const uncovered = new Map();
   const covered = new Set(VOD_CHANNELS.flatMap((channel) => channel.organizers));
@@ -371,7 +381,7 @@ function report({ now, summary, errors, matches, links, missing, unmatched, ambi
     '',
     `## The watch list (${entries.length}): ${LABELS.map((label) => `${label} ${entries.filter((entry) => entry.label === label).length}`).join(', ')}`,
     '',
-    `Team ratings from ${state.results.list.length} tier s/a results, read up to ${state.results.readTo ?? 'never (the list keeps its entries until then)'}.`,
+    `Team ratings from ${state.results.list.length} tier s/a results, read up to ${state.results.readTo ?? 'never'}${resultsComplete ? '' : ': a gap before this run, so the list kept its entries'}.`,
     '',
     '## Tier s/a leagues not in app/domains/matches/leagues.json (left out)',
     '',

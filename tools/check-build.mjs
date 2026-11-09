@@ -7,6 +7,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { MATCHES_FILE, WATCH_FILE } from './data-job/job.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
@@ -27,9 +28,15 @@ function files(dir) {
   });
 }
 
-/** A page's text as a reader sees it, without its tags, scripts and styles. */
+/**
+ * What a page holds for a reader or a script: its text, its attributes' values (`aria-label`, `title`) and its inline
+ * JSON (Nuxt's payload), without its tags, code and styles.
+ */
 function html(page) {
-  return page.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ');
+  const json = [...page.matchAll(/<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]);
+  const markup = page.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
+  const attributes = [...markup.matchAll(/=\s*"([^"]*)"/g)].map((match) => match[1]);
+  return [markup.replace(/<[^>]+>/g, ' '), ...attributes, ...json].join(' ');
 }
 
 function attr(html, pattern) {
@@ -40,7 +47,7 @@ function attr(html, pattern) {
  * A stored match's result fields, as an object key: the record must never ship. In HTML and JSON (pages, payloads)
  * every field; in a script bundle only the names no library uses (Vue's router has a `score`).
  */
-const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results|mapSeconds|forfeit)\b["']?\s*:/;
+const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|games|forfeit)\b["']?\s*:/;
 const RESULT_KEY_IN_SCRIPT = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
@@ -49,27 +56,31 @@ export function buildData(root = ROOT) {
     const file = join(root, path);
     return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8'))[key] ?? [] : [];
   };
-  return { matches: read('app/domains/matches/data/matches.json', 'matches'), entries: read('app/domains/watch/data/watch.json', 'entries') };
+  return { matches: read(MATCHES_FILE, 'matches'), entries: read(WATCH_FILE, 'entries') };
 }
 
 /**
- * The results of the listed matches, as they could leak: each winner's team id and each map's length (as numbers in
- * HTML or JSON), and each series score or map count as text a page shows ("2-1", "1:2", "3 maps").
+ * The results of the listed matches, as they could leak: each winner's team id and each map's length (as values in
+ * HTML or JSON), and each series score or map count as text ("2-1", "1:2", "3 maps"). A listed match with no record
+ * is a problem of its own: the check can't know its result.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
-  return entries.map((entry) => byId.get(entry.matchId)).filter(Boolean).map((match) => {
+  const missing = entries.filter((entry) => !byId.has(entry.matchId)).map((entry) => entry.matchId);
+  const leaks = entries.map((entry) => byId.get(entry.matchId)).filter(Boolean).map((match) => {
     const [a, b] = match.score ?? [];
-    const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 100);
+    // From 1000: team ids start above it, a real map lasts longer, and a payload's own indexes stay below it.
+    const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 1000);
     const scores = a === undefined ? [] : [`${a}\\s*[-–:]\\s*${b}`, `${b}\\s*[-–:]\\s*${a}`];
     if (match.mapSeconds?.length) scores.push(`${match.mapSeconds.length}\\s+maps?`);
     return {
       match: `match ${match.id}`,
-      // As a serialised value (`,3216,`, `[3216]`, `:3216}`): a page's text holds years and counts of its own.
-      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*)(${numbers.join('|')})(?=\\s*[,\\]}])`) : null,
+      // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`): a page's text holds years and counts of its own.
+      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*"?)(${numbers.join('|')})(?="?\\s*[,\\]}])`) : null,
       score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
     };
   });
+  return { leaks, missing };
 }
 
 export function checkBuild(dir, { data = buildData() } = {}) {
@@ -117,7 +128,8 @@ export function checkBuild(dir, { data = buildData() } = {}) {
   else if (!readFileSync(robotsFile, 'utf8').includes(`Sitemap: ${SITE_URL}/sitemap.xml`)) problem('robots.txt does not name the sitemap');
   if (!existsSync(join(dir, 'og.png'))) problem('og.png, the Open Graph image, is missing');
 
-  const leaks = spoilers(data);
+  const { leaks, missing } = spoilers(data);
+  for (const id of missing) problem(`the watch list holds match ${id}, which the matches data lacks: its result can't be checked`);
   for (const path of files(dir)) {
     const name = relative(dir, path);
     if (name.endsWith('.map')) problem(`${name}: a source map in the build`);
@@ -130,10 +142,10 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     }
     // Numbers only in HTML and JSON (a page's inline payload, `_payload.json`): a script bundle is full of unrelated ones.
     if (/\.(html|json)$/.test(name)) {
-      const visible = name.endsWith('.html') ? html(content) : '';
+      const readable = name.endsWith('.html') ? html(content) : content;
       for (const leak of leaks) {
         if (leak.number?.test(content)) problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
-        if (leak.score?.test(visible)) problem(`${name}: shows the score or map count of listed ${leak.match}, a spoiler`);
+        if (leak.score?.test(readable)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
       }
     }
   }

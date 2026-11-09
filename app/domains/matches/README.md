@@ -4,7 +4,7 @@ Tier-1 CS2 matches from PandaScore's free plan: schedule and results. The data j
 stores them; the `watch` domain rates them and lists them on the home page. Depends on nothing yet (`site` is allowed,
 for the credit).
 
-- `index.ts` (plain TypeScript, for the data job and later the app):
+- `index.ts` (plain TypeScript, for the data job and the `watch` domain):
   - `fetchPandaScoreMatches`: `/csgo/matches`, every match scheduled in a window, any tier, 100 per page.
   - `fetchPandaScoreTierResults`: every past match of the tier s and a tournaments in a window, of any league
     (`/csgo/tournaments`, then `/csgo/matches/past` by tournament): the year the `watch` domain's team ratings read.

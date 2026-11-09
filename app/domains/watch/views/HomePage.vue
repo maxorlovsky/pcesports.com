@@ -19,9 +19,9 @@ const { data: entries } = await useAsyncData('watch-list', async (): Promise<Sho
 }, { default: () => [] });
 
 const NOTES: Record<Label, string> = {
-  'Must watch': 'The week\'s best: high stakes, and it delivered.',
+  'Must watch': 'The week\'s best. Start here.',
   'Worth a watch': 'Good matches, if you have the evening.',
-  'For fans': 'Only if you follow these teams.',
+  'For fans': 'For those who follow the event closely.',
 };
 
 const groups = computed(() => LABELS

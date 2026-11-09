@@ -4,7 +4,8 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, test } from 'node:test';
-import { checkBuild } from '../tools/check-build.mjs';
+import { MATCHES_FILE, WATCH_FILE } from '../tools/data-job/job.mjs';
+import { buildData, checkBuild } from '../tools/check-build.mjs';
 
 const SITE = 'https://www.pcesports.com';
 let dir;
@@ -79,19 +80,42 @@ test('a build that lists a match without its result passes, years, counts and th
 });
 
 const spoiled = [
-  ['the score on the page', { 'index.html': listedPage('<p>MOUZ 2-1 Natus Vincere</p>') }, /shows the score or map count of listed match 7/],
-  ['the score the other way round', { 'index.html': listedPage('<p>1 : 2</p>') }, /shows the score or map count of listed match 7/],
-  ['the map count on the page', { 'index.html': listedPage('<p>went to 3 maps</p>') }, /shows the score or map count of listed match 7/],
+  ['the score on the page', { 'index.html': listedPage('<p>MOUZ 2-1 Natus Vincere</p>') }, /holds the score or map count of listed match 7/],
+  ['the score the other way round', { 'index.html': listedPage('<p>1 : 2</p>') }, /holds the score or map count of listed match 7/],
+  ['the map count on the page', { 'index.html': listedPage('<p>went to 3 maps</p>') }, /holds the score or map count of listed match 7/],
   ['the winner in the payload', { '_payload.json': '[{"teams":1,"w":3},["MOUZ","Natus Vincere"],3240]' }, /_payload\.json: holds a winner's team id or a map length of listed match 7/],
   ['a map length in the page\'s inline payload', { 'index.html': listedPage('<script type="application/json" id="__NUXT_DATA__">[{"m":1},3962]</script>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
   ['the match record in a script', { '_nuxt/app.js': 'const m={winnerId:3240,score:[2,1]}' }, /_nuxt\/app\.js: holds a match result field \(winnerId:\)/],
   ['the score field in the payload', { '_payload.json': '[{"score":1},[2,1]]' }, /_payload\.json: holds a match result field \("score":\)/],
+  ['the score as text in the payload', { '_payload.json': '[{"teams":1,"s":3},["MOUZ","Natus Vincere"],"2-1"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the score in the page\'s inline payload', { 'index.html': listedPage('<script type="application/json" id="__NUXT_DATA__">[{"s":1},"1:2"]</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count in the payload', { '_payload.json': '[{"teams":1,"n":2},["MOUZ","Natus Vincere"],"3 maps"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the score in an attribute', { 'index.html': listedPage('<a aria-label="MOUZ won 2-1" href="#">VOD</a>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count in an attribute', { 'index.html': listedPage('<span title="3 maps"></span>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the winner\'s id as a string', { '_payload.json': '[{"w":1},"3240"]' }, /_payload\.json: holds a winner's team id or a map length of listed match 7/],
+  ['a result field', { '_payload.json': '[{"result":1},[2,1]]' }, /_payload\.json: holds a match result field \("result":\)/],
+  ['the maps field', { '_payload.json': '[{"games":1},[]]' }, /_payload\.json: holds a match result field \("games":\)/],
+  ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];
 
-for (const [what, change, expected] of spoiled) {
+for (const [what, change, expected, data = LISTED] of spoiled) {
   test(`a build with ${what} fails`, () => {
-    const problems = build(change, LISTED);
+    const problems = build(change, data);
     assert.ok(problems.some((problem) => expected.test(problem)), problems.join('\n') || 'no problem found');
   });
 }
+
+test('the check reads the data the build was made from, and nothing without it', () => {
+  const root = mkdtempSync(join(tmpdir(), 'pce-build-data-'));
+  try {
+    assert.deepEqual(buildData(root), { matches: [], entries: [] });
+    for (const [path, body] of [[MATCHES_FILE, { matches: LISTED.matches }], [WATCH_FILE, { entries: LISTED.entries }]]) {
+      mkdirSync(join(root, path, '..'), { recursive: true });
+      writeFileSync(join(root, path), JSON.stringify(body));
+    }
+    assert.deepEqual(buildData(root), LISTED);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

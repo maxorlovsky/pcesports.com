@@ -1,5 +1,5 @@
-// The after-match rating: stakes (known before the match) plus closeness (after it), as one of three labels. The
-// owner's ruling and the measurement behind every number here are on the card that built it (README.md).
+// The after-match rating: stakes (known before the match) plus closeness (after it), as one of three labels. Every
+// number here was measured on past matches for how much a label gives away; README.md has the measurement.
 import type { Match } from '../matches/index.ts';
 import { winChance } from './elo.ts';
 import type { BeforeMatch } from './elo.ts';
