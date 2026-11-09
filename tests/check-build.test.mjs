@@ -73,8 +73,9 @@ const LISTED = {
 };
 const listedPage = (body) => page({ path: '/', body: `<h2>What should I watch?</h2><p>IEM Beijing 2026, Playoffs · Semifinal 1, Mon 2 Nov</p><details><summary>Show teams</summary>MOUZ vs Natus Vincere</details>${body}` });
 
-test('a build that lists a match without its result passes', () => {
-  assert.deepEqual(build({ 'index.html': listedPage(''), '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]' }, LISTED), []);
+test('a build that lists a match without its result passes, years, counts and the router\'s own score field and all', () => {
+  const index = listedPage('<p>© 2014-2026</p><p>3125 fans</p>');
+  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, LISTED), []);
 });
 
 const spoiled = [
@@ -82,7 +83,7 @@ const spoiled = [
   ['the score the other way round', { 'index.html': listedPage('<p>1 : 2</p>') }, /shows the score or map count of listed match 7/],
   ['the map count on the page', { 'index.html': listedPage('<p>went to 3 maps</p>') }, /shows the score or map count of listed match 7/],
   ['the winner in the payload', { '_payload.json': '[{"teams":1,"w":3},["MOUZ","Natus Vincere"],3240]' }, /_payload\.json: holds a winner's team id or a map length of listed match 7/],
-  ['a map length in the HTML', { 'index.html': listedPage('<span data-length="3962"></span>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
+  ['a map length in the page\'s inline payload', { 'index.html': listedPage('<script type="application/json" id="__NUXT_DATA__">[{"m":1},3962]</script>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
   ['the match record in a script', { '_nuxt/app.js': 'const m={winnerId:3240,score:[2,1]}' }, /_nuxt\/app\.js: holds a match result field \(winnerId:\)/],
   ['the score field in the payload', { '_payload.json': '[{"score":1},[2,1]]' }, /_payload\.json: holds a match result field \("score":\)/],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],

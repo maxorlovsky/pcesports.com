@@ -36,8 +36,12 @@ function attr(html, pattern) {
   return html.match(pattern)?.[1];
 }
 
-/** A stored match's result fields, as an object key in JSON or JavaScript: the record must never ship. */
+/**
+ * A stored match's result fields, as an object key: the record must never ship. In HTML and JSON (pages, payloads)
+ * every field; in a script bundle only the names no library uses (Vue's router has a `score`).
+ */
 const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results|mapSeconds|forfeit)\b["']?\s*:/;
+const RESULT_KEY_IN_SCRIPT = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -61,7 +65,8 @@ function spoilers({ matches, entries }) {
     if (match.mapSeconds?.length) scores.push(`${match.mapSeconds.length}\\s+maps?`);
     return {
       match: `match ${match.id}`,
-      number: numbers.length ? new RegExp(`(?<![\\w.])(${numbers.join('|')})(?![\\w.])`) : null,
+      // As a serialised value (`,3216,`, `[3216]`, `:3216}`): a page's text holds years and counts of its own.
+      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*)(${numbers.join('|')})(?=\\s*[,\\]}])`) : null,
       score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
     };
   });
@@ -120,10 +125,10 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
     if (/\.(html|js|json)$/.test(name)) {
-      const key = content.match(RESULT_KEY);
+      const key = content.match(name.endsWith('.js') ? RESULT_KEY_IN_SCRIPT : RESULT_KEY);
       if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);
     }
-    // Numbers only in HTML and JSON: a script bundle is full of unrelated ones.
+    // Numbers only in HTML and JSON (a page's inline payload, `_payload.json`): a script bundle is full of unrelated ones.
     if (/\.(html|json)$/.test(name)) {
       const visible = name.endsWith('.html') ? html(content) : '';
       for (const leak of leaks) {
