@@ -5,7 +5,7 @@
     "the data credits the footer shows",
     "the layout: header, footer, skip link",
     "every page's title, description, canonical URL and Open Graph tags (usePageSeo)",
-    "the home page's content, the privacy page and the error page"
+    "the privacy page and the error page"
   ],
   "allowedDomainDependencies": []
 }

@@ -24,8 +24,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches` and `vods` rules and the data job (against fake APIs and a scratch origin) |
-| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, and nothing of the old site (`tools/check-build.mjs`) |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
+| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www and the old URLs (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
 
 ## Where things are
@@ -34,9 +34,11 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
   lists what it owns.
   - `site`: the site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`),
     the layout, header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags),
-    and the home, privacy and 404 pages' content.
+    and the privacy and 404 pages' content.
   - `matches` and `vods`: the CS2 matches from PandaScore and their official VODs, which the data job keeps current
-    (see "Data job"). No page shows them yet.
+    (see "Data job").
+  - `watch`: the after-match rating and the "What should I watch?" list the data job writes, and the home page that
+    shows it (its `README.md` has the formula and the no-spoiler rules).
 - `app/app.vue`, `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed
   places; each file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
@@ -92,9 +94,14 @@ Each run:
 4. reads the new uploads of each whitelisted VOD channel through its uploads playlist, re-reads the uploads it first saw
    live, re-checks the whitelist once a day, refreshes every linked video weekly, and links each match to its VOD
    (`app/domains/vods/README.md`, "The matcher"; a run whose PandaScore read failed links nothing new);
-5. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the deploy
+5. rates the finished matches of the last 7 days that have a VOD, for the home page's list
+   (`app/domains/watch/README.md`): the team ratings are replayed from a year of PandaScore's tier s and a results,
+   which the state folder keeps. The first run reads that year (about a dozen requests), and a run after the job was
+   off longer than the 3 days each run reads catches up on the stretch it missed; until such a read succeeds the list
+   keeps its entries. A stored match from before the record kept map lengths takes them from that year's read;
+6. publishes the data branch if the data changed and the last publish is 30 minutes old or more, then starts the deploy
    (`gh workflow run ci.yml --ref master`);
-6. writes `report.md`, `state.json` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`.
+7. writes `report.md`, `state.json` and a line in `job.log` in its state folder, `~/.local/state/pcesports-data-job/`.
    With nothing wrong it prints nothing; a problem goes to stderr and the exit code is 1.
 
 **Batching:** at most one publish per 30 minutes (2 minutes' slack for how long a run takes, so it is the second run
@@ -112,18 +119,21 @@ them (no reflog holds them), so old YouTube ids don't linger in `.git`. Both dep
 (`.deploy.lock`) and CI's concurrency group, so they never overlap. CI's runs on master pull the data too; pull requests
 build without it.
 
-**What it stores.** Committed: the matches (PandaScore's data, credited "Source: PandaScore" wherever shown) and, per
-match, YouTube's video and channel ids. On the machine only, in `state.json`: each upload's title, publish time and
-length, kept 14 days after they were last read, and when each linked video was last refreshed. `report.md` lists the
-finished matches with no VOD 12 hours after their start, the full-length uploads no match links, the dropped links, the
-tier-1 leagues left out, and every link, for hand checks.
+**What it stores.** Committed: the matches (PandaScore's data, credited "Source: PandaScore" wherever shown), per
+match, YouTube's video and channel ids, and the home page's list (`watch.json`: what the page shows, with the video id
+and no result). On the machine only, in `state.json`: each upload's title, publish time and length, kept 14 days after
+they were last read, when each linked video was last refreshed, and a year of tier s and a results for the team
+ratings. `report.md` gives the list's count per label, and lists the finished matches with no VOD 12 hours after their
+start, the full-length uploads no match links, the dropped links, the tier-1 leagues left out, and every link, for
+hand checks.
 
 **YouTube quota:** measured per run with the 4 VOD channels: 4 units (one `playlistItems.list` each), plus 1 when there
 are uploads to read (`videos.list`), plus 1 when linked videos fall due for their weekly refresh (per 50), plus 4 once a
 day for the whitelist check. A cold first run cost 9 and a 15-day backfill 10. A day of 15-minute runs is 96 x 4 = 384
 units when nothing is new, about 580 on a busy day: under 6% of the 10,000-unit daily quota (a failing whitelist check
 retries every run, up to 4 units more each, still under 10%). `job.log` gives each run's units and the day's total
-(`today=`). PandaScore: 5 requests per run, about 20 an hour of its 1,000.
+(`today=`). PandaScore: 5 requests per run, about 20 an hour of its 1,000, plus about 12 for a year of results on a
+first run.
 
 **The env file**, `~/.config/pcesports/data-job.env` (or `--env <path>`, or `PCESPORTS_DATA_JOB_ENV`), outside the
 repository and `chmod 600` (the job refuses anything else):

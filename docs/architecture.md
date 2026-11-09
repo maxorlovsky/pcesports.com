@@ -9,10 +9,10 @@ enforces the rules below on every `npm test`, so in CI too.
 
 | Domain | Owns | May depend on | State |
 |---|---|---|---|
-| `site` | the site's address, name, contact and sitemap, the footer's data credits, the layout, `usePageSeo`, the home, privacy and error pages | - | exists |
+| `site` | the site's address, name, contact and sitemap, the footer's data credits, the layout, `usePageSeo`, the privacy and error pages | - | exists |
 | `matches` | CS2 fixtures and results from PandaScore (free plan): fetching, normalising, which matches the site lists | `site` | exists |
 | `vods` | the organisers' official YouTube VOD channels: the whitelist, reading their uploads, matching a VOD to its match, the 30-day refresh | `site`, `matches` | exists |
-| `watch` | the "What should I watch?" ranking and its page, with each VOD shown as the site's own card | `site`, `matches`, `vods` | planned |
+| `watch` | the "What should I watch?" after-match rating, the list the data job writes, and the home page that shows it, each VOD as the site's own card | `site`, `matches`, `vods` | exists |
 | `guides` | the guides and their pages | `site` | planned |
 
 So the order is `site` <- `matches` <- `vods` <- `watch`, with `guides` beside them on `site`. A domain depends only on
@@ -33,11 +33,11 @@ syntax (no `enum`, `namespace` or constructor parameter properties), and resolve
 is why a plain part imports by relative path with the `.ts` or `.json` extension (`../site/index.ts`,
 `./data/matches.json` with `with { type: 'json' }`), never reaches Vue or Nuxt, and why `npm test` loads every domain's
 `index.ts` in Node. The data files it writes belong to the domain whose rules write them
-(`app/domains/matches/data/matches.json`, `app/domains/vods/data/vods.json`), and the app reads them through that
-domain's entry. They live on the `data` branch, never in the code branches: the job publishes that branch, and a build
-gets the files from it (`tools/data-job/pull.mjs`), so in a checkout the `data/` folders are ignored by git and hold
-only what the last pull put there. Code that reads them handles a build with none (a pull request's, or before the job's
-first publish).
+(`app/domains/matches/data/matches.json`, `app/domains/vods/data/vods.json`, `app/domains/watch/data/watch.json`), and
+the app reads them through that domain (the home page reads `watch.json` at build time only). They live on the
+`data` branch, never in the code branches: the job publishes that branch, and a build gets the files from it
+(`tools/data-job/pull.mjs`), so in a checkout the `data/` folders are ignored by git and hold only what the last pull
+put there. Code that reads them handles a build with none (a pull request's, or before the job's first publish).
 
 ## Where code goes
 

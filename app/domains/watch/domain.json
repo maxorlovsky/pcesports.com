@@ -1,0 +1,10 @@
+{
+  "name": "watch",
+  "owns": [
+    "the after-match rating: stakes before the match plus closeness after it, as one of three labels",
+    "team strength: an Elo rating replayed over a year of PandaScore tier s and a results",
+    "the list the data job writes (data/watch.json): what the home page shows, in order, with no result in it",
+    "the home page: the hero and the \"What should I watch?\" list, each VOD as the site's own card"
+  ],
+  "allowedDomainDependencies": ["site", "matches", "vods"]
+}
