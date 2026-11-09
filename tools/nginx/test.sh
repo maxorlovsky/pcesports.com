@@ -1,10 +1,11 @@
 #!/bin/sh
 # Tests tools/nginx/nginx.prod.conf in a throwaway, non-root nginx (the live `nginx -t` needs root):
-#   1. `nginx -t` on the file as it is, with test ports and a self-signed certificate in place of the Let's Encrypt
-#      ones, and copies of the snippets it includes from /etc/nginx/snippets;
+#   1. the file's TLS rules (below), then `nginx -t` on the file as it is, with test ports, a self-signed certificate
+#      and test DH parameters in place of the Let's Encrypt ones;
 #   2. with a build (`npm run generate` -> .output/public, or the folder given as $1), it also runs that nginx on the
 #      build and checks what each URL answers: pages, the 404 page, the redirects to www, old-urls.conf's 301s and
-#      410s (docs/old-urls.md), and Let's Encrypt's challenge, served from a scratch `acme` folder.
+#      410s (docs/old-urls.md), Let's Encrypt's challenge, served from a scratch `acme` folder, and the three headers
+#      of every HTTPS answer.
 # Run it before committing an edit to either file: `npm run nginx:test`. It needs nginx and curl, not root.
 set -eu
 
@@ -22,30 +23,65 @@ trap cleanup EXIT
 http_port=${NGINX_TEST_HTTP_PORT:-18580}
 https_port=${NGINX_TEST_HTTPS_PORT:-18543}
 
-mkdir -p "$work_dir/conf/snippets" "$work_dir/temp" "$work_dir/acme/.well-known/acme-challenge"
+conf="$repo_root/tools/nginx/nginx.prod.conf"
+
+# The TLS protocols every site on max-cloud's port 443 runs. Sites on one port can break each other's handshakes, so
+# this matches the other sites' configs and changes only together with them (README.md, "On max-cloud").
+tls_protocols='TLSv1 TLSv1.1 TLSv1.2'
+
+echo '== TLS rules'
+# Every HTTPS server block sets ssl_protocols itself, to the line above, and nothing sets it outside one, where it
+# would reach every site on the server. Comments are skipped; the file's braces are all nginx's own.
+rule_failures=$(awk -v want="$tls_protocols" '
+  { line = $0; sub(/#.*/, "", line) }
+  depth == 0 && line ~ /^[[:space:]]*server[[:space:]]*\{/ { block = NR; https = 0; protocols = 0 }
+  depth == 1 && line ~ /^[[:space:]]*listen[[:space:]]/ && line ~ /([[:space:]:]443|[[:space:]]ssl)[[:space:];]/ { https = 1 }
+  line ~ /^[[:space:]]*ssl_protocols[[:space:]]/ {
+    value = line
+    sub(/^[[:space:]]*ssl_protocols[[:space:]]+/, "", value)
+    sub(/[[:space:]]*;[[:space:]]*$/, "", value)
+    gsub(/[[:space:]]+/, " ", value)
+    if (depth != 1) print "line " NR ": ssl_protocols outside a server block"
+    else protocols++
+    if (depth == 1 && value != want) print "line " NR ": ssl_protocols " value ", expected " want
+  }
+  {
+    opened = gsub(/\{/, "{", line)
+    closed = gsub(/\}/, "}", line)
+    depth += opened - closed
+    if (closed > 0 && depth == 0 && block && https && protocols != 1)
+      print "line " block ": an HTTPS server block with " protocols " ssl_protocols lines, expected 1"
+    if (closed > 0 && depth == 0) block = 0
+  }
+' "$conf")
+# A shared snippet (/etc/nginx/snippets) changes with the server, not with this file; default_server would make this
+# site's TLS settings the port's for every name no site claims
+rule_failures="$rule_failures$(grep -nE '^[^#]*include[[:space:]]+[^;#]*snippets/' "$conf" | sed 's/^\([0-9]*\):.*/\nline \1: includes a snippet/')"
+rule_failures="$rule_failures$(cd "$repo_root/tools/nginx" && grep -nE '^[^#]*default_server' nginx.prod.conf old-urls.conf | sed 's/^\([^:]*\):\([0-9]*\):.*/\n\1 line \2: default_server/')"
+if [ -n "$rule_failures" ]; then
+  echo "$rule_failures" | sed '/^$/d; s/^/FAIL /'
+  exit 1
+fi
+echo "ok   ssl_protocols $tls_protocols in every HTTPS server block, no snippets, no default_server"
+
+mkdir -p "$work_dir/conf" "$work_dir/temp" "$work_dir/acme/.well-known/acme-challenge"
 echo 'challenge answer' > "$work_dir/acme/.well-known/acme-challenge/test-token"
 openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=nginx-test \
   -keyout "$work_dir/conf/test.key" -out "$work_dir/conf/test.crt" 2>/dev/null
+# RFC 7919's ffdhe2048, the group of certbot's ssl-dhparams.pem
+openssl genpkey -genparam -algorithm DH -pkeyopt group:ffdhe2048 -out "$work_dir/conf/test-dhparams.pem"
 
-for snippet in $(sed -nE 's/^[[:space:]]*include[[:space:]]+snippets\/([^;[:space:]]+);.*/\1/p' "$repo_root/tools/nginx/nginx.prod.conf" | sort -u); do
-  if [ -r "/etc/nginx/snippets/$snippet" ]; then
-    cp "/etc/nginx/snippets/$snippet" "$work_dir/conf/snippets/$snippet"
-  else
-    echo "snippets/$snippet is not in /etc/nginx/snippets" >&2
-    exit 1
-  fi
-done
-
-# Test ports, the test certificate, and the repository's files and build in place of the live clone's
+# Test ports, the test certificate and DH parameters, and the repository's files and build in place of the live clone's
 sed -E \
   -e "s/^([[:space:]]*listen[[:space:]]+(\[::\]:)?)80([[:space:];])/\1$http_port\3/" \
   -e "s/^([[:space:]]*listen[[:space:]]+(\[::\]:)?)443([[:space:];])/\1$https_port\3/" \
   -e "s#^([[:space:]]*ssl_certificate[[:space:]]+)[^;]+;#\\1$work_dir/conf/test.crt;#" \
   -e "s#^([[:space:]]*ssl_certificate_key[[:space:]]+)[^;]+;#\\1$work_dir/conf/test.key;#" \
+  -e "s#^([[:space:]]*ssl_dhparam[[:space:]]+)[^;]+;#\\1$work_dir/conf/test-dhparams.pem;#" \
   -e "s#/var/www/pcesports.com/site#$build_dir#g" \
   -e "s#/var/www/pcesports.com/acme#$work_dir/acme#g" \
   -e "s#/var/www/pcesports.com/tools/nginx/#$repo_root/tools/nginx/#g" \
-  "$repo_root/tools/nginx/nginx.prod.conf" > "$work_dir/conf/site.conf"
+  "$conf" > "$work_dir/conf/site.conf"
 
 cat > "$work_dir/conf/nginx.conf" <<CONF
 pid $pid_file;
@@ -78,11 +114,14 @@ echo "== URLs, served from $build_dir"
 failures=0
 
 # check <scheme> <host> <path> <status> [location | text the body must hold]
+# An HTTPS answer that nginx's add_header covers (2xx and 3xx: the server block's headers have no `always`) must carry
+# the three headers: a location with an add_header of its own would drop them.
 check() {
   port=$https_port
   [ "$1" = http ] && port=$http_port
   # A response curl refuses (a broken header) counts as status 000, a failure, rather than stopping the script
-  out=$(curl -sk -o "$work_dir/body" -w '%{http_code} %{redirect_url}' --resolve "$2:$port:127.0.0.1" "$1://$2:$port$3") || out="${out:-000 }"
+  : > "$work_dir/headers"
+  out=$(curl -sk -o "$work_dir/body" -D "$work_dir/headers" -w '%{http_code} %{redirect_url}' --resolve "$2:$port:127.0.0.1" "$1://$2:$port$3") || out="${out:-000 }"
   code=${out%% *}
   location=${out#* }
   ok=1
@@ -93,10 +132,20 @@ check() {
       *) grep -qF "$5" "$work_dir/body" || ok=0 ;;
     esac
   fi
+  missing=
+  case "$1 $code" in
+    'https 20'[0146] | 'https 30'[123478])
+      for header in 'strict-transport-security: max-age=63072000; includeSubdomains' 'x-frame-options: DENY' \
+        'x-content-type-options: nosniff'; do
+        grep -qiF "$header" "$work_dir/headers" || missing="$missing, no ${header%%:*}"
+      done
+      [ -z "$missing" ] || ok=0
+      ;;
+  esac
   if [ $ok = 1 ]; then
     echo "ok   $1://$2$3 -> $code${location:+ $location}"
   else
-    echo "FAIL $1://$2$3 -> $code${location:+ $location}, expected $4${5:+ $5}"
+    echo "FAIL $1://$2$3 -> $code${location:+ $location}$missing, expected $4${5:+ $5}"
     failures=$((failures + 1))
   fi
 }
@@ -190,9 +239,9 @@ if [ -n "${OLD_URLS:-}" ]; then
   echo "Answers for $OLD_URLS written to $OLD_URLS.answers.csv"
 fi
 
-if grep -v -e 'ssl_stapling' "$work_dir/error.log" | grep -q .; then
+if [ -s "$work_dir/error.log" ]; then
   echo '== nginx error log'
-  grep -v -e 'ssl_stapling' "$work_dir/error.log" | sed "s#$work_dir#<tmp>#g"
+  sed "s#$work_dir#<tmp>#g" "$work_dir/error.log"
 fi
 if [ "$failures" -gt 0 ]; then
   echo "$failures URL check(s) failed"

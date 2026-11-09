@@ -26,7 +26,7 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
 | `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
 | `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
-| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: `nginx -t`, then the answers of the pages, the redirects to www, the old URLs and Let's Encrypt's challenge (`tools/nginx/test.sh`). Needs nginx and the `/etc/nginx/snippets` it includes (the factory machine's copy of `ssl-params.conf`), so it runs on the factory machine, not in CI |
+| `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: its TLS rules (see "On max-cloud"), `nginx -t`, then the answers of the pages, the redirects to www, the old URLs, Let's Encrypt's challenge and the three headers of every HTTPS answer (`tools/nginx/test.sh`). Needs nginx, so it runs on the factory machine, not in CI |
 
 ## Where things are
 
@@ -189,6 +189,15 @@ them.
 - `/etc/nginx/sites-enabled/pcesports.com` is a symlink to `tools/nginx/nginx.prod.conf` in the live clone. nginx
   reads it at every reload, so never move, rename or delete that file, and keep the clone on master. A deploy doesn't
   reload nginx: after one that changed either nginx file, run `sudo nginx -t && sudo systemctl reload nginx`.
+- The vhost's TLS settings (protocols, ciphers, session cache, DH parameters) and its three headers
+  (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options) are written out in each HTTPS server block of
+  `nginx.prod.conf`, which includes no shared `/etc/nginx/snippets` file: a change to one would reach every site that
+  includes it. Every HTTPS site on the server shares port 443, and one site's TLS settings can break another's
+  handshakes, so they match the other sites' and change only together with them. `npm run nginx:test` holds
+  `ssl_protocols` to the agreed line, and fails on a snippet include or a `default_server`. A change takes effect at
+  nginx's next reload, whatever starts it (certbot's renewals too), so reload right after the deploy that brings it
+  (`sudo nginx -t && sudo systemctl reload nginx`), then check every site on the server answers:
+  `curl -sk -o /dev/null -w '%{http_code}\n' --resolve <host>:443:127.0.0.1 https://<host>/` for each host.
 - The vhost serves `https://www.pcesports.com`; plain HTTP and the bare domain redirect there. Cloudflare's proxy sits
   in front. No server block keeps an access log (the privacy page says so).
 - The certificate, `pcesports.com` for both names, is Let's Encrypt's, renewed by certbot with the webroot method. Its
