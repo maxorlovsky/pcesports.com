@@ -86,7 +86,7 @@ test('a build that lists a match without its result passes, years, sizes and the
   const data = { ...LISTED, matches: [{ ...LISTED.matches[0], mapSeconds: [2026, 1200, 3962] }] };
   assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, data), []);
   // A listed match with no number to look for: nothing to find, and no crash
-  const unnumbered = listedPage('<p data-x="1">MOUZ</p>');
+  const unnumbered = listedPage('<p data-x="1">MOUZ &#99999999; 2.1 12:10</p>');
   assert.deepEqual(build({ 'index.html': unnumbered }, { ...LISTED, matches: [{ ...LISTED.matches[0], winnerId: null, mapSeconds: [] }] }), []);
 });
 
@@ -125,6 +125,11 @@ const spoiled = [
   ['the map count with a non-breaking space', { 'index.html': listedPage('<p>3&nbsp;maps</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the winner\'s id ending an inline script', { 'index.html': listedPage('<script>window.__W = 3240\n</script>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
   ['the winner\'s id as an argument', { 'index.html': listedPage('<script>show(3240)</script>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
+  ['the score ending a sentence', { 'index.html': listedPage('<p>MOUZ won 2-1.</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count ending a sentence', { '_payload.json': '[{"t":1},"It went to 3 maps."]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the score after a colon', { 'index.html': listedPage('<p>Score:2-1</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count with a bare non-breaking space', { 'index.html': listedPage('<p>3&nbspmaps</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score with thin spaces and a dash entity', { 'index.html': listedPage('<p>2&thinsp;&dash;&thinsp;1</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

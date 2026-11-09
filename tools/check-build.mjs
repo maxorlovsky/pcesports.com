@@ -64,14 +64,18 @@ const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
 /** Between the two numbers of a score, once entities are decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
 const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
-const NAMED_ENTITIES = { nbsp: ' ', ndash: '–', mdash: '—', minus: '−', hyphen: '‐', colon: ':', amp: '&' };
+const NAMED_ENTITIES = {
+  nbsp: ' ', ensp: ' ', emsp: ' ', thinsp: ' ', ndash: '–', mdash: '—', minus: '−', hyphen: '‐', dash: '‐', colon: ':', amp: '&',
+};
+/** A reference, its `;` optional as browsers read it: `&#45;`, `&#x2D;`, `&ndash;`, `&nbsp` (longer names first). */
+const ENTITY = new RegExp(`&(?:#(\\d+);?|#x([\\da-f]+);?|(${Object.keys(NAMED_ENTITIES).sort((a, b) => b.length - a.length).join('|')});?)`, 'gi');
 
-/** Text with its character references written out (`&#45;`, `&#x2D;`, `&ndash;`, `&nbsp;`), so one pattern reads both. */
+/** Text with its character references written out, so one pattern reads both. */
 function decode(text) {
-  return text.replace(/&(?:#(\d+)|#x([\da-f]+)|(\w+));/gi, (entity, decimal, hex, name) => {
-    if (decimal) return String.fromCodePoint(Number(decimal));
-    if (hex) return String.fromCodePoint(Number.parseInt(hex, 16));
-    return NAMED_ENTITIES[name.toLowerCase()] ?? entity;
+  return text.replace(ENTITY, (entity, decimal, hex, name) => {
+    const code = decimal ? Number(decimal) : hex ? Number.parseInt(hex, 16) : null;
+    if (code !== null) return code <= 0x10ffff ? String.fromCodePoint(code) : entity;
+    return NAMED_ENTITIES[name.toLowerCase()];
   });
 }
 
@@ -90,7 +94,7 @@ export function buildData(root = ROOT) {
  * every series plays). A listed match with no record is a problem of its own: the check can't know its result.
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
- * attributes, and for a score or a map count, in any case, in all the text a reader or a script gets. It can't read a
+ * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets. It can't read a
  * sentence ("the second team won"). The page's own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
@@ -111,7 +115,8 @@ function spoilers({ matches, entries }) {
       number: numbers.length ? new RegExp(`(?<=[:,[=(]\\s*"?)(${list})(?="?(?:\\s*[,\\]});]|\\s|$))`) : null,
       // A value attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
       inAttribute: numbers.length ? new RegExp(`(?<![\\w.:-])(${list})(?![\\w.:-])`) : null,
-      score: scores.length ? new RegExp(`(?<![\\w.:‐‑–—−-])(${scores.join('|')})(?![\\w.‐‑–—−-]|:\\d)`, 'i') : null,
+      // Not inside a word, a number, a date or a time ("12-1", "2-10", "10:2", "2.1"), but before a full stop or a colon.
+      score: scores.length ? new RegExp(`(?<![\\w‐‑–—−-]|\\d[.:])(${scores.join('|')})(?![\\w‐‑–—−-]|[.:]\\d)`, 'i') : null,
     };
   });
   return { leaks, missing };
