@@ -85,7 +85,9 @@ test('a build that lists a match without its result passes, years, sizes and the
     + '<script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/"}}</script>');
   // Map lengths that are also the event's year and the Open Graph image's width
   const data = { ...LISTED, matches: [{ ...LISTED.matches[0], mapSeconds: [2026, 1200, 3962] }] };
-  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, data), []);
+  // A CSS string that a backslash carries over a line break goes on as one word: "2-10", not a score
+  const css = '.x::after{content:"Since 2-1\\\n0 BC"}';
+  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}', '_nuxt/entry.css': css }, data), []);
   // A listed match with no number to look for: nothing to find, and no crash
   const unnumbered = listedPage('<p data-x="1">MOUZ &#99999999;</p>');
   assert.deepEqual(build({ 'index.html': unnumbered }, { ...LISTED, matches: [{ ...LISTED.matches[0], winnerId: null, mapSeconds: [] }] }), []);
@@ -152,6 +154,11 @@ const spoiled = [
   ['the map count in a stylesheet\'s content', { 'index.html': listedPage('<style>.x::after{content:"3 maps"}</style>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the score in a style attribute', { 'index.html': listedPage('<p style="--c:\'2-1\'">MOUZ</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the score in a CSS file', { '_nuxt/entry.css': '.x::after{content:"2\\2d 1"}' }, /_nuxt\/entry\.css: holds the score or map count of listed match 7/],
+  ['the map count between strings holding < and >', { '_payload.json': '[{"t":1},"I \\u003C3 CS","3 maps","a > b"]' }, /_payload\.json: holds the score or map count of listed match 7/],
+  ['the score between script strings holding < and >', { 'index.html': listedPage('<script>window.x=["a <3","2-1","b >"]</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count in a style attribute as Vue writes it', { 'index.html': listedPage('<p style="--c:&quot;3 maps&quot;;">MOUZ</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score escaped in CSS', { '_nuxt/entry.css': '.x::after{content:"2\\-1"}' }, /_nuxt\/entry\.css: holds the score or map count of listed match 7/],
+  ['the score escaped in a script', { 'index.html': listedPage('<script>window.x="2\\-1"</script>') }, /index\.html: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

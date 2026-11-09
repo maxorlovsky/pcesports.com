@@ -44,7 +44,8 @@ function parts(name, content) {
   if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
   if (name.endsWith('.css')) return { data: '', code: '', values: [], text: decode(shownByStyles(content)) };
   const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
-  const styles = [...content.matchAll(/<style[^>]*>([\s\S]*?)<\/style>|\sstyle\s*=\s*(["'])([\s\S]*?)\2/g)].map((match) => match[1] ?? match[3]);
+  // A style attribute's value reaches the CSS parser with its entities decoded (Vue writes a bound style's quotes so)
+  const styles = [...content.matchAll(/<style[^>]*>([\s\S]*?)<\/style>|\sstyle\s*=\s*(["'])([\s\S]*?)\2/g)].map((match) => match[1] ?? decodeHTML(match[3]));
   const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
   const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)];
   const values = attributes.filter((match) => /^(data-|value$)/.test(match[1])).map((match) => match[3]);
@@ -75,22 +76,30 @@ const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
 const decode = (text) => decodeHTML(text).replace(/\s+/g, ' ');
 
 /**
- * Data's strings as they would show: their escapes written out (JSON's `\n`, `\u002F`, a script's `\x20`, `\f`), then
- * any markup in them dropped, as a page would render it ("<b>3</b> maps").
+ * Data's strings as they would show: their escapes written out (JSON's `\n`, `\u002F`, a script's `\x20`, `\-`), as
+ * they are and again with any markup in them dropped ("<b>3</b> maps"). Dropping markup from the whole blob would let
+ * a "<3" in one string and a ">" in a later one hide all between them, so the text keeps both.
  */
 function readData(data) {
-  return data
+  const text = data
     .replace(/\\u([\da-f]{4})|\\x([\da-f]{2})/gi, (escape, u, x) => String.fromCharCode(Number.parseInt(u ?? x, 16)))
     .replace(/\\[nrtfbv]/g, ' ')
-    .replace(/<[^>]+>/g, ' ');
+    .replace(/\\([\s\S])/g, '$1');
+  return `${text} ${text.replace(/<[^>]+>/g, ' ')}`;
 }
 
-/** The text a stylesheet shows: its `content` strings (`::after { content: "…" }`), custom properties' strings too. */
+/**
+ * The text a stylesheet shows: its strings (`::after { content: "…" }`, custom properties'), with CSS's escapes
+ * written out: a hex one (`\2d `), a backslash before a line break (the string goes on), one before any other character.
+ */
 function shownByStyles(css) {
-  return [...css.matchAll(/(["'])((?:\\.|(?!\1).)*)\1/g)].map((match) => match[2].replace(/\\[\da-f]{1,6}\s?/gi, (escape) => {
-    const code = Number.parseInt(escape.slice(1), 16);
-    return code <= 0x10ffff ? String.fromCodePoint(code) : ' ';
-  })).join(' ');
+  return [...css.matchAll(/(["'])((?:\\[\s\S]|(?!\1)[^\\])*)\1/g)].map((match) => match[2]
+    .replace(/\\\r?\n/g, '')
+    .replace(/\\([\da-f]{1,6})\s?|\\([\s\S])/gi, (escape, hex, other) => {
+      if (other !== undefined) return other;
+      const code = Number.parseInt(hex, 16);
+      return code <= 0x10ffff ? String.fromCodePoint(code) : ' ';
+    })).join(' ');
 }
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
