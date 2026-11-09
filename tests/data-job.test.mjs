@@ -342,16 +342,20 @@ test('while the results leave a gap, a failed read keeps the list as it was: a f
   assert.deepEqual(entries().sort(), [1, 3]);
   assert.equal(reads(), 3);
 
-  // The job off for a week, then a read of the missed stretch that fails: the list stays, until a read succeeds
-  played(4, 13 + 24 * 6, ['mouz', 'vitality']);
+  // The job off for 5 days, then a read of the missed stretch that fails: the list stays, until a read succeeds
+  played(4, 13 + 24 * 4, ['mouz', 'vitality']);
   data.fail = ['tournaments'];
-  await runJob({ ...options, stateDir: fresh, now: later(13 + 24 * 7) });
+  await runJob({ ...options, stateDir: fresh, now: later(13 + 24 * 5) });
   assert.deepEqual(entries().sort(), [1, 3]);
   data.fail = [];
-  await runJob({ ...options, stateDir: fresh, now: later(14 + 24 * 7) });
+  await runJob({ ...options, stateDir: fresh, now: later(14 + 24 * 5) });
   assert.deepEqual(entries().sort(), [1, 3, 4]);
   const since = apis.calls.filter((call) => call.endpoint === 'past').at(-1).params['range[begin_at]'].split(',')[0];
   assert.equal(since, later(13 - 24).toISOString());
+  // Matches older than LIST_DAYS leave the list, and that is a change the job publishes
+  const aged = await runJob({ ...options, stateDir: fresh, now: later(14 + 24 * 7.5) });
+  assert.equal(aged.published.status, 'pushed');
+  assert.deepEqual(entries(), [4]);
 });
 
 test('a stored match from before map lengths were kept takes them from the year of results', async () => {

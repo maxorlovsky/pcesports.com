@@ -104,7 +104,7 @@ test('a 2-0 and a 2-1 with the same first two maps get the same rating: the labe
   assert.equal(rate({ ...final(5, [2, 0]), forfeit: true }, undefined, SCALE), null);
 });
 
-test('the list: matches with a VOD only, by label, then stakes, then newest, with nothing in it but what the page shows', () => {
+test('the list: matches of the last days with a VOD only, by label, then stakes, then newest, with nothing in it but what the page shows', () => {
   const now = new Date(at(3));
   const raws = [
     rawMatch({ id: 1, start: at(0), name: 'Quarterfinal 1: A vs B', stage: 'Playoffs' }),
@@ -113,10 +113,12 @@ test('the list: matches with a VOD only, by label, then stakes, then newest, wit
     rawMatch({ id: 4, start: at(0.2), name: 'Semifinal 1: A vs B', stage: 'Playoffs', minutes: [55, 40] }),
     rawMatch({ id: 5, start: at(2), name: 'Semifinal 2: A vs B', stage: 'Playoffs' }),
     rawMatch({ id: 6, start: at(2.5), name: 'Grand Final: A vs B', stage: 'Playoffs', status: 'running' }),
+    rawMatch({ id: 7, start: at(3 - LIST_DAYS - 0.1), name: 'Grand Final: A vs B', stage: 'Playoffs' }),
   ];
   const matches = raws.map(toMatch);
-  const links = [1, 2, 3, 4, 6].map((matchId) => ({ matchId, videoId: `vod${matchId}`, channelId: 'c' }));
-  const entries = watchEntries(matches, links, raws.map(toResult).filter(Boolean), now);
+  const links = [1, 2, 3, 4, 6, 7].map((matchId) => ({ matchId, videoId: `vod${matchId}`, channelId: 'c' }));
+  // Match 7 began before the list's days: it is left out (and out of the ratings, which stay as they were)
+  const entries = watchEntries(matches, links, raws.filter((raw) => raw.id !== 7).map(toResult).filter(Boolean), now);
   assert.deepEqual(entries.map((entry) => [entry.matchId, entry.label]), [[2, 'Must watch'], [4, 'Worth a watch'], [1, 'For fans'], [3, 'For fans']]);
   assert.deepEqual(entries[0], {
     matchId: 2, start: at(1), event: 'IEM Beijing 2026', stage: 'Playoffs · Grand Final', teams: ['MOUZ', 'Vitality'], label: 'Must watch', videoId: 'vod2',

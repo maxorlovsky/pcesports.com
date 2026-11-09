@@ -55,8 +55,9 @@ export function strengthScale(results: Result[], before: ReturnType<typeof repla
 }
 
 /**
- * Every finished, played match with a VOD, rated: by label, then by stakes (known before the match, so the order says
- * no more than the label does), then newest first.
+ * Every finished, played match with a VOD that began in the `LIST_DAYS` before `now`, rated: by label, then by stakes
+ * (known before the match, so the order says no more than the label does), then newest first. Only those days: a
+ * match ageing out changes the data, so the job publishes and the site is built again without it.
  */
 export function watchEntries(matches: Match[], links: VodLink[], results: Result[], now: Date): WatchEntry[] {
   const before = replay(results);
@@ -66,7 +67,7 @@ export function watchEntries(matches: Match[], links: VodLink[], results: Result
   for (const match of matches) {
     const videoId = videos.get(match.id);
     const start = startOf(match);
-    const rating = videoId && start ? rate(match, before.get(match.id), scale) : null;
+    const rating = videoId && start && inList(start, now) ? rate(match, before.get(match.id), scale) : null;
     const [home, away] = match.teams;
     if (!rating || !videoId || !start || !home || !away) continue;
     const round = roundOf(match);
@@ -98,10 +99,15 @@ export interface ShownEntry {
   label: Label;
 }
 
-/** The entries of the `LIST_DAYS` before `now`, in the data's order, cut to what the page shows. */
+/** Whether a match that began at `start` belongs to the list of the `LIST_DAYS` before `now`. */
+export function inList(start: string, now: Date): boolean {
+  const at = Date.parse(start);
+  return at >= now.getTime() - LIST_DAYS * DAY && at <= now.getTime();
+}
+
+/** The entries of the `LIST_DAYS` before `now` (the build's time), in the data's order, cut to what the page shows. */
 export function recentEntries(entries: WatchEntry[], now: Date): ShownEntry[] {
-  const from = now.getTime() - LIST_DAYS * DAY;
   return entries
-    .filter((entry) => Date.parse(entry.start) >= from && Date.parse(entry.start) <= now.getTime())
+    .filter((entry) => inList(entry.start, now))
     .map(({ videoId, start, event, stage, teams, label }) => ({ videoId, date: start.slice(0, 10), event, stage, teams, label }));
 }

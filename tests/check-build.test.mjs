@@ -72,11 +72,21 @@ const LISTED = {
   matches: [{ id: 7, teams: [{ id: 3240, name: 'MOUZ' }, { id: 3216, name: 'Natus Vincere' }], winnerId: 3240, score: [2, 1], bestOf: 3, mapSeconds: [3125, 2710, 3962] }],
   entries: [{ matchId: 7, start: '2026-11-02T02:00:00Z', event: 'IEM Beijing 2026', stage: 'Playoffs · Semifinal 1', teams: ['MOUZ', 'Natus Vincere'], label: 'Must watch', videoId: 'v7' }],
 };
-const listedPage = (body) => page({ path: '/', body: `<h2>What should I watch?</h2><p>IEM Beijing 2026, Playoffs · Semifinal 1, Mon 2 Nov</p><details><summary>Show teams</summary>MOUZ vs Natus Vincere</details>${body}` });
+const listedPage = (body) => page({
+  path: '/',
+  body: '<h2>What should I watch?</h2><p>IEM Beijing 2026</p><p>Playoffs · Semifinal 1</p><time datetime="2026-11-02">Mon 2 Nov</time>'
+    + '<details><summary>Show teams</summary>MOUZ vs Natus Vincere</details>'
+    + `<a aria-label="Watch the VOD: IEM Beijing 2026, Playoffs · Semifinal 1, on YouTube" href="https://www.youtube.com/watch?v=v7">Watch the VOD</a>${body}`,
+}).replace('</head>', '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></head>');
 
-test('a build that lists a match without its result passes, years, counts and the router\'s own score field and all', () => {
-  const index = listedPage('<p>© 2014-2026</p><p>3125 fans</p><p>The result: a list of matches.</p><svg><path d="M3 0-3 4 2-1z"/></svg><time datetime="2026-11-02">Mon 2 Nov</time>');
-  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, LISTED), []);
+test('a build that lists a match without its result passes, years, sizes and the router\'s own score field and all', () => {
+  const index = listedPage('<p>© 2014-2026</p><p>3125 fans</p><p>The result: a list of matches.</p><svg><path d="M3 0-3 4 2-1z"/></svg>'
+    + '<script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/"}}</script>');
+  // Map lengths that are also the event's year and the Open Graph image's width
+  const data = { ...LISTED, matches: [{ ...LISTED.matches[0], mapSeconds: [2026, 1200, 3962] }] };
+  assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, data), []);
+  // A listed match with no number to look for: nothing to find, and no crash
+  assert.deepEqual(build({ 'index.html': index }, { ...LISTED, matches: [{ ...LISTED.matches[0], winnerId: null, mapSeconds: [] }] }), []);
 });
 
 const spoiled = [
@@ -101,6 +111,12 @@ const spoiled = [
   ['the deciding map named', { 'index.html': listedPage('<p>decided on map 3</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the map count in a single-quoted attribute', { 'index.html': listedPage('<span title=\'3 maps\'></span>') }, /index\.html: holds the score or map count of listed match 7/],
   ['the maps field in the inline payload', { 'index.html': listedPage('<script type="application/json" id="__NUXT_DATA__">[{"maps":1},3]</script>') }, /index\.html: holds a match result field \("maps":\)/],
+  ['the record in an inline script', { 'index.html': listedPage('<script>window.__NUXT__={data:{x:{winner:3240,maps:3}}}</script>') }, /index\.html: holds a match result field \(winner:\)/],
+  ['the winner\'s id in an inline script', { 'index.html': listedPage('<script>window.__W=3240;</script>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
+  ['the score in an inline script', { 'index.html': listedPage('<script>window.__S="2-1"</script>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score in a comment', { 'index.html': listedPage('<!-- 1-2 -->') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score with an em dash', { 'index.html': listedPage('<p>2 — 1</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score with a numeric hyphen', { 'index.html': listedPage('<p>2&#45;1</p>') }, /index\.html: holds the score or map count of listed match 7/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

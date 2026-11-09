@@ -9,7 +9,7 @@ import {
   CHANNELS_LIST, MISSING_AFTER_HOURS, PUBLISH_WINDOW_HOURS, REFRESH_DAYS, VOD_CHANNELS, applyRefresh, dueForRefresh, durationSeconds, linkVods,
   missingVods, pruneUploads, unmatchedUploads, youtubeClient,
 } from '../../app/domains/vods/index.ts';
-import { LABELS, RESULTS_DAYS, WATCH_DATA, mergeResults, toResult, watchEntries } from '../../app/domains/watch/index.ts';
+import { LABELS, RESULTS_DAYS, WATCH_DATA, inList, mergeResults, toResult, watchEntries } from '../../app/domains/watch/index.ts';
 import { fetchData, forgetData, publishData, pruneData, readData } from './data-branch.mjs';
 
 const HOUR = 3600 * 1000;
@@ -237,7 +237,7 @@ export async function runJob({ cwd, stateDir, now = new Date(), secrets, fetch =
   // While the results leave a gap (a first run or a run after days off, whose read failed), the ratings would miss
   // teams' matches: the list keeps its entries (those whose VOD link still stands) rather than relabel them.
   const linked = new Set(links.map((link) => link.videoId));
-  const entries = resultsComplete ? watchEntries(matches, links, state.results.list, now) : stored.watch.filter((entry) => linked.has(entry.videoId));
+  const entries = resultsComplete ? watchEntries(matches, links, state.results.list, now) : stored.watch.filter((entry) => linked.has(entry.videoId) && inList(entry.start, now));
   const files = new Map([
     [MATCHES_FILE, json({ source: 'PandaScore', matches })],
     [VODS_FILE, json({ vods: links })],

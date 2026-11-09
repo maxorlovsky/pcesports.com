@@ -29,19 +29,24 @@ function files(dir) {
 }
 
 /**
- * A built file as the spoiler check reads it: its data (JSON, a page's inline JSON such as Nuxt's payload), its code
- * (a script bundle, a page's inline scripts), its text-bearing attributes' values, and all the text a reader, a screen
- * reader or a script gets (the data, the page's text and those attributes).
+ * A built file as the spoiler check reads it:
+ * - `data`: what may carry a match's record: a JSON file, and every script a page holds inline (Nuxt's payload, as
+ *   JSON or as `window.__NUXT__ = {…}`);
+ * - `code`: a script bundle, which holds unrelated keys and numbers of its own;
+ * - `values`: the attributes that carry values for a script (`data-*`, `value`), read for ids and lengths;
+ * - `text`: all a reader, a screen reader or a script gets (the page's text and comments, its text-bearing attributes,
+ *   the data), read for a score or a map count.
  */
 function parts(name, content) {
-  if (name.endsWith('.json')) return { data: content, code: '', attributes: [], text: content };
-  if (name.endsWith('.js')) return { data: '', code: content, attributes: [], text: '' };
-  const scripts = [...content.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];
-  const data = scripts.filter((match) => /type=["']application\/(ld\+)?json["']/.test(match[1])).map((match) => match[2]).join('\n');
-  const code = scripts.filter((match) => !/type=["']application\/(ld\+)?json["']/.test(match[1])).map((match) => match[2]).join('\n');
+  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: content };
+  if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
+  const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
   const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
-  const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)].map((match) => match[3]);
-  return { data, code, attributes, text: [markup.replace(/<[^>]+>/g, ' '), ...attributes, data].join(' ') };
+  const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)];
+  const values = attributes.filter((match) => /^(data-|value$)/.test(match[1])).map((match) => match[3]);
+  const comments = [...markup.matchAll(/<!--([\s\S]*?)-->/g)].map((match) => match[1]);
+  const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), data];
+  return { data, code: '', values, text: text.join(' ') };
 }
 
 function attr(html, pattern) {
@@ -49,16 +54,16 @@ function attr(html, pattern) {
 }
 
 /**
- * A match's result fields, as an object key: the record must never ship. In data (JSON, a page's inline JSON) every
- * field; in code only the names no library uses (Vue's router has a `score`). A page's prose ("The result: …") is
+ * A match's result fields, as an object key: the record must never ship. In data (JSON, a page's inline scripts) every
+ * field; in a bundle only the names no library uses (Vue's router has a `score`). A page's prose ("The result: …") is
  * neither.
  */
 const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|maps|games|forfeit)\b["']?\s*:/;
 const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 /** The attributes that carry text or data a reader, a screen reader or a script gets; never SVG geometry or classes. */
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
-/** Between the two numbers of a score: "2-1", "2 – 1", "2:1", "2&ndash;1", "2 to 1". */
-const SCORE_SEPARATOR = '\\s*(?:[-–:]|&ndash;|&#8211;|&#x2013;)\\s*|\\s+to\\s+';
+/** Between the two numbers of a score: "2-1", "2 – 1", "2 — 1", "2:1", "2&ndash;1", "2&#45;1", "2 to 1". */
+const SCORE_SEPARATOR = '\\s*(?:[-–—:]|&ndash;|&mdash;|&#8211;|&#8212;|&#45;|&#x2013;|&#x2014;|&#x2d;)\\s*|\\s+to\\s+';
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -74,8 +79,9 @@ export function buildData(root = ROOT) {
  * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "map 3" past the maps
  * every series plays). A listed match with no record is a problem of its own: the check can't know its result.
  *
- * It catches the record and its numbers however they are serialised, and the common ways to write a score; it can't
- * read every sentence ("the second team won"). The page's own guarantee is what it is given: only the shown fields.
+ * It catches the record and its numbers in data, inline scripts and value attributes, and the common ways to write a
+ * score. Not: a number in an unquoted attribute, an `id` or a `class`, or a sentence ("the second team won"). The
+ * page's own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -91,9 +97,9 @@ function spoilers({ matches, entries }) {
     const list = numbers.join('|');
     return {
       match: `match ${match.id}`,
-      // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`): a page's text holds years and counts of its own.
-      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*"?)(${list})(?="?\\s*[,\\]}])`) : null,
-      // An attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
+      // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`, `w=3216;`).
+      number: numbers.length ? new RegExp(`(?<=[:,[=]\\s*"?)(${list})(?="?\\s*[,\\]};])`) : null,
+      // A value attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
       inAttribute: numbers.length ? new RegExp(`(?<![\\w.:-])(${list})(?![\\w.:-])`) : null,
       score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
     };
@@ -155,12 +161,12 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
     if (!/\.(html|js|json)$/.test(name)) continue;
-    const { data: values, code, attributes, text } = parts(name, content);
-    const key = values.match(RESULT_KEY) ?? code.match(RESULT_KEY_IN_CODE);
+    const { data, code, values, text } = parts(name, content);
+    const key = data.match(RESULT_KEY) ?? code.match(RESULT_KEY_IN_CODE);
     if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);
-    // Numbers only in data and attributes: a script bundle is full of unrelated ones.
+    // Numbers only in data and value attributes: a bundle, and a page's text, hold years and sizes of their own.
     for (const leak of leaks) {
-      if (leak.number?.test(values) || attributes.some((value) => leak.inAttribute.test(value))) {
+      if (leak.number?.test(data) || values.some((value) => leak.inAttribute?.test(value))) {
         problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
       }
       if (leak.score?.test(text)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
