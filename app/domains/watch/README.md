@@ -10,16 +10,18 @@ home page that shows it. Depends on `site` (the page's SEO), `matches` (the matc
     best-of-one; each team starts at 1500).
   - `rate`, `stagePoints`, `eventPoints`, `strengthPoints`, `closeness`, `labelOf`, `roundOf` and the thresholds: the
     rating.
-  - `watchEntries`, `strengthScale`, `recentEntries`, `LIST_DAYS`, `SCALE_DAYS`: the list, in order.
+  - `watchEntries`, `strengthScale`, `recentEntries`, `SCALE_DAYS`: the list, in order; `LIST_DAYS` and `LABELS`
+    (`page.ts`, which the page imports too).
   - `shownEntries`, `WATCH_DATA`: what the home page reads at build time (`data.ts`).
-  - `LABELS`; the types `Result`, `BeforeMatch`, `ClosenessInput`, `Rated`, `StrengthScale`, `WatchEntry`,
+  - the types `Result`, `BeforeMatch`, `ClosenessInput`, `Rated`, `StrengthScale`, `WatchEntry`,
     `WatchData`, `ShownEntry`, `Label`.
 - `views/HomePage.vue` (`app/pages/index.vue`): the hero and the list of the last `LIST_DAYS` (7) days, grouped by
   label, each match as the site's own card: event, stage, date and label, its teams behind a "Show teams" tap
   (`<details>`, no script), and a "Watch the VOD" link to the official video. It says so plainly when the list is
   empty.
 - `data/watch.json`: not in the code branches. The data job publishes it on the `data` branch, and
-  `tools/data-job/pull.mjs` puts it here for a build (git ignores the folder). Shape: `{ source, entries: WatchEntry[] }`.
+  `tools/data-job/pull.mjs` puts it here for a build (git ignores the folder). Shape:
+  `{ source, entries: WatchEntry[] }`.
 - The results the ratings are replayed from stay in the data job's state folder (`state.json`, `results`), never in
   the data branch.
 
@@ -50,7 +52,8 @@ Invariants:
 - **Nothing in the build reveals a result.** `data/watch.json` holds what the page shows and nothing else (no score,
   winner, map count, rating or stakes). The page reads it on the server at build time (`useAsyncData` with
   `import.meta.server`), so its HTML and payload get only the shown entries. `npm run check:build` fails if a listed
-  match's result is anywhere in the build (`tools/check-build.mjs`).
+  match's result fields, its winner's id or map lengths as data, or its score or map count written out in the usual
+  ways, are anywhere in the build (`tools/check-build.mjs`).
 - **Teams on tap.** Later rounds name who won earlier ones, so every entry hides its teams until the visitor taps.
 - **Closeness has one entry point.** Everything it reads comes in through `ClosenessInput`: a paid source's per-map
   round scores would be one more field of its `maps`, and no other code changes.

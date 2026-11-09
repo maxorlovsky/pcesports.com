@@ -69,14 +69,19 @@ export function fakeApis(world) {
     if (hostname === 'api.pandascore.co') {
       const page = Number(searchParams.get('page'));
       const per = Number(searchParams.get('per_page'));
-      let items = world.matches;
+      // Each endpoint keeps to its range, as PandaScore does: /csgo/matches by schedule, /csgo/matches/past by start.
+      const within = (param, field) => {
+        const [from, to] = (searchParams.get(param) ?? ',').split(',').map((time) => (time ? Date.parse(time) : NaN));
+        return (match) => !match[field] || ((Number.isNaN(from) || Date.parse(match[field]) >= from) && (Number.isNaN(to) || Date.parse(match[field]) <= to));
+      };
+      let items = world.matches.filter(within('range[scheduled_at]', 'scheduled_at'));
       // A year of results: the tier s and a tournaments, then their past matches.
       if (pathname === '/csgo/tournaments') {
         const tiers = searchParams.get('filter[tier]').split(',');
         items = [...new Map(world.matches.filter((match) => tiers.includes(match.tournament.tier)).map((match) => [match.tournament_id, { id: match.tournament_id }])).values()];
       } else if (pathname === '/csgo/matches/past') {
         const ids = searchParams.get('filter[tournament_id]').split(',').map(Number);
-        items = world.matches.filter((match) => ids.includes(match.tournament_id) && match.status === 'finished');
+        items = world.matches.filter((match) => ids.includes(match.tournament_id) && match.status === 'finished').filter(within('range[begin_at]', 'begin_at'));
       }
       return answer(items.slice((page - 1) * per, page * per));
     }

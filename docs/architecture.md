@@ -34,10 +34,10 @@ is why a plain part imports by relative path with the `.ts` or `.json` extension
 `./data/matches.json` with `with { type: 'json' }`), never reaches Vue or Nuxt, and why `npm test` loads every domain's
 `index.ts` in Node. The data files it writes belong to the domain whose rules write them
 (`app/domains/matches/data/matches.json`, `app/domains/vods/data/vods.json`, `app/domains/watch/data/watch.json`), and
-the app reads them through that domain (the home page reads `watch.json` at build time only). They live on the `data` branch, never in the code branches: the job publishes that branch, and a build
-gets the files from it (`tools/data-job/pull.mjs`), so in a checkout the `data/` folders are ignored by git and hold
-only what the last pull put there. Code that reads them handles a build with none (a pull request's, or before the job's
-first publish).
+the app reads them through that domain (the home page reads `watch.json` at build time only). They live on the
+`data` branch, never in the code branches: the job publishes that branch, and a build gets the files from it
+(`tools/data-job/pull.mjs`), so in a checkout the `data/` folders are ignored by git and hold only what the last pull
+put there. Code that reads them handles a build with none (a pull request's, or before the job's first publish).
 
 ## Where code goes
 

@@ -69,13 +69,13 @@ for (const [name, change, expected] of broken) {
 
 // One listed match, MOUZ 2-1 NAVI over three maps, as the data job stores it and lists it.
 const LISTED = {
-  matches: [{ id: 7, teams: [{ id: 3240, name: 'MOUZ' }, { id: 3216, name: 'Natus Vincere' }], winnerId: 3240, score: [2, 1], mapSeconds: [3125, 2710, 3962] }],
+  matches: [{ id: 7, teams: [{ id: 3240, name: 'MOUZ' }, { id: 3216, name: 'Natus Vincere' }], winnerId: 3240, score: [2, 1], bestOf: 3, mapSeconds: [3125, 2710, 3962] }],
   entries: [{ matchId: 7, start: '2026-11-02T02:00:00Z', event: 'IEM Beijing 2026', stage: 'Playoffs · Semifinal 1', teams: ['MOUZ', 'Natus Vincere'], label: 'Must watch', videoId: 'v7' }],
 };
 const listedPage = (body) => page({ path: '/', body: `<h2>What should I watch?</h2><p>IEM Beijing 2026, Playoffs · Semifinal 1, Mon 2 Nov</p><details><summary>Show teams</summary>MOUZ vs Natus Vincere</details>${body}` });
 
 test('a build that lists a match without its result passes, years, counts and the router\'s own score field and all', () => {
-  const index = listedPage('<p>© 2014-2026</p><p>3125 fans</p>');
+  const index = listedPage('<p>© 2014-2026</p><p>3125 fans</p><p>The result: a list of matches.</p><svg><path d="M3 0-3 4 2-1z"/></svg><time datetime="2026-11-02">Mon 2 Nov</time>');
   assert.deepEqual(build({ 'index.html': index, '_payload.json': '[{"teams":1,"label":2},["MOUZ","Natus Vincere"],"Must watch"]', '_nuxt/app.js': 'return{re:o,score:r}' }, LISTED), []);
 });
 
@@ -95,6 +95,12 @@ const spoiled = [
   ['the winner\'s id as a string', { '_payload.json': '[{"w":1},"3240"]' }, /_payload\.json: holds a winner's team id or a map length of listed match 7/],
   ['a result field', { '_payload.json': '[{"result":1},[2,1]]' }, /_payload\.json: holds a match result field \("result":\)/],
   ['the maps field', { '_payload.json': '[{"games":1},[]]' }, /_payload\.json: holds a match result field \("games":\)/],
+  ['the winner\'s id in an attribute', { 'index.html': listedPage('<p data-w="3240">MOUZ</p>') }, /index\.html: holds a winner's team id or a map length of listed match 7/],
+  ['the score as an HTML entity', { 'index.html': listedPage('<p>2&ndash;1</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the score in words', { 'index.html': listedPage('<p>won it 2 to 1</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the deciding map named', { 'index.html': listedPage('<p>decided on map 3</p>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the map count in a single-quoted attribute', { 'index.html': listedPage('<span title=\'3 maps\'></span>') }, /index\.html: holds the score or map count of listed match 7/],
+  ['the maps field in the inline payload', { 'index.html': listedPage('<script type="application/json" id="__NUXT_DATA__">[{"maps":1},3]</script>') }, /index\.html: holds a match result field \("maps":\)/],
   ['a listed match the data lacks', { 'index.html': listedPage('') }, /the watch list holds match 8, which the matches data lacks/, { ...LISTED, entries: [...LISTED.entries, { ...LISTED.entries[0], matchId: 8 }] }],
   ['the map lengths field in the HTML', { 'index.html': listedPage('<script>window.x={"mapSeconds":[]}</script>') }, /holds a match result field \("mapSeconds":\)/],
 ];

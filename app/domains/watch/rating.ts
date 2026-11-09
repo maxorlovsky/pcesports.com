@@ -3,7 +3,7 @@
 import type { Match } from '../matches/index.ts';
 import { winChance } from './elo.ts';
 import type { BeforeMatch } from './elo.ts';
-import type { Label } from './labels.ts';
+import type { Label } from './page.ts';
 /** A rating at or above it is "Must watch"; at or above `WORTH_A_WATCH`, "Worth a watch"; below, "For fans". */
 export const MUST_WATCH = 3.5;
 export const WORTH_A_WATCH = 1.75;

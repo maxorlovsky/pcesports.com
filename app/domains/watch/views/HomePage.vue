@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { usePageSeo } from '../../site/ui/index.ts';
 import type { ShownEntry } from '../list.ts';
-import { LABELS } from '../labels.ts';
-import type { Label } from '../labels.ts';
+import { LABELS, LIST_DAYS } from '../page.ts';
+import type { Label } from '../page.ts';
 
 usePageSeo({
   title: 'esports for people who don\'t have time to follow everything',
@@ -65,13 +65,13 @@ const promises = [
     <section class="container watch" aria-labelledby="watch-title">
       <h2 id="watch-title">What should I watch?</h2>
       <p class="watch-intro">
-        The finished tier-1 CS2 matches of the last 7 days that have an official full-match VOD, best first. Teams stay
-        hidden until you tap: later rounds would give earlier winners away.
+        The finished tier-1 CS2 matches of the last {{ LIST_DAYS }} days that have an official full-match VOD, best
+        first. Teams stay hidden until you tap: later rounds would give earlier winners away.
       </p>
 
       <p v-if="!groups.length" class="empty">
-        No finished tier-1 CS2 match with an official VOD in the last 7 days. The list fills up again with the next
-        event.
+        No finished tier-1 CS2 match with an official VOD in the last {{ LIST_DAYS }} days. The list fills up again with
+        the next event.
       </p>
 
       <section v-for="group in groups" :key="group.label" class="group" :aria-labelledby="`group-${labelClass(group.label)}`">

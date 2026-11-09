@@ -6,15 +6,13 @@ import type { Match } from '../matches/index.ts';
 import type { VodLink } from '../vods/index.ts';
 import { replay } from './elo.ts';
 import type { Result } from './elo.ts';
-import { LABELS } from './labels.ts';
-import type { Label } from './labels.ts';
+import { LABELS, LIST_DAYS } from './page.ts';
+import type { Label } from './page.ts';
 import { rate, roundOf } from './rating.ts';
 import type { StrengthScale } from './rating.ts';
 
 const DAY = 24 * 3600 * 1000;
 
-/** The home page lists the matches of this many days before the build. */
-export const LIST_DAYS = 7;
 /**
  * The strength scale is read from the tier s and a results of this many days before now: the window the rating was
  * measured on. Ratings drift up over a year as new teams join below, so a shorter or longer one moves the labels.

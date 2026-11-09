@@ -29,14 +29,19 @@ function files(dir) {
 }
 
 /**
- * What a page holds for a reader or a script: its text, its attributes' values (`aria-label`, `title`) and its inline
- * JSON (Nuxt's payload), without its tags, code and styles.
+ * A built file as the spoiler check reads it: its data (JSON, a page's inline JSON such as Nuxt's payload), its code
+ * (a script bundle, a page's inline scripts), its text-bearing attributes' values, and all the text a reader, a screen
+ * reader or a script gets (the data, the page's text and those attributes).
  */
-function html(page) {
-  const json = [...page.matchAll(/<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]);
-  const markup = page.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
-  const attributes = [...markup.matchAll(/=\s*"([^"]*)"/g)].map((match) => match[1]);
-  return [markup.replace(/<[^>]+>/g, ' '), ...attributes, ...json].join(' ');
+function parts(name, content) {
+  if (name.endsWith('.json')) return { data: content, code: '', attributes: [], text: content };
+  if (name.endsWith('.js')) return { data: '', code: content, attributes: [], text: '' };
+  const scripts = [...content.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];
+  const data = scripts.filter((match) => /type=["']application\/(ld\+)?json["']/.test(match[1])).map((match) => match[2]).join('\n');
+  const code = scripts.filter((match) => !/type=["']application\/(ld\+)?json["']/.test(match[1])).map((match) => match[2]).join('\n');
+  const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
+  const attributes = [...markup.matchAll(TEXT_ATTRIBUTES)].map((match) => match[3]);
+  return { data, code, attributes, text: [markup.replace(/<[^>]+>/g, ' '), ...attributes, data].join(' ') };
 }
 
 function attr(html, pattern) {
@@ -44,11 +49,16 @@ function attr(html, pattern) {
 }
 
 /**
- * A stored match's result fields, as an object key: the record must never ship. In HTML and JSON (pages, payloads)
- * every field; in a script bundle only the names no library uses (Vue's router has a `score`).
+ * A match's result fields, as an object key: the record must never ship. In data (JSON, a page's inline JSON) every
+ * field; in code only the names no library uses (Vue's router has a `score`). A page's prose ("The result: …") is
+ * neither.
  */
-const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|games|forfeit)\b["']?\s*:/;
-const RESULT_KEY_IN_SCRIPT = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
+const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|maps|games|forfeit)\b["']?\s*:/;
+const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
+/** The attributes that carry text or data a reader, a screen reader or a script gets; never SVG geometry or classes. */
+const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
+/** Between the two numbers of a score: "2-1", "2 – 1", "2:1", "2&ndash;1", "2 to 1". */
+const SCORE_SEPARATOR = '\\s*(?:[-–:]|&ndash;|&#8211;|&#x2013;)\\s*|\\s+to\\s+';
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -61,8 +71,11 @@ export function buildData(root = ROOT) {
 
 /**
  * The results of the listed matches, as they could leak: each winner's team id and each map's length (as values in
- * HTML or JSON), and each series score or map count as text ("2-1", "1:2", "3 maps"). A listed match with no record
- * is a problem of its own: the check can't know its result.
+ * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "map 3" past the maps
+ * every series plays). A listed match with no record is a problem of its own: the check can't know its result.
+ *
+ * It catches the record and its numbers however they are serialised, and the common ways to write a score; it can't
+ * read every sentence ("the second team won"). The page's own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -71,12 +84,17 @@ function spoilers({ matches, entries }) {
     const [a, b] = match.score ?? [];
     // From 1000: team ids start above it, a real map lasts longer, and a payload's own indexes stay below it.
     const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 1000);
-    const scores = a === undefined ? [] : [`${a}\\s*[-–:]\\s*${b}`, `${b}\\s*[-–:]\\s*${a}`];
-    if (match.mapSeconds?.length) scores.push(`${match.mapSeconds.length}\\s+maps?`);
+    const scores = a === undefined ? [] : [`${a}(?:${SCORE_SEPARATOR})${b}`, `${b}(?:${SCORE_SEPARATOR})${a}`];
+    const maps = match.mapSeconds?.length ?? 0;
+    if (maps) scores.push(`${maps}\\s+maps?`);
+    if (maps > Math.ceil((match.bestOf ?? 1) / 2)) scores.push(`maps?\\s+${maps}`);
+    const list = numbers.join('|');
     return {
       match: `match ${match.id}`,
       // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`): a page's text holds years and counts of its own.
-      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*"?)(${numbers.join('|')})(?="?\\s*[,\\]}])`) : null,
+      number: numbers.length ? new RegExp(`(?<=[:,[]\\s*"?)(${list})(?="?\\s*[,\\]}])`) : null,
+      // An attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
+      inAttribute: numbers.length ? new RegExp(`(?<![\\w.:-])(${list})(?![\\w.:-])`) : null,
       score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
     };
   });
@@ -136,17 +154,16 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     if (!/\.(html|js|css|json|xml|txt)$/.test(name)) continue;
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
-    if (/\.(html|js|json)$/.test(name)) {
-      const key = content.match(name.endsWith('.js') ? RESULT_KEY_IN_SCRIPT : RESULT_KEY);
-      if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);
-    }
-    // Numbers only in HTML and JSON (a page's inline payload, `_payload.json`): a script bundle is full of unrelated ones.
-    if (/\.(html|json)$/.test(name)) {
-      const readable = name.endsWith('.html') ? html(content) : content;
-      for (const leak of leaks) {
-        if (leak.number?.test(content)) problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
-        if (leak.score?.test(readable)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
+    if (!/\.(html|js|json)$/.test(name)) continue;
+    const { data: values, code, attributes, text } = parts(name, content);
+    const key = values.match(RESULT_KEY) ?? code.match(RESULT_KEY_IN_CODE);
+    if (key) problem(`${name}: holds a match result field (${key[0].trim()}), a spoiler`);
+    // Numbers only in data and attributes: a script bundle is full of unrelated ones.
+    for (const leak of leaks) {
+      if (leak.number?.test(values) || attributes.some((value) => leak.inAttribute.test(value))) {
+        problem(`${name}: holds a winner's team id or a map length of listed ${leak.match}, a spoiler`);
       }
+      if (leak.score?.test(text)) problem(`${name}: holds the score or map count of listed ${leak.match}, a spoiler`);
     }
   }
   return problems;
