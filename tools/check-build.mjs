@@ -7,6 +7,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { decodeHTML } from 'entities';
 import { MATCHES_FILE, WATCH_FILE } from './data-job/job.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -62,22 +63,10 @@ const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|
 const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 /** The attributes that carry text or data a reader, a screen reader or a script gets; never SVG geometry or classes. */
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
-/** Between the two numbers of a score, once entities are decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
+/** Between a score's two numbers, entities decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
 const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
-const NAMED_ENTITIES = {
-  nbsp: ' ', ensp: ' ', emsp: ' ', thinsp: ' ', ndash: '–', mdash: '—', minus: '−', hyphen: '‐', dash: '‐', colon: ':', amp: '&',
-};
-/** A reference, its `;` optional as browsers read it: `&#45;`, `&#x2D;`, `&ndash;`, `&nbsp` (longer names first). */
-const ENTITY = new RegExp(`&(?:#(\\d+);?|#x([\\da-f]+);?|(${Object.keys(NAMED_ENTITIES).sort((a, b) => b.length - a.length).join('|')});?)`, 'gi');
-
-/** Text with its character references written out, so one pattern reads both. */
-function decode(text) {
-  return text.replace(ENTITY, (entity, decimal, hex, name) => {
-    const code = decimal ? Number(decimal) : hex ? Number.parseInt(hex, 16) : null;
-    if (code !== null) return code <= 0x10ffff ? String.fromCodePoint(code) : entity;
-    return NAMED_ENTITIES[name.toLowerCase()];
-  });
-}
+/** Text with its character references written out as a browser shows them (`&#45;`, `&#150;`, `&nbsp`, `&thinsp;`). */
+const decode = (text) => decodeHTML(text);
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -90,12 +79,14 @@ export function buildData(root = ROOT) {
 
 /**
  * The results of the listed matches, as they could leak: each winner's team id and each map's length (as values in
- * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "map 3" past the maps
- * every series plays). A listed match with no record is a problem of its own: the check can't know its result.
+ * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "Maps: 3", "map 3"
+ * past the maps every series plays). A listed match with no record is a problem of its own: the check can't know its
+ * result.
  *
  * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
- * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets. It can't read a
- * sentence ("the second team won"). The page's own guarantee is what it is given: only the shown fields.
+ * attributes, and for a score or a map count, in upper or lower case, in all the text a reader or a script gets,
+ * decoded as a browser shows it. It can't read a sentence ("the second team won", "three maps"). The page's own
+ * guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -106,7 +97,8 @@ function spoilers({ matches, entries }) {
     const numbers = [match.winnerId, ...(match.mapSeconds ?? [])].filter((value) => Number.isInteger(value) && value >= 1000);
     const scores = a === undefined ? [] : [`${a}(?:${SCORE_SEPARATOR})${b}`, `${b}(?:${SCORE_SEPARATOR})${a}`];
     const maps = match.mapSeconds?.length ?? 0;
-    if (maps) scores.push(`${maps}\\s+maps?`);
+    // The count, any way round: "3 maps", "a 3-map series", "Maps: 3", "Maps played: 3"
+    if (maps) scores.push(`${maps}[\\s‐‑–-]*maps?(?:per)?`, `maps?(?:\\s+played)?\\s*:\\s*${maps}`);
     if (maps > Math.ceil((match.bestOf ?? 1) / 2)) scores.push(`maps?\\s+${maps}`);
     const list = numbers.join('|');
     return {
@@ -115,7 +107,8 @@ function spoilers({ matches, entries }) {
       number: numbers.length ? new RegExp(`(?<=[:,[=(]\\s*"?)(${list})(?="?(?:\\s*[,\\]});]|\\s|$))`) : null,
       // A value attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
       inAttribute: numbers.length ? new RegExp(`(?<![\\w.:-])(${list})(?![\\w.:-])`) : null,
-      // Not inside a word, a number, a date or a time ("12-1", "2-10", "10:2", "2.1"), but before a full stop or a colon.
+      // Not inside a word, a number, a date or a time ("12-1", "2-10", "10:2-1", "1.2-1", "2-1:30"), but next to a
+      // full stop or a colon ("won 2-1.", "Score:2-1").
       score: scores.length ? new RegExp(`(?<![\\w‐‑–—−-]|\\d[.:])(${scores.join('|')})(?![\\w‐‑–—−-]|[.:]\\d)`, 'i') : null,
     };
   });
