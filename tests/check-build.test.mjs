@@ -96,6 +96,14 @@ test('a build that lists a match without its result passes, years, sizes and the
   assert.deepEqual(build({ 'index.html': unnumbered }, { ...LISTED, matches: [{ ...LISTED.matches[0], winnerId: null, mapSeconds: [] }] }), []);
 });
 
+test('the listed page raises no false alarm, whatever the result: every score, map count and winner', () => {
+  const files = { 'index.html': listedPage('<p>For those who follow the event closely.</p>'), '_nuxt/app.js': BUNDLE };
+  for (const winnerId of [3240, 3216]) for (let a = 0; a <= 3; a++) for (let b = 0; b <= 3; b++) for (let maps = 1; maps <= 5; maps++) {
+    const match = { ...LISTED.matches[0], winnerId, score: [a, b], mapSeconds: Array(maps).fill(3000 + maps) };
+    assert.deepEqual(build(files, { ...LISTED, matches: [match] }), [], `${a}-${b} over ${maps} maps`);
+  }
+});
+
 const spoiled = [
   ['the score on the page', { 'index.html': listedPage('<p>MOUZ 2-1 Natus Vincere</p>') }, /holds the score or map count of listed match 7/],
   ['the score the other way round', { 'index.html': listedPage('<p>1 : 2</p>') }, /holds the score or map count of listed match 7/],

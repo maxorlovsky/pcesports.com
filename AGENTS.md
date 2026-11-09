@@ -18,8 +18,8 @@ files only, one commit, never merged; agents never push to it.
 
 ## Domains
 
-The app is domain-modular: `app/domains/<domain>/`, today `site`, `matches`, `vods` and `watch`; `guides` is
-planned (`docs/architecture.md` has their order, where the data job goes, and every rule).
+The app is domain-modular: `app/domains/<domain>/`; `docs/architecture.md` has the domains, their order, where the
+data job goes, and every rule.
 
 - Work in the domain that owns the change; read its `README.md` and `domain.json` first. A new domain comes with its
   first code, never empty, and adds itself to the table in `docs/architecture.md`.
@@ -39,8 +39,8 @@ planned (`docs/architecture.md` has their order, where the data job goes, and ev
 
 From the report and the owner's decisions; a change that bends one needs the owner's ruling on the card first.
 
-- **Credits:** every page that shows PandaScore data shows "Source: PandaScore" (the footer's `DATA_CREDITS` in the
-  `site` domain). Any other data source comes with its own credit, as its terms say.
+- **Credits:** every page that shows PandaScore data shows "Source: PandaScore" (`DATA_CREDITS`, the `site` domain's
+  footer). Any other data source comes with its own credit, as its terms say.
 - **No derived YouTube metrics:** compute no metrics or derived data from YouTube API data (views, likes, lengths,
   comments); show it as YouTube returns it, or not at all. Matching a VOD to its match by title is allowed (the
   owner accepted the report's reading, decision 5). The data job commits YouTube's ids only (video, channel), never
@@ -48,9 +48,8 @@ From the report and the owner's decisions; a change that bends one needs the own
 - **30-day refresh:** YouTube API data the site stores is refreshed or deleted within 30 days, and deleted videos are
   dropped.
 - **No spoilers before the click:** nothing shown before the click lets a visitor read off the winner, the score or the
-  map count: not a label, not the list's order, not a later round's teams (`app/domains/watch/README.md`). No video
-  length, YouTube thumbnail or chapters either, and no result in the build (`npm run check:build`). A VOD is the site's
-  own card with a deep link.
+  map count: not a label, the list's order or a later round's teams (`app/domains/watch/README.md`), nor a video
+  length, YouTube thumbnail or chapters. A VOD is the site's own card with a deep link.
 - API keys stay on the machine that runs the data job, never in the built site or the repository.
 
 ## Validators
@@ -59,8 +58,8 @@ Before a pull request: `npm run check` (lint, typecheck, tests, `nuxt generate`,
 `npm run nginx:test` (on the factory machine; it needs its nginx). Both must pass and leave `git status` unchanged. CI
 runs the same, except nginx, on every pull request into `dev` or `master`.
 
-Build and look: `npm run generate` writes `.output/public`; `npm run preview` serves it as nginx would
-(`PORT=<port>`; pick a free one and stop it afterwards). `npm run dev` is the hot-reload server.
+Build and look: `npm run generate`, then `npm run preview` serves `.output/public` as nginx would (`PORT=<port>`; pick
+a free one and stop it afterwards).
 
 ## Never
 
