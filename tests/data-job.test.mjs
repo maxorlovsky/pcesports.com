@@ -352,8 +352,11 @@ test('while the results leave a gap, a failed read keeps the list as it was: a f
   assert.deepEqual(entries().sort(), [1, 3, 4]);
   const since = apis.calls.filter((call) => call.endpoint === 'past').at(-1).params['range[begin_at]'].split(',')[0];
   assert.equal(since, later(13 - 24).toISOString());
-  // Matches older than LIST_DAYS leave the list, and that is a change the job publishes
-  const aged = await runJob({ ...options, stateDir: fresh, now: later(14 + 24 * 7.5) });
+  // Matches older than LIST_DAYS leave the list, and that is a change the job publishes: also while it keeps its
+  // entries, here after 3.5 days off and a read that fails again
+  data.fail = ['tournaments'];
+  const aged = await runJob({ ...options, stateDir: fresh, now: later(14 + 24 * 8.5) });
+  assert.match(aged.errors.join('\n'), /results for the team ratings/);
   assert.equal(aged.published.status, 'pushed');
   assert.deepEqual(entries(), [4]);
 });

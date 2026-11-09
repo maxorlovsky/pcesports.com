@@ -10,8 +10,8 @@ home page that shows it. Depends on `site` (the page's SEO), `matches` (the matc
     best-of-one; each team starts at 1500).
   - `rate`, `stagePoints`, `eventPoints`, `strengthPoints`, `closeness`, `labelOf`, `roundOf` and the thresholds: the
     rating.
-  - `watchEntries`, `strengthScale`, `recentEntries`, `inList`, `SCALE_DAYS`: the list, in order; `LIST_DAYS` and `LABELS`
-    (`page.ts`, which the page imports too).
+  - `watchEntries`, `strengthScale`, `recentEntries`, `inList`, `SCALE_DAYS`: the list, in order; `LIST_DAYS` and
+    `LABELS` (`page.ts`, which the page imports too).
   - `shownEntries`, `WATCH_DATA`: what the home page reads at build time (`data.ts`).
   - the types `Result`, `BeforeMatch`, `ClosenessInput`, `Rated`, `StrengthScale`, `WatchEntry`,
     `WatchData`, `ShownEntry`, `Label`.

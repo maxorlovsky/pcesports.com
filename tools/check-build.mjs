@@ -38,7 +38,7 @@ function files(dir) {
  *   the data), read for a score or a map count.
  */
 function parts(name, content) {
-  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: content };
+  if (name.endsWith('.json')) return { data: content, code: '', values: [], text: decode(content) };
   if (name.endsWith('.js')) return { data: '', code: content, values: [], text: '' };
   const data = [...content.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1]).join('\n');
   const markup = content.replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
@@ -46,7 +46,7 @@ function parts(name, content) {
   const values = attributes.filter((match) => /^(data-|value$)/.test(match[1])).map((match) => match[3]);
   const comments = [...markup.matchAll(/<!--([\s\S]*?)-->/g)].map((match) => match[1]);
   const text = [markup.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<[^>]+>/g, ' '), ...comments, ...attributes.map((match) => match[3]), data];
-  return { data, code: '', values, text: text.join(' ') };
+  return { data, code: '', values, text: decode(text.join(' ')) };
 }
 
 function attr(html, pattern) {
@@ -62,8 +62,18 @@ const RESULT_KEY = /["']?\b(winnerId|winner_id|winner|score|results?|mapSeconds|
 const RESULT_KEY_IN_CODE = /["']?\b(winnerId|winner_id|mapSeconds)\b["']?\s*:/;
 /** The attributes that carry text or data a reader, a screen reader or a script gets; never SVG geometry or classes. */
 const TEXT_ATTRIBUTES = /\s(aria-[\w-]+|data-[\w-]+|title|alt|content|value|placeholder|label|href)\s*=\s*(["'])([\s\S]*?)\2/g;
-/** Between the two numbers of a score: "2-1", "2 – 1", "2 — 1", "2:1", "2&ndash;1", "2&#45;1", "2 to 1". */
-const SCORE_SEPARATOR = '\\s*(?:[-–—:]|&ndash;|&mdash;|&#8211;|&#8212;|&#45;|&#x2013;|&#x2014;|&#x2d;)\\s*|\\s+to\\s+';
+/** Between the two numbers of a score, once entities are decoded: "2-1", "2 – 1", "2 — 1", "2 − 1", "2:1", "2 to 1". */
+const SCORE_SEPARATOR = '\\s*[-‐‑–—−:]\\s*|\\s+to\\s+';
+const NAMED_ENTITIES = { nbsp: ' ', ndash: '–', mdash: '—', minus: '−', hyphen: '‐', colon: ':', amp: '&' };
+
+/** Text with its character references written out (`&#45;`, `&#x2D;`, `&ndash;`, `&nbsp;`), so one pattern reads both. */
+function decode(text) {
+  return text.replace(/&(?:#(\d+)|#x([\da-f]+)|(\w+));/gi, (entity, decimal, hex, name) => {
+    if (decimal) return String.fromCodePoint(Number(decimal));
+    if (hex) return String.fromCodePoint(Number.parseInt(hex, 16));
+    return NAMED_ENTITIES[name.toLowerCase()] ?? entity;
+  });
+}
 
 /** The data a build was made from: the data job's matches and the watch list (none: a build without data). */
 export function buildData(root = ROOT) {
@@ -79,9 +89,9 @@ export function buildData(root = ROOT) {
  * data or attributes), and each series score or map count as text ("2-1", "1 to 2", "3 maps", "map 3" past the maps
  * every series plays). A listed match with no record is a problem of its own: the check can't know its result.
  *
- * It catches the record and its numbers in data, inline scripts and value attributes, and the common ways to write a
- * score. Not: a number in an unquoted attribute, an `id` or a `class`, or a sentence ("the second team won"). The
- * page's own guarantee is what it is given: only the shown fields.
+ * It looks for the record's fields, ids and lengths only in data (JSON, inline scripts) and `data-*`/`value`
+ * attributes, and for a score or a map count, in any case, in all the text a reader or a script gets. It can't read a
+ * sentence ("the second team won"). The page's own guarantee is what it is given: only the shown fields.
  */
 function spoilers({ matches, entries }) {
   const byId = new Map(matches.map((match) => [match.id, match]));
@@ -97,11 +107,11 @@ function spoilers({ matches, entries }) {
     const list = numbers.join('|');
     return {
       match: `match ${match.id}`,
-      // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`, `w=3216;`).
-      number: numbers.length ? new RegExp(`(?<=[:,[=]\\s*"?)(${list})(?="?\\s*[,\\]};])`) : null,
+      // As a serialised value (`,3216,`, `[3216]`, `:"3216"}`, `w=3216`, `f(3216)`).
+      number: numbers.length ? new RegExp(`(?<=[:,[=(]\\s*"?)(${list})(?="?(?:\\s*[,\\]});]|\\s|$))`) : null,
       // A value attribute's value, whole or as one of its words (`data-w="3240"`), but not inside a date or an id.
       inAttribute: numbers.length ? new RegExp(`(?<![\\w.:-])(${list})(?![\\w.:-])`) : null,
-      score: scores.length ? new RegExp(`(?<![\\w.:–-])(${scores.join('|')})(?![\\w.:–-])`) : null,
+      score: scores.length ? new RegExp(`(?<![\\w.:‐‑–—−-])(${scores.join('|')})(?![\\w.‐‑–—−-]|:\\d)`, 'i') : null,
     };
   });
   return { leaks, missing };
