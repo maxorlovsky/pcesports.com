@@ -45,7 +45,7 @@ const sessionCookie = `_ga_${ANALYTICS_ID.replace(/^G-/, '')}`;
 
       <h2>Google Analytics</h2>
       <p>
-        If you accept, each page loads Google's analytics tag from Google's servers, and your browser sends Google:
+        If you accept, the site loads Google's analytics tag from Google's servers, and your browser sends Google:
       </p>
       <ul>
         <li>each page you open on this site, its title and the page you came from;</li>
