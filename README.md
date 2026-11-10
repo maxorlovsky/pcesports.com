@@ -24,8 +24,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
-| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `site` domain's consent rules, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
+| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, no Google analytics tag in a page's HTML, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: its TLS rules (see "On max-cloud"), `nginx -t`, then the answers of the pages, the redirects to www, the old URLs, Let's Encrypt's challenge and the three headers of every HTTPS 2xx and 3xx answer (`tools/nginx/test.sh`). Needs nginx, so it runs on the factory machine, not in CI |
 
 ## Where things are
@@ -34,7 +34,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
   lists what it owns.
   - `site`: the site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`),
     the layout, header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags),
-    and the privacy and 404 pages' content.
+    the analytics consent banner and Google Analytics, which loads only after "Accept" (its `README.md`), and the
+    privacy and 404 pages' content.
   - `matches` and `vods`: the CS2 matches from PandaScore and their official VODs, which the data job keeps current
     (see "Data job").
   - `watch`: the after-match rating and the "What should I watch?" list the data job writes, and the home page that

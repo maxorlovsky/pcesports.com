@@ -59,6 +59,8 @@ const broken = [
   ['the Twitter link', { '_nuxt/app.js': 'href="https://twitter.com/pcesports"' }, /twitter/],
   ['the icon font', { '_nuxt/app.css': '@font-face{font-family:icomoon}' }, /icomoon/],
   ['a source map', { '_nuxt/app.js.map': '{}' }, /a source map/],
+  ['the analytics tag in a page', { 'index.html': page({ path: '/', body: '<h2>What should I watch?</h2><script async src="https://www.googletagmanager.com/gtag/js?id=G-1"></script>' }) }, /index\.html: names Google's analytics tag/],
+  ['a page view sent from a page', { 'privacy.html': page({ path: '/privacy', body: '<h2>What we collect</h2><script>gtag(\'config\', \'G-1\')</script>' }) }, /privacy\.html: names Google's analytics tag/],
 ];
 for (const [name, change, expected] of broken) {
   test(`it stops ${name}`, () => {

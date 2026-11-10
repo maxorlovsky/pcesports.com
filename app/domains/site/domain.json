@@ -4,6 +4,7 @@
     "the site's address, name and contact, and the sitemap",
     "the data credits the footer shows",
     "the layout: header, footer, skip link",
+    "the analytics consent banner and Google Analytics, which loads only after \"Accept\"",
     "every page's title, description, canonical URL and Open Graph tags (usePageSeo)",
     "the privacy page and the error page"
   ],
