@@ -49,10 +49,7 @@ const sessionCookie = `_ga_${ANALYTICS_ID.replace(/^G-/, '')}`;
       </p>
       <ul>
         <li>each page you open on this site, its title and the page you came from;</li>
-        <li>
-          how long you stay, and, depending on our settings in Google Analytics, how far you scroll and which links
-          you follow out of the site;
-        </li>
+        <li>how long each page stays open in front of you;</li>
         <li>your browser, operating system, type of device, screen size and language;</li>
         <li>
           your IP address, from which Google works out an approximate location (city, region and country). Google
@@ -65,7 +62,12 @@ const sessionCookie = `_ga_${ANALYTICS_ID.replace(/^G-/, '')}`;
         </li>
       </ul>
       <p>
-        We use it to see how many people visit and which pages they read. Google keeps the data for at most 14 months, then deletes it. Google processes it for us, as our processor,
+        That is all: the site sends Google page views only, and nothing about what you click, type or scroll.
+      </p>
+      <p>
+        We use it to see how many people visit and which pages they read. Google deletes what is tied to that random
+        ID at most 14 months after your last visit, under our account's retention setting; the totals in its reports
+        (such as visits per page or per country) stay. Google processes the data for us, as our processor,
         under its Google Analytics terms; how Google uses it is in its
         <a href="https://policies.google.com/privacy" rel="noopener">privacy policy</a> and on
         <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">How Google uses information
