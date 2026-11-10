@@ -4,8 +4,8 @@ What every page shares, and the pages that belong to no other domain. It is the 
 depend on it, and it depends on none.
 
 - `index.ts` (plain TypeScript, for the app, the server and Node scripts): `SITE_URL` (the canonical
-  `https://www.pcesports.com`), `SITE_NAME`, `CONTACT_EMAIL`, `absoluteUrl`, `SITEMAP_PATHS` (this domain's pages and
-  the home page; a new page here adds its path) and `sitemapXml(paths)`, which `server/routes/sitemap.xml.ts` gives
+  `https://www.pcesports.com`), `SITE_NAME`, `CONTACT_EMAIL`, `absoluteUrl`, `SITEMAP_PATHS` (the home page and this
+  domain's pages; a new page here adds its path) and `sitemapXml(paths)`, which `server/routes/sitemap.xml.ts` gives
   these and the guides' (`guides` domain, `guidePaths`), and `DATA_CREDITS`, the credits the footer shows (a domain
   whose pages show third-party data adds its credit here: `Source: PandaScore` today).
   It also exports the consent rules (`analytics.ts`): `analyticsController`, which decides when the tag loads, stops

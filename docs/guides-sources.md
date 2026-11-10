@@ -14,12 +14,11 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 |---|---|---|---|
 | V1 | [CS Major Supplemental Rulebook](https://github.com/ValveSoftware/counter-strike_rules_and_regs/blob/main/major-supplemental-rulebook.md) (last changed 2026-10-06) | Valve | 2026-11-10 |
 | V2 | [Tournament Operation Requirements: exceptions](https://github.com/ValveSoftware/counter-strike_rules_and_regs/blob/main/tournament-operation-requirements-exceptions.md) (its "Singapore 2026 Major" row, added 2026-10-07), and the rulebook's [commit of 2026-10-06](https://github.com/ValveSoftware/counter-strike_rules_and_regs/commits/main/major-supplemental-rulebook.md), "Updating rules for Regional Assignment for the upcoming Singapore Major" | Valve | 2026-11-10 |
-| V3 | [Valve Regional Standings](https://github.com/ValveSoftware/counter-strike_regional_standings) (its readme) | Valve | 2026-11-10 |
+| V3 | Valve Regional Standings: the model it runs, [`model/ranking.js`](https://github.com/ValveSoftware/counter-strike_regional_standings/blob/main/model/ranking.js), and a roster's details page of the 2026-11-02 standings, [`live/2026/details/2026_11_02/`](https://github.com/ValveSoftware/counter-strike_regional_standings/tree/main/live/2026/details/2026_11_02) (each page explains the factors; the repository's readme describes an older model and qualifiers, and isn't used) | Valve | 2026-11-10 |
 | V4 | ["BLAST.TV Austin Major 2025"](https://store.steampowered.com/news/app/730/view/1800357164422450) (2025-05-23), ["The Final Showdown in Austin"](https://store.steampowered.com/news/app/730/view/1802893906812947) (2025-06-22) | Valve | 2026-11-10 |
 | V5 | ["The Starladder Budapest Major 2025"](https://store.steampowered.com/news/app/730/view/1816215235365195) (2025-11-12), ["Best of Five in Budapest"](https://store.steampowered.com/news/app/730/view/1818752592130605) (2025-12-13) | Valve | 2026-11-10 |
 | V6 | ["IEM Cologne 2026"](https://store.steampowered.com/news/app/730/view/1833334318570412) (2026-05-22), ["Playoffs at the 'Cathedral of Counter-Strike'"](https://store.steampowered.com/news/app/730/view/1835871199302220) (2026-06-17), ["The IEM Cologne 2026 Grand Finals"](https://store.steampowered.com/news/app/730/view/1835871199310024) (2026-06-20) | Valve | 2026-11-10 |
 | Y1 | [Video chapters](https://support.google.com/youtube/answer/9884579) (YouTube Help) | Google | 2026-11-10 |
-| Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
 | R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
 | R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
 
@@ -32,22 +31,23 @@ same posts as the store pages linked above.
 | Fact (as of November 2026) | Source |
 |---|---|
 | A Major runs under Valve's rules; its organiser adds its own rules for the rest | V1, foreword |
-| Two Majors a year: Austin (ended in June 2025), Budapest (late November to mid-December 2025), Cologne (ended in June 2026) | V4, V5, V6 |
-| Valve's rules name a Singapore Major as the next one | V2 |
+| Two Majors a year: Austin (ended in June 2025), Budapest (late November to mid-December 2025), Cologne (ended in June 2026), and the Singapore 2026 Major | V4, V5, V6, V2 |
+| Valve's rules name the Singapore 2026 Major as the next one | V2 |
+| The organiser's name is in the Major's: "BLAST.TV Austin Major", "StarLadder Budapest Major", "IEM Cologne 2026 Major" | V4, V5, V6 (the posts' own names) |
 | 32 teams; 16 invited to Stage 1, 8 to Stage 2, 8 to Stage 3, all from the Valve Regional Standings; no open qualifiers | V1, "Invitations" |
 | Three stages of 16 teams in a Swiss format, 8 advancing from each, then single-elimination playoffs of the top 8 | V1, "Major Format", "Stage Seeding" |
 | Swiss: opponents of the same record; three wins advance, three losses eliminate; elimination and advancement matches best-of-three, all others best-of-one; no rematch in a stage if possible | V1, "Swiss Bracket" |
 | Seeding by the global VRS before the event; ties broken by the difficulty score (opponents' wins minus their losses) | V1, "Seeding" |
 | Quarter-finals and semi-finals best-of-three | V1, "Single Elimination Bracket" |
-| Grand final best-of-five: first at Budapest (December 2025), again at Cologne (June 2026) | V5, V6. V1 still says "All matches are best of three" for the playoffs; the guide follows Valve's announcements of the last two Majors |
+| Grand final best-of-five at the last two Majors: first at Budapest (December 2025), again at Cologne (June 2026); Valve's written rules still say best-of-three for every playoff match | V5, V6; V1, "Single Elimination Bracket": "All matches are best of three" |
 | The pick-ban order is set by Valve for every Major | V1, "Map Pick-Ban" |
 | Three VRS regions: Europe, Americas, Asia; a roster's region is the region of most of its players | V1, "Regional Standing", "Roster Regional Assignment" |
 | One Stage 2 place per team of the region in the previous Major's Stage 3; one Stage 3 place per team in its playoffs | V1, "Invitations" |
 | The invitation goes to the roster; one that declines or isn't intact passes it to the next-highest ranked roster; a last-chance regional qualifier fills places no roster is left for | V1, "Invitation Process", "Team Requirements" |
-| The VRS ranks teams by results at third-party events through the year: prize money earned, beaten opponents' prize money and number, head-to-head | V3 |
+| The VRS starts a roster from four factors: prize money won ("Bounty Offered"), beaten opponents' prize money ("Bounty Collected"), "Opponent Network" and LAN wins; the last three read its ten best results of the past six months; head-to-head results then adjust it; older results are weighted down ("Age Weight") | V3 (`SEED_MODIFIER_FACTORS` in `ranking.js`: `ownNetwork`, the number of teams beaten, has weight 0; a details page's "Starting Rank Value" and "Factors" notes) |
 | During a Major Valve sells stickers with team logos and player signatures; 50% of tournament item sales go to the organiser, the teams and the players | V5, V6 |
 | Pick'Em challenge in the game | V5, V6 |
-| Souvenirs: an item in the game can be made a souvenir of a Major match, with its team and player stickers | V6 ("Souvenir-O-Matic") |
+| At the Cologne 2026 Major, a weapon in the game could be made a souvenir of one of its matches, with team, map and player stickers | V6 ("Souvenir-O-Matic") |
 
 Left out because no primary source confirmed it: the prize pool, and the Singapore Major's dates and organiser.
 
@@ -58,14 +58,15 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | A full-match video's length shows on its thumbnail and the player; a third map makes a best-of-three clearly longer | R1 |
 | Most full-match videos list one chapter per map played in the description, with highlight moments; the player shows them on the progress bar | R1 |
 | Chapters come from timestamps in the description; YouTube can add automatic chapters; chapters may appear in transcripts | Y1 |
-| The organisers' thumbnails show both teams' logos and no score; titles name the teams, the event and the stage, not the result | R1 |
+| In the sample checked by hand (6 thumbnails, ESL's and PGL's), the thumbnails showed both teams' logos and no score; titles name the teams, the event and the stage, not the result (all 69) | R1 |
 | A later round's title (a semi-final naming two teams) gives away earlier results | R1 |
 | Organisers' main channels post Shorts naming who was eliminated or reached a final; the VOD channels post only full matches | R1 |
-| As of November 2026, the arrow keys seek five seconds and L ten seconds | Y2 |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
 code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
-described as places that can show a result, with no claim about how often they do.
+described as places that can show a result, with no claim about how often they do; the same for the player showing
+its controls and time while the mouse moves over it. A tip to skip the pre-show with the keyboard was left out: seeking
+with the keys may show the progress bar, which couldn't be checked without a browser that plays YouTube.
 
 ## CS2 formats explained (`cs2-formats-explained.md`)
 

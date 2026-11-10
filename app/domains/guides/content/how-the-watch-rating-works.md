@@ -12,7 +12,7 @@ The stakes add up three parts.
 **The stage:**
 
 - a grand final: {{grandFinal}}
-- a semi-final: {{semiFinal}}
+- a semi-final, upper and lower bracket ones included: {{semiFinal}}
 - an upper or lower bracket final in the playoffs: {{bracketFinal}}
 - any other playoff match: {{otherPlayoff}}
 - a third-place match: {{thirdPlace}}
@@ -25,7 +25,9 @@ The stakes add up three parts.
 - an event in PandaScore's top tier, tier s: {{tierS}}
 - an event in its next tier, tier a: {{tierA}}
 
-**The teams:** how strong both teams are, from {{strengthMin}} for two of the weaker teams to {{strengthMax}} for two of the strongest. Strength comes from a team rating that replays every top-tier result of the last {{resultsDays}} days: a team gains rating by beating stronger teams and loses it by losing to weaker ones. Two teams of middling strength score about nothing here.
+**The teams:** how strong both teams are, from {{strengthMin}} for two of the weaker teams to {{strengthMax}} for two of the strongest. Strength comes from a team rating that replays every top-tier result of the last {{resultsDays}} days. Every win raises a team's rating and every loss lowers it, more so when the result was unexpected. Two teams of middling strength score about nothing here.
+
+**An example:** a Major's grand final starts with {{grandFinal}} for the stage and {{major}} for the event. The teams' strength comes on top, before anyone knows how the match went. A first group match at a smaller event can start at {{otherGroup}} for the stage and {{tierA}} for the event, and needs strong teams and a close match to climb.
 
 ## Closeness: known after the match
 

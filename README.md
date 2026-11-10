@@ -53,8 +53,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 - `tools/nginx/`: production's vhost and the old URLs' redirects (`docs/old-urls.md`).
 - `tools/deploy/`: the deploy and its SSH forced command. `tools/data-job/`: the data job, and `pull.mjs`, which puts
   the data branch's files in place for a build.
-- `docs/`: the architecture, the feasibility report, the guides' sources and the old URLs. `experiments/`: the data experiments (not part
-  of the site).
+- `docs/`: the architecture, the feasibility report, the guides' sources and the old URLs. `experiments/`: the data
+  experiments (not part of the site).
 - `AGENTS.md` (`CLAUDE.md` imports it): the rules coding agents work by.
 
 ## Branches

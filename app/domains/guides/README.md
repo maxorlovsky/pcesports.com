@@ -4,11 +4,11 @@ Short, evergreen guides for people who don't follow every match: `/guides` lists
 `/guides/<slug>`. Depends on `site` (each page's SEO) and `watch` (the rating's numbers and labels, for the rating
 guide), so it is the top domain: `site` <- `matches` <- `vods` <- `watch` <- `guides`.
 
-- `index.ts` (plain TypeScript, for the sitemap, the build check and the tests): `loadGuides`, `findGuide`,
-  `guideSummaries` and `guidePaths` (`load.ts`, which reads `content/` from the repository root a build runs in);
-  `parseGuide`, `fillFacts`, `wordsOf`, `sortGuides`, `summaryOf`, `WORDS_PER_MINUTE` (`guides.ts`); the Markdown
-  subset, `parseMarkdown`, `parseInline`, `textOf` (`markdown.ts`); `GUIDE_FACTS` (`facts.ts`); the types `Guide`,
-  `GuideSummary`, `Block`, `Inline`.
+- `index.ts` (plain TypeScript, for the sitemap, the build check and the tests): `loadGuides`, `guidePaths` and
+  `GUIDES_DIR` (`load.ts`, which reads `content/` from the repository root a build runs in); `parseGuide`, `wordsOf`,
+  `WORDS_PER_MINUTE` (`guides.ts`); the Markdown subset, `parseMarkdown`, `parseInline`, `textOf` (`markdown.ts`);
+  `GUIDE_FACTS` (`facts.ts`); the types `Guide`, `GuideSummary`, `Block`, `Inline`. The views import `load.ts`'s
+  `findGuide` and `guideSummaries` themselves.
 - `views/GuidesIndexPage.vue` (`app/pages/guides/index.vue`) and `views/GuidePage.vue` (`app/pages/guides/[slug].vue`):
   the list and a guide. Both read the guides at build time, on the server only (`useAsyncData` with
   `import.meta.server`, as the home page reads its list), so the files and `load.ts` never reach the browser, and the
@@ -53,7 +53,9 @@ A guide may write `{{name}}` for a fact the site's code holds, filled at build t
 unknown name fails the build. The rating guide takes every number and label from there: the thresholds, the labels,
 the stage, event, strength and closeness points (read from the `watch` domain's own functions, so a change to the
 rating reaches the guide), the days the list and the team ratings cover. `tests/guides.test.mjs` fails if the rating
-guide types a number or a label by hand, or if a fact disagrees with what the `watch` domain's code does.
+guide (its title and description included) types a number or a label by hand, or if any fact disagrees with what the
+`watch` domain's code does: the test works each one out again from `watch`'s exports, and a new fact needs its row
+there.
 
 ## The rules every guide keeps
 

@@ -13,7 +13,7 @@ The rest of this guide goes through each place a result leaks, and what to do ab
 
 A full-match video shows its length on the thumbnail, in search results and on the player. A best-of-three that goes to a third map runs clearly longer than one that ends after two. So the length alone can tell you whether a series was one-sided.
 
-**What to do:** don't look for the video on the organiser's channel page or in search results, where every length is on show. Use a link that opens the video itself. Once it plays, keep the mouse away from the player, so its controls and the time stay hidden.
+**What to do:** don't look for the video on the organiser's channel page or in search results, where every length is on show. Use a link that opens the video itself. The player shows its controls, the time included, while the mouse moves over it: once the video plays, keep the mouse away from the player.
 
 ### Chapters
 
@@ -21,11 +21,11 @@ Most full-match videos list their chapters in the description: one chapter per m
 
 YouTube can also add chapters to a video by itself, and chapters can show in the video's transcript.
 
-**What to do:** don't open the description or the transcript, and don't hover over the progress bar. To skip the pre-show, use the keyboard rather than the bar: as of November 2026, the right arrow key jumps five seconds ahead and the L key ten.
+**What to do:** don't open the description or the transcript, and don't hover over the progress bar.
 
 ### Thumbnails and titles
 
-The organisers' own full-match videos are mostly safe on their own. Their thumbnails show both teams' logos and no score. Their titles name the teams, the event and the stage, not the result.
+The organisers' own full-match videos are mostly safe on their own. In the sample this site checked by hand, the thumbnails showed both teams' logos and no score. The titles name the teams, the event and the stage, not the result.
 
 The risk is the titles of other matches. A semi-final video names its two teams, so it tells you who won both quarter-finals before it. A list of uploads shows all of those titles at once.
 
@@ -33,31 +33,31 @@ The risk is the titles of other matches. A semi-final video names its two teams,
 
 ### The organiser's other uploads
 
-Organisers' main channels post short clips and highlights that name who was knocked out or who reached the final, often as soon as it happens. Their channels for full matches usually post only full matches.
+Organisers' main channels post short clips that name who was knocked out or who reached the final. Their channels for full matches post only full matches.
 
 **What to do:** don't open an organiser's main channel or its short clips during an event you want to watch later. If YouTube suggests them, skip them.
 
 ### Recommendations and comments
 
-Next to the video, YouTube suggests other videos: often later matches, highlights or clips of the same event, whose titles give results away. Under the video, viewers talk about the match, its result included.
+Next to the video, YouTube suggests other videos. They can be later matches, highlights or clips of the same event, whose titles can give results away. Under the video, viewers comment on the match, and a comment can name the result.
 
 **What to do:** watch full screen or in theatre mode, and don't scroll below the player.
 
 ### Social feeds
 
-Teams, players, organisers and fans post results the moment a match ends, often in the first line or in the picture. A feed shows them to you without asking.
+Teams, players, organisers and fans post results once a match ends, sometimes in the first line or in the picture. A feed shows them to you without asking.
 
 **What to do:** stay off the feeds until you have watched. Where an app lets you mute words, mute the event's and the teams' names for the days you need.
 
 ### Search engines
 
-Searching for a team or an event shows the newest news headlines and video titles first, and they often carry the result. Any results box a search engine shows above the links can give the score away too.
+Searching for a team or an event can show news headlines and video titles that carry the result. Any results box a search engine shows above the links can give the score away too.
 
 **What to do:** don't search for a match you haven't watched yet. Find its video from a link that goes straight to it.
 
 ## How this site avoids them
 
-The home page lists the finished top-tier matches of the last week that have an official full-match video. It was built so that nothing it shows gives a result away:
+The home page lists the finished top-tier matches of the last {{listDays}} days that have an official full-match video. It was built so that nothing it shows gives a result away:
 
 - **Its own card for each match.** A card shows the event, the stage, the date and a label. There is no YouTube thumbnail, no video length, no chapters and no video title.
 - **Teams on tap.** The teams stay hidden until you tap "Show teams". A later round's teams would tell you who won the earlier ones.

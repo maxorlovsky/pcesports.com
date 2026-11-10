@@ -5,8 +5,8 @@ import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { GUIDES_DIR, GUIDE_FACTS, WORDS_PER_MINUTE, loadGuides, parseGuide, parseInline, parseMarkdown, textOf } from '../app/domains/guides/index.ts';
-import { CLOSE_MINUTES, LABELS, OVERTIME_MINUTES, UPSET_CHANCE, closeness, labelOf } from '../app/domains/watch/index.ts';
+import { GUIDES_DIR, GUIDE_FACTS, WORDS_PER_MINUTE, loadGuides, parseGuide, parseInline, parseMarkdown, textOf, wordsOf } from '../app/domains/guides/index.ts';
+import { CLOSE_MINUTES, LABELS, LIST_DAYS, MUST_WATCH, OVERTIME_MINUTES, RESULTS_DAYS, UPSET_CHANCE, WORTH_A_WATCH, closeness, eventPoints, labelOf, stagePoints, strengthPoints } from '../app/domains/watch/index.ts';
 import { checkBuild } from '../tools/check-build.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
@@ -84,7 +84,9 @@ test('every guide file loads, in the list\'s order', () => {
 
 for (const guide of guides) {
   test(`${guide.slug}: reads in about 3 to 5 minutes`, () => {
-    assert.ok(guide.minutes >= 3 && guide.minutes <= 5, `${guide.minutes} minutes at ${WORDS_PER_MINUTE} words a minute`);
+    const minutes = wordsOf(guide.blocks) / WORDS_PER_MINUTE;
+    assert.ok(minutes >= 2.75 && minutes <= 5.25, `${minutes.toFixed(2)} minutes at ${WORDS_PER_MINUTE} words a minute`);
+    assert.equal(guide.minutes, Math.round(minutes));
   });
 
   test(`${guide.slug}: straight quotes and plain hyphens only`, () => {
@@ -104,7 +106,7 @@ for (const guide of guides) {
 }
 
 test('the rating guide types no number and no label: each comes from the watch domain\'s code', () => {
-  const body = sources[RATING_GUIDE].replace(/^---[\s\S]*?\n---\n/, '').replace(/\{\{\s*\w+\s*\}\}/g, '');
+  const body = sources[RATING_GUIDE].replace(/^order: .*$/m, '').replace(/\{\{\s*\w+\s*\}\}/g, '');
   const number = body.match(/(?<![\w.])-?\d+(?:\.\d+)?(?![\w.]?\d)/);
   assert.equal(number, null, `"${number?.[0]}" is typed by hand: write it as a {{fact}} (facts.ts)`);
   for (const label of LABELS) assert.ok(!body.toLowerCase().includes(label.toLowerCase()), `"${label}" is typed by hand: write it as a {{fact}}`);
@@ -112,25 +114,46 @@ test('the rating guide types no number and no label: each comes from the watch d
   for (const label of LABELS) assert.ok(textOfGuide(rating).includes(label), `the guide doesn't name "${label}"`);
 });
 
-test('the rating guide\'s facts are what the watch domain\'s code does', () => {
-  const facts = GUIDE_FACTS;
-  const must = Number(facts.mustWatch);
-  const worth = Number(facts.worthAWatch);
-  assert.deepEqual([facts.labelMustWatch, facts.labelWorthAWatch, facts.labelForFans], [...LABELS]);
-  assert.equal(labelOf(must), facts.labelMustWatch);
-  assert.equal(labelOf(must - 0.01), facts.labelWorthAWatch);
-  assert.equal(labelOf(worth), facts.labelWorthAWatch);
-  assert.equal(labelOf(worth - 0.01), facts.labelForFans);
-  const upset = Number(facts.upsetPercent) / 100;
-  assert.equal(upset, UPSET_CHANCE);
-  assert.equal(closeness({ bestOf: 1, maps: [], winnerChance: upset - 0.01 }), Number(facts.upset));
-  assert.equal(closeness({ bestOf: 1, maps: [], winnerChance: upset }), 0);
-  const map = (minutes) => closeness({ bestOf: 1, maps: [{ seconds: minutes * 60 }], winnerChance: null });
-  assert.equal(Number(facts.overtimeMinutes), OVERTIME_MINUTES);
-  assert.equal(Number(facts.closeMinutes), CLOSE_MINUTES);
-  assert.equal(map(OVERTIME_MINUTES), Number(facts.overtimeMap));
-  assert.equal(map(CLOSE_MINUTES), Number(facts.closeMap));
-  assert.ok(map(CLOSE_MINUTES - 1) < Number(facts.closeMap));
+test('the rating guide\'s facts are what the watch domain\'s code does, every one of them', () => {
+  // Worked out here from the watch domain's exports and its functions on other round and league names than facts.ts
+  // uses, so a fact typed by hand, or read from the wrong place, fails.
+  const playoff = (round) => stagePoints({ name: `${round}: X vs Y`, stage: 'Playoffs', teams: [] });
+  const group = (round, stage) => stagePoints({ name: `${round}: X vs Y`, stage, teams: [] });
+  const scale = { median: 1500, top: 1600 };
+  const expected = {
+    mustWatch: MUST_WATCH,
+    worthAWatch: WORTH_A_WATCH,
+    labelMustWatch: LABELS[0],
+    labelWorthAWatch: LABELS[1],
+    labelForFans: LABELS[2],
+    listDays: LIST_DAYS,
+    resultsDays: RESULTS_DAYS,
+    grandFinal: playoff('Grand final'),
+    semiFinal: playoff('Semifinal 2'),
+    bracketFinal: playoff('Upper Bracket Final'),
+    otherPlayoff: playoff('Quarterfinal 3'),
+    thirdPlace: playoff('Third Place Match'),
+    groupDecider: group('Elimination Match', 'Group B'),
+    otherGroup: group('Round 2', 'Swiss Stage'),
+    major: eventPoints({ league: 'PGL', serie: 'Major Copenhagen 2024', tier: 'a' }),
+    tierS: eventPoints({ league: 'BLAST Premier', serie: 'World Final 2026', tier: 's' }),
+    tierA: eventPoints({ league: 'BLAST Rivals', serie: 'Fall 2026', tier: 'a' }),
+    strengthMin: strengthPoints(0, scale),
+    strengthMax: strengthPoints(3000, scale),
+    upsetPercent: UPSET_CHANCE * 100,
+    upset: closeness({ bestOf: 3, maps: [{ seconds: 1800 }, { seconds: 1800 }], winnerChance: UPSET_CHANCE / 2 }),
+    overtimeMinutes: OVERTIME_MINUTES,
+    overtimeMap: closeness({ bestOf: 3, maps: [{ seconds: OVERTIME_MINUTES * 60 + 30 }, { seconds: 1800 }], winnerChance: 0.5 }),
+    closeMinutes: CLOSE_MINUTES,
+    closeMap: closeness({ bestOf: 3, maps: [{ seconds: 1800 }, { seconds: CLOSE_MINUTES * 60 + 30 }], winnerChance: 0.5 }),
+  };
+  assert.deepEqual(GUIDE_FACTS, Object.fromEntries(Object.entries(expected).map(([name, value]) => [name, String(value)])));
+  // What the guide says around them: the thresholds are where the labels change; semi-finals of a bracket score as
+  // semi-finals; a shorter map, or the favourite winning, adds nothing.
+  assert.equal(labelOf(MUST_WATCH - 0.01), LABELS[1]);
+  assert.equal(labelOf(WORTH_A_WATCH - 0.01), LABELS[2]);
+  assert.equal(playoff('Lower Bracket Semifinal 1'), playoff('Semifinal 1'));
+  assert.equal(closeness({ bestOf: 1, maps: [{ seconds: CLOSE_MINUTES * 60 - 60 }], winnerChance: UPSET_CHANCE }), 0);
 });
 
 test('no guide holds anything the build\'s spoiler check reads as a score, a map count or a winner, whatever the data', () => {
