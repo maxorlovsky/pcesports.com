@@ -109,7 +109,8 @@ test('the rating guide types no number and no label: each comes from the watch d
   const body = sources[RATING_GUIDE].replace(/^order: .*$/m, '').replace(/\{\{\s*\w+\s*\}\}/g, '');
   const number = body.match(/(?<![\w.])-?\d+(?:\.\d+)?(?![\w.]?\d)/);
   assert.equal(number, null, `"${number?.[0]}" is typed by hand: write it as a {{fact}} (facts.ts)`);
-  for (const label of LABELS) assert.ok(!body.toLowerCase().includes(label.toLowerCase()), `"${label}" is typed by hand: write it as a {{fact}}`);
+  const words = body.toLowerCase().replace(/[^a-z]+/g, ' ');
+  for (const label of LABELS) assert.ok(!words.includes(label.toLowerCase()), `"${label}" is typed by hand: write it as a {{fact}}`);
   const rating = guides.find((guide) => guide.slug === RATING_GUIDE);
   for (const label of LABELS) assert.ok(textOfGuide(rating).includes(label), `the guide doesn't name "${label}"`);
 });
@@ -153,6 +154,10 @@ test('the rating guide\'s facts are what the watch domain\'s code does, every on
   assert.equal(labelOf(MUST_WATCH - 0.01), LABELS[1]);
   assert.equal(labelOf(WORTH_A_WATCH - 0.01), LABELS[2]);
   assert.equal(playoff('Lower Bracket Semifinal 1'), playoff('Semifinal 1'));
+  // Outside the playoffs, bracket rounds score as the group lines say: by whether they can knock out or send through.
+  assert.equal(group('Lower Bracket Semifinal 1', 'Group A'), Number(GUIDE_FACTS.groupDecider));
+  assert.equal(group('Upper Bracket Semifinal 1', 'Group A'), Number(GUIDE_FACTS.otherGroup));
+  assert.equal(group('Third Place Match', 'Group A'), Number(GUIDE_FACTS.otherGroup));
   assert.equal(closeness({ bestOf: 1, maps: [{ seconds: CLOSE_MINUTES * 60 - 60 }], winnerChance: UPSET_CHANCE }), 0);
 });
 

@@ -120,7 +120,7 @@ const promises = [
         </li>
       </ol>
       <p class="how-more">
-        How the labels are worked out, how the Majors and formats work, and how to stay spoiler-free:
+        How the labels are worked out, and more short reads for busy viewers:
         <NuxtLink to="/guides">read the guides</NuxtLink>.
       </p>
     </section>

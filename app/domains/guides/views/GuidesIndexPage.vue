@@ -4,7 +4,7 @@ import type { GuideSummary } from '../guides.ts';
 
 usePageSeo({
   title: 'Guides',
-  description: 'Short CS2 guides for busy viewers: watching without spoilers, how the Majors and formats work, and how PCesports rates matches.',
+  description: 'Short CS2 guides for viewers who don\'t follow every match, each one read in a few minutes.',
   path: '/guides',
 });
 

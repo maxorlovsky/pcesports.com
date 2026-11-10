@@ -57,10 +57,10 @@ In double elimination, a team is out only after it loses twice:
 
 - Every team starts in the **upper bracket**.
 - A team that loses in the upper bracket drops to the **lower bracket**. There, one more loss and it is out.
-- The **upper bracket final** sends its winner to the grand final, and its loser drops to the lower bracket.
-- The **lower bracket final** is the last match of the lower bracket. Its winner takes the other place in the grand final.
+- The **upper bracket final** sends its winner on, and its loser drops to the lower bracket. In a playoff bracket the winner goes to the grand final. In a group it goes through to the next stage.
+- The **lower bracket final** is the last match of the lower bracket. Its winner takes the other place: in the grand final, or the group's other place to go through.
 
-So a lower bracket final is a team's last chance to reach the grand final, and the upper bracket final's winner can wait for its opponent there.
+So a lower bracket final is a team's last chance, and the upper bracket final's winner can wait for its opponent.
 
 On this site these rounds show as "Upper Bracket Quarterfinal", "Upper Bracket Semifinal", "Upper Bracket Final", and the same names with "Lower Bracket".
 

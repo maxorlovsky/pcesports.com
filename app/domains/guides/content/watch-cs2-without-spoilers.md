@@ -11,7 +11,7 @@ The rest of this guide goes through each place a result leaks, and what to do ab
 
 ### The video's length
 
-A full-match video shows its length on the thumbnail, in search results and on the player. A best-of-three that goes to a third map runs clearly longer than one that ends after two. So the length alone can tell you whether a series was one-sided.
+A full-match video shows its length on the thumbnail, in search results and on the player. A best-of-three that goes to a third map runs clearly longer than one that ends after two. So the length alone can tell you how many maps were played.
 
 **What to do:** don't look for the video on the organiser's channel page or in search results, where every length is on show. Use a link that opens the video itself. The player shows its controls, the time included, while the mouse moves over it: once the video plays, keep the mouse away from the player.
 
@@ -71,7 +71,7 @@ How the labels are worked out is in [How "What should I watch?" rates matches](/
 ## A routine that works
 
 1. Choose your matches on the [home page](/) before you open anything else.
-2. Open each one with "Watch the VOD" and go full screen right away.
-3. Keep the mouse away from the progress bar and the description.
+2. Open each one with "Watch the VOD" and press F for full screen (YouTube's shortcut, as of November 2026), rather than clicking the control bar.
+3. The control bar, with the time and the progress bar, can show when the video starts or pauses: keep your eyes off the bottom of the screen until it hides, and the mouse away from it.
 4. Watch the matches of an event in the order they were played.
 5. Check feeds, search and results only once you are done.

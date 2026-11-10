@@ -19,6 +19,7 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 | V5 | ["The Starladder Budapest Major 2025"](https://store.steampowered.com/news/app/730/view/1816215235365195) (2025-11-12), ["Best of Five in Budapest"](https://store.steampowered.com/news/app/730/view/1818752592130605) (2025-12-13) | Valve | 2026-11-10 |
 | V6 | ["IEM Cologne 2026"](https://store.steampowered.com/news/app/730/view/1833334318570412) (2026-05-22), ["Playoffs at the 'Cathedral of Counter-Strike'"](https://store.steampowered.com/news/app/730/view/1835871199302220) (2026-06-17), ["The IEM Cologne 2026 Grand Finals"](https://store.steampowered.com/news/app/730/view/1835871199310024) (2026-06-20) | Valve | 2026-11-10 |
 | Y1 | [Video chapters](https://support.google.com/youtube/answer/9884579) (YouTube Help) | Google | 2026-11-10 |
+| Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
 | R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
 | R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
 
@@ -61,12 +62,14 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | In the sample checked by hand (6 thumbnails, ESL's and PGL's), the thumbnails showed both teams' logos and no score; titles name the teams, the event and the stage, not the result (all 69) | R1 |
 | A later round's title (a semi-final naming two teams) gives away earlier results | R1 |
 | Organisers' main channels post Shorts naming who was eliminated or reached a final; the VOD channels post only full matches | R1 |
+| As of November 2026, F turns full screen on ("f: Activate full screen") | Y2 |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
 code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
-described as places that can show a result, with no claim about how often they do; the same for the player showing
-its controls and time while the mouse moves over it. A tip to skip the pre-show with the keyboard was left out: seeking
-with the keys may show the progress bar, which couldn't be checked without a browser that plays YouTube.
+described as places that can show a result, with no claim about how often they do; the same for the player's control
+bar, which "can show" when the video starts or pauses and shows while the mouse moves over the player. A tip to skip
+the pre-show with the keyboard was left out: seeking with the keys may show the progress bar, which couldn't be checked
+without a browser that plays YouTube.
 
 ## CS2 formats explained (`cs2-formats-explained.md`)
 

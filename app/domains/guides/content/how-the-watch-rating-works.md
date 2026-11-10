@@ -12,11 +12,11 @@ The stakes add up three parts.
 **The stage:**
 
 - a grand final: {{grandFinal}}
-- a semi-final, upper and lower bracket ones included: {{semiFinal}}
-- an upper or lower bracket final in the playoffs: {{bracketFinal}}
+- in the playoffs, a semi-final, upper and lower bracket ones included: {{semiFinal}}
+- in the playoffs, an upper or lower bracket final: {{bracketFinal}}
+- in the playoffs, a third-place match: {{thirdPlace}}
 - any other playoff match: {{otherPlayoff}}
-- a third-place match: {{thirdPlace}}
-- a group or Swiss match that can knock a team out or send it through: {{groupDecider}}
+- in a group or Swiss stage, a match that can knock a team out or send it through: {{groupDecider}}
 - any other group or Swiss match: {{otherGroup}}
 
 **The event:**

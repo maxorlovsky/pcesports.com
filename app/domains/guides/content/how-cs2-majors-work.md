@@ -3,7 +3,7 @@ title: How the CS2 Majors work
 description: What a CS2 Major is, how often it happens, its stages, how teams get in and why it matters more than other events. As of November 2026.
 order: 2
 ---
-**The short answer:** a Major is a Counter-Strike event run under Valve's own rules. Valve makes the game. As of November 2026 there are two Majors a year. Each one brings 32 teams through three Swiss stages to an eight-team playoff. Teams don't qualify through open qualifiers: Valve invites them from its own ranking, the Valve Regional Standings.
+**The short answer:** a Major is a Counter-Strike event run under Valve's own rules. Valve makes the game. As of November 2026 there are two Majors a year. Each one brings 32 teams through three Swiss stages to an eight-team playoff. Teams don't play open qualifiers: Valve invites them from its own ranking, the Valve Regional Standings.
 
 ## How often
 
@@ -35,11 +35,11 @@ Who plays whom follows the seeds. Before the Major, all 32 teams are seeded by t
 
 The quarter-finals and semi-finals are best-of-three. The grand final has been a best-of-five at the last two Majors: for the first time at Budapest in December 2025, and again at Cologne in June 2026. Valve's written rules still say best-of-three for every playoff match.
 
-Before each series, the teams take turns removing maps from the map pool and picking the ones they want to play. Valve's rules set the order of those turns for every Major.
+Before each series, the teams take turns removing maps from the map pool. In a best-of-three they also pick the maps they want to play. Valve's rules set the order of those turns for every Major.
 
 ## How teams get in
 
-- **All 32 places are invitations.** Valve's rules invite 16 teams to Stage 1, eight to Stage 2 and eight to Stage 3.
+- **The places are invitations.** Valve's rules invite 16 teams to Stage 1, eight to Stage 2 and eight to Stage 3. Only a place no ranked roster is left for goes to a qualifier (below).
 - **The ranking decides who.** The Valve Regional Standings rank rosters by their results at other events. A roster starts from four measures: the prize money it has won, the prize money of the teams it beat, a measure of the opponents it beat that Valve calls its opponent network, and its wins at LAN events. The last three read only its ten best results of the past six months. Then every head-to-head result moves it up or down, and older results count less.
 - **Three regions.** The ranking has three lists: Europe, the Americas and Asia. A team's region is the region most of its players come from.
 - **Places per region follow the last Major.** A region gets one Stage 2 place for each of its teams that reached Stage 3 at the previous Major. It gets one Stage 3 place for each of its teams that reached the playoffs.
@@ -48,7 +48,7 @@ Before each series, the teams take turns removing maps from the map pool and pic
 
 ## Why the Majors matter more
 
-- **One set of rules.** Valve writes the format, the invitations and the seeding, and every Major follows them. Other events each set their own.
+- **One set of rules.** Valve writes the format, the invitations and the seeding, and every Major follows them.
 - **The game takes part.** During a Major, Valve sells stickers in the game with the teams' logos and the players' signatures. Half of what those sales bring in goes to the organiser, the teams and the players.
 - **Viewers play along.** Valve runs a Pick'Em challenge in the game: viewers predict the results of each stage.
 - **Souvenirs.** At the Cologne 2026 Major, players could turn a weapon in the game into a souvenir of one of its matches, with that match's team, map and player stickers on it.

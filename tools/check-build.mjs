@@ -17,13 +17,13 @@ const ROOT = resolve(import.meta.dirname, '..');
 
 const SITE_URL = 'https://www.pcesports.com';
 
-/** The guides' pages: the list, which names every guide, and each guide, by its first heading (not in its title). */
+/** The guides' pages: the list, which names every guide, and each guide, by its body's first block (its lead). */
 export function guidePages(root = ROOT) {
   const guides = loadGuides(root);
-  const heading = (guide) => textOf(guide.blocks.find((block) => block.kind === 'h2')?.inlines ?? []) || guide.title;
+  const lead = ([first]) => textOf('items' in first ? first.items[0] : first.inlines);
   return [
     { file: 'guides.html', path: '/guides', text: guides.map((guide) => guide.title) },
-    ...guides.map((guide) => ({ file: `guides/${guide.slug}.html`, path: `/guides/${guide.slug}`, text: heading(guide) })),
+    ...guides.map((guide) => ({ file: `guides/${guide.slug}.html`, path: `/guides/${guide.slug}`, text: lead(guide.blocks) })),
   ];
 }
 
