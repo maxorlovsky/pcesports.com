@@ -23,19 +23,19 @@ them or the tag. `analyticsController` (plain, tested) decides; `ui/useAnalytics
 `page:finish`, once Nuxt has written the new title, and "Decline" after "Accept" sets GA's `ga-disable-<id>` flag and
 deletes its cookies. A choice made in one tab reaches the site's other open tabs through the `storage` event.
 
-The site's code sends every page view itself (`send_page_view: false`) and nothing else, so in the GA property
-enhanced measurement and user-provided data collection stay off: history-based page views would add one of their own
-on each navigation (Google's single-page-app guide), and scroll, click, download, form and typed data are what the
-privacy page says the site does not send. GA's admin is where to check, under Admin, Data collection and
-modification: in Data streams, the web stream shows "Enhanced measurement" off with "Measuring: Page views", and Data
-collection offers "Turn on" for user-provided data collection. Don't go by the `gtag.js` Google serves for the ID: 40
-minutes after both were switched off it still listed every enhanced-measurement flag as `true`
-(`"vtp_enableScroll":true` and the rest); whether it catches up later is unknown. After a deploy, GA's Realtime report
-shows what arrives. Accept on the home page, follow the footer's "Privacy" link, scroll that page to the bottom, go
-back to the home page (the header's link or the browser's back button), and last click the footer's outbound "Source:
-PandaScore" link: Realtime should show 3 `page_view` events (besides GA's own `first_visit`, `session_start` and
-`user_engagement`), and no `scroll` or `click`. More page views, or either of those events, means enhanced measurement
-still runs.
+The site's code sends every page view itself (`send_page_view: false`) and nothing else, so in the GA property enhanced
+measurement and user-provided data collection stay off: history-based page views would add one of their own on each
+navigation (Google's single-page-app guide), and scroll, click, download, form and typed data are what the privacy page
+says the site does not send. GA's admin is where to check, under Admin, Data collection and modification: in Data
+streams, the web stream shows "Enhanced measurement" off with "Measuring: Page views", and Data collection offers "Turn
+on" for user-provided data collection. Don't go by the `gtag.js` Google serves for the ID: 40 minutes after both were
+switched off it still listed every enhanced-measurement flag as `true` (`"vtp_enableScroll":true` and the rest); whether
+it catches up later is unknown. After a deploy, GA's Realtime report shows what arrives. Accept on the home page, follow
+the footer's "Privacy" link, scroll that page to the bottom, go back to the home page (the header's link or the
+browser's back button), and last click the footer's outbound "Source: PandaScore" link. Read Realtime while it shows one
+user in the last 30 minutes (yours: it counts every visitor): it should show 3 `page_view` events (besides GA's own
+`first_visit`, `session_start` and `user_engagement`), and no `scroll` or `click`. More page views, or either of those
+events, means enhanced measurement still runs.
 
 The banner stays this simple: ads will need a Google-certified consent tool, which replaces it.
 
