@@ -29,7 +29,7 @@ In a Swiss stage, teams play opponents with the same record of wins and losses. 
 
 A match that can send a team through or knock it out is a best-of-three. Every other Swiss match is a best-of-one. Teams don't meet the same opponent twice in a stage, where that can be avoided.
 
-Who plays whom follows the seeds. Before the Major, all 32 teams are seeded by their place in Valve's world ranking. Within a stage, ties in the record are broken by a difficulty score. It adds up the wins of every opponent a team has played so far, and takes away their losses.
+Who plays whom follows the seeds. Before the Major, all 32 teams are seeded by their place in the world list of the same ranking. Within a stage, ties in the record are broken by a difficulty score. It adds up the wins of every opponent a team has played so far, and takes away their losses.
 
 ### The playoffs
 
@@ -40,9 +40,9 @@ Before each series, the teams take turns removing maps from the map pool. In a b
 ## How teams get in
 
 - **The places are invitations.** Valve's rules invite 16 teams to Stage 1, eight to Stage 2 and eight to Stage 3. Only a place no ranked roster is left for goes to a qualifier (below).
-- **The ranking decides who.** The Valve Regional Standings rank rosters by their results at other events. A roster starts from four measures: the prize money it has won, the prize money of the teams it beat, a measure of the opponents it beat that Valve calls its opponent network, and its wins at LAN events. The last three read only its ten best results of the past six months. Then every head-to-head result moves it up or down, and older results count less.
+- **The ranking decides who.** The Valve Regional Standings rank rosters by their results at other events. A roster starts from four measures: the prize money it has won, the prize money of the teams it beat, a measure of the opponents it beat that Valve calls its opponent network, and its wins at LAN events. Each measure reads only its ten best results of the past six months. Then every head-to-head result moves it up or down, and older results count less.
 - **Three regions.** The ranking has three lists: Europe, the Americas and Asia. A team's region is the region most of its players come from.
-- **Places per region follow the last Major.** The places in each stage are shared out between the regions by how far each region's teams got at the previous Major.
+- **Places per region follow the last Major.** The places in Stages 2 and 3 are shared out between the regions by how far each region's teams got at the previous Major.
 - **The players are invited, not the club.** The invitation goes to the roster that earned it, and that roster must play. A roster that says no, or no longer has its players, loses its place to the next-highest ranked roster.
 - **A last chance.** If no ranked roster is left to invite, a last-chance regional qualifier fills the remaining places.
 

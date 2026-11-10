@@ -17,7 +17,7 @@ A full-match video shows its length on the thumbnail, in search results and on t
 
 ### Chapters
 
-Most full-match videos list their chapters in the description: one chapter per map played, often with highlight moments too. The player then splits its progress bar into those chapters. A glance at the bar can tell you how many maps were played, and a chapter's name can tell you what happened in it.
+At ESL and PGL, the organisers this site checked in detail, most full-match videos list their chapters in the description: one chapter per map played, often with highlight moments too. The player then splits its progress bar into those chapters. A glance at the bar can tell you how many maps were played, and a chapter's name can tell you what happened in it.
 
 YouTube can also add chapters to a video by itself, and chapters can show in the video's transcript.
 
@@ -25,7 +25,7 @@ YouTube can also add chapters to a video by itself, and chapters can show in the
 
 ### Thumbnails and titles
 
-The organisers' own full-match videos are mostly safe on their own. In the sample this site checked by hand, the thumbnails showed both teams' logos and no score. The titles name the teams, the event and the stage, not the result.
+The organisers' own full-match videos are mostly safe on their own. In the sample this site checked by hand, from ESL and PGL, the thumbnails showed both teams' logos and no score. In the titles this site has seen, the teams and the event are named, sometimes the stage, but not the result.
 
 The risk is the titles of other matches. A semi-final video names its two teams, so it tells you who won the quarter-finals that led to it. A list of uploads shows all of those titles at once.
 
@@ -33,9 +33,9 @@ The risk is the titles of other matches. A semi-final video names its two teams,
 
 ### The organiser's other uploads
 
-Organisers' main channels post short clips that name who was knocked out or who reached the final. Their channels for full matches post only full matches.
+At ESL and PGL, the organisers' main channels post short clips that name who was knocked out or who reached the final. Their full matches are on a separate channel, which posts only full matches. Other organisers, such as StarLadder, post their full matches on the main channel, next to the clips.
 
-**What to do:** don't open an organiser's main channel or its short clips during an event you want to watch later. If YouTube suggests them, skip them.
+**What to do:** don't browse an organiser's channel or its short clips during an event you want to watch later. Open each full match from a link that goes straight to it. If YouTube suggests clips, skip them.
 
 ### Recommendations and comments
 
@@ -57,7 +57,7 @@ Searching for a team or an event can show news headlines and video titles that c
 
 ## How this site avoids them
 
-The home page lists the finished top-tier matches of the last {{listDays}} days that have an official full-match video. It was built so that nothing it shows gives a result away:
+The home page lists the finished matches of PandaScore's top two tiers from the last {{listDays}} days that have an official full-match video. It was built so that nothing it shows gives a result away:
 
 - **Its own card for each match.** A card shows the event, the stage, the date and a label. There is no YouTube thumbnail, no video length, no chapters and no video title.
 - **Teams on tap.** The teams stay hidden until you tap "Show teams". A later round's teams would tell you who won the earlier ones.

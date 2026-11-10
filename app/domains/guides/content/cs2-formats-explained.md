@@ -36,7 +36,7 @@ On this site a Swiss match shows as **Round** and a number: "Round 1" is the fir
 In a group, a few teams play each other, and the best of them go through. There are three common kinds:
 
 - **Round robin:** every team plays every other team once. The table decides who goes through.
-- **Four-team groups:** two opening matches. Their winners meet in the **Winners Match**, and their losers in the **Elimination Match**, which knocks one team out. How many teams go through, and whether a deciding match follows, depends on the event.
+- **A four-team bracket:** two opening matches. Their winners meet in the **Winners Match**, and their losers in the **Elimination Match**, which knocks one team out. How many teams go through, and whether a deciding match follows, depends on the event.
 - **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with upper and lower bracket rounds (below). How many teams go through, and from which rounds, depends on the event too.
 
 On this site a group shows as **Group A**, **Group B** and so on, followed by the match's name in it.

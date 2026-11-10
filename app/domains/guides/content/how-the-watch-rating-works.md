@@ -3,7 +3,7 @@ title: How "What should I watch?" rates matches
 description: How PCesports labels each finished CS2 match: what was at stake plus how close it got, the three labels, and why it only rates after the match.
 order: 4
 ---
-**The short answer:** every finished top-tier CS2 match with an official full-match video gets one of three labels: {{labelMustWatch}}, {{labelWorthAWatch}} or {{labelForFans}}. The label adds up two things. The stakes are what the match decided, known before it started. Closeness is how close it got, known only after it ended. The label never tells you who won, the score or how many maps were played.
+**The short answer:** every finished CS2 match in PandaScore's top two tiers with an official full-match video gets one of three labels: {{labelMustWatch}}, {{labelWorthAWatch}} or {{labelForFans}}. The label adds up two things. The stakes are what the match decided, known before it started. Closeness is how close it got, known only after it ended. The label never tells you who won, the score or how many maps were played.
 
 ## Stakes: known before the match
 
@@ -25,10 +25,10 @@ The site reads the stage from the names PandaScore gives the rounds. That is a g
 **The event:**
 
 - a Major: {{major}}
-- an event in PandaScore's top tier, tier s: {{tierS}}
-- an event in its next tier, tier a: {{tierA}}
+- an event in PandaScore's highest tier, tier s: {{tierS}}
+- an event in its second tier, tier a: {{tierA}}
 
-**The teams:** how strong both teams are, from {{strengthMin}} for two of the weaker teams to {{strengthMax}} for two of the strongest. Strength comes from a team rating that replays every top-tier result of the last {{resultsDays}} days. Every win raises a team's rating and every loss lowers it, more so when the result was unexpected. Two teams of middling strength score about nothing here.
+**The teams:** how strong both teams are, from {{strengthMin}} for two of the weaker teams to {{strengthMax}} for two of the strongest. Strength comes from a team rating that replays every result in PandaScore's top two tiers from the last {{resultsDays}} days. Every win raises a team's rating and every loss lowers it, more so when the result was unexpected. Two teams of middling strength score about nothing here.
 
 **An example:** a Major's grand final starts with {{grandFinal}} for the stage and {{major}} for the event. The teams' strength comes on top, before anyone knows how the match went. A first group match at a smaller event can start at {{otherGroup}} for the stage and {{tierA}} for the event, and needs strong teams and a close match to climb.
 

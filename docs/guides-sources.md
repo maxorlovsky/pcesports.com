@@ -42,9 +42,9 @@ same posts as the store pages linked above.
 | Grand final best-of-five at the last two Majors: first at Budapest (December 2025), again at Cologne (June 2026); Valve's written rules still say best-of-three for every playoff match | V5, V6; V1, "Single Elimination Bracket": "All matches are best of three" |
 | The pick-ban order is set by Valve for every Major | V1, "Map Pick-Ban" |
 | Three VRS regions: Europe, Americas, Asia; a roster's region is the region of most of its players | V1, "Regional Standing", "Roster Regional Assignment" |
-| One Stage 2 place per team of the region in the previous Major's Stage 3; one Stage 3 place per team in its playoffs | V1, "Invitations" |
+| The places in Stages 2 and 3 are shared out between the regions by the previous Major: one Stage 2 place per team of the region that reached Stage 3, one Stage 3 place per team in its playoffs | V1, "Invitations" |
 | The invitation goes to the roster; one that declines or isn't intact passes it to the next-highest ranked roster; a last-chance regional qualifier fills places no roster is left for | V1, "Invitation Process", "Team Requirements" |
-| The VRS starts a roster from four factors: prize money won ("Bounty Offered"), beaten opponents' prize money ("Bounty Collected"), "Opponent Network" and LAN wins; the last three read its ten best results of the past six months; head-to-head results then adjust it; older results are weighted down ("Age Weight") | V3 (`SEED_MODIFIER_FACTORS` in `ranking.js`: `ownNetwork`, the number of teams beaten, has weight 0; a details page's "Starting Rank Value" and "Factors" notes) |
+| The VRS starts a roster from four factors: prize money won ("Bounty Offered"), beaten opponents' prize money ("Bounty Collected"), "Opponent Network" and LAN wins; each reads the roster's ten best results of the past six months; head-to-head results then adjust it; older results are weighted down ("Age Weight") | V3 (`SEED_MODIFIER_FACTORS` in `ranking.js`: `ownNetwork`, the number of teams beaten, has weight 0; a details page's "Starting Rank Value" and "Factors" notes; `model/data_loader.js` keeps six months of matches) |
 | During a Major Valve sells stickers with team logos and player signatures; 50% of tournament item sales go to the organiser, the teams and the players | V5, V6 |
 | Pick'Em challenge in the game | V5, V6 |
 | At the Cologne 2026 Major, a weapon in the game could be made a souvenir of one of its matches, with team, map and player stickers | V6 ("Souvenir-O-Matic") |
@@ -56,11 +56,11 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | Fact | Source |
 |---|---|
 | A full-match video's length shows on its thumbnail and the player; a third map makes a best-of-three clearly longer | R1 |
-| Most full-match videos list one chapter per map played in the description, with highlight moments; the player shows them on the progress bar | R1 |
+| At ESL and PGL (the 69 VODs read), most full-match videos list one chapter per map played in the description, with highlight moments; the player shows them on the progress bar | R1 |
 | Chapters come from timestamps in the description; YouTube can add automatic chapters; chapters may appear in transcripts | Y1 |
-| In the sample checked by hand (6 thumbnails, ESL's and PGL's), the thumbnails showed both teams' logos and no score; titles name the teams, the event and the stage, not the result (all 69) | R1 |
+| In the sample checked by hand (6 thumbnails, ESL's and PGL's), the thumbnails showed both teams' logos and no score; titles name the teams and the event, not the result (ESL's and PGL's 69: `A vs B - Event - Stage`; StarLadder's, `A vs B - <event> \| CS2`, have no stage) | R1, and its "Official channel whitelist" for StarLadder |
 | A later round's title (a semi-final naming two teams) gives away earlier results | R1 |
-| Organisers' main channels post Shorts naming who was eliminated or reached a final; the VOD channels post only full matches | R1 |
+| At ESL and PGL, the main channels post Shorts naming who was eliminated or reached a final, and the VOD channels post only full matches; StarLadder keeps its full matches on its main channel, next to short clips | R1, and its "Official channel whitelist" (`app/domains/vods/channels.json`) |
 | As of November 2026, F turns full screen on ("f: Activate full screen") | Y2 |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
