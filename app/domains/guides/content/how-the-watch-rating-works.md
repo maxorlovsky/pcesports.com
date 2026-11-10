@@ -30,8 +30,6 @@ The site reads the stage from the names PandaScore gives the rounds. That is a g
 
 **The teams:** how strong both teams are, from {{strengthMin}} for two of the weaker teams to {{strengthMax}} for two of the strongest. Strength comes from a team rating that replays every result in PandaScore's top two tiers from the last {{resultsDays}} days. Every win raises a team's rating and every loss lowers it, more so when the result was unexpected. Two teams of middling strength score about nothing here.
 
-**An example:** a Major's grand final starts with {{grandFinal}} for the stage and {{major}} for the event. The teams' strength comes on top, before anyone knows how the match went. A first group match at a smaller event can start at {{otherGroup}} for the stage and {{tierA}} for the event, and needs strong teams and a close match to climb.
-
 ## Closeness: known after the match
 
 Closeness is the strongest of these, not their sum:

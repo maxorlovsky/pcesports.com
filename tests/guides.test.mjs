@@ -168,6 +168,46 @@ test('the rating guide\'s facts are what the watch domain\'s code does, every on
   assert.equal(closeness({ bestOf: 1, maps: [{ seconds: CLOSE_MINUTES * 60 - 60 }], winnerChance: UPSET_CHANCE }), 0);
 });
 
+test('the rating guide puts each fact where it belongs: a wrong placeholder on a line fails', () => {
+  // Each line (a list item or a paragraph) that states a number is matched to the first rule its words fit, and may
+  // hold only that rule's facts, all of them, written as the rule says. A rewrite keeps the words a rule reads, or
+  // updates the rule with them.
+  const rules = [
+    [/\{\{labelMustWatch\}\}/, ['mustWatch'], '{{mustWatch}} or more'],
+    [/\{\{labelWorthAWatch\}\}/, ['worthAWatch'], '{{worthAWatch}} or more'],
+    [/\{\{labelForFans\}\}/, ['worthAWatch'], 'below {{worthAWatch}}'],
+    [/^\*\*the teams:\*\*/i, ['strengthMin', 'strengthMax', 'resultsDays'], /from \{\{strengthMin\}\}.* to \{\{strengthMax\}\}.*\{\{resultsDays\}\} days/],
+    [/in a group,|in a swiss stage/i, ['groupDecider']],
+    [/grand final/i, ['grandFinal']],
+    [/semi-final/i, ['semiFinal']],
+    [/bracket final/i, ['bracketFinal']],
+    [/third-place/i, ['thirdPlace']],
+    [/other playoff/i, ['otherPlayoff']],
+    [/other group/i, ['otherGroup']],
+    [/\ba major\b/i, ['major']],
+    [/\btier s\b/i, ['tierS']],
+    [/\btier a\b/i, ['tierA']],
+    [/upset/i, ['upset', 'upsetPercent'], '{{upsetPercent}}% chance'],
+    [/very long map/i, ['overtimeMap', 'overtimeMinutes'], '{{overtimeMinutes}} minutes'],
+    [/long map/i, ['closeMap', 'closeMinutes'], '{{closeMinutes}} minutes'],
+    [/\{\{listDays\}\} days/, ['listDays']],
+  ];
+  const labels = new Set(['labelMustWatch', 'labelWorthAWatch', 'labelForFans']);
+  const stated = new Set();
+  for (const line of sources[RATING_GUIDE].split('\n')) {
+    const facts = [...line.matchAll(/\{\{\s*(\w+)\s*\}\}/g)].map((match) => match[1]).filter((name) => !labels.has(name));
+    if (!facts.length) continue;
+    const rule = rules.find(([words]) => words.test(line));
+    assert.ok(rule, `no rule says which facts "${line}" may state: add one`);
+    const [, allowed, written] = rule;
+    assert.deepEqual([...new Set(facts)].sort(), [...allowed].sort(), `"${line}" states ${facts.join(', ')}, expected ${allowed.join(', ')}`);
+    if (written) assert.ok(typeof written === 'string' ? line.includes(written) : written.test(line), `"${line}" doesn't say ${written}`);
+    facts.forEach((name) => stated.add(name));
+  }
+  const numbers = Object.keys(GUIDE_FACTS).filter((name) => !labels.has(name));
+  assert.deepEqual(numbers.filter((name) => !stated.has(name)), [], 'every fact the rating guide can state, it states');
+});
+
 test('no guide holds anything the build\'s spoiler check reads as a score, a map count or a winner, whatever the data', () => {
   // Every result a listed match can have (each series score of a best-of-one to five, each map count) and winners
   // named like real teams whose names are also words.

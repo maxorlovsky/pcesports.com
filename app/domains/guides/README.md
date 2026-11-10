@@ -55,7 +55,9 @@ the stage, event, strength and closeness points (read from the `watch` domain's 
 rating reaches the guide), the days the list and the team ratings cover. `tests/guides.test.mjs` fails if the rating
 guide (its title and description included) types a number or a label by hand, or if any fact disagrees with what the
 `watch` domain's code does: the test works each one out again from `watch`'s exports, and a new fact needs its row
-there.
+there. A third test reads each line of the rating guide that states a number and holds it to the facts its words call
+for (a "grand final" line states `{{grandFinal}}` and nothing else), so a placeholder on the wrong line fails too; a
+rewrite keeps the words a rule reads, or updates the rule.
 
 ## The rules every guide keeps
 

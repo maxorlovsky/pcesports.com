@@ -17,13 +17,13 @@ const ROOT = resolve(import.meta.dirname, '..');
 
 const SITE_URL = 'https://www.pcesports.com';
 
-/** The guides' pages: the list, which names every guide, and each guide, by its body's first block (its lead). */
+/** The guides' pages: the list, with every guide's title and description, and each guide, with every block of its body. */
 export function guidePages(root = ROOT) {
   const guides = loadGuides(root);
-  const lead = ([first]) => textOf('items' in first ? first.items[0] : first.inlines);
+  const texts = (blocks) => blocks.flatMap((block) => ('items' in block ? block.items : [block.inlines]).map(textOf));
   return [
-    { file: 'guides.html', path: '/guides', text: guides.map((guide) => guide.title) },
-    ...guides.map((guide) => ({ file: `guides/${guide.slug}.html`, path: `/guides/${guide.slug}`, text: lead(guide.blocks) })),
+    { file: 'guides.html', path: '/guides', text: guides.flatMap((guide) => [guide.title, guide.description]) },
+    ...guides.map((guide) => ({ file: `guides/${guide.slug}.html`, path: `/guides/${guide.slug}`, text: texts(guide.blocks) })),
   ];
 }
 
@@ -212,8 +212,9 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     if (!title) problem(`${file}: no <title>`);
     if (!attr(html, /<meta name="description" content="([^"]+)"/)) problem(`${file}: no meta description`);
     // The content is in the HTML, not built by a script: what a reader with JavaScript off and a crawler see
-    const visible = decodeHTML(html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ''));
-    for (const sentence of [text].flat()) if (!visible.includes(sentence)) problem(`${file}: "${sentence}" is not in its HTML`);
+    // White space as a browser shows it: one space for each run, as the markup around a link or a list leaves it
+    const visible = decodeHTML(html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ');
+    for (const sentence of [text].flat()) if (!visible.includes(sentence.replace(/\s+/g, ' '))) problem(`${file}: "${sentence}" is not in its HTML`);
     for (const property of ['og:title', 'og:description', 'og:image', 'og:type']) {
       if (!attr(html, new RegExp(`<meta property="${property}" content="([^"]+)"`))) problem(`${file}: no ${property}`);
     }
