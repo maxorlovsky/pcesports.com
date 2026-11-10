@@ -154,10 +154,17 @@ test('the rating guide\'s facts are what the watch domain\'s code does, every on
   assert.equal(labelOf(MUST_WATCH - 0.01), LABELS[1]);
   assert.equal(labelOf(WORTH_A_WATCH - 0.01), LABELS[2]);
   assert.equal(playoff('Lower Bracket Semifinal 1'), playoff('Semifinal 1'));
-  // Outside the playoffs, bracket rounds score as the group lines say: by whether they can knock out or send through.
-  assert.equal(group('Lower Bracket Semifinal 1', 'Group A'), Number(GUIDE_FACTS.groupDecider));
-  assert.equal(group('Upper Bracket Semifinal 1', 'Group A'), Number(GUIDE_FACTS.otherGroup));
-  assert.equal(group('Third Place Match', 'Group A'), Number(GUIDE_FACTS.otherGroup));
+  // Outside the playoffs, a round scores by its name as the group lines list them, and a Swiss round by the records.
+  for (const round of ['Elimination Match', 'Decider Match', 'Winners Match', 'Upper Bracket Final', 'Lower Bracket Semifinal 1', 'Lower Bracket Quarterfinal 2']) {
+    assert.equal(group(round, 'Group A'), Number(GUIDE_FACTS.groupDecider), round);
+  }
+  for (const round of ['Upper Bracket Semifinal 1', 'Upper Bracket Quarterfinal 1', 'Third Place Match', 'Opening Match']) {
+    assert.equal(group(round, 'Group A'), Number(GUIDE_FACTS.otherGroup), round);
+  }
+  const swiss = (records) => stagePoints({ name: 'Round 4: X vs Y', stage: 'Swiss Stage', teams: [{ id: 1 }, { id: 2 }] }, new Map(records));
+  assert.equal(swiss([[1, [2, 1]], [2, [1, 1]]]), Number(GUIDE_FACTS.groupDecider));
+  assert.equal(swiss([[1, [1, 2]]]), Number(GUIDE_FACTS.groupDecider));
+  assert.equal(swiss([[1, [1, 1]], [2, [1, 0]]]), Number(GUIDE_FACTS.otherGroup));
   assert.equal(closeness({ bestOf: 1, maps: [{ seconds: CLOSE_MINUTES * 60 - 60 }], winnerChance: UPSET_CHANCE }), 0);
 });
 

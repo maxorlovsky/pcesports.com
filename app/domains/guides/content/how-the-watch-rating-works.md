@@ -16,8 +16,11 @@ The stakes add up three parts.
 - in the playoffs, an upper or lower bracket final: {{bracketFinal}}
 - in the playoffs, a third-place match: {{thirdPlace}}
 - any other playoff match: {{otherPlayoff}}
-- in a group or Swiss stage, a match that can knock a team out or send it through: {{groupDecider}}
+- in a group, a round whose name says it may decide who goes through or goes out (an elimination match, a decider, a winners match, an upper bracket final or any lower bracket match): {{groupDecider}}
+- in a Swiss stage, a round where one of the teams has two wins or two losses: {{groupDecider}}
 - any other group or Swiss match: {{otherGroup}}
+
+The site reads the stage from the names PandaScore gives the rounds. That is a good guess at which matches decide something, not an exact rule for every event.
 
 **The event:**
 

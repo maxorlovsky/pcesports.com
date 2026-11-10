@@ -12,7 +12,7 @@ As of November 2026, Valve holds two Majors a year:
 - In 2025, the BLAST.tv Austin Major, which ended in June, and the StarLadder Budapest Major, from late November to mid-December.
 - In 2026, the IEM Cologne Major, which ended in June, and the Singapore 2026 Major, which Valve's rules name as the next one.
 
-A tournament organiser runs each Major, and its name is in the Major's name: BLAST.tv in Austin, StarLadder in Budapest, IEM in Cologne. Valve sets the rules that every Major shares, and the organiser adds its own for the rest.
+A tournament organiser runs each Major. Valve sets the rules that every Major shares, and the organiser adds its own for the rest.
 
 ## The stages
 
@@ -42,13 +42,13 @@ Before each series, the teams take turns removing maps from the map pool. In a b
 - **The places are invitations.** Valve's rules invite 16 teams to Stage 1, eight to Stage 2 and eight to Stage 3. Only a place no ranked roster is left for goes to a qualifier (below).
 - **The ranking decides who.** The Valve Regional Standings rank rosters by their results at other events. A roster starts from four measures: the prize money it has won, the prize money of the teams it beat, a measure of the opponents it beat that Valve calls its opponent network, and its wins at LAN events. The last three read only its ten best results of the past six months. Then every head-to-head result moves it up or down, and older results count less.
 - **Three regions.** The ranking has three lists: Europe, the Americas and Asia. A team's region is the region most of its players come from.
-- **Places per region follow the last Major.** A region gets one Stage 2 place for each of its teams that reached Stage 3 at the previous Major. It gets one Stage 3 place for each of its teams that reached the playoffs.
+- **Places per region follow the last Major.** The places in each stage are shared out between the regions by how far each region's teams got at the previous Major.
 - **The players are invited, not the club.** The invitation goes to the roster that earned it, and that roster must play. A roster that says no, or no longer has its players, loses its place to the next-highest ranked roster.
 - **A last chance.** If no ranked roster is left to invite, a last-chance regional qualifier fills the remaining places.
 
 ## Why the Majors matter more
 
-- **One set of rules.** Valve writes the format, the invitations and the seeding, and every Major follows them.
+- **One set of rules.** Valve writes the rules every Major shares: the format, the invitations and the seeding.
 - **The game takes part.** During a Major, Valve sells stickers in the game with the teams' logos and the players' signatures. Half of what those sales bring in goes to the organiser, the teams and the players.
 - **Viewers play along.** Valve runs a Pick'Em challenge in the game: viewers predict the results of each stage.
 - **Souvenirs.** At the Cologne 2026 Major, players could turn a weapon in the game into a souvenir of one of its matches, with that match's team, map and player stickers on it.

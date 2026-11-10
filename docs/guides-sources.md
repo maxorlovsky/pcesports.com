@@ -34,7 +34,6 @@ same posts as the store pages linked above.
 | A Major runs under Valve's rules; its organiser adds its own rules for the rest | V1, foreword |
 | Two Majors a year: Austin (ended in June 2025), Budapest (late November to mid-December 2025), Cologne (ended in June 2026), and the Singapore 2026 Major | V4, V5, V6, V2 |
 | Valve's rules name the Singapore 2026 Major as the next one | V2 |
-| The organiser's name is in the Major's: "BLAST.TV Austin Major", "StarLadder Budapest Major", "IEM Cologne 2026 Major" | V4, V5, V6 (the posts' own names) |
 | 32 teams; 16 invited to Stage 1, 8 to Stage 2, 8 to Stage 3, all from the Valve Regional Standings; no open qualifiers | V1, "Invitations" |
 | Three stages of 16 teams in a Swiss format, 8 advancing from each, then single-elimination playoffs of the top 8 | V1, "Major Format", "Stage Seeding" |
 | Swiss: opponents of the same record; three wins advance, three losses eliminate; elimination and advancement matches best-of-three, all others best-of-one; no rematch in a stage if possible | V1, "Swiss Bracket" |
@@ -79,8 +78,13 @@ without a browser that plays YouTube.
 | In a best-of-one, maps are removed until one is left | V1, "Best of 1 Pick-Ban Process" |
 | The stage and round names the site shows ("Playoffs" with "Lower Bracket Final", "Group Stage" with "Round 5", "Group A", "Winners Match", "Elimination Match", "Semifinal 1", "3rd Place Match") are PandaScore's | R1 (section 1, the PandaScore row) and the site's match data (`app/domains/matches`, `stage` and the round in `name`) |
 
-Best-of-one, three and five, round robin, four-team double-elimination groups, single and double elimination are
-described as formats in general, with no event named, so nothing there changes with an event's rules.
+Best-of-one, three and five, round robin, single and double elimination are described as formats in general, with no
+event named. Where events differ, the guide says so rather than give one event's rule: how many teams a four-team
+group or a group bracket sends through, whether a deciding match follows the Winners Match, and quarter-finals some
+teams skip. The site's own match data shows each case (2026-11-10, by stage and round names only): IEM Beijing 2026's
+groups are double-elimination brackets ending in an upper and a lower bracket final, with two quarter-finals in its
+playoffs; BLAST Rivals Fall 2026's groups have a Winners Match and an Elimination Match and no deciding match, with two
+quarter-finals in its playoffs.
 
 ## Reading time
 

@@ -36,8 +36,8 @@ On this site a Swiss match shows as **Round** and a number: "Round 1" is the fir
 In a group, a few teams play each other, and the best of them go through. There are three common kinds:
 
 - **Round robin:** every team plays every other team once. The table decides who goes through.
-- **Four-team double elimination:** two opening matches. Their winners meet in the **Winners Match**, which sends one team through. Their losers meet in the **Elimination Match**, which knocks one team out. The other two meet in a deciding match for the last place.
-- **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with its own upper and lower bracket (below).
+- **Four-team groups:** two opening matches. Their winners meet in the **Winners Match**, and their losers in the **Elimination Match**, which knocks one team out. How many teams go through, and whether a deciding match follows, depends on the event.
+- **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with upper and lower bracket rounds (below). How many teams go through, and from which rounds, depends on the event too.
 
 On this site a group shows as **Group A**, **Group B** and so on, followed by the match's name in it.
 
@@ -45,7 +45,7 @@ On this site a group shows as **Group A**, **Group B** and so on, followed by th
 
 In single elimination, the team that loses a match is out. Each round halves the field:
 
-- **Quarter-finals:** eight teams, four matches.
+- **Quarter-finals:** eight teams, four matches. At some events the best teams of the stage before skip them and start in the semi-finals, so there are fewer quarter-finals.
 - **Semi-finals:** four teams, two matches.
 - **Grand final:** the last two teams, for the title.
 
@@ -57,10 +57,10 @@ In double elimination, a team is out only after it loses twice:
 
 - Every team starts in the **upper bracket**.
 - A team that loses in the upper bracket drops to the **lower bracket**. There, one more loss and it is out.
-- The **upper bracket final** sends its winner on, and its loser drops to the lower bracket. In a playoff bracket the winner goes to the grand final. In a group it goes through to the next stage.
-- The **lower bracket final** is the last match of the lower bracket. Its winner takes the other place: in the grand final, or the group's other place to go through.
+- In a playoff bracket, the **upper bracket final** sends its winner to the grand final, and its loser drops to the lower bracket.
+- The **lower bracket final** is the last match of the lower bracket. In a playoff bracket, its winner takes the other place in the grand final.
 
-So a lower bracket final is a team's last chance, and the upper bracket final's winner can wait for its opponent.
+So a lower bracket final is a team's last chance. Inside a group, the bracket can stop earlier. At some events, both teams of the upper bracket final are already through, and the lower bracket final decides the last place.
 
 On this site these rounds show as "Upper Bracket Quarterfinal", "Upper Bracket Semifinal", "Upper Bracket Final", and the same names with "Lower Bracket".
 

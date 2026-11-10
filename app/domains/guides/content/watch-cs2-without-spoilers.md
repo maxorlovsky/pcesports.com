@@ -27,7 +27,7 @@ YouTube can also add chapters to a video by itself, and chapters can show in the
 
 The organisers' own full-match videos are mostly safe on their own. In the sample this site checked by hand, the thumbnails showed both teams' logos and no score. The titles name the teams, the event and the stage, not the result.
 
-The risk is the titles of other matches. A semi-final video names its two teams, so it tells you who won both quarter-finals before it. A list of uploads shows all of those titles at once.
+The risk is the titles of other matches. A semi-final video names its two teams, so it tells you who won the quarter-finals that led to it. A list of uploads shows all of those titles at once.
 
 **What to do:** watch the matches of an event in the order they were played. Don't scroll a channel's list of uploads.
 

@@ -32,7 +32,9 @@ home page that shows it. Depends on `site` (the page's SEO), `matches` (the matc
 
 - **Stakes** (known before the match), added up:
   - the stage (`stagePoints`): a grand final 3; a semi-final or a playoff upper or lower final 2; another playoff match
-    1, a third-place one 0.5; a group match that eliminates or advances a team 1; any other group match 0;
+    1, a third-place one 0.5; a group match whose round's name says it may eliminate or advance a team (an
+    elimination match, a decider, a winners' match, an upper bracket final, any lower bracket match), or a Swiss round
+    with a team on two wins or two losses, 1; any other group match 0;
   - the event (`eventPoints`): a Major 1, PandaScore tier s 0.5, tier a 0;
   - the teams' strength (`strengthPoints`): both teams' average rating before the match, scaled from -0.5 to 1
     between the median and the 90th percentile of the last `SCALE_DAYS` (250) of results.
