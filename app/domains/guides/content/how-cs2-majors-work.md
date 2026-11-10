@@ -3,7 +3,7 @@ title: How the CS2 Majors work
 description: What a CS2 Major is, how often it happens, its stages, how teams get in and why it matters more than other events. As of November 2026.
 order: 2
 ---
-**The short answer:** a Major is a Counter-Strike event run under Valve's own rules. Valve makes the game. As of November 2026 there are two Majors a year. Each one brings 32 teams through three Swiss stages to an eight-team playoff. Teams don't play open qualifiers: Valve invites them from its own ranking, the Valve Regional Standings.
+**The short answer:** a Major is a Counter-Strike event run under Valve's own rules. Valve makes the game. As of November 2026 there are two Majors a year. Each one brings 32 teams through three Swiss stages to an eight-team playoff. Valve invites the teams from its own ranking, the Valve Regional Standings, and a qualifier only fills a place no ranked roster is left for.
 
 ## How often
 
@@ -33,7 +33,7 @@ Who plays whom follows the seeds. Before the Major, all 32 teams are seeded by t
 
 ### The playoffs
 
-The quarter-finals and semi-finals are best-of-three. The grand final has been a best-of-five at the last two Majors: for the first time at Budapest in December 2025, and again at Cologne in June 2026. Valve's written rules still say best-of-three for every playoff match.
+As of November 2026, the quarter-finals and semi-finals are best-of-three. The grand final has been a best-of-five at the last two Majors: for the first time at Budapest in December 2025, and again at Cologne in June 2026. Valve's written rules still say best-of-three for every playoff match.
 
 Before each series, the teams take turns removing maps from the map pool. In a best-of-three they also pick the maps they want to play. Valve's rules set the order of those turns for every Major.
 

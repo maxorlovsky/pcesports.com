@@ -39,7 +39,7 @@ In a group, a few teams play each other, and the best of them go through. There 
 - **A four-team bracket:** two opening matches. Their winners meet in the **Winners Match**, and their losers in the **Elimination Match**, which knocks one team out. How many teams go through, and whether a deciding match follows, depends on the event.
 - **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with upper and lower bracket rounds (below). How many teams go through, and from which rounds, depends on the event too.
 
-On this site a group shows as **Group A**, **Group B** and so on, followed by the match's name in it.
+On this site a group shows as **Group A**, **Group B** and so on, followed by the match's round where PandaScore names it.
 
 ## Single elimination
 
@@ -66,7 +66,7 @@ On this site these rounds show as "Upper Bracket Quarterfinal", "Upper Bracket S
 
 ## The stage names on this site
 
-Each match card shows the stage, then the round inside it, for example "Playoffs" and "Lower Bracket Final", or "Group Stage" and "Round 5". Both come from PandaScore as it names them. A stage name never tells you who won that match.
+Each match card shows the stage, then the round inside it where PandaScore names one, for example "Playoffs" and "Lower Bracket Final", or "Group Stage" and "Round 5". Both come from PandaScore as it names them. A stage name never tells you who won that match.
 
 Later rounds do name the teams that won earlier ones. That is why the site keeps the teams hidden until you tap: knowing who plays in a semi-final tells you who won the quarter-finals. More on that in [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers).
 

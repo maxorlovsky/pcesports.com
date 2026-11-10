@@ -21,7 +21,7 @@ allows. When a lower domain needs something from a higher one, the higher one pa
 the two; the lower one never imports up. A planned domain gets its folder with the card that gives it its first code:
 no empty domains.
 
-`docs/feasibility/cs2-data-and-vods.md` is the source for the planned domains' data rules.
+`docs/feasibility/cs2-data-and-vods.md` is the source for the CS2 domains' data rules.
 
 ### The data job
 

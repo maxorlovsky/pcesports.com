@@ -33,7 +33,7 @@ The risk is the titles of other matches. A semi-final video names its two teams,
 
 ### The organiser's other uploads
 
-At ESL and PGL, the organisers' main channels post short clips that name who was knocked out or who reached the final. Their full matches are on a separate channel, which posts only full matches. Other organisers, such as StarLadder, post their full matches on the main channel, next to the clips.
+At ESL and PGL, the organisers' main channels post short clips that name who was knocked out or who reached the final. Their full matches are on a separate channel, which posts only full matches. StarLadder posts its full matches on its main channel, next to its clips.
 
 **What to do:** don't browse an organiser's channel or its short clips during an event you want to watch later. Open each full match from a link that goes straight to it. If YouTube suggests clips, skip them.
 
@@ -41,7 +41,9 @@ At ESL and PGL, the organisers' main channels post short clips that name who was
 
 Next to the video, YouTube suggests other videos. They can be later matches, highlights or clips of the same event, whose titles can give results away. Under the video, viewers comment on the match, and a comment can name the result.
 
-**What to do:** watch full screen or in theatre mode, and don't scroll below the player.
+In the last seconds of a video, the player can show other videos too: the next one autoplay would start, and links the channel adds to an end screen.
+
+**What to do:** watch full screen or in theatre mode, and don't scroll below the player. Stop the video once the match is over, before its last seconds.
 
 ### Social feeds
 
@@ -72,6 +74,6 @@ How the labels are worked out is in [How "What should I watch?" rates matches](/
 
 1. Choose your matches on the [home page](/) before you open anything else.
 2. Open each one with "Watch the VOD" and press F for full screen (YouTube's shortcut, as of November 2026), rather than clicking the control bar.
-3. The control bar, with the time and the progress bar, can show when the video starts or pauses: keep your eyes off the bottom of the screen until it hides, and the mouse away from it.
+3. The control bar, with the time and the progress bar, can show when the video starts or pauses: keep your eyes off the bottom of the screen until it hides, and the mouse away from it. On a phone, a tap on the video can show the same bar, so turn the phone sideways for full screen and don't tap the video once it plays.
 4. Watch the matches of an event in the order they were played.
 5. Check feeds, search and results only once you are done.

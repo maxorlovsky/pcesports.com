@@ -20,6 +20,7 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 | V6 | ["IEM Cologne 2026"](https://store.steampowered.com/news/app/730/view/1833334318570412) (2026-05-22), ["Playoffs at the 'Cathedral of Counter-Strike'"](https://store.steampowered.com/news/app/730/view/1835871199302220) (2026-06-17), ["The IEM Cologne 2026 Grand Finals"](https://store.steampowered.com/news/app/730/view/1835871199310024) (2026-06-20) | Valve | 2026-11-10 |
 | Y1 | [Video chapters](https://support.google.com/youtube/answer/9884579) (YouTube Help) | Google | 2026-11-10 |
 | Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
+| Y3 | [Add end screens to videos](https://support.google.com/youtube/answer/6388789) (YouTube Help) | Google | 2026-11-10 |
 | R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
 | R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
 
@@ -62,6 +63,7 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | A later round's title (a semi-final naming two teams) gives away earlier results | R1 |
 | At ESL and PGL, the main channels post Shorts naming who was eliminated or reached a final, and the VOD channels post only full matches; StarLadder keeps its full matches on its main channel, next to short clips | R1, and its "Official channel whitelist" (`app/domains/vods/channels.json`) |
 | As of November 2026, F turns full screen on ("f: Activate full screen") | Y2 |
+| A channel can add an end screen with links to other videos in a video's last seconds ("the last 5-20 seconds") | Y3 |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
 code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
