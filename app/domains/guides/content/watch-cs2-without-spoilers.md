@@ -41,9 +41,9 @@ At ESL and PGL, the organisers' main channels post short clips that name who was
 
 Next to the video, YouTube suggests other videos. They can be later matches, highlights or clips of the same event, whose titles can give results away. Under the video, viewers comment on the match, and a comment can name the result.
 
-In the last seconds of a video, the player can show other videos too: the next one autoplay would start, and links the channel adds to an end screen.
+In the last seconds of a video, the player can show other videos too: the next one Autoplay would start, and links the channel adds to an end screen.
 
-**What to do:** watch full screen or in theatre mode, and don't scroll below the player. Turn Autoplay off in the player or in YouTube's settings, and stop the video once the match is over, before its last seconds.
+**What to do:** watch full screen, and don't scroll below the player. Turn Autoplay off, as of November 2026 in the player or in YouTube's settings. Stop the video once the match is over, before its last seconds.
 
 ### Social feeds
 

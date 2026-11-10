@@ -65,15 +65,14 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | At ESL and PGL, the main channels post Shorts naming who was eliminated or reached a final, and the VOD channels post only full matches; StarLadder keeps its full matches on its main channel, next to short clips | R1, and its "Official channel whitelist" (`app/domains/vods/channels.json`) |
 | As of November 2026, F turns full screen on ("f: Activate full screen") | Y2 |
 | A channel can add an end screen with links to other videos in a video's last seconds ("the last 5-20 seconds") | Y3 |
-| At the end of a video the player shows what Autoplay will play next; Autoplay can be switched off in the player and in settings | Y4 ("At the end of a video, the video player will show what's going to play next"; "Switch autoplay on or off") |
+| At the end of a video the player shows what Autoplay will play next; as of November 2026, Autoplay can be switched off in the player and in settings | Y4 ("At the end of a video, the video player will show what's going to play next"; "Switch autoplay on or off") |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
 code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
 described as places that can show a result, with no claim about how often they do; the same for the player's control
 bar, which "can show" when the video starts or pauses, while the mouse moves over the player, or on a phone after a tap
-on the video. A tip to skip
-the pre-show with the keyboard was left out: seeking with the keys may show the progress bar, which couldn't be checked
-without a browser that plays YouTube.
+on the video. A tip to skip the pre-show with the keyboard was left out: seeking with the keys may show the progress
+bar, which couldn't be checked without a browser that plays YouTube.
 
 ## CS2 formats explained (`cs2-formats-explained.md`)
 
