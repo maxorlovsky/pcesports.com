@@ -55,7 +55,7 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 
 ## How to watch CS2 without spoilers (`watch-cs2-without-spoilers.md`)
 
-| Fact | Source |
+| Fact (as of November 2026) | Source |
 |---|---|
 | A full-match video's length shows on its thumbnail and the player; a third map makes a best-of-three clearly longer | R1 |
 | At ESL and PGL (the 69 VODs read), most full-match videos list one chapter per map played in the description, with highlight moments; the player shows them on the progress bar | R1 |

@@ -5,7 +5,7 @@ order: 1
 ---
 **The short answer:** choose what to watch before you look anywhere else. Open the full-match video from a link that goes straight to it. Keep away from social feeds, search results and the organiser's short clips until you have watched it.
 
-The rest of this guide goes through each place a result leaks, and what to do about it.
+The rest of this guide goes through each place a result leaks, and what to do about it. What YouTube shows is described as of November 2026.
 
 ## Where results leak
 
@@ -13,7 +13,7 @@ The rest of this guide goes through each place a result leaks, and what to do ab
 
 A full-match video shows its length on the thumbnail, in search results and on the player. A best-of-three that goes to a third map runs clearly longer than one that ends after two. So the length alone can tell you how many maps were played.
 
-**What to do:** don't look for the video on the organiser's channel page or in search results, where every length is on show. Use a link that opens the video itself. The player shows its controls, the time included, while the mouse moves over it: once the video plays, keep the mouse away from the player.
+**What to do:** don't look for the video on the organiser's channel page or in search results, where every length is on show. Use a link that opens the video itself. The player can show its controls, the time included, while the mouse moves over it: once the video plays, keep the mouse away from the player.
 
 ### Chapters
 
@@ -43,7 +43,7 @@ Next to the video, YouTube suggests other videos. They can be later matches, hig
 
 In the last seconds of a video, the player can show other videos too: the next one Autoplay would start, and links the channel adds to an end screen.
 
-**What to do:** watch full screen, and don't scroll below the player. Turn Autoplay off, as of November 2026 in the player or in YouTube's settings. Stop the video once the match is over, before its last seconds.
+**What to do:** watch full screen, and don't scroll below the player. As of November 2026, you can turn Autoplay off in the player or in YouTube's settings: do it. Stop the video once the match is over, before its last seconds.
 
 ### Social feeds
 

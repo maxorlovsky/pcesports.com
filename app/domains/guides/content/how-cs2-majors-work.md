@@ -39,6 +39,8 @@ Before each series, the teams take turns removing maps from the map pool. In a b
 
 ## How teams get in
 
+As of November 2026:
+
 - **The places are invitations.** Valve's rules invite 16 teams to Stage 1, eight to Stage 2 and eight to Stage 3. Only a place no ranked roster is left for goes to a qualifier (below).
 - **The ranking decides who.** The Valve Regional Standings rank rosters by their results at other events. A roster starts from four measures: the prize money it has won, the prize money of the teams it beat, a measure of the opponents it beat that Valve calls its opponent network, and its wins at LAN events. Each measure reads only its ten best results of the past six months. Then every head-to-head result moves it up or down, and older results count less.
 - **Three regions.** The ranking has three lists: Europe, the Americas and Asia. A team's region is the region most of its players come from.
@@ -47,6 +49,8 @@ Before each series, the teams take turns removing maps from the map pool. In a b
 - **A last chance.** If no ranked roster is left to invite, a last-chance regional qualifier fills the remaining places.
 
 ## Why the Majors matter more
+
+As of November 2026:
 
 - **One set of rules.** Valve writes the rules every Major shares: the format, the invitations and the seeding.
 - **The game takes part.** During a Major, Valve sells stickers in the game with the teams' logos and the players' signatures. Half of what those sales bring in goes to the organiser, the teams and the players.
