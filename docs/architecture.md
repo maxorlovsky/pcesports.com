@@ -9,7 +9,7 @@ enforces the rules below on every `npm test`, so in CI too.
 
 | Domain | Owns | May depend on | State |
 |---|---|---|---|
-| `site` | the site's address, name, contact and sitemap, the footer's data credits, the layout, `usePageSeo`, the privacy and error pages | - | exists |
+| `site` | the site's address, name, contact and sitemap, the footer's data credits, the layout, `usePageSeo`, the analytics consent and Google Analytics, the privacy and error pages | - | exists |
 | `matches` | CS2 fixtures and results from PandaScore (free plan): fetching, normalising, which matches the site lists | `site` | exists |
 | `vods` | the organisers' official YouTube VOD channels: the whitelist, reading their uploads, matching a VOD to its match, the 30-day refresh | `site`, `matches` | exists |
 | `watch` | the "What should I watch?" after-match rating, the list the data job writes, and the home page that shows it, each VOD as the site's own card | `site`, `matches`, `vods` | exists |

@@ -7,14 +7,27 @@ depend on it, and it depends on none.
   `https://www.pcesports.com`), `SITE_NAME`, `CONTACT_EMAIL`, `absoluteUrl`, `SITEMAP_PATHS` and `sitemapXml` (the
   pages the sitemap lists; a new page adds its path), and `DATA_CREDITS`, the credits the footer shows (a domain
   whose pages show third-party data adds its credit here: `Source: PandaScore` today).
+  It also exports the analytics rules (`analytics.ts`): the GA4 measurement ID, where the choice is kept, and which
+  cookies a withdrawal deletes.
 - `ui/index.ts` (the app only): `usePageSeo`, which every page's content calls once for its title, description,
   canonical URL and Open Graph tags (`noindex` for the error page).
 - `views/`: what the shell renders, one file each: `SiteLayout` (`app/layouts/default.vue`), `PrivacyPage`
   (`app/pages/privacy.vue`) and `ErrorPage` (`app/error.vue`). The home page is the `watch` domain's.
-- Internal: `site.ts`, `ui/SiteHeader.vue`, `ui/SiteFooter.vue`, `ui/usePageSeo.ts`.
+- Internal: `site.ts`, `analytics.ts`, `ui/SiteHeader.vue`, `ui/SiteFooter.vue`, `ui/usePageSeo.ts`, and the
+  analytics consent: `ui/ConsentBanner.vue` (in the layout, after the footer) and `ui/useAnalyticsConsent.ts`.
+
+Analytics: Google Analytics (GA4) counts page views, and only after the visitor's "Accept" in the banner. The choice is
+kept in `localStorage`; the banner and the footer's "Cookie settings" render only after mount, so no page's HTML holds
+them or the tag. "Accept" loads `gtag.js` and sends a page view for the current page; each client-side navigation to
+another path sends one more on `page:finish`, once Nuxt has written the new title. Every page view is sent by this
+code (`send_page_view: false`), so GA's enhanced measurement must keep "page changes based on browser history events"
+off, or a navigation counts twice. "Decline" after "Accept" sets GA's `ga-disable-<id>` flag and deletes its cookies. The
+banner stays this simple: ads will need a Google-certified consent tool, which replaces it.
 
 Invariants:
 
 - Every page's HTML holds its content and its tags without JavaScript (`npm run check:build`).
 - The privacy page says what the site collects. A change that adds a cookie, analytics, ads or a third-party request
   updates it first.
+- Nothing reaches Google before "Accept" or after "Decline": no request, no cookie (`npm run check:build` stops a page
+  whose HTML names the tag).
