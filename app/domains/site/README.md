@@ -21,7 +21,7 @@ kept in `localStorage`; the banner and the footer's "Cookie settings" render onl
 them or the tag. `analyticsController` (plain, tested) decides; `ui/useAnalyticsConsent.ts` does it in the browser:
 "Accept" loads `gtag.js` and counts the current page, each client-side navigation to another path counts one more on
 `page:finish`, once Nuxt has written the new title, and "Decline" after "Accept" sets GA's `ga-disable-<id>` flag and
-deletes its cookies. The site's code sends every page view itself (`send_page_view: false`) and nothing else, so in
+deletes its cookies. A choice made in one tab reaches the site's other open tabs through the `storage` event. The site's code sends every page view itself (`send_page_view: false`) and nothing else, so in
 the GA property (Admin, Data streams, the web stream) enhanced measurement and user-provided data collection stay off:
 history-based page views would add one of their own on each navigation (Google's single-page-app guide), and scroll,
 click, download, form and typed data are what the privacy page says the site does not send. The tag Google serves

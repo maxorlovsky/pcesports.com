@@ -92,6 +92,15 @@ export function startAnalytics(nuxtApp: NuxtApp) {
   consent.value = controller.consent;
   ready.value = true;
 
+  // A choice made in another tab of the site applies here at once: a withdrawal there stops this tab's tag too.
+  window.addEventListener('storage', (event) => {
+    if (event.key !== CONSENT_KEY && event.key !== null) return;
+    const value = parseConsent(event.key === null ? null : event.newValue);
+    controller?.choose(value);
+    consent.value = value;
+    reopened.value = false;
+  });
+
   nuxtApp.hook('page:finish', () => {
     // Nuxt's head writes the new title in a `setTimeout(0)` it schedules on this same hook, before this one runs:
     // a timer set now fires after it, so the page view carries the new page's title.

@@ -70,3 +70,12 @@ test('a withdrawal stops the tag and deletes its cookies; "Accept" again counts 
   controller.choose('granted'); // on /privacy again: counted already
   assert.deepEqual(calls.slice(5), ['enable', `view ${PRIVACY.url}`, 'disable', 'delete cookies', 'enable']);
 });
+
+test('a choice cleared in another tab withdraws as "Decline" does, and the next "Accept" counts the page', () => {
+  const { controller, calls } = started('granted');
+  controller.choose(null);
+  controller.navigated(PRIVACY);
+  assert.equal(controller.consent, null);
+  controller.choose('granted');
+  assert.deepEqual(calls, ['load', 'enable', `view ${HOME.url}`, 'disable', 'delete cookies', 'enable', `view ${PRIVACY.url}`]);
+});

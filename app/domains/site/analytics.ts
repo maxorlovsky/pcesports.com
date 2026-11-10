@@ -81,7 +81,8 @@ export function analyticsController(effects: AnalyticsEffects, stored: Consent |
     get consent() {
       return consent;
     },
-    choose(value: Consent) {
+    /** A choice made here or in another tab; `null` (the stored choice cleared) withdraws as "Decline" does. */
+    choose(value: Consent | null) {
       if (value === consent) return;
       consent = value;
       if (value === 'granted') {
