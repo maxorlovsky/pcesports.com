@@ -1,0 +1,83 @@
+# Guides: sources
+
+Every fact in a guide (`app/domains/guides/content/`) that can change, with the primary source it was checked
+against and the date it was read. A fact with no source here doesn't go into a guide. Where a source also reports
+results (Valve's announcements do), the guides take only formats, dates and rules from it, never who won.
+
+The rating guide (`how-the-watch-rating-works.md`) needs no outside source: every number and label in it comes from the
+`watch` domain's code at build time (`app/domains/guides/facts.ts`), and its rules are those of
+`app/domains/watch/README.md`.
+
+## Sources
+
+| Id | Source | Owner | Read |
+|---|---|---|---|
+| V1 | [CS Major Supplemental Rulebook](https://github.com/ValveSoftware/counter-strike_rules_and_regs/blob/main/major-supplemental-rulebook.md) (last changed 2026-10-06) | Valve | 2026-11-10 |
+| V2 | [Tournament Operation Requirements: exceptions](https://github.com/ValveSoftware/counter-strike_rules_and_regs/blob/main/tournament-operation-requirements-exceptions.md) (its "Singapore 2026 Major" row, added 2026-10-07), and the rulebook's [commit of 2026-10-06](https://github.com/ValveSoftware/counter-strike_rules_and_regs/commits/main/major-supplemental-rulebook.md), "Updating rules for Regional Assignment for the upcoming Singapore Major" | Valve | 2026-11-10 |
+| V3 | [Valve Regional Standings](https://github.com/ValveSoftware/counter-strike_regional_standings) (its readme) | Valve | 2026-11-10 |
+| V4 | ["BLAST.TV Austin Major 2025"](https://store.steampowered.com/news/app/730/view/1800357164422450) (2025-05-23), ["The Final Showdown in Austin"](https://store.steampowered.com/news/app/730/view/1802893906812947) (2025-06-22) | Valve | 2026-11-10 |
+| V5 | ["The Starladder Budapest Major 2025"](https://store.steampowered.com/news/app/730/view/1816215235365195) (2025-11-12), ["Best of Five in Budapest"](https://store.steampowered.com/news/app/730/view/1818752592130605) (2025-12-13) | Valve | 2026-11-10 |
+| V6 | ["IEM Cologne 2026"](https://store.steampowered.com/news/app/730/view/1833334318570412) (2026-05-22), ["Playoffs at the 'Cathedral of Counter-Strike'"](https://store.steampowered.com/news/app/730/view/1835871199302220) (2026-06-17), ["The IEM Cologne 2026 Grand Finals"](https://store.steampowered.com/news/app/730/view/1835871199310024) (2026-06-20) | Valve | 2026-11-10 |
+| Y1 | [Video chapters](https://support.google.com/youtube/answer/9884579) (YouTube Help) | Google | 2026-11-10 |
+| Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
+| R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
+| R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
+
+Valve's announcements were read through the Steam news API
+(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=730&feeds=steam_community_announcements`), the
+same posts as the store pages linked above.
+
+## How the CS2 Majors work (`how-cs2-majors-work.md`)
+
+| Fact (as of November 2026) | Source |
+|---|---|
+| A Major runs under Valve's rules; its organiser adds its own rules for the rest | V1, foreword |
+| Two Majors a year: Austin (ended in June 2025), Budapest (late November to mid-December 2025), Cologne (ended in June 2026) | V4, V5, V6 |
+| Valve's rules name a Singapore Major as the next one | V2 |
+| 32 teams; 16 invited to Stage 1, 8 to Stage 2, 8 to Stage 3, all from the Valve Regional Standings; no open qualifiers | V1, "Invitations" |
+| Three stages of 16 teams in a Swiss format, 8 advancing from each, then single-elimination playoffs of the top 8 | V1, "Major Format", "Stage Seeding" |
+| Swiss: opponents of the same record; three wins advance, three losses eliminate; elimination and advancement matches best-of-three, all others best-of-one; no rematch in a stage if possible | V1, "Swiss Bracket" |
+| Seeding by the global VRS before the event; ties broken by the difficulty score (opponents' wins minus their losses) | V1, "Seeding" |
+| Quarter-finals and semi-finals best-of-three | V1, "Single Elimination Bracket" |
+| Grand final best-of-five: first at Budapest (December 2025), again at Cologne (June 2026) | V5, V6. V1 still says "All matches are best of three" for the playoffs; the guide follows Valve's announcements of the last two Majors |
+| The pick-ban order is set by Valve for every Major | V1, "Map Pick-Ban" |
+| Three VRS regions: Europe, Americas, Asia; a roster's region is the region of most of its players | V1, "Regional Standing", "Roster Regional Assignment" |
+| One Stage 2 place per team of the region in the previous Major's Stage 3; one Stage 3 place per team in its playoffs | V1, "Invitations" |
+| The invitation goes to the roster; one that declines or isn't intact passes it to the next-highest ranked roster; a last-chance regional qualifier fills places no roster is left for | V1, "Invitation Process", "Team Requirements" |
+| The VRS ranks teams by results at third-party events through the year: prize money earned, beaten opponents' prize money and number, head-to-head | V3 |
+| During a Major Valve sells stickers with team logos and player signatures; 50% of tournament item sales go to the organiser, the teams and the players | V5, V6 |
+| Pick'Em challenge in the game | V5, V6 |
+| Souvenirs: an item in the game can be made a souvenir of a Major match, with its team and player stickers | V6 ("Souvenir-O-Matic") |
+
+Left out because no primary source confirmed it: the prize pool, and the Singapore Major's dates and organiser.
+
+## How to watch CS2 without spoilers (`watch-cs2-without-spoilers.md`)
+
+| Fact | Source |
+|---|---|
+| A full-match video's length shows on its thumbnail and the player; a third map makes a best-of-three clearly longer | R1 |
+| Most full-match videos list one chapter per map played in the description, with highlight moments; the player shows them on the progress bar | R1 |
+| Chapters come from timestamps in the description; YouTube can add automatic chapters; chapters may appear in transcripts | Y1 |
+| The organisers' thumbnails show both teams' logos and no score; titles name the teams, the event and the stage, not the result | R1 |
+| A later round's title (a semi-final naming two teams) gives away earlier results | R1 |
+| Organisers' main channels post Shorts naming who was eliminated or reached a final; the VOD channels post only full matches | R1 |
+| As of November 2026, the arrow keys seek five seconds and L ten seconds | Y2 |
+
+What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
+code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
+described as places that can show a result, with no claim about how often they do.
+
+## CS2 formats explained (`cs2-formats-explained.md`)
+
+| Fact | Source |
+|---|---|
+| At a Major: three wins advance, three losses eliminate; deciding matches best-of-three, the others best-of-one | V1, "Swiss Bracket" |
+| In a best-of-one, maps are removed until one is left | V1, "Best of 1 Pick-Ban Process" |
+| The stage and round names the site shows ("Playoffs" with "Lower Bracket Final", "Group Stage" with "Round 5", "Group A", "Winners Match", "Elimination Match", "Semifinal 1", "3rd Place Match") are PandaScore's | R1 (section 1, the PandaScore row) and the site's match data (`app/domains/matches`, `stage` and the round in `name`) |
+
+Best-of-one, three and five, round robin, four-team double-elimination groups, single and double elimination are
+described as formats in general, with no event named, so nothing there changes with an event's rules.
+
+## Reading time
+
+The guides' "N min read" and their 3 to 5 minutes use 238 words a minute, adults' silent reading of non-fiction: R2.

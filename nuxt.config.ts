@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   features: { inlineStyles: true },
   nitro: {
     prerender: {
-      routes: ['/', '/privacy', '/sitemap.xml'],
+      routes: ['/', '/privacy', '/guides', '/sitemap.xml'],
       crawlLinks: true,
       failOnError: true,
       // `privacy.html`, not `privacy/index.html`: nginx serves `/privacy` without a trailing-slash redirect.

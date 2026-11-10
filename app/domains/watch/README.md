@@ -18,7 +18,7 @@ home page that shows it. Depends on `site` (the page's SEO), `matches` (the matc
 - `views/HomePage.vue` (`app/pages/index.vue`): the hero and the list of the last `LIST_DAYS` (7) days, grouped by
   label, each match as the site's own card: event, stage, date and label, its teams behind a "Show teams" tap
   (`<details>`, no script), and a "Watch the VOD" link to the official video. It says so plainly when the list is
-  empty.
+  empty. Below "How it works", it links to the guides (`/guides`).
 - `data/watch.json`: the last `LIST_DAYS`' entries only, so a match ageing out is a change the job publishes and the
   site is rebuilt without it. Not in the code branches. The data job publishes it on the `data` branch, and
   `tools/data-job/pull.mjs` puts it here for a build (git ignores the folder). Shape:

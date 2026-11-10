@@ -119,6 +119,10 @@ const promises = [
           <p>{{ promise.text }}</p>
         </li>
       </ol>
+      <p class="how-more">
+        How the labels are worked out, how the Majors and formats work, and how to stay spoiler-free:
+        <NuxtLink to="/guides">read the guides</NuxtLink>.
+      </p>
     </section>
   </div>
 </template>
@@ -423,5 +427,11 @@ const promises = [
   margin: 0;
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
+}
+
+.how-more {
+  max-width: var(--width-text);
+  margin: var(--space-5) 0 0;
+  color: var(--color-text-muted);
 }
 </style>
