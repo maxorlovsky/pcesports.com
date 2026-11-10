@@ -21,11 +21,13 @@ kept in `localStorage`; the banner and the footer's "Cookie settings" render onl
 them or the tag. `analyticsController` (plain, tested) decides; `ui/useAnalyticsConsent.ts` does it in the browser:
 "Accept" loads `gtag.js` and counts the current page, each client-side navigation to another path counts one more on
 `page:finish`, once Nuxt has written the new title, and "Decline" after "Accept" sets GA's `ga-disable-<id>` flag and
-deletes its cookies. The site's code sends every page view itself (`send_page_view: false`) and nothing else, so the
-GA property's enhanced measurement stays off (Admin, Data streams, the web stream): its history-based page views would
-add one of their own on each navigation (Google's single-page-app guide), and its scroll, click, download and form
-events are data the privacy page says the site does not send. The banner stays this simple: ads will need a Google-certified consent
-tool, which replaces it.
+deletes its cookies. The site's code sends every page view itself (`send_page_view: false`) and nothing else, so in
+the GA property (Admin, Data streams, the web stream) enhanced measurement and user-provided data collection stay off:
+history-based page views would add one of their own on each navigation (Google's single-page-app guide), and scroll,
+click, download, form and typed data are what the privacy page says the site does not send. The tag Google serves
+shows them: in `curl -s 'https://www.googletagmanager.com/gtag/js?id=G-425HK770VC'`, every `"vtp_enable…"` but
+`vtp_enablePageView`, and `"vtp_isAutoEnabled"`, must read `false` or be gone. The banner stays this simple: ads will
+need a Google-certified consent tool, which replaces it.
 
 Invariants:
 

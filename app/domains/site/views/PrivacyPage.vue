@@ -62,7 +62,8 @@ const sessionCookie = `_ga_${ANALYTICS_ID.replace(/^G-/, '')}`;
         </li>
       </ul>
       <p>
-        That is all: the site sends Google page views only, and nothing about what you click, type or scroll.
+        That is all: the site sends Google which pages you view and for how long, and nothing about what you click,
+        type or scroll.
       </p>
       <p>
         We use it to see how many people visit and which pages they read. Google deletes what is tied to that random
@@ -77,8 +78,9 @@ const sessionCookie = `_ga_${ANALYTICS_ID.replace(/^G-/, '')}`;
       <h2>Changing your choice</h2>
       <p>
         "Cookie settings", at the bottom of every page, shows the banner again: choose "Decline" to withdraw your
-        consent. Google Analytics then stops at once and its cookies are deleted. Clearing this site's data in your
-        browser also forgets your choice, and the banner asks again.
+        consent. Google Analytics then stops at once in that tab, and in your other open tabs of this site once they
+        reload, and its cookies are deleted. Clearing this site's data in your browser also forgets your choice, and
+        the banner asks again.
       </p>
 
       <h2>Cloudflare</h2>

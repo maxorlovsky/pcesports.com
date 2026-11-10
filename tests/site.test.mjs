@@ -31,7 +31,7 @@ function started(stored, page = HOME) {
     load: () => calls.push('load'),
     setDisabled: (disabled) => calls.push(disabled ? 'disable' : 'enable'),
     deleteCookies: () => calls.push('delete cookies'),
-    pageView: (referrer) => calls.push(referrer ? `view from ${referrer}` : 'view'),
+    pageView: (url, referrer) => calls.push(`view ${url}${referrer ? ` from ${referrer}` : ''}`),
   }, stored, page);
   return { controller, calls };
 }
@@ -53,20 +53,20 @@ test('"Accept" loads the tag once and counts the page it was given on, then each
   controller.navigated(PRIVACY);
   controller.choose('granted'); // the footer's banner, "Accept" again
   controller.navigated(HOME);
-  assert.deepEqual(calls, ['load', 'enable', 'view', `view from ${HOME.url}`, `view from ${PRIVACY.url}`]);
+  assert.deepEqual(calls, ['load', 'enable', `view ${HOME.url}`, `view ${PRIVACY.url} from ${HOME.url}`, `view ${HOME.url} from ${PRIVACY.url}`]);
 });
 
 test('a stored "Accept" counts the page the app starts on', () => {
-  assert.deepEqual(started('granted', PRIVACY).calls, ['load', 'enable', 'view']);
+  assert.deepEqual(started('granted', PRIVACY).calls, ['load', 'enable', `view ${PRIVACY.url}`]);
 });
 
 test('a withdrawal stops the tag and deletes its cookies; "Accept" again counts only a page not yet counted', () => {
   const { controller, calls } = started('granted');
   controller.choose('denied');
   controller.navigated(PRIVACY);
-  assert.deepEqual(calls, ['load', 'enable', 'view', 'disable', 'delete cookies']);
+  assert.deepEqual(calls, ['load', 'enable', `view ${HOME.url}`, 'disable', 'delete cookies']);
   controller.choose('granted'); // on /privacy, which was not counted
   controller.choose('denied');
   controller.choose('granted'); // on /privacy again: counted already
-  assert.deepEqual(calls.slice(5), ['enable', 'view', 'disable', 'delete cookies', 'enable']);
+  assert.deepEqual(calls.slice(5), ['enable', `view ${PRIVACY.url}`, 'disable', 'delete cookies', 'enable']);
 });

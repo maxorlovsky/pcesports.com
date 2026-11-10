@@ -64,9 +64,9 @@ const effects: AnalyticsEffects = {
       }
     }
   },
-  pageView(referrer) {
+  pageView(url, referrer) {
     window.gtag?.('event', 'page_view', {
-      page_location: location.href,
+      page_location: url,
       page_title: document.title,
       ...(referrer ? { page_referrer: referrer } : {}),
     });

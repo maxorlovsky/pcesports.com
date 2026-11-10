@@ -42,8 +42,8 @@ export interface AnalyticsEffects {
   setDisabled(disabled: boolean): void;
   /** Deletes GA's cookies. */
   deleteCookies(): void;
-  /** Sends a page view for the page shown now, with the page before it as its referrer after a navigation. */
-  pageView(referrer?: string): void;
+  /** Sends a page view for `url`, the page shown now, with the page before it as its referrer after a navigation. */
+  pageView(url: string, referrer?: string): void;
 }
 
 /** A page as the controller tells them apart: by path (a hash or a query is the same page), with its full URL. */
@@ -65,7 +65,7 @@ export function analyticsController(effects: AnalyticsEffects, stored: Consent |
 
   const count = (referrer?: string) => {
     counted = true;
-    effects.pageView(referrer);
+    effects.pageView(shown.url, referrer);
   };
   const grant = () => {
     if (!loaded) {
