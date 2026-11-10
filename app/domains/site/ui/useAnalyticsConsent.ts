@@ -113,7 +113,10 @@ export function startAnalytics(nuxtApp: NuxtApp) {
     const referrer = shownUrl;
     shownPath = location.pathname;
     shownUrl = location.href;
-    if (consent.value === 'granted' && tagLoaded) sendPageView(referrer);
+    if (consent.value !== 'granted' || !tagLoaded) return;
+    // Nuxt's head writes the new title in a `setTimeout(0)` it schedules on this same hook, before this one runs:
+    // a timer set now fires after it, so the page view carries the new page's title.
+    setTimeout(() => sendPageView(referrer), 0);
   });
 }
 
