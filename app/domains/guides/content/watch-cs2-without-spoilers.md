@@ -43,7 +43,7 @@ Next to the video, YouTube suggests other videos. They can be later matches, hig
 
 In the last seconds of a video, the player can show other videos too: the next one autoplay would start, and links the channel adds to an end screen.
 
-**What to do:** watch full screen or in theatre mode, and don't scroll below the player. Stop the video once the match is over, before its last seconds.
+**What to do:** watch full screen or in theatre mode, and don't scroll below the player. Turn Autoplay off in the player or in YouTube's settings, and stop the video once the match is over, before its last seconds.
 
 ### Social feeds
 
@@ -74,6 +74,6 @@ How the labels are worked out is in [How "What should I watch?" rates matches](/
 
 1. Choose your matches on the [home page](/) before you open anything else.
 2. Open each one with "Watch the VOD" and press F for full screen (YouTube's shortcut, as of November 2026), rather than clicking the control bar.
-3. The control bar, with the time and the progress bar, can show when the video starts or pauses: keep your eyes off the bottom of the screen until it hides, and the mouse away from it. On a phone, a tap on the video can show the same bar, so turn the phone sideways for full screen and don't tap the video once it plays.
+3. The control bar, with the time and the progress bar, can show when the video starts or pauses: keep your eyes off the bottom of the screen until it hides, and the mouse away from it. On a phone, a tap on the video can show the same bar, so don't tap the video once it plays.
 4. Watch the matches of an event in the order they were played.
 5. Check feeds, search and results only once you are done.

@@ -21,6 +21,7 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 | Y1 | [Video chapters](https://support.google.com/youtube/answer/9884579) (YouTube Help) | Google | 2026-11-10 |
 | Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
 | Y3 | [Add end screens to videos](https://support.google.com/youtube/answer/6388789) (YouTube Help) | Google | 2026-11-10 |
+| Y4 | [Autoplay videos](https://support.google.com/youtube/answer/6327615) (YouTube Help) | Google | 2026-11-10 |
 | R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
 | R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
 
@@ -35,7 +36,7 @@ same posts as the store pages linked above.
 | A Major runs under Valve's rules; its organiser adds its own rules for the rest | V1, foreword |
 | Two Majors a year: Austin (ended in June 2025), Budapest (late November to mid-December 2025), Cologne (ended in June 2026), and the Singapore 2026 Major | V4, V5, V6, V2 |
 | Valve's rules name the Singapore 2026 Major as the next one | V2 |
-| 32 teams; 16 invited to Stage 1, 8 to Stage 2, 8 to Stage 3, all from the Valve Regional Standings; no open qualifiers | V1, "Invitations" |
+| 32 teams; 16 invited to Stage 1, 8 to Stage 2, 8 to Stage 3, from the Valve Regional Standings | V1, "Invitations" |
 | Three stages of 16 teams in a Swiss format, 8 advancing from each, then single-elimination playoffs of the top 8 | V1, "Major Format", "Stage Seeding" |
 | Swiss: opponents of the same record; three wins advance, three losses eliminate; elimination and advancement matches best-of-three, all others best-of-one; no rematch in a stage if possible | V1, "Swiss Bracket" |
 | Seeding by the global VRS before the event; ties broken by the difficulty score (opponents' wins minus their losses) | V1, "Seeding" |
@@ -64,11 +65,13 @@ Left out because no primary source confirmed it: the prize pool, and the Singapo
 | At ESL and PGL, the main channels post Shorts naming who was eliminated or reached a final, and the VOD channels post only full matches; StarLadder keeps its full matches on its main channel, next to short clips | R1, and its "Official channel whitelist" (`app/domains/vods/channels.json`) |
 | As of November 2026, F turns full screen on ("f: Activate full screen") | Y2 |
 | A channel can add an end screen with links to other videos in a video's last seconds ("the last 5-20 seconds") | Y3 |
+| At the end of a video the player shows what Autoplay will play next; Autoplay can be switched off in the player and in settings | Y4 ("At the end of a video, the video player will show what's going to play next"; "Switch autoplay on or off") |
 
 What the site does (its own card, teams on tap, a label that orders by stakes, no thumbnail or length) is the site's own
 code: `app/domains/watch/README.md`. Suggestions beside the player, comments, social feeds and search results are
 described as places that can show a result, with no claim about how often they do; the same for the player's control
-bar, which "can show" when the video starts or pauses and shows while the mouse moves over the player. A tip to skip
+bar, which "can show" when the video starts or pauses, while the mouse moves over the player, or on a phone after a tap
+on the video. A tip to skip
 the pre-show with the keyboard was left out: seeking with the keys may show the progress bar, which couldn't be checked
 without a browser that plays YouTube.
 
