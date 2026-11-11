@@ -72,9 +72,11 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
   match can have. So a guide never writes a score-like pair of digits or a digit next to "map" ("map 1", "3 maps"),
   which go in words, nor a result's field name before a colon ("score:", "maps:", "winner:"), which the payload would
   carry as a result's key.
-- **Facts from primary sources:** every fact that can change (formats, dates, qualification rules) is checked against
-  its owner's own page and listed, with the URL and the date read, in `docs/guides-sources.md`; where it can change,
-  the guide says "as of <month year>". Never copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays
-  out.
+- **Facts from primary sources:** every fact that can change (formats, dates, qualification rules, YouTube's
+  interface) is checked against its owner's own page and listed, with the URL and the date read, in
+  `docs/guides-sources.md`. A claim says no more than its source covers: what was seen at two organisers is said of
+  those two, a rule the code applies by round names is described by those names, and where events differ the guide says
+  so. "As of <month year>" goes in the body, at the section it dates: the page doesn't show the description. Never
+  copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays out.
 - **Typography:** straight quotes and plain hyphens only, no curly quotes, long dashes or ellipsis characters.
 - **One claim per sentence** where possible, so a rewrite can't silently change a fact.
