@@ -229,7 +229,7 @@ test('a release with a folder the deploy user can\'t read never claims that no o
   }
 });
 
-test('a whole deploy refuses an untagged head it pulled, and builds nothing', () => {
+test('a whole deploy refuses an untagged head, pulled or not, and builds nothing', () => {
   // The live clone at the tagged release; origin then gets a merge whose release run hasn't tagged it yet
   const work = join(dir, 'pulled-work');
   git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
