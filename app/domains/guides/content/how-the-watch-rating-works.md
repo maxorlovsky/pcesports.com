@@ -35,10 +35,10 @@ The site identifies the stage from PandaScore's round names. This gives a useful
 Only the strongest of these signals contributes closeness points. The site does not add them together:
 
 - {{upset}} for **an upset**: the team ratings gave the winner less than a {{upsetPercent}}% chance before the match.
-- {{overtimeMap}} for **a very long map**: one of the maps lasted {{overtimeMinutes}} minutes or more. Every map of that length in the site's measurements reached overtime.
+- {{overtimeMap}} for **a very long map**: one of the maps lasted {{overtimeMinutes}} minutes or more. Every map that long in the site's measurements reached overtime.
 - {{closeMap}} for **a long map**: one of the maps lasted {{closeMinutes}} minutes or more.
 
-Closeness uses only the maps that every series of that length must play. For a best-of-three, that means the maps before a possible third. Playing the full possible series never contributes to closeness.
+Closeness uses only the maps that every match of that length must play. For a match that needs two map wins, that means the maps before a possible third map. Whether a match went the distance never counts.
 
 ## The three labels
 
@@ -56,7 +56,7 @@ Before a match begins, only its stakes are known. Whether it is worth watching a
 
 A label calculated after the match uses information about the result. The rating is designed to keep that result hidden:
 
-- **No map count.** Closeness ignores the number of maps played and whether the series used every possible map.
+- **No map count.** Closeness ignores the number of maps played and whether the match used every possible map.
 - **No single reason.** Closeness takes only the strongest signal, so a label never says "it was an upset" or "it went to overtime".
 - **Ordering keeps results hidden.** Matches with the same label are ordered by stakes, which were known beforehand. A match's position reveals nothing more about its result.
 - **Hidden team names.** The teams stay hidden until you tap, because a later round's teams tell you who won the earlier ones.

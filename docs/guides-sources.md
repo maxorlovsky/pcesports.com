@@ -88,7 +88,7 @@ bar, which "can show" when the video starts or pauses, while the mouse moves ove
 on the video. A tip to skip the pre-show with the keyboard was left out: seeking with the keys may show the progress
 bar, which couldn't be checked without a browser that plays YouTube.
 
-## CS2 tournament formats: series, Swiss and brackets (`cs2-formats-explained.md`)
+## CS2 formats explained: best-of-3, Swiss and brackets (`cs2-formats-explained.md`)
 
 | Fact | Source |
 |---|---|

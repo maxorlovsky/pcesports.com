@@ -3,7 +3,7 @@ title: The CS2 season: Majors, organisers and key events
 description: A short guide to the CS2 season: who runs the tournaments, why Majors and Tier 1 events matter, and when to watch. As of November 2026.
 order: 5
 ---
-**The short answer:** the CS2 season runs for most of the year, with two Majors as its high points. Organisers run those events under Valve's own rules. ESL, BLAST, PGL, StarLadder and a few others run the other big tournaments. Events carry more weight when they attract highly ranked teams and offer more prize money. Valve's ranking rewards wins over strong teams and wins at events with larger prize pools more heavily.
+**The short answer:** the CS2 season runs almost all year, with two Majors as its high points. Organisers run those events under Valve's own rules. ESL, BLAST, PGL, StarLadder and a few others run the other big tournaments. Events carry more weight when they attract highly ranked teams and offer more prize money. Valve's ranking rewards wins over strong teams and wins at events with larger prize pools more heavily.
 
 ## Who runs the events
 

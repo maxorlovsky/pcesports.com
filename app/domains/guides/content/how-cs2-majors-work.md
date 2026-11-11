@@ -3,7 +3,7 @@ title: CS2 Majors explained: format, invitations and stages
 description: How CS2 Majors work: two events a year, Swiss stages, playoffs and team invitations, plus what makes them different. As of November 2026.
 order: 2
 ---
-**The short answer:** a Major is a Counter-Strike tournament run under rules set by Valve, the game's developer. As of November 2026, there are two Majors each year. Each takes 32 teams through three Swiss stages and an eight-team playoff bracket. Invitations come from Valve's ranking, the Valve Regional Standings. A qualifier fills a place only when no ranked roster remains to invite.
+**The short answer:** a Major is a Counter-Strike tournament run under rules set by Valve, the game's developer. As of November 2026, there are two Majors each year. Each takes 32 teams through three Swiss stages to an eight-team playoff bracket. Invitations come from Valve's ranking, the Valve Regional Standings. A qualifier fills a place only when no ranked roster remains to invite.
 
 ## Two Majors a year
 
@@ -27,15 +27,15 @@ As of November 2026, every Major follows the same four-stage structure:
 
 In a Swiss stage, teams play opponents with the same record of wins and losses. Three wins qualify a team for the next stage. Three losses eliminate it. Each team therefore plays between three and five matches.
 
-A match that can send a team through or knock it out is a best-of-three. Every other Swiss match is a best-of-one. Teams avoid facing the same opponent twice within a stage wherever possible.
+A match that can send a team through or knock it out is a best-of-3. Every other Swiss match is a best-of-1. Teams avoid facing the same opponent twice within a stage wherever possible.
 
 Seeding determines the pairings. Before the Major, all 32 teams are seeded by their place in the global list of the same ranking. Within a stage, a difficulty score breaks ties between teams with the same record. It totals the wins of all opponents a team has faced so far, then subtracts their losses.
 
 ### The playoffs
 
-As of November 2026, the quarter-finals and semi-finals are best-of-three. The grand final has been a best-of-five at the last two Majors: first at Budapest in December 2025, then at Cologne in June 2026. Valve's written rules still say best-of-three for every playoff match.
+As of November 2026, the quarter-finals and semi-finals are best-of-3. The grand final has been a best-of-5 at the last two Majors: first at Budapest in December 2025, then at Cologne in June 2026. Valve's written rules still say best-of-3 for every playoff match.
 
-Before each series, the teams take turns removing maps from the map pool. In a best-of-three they also pick the maps they want to play. Valve's rules set the order of those turns for every Major.
+Before each match, the teams take turns removing maps from the map pool. In a best-of-3 they also pick the maps they want to play. Valve's rules set the order of those turns for every Major.
 
 ## How teams qualify
 
@@ -63,4 +63,4 @@ For viewers, a Major brings the strongest teams from every region into one event
 
 The site's rating gives a Major match extra points for what is at stake, before considering how the match played out. [How PCesports rates CS2 matches to watch](/guides/how-the-watch-rating-works) has the numbers.
 
-If you want to catch up on a Major without knowing the results, [Watch CS2 VODs without spoilers](/guides/watch-cs2-without-spoilers) helps, and [CS2 tournament formats: series, Swiss and brackets](/guides/cs2-formats-explained) covers Swiss stages and brackets in more detail.
+If you want to catch up on a Major without knowing the results, [Watch CS2 VODs without spoilers](/guides/watch-cs2-without-spoilers) helps, and [CS2 formats explained: best-of-3, Swiss and brackets](/guides/cs2-formats-explained) covers Swiss stages and brackets in more detail.

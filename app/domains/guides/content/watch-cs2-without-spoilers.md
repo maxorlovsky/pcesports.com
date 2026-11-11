@@ -11,7 +11,7 @@ Below are the places where results can appear and the steps you can take to avoi
 
 ### The video's length
 
-YouTube shows a full-match VOD's length on its thumbnail, in search results and in the player. A best-of-three that reaches a third map is noticeably longer than one that ends after two. The length alone can therefore reveal the number of maps played.
+YouTube shows a full-match VOD's length on its thumbnail, in search results and in the player. A best-of-3 that reaches a third map is noticeably longer than one that ends after two. The length alone can therefore reveal the number of maps played.
 
 **What to do:** don't look for the video on the organiser's channel page or in search results, where video lengths are visible. Follow a direct link to the video instead. Moving the mouse over the player can reveal its controls, including the time. Once playback starts, keep the mouse away from the player.
 

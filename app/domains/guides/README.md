@@ -99,10 +99,11 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
 Use these terms consistently in guide prose. Keep quoted interface labels and PandaScore's round names as they appear
 on screen (for example, "Lower Bracket Final" and "Semifinal 1").
 
-- **Match** or **series**: the whole contest between two teams; a **map** is one game within it; a **round** is one
+- **Match**: the whole contest between two teams; define "series" once as a synonym, then use "match". A **map** is
+  one game within a match; a **round** is one
   round within a map. A tournament's round is named in its stage context.
-- **Best-of-one**, **best-of-three**, **best-of-five**: spell out series lengths. Do not mix these with BO1, BO3
-  or best-of-3.
+- **Best-of-1**, **best-of-3**, **best-of-5**: use these spellings. Do not mix them with BO1, BO3 or best-of-three.
+  The rating guide explains the same example in words to keep its rule against typing numbers by hand.
 - **Swiss stage**, **group**, **playoffs**, **single elimination**, **double elimination**: the stage or format.
   Use **upper bracket**, **lower bracket**, **quarter-finals**, **semi-finals** and **grand final** for their parts.
 - **VOD**: a full-match recording posted by the organiser; expand it as **video on demand** when defining it.

@@ -53,7 +53,7 @@ As of November 2026, Valve's competitive map pool, called the Active Duty map gr
 
 Valve updates the pool from time to time, usually replacing one map at a time. In 2026, Anubis came back in January, in place of Train. Cache joined in July, in place of Overpass.
 
-The same pool applies in Premier, the game's ranked mode, and at the Majors. Before each series, the teams take turns removing maps and picking the ones they want to play. [CS2 tournament formats: series, Swiss and brackets](/guides/cs2-formats-explained) covers how.
+The same pool applies in Premier, the game's ranked mode, and at the Majors. Before each match, the teams take turns removing maps and picking the ones they want to play. [CS2 formats explained: best-of-3, Swiss and brackets](/guides/cs2-formats-explained) covers how.
 
 ## What changed from CS:GO
 

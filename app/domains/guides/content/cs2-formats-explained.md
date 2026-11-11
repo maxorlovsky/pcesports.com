@@ -1,25 +1,25 @@
 ---
-title: CS2 tournament formats: series, Swiss and brackets
-description: Understand CS2 series, Swiss stages, groups and elimination brackets, plus match labels such as "Lower Bracket Final" and "Round 5".
+title: CS2 formats explained: best-of-3, Swiss and brackets
+description: Understand best-of-3 matches, Swiss stages, groups and elimination brackets, plus match labels such as "Lower Bracket Final" and "Round 5".
 order: 3
 ---
-**The short answer:** a CS2 match is a series of maps. The team that wins more maps wins the match. Tournaments group matches into stages. An opening group or Swiss stage gives each team more than one chance. A final bracket decides the title, and losing there often means elimination.
+**The short answer:** a CS2 match is played over a set of maps. The team that wins more maps wins the match. Tournaments group matches into stages. An opening group or Swiss stage gives each team more than one chance. A final bracket decides the title, and losing there often means elimination.
 
 The stage names on this site come from PandaScore, the site's source for match data. Here is what those names mean.
 
-## Maps and series
+## Maps and matches
 
-A **map** is one game, played on one of the maps in the competitive map pool. The teams play rounds until one side has enough round wins. If the teams are tied after those rounds, they play overtime.
+A **map** is one game, played on one of the maps in the competitive map pool. The teams play rounds until one side has enough round wins. If the teams are tied when the regular rounds run out, they play overtime.
 
-A **match**, also called a series, consists of a set of maps. These are the three common series lengths.
+A **match**, also called a series, consists of a set of maps. These are the three common match lengths.
 
-- **Best-of-one:** one map decides the match.
-- **Best-of-three:** the first team to win two maps wins. A third map is played only when each team has won one.
-- **Best-of-five:** the first team to win three maps wins. The fourth and fifth maps are played only when needed.
+- **Best-of-1:** one map decides the match.
+- **Best-of-3:** the first team to win two maps wins. A third map is played only when each team has won one.
+- **Best-of-5:** the first team to win three maps wins. The fourth and fifth maps are played only when needed.
 
-Longer series are fairer because one bad map cannot decide the match. They also take more time. Many events therefore use best-of-one matches early on, then best-of-three or best-of-five series when more is at stake.
+Longer matches are fairer because one bad map cannot decide the match. They also take more time. Many events therefore use best-of-1 matches early on, then best-of-3 or best-of-5 matches when more is at stake.
 
-Before a series, the teams take turns removing maps from the pool and picking the ones they want to play. In a best-of-one they remove maps until one is left.
+Before a match, the teams take turns removing maps from the pool and picking the ones they want to play. In a best-of-1 they remove maps until one is left.
 
 ## Swiss stage
 
@@ -27,7 +27,7 @@ A Swiss stage sorts a large field quickly without making every team play every o
 
 - In each round, teams play an opponent with the same record of wins and losses.
 - A team that reaches the set number of wins goes through. A team that reaches the set number of losses is out.
-- At a Major, as of November 2026, three wins send a team through, while three losses eliminate it. A match that can send a team through or knock it out is a best-of-three. The others are best-of-one.
+- At a Major, as of November 2026, three wins send a team through, while three losses eliminate it. A match that can send a team through or knock it out is a best-of-3. The others are best-of-1.
 
 On this site, a Swiss match appears as **Round** and a number: "Round 1" is the first round of the stage, "Round 5" the fifth. When teams finish at three wins or three losses, the fifth round is the last. Every team in it has two wins and two losses, so each of its matches decides who goes through.
 
