@@ -86,8 +86,10 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
 - **Facts from primary sources:** every fact that can change (formats, dates, qualification rules, YouTube's
   interface) is checked against its owner's own page and listed, with the URL and the date read, in
   `docs/guides-sources.md`. A claim says no more than its source covers: what was seen at two organisers is said of
-  those two, a rule the code applies by round names is described by those names, and where events differ the guide says
-  so. "As of <month year>" goes in the body, at the section it dates: the page doesn't show the description. Never
+  those two, a rule the code applies by round names is described by those names, a weight in Valve's code is said of
+  the measures it weighs, and where events differ the guide says so. What the site itself shows or checks is read
+  from its code (`watchEntries` lists only matches with a VOD), and an event's dates from its start, not its arena
+  days. "As of <month year>" goes in the body, at the section it dates: the page doesn't show the description. Never
   copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays out.
 - **Typography:** straight quotes and plain hyphens only, no curly quotes, long dashes or ellipsis characters.
 - **One claim per sentence** where possible, so a rewrite can't silently change a fact.
