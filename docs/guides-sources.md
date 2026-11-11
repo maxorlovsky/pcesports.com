@@ -22,6 +22,19 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 | Y2 | [YouTube keyboard shortcuts](https://support.google.com/youtube/answer/7631406) (YouTube Help) | Google | 2026-11-10 |
 | Y3 | [Add end screens to videos](https://support.google.com/youtube/answer/6388789) (YouTube Help) | Google | 2026-11-10 |
 | Y4 | [Autoplay videos](https://support.google.com/youtube/answer/6327615) (YouTube Help) | Google | 2026-11-10 |
+| V7 | [Tournament Operation Requirements](https://github.com/ValveSoftware/counter-strike_rules_and_regs/blob/main/tournament-operation-requirements.md) (last changed 2025-12-08, "added TO requirements for both ranked and unranked events") | Valve | 2026-11-11 |
+| V8 | Valve Regional Standings, more of the model: [`model/data_loader.js`](https://github.com/ValveSoftware/counter-strike_regional_standings/blob/main/model/data_loader.js), [`model/team.js`](https://github.com/ValveSoftware/counter-strike_regional_standings/blob/main/model/team.js), [`model/ranking_context.js`](https://github.com/ValveSoftware/counter-strike_regional_standings/blob/main/model/ranking_context.js); the [`invitation`](https://github.com/ValveSoftware/counter-strike_regional_standings/tree/main/invitation) folder; the last line of [`live/2026/standings_global_2026_11_02.md`](https://github.com/ValveSoftware/counter-strike_regional_standings/blob/main/live/2026/standings_global_2026_11_02.md); the repository's commits (one release a month in 2026) | Valve | 2026-11-11 |
+| V9 | Map pool changes in the game's update notes: ["Counter-Strike 2 Update"](https://store.steampowered.com/news/app/730/view/1790214123031344) (2025-01-28), ["Counter-Strike 2 Update"](https://store.steampowered.com/news/app/730/view/1805431065285705) (2025-07-16), ["Counter-Strike 2 Update"](https://store.steampowered.com/news/app/730/view/1822556746157780) (2026-01-21), ["Counter-Strike 2 Update"](https://store.steampowered.com/news/app/730/view/1836506165581827) (2026-07-08) and ["Season 5, Armory, and More"](https://store.steampowered.com/news/app/730/view/1836506165581825) (2026-07-08); every update note up to 2026-11-05 read for later changes, none found | Valve | 2026-11-11 |
+| V10 | ["Your Time is Now"](https://store.steampowered.com/news/app/730/view/5141476355659151610) (2023-08-31): "a maximum of 24 rounds in regulation time (with a 6 round overtime in case of a tie) for Premier, Competitive, and the Majors" | Valve | 2026-11-11 |
+| V11 | ["Premier for All"](https://store.steampowered.com/news/app/730/view/4026755437314208134) (2021-03-29, CS:GO): "work together to win 16 rounds" | Valve | 2026-11-11 |
+| V12 | ["On The Other Hand..."](https://store.steampowered.com/news/app/730/view/5759616966666137028) (2024-04-25): "the Active Duty map pool (for both Premier and competitions)" | Valve | 2026-11-11 |
+| V13 | Economy notes: ["Release Notes for 9/1/2023"](https://store.steampowered.com/news/app/730/view/5141476355663002229) ("Players who survive the last round before overtime no longer carry their items into overtime"), ["Release Notes for 4/25/2024"](https://store.steampowered.com/news/app/730/view/5759616966666131969) (kill rewards by weapon), ["Release Notes for 5/23/2024"](https://store.steampowered.com/news/app/730/view/5741605105608520854) ("the terrorist team award when bomb was planted but defused"; the "Loss Bonus" tooltip) | Valve | 2026-11-11 |
+| V14 | [Counter-Strike 2](https://www.counter-strike.net/cs2) (Valve's page on what CS2 changed: smokes, sub-tick, maps; rendered in a browser) | Valve | 2026-11-11 |
+| E1 | [ESL Pro Tour CS](https://pro.eslgaming.com/tour/cs/) (its series, "one of the two annual ESL Pro Tour Championship events", the upcoming tournaments) | ESL | 2026-11-11 |
+| E2 | [ESL Pro Tour Counter-Strike: Game Specific Rules](https://drive.google.com/file/d/1ZMxPYAv__yDwI7rNTvCcB8ah_aPWV_gR/view) ("Date updated: 20 January 2026", linked from E1): 2.3.1 "Map pool", 2.4 "Match settings", 2.4.1 "Overtimes" | ESL | 2026-11-11 |
+| B1 | [BLAST.tv: Counter-Strike tournaments](https://blast.tv/cs/tournaments) (upcoming BLAST Premier events; rendered in a browser) | BLAST | 2026-11-11 |
+| P1 | [PGL: Events](https://www.pglesports.com/events) (upcoming events; rendered in a browser) | PGL | 2026-11-11 |
+| S1 | [StarLadder](https://starladder.com/en/) (its news: StarSeries, "Stake Ranked, the premiere Counter-Strike 2 Tier 2 LAN tournament circuit", "LORGAR RANKINGS, an official CS2 Tier-2 tournament") | StarLadder | 2026-11-11 |
 | R1 | `docs/feasibility/cs2-data-and-vods.md`, "What the VODs give away": the organisers' 69 linked VODs, read through the YouTube Data API | this site | 2026-11-08 |
 | R2 | Brysbaert, M. (2019). [How many words do we read per minute? A review and meta-analysis of reading rate](https://doi.org/10.1016/j.jml.2019.104047). *Journal of Memory and Language*, 109, 104047 ([abstract](https://osf.io/preprints/psyarxiv/xynwg)) | the author | 2026-11-10 |
 
@@ -89,6 +102,78 @@ teams skip. The site's own match data shows each case (2026-11-10, by stage and 
 groups are double-elimination brackets ending in an upper and a lower bracket final, with two quarter-finals in its
 playoffs; BLAST Rivals Fall 2026's groups have a Winners Match and an Elimination Match and no deciding match, with two
 quarter-finals in its playoffs.
+
+## The CS2 season in 5 minutes (`cs2-season-in-5-minutes.md`)
+
+| Fact (as of November 2026) | Source |
+|---|---|
+| Organisers run their events under a license from Valve | V7, foreword |
+| ESL runs the ESL Pro Tour: Intel Extreme Masters and ESL Pro League at the top, the ESL Challenger League below; two Championship events a year | E1 |
+| BLAST runs BLAST Premier, with Open, Rivals and Bounty events; its 2027 list runs from January (Bounty) to November | B1 |
+| PGL's events in Romania (Bucharest, Cluj-Napoca) and elsewhere in Europe and Asia (Lodz, China); the PGL CS2 Major Singapore, November 24 to December 13, 2026; its 2027 list starts with PGL Bucharest in mid-January | P1 |
+| StarLadder runs StarSeries and Tier 2 circuits; it ran the Budapest Major 2025 | S1; V5 |
+| The three other organisers the site lists: Perfect World, FISSURE, GAM3RS_X | `app/domains/matches/leagues.json`; R1 |
+| Ranked events count toward the VRS; their direct invitations come from it, in order; open qualifiers may fill places | V7, 1.6, 3.2, 3.2.7, 3.8.1 |
+| Unranked events may invite anyone; their total compensation is capped at $100,000 | V7, 2.2, 2.3 |
+| Tier 1: at least 20 direct VRS invites, from the Global list or a regional one, starting with the #1 roster | V7, 3.7.1 to 3.7.3 |
+| Tier 2: direct VRS invites only of rosters ranked lower than 12 on the Global VRS | V7, 3.8.2, 3.8.4 |
+| A win counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`, `getCappedPrizePool`, the stakes modifier) |
+| The Majors of 2025 and 2026: the first ended in June, the second from late November into December | V4, V5, V6, P1 |
+| ESL's 2027 list: Kraków in early February, Cologne in August | E1 |
+| ESL, BLAST, PGL and StarLadder post full matches on YouTube | `app/domains/vods/channels.json`; R1 |
+
+## How the Valve Regional Standings work (`how-the-valve-regional-standings-work.md`)
+
+The guide reproduces no list, rank, point value or match from Valve's repository; it explains the model and links
+the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`, section 1).
+
+| Fact (as of November 2026) | Source |
+|---|---|
+| The VRS is Valve's ranking of rosters, published monthly; a roster is five players, whatever the club | V7, 1.1, 1.2; V8 (commits) |
+| A roster that shares enough players with a later one counts as the same | V8 (`data_loader.js`: "Rosters that share enough players with a more recent match are considered the same team") |
+| Four lists: Global, Americas, Europe, Asia; a roster's region is that of most of its players | V7, 3.7.1; V1, "Roster Regional Assignment" |
+| Only ranked events count; show matches don't; an event's matches count once it has ended | V7, 1.6; V8 (`data_loader.js`: `filterUnrankedMatches`, `filterShowmatches`, `filterInProgressEvents`) |
+| A roster needs five matches and a win to be ranked | V3 (`ranking.js`: `matchesPlayed >= 5`, `distinctTeamsDefeated > 0`) |
+| Six months of matches | V8 (`data_loader.js`: `6*30*24*3600`) |
+| The starting value: four measures of equal weight ("Bounty Offered", "Bounty Collected", "Opponent Network", LAN wins), each of the ten best results | V3 (`SEED_MODIFIER_FACTORS`); V8 (`team.js`: `bucketSize = 10`, "there's never any harm in playing in a low-stakes match") |
+| Results of the last month count in full, older ones less, down to nothing at the window's start | V8 (`data_loader.js`: the one-month `graceperiod`; `ranking_context.js`: `getTimestampModifier`) |
+| A win counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`) |
+| Then every match, oldest first, moves both rosters as a Glicko rating with a fixed deviation does ("glicko -> elo"), weighted by its age | V3 (`ranking.js`: `runMatches`, `setFixedRD`); V8 (`data_loader.js`: `informationContent`) |
+| The Majors invite from the VRS; Stage 2 and 3 places are shared out between regions | V1, "Invitations" |
+| Invitation rules: lists, count and starting rank chosen by the organiser; the latest version on the invite date; versions in `invitation/`; in order; declines go down the list; at least three of the invited players play; open qualifiers fill the gaps; two wildcards per eight VRS invites, with their conditions | V7, 1.1, 3.2.1 to 3.2.7, 3.6 |
+| Valve's files credit HLTV.org for the event data | V8 (the standings file's last line) |
+
+## CS2 basics for returning viewers (`cs2-basics-for-returning-viewers.md`)
+
+| Fact (as of November 2026) | Source |
+|---|---|
+| At most 24 rounds, a six-round overtime, for Premier, Competitive and the Majors | V10; V1, "Convars" (the Majors use Premier's defaults) |
+| At ESL: best out of 24; round time 1 minute 55 seconds; bomb timer 40 seconds; $800 start money; overtime best out of 6 with $12,500 start money, sides swapped at its half-time, overtimes until there is a winner | E2, 2.4, 2.4.1 |
+| Survivors keep their items, except into overtime | V13 (9/1/2023) |
+| Money from kills, from planting the bomb even when it is defused, and a loss bonus | V13 (4/25/2024, 5/23/2024) |
+| The Active Duty pool: Ancient, Anubis, Cache, Dust II, Inferno, Mirage, Nuke | E2, 2.3.1 (as of 2026-01-20: Overpass, Inferno, Mirage, Nuke, Dust2, Ancient, Anubis), then V9 (2026-07-08: Cache in, Overpass out; no change since) |
+| Changes one map at a time; Anubis back in January 2026 for Train, Cache in July 2026 for Overpass | V9 |
+| The same pool in Premier and at competitions, the Majors included | V12; V1, "Maps" |
+| CS:GO's competitive maps took 16 round wins | V11 |
+| Smokes fill spaces, and bullets and HE grenades push them aside; sub-tick; maps rebuilt, upgraded or relit in Source 2, Dust II among the unchanged ones | V14 |
+
+The buy words (full buy, eco round, force buy) are the community's own terms, explained, not facts that change. Left out
+because no primary source confirmed it: the round win and loss bonus amounts, weapon prices, and whether money resets
+at half-time.
+
+## Where to watch official CS2 VODs (`where-to-watch-official-cs2-vods.md`)
+
+The channel list isn't typed: `{{vodChannels}}` is filled from `app/domains/vods/channels.json` at build time
+(`app/domains/guides/README.md`), with each channel's name and a link by its id. The rest:
+
+| Fact (as of November 2026) | Source |
+|---|---|
+| How a channel was checked: linked by the organiser's site, or featured by the main channel it links; full-match channels only | R1, "Official channel whitelist" |
+| Titles name the teams and the event, not the result; ESL's and PGL's name the stage, StarLadder's don't; a later round's title gives away earlier results | R1, "What the VODs give away", and its "Official channel whitelist" |
+| ESL's and PGL's main channels post short clips naming who went through or was out | R1 |
+| Perfect World, FISSURE and GAM3RS_X post no full-match videos on YouTube (checked 2026-11-08) | R1, "The other 2026 S-Tier organisers" |
+| VODs were up within hours of each match | R1, "Numbers" ("every VOD was up within hours of its match") |
+| The site's list shows only matches with a VOD; it re-checks each channel daily and stops reading one that fails; it re-reads each link at least weekly and drops deleted videos | `app/domains/watch/list.ts` (`watchEntries`); `app/domains/vods/README.md`; `app/domains/vods/refresh.ts` (`REFRESH_DAYS`) |
 
 ## Reading time
 

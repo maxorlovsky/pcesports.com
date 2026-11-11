@@ -12,8 +12,11 @@ export type Block =
   | { kind: 'ul' | 'ol'; items: Inline[][] };
 
 const INLINE = /\*\*([^*]+)\*\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
-/** What the subset doesn't have: emphasis, code, HTML, images, footnotes, a bracket that isn't a link. */
-const UNSUPPORTED_INLINE = /[*_`<[\]]/;
+/**
+ * What the subset doesn't have: emphasis, code, HTML, images, footnotes, a bracket that isn't a link. An underscore
+ * inside a word is a name's (GAM3RS_X), not emphasis.
+ */
+const UNSUPPORTED_INLINE = /[*`<[\]]|(?<![\p{L}\p{N}])_|_(?![\p{L}\p{N}])/u;
 const UNSUPPORTED_LINE = /^(#|>|\||\* |\+ |`|<|---|===|\d+\)|\s)/;
 
 function fail(line: number, message: string): never {

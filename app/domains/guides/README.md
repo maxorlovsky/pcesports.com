@@ -1,13 +1,14 @@
 # guides
 
 Short, evergreen guides for people who don't follow every match: `/guides` lists them, and each one is a page at
-`/guides/<slug>`. Depends on `site` (each page's SEO) and `watch` (the rating's numbers and labels, for the rating
-guide), so it is the top domain: `site` <- `matches` <- `vods` <- `watch` <- `guides`.
+`/guides/<slug>`. Depends on `site` (each page's SEO), `vods` (the whitelist's VOD channels, for the VOD guide) and
+`watch` (the rating's numbers and labels, for the rating guide), so it is the top domain: `site` <- `matches` <- `vods`
+<- `watch` <- `guides`.
 
 - `index.ts` (plain TypeScript, for the sitemap, the build check and the tests): `loadGuides`, `guidePaths` and
   `GUIDES_DIR` (`load.ts`, which reads `content/` from the repository root a build runs in); `parseGuide`, `wordsOf`,
   `WORDS_PER_MINUTE` (`guides.ts`); the Markdown subset, `parseMarkdown`, `parseInline`, `textOf` (`markdown.ts`);
-  `GUIDE_FACTS` (`facts.ts`); the types `Guide`, `GuideSummary`, `Block`, `Inline`. The views import `load.ts`'s
+  `GUIDE_FACTS`, `RATING_FACTS`, `vodChannelList` (`facts.ts`); the types `Guide`, `GuideSummary`, `Block`, `Inline`. The views import `load.ts`'s
   `findGuide` and `guideSummaries` themselves.
 - `views/GuidesIndexPage.vue` (`app/pages/guides/index.vue`) and `views/GuidePage.vue` (`app/pages/guides/[slug].vue`):
   the list and a guide. Both read the guides at build time, on the server only (`useAsyncData` with
@@ -43,9 +44,10 @@ A paragraph. Lines join until a blank line.
 ```
 
 The format is a Markdown subset: `##` and `###` headings, paragraphs, `- ` and `1. ` lists, `**bold**` and links
-(a path on the site, or `https://`). Anything else (an `#` heading, emphasis, code, HTML, images, tables, quotes) fails
-the build with its file and line, so a guide never renders differently from how it reads. The header holds `title`,
-`description` and `order` (the list's order, lowest first), each as `name: value`.
+(a path on the site, or `https://`). An underscore inside a word is text (`GAM3RS_X`). Anything else (an `#` heading,
+emphasis, code, HTML, images, tables, quotes) fails the build with its file and line, so a guide never renders
+differently from how it reads. The header holds `title`, `description` and `order` (the list's order, lowest first),
+each as `name: value`.
 
 ## Facts from the code
 
@@ -58,6 +60,12 @@ guide (its title and description included) types a number or a label by hand, or
 there. A third test reads each line of the rating guide that states a number and holds it to the facts its words call
 for (a "grand final" line states `{{grandFinal}}` and nothing else), so a placeholder on the wrong line fails too; a
 rewrite keeps the words a rule reads, or updates the rule.
+
+The VOD guide (`where-to-watch-official-cs2-vods.md`) writes `{{vodChannels}}` on a line of its own: a list built from
+the whitelist (`app/domains/vods/channels.json`) by `vodChannelList`, one item per VOD channel, with its organisers and
+its name linked by its channel id, and "its main channel" where the organiser has no other channel there. So a channel
+added to or removed from the whitelist changes the guide, and the guide shows nothing the YouTube API returns.
+`tests/guides.test.mjs` holds both. Only the guide's part on organisers with no VODs is written by hand.
 
 ## The rules every guide keeps
 
