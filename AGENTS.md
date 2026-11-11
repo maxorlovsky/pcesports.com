@@ -1,7 +1,7 @@
 # pcesports.com: agent instructions
 
 PCesports (<https://www.pcesports.com>): esports for people who don't have time to follow everything. A "What should
-I watch?" page for CS2 matches with links to the official full-match VODs, and later guides. A static Nuxt site:
+I watch?" page for CS2 matches with links to the official full-match VODs, and short guides. A static Nuxt site:
 `nuxt generate` renders every page to HTML, nginx on max-cloud serves the files, nothing else runs in production.
 
 Where things are: `README.md` (run, checks, deploy, the server), `docs/architecture.md` (the domains and their rules),

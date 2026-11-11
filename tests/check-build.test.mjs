@@ -5,9 +5,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, test } from 'node:test';
 import { MATCHES_FILE, WATCH_FILE } from '../tools/data-job/job.mjs';
-import { buildData, checkBuild } from '../tools/check-build.mjs';
+import { buildData, checkBuild, guidePages } from '../tools/check-build.mjs';
 
 const SITE = 'https://www.pcesports.com';
+const GUIDE_PAGES = guidePages();
+const [GUIDE_LIST, FIRST_GUIDE] = GUIDE_PAGES;
 let dir;
 
 function page({ title = 'A page', path, body, noindex = false }) {
@@ -26,7 +28,8 @@ function build(change = {}, data = { matches: [], entries: [] }) {
     'index.html': page({ path: '/', body: '<h2>What should I watch?</h2>' }),
     'privacy.html': page({ path: '/privacy', body: '<h2>What we collect</h2>' }),
     '404.html': page({ body: '<h1>This page is not here</h1>', noindex: true }),
-    'sitemap.xml': `<urlset><url><loc>${SITE}/</loc></url><url><loc>${SITE}/privacy</loc></url></urlset>`,
+    ...Object.fromEntries(GUIDE_PAGES.map((guide) => [guide.file, page({ path: guide.path, body: [guide.text].flat().map((text) => `<h2>${text.replace(/"/g, '&quot;')}</h2>`).join('') })])),
+    'sitemap.xml': `<urlset>${['/', '/privacy', ...GUIDE_PAGES.map((guide) => guide.path)].map((path) => `<url><loc>${SITE}${path}</loc></url>`).join('')}</urlset>`,
     'robots.txt': `User-agent: *\nSitemap: ${SITE}/sitemap.xml\n`,
     'og.png': 'png',
     '_nuxt/app.js': 'console.log(1)',
@@ -55,6 +58,10 @@ const broken = [
   ['an indexable 404 page', { '404.html': page({ body: 'This page is not here' }) }, /the 404 page is not noindex/],
   ['a noindex page', { 'privacy.html': page({ path: '/privacy', body: 'What we collect', noindex: true }) }, /noindex on an indexable page/],
   ['a sitemap missing a page', { 'sitemap.xml': `<urlset><url><loc>${SITE}/</loc></url></urlset>` }, /sitemap\.xml lists/],
+  ['a missing guide', { [FIRST_GUIDE.file]: null }, new RegExp(`${FIRST_GUIDE.file} is missing`)],
+  ['a guide without its body', { [FIRST_GUIDE.file]: page({ path: FIRST_GUIDE.path, body: '<div id="app"></div>' }) }, /is not in its HTML/],
+  ['the guides list missing a guide', { [GUIDE_LIST.file]: page({ path: '/guides', body: GUIDE_LIST.text.slice(2).join(' ') }) }, /guides\.html: ".+" is not in its HTML/],
+  ['a guide missing a later block', { [FIRST_GUIDE.file]: page({ path: FIRST_GUIDE.path, body: FIRST_GUIDE.text.slice(0, -1).map((text) => `<p>${text}</p>`).join('') }) }, /is not in its HTML/],
   ['robots.txt without the sitemap', { 'robots.txt': 'User-agent: *\n' }, /robots\.txt does not name the sitemap/],
   ['the Twitter link', { '_nuxt/app.js': 'href="https://twitter.com/pcesports"' }, /twitter/],
   ['the icon font', { '_nuxt/app.css': '@font-face{font-family:icomoon}' }, /icomoon/],

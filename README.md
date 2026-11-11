@@ -24,8 +24,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `site` domain's consent rules, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
-| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, no Google analytics tag in a page's HTML, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `site` domain's consent rules, the `matches`, `vods` and `watch` rules, the guides (their format, length, typography, the rating guide's facts, and no spoiler the build check reads) and the data job (against fake APIs and a scratch origin) |
+| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off; the guides' pages are read from `app/domains/guides/content/`), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, no Google analytics tag in a page's HTML, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: its TLS rules (see "On max-cloud"), `nginx -t`, then the answers of the pages, the redirects to www, the old URLs, Let's Encrypt's challenge and the three headers of every HTTPS 2xx and 3xx answer (`tools/nginx/test.sh`). Needs nginx, so it runs on the factory machine, not in CI |
 
 ## Where things are
@@ -40,6 +40,9 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
     (see "Data job").
   - `watch`: the after-match rating and the "What should I watch?" list the data job writes, and the home page that
     shows it (its `README.md` has the formula and the no-spoiler rules).
+  - `guides`: the guides, one Markdown file each in `app/domains/guides/content/`, at `/guides` and `/guides/<slug>`
+    (its `README.md`: adding a guide, the format, the rules every guide keeps). `docs/guides-sources.md` lists the
+    primary source of every fact in them that can change.
 - `app/app.vue`, `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed
   places; each file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
@@ -50,8 +53,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 - `tools/nginx/`: production's vhost and the old URLs' redirects (`docs/old-urls.md`).
 - `tools/deploy/`: the deploy and its SSH forced command. `tools/data-job/`: the data job, and `pull.mjs`, which puts
   the data branch's files in place for a build.
-- `docs/`: the architecture, the feasibility report and the old URLs. `experiments/`: the data experiments (not part
-  of the site).
+- `docs/`: the architecture, the feasibility report, the guides' sources and the old URLs. `experiments/`: the data
+  experiments (not part of the site).
 - `AGENTS.md` (`CLAUDE.md` imports it): the rules coding agents work by.
 
 ## Branches

@@ -19,6 +19,7 @@ const year = new Date().getFullYear();
       </ul>
       <nav aria-label="Footer">
         <ul class="footer-links">
+          <li><NuxtLink to="/guides">Guides</NuxtLink></li>
           <li><NuxtLink to="/privacy">Privacy</NuxtLink></li>
           <!-- Only once the page runs its script: without one there is nothing to choose -->
           <li v-if="ready"><button type="button" class="footer-button" @click="reopen">Cookie settings</button></li>

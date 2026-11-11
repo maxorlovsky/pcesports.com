@@ -13,14 +13,15 @@ enforces the rules below on every `npm test`, so in CI too.
 | `matches` | CS2 fixtures and results from PandaScore (free plan): fetching, normalising, which matches the site lists | `site` | exists |
 | `vods` | the organisers' official YouTube VOD channels: the whitelist, reading their uploads, matching a VOD to its match, the 30-day refresh | `site`, `matches` | exists |
 | `watch` | the "What should I watch?" after-match rating, the list the data job writes, and the home page that shows it, each VOD as the site's own card | `site`, `matches`, `vods` | exists |
-| `guides` | the guides and their pages | `site` | planned |
+| `guides` | the guides (one Markdown file each), the list at `/guides` and each guide's page, and the facts a guide takes from the code | `site`, `watch` | exists |
 
-So the order is `site` <- `matches` <- `vods` <- `watch`, with `guides` beside them on `site`. A domain depends only on
-the ones below it, as its `domain.json` allows. When a lower domain needs something from a higher one, the higher one
-passes it down, or the shell composes the two; the lower one never imports up. A planned domain gets its folder with
-the card that gives it its first code: no empty domains.
+So the order is `site` <- `matches` <- `vods` <- `watch` <- `guides`: the rating guide reads the rating's numbers and
+labels through `watch`'s entry, at build time. A domain depends only on the ones below it, as its `domain.json`
+allows. When a lower domain needs something from a higher one, the higher one passes it down, or the shell composes
+the two; the lower one never imports up. A planned domain gets its folder with the card that gives it its first code:
+no empty domains.
 
-`docs/feasibility/cs2-data-and-vods.md` is the source for the planned domains' data rules.
+`docs/feasibility/cs2-data-and-vods.md` is the source for the CS2 domains' data rules.
 
 ### The data job
 
