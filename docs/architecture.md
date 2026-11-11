@@ -16,8 +16,7 @@ enforces the rules below on every `npm test`, so in CI too.
 | `guides` | the guides (one Markdown file each), the list at `/guides` and each guide's page, and the facts a guide takes from the code | `site`, `vods`, `watch` | exists |
 
 So the order is `site` <- `matches` <- `vods` <- `watch` <- `guides`: the rating guide reads the rating's numbers and
-labels through `watch`'s entry, and the VOD guide its channel list through `vods`'s entry, both at build
-time. A domain depends only on the ones below it, as its `domain.json`
+labels through `watch`'s entry, and the VOD guide its channel list through `vods`'s entry, both at build time. A domain depends only on the ones below it, as its `domain.json`
 allows. When a lower domain needs something from a higher one, the higher one passes it down, or the shell composes
 the two; the lower one never imports up. A planned domain gets its folder with the card that gives it its first code:
 no empty domains.

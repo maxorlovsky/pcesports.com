@@ -28,7 +28,7 @@ A channel's list of videos can still give results away:
 - **Later rounds.** A semi-final's title names the two teams that reached it. So a channel's newest videos tell you who went through in the rounds before.
 - **Short clips.** Main channels post short clips too. At ESL and PGL, as of November 2026, the main channels' short clips during an event named who went through or who was out.
 
-If you want to watch a match without knowing the result, open the full match from a link that goes straight to it, rather than browsing a channel. [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers) has more ways to keep the result hidden.
+If you want to watch a match without knowing the result, open the full match from a link that goes straight to it, rather than browsing a channel. Even then, the video page shows the video's length and often its chapters, and both can give away how many maps were played. [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers) has more ways to keep the result hidden.
 
 ## Events with no full matches on YouTube
 
@@ -45,7 +45,7 @@ The site's list only shows matches that have a full video, so matches from these
 - **One link for each match.** The site matches each finished match to its video on the organiser's channel, by the teams and the event in the video's title.
 - **The site's own card, not YouTube's.** The list on the [home page](/) shows each match as the site's own card, with no thumbnail, no video length and no title from YouTube. "Watch the VOD" opens the organiser's video on YouTube.
 - **Only official videos.** The site never links a copy of a match uploaded by someone else, only the organiser's own video.
-- **Checked every day.** Every day, the site checks each channel again: that the organiser's main channel still lists it, where it was found that way, and that its list of uploads is still the same. It stops reading a channel that fails the check.
+- **Checked every day.** Every day, the site checks each channel again: that the organiser's main channel still lists it, where it was found that way, and that its uploads playlist is still the one on record. It stops reading a channel that fails the check.
 - **Deleted videos go.** The site reads each link again at least once a week, and drops a video that has been deleted.
 
 [How "What should I watch?" rates matches](/guides/how-the-watch-rating-works) explains how the site picks the matches worth your time.

@@ -65,7 +65,8 @@ The VOD guide (`where-to-watch-official-cs2-vods.md`) writes `{{vodChannels}}` o
 the whitelist (`app/domains/vods/channels.json`) by `vodChannelList`, one item per VOD channel, with its organisers and
 its name linked by its channel id, and "its main channel" where the organiser has no other channel there. So a channel
 added to or removed from the whitelist changes the guide, and the guide shows nothing the YouTube API returns.
-`tests/guides.test.mjs` holds both. The rest of the guide names no channel, and says which organisers post full
+`tests/guides.test.mjs` holds the list to the whitelist's VOD channels, names and links, and shows that a channel added
+to the whitelist appears in the guide. The rest of the guide names no channel, and says which organisers post full
 matches only through the list; what it says of particular organisers (their titles and clips, the ones with no VODs)
 is dated and sourced in `docs/guides-sources.md`.
 

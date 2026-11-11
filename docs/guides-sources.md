@@ -120,7 +120,8 @@ quarter-finals in its playoffs.
 | Tier 2: direct VRS invites only of rosters ranked lower than 12 on the Global VRS | V7, 3.8.2, 3.8.4 |
 | A win over another team counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`, `getCappedPrizePool`, the stakes modifier) |
 | The Majors of 2025 and 2026: the first ended in June, the second runs from late November into December (Singapore: scheduled) | V4, V5, V6, P1 |
-| ESL's 2027 list: Kraków in early February, Cologne in August | E1 |
+| ESL's 2027 list: IEM Kraków starts on January 27 (arena days February 4 to 7), Cologne in August (starts August 2) | E1 (each event's card: "Tournament starts on Jan 27", "Tournament starts on Aug 2") |
+| A Major: Valve's rules, 32 teams from every region, items sold in the game | the Majors guide's rows: V1, V5, V6 |
 
 ## How the Valve Regional Standings work (`how-the-valve-regional-standings-work.md`)
 
@@ -139,7 +140,7 @@ the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`,
 | Results of the last month count in full, older ones less, down to nothing at the window's start, for every measure | V8 (`data_loader.js`: the one-month `graceperiod`; `ranking_context.js`: `getTimestampModifier`; `team.js`) |
 | Prize money weighs only the Bounty Collected and Opponent Network wins: more at an event with more prize money, up to $1,000,000 | V8 (`team.js`: `stakesModifier`; the LAN wins and the prize money won are weighted by age only) |
 | Then every match, oldest first, moves both rosters as a Glicko rating with a fixed deviation does ("glicko -> elo"), weighted by its age | V3 (`ranking.js`: `runMatches`, `setFixedRD`); V8 (`data_loader.js`: `informationContent`) |
-| The Majors invite from the VRS; Stage 2 and 3 places are shared out between regions | V1, "Invitations" |
+| The Majors invite from the VRS; the places of every stage are shared out between the regions, each invited from its region's list; the global list only seeds | V1, "Invitations", "Regional Standing" |
 | Invitation rules: lists, count and starting rank chosen by the organiser; the latest version on the invite date; versions in `invitation/`; in order; declines go down the list; at least three of the invited players play; open qualifiers fill the gaps; two wildcards per eight VRS invites, with their conditions | V7, 1.1, 3.2.1 to 3.2.7, 3.6 |
 | Valve's files credit HLTV.org for the event data | V8 (the standings file's last line) |
 
@@ -155,7 +156,7 @@ the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`,
 | Changes one map at a time; Anubis back in January 2026 for Train, Cache in July 2026 for Overpass | V9 |
 | The same pool in Premier and at competitions, the Majors included | V12; V1, "Maps" |
 | CS:GO's competitive maps took 16 round wins | V11 |
-| Smokes fill spaces, and bullets and HE grenades push them aside; sub-tick; maps rebuilt, upgraded or relit in Source 2, Dust II among the unchanged ones | V14 |
+| Smokes fill spaces, and bullets and HE grenades push them aside; sub-tick; maps rebuilt, upgraded or relit in Source 2, Dust II among the unchanged ones at launch (later update notes changed it in small ways) | V14 |
 
 The buy words (full buy, eco round, force buy) are the community's own terms, explained, not facts that change. Left out
 because no primary source confirmed it: the round win and loss bonus amounts, weapon prices, and whether money resets
@@ -171,6 +172,7 @@ The channel list isn't typed: `{{vodChannels}}` is filled from `app/domains/vods
 | How a channel was checked: linked by the organiser's site, or featured by the main channel it links; full-match channels only | R1, "Official channel whitelist" |
 | Titles name the teams and the event, not the result; ESL's and PGL's name the stage, StarLadder's don't; a later round's title gives away earlier results | R1, "What the VODs give away", and its "Official channel whitelist" |
 | ESL's and PGL's main channels post short clips naming who went through or was out | R1 |
+| The video page shows the length, and often chapters, which can give away the map count | R1, "What the VODs give away" (most ESL and PGL VODs list one chapter per map); Y1 |
 | Perfect World, FISSURE and GAM3RS_X post no full-match videos on YouTube (checked 2026-11-08; the Thunderpick World Championship's site through a Wayback snapshot of 2026-07-18; GAM3RS_X's own site links no YouTube) | R1, "The other 2026 S-Tier organisers" |
 | At ESL and PGL, VODs were up within hours of each match (IEM Beijing 2026, PGL Masters Bucharest 2026) | R1, "Window and matches", "Numbers" ("every VOD was up within hours of its match") |
 | The site's list shows only matches with a VOD; it re-checks daily that each featured VOD channel is still featured and that each channel's uploads playlist is the listed one, and stops reading one that fails; it re-reads each link at least weekly and drops deleted videos | `app/domains/watch/list.ts` (`watchEntries`); `app/domains/vods/README.md`; `app/domains/vods/refresh.ts` (`REFRESH_DAYS`) |

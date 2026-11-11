@@ -52,7 +52,7 @@ The rosters are then ranked by their final value, on the world list and on their
 
 ### At the Majors
 
-Valve invites the teams at a Major from this ranking. The places in Stages 2 and 3 are shared out between the three regions. [How the CS2 Majors work](/guides/how-cs2-majors-work) has the details.
+Valve invites the teams at a Major from this ranking. The places in every stage are shared out between the three regions, and each region's teams are invited from its own list. The world list only seeds the teams once they are in. [How the CS2 Majors work](/guides/how-cs2-majors-work) has the details.
 
 ### At other events
 

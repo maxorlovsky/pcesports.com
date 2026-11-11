@@ -3,7 +3,7 @@ title: The CS2 season in 5 minutes
 description: Who runs the big CS2 events, which ones count most and why, and when the season peaks. As of November 2026.
 order: 5
 ---
-**The short answer:** the CS2 season runs almost all year. Its high points are the two Majors, events that organisers run under Valve's own rules. A handful of organisers run the other big events: ESL, BLAST, PGL and StarLadder, and a few others. An event counts more when it invites the best-ranked teams and pays more prize money, because Valve's ranking of teams weighs both.
+**The short answer:** the CS2 season runs almost all year. Its high points are the two Majors, events that organisers run under Valve's own rules. A handful of organisers run the other big events: ESL, BLAST, PGL and StarLadder, and a few others. An event counts more when the best-ranked teams play it and it pays more prize money. Valve's ranking of teams counts wins over strong teams, and wins at events with more prize money, for more.
 
 ## Who runs the events
 
@@ -20,7 +20,7 @@ The site's match data also covers three more organisers: Perfect World's CS Asia
 
 ### The Majors
 
-The Majors are the biggest events of the year. Valve writes their rules, invites 32 teams from every region and sells items in the game during each one. [How the CS2 Majors work](/guides/how-cs2-majors-work) explains them.
+The Majors are the biggest events of the year. Valve writes their rules, invites 32 teams in all, from every region, and sells items in the game during each one. [How the CS2 Majors work](/guides/how-cs2-majors-work) explains them.
 
 ### Events that invite the best teams
 
@@ -38,7 +38,7 @@ So a Tier 1 event is where the top-ranked teams of its list meet.
 
 ### Prize money
 
-The ranking counts a win over another team for more when it comes at an event with more prize money, up to one million dollars. So wins at big events count for more in the ranking. [How the Valve Regional Standings work](/guides/how-the-valve-regional-standings-work) has the details.
+As of November 2026, the ranking counts a win over another team for more when it comes at an event with more prize money, up to one million dollars. So wins at big events count for more in the ranking. [How the Valve Regional Standings work](/guides/how-the-valve-regional-standings-work) has the details.
 
 ## When the season peaks
 
@@ -53,7 +53,7 @@ The organisers' calendars for 2027, as of November 2026:
 
 - PGL's calendar starts in mid-January, with PGL Bucharest.
 - BLAST's calendar starts in January, with BLAST Premier Bounty.
-- ESL's calendar starts in early February, with an event in Kraków. ESL is back in Cologne in August.
+- ESL's calendar starts in late January, with IEM Kraków, whose arena days are in early February. ESL is back in Cologne in August.
 
 ## How to follow it without spending all year on it
 

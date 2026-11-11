@@ -22,7 +22,7 @@ If the teams are level after 24 rounds, the map goes to overtime:
 - **Money is reset.** Every player starts each overtime with 12,500 dollars.
 - **It goes on until someone wins.** If the overtime ends level too, another one follows.
 
-This is how ESL's rules describe it, as of November 2026. Valve's own announcement of CS2 set the six-round overtime for Premier, Competitive and the Majors.
+This is how ESL's rules describe it, as of November 2026. Valve's post of August 2023 on CS2 set the six-round overtime for Premier, Competitive and the Majors.
 
 ## The economy
 
@@ -60,7 +60,7 @@ The same pool is used in Premier, the game's ranked mode, and at the Majors. Bef
 - **Shorter maps.** In CS:GO, a map took 16 round wins. In CS2, it takes 13, with at most 24 rounds before overtime.
 - **Smokes that move.** A smoke grenade now fills the space around it: it spreads through doorways, up and down stairs and along corridors. Bullets and HE grenades can push the smoke aside for a moment and open a line of sight.
 - **Shots count when they happen.** The server now knows the exact moment a player moves, shoots or throws, instead of only checking at fixed intervals called ticks. Valve calls this sub-tick.
-- **Maps that look different.** Many maps have been rebuilt or relit in the new engine, Source 2. Some, such as Dust II, play as they did, with better lighting.
+- **Maps that look different.** Many maps have been rebuilt or relit in the new engine, Source 2. At CS2's launch, some, such as Dust II, kept their layout and only got better lighting.
 
 The Majors have changed too. [How the CS2 Majors work](/guides/how-cs2-majors-work) explains their current format.
 

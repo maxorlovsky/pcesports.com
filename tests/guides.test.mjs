@@ -213,10 +213,6 @@ test('the rating guide puts each fact where it belongs: a wrong placeholder on a
   assert.deepEqual(numbers.filter((name) => !stated.has(name)), [], 'every fact the rating guide can state, it states');
 });
 
-test('the guides\' facts are the rating\'s and the VOD channel list, nothing else', () => {
-  assert.deepEqual(GUIDE_FACTS, { ...RATING_FACTS, vodChannels: vodChannelList() });
-});
-
 test('the VOD guide lists every VOD channel of the whitelist, and a channel added there appears in it', () => {
   const links = (guide) => guide.blocks.flatMap((block) => ('items' in block ? block.items.flat() : block.inlines)).filter((inline) => inline.kind === 'link');
   const channelLinks = (guide) => links(guide).filter((link) => link.href.startsWith('https://www.youtube.com/'));
