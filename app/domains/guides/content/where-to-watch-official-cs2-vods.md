@@ -1,23 +1,23 @@
 ---
-title: Where to watch official CS2 VODs
-description: Which organisers post full CS2 matches on YouTube, on which channel, and which events have no full-match videos at all.
+title: Official CS2 VODs: where to watch full matches
+description: Find official full-match CS2 VODs on YouTube, learn which channels to use, and see which organisers do not post full-match VODs there.
 order: 8
 ---
-**The short answer:** the organisers in the list below post the full matches of their events as videos on YouTube. Some organisers post no full matches on YouTube, so their events can't be caught up on there.
+**The short answer:** the organisers listed below upload full-match VODs to YouTube. Some other organisers do not post full matches there, so you cannot use YouTube to catch up on those events.
 
-A VOD, short for video on demand, is the full recording of a match, posted by the organiser once the match is over.
+Here, a **VOD** (video on demand) means a full recording of a match that the organiser posts after it ends.
 
 ## The channels
 
-These are the channels that hold the organisers' full matches. This site reads the same channels to link each match to its video, and the list below is built from the site's own list, so it is always the one the site uses.
+These channels contain the organisers' full-match VODs. PCesports reads them to find the video for each match. The list below comes directly from the site's channel list, so it always reflects the channels the site uses.
 
 {{vodChannels}}
 
-Each channel was checked before the site started reading it. Either the organiser's own website links it, or the website links the organiser's main channel, which lists it among its featured channels. A channel joins the list only if it holds full matches, one video for each match.
+The site checked each channel before it began reading uploads. The organiser's website must link either to that channel or to the organiser's main channel, which features it. To join the list, a channel must contain full matches, with a separate video for each match.
 
 ## How the channels are organised
 
-An organiser can keep its full matches on a channel of their own, apart from its main channel, or post them on its main channel next to everything else. The list above says which is which.
+Organisers can use a dedicated channel for full matches or post them alongside other uploads on their main channel. The list above identifies which channels are main channels.
 
 ## What a channel can give away
 
@@ -25,33 +25,33 @@ In the videos checked in November 2026, the titles named the teams and the event
 
 A channel's list of videos can still give results away:
 
-- **Later rounds.** A semi-final's title names the two teams that reached it. So a channel's newest videos tell you who went through in the rounds before.
-- **Short clips.** Main channels post short clips too. At ESL and PGL, as of November 2026, the main channels' short clips during an event named who went through or who was out.
+- **Later rounds.** A semi-final title names the teams that reached it. A channel's newest uploads can therefore reveal who advanced from earlier rounds.
+- **Short clips.** Main channels post short clips too. At ESL and PGL, as of November 2026, the main channels' short clips during an event named teams that advanced or were eliminated.
 
-If you want to watch a match without knowing the result, open the full match from a link that goes straight to it, rather than browsing a channel. Even then, the video page shows the video's length and often its chapters, and both can give away how many maps were played. [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers) has more ways to keep the result hidden.
+If you want to watch a match without knowing the result, follow a direct link to the full-match VOD instead of browsing a channel. The video page still shows its length and often its chapters. Both can reveal how many maps were played. [Watch CS2 VODs without spoilers](/guides/watch-cs2-without-spoilers) has more ways to keep the result hidden.
 
-## Events with no full matches on YouTube
+## Organisers without full-match VODs on YouTube
 
-As of November 2026, three organisers whose events are in the site's match data post no full-match videos on YouTube. This was checked in November 2026, on the organisers' and the events' own sites and the YouTube channels they link. The Thunderpick World Championship's site was read from an archived copy of July 2026, because it blocks automated readers.
+As of November 2026, three organisers whose events are in the site's match data post no full-match VODs on YouTube. The check, carried out in November 2026, covered the organisers' and events' websites and the YouTube channels they link. The Thunderpick World Championship's site was checked through a July 2026 archive because the live site blocks automated readers.
 
 - **Perfect World (CS Asia Championships):** its site links a YouTube channel with no recent videos. The event's own site names only Chinese video platforms.
-- **FISSURE (FISSURE Playground):** the event's page links a YouTube channel in Russian. It holds whole broadcast days and highlights, not one video for each match.
-- **GAM3RS_X (Thunderpick World Championship):** GAM3RS_X's own site links no YouTube channel. The event's site links one that holds whole broadcast days and highlights, not one video for each match.
+- **FISSURE (FISSURE Playground):** the event's page links a YouTube channel in Russian. It contains full broadcast days and highlights rather than a separate video for each match.
+- **GAM3RS_X (Thunderpick World Championship):** GAM3RS_X's own site links no YouTube channel. The event's site links a channel with full broadcast days and highlights rather than separate match videos.
 
-The site's list only shows matches that have a full video, so matches from these events don't appear in it.
+Only matches with a full-match VOD appear in the site's list. Matches from these events are therefore absent.
 
 ## How this site uses the VODs
 
-- **One link for each match.** The site matches each finished match to its video on the organiser's channel, by the teams and the event in the video's title.
-- **The site's own card, not YouTube's.** The list on the [home page](/) shows each match as the site's own card, with no thumbnail, no video length and no title from YouTube. "Watch the VOD" opens the organiser's video on YouTube.
-- **Only official videos.** The site never links a copy of a match uploaded by someone else, only the organiser's own video.
-- **Checked every day.** Every day, the site checks each channel again: that the organiser's main channel still lists it, where it was found that way, and that its uploads playlist is still the one on record. It stops reading a channel that fails the check.
-- **Deleted videos go.** The site reads each link again at least once a week, and drops a video that has been deleted.
+- **One link for each match.** The site finds each finished match's video on the organiser's channel by matching the teams and event in its title.
+- **A card without video details.** The list on the [home page](/) shows each match as the site's own card, with no thumbnail, no video length and no title from YouTube. "Watch the VOD" opens the organiser's video on YouTube.
+- **Only official videos.** Every linked VOD comes from the organiser. The site does not link copies uploaded by other people.
+- **Checked every day.** Every day, the site checks each channel's uploads playlist against its record. If the channel was found through the main channel, it also checks that the main channel still features it. A failed check stops the site from reading that channel.
+- **Deleted videos are removed.** The site rechecks each link at least once a week and removes videos that have been deleted.
 
-[How "What should I watch?" rates matches](/guides/how-the-watch-rating-works) explains how the site picks the matches worth your time.
+[How PCesports rates CS2 matches to watch](/guides/how-the-watch-rating-works) explains how the site selects matches to watch.
 
 ## If a match has no VOD yet
 
-At ESL and PGL, in the matches checked in October and November 2026, the videos were up within hours of each match. Until a match has its video, the site's list leaves it out. It shows the match once the video is there, if the match is still within the week the list covers.
+At ESL and PGL, in the matches checked in October and November 2026, VODs appeared within hours of each match. The site leaves a match out until its video is available. Once the VOD appears, the match enters the list if it still falls within the week the list covers.
 
-When the site's list of channels changes, the list on this page changes with it.
+Changes to the site's channel list automatically appear on this page too.
