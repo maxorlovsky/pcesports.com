@@ -1,11 +1,13 @@
 name: CI
 
-# Pull requests into dev or master: the validators (README.md, "Checks"). Work goes into dev, the owner merges dev into
-# master, and a push to master runs the validators too, then deploys: the deploy job SSHes into max-cloud with the
-# deploy key, whose forced command, tools/deploy/ssh.sh, runs `npm run deploy` in the live clone, which pulls master
-# and the data branch's files, builds and switches the site.
-# Actions -> CI -> Run workflow, on master, re-deploys: the data job does the same after it publishes new data
-# (tools/data-job/run.mjs). README.md, "Deploy", has the setup.
+# Pull requests into dev or master: the validators (README.md, "Checks"). Work goes into dev, and the owner merges dev
+# into master. Every push to master is a release (README.md, "Releasing"): the release job bumps the version in a
+# `chore(release): X.Y.Z` commit, tags it and publishes a GitHub Release, master goes back into dev, and the validators
+# run too. Then the deploy job SSHes into max-cloud with the deploy key, whose forced command, tools/deploy/ssh.sh, runs
+# `npm run deploy` in the live clone, which pulls master (the release commit) and the data branch's files, builds and
+# switches the site.
+# Actions -> CI -> Run workflow, on master, re-deploys without a release: the data job does the same after it
+# publishes new data (tools/data-job/run.mjs). README.md, "Deploy", has the setup.
 
 on:
   pull_request:
@@ -20,15 +22,102 @@ on:
 permissions:
   contents: read
 
-# A newer push to the same pull request cancels the run it replaces. Pushes to master never cancel a running deploy;
-# GitHub keeps only the newest one waiting, which deploys the newest master anyway
+# A newer push to the same pull request cancels the run it replaces. Runs on master never cancel a running one; GitHub
+# keeps only the newest one waiting, whose release counts the commits of the pushes it replaced. Pushes and manual runs
+# (the data job's) wait in groups of their own, and so does each release commit's own run (it skips every job), so
+# neither ever replaces a waiting push and leaves its commits unreleased; the deploy job's own group keeps deploys apart
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
+  group: "ci-${{ github.event.pull_request.number
+    || (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(release): ')
+    && format('release-commit-{0}', github.sha))
+    || format('{0}-{1}', github.event_name, github.ref) }}"
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  release:
+    name: Version, tag and GitHub Release
+    # Every push to master but the release commit this job pushes (tools/release/next-version.mjs, releaseCommitPrefix),
+    # so it can't loop: pushed with RELEASE_TOKEN, that commit starts a run of its own, in which every job skips (this
+    # run checks and deploys it); pushed with the default token, it starts none. A manual run never releases
+    if: "${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore(release): ') }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: read
+
+    steps:
+      - name: Check out the pushed commit with its history and tags
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          # The git push below uses it: the owner's token (a fine-grained PAT with Contents: Read and write, the
+          # repository secret RELEASE_TOKEN) when a branch rule stops GitHub Actions (README.md, "Releasing")
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Pick the version and write it to package.json and package-lock.json
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/release/next-version.mjs --write --repo "$GITHUB_REPOSITORY"
+
+      # One atomic push: the release commit on master and its tag land together or not at all. A push that fails
+      # (master moved on, or a branch rule) ends the run red with nothing released, and nothing deploys
+      - name: Commit, tag and push
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          COMMIT_MESSAGE: ${{ steps.version.outputs.commit_message }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "$COMMIT_MESSAGE"
+          git tag -a "$VERSION" -m "$VERSION"
+          git push --atomic origin "HEAD:refs/heads/master" "refs/tags/$VERSION"
+
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "$VERSION" --verify-tag --title "$VERSION" --generate-notes
+
+  # A job of its own, so a conflict here never holds back the deploy of a version that is already tagged
+  merge-back:
+    name: Merge the release into dev
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out master with its history
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
+
+      # A conflict fails the run (red) and nothing is forced: merge master into dev by hand
+      - name: Merge master into dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin master dev
+          git switch --create dev origin/dev
+          git merge --no-edit origin/master
+          git push origin HEAD:refs/heads/dev
+
   check:
     name: Validators
+    # Beside the release, on the pushed commit: the release commit only changes the version. Not in the release
+    # commit's own run, which checks nothing and deploys nothing
+    if: "${{ github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'chore(release): ') }}"
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -76,8 +165,12 @@ jobs:
 
   deploy:
     name: Deploy production
-    needs: check
-    if: ${{ github.ref == 'refs/heads/master' && github.event_name != 'pull_request' }}
+    needs: [release, check]
+    # Once per release, after its push, so the server pulls the release commit; or on a manual run on master (the data
+    # job's), which releases nothing. A failed release deploys nothing, and the release commit's own run skips it
+    if: >-
+      ${{ !cancelled() && needs.check.result == 'success' && github.ref == 'refs/heads/master'
+      && (needs.release.result == 'success' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     concurrency:
