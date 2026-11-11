@@ -250,6 +250,11 @@ test('a whole deploy refuses an untagged head it pulled, and builds nothing', ()
   assert.match(result.stderr, /master at \w{7} is no release \(no X\.Y\.Z tag on it\)/);
   assert.equal(git(live, 'log', '-1', '--format=%s'), 'Merge pull request #9 from me/dev');
   assert.equal(existsSync(join(bin, 'npm.log')), false);
+  // The next deploy (the data job's, while the release is still broken) pulls nothing new and refuses the same
+  const again = sh('node', ['tools/deploy/deploy.mjs'], live, { PATH: `${bin}:${process.env.PATH}` });
+  assert.equal(again.status, 1, again.stderr);
+  assert.match(again.stderr, /is no release/);
+  assert.equal(existsSync(join(bin, 'npm.log')), false);
   for (const left of ['site', '.releases']) assert.equal(existsSync(join(live, left)), false, left);
 });
 

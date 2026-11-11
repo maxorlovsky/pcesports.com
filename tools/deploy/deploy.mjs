@@ -1,7 +1,7 @@
 // The production deploy (README.md, "Deploy"), run in the live clone on master, whatever its folder:
 //   node tools/deploy/deploy.mjs [--dry-run]   (npm run deploy, npm run deploy -- --dry-run)
 // It refuses another branch, a checkout with changes and a second deploy while one runs. It pulls master
-// (fast-forward only) and runs the deploy it pulled, which refuses a head that is no release (no X.Y.Z tag), fetches
+// (fast-forward only) and runs the deploy it pulled, then refuses a head that is no release (no X.Y.Z tag), fetches
 // the data branch's files, installs with npm ci, builds the static site, checks the build, then points `site` (what
 // nginx serves, tools/nginx/nginx.prod.conf) at it in one step, keeping the releases before it to go back to.
 // --dry-run checks the same (origin's master, for the release) and prints the steps without running them.

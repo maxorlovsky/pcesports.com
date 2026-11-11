@@ -207,15 +207,14 @@ replaces a waiting release run. Deploys share one group with one waiting place, 
 run's waiting deploy: the release run shows it cancelled, and the data deploy, which pulls `master`, ships the release.
 The `data` branch is never part of a release: the release pushes `master`, its tag and `dev` only.
 
-Don't bump the version by hand, and don't start a commit on `master` with `chore(release): `.
-`node tools/release/next-version.mjs [--ref <rev>]` prints what a release of a `master` commit would get, without
-writing anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released nothing,
-and the next push's run releases those commits too. Any other release that goes red by the end of "Commit, tag and
-push" (two `release:*` labels, a branch rule that rejects the push) leaves `master` unreleased: fix the cause and re-run
-the failed jobs. A run
-that fails after "Commit, tag and push" has released the version already, and a re-run stops at "Tag X.Y.Z already
-exists". Finish by hand instead: `gh release create X.Y.Z --verify-tag --generate-notes` if the Release is missing,
-then deploy it (Actions → CI → Run workflow, on master), and merge `master` into `dev`.
+Don't bump the version by hand, and don't start a commit on `master` with `chore(release): `. `node
+tools/release/next-version.mjs [--ref <rev>]` prints what a release of a `master` commit would get, without writing
+anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released nothing, and the next
+push's run releases those commits too. Any other release that goes red by the end of "Commit, tag and push" (two
+`release:*` labels, a branch rule that rejects the push) leaves `master` unreleased: fix the cause and re-run the failed
+jobs. A run that fails after "Commit, tag and push" has released the version already, and a re-run stops at "Tag X.Y.Z
+already exists". Finish by hand instead: `gh release create X.Y.Z --verify-tag --generate-notes` if the Release is
+missing, then deploy it (Actions → CI → Run workflow, on master), and merge `master` into `dev`.
 
 GitHub Actions' own token pushes the release commit, the tag and the merge into `dev`, unless a branch rule on
 `master` or `dev` stops it (a required pull request or required status checks). Then the repository secret
@@ -230,8 +229,8 @@ a deploy key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy`
 `/var/www/pcesports.com` (user `max`), which:
 
 1. refuses any branch but master, a checkout with changes, and a second deploy while one runs;
-2. pulls master (fast-forward only) and runs the deploy it pulled, which refuses a head that is no release: one with no
-   `X.Y.Z` tag on origin (see "Releasing");
+2. pulls master (fast-forward only) and runs the deploy it pulled, then refuses a head that is no release, pulled or
+   not: one with no `X.Y.Z` tag on origin (see "Releasing");
 3. puts the data branch's files into the domains' data folders (`tools/data-job/pull.mjs`, see "Data job"); a fetch that
    fails stops the deploy, so a release never ships older data;
 4. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
