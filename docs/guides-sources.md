@@ -28,7 +28,7 @@ The rating guide (`how-the-watch-rating-works.md`) needs no outside source: ever
 | V10 | ["Your Time is Now"](https://store.steampowered.com/news/app/730/view/5141476355659151610) (2023-08-31): "a maximum of 24 rounds in regulation time (with a 6 round overtime in case of a tie) for Premier, Competitive, and the Majors" | Valve | 2026-11-11 |
 | V11 | ["Premier for All"](https://store.steampowered.com/news/app/730/view/4026755437314208134) (2021-03-29, CS:GO): "work together to win 16 rounds" | Valve | 2026-11-11 |
 | V12 | ["On The Other Hand..."](https://store.steampowered.com/news/app/730/view/5759616966666137028) (2024-04-25): "the Active Duty map pool (for both Premier and competitions)" | Valve | 2026-11-11 |
-| V13 | Economy notes: ["Release Notes for 9/1/2023"](https://store.steampowered.com/news/app/730/view/5141476355663002229) ("Players who survive the last round before overtime no longer carry their items into overtime"), ["Release Notes for 4/25/2024"](https://store.steampowered.com/news/app/730/view/5759616966666131969) (kill rewards by weapon), ["Release Notes for 5/23/2024"](https://store.steampowered.com/news/app/730/view/5741605105608520854) ("the terrorist team award when bomb was planted but defused"; the "Loss Bonus" tooltip) | Valve | 2026-11-11 |
+| V13 | Economy notes: ["Release Notes for 9/1/2023"](https://store.steampowered.com/news/app/730/view/5141476355663002229) ("Players who survive the last round before overtime no longer carry their items into overtime"), ["Release Notes for 11/2/2023"](https://store.steampowered.com/news/app/730/view/5288974951208087929) ("Fixed a case where players would fail to keep their weapons between rounds of overtime"), ["Release Notes for 4/25/2024"](https://store.steampowered.com/news/app/730/view/5759616966666131969) (kill rewards by weapon), ["Release Notes for 5/23/2024"](https://store.steampowered.com/news/app/730/view/5741605105608520854) ("the terrorist team award when bomb was planted but defused"; the "Loss Bonus" tooltip) | Valve | 2026-11-11 |
 | V14 | [Counter-Strike 2](https://www.counter-strike.net/cs2) (Valve's page on what CS2 changed: smokes, sub-tick, maps; rendered in a browser) | Valve | 2026-11-11 |
 | E1 | [ESL Pro Tour CS](https://pro.eslgaming.com/tour/cs/) (its series, "one of the two annual ESL Pro Tour Championship events", the upcoming tournaments) | ESL | 2026-11-11 |
 | E2 | [ESL Pro Tour Counter-Strike: Game Specific Rules](https://drive.google.com/file/d/1ZMxPYAv__yDwI7rNTvCcB8ah_aPWV_gR/view) ("Date updated: 20 January 2026", linked from E1): 2.3.1 "Map pool", 2.4 "Match settings", 2.4.1 "Overtimes" | ESL | 2026-11-11 |
@@ -64,7 +64,8 @@ same posts as the store pages linked above.
 | Pick'Em challenge in the game | V5, V6 |
 | At the Cologne 2026 Major, a weapon in the game could be made a souvenir of one of its matches, with team, map and player stickers | V6 ("Souvenir-O-Matic") |
 
-Left out because no primary source confirmed it: the prize pool, and the Singapore Major's dates and organiser.
+Left out because no primary source confirmed it when this guide was written: the prize pool, and the Singapore Major's
+dates and organiser. PGL's own page now gives both (P1), and the season guide uses them.
 
 ## How to watch CS2 without spoilers (`watch-cs2-without-spoilers.md`)
 
@@ -112,15 +113,14 @@ quarter-finals in its playoffs.
 | BLAST runs BLAST Premier, with Open, Rivals and Bounty events; its 2027 list runs from January (Bounty) to November | B1 |
 | PGL's events in Romania (Bucharest, Cluj-Napoca) and elsewhere in Europe and Asia (Lodz, China); the PGL CS2 Major Singapore, November 24 to December 13, 2026; its 2027 list starts with PGL Bucharest in mid-January | P1 |
 | StarLadder runs StarSeries and Tier 2 circuits; it ran the Budapest Major 2025 | S1; V5 |
-| The three other organisers the site lists: Perfect World, FISSURE, GAM3RS_X | `app/domains/matches/leagues.json`; R1 |
+| Three more organisers in the site's match data, whose matches the site can't show (no full matches on YouTube): Perfect World, FISSURE, GAM3RS_X | `app/domains/matches/leagues.json`; R1; `app/domains/watch/list.ts` (`watchEntries` keeps only matches with a VOD) |
 | Ranked events count toward the VRS; their direct invitations come from it, in order; open qualifiers may fill places | V7, 1.6, 3.2, 3.2.7, 3.8.1 |
 | Unranked events may invite anyone; their total compensation is capped at $100,000 | V7, 2.2, 2.3 |
 | Tier 1: at least 20 direct VRS invites, from the Global list or a regional one, starting with the #1 roster | V7, 3.7.1 to 3.7.3 |
 | Tier 2: direct VRS invites only of rosters ranked lower than 12 on the Global VRS | V7, 3.8.2, 3.8.4 |
-| A win counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`, `getCappedPrizePool`, the stakes modifier) |
-| The Majors of 2025 and 2026: the first ended in June, the second from late November into December | V4, V5, V6, P1 |
+| A win over another team counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`, `getCappedPrizePool`, the stakes modifier) |
+| The Majors of 2025 and 2026: the first ended in June, the second runs from late November into December (Singapore: scheduled) | V4, V5, V6, P1 |
 | ESL's 2027 list: Kraków in early February, Cologne in August | E1 |
-| ESL, BLAST, PGL and StarLadder post full matches on YouTube | `app/domains/vods/channels.json`; R1 |
 
 ## How the Valve Regional Standings work (`how-the-valve-regional-standings-work.md`)
 
@@ -136,8 +136,8 @@ the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`,
 | A roster needs five matches and a win to be ranked | V3 (`ranking.js`: `matchesPlayed >= 5`, `distinctTeamsDefeated > 0`) |
 | Six months of matches | V8 (`data_loader.js`: `6*30*24*3600`) |
 | The starting value: four measures of equal weight ("Bounty Offered", "Bounty Collected", "Opponent Network", LAN wins), each of the ten best results | V3 (`SEED_MODIFIER_FACTORS`); V8 (`team.js`: `bucketSize = 10`, "there's never any harm in playing in a low-stakes match") |
-| Results of the last month count in full, older ones less, down to nothing at the window's start | V8 (`data_loader.js`: the one-month `graceperiod`; `ranking_context.js`: `getTimestampModifier`) |
-| A win counts for more at an event with more prize money, up to $1,000,000 | V8 (`team.js`) |
+| Results of the last month count in full, older ones less, down to nothing at the window's start, for every measure | V8 (`data_loader.js`: the one-month `graceperiod`; `ranking_context.js`: `getTimestampModifier`; `team.js`) |
+| Prize money weighs only the Bounty Collected and Opponent Network wins: more at an event with more prize money, up to $1,000,000 | V8 (`team.js`: `stakesModifier`; the LAN wins and the prize money won are weighted by age only) |
 | Then every match, oldest first, moves both rosters as a Glicko rating with a fixed deviation does ("glicko -> elo"), weighted by its age | V3 (`ranking.js`: `runMatches`, `setFixedRD`); V8 (`data_loader.js`: `informationContent`) |
 | The Majors invite from the VRS; Stage 2 and 3 places are shared out between regions | V1, "Invitations" |
 | Invitation rules: lists, count and starting rank chosen by the organiser; the latest version on the invite date; versions in `invitation/`; in order; declines go down the list; at least three of the invited players play; open qualifiers fill the gaps; two wildcards per eight VRS invites, with their conditions | V7, 1.1, 3.2.1 to 3.2.7, 3.6 |
@@ -147,9 +147,9 @@ the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`,
 
 | Fact (as of November 2026) | Source |
 |---|---|
-| At most 24 rounds, a six-round overtime, for Premier, Competitive and the Majors | V10; V1, "Convars" (the Majors use Premier's defaults) |
+| At most 24 rounds, a six-round overtime, for Premier, Competitive and the Majors | V10; V1, "Convars" (the Majors use Premier's defaults); every update note from September 2023 to 2026-11-05 searched for a change to the rounds or overtime, none found |
 | At ESL: best out of 24; round time 1 minute 55 seconds; bomb timer 40 seconds; $800 start money; overtime best out of 6 with $12,500 start money, sides swapped at its half-time, overtimes until there is a winner | E2, 2.4, 2.4.1 |
-| Survivors keep their items, except into overtime | V13 (9/1/2023) |
+| Survivors usually keep their items; not into overtime | V13 (9/1/2023: "no longer carry their items into overtime"; 11/2/2023: "keep their weapons between rounds of overtime") |
 | Money from kills, from planting the bomb even when it is defused, and a loss bonus | V13 (4/25/2024, 5/23/2024) |
 | The Active Duty pool: Ancient, Anubis, Cache, Dust II, Inferno, Mirage, Nuke | E2, 2.3.1 (as of 2026-01-20: Overpass, Inferno, Mirage, Nuke, Dust2, Ancient, Anubis), then V9 (2026-07-08: Cache in, Overpass out; no change since) |
 | Changes one map at a time; Anubis back in January 2026 for Train, Cache in July 2026 for Overpass | V9 |
@@ -171,9 +171,9 @@ The channel list isn't typed: `{{vodChannels}}` is filled from `app/domains/vods
 | How a channel was checked: linked by the organiser's site, or featured by the main channel it links; full-match channels only | R1, "Official channel whitelist" |
 | Titles name the teams and the event, not the result; ESL's and PGL's name the stage, StarLadder's don't; a later round's title gives away earlier results | R1, "What the VODs give away", and its "Official channel whitelist" |
 | ESL's and PGL's main channels post short clips naming who went through or was out | R1 |
-| Perfect World, FISSURE and GAM3RS_X post no full-match videos on YouTube (checked 2026-11-08) | R1, "The other 2026 S-Tier organisers" |
-| VODs were up within hours of each match | R1, "Numbers" ("every VOD was up within hours of its match") |
-| The site's list shows only matches with a VOD; it re-checks each channel daily and stops reading one that fails; it re-reads each link at least weekly and drops deleted videos | `app/domains/watch/list.ts` (`watchEntries`); `app/domains/vods/README.md`; `app/domains/vods/refresh.ts` (`REFRESH_DAYS`) |
+| Perfect World, FISSURE and GAM3RS_X post no full-match videos on YouTube (checked 2026-11-08; the Thunderpick World Championship's site through a Wayback snapshot of 2026-07-18; GAM3RS_X's own site links no YouTube) | R1, "The other 2026 S-Tier organisers" |
+| At ESL and PGL, VODs were up within hours of each match (IEM Beijing 2026, PGL Masters Bucharest 2026) | R1, "Window and matches", "Numbers" ("every VOD was up within hours of its match") |
+| The site's list shows only matches with a VOD; it re-checks daily that each featured VOD channel is still featured and that each channel's uploads playlist is the listed one, and stops reading one that fails; it re-reads each link at least weekly and drops deleted videos | `app/domains/watch/list.ts` (`watchEntries`); `app/domains/vods/README.md`; `app/domains/vods/refresh.ts` (`REFRESH_DAYS`) |
 
 ## Reading time
 

@@ -8,8 +8,8 @@ Short, evergreen guides for people who don't follow every match: `/guides` lists
 - `index.ts` (plain TypeScript, for the sitemap, the build check and the tests): `loadGuides`, `guidePaths` and
   `GUIDES_DIR` (`load.ts`, which reads `content/` from the repository root a build runs in); `parseGuide`, `wordsOf`,
   `WORDS_PER_MINUTE` (`guides.ts`); the Markdown subset, `parseMarkdown`, `parseInline`, `textOf` (`markdown.ts`);
-  `GUIDE_FACTS`, `RATING_FACTS`, `vodChannelList` (`facts.ts`); the types `Guide`, `GuideSummary`, `Block`, `Inline`. The views import `load.ts`'s
-  `findGuide` and `guideSummaries` themselves.
+  `GUIDE_FACTS`, `RATING_FACTS`, `vodChannelList` (`facts.ts`); the types `Guide`, `GuideSummary`, `Block`, `Inline`.
+  The views import `load.ts`'s `findGuide` and `guideSummaries` themselves.
 - `views/GuidesIndexPage.vue` (`app/pages/guides/index.vue`) and `views/GuidePage.vue` (`app/pages/guides/[slug].vue`):
   the list and a guide. Both read the guides at build time, on the server only (`useAsyncData` with
   `import.meta.server`, as the home page reads its list), so the files and `load.ts` never reach the browser, and the
@@ -65,7 +65,9 @@ The VOD guide (`where-to-watch-official-cs2-vods.md`) writes `{{vodChannels}}` o
 the whitelist (`app/domains/vods/channels.json`) by `vodChannelList`, one item per VOD channel, with its organisers and
 its name linked by its channel id, and "its main channel" where the organiser has no other channel there. So a channel
 added to or removed from the whitelist changes the guide, and the guide shows nothing the YouTube API returns.
-`tests/guides.test.mjs` holds both. Only the guide's part on organisers with no VODs is written by hand.
+`tests/guides.test.mjs` holds both. The rest of the guide names no channel, and says which organisers post full
+matches only through the list; what it says of particular organisers (their titles and clips, the ones with no VODs)
+is dated and sourced in `docs/guides-sources.md`.
 
 ## The rules every guide keeps
 

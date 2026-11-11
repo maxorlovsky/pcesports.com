@@ -11,7 +11,7 @@ A match is played on one or more maps. On each map, one team plays the Terrorist
 
 As of November 2026:
 
-- **A map has at most 24 rounds.** The first team to win 13 takes the map. That holds at the Majors, in the game's own modes and at ESL's events.
+- **A map has at most 24 rounds.** The first team to win 13 takes the map. That holds at the Majors, in the game's Premier and Competitive modes, and at ESL's events.
 - **A round lasts 1 minute 55 seconds** at ESL's events. Once the bomb is planted, it goes off after 40 seconds unless it is defused.
 
 ## Overtime
@@ -22,7 +22,7 @@ If the teams are level after 24 rounds, the map goes to overtime:
 - **Money is reset.** Every player starts each overtime with 12,500 dollars.
 - **It goes on until someone wins.** If the overtime ends level too, another one follows.
 
-This is how ESL's rules describe it, as of November 2026. Valve's own announcement of CS2 set the six-round overtime for its modes and the Majors.
+This is how ESL's rules describe it, as of November 2026. Valve's own announcement of CS2 set the six-round overtime for Premier, Competitive and the Majors.
 
 ## The economy
 
@@ -31,7 +31,7 @@ Money is what makes CS2 a game of plans, not only of aim. Each player has their 
 - **The first round is a pistol round.** At ESL's events, as of November 2026, players start the map with 800 dollars, which doesn't buy much.
 - **Money comes from the round.** A team earns money from how the round ends. Kills bring money too, and so does planting the bomb, even when it is defused.
 - **Losing still pays.** A team that loses a round gets a loss bonus.
-- **Survivors keep their weapons.** A player who lives through a round keeps what they carry for the next one. That stops at overtime: nobody carries weapons into it.
+- **Survivors can keep their weapons.** A player who lives through a round usually keeps what they carry for the next one. Not always: for one, nobody carries weapons into overtime.
 
 That gives the rhythm casters talk about:
 

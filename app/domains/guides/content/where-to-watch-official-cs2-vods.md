@@ -3,7 +3,7 @@ title: Where to watch official CS2 VODs
 description: Which organisers post full CS2 matches on YouTube, on which channel, and which events have no full-match videos at all.
 order: 8
 ---
-**The short answer:** ESL, PGL, BLAST and StarLadder post the full matches of their events as videos on YouTube, each on one channel. The list below names them. Some organisers post no full matches on YouTube, so their events can't be caught up on there.
+**The short answer:** the organisers in the list below post the full matches of their events as videos on YouTube. Some organisers post no full matches on YouTube, so their events can't be caught up on there.
 
 A VOD, short for video on demand, is the full recording of a match, posted by the organiser once the match is over.
 
@@ -32,11 +32,11 @@ If you want to watch a match without knowing the result, open the full match fro
 
 ## Events with no full matches on YouTube
 
-As of November 2026, three organisers whose events this site lists post no full-match videos on YouTube. This was checked in November 2026, on each organiser's own site and the YouTube channel it links.
+As of November 2026, three organisers whose events are in the site's match data post no full-match videos on YouTube. This was checked in November 2026, on the organisers' and the events' own sites and the YouTube channels they link. The Thunderpick World Championship's site was read from an archived copy of July 2026, because it blocks automated readers.
 
 - **Perfect World (CS Asia Championships):** its site links a YouTube channel with no recent videos. The event's own site names only Chinese video platforms.
 - **FISSURE (FISSURE Playground):** the event's page links a YouTube channel in Russian. It holds whole broadcast days and highlights, not one video for each match.
-- **GAM3RS_X (Thunderpick World Championship):** the event's site links a YouTube channel that holds whole broadcast days and highlights, not one video for each match.
+- **GAM3RS_X (Thunderpick World Championship):** GAM3RS_X's own site links no YouTube channel. The event's site links one that holds whole broadcast days and highlights, not one video for each match.
 
 The site's list only shows matches that have a full video, so matches from these events don't appear in it.
 
@@ -45,13 +45,13 @@ The site's list only shows matches that have a full video, so matches from these
 - **One link for each match.** The site matches each finished match to its video on the organiser's channel, by the teams and the event in the video's title.
 - **The site's own card, not YouTube's.** The list on the [home page](/) shows each match as the site's own card, with no thumbnail, no video length and no title from YouTube. "Watch the VOD" opens the organiser's video on YouTube.
 - **Only official videos.** The site never links a copy of a match uploaded by someone else, only the organiser's own video.
-- **Checked every day.** Every day, the site checks that each channel is still the one the organiser points to. It stops reading a channel that fails the check.
+- **Checked every day.** Every day, the site checks each channel again: that the organiser's main channel still lists it, where it was found that way, and that its list of uploads is still the same. It stops reading a channel that fails the check.
 - **Deleted videos go.** The site reads each link again at least once a week, and drops a video that has been deleted.
 
 [How "What should I watch?" rates matches](/guides/how-the-watch-rating-works) explains how the site picks the matches worth your time.
 
 ## If a match has no VOD yet
 
-In November 2026, the organisers' videos were up within hours of each match. Until a match has its video, the site's list leaves it out, and it shows the match once the video is there.
+At ESL and PGL, in the matches checked in October and November 2026, the videos were up within hours of each match. Until a match has its video, the site's list leaves it out, and it shows the match once the video is there.
 
 When the site's list of channels changes, the list on this page changes with it.

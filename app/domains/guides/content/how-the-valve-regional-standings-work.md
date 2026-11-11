@@ -31,10 +31,10 @@ Every roster first gets a starting value from four measures, which count the sam
 
 Each measure reads only the roster's ten best results. So an extra match at a small event never lowers it.
 
-Two more things set how much each result weighs.
+Two more things set how much a result weighs:
 
-- **Its age.** Results from the last month count in full. Older ones count less and less, down to nothing at six months.
-- **The event's prize money.** A win at an event with more prize money counts for more, up to one million dollars.
+- **Its age.** For every measure, results from the last month count in full. Older ones count less and less, down to nothing at six months.
+- **The event's prize money.** For the prize money of the teams it beat and for its opponent network, a win at an event with more prize money counts for more, up to one million dollars.
 
 ### Step two: head-to-head results
 
