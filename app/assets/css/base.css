@@ -76,7 +76,7 @@ img {
   padding-inline: var(--gutter);
 }
 
-/* Long-form text (privacy now, guides later): a readable measure */
+/* Long-form text (the privacy page, the guides): a readable measure */
 .prose {
   max-width: var(--width-text);
 }
