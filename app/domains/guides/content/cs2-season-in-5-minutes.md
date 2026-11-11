@@ -7,7 +7,7 @@ order: 5
 
 ## Who runs the events
 
-Valve makes the game, but it doesn't run most events. Independent companies, the tournament organisers, run them with a license from Valve. The biggest ones, as of November 2026:
+Valve makes the game, but it doesn't run the events. Independent companies, the tournament organisers, run them with a license from Valve. The biggest ones, as of November 2026:
 
 - **ESL** runs the ESL Pro Tour. Its two series at the top are Intel Extreme Masters (IEM) and ESL Pro League. ESL calls its two biggest events of the year its Championships.
 - **BLAST** runs BLAST Premier. Its events are called Open, Rivals and Bounty. Its schedule for 2027 lists events from January to November.
@@ -31,10 +31,10 @@ Every other event follows Valve's rules for tournament organisers. As of Novembe
 
 An organiser can also declare a ranked event Tier 1 or Tier 2:
 
-- **Tier 1:** the event invites at least 20 teams from the ranking, from the world list or a region's list. The invitations start with the team ranked first on that list. So the best-ranked teams of that list are offered a place.
+- **Tier 1:** the event invites at least 20 teams from the ranking, from one or more of its lists: the world list and the regional ones. On each list it uses, the invitations start with the team ranked first. So the best-ranked teams of those lists are offered a place.
 - **Tier 2:** if the event invites teams from the ranking at all, it may only invite teams ranked below 12th in the world.
 
-So a Tier 1 event is where the top-ranked teams of its list meet.
+So a Tier 1 event is where the top-ranked teams of its lists meet.
 
 ### Prize money
 

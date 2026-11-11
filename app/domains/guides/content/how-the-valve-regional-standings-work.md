@@ -65,7 +65,7 @@ Valve's rules for tournament organisers set how a ranked event invites teams, as
 - **Open qualifiers fill the gaps.** If too few ranked rosters are left, the organiser may fill the remaining places with an open qualifier.
 - **A few wildcards.** For every eight teams invited from the ranking, the organiser may invite two more of its own choice. A wildcard team must be ranked below 12th in the world. It must also have finished first or second at an event of the same tier or lower, or have at least three players who were in a top-12 team, in the past six months.
 
-Tier 1 events must invite at least 20 rosters from the ranking, starting with the roster in first place on the list they use. Tier 2 events may only invite rosters from the ranking that are ranked below 12th in the world. [The CS2 season in 5 minutes](/guides/cs2-season-in-5-minutes) explains what that means for which events count most.
+Tier 1 events must invite at least 20 rosters from the ranking, starting with the roster in first place on each list they use. Tier 2 events may only invite rosters from the ranking that are ranked below 12th in the world. [The CS2 season in 5 minutes](/guides/cs2-season-in-5-minutes) explains what that means for which events count most.
 
 ## Where to see it
 

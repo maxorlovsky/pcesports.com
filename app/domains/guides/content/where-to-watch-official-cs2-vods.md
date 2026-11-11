@@ -52,6 +52,6 @@ The site's list only shows matches that have a full video, so matches from these
 
 ## If a match has no VOD yet
 
-At ESL and PGL, in the matches checked in October and November 2026, the videos were up within hours of each match. Until a match has its video, the site's list leaves it out, and it shows the match once the video is there.
+At ESL and PGL, in the matches checked in October and November 2026, the videos were up within hours of each match. Until a match has its video, the site's list leaves it out. It shows the match once the video is there, if the match is still within the week the list covers.
 
 When the site's list of channels changes, the list on this page changes with it.
