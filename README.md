@@ -60,8 +60,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 ## Branches
 
 Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` releases a new
-version and deploys it (see "Releasing"). The
-`data` branch is the data job's (see "Data job"): data files only, one commit, never merged.
+version and deploys it (see "Releasing"). The `data` branch is the data job's (see "Data job"): data files only, one
+commit, never merged.
 
 ## Data job
 
@@ -188,38 +188,48 @@ pushed straight to it included, is a release, in the CI workflow (`.github/workf
    tag. On a conflict it goes red and nothing is forced: merge `master` into `dev` by hand. It never holds back the
    deploy.
 5. The validators run beside the release, on the pushed commit (the release commit only changes the version). Once
-   both pass, the deploy job deploys once (see "Deploy"): the server pulls `master`, the release commit. A release or
-   validators that fail deploy nothing.
+   both pass, the deploy job deploys once (see "Deploy"): the server pulls `master`, the release commit. Validators
+   that fail deploy nothing, but the version is tagged and its GitHub Release published: fix it in a new pull request,
+   whose release (the next patch) deploys.
+
+Only a release deploys: the deploy refuses a `master` whose head carries no `X.Y.Z` tag (see "Deploy"). A release that
+failed leaves `master` untagged, so no deploy ships it, the data job's included, until it is finished; those deploys go
+red meanwhile, and the site keeps its last release. A data deploy that reaches the server in the minute between a
+merge and its release commit goes red the same way, and changes nothing.
 
 The release commit can't release again: the run its push starts (with `RELEASE_TOKEN`; the default token's pushes start
 none) skips every job, since the run that made it already checked and deploys it. The data job's run
-(`gh workflow run ci.yml --ref master`, a `workflow_dispatch`) and Actions → CI → Run workflow never release: they
-run the validators and deploy, with no version, tag or GitHub Release. Pushes and those manual runs queue in
-concurrency groups of their own, so a data deploy never replaces a waiting release. The `data` branch is never part of
-a release: the release pushes `master`, its tag and `dev` only.
+(`gh workflow run ci.yml --ref master`, a `workflow_dispatch`) and Actions → CI → Run workflow on master never
+release: they run the validators and deploy, with no version, tag or GitHub Release (on another branch they only run
+the validators). Pushes and those manual runs queue in concurrency groups of their own, so a data deploy never
+replaces a waiting release run. Deploys share one group with one waiting place, so a data deploy can replace a release
+run's waiting deploy: the release run shows it cancelled, and the data deploy, which pulls `master`, ships the release.
+The `data` branch is never part of a release: the release pushes `master`, its tag and `dev` only.
 
 Don't bump the version by hand, and don't start a commit on `master` with `chore(release): `.
 `node tools/release/next-version.mjs [--ref <rev>]` prints what a release of a `master` commit would get, without
-writing anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released and deployed
-nothing, and needs nothing: the next push's run counts those commits too. A run that fails after "Commit, tag and push"
-has released the version already, and a re-run stops at "Tag X.Y.Z already exists". Finish by hand instead:
-`gh release create X.Y.Z --verify-tag --generate-notes` if the Release is missing, then deploy it (Actions → CI → Run
-workflow, on master).
+writing anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released nothing,
+and the next push's run releases those commits too. Any other release that goes red before "Commit, tag and push"
+(two `release:*` labels, a branch rule) leaves `master` unreleased: fix the cause and re-run the failed jobs. A run
+that fails after "Commit, tag and push" has released the version already, and a re-run stops at "Tag X.Y.Z already
+exists". Finish by hand instead: `gh release create X.Y.Z --verify-tag --generate-notes` if the Release is missing,
+then deploy it (Actions → CI → Run workflow, on master), and merge `master` into `dev`.
 
 GitHub Actions' own token pushes the release commit, the tag and the merge into `dev`, unless a branch rule on
 `master` or `dev` stops it (a required pull request or required status checks). Then the repository secret
-`RELEASE_TOKEN`, a fine-grained token of the owner's (this repository only, Contents: Read and write), pushes instead.
-Until it exists, a rule on `master` turns the release red before anything is pushed or deployed, and one on `dev` only
-the merge back.
+`RELEASE_TOKEN` pushes instead: a fine-grained token (this repository only, Contents: Read and write) of the owner's,
+who must be allowed past the rule (an admin, with the rule not applied to admins). Until it exists, a rule on `master`
+turns the release red before anything is pushed or deployed, and one on `dev` only the merge back.
 
 ## Deploy
 
-Every release deploys (see "Releasing"): the CI workflow runs the checks, then its deploy job SSHes into max-cloud with a deploy
-key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the live clone, `/var/www/pcesports.com`
-(user `max`), which:
+Every release deploys (see "Releasing"): the CI workflow runs the checks, then its deploy job SSHes into max-cloud with
+a deploy key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the live clone,
+`/var/www/pcesports.com` (user `max`), which:
 
 1. refuses any branch but master, a checkout with changes, and a second deploy while one runs;
-2. pulls master (fast-forward only) and runs the deploy it pulled;
+2. pulls master (fast-forward only) and runs the deploy it pulled, which refuses a head that is no release: one with no
+   `X.Y.Z` tag on origin (see "Releasing");
 3. puts the data branch's files into the domains' data folders (`tools/data-job/pull.mjs`, see "Data job"); a fetch that
    fails stops the deploy, so a release never ships older data;
 4. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
@@ -229,8 +239,8 @@ key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the l
    owns (a root-owned `.well-known` is certbot's: see "On max-cloud").
 
 Actions → CI → Run workflow, on master, deploys again without a new commit and without a release; the data job starts
-the same run after it publishes new data. `npm run deploy -- --dry-run` in the clone checks the same and prints the steps without running
-them.
+the same run after it publishes new data. `npm run deploy -- --dry-run` in the clone checks the same and prints the
+steps without running them.
 
 ### On max-cloud
 

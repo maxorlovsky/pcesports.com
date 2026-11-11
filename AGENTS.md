@@ -13,8 +13,8 @@ site, left as they are.
 
 Work goes into `dev` through a pull request. The owner merges `dev` into `master`, and every push to `master` releases
 a version and deploys it (`.github/workflows/ci.yml`; `README.md`, "Releasing"). Never push to `dev` or `master`, never
-deploy, and never bump the version by hand: the release does. The `data` branch is the data job's alone (`README.md`, "Data job"): data
-files only, one commit, never merged; agents never push to it.
+deploy, and never bump the version by hand: the release does. The `data` branch is the data job's alone (`README.md`,
+"Data job"): data files only, one commit, never merged; agents never push to it.
 
 ## Domains
 

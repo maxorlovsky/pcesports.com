@@ -1,7 +1,7 @@
 // The production deploy (README.md, "Deploy"), run in the live clone on master, whatever its folder:
 //   node tools/deploy/deploy.mjs [--dry-run]   (npm run deploy, npm run deploy -- --dry-run)
 // It refuses another branch, a checkout with changes and a second deploy while one runs. It pulls master
-// (fast-forward only) and runs the deploy it pulled, fetches the data branch's files, installs with npm ci, builds the
+// (fast-forward only) and runs the deploy it pulled, which refuses a head that is no release (no X.Y.Z tag), fetches the data branch's files, installs with npm ci, builds the
 // static site, checks the build, then points `site` (what nginx serves, tools/nginx/nginx.prod.conf) at it in one
 // step, keeping the releases before it to go back to. --dry-run checks the same and prints the steps without running them.
 // An older release it can't delete leaves the site switched but ends the run red (exit 1): a green run's log is never
@@ -92,6 +92,19 @@ if (!flags.includes('--pulled')) {
     const again = spawnSync(process.execPath, [fileURLToPath(import.meta.url), ...flags, '--pulled'], { cwd: ROOT, stdio: 'inherit' });
     process.exit(again.status ?? 1);
   }
+}
+
+// Only a release ships: master's head must carry its X.Y.Z tag (README.md, "Releasing"), so a release that failed, or
+// the minute before its release commit lands, never deploys an unversioned build. Read from origin: a fetch of master
+// alone may leave the tag behind.
+const head = git('rev-parse', 'HEAD');
+const released = git('ls-remote', '--tags', 'origin').split('\n').some((line) => {
+  const [sha, ref] = line.split('\t');
+  return sha === head && /^refs\/tags\/\d+\.\d+\.\d+(\^\{\})?$/.test(ref ?? '');
+});
+if (!released) {
+  fail(`master at ${head.slice(0, 7)} is no release (no X.Y.Z tag on it): its release run deploys it once tagged, and a `
+    + 'failed one needs finishing first (README.md, "Releasing")');
 }
 
 // What the steps need, before the first runs

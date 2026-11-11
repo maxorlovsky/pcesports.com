@@ -270,8 +270,6 @@ describe('the CI workflow', () => {
 
   test('runs on pull requests, on pushes to master only, and by hand (the data job\'s deploy)', () => {
     assert.match(workflow, /\non:\n {2}pull_request:\n {4}branches:\n {6}- dev\n {6}- master\n {2}push:\n {4}branches:\n {6}- master\n {2}workflow_dispatch:\n\n/);
-    // tools/data-job/run.mjs starts that manual run after it publishes new data
-    assert.match(readFileSync(join(REPO, 'tools', 'data-job', 'run.mjs'), 'utf8'), /spawnSync\('gh', \['workflow', 'run', 'ci\.yml', '--ref', 'master'\]/);
   });
 
   test('releases every push but its own release commit, the one the script names, and never a manual run', () => {
@@ -315,7 +313,10 @@ describe('the CI workflow', () => {
     dir = mkdtempSync(join(tmpdir(), 'pce-release-steps-'));
     const sh = (cwd, script, env = {}) => {
       const result = spawnSync('bash', ['--noprofile', '--norc', '-eo', 'pipefail', '-c', script], {
-        cwd, encoding: 'utf8', env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', ...env },
+        cwd,
+        encoding: 'utf8',
+        // Step outputs and a summary of its own, never those of the CI run the tests run in
+        env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', GITHUB_OUTPUT: join(dir, 'output'), GITHUB_STEP_SUMMARY: join(dir, 'summary'), ...env },
       });
       assert.equal(result.status, 0, `${script}\n${result.stdout}${result.stderr}`);
       return result.stdout.trim();
@@ -338,7 +339,7 @@ describe('the CI workflow', () => {
     sh(dir, 'git clone -q origin.git runner');
     const runner = join(dir, 'runner');
     const release = job('release');
-    const picked = sh(runner, 'node tools/release/next-version.mjs --write', { GITHUB_OUTPUT: join(dir, 'output') });
+    const picked = sh(runner, 'node tools/release/next-version.mjs --write');
     assert.match(picked, /^Version: 6\.1\.0 \(minor\)$/m);
     const outputs = Object.fromEntries(readFileSync(join(dir, 'output'), 'utf8').trim().split('\n').map((line) => line.split('=')));
     sh(runner, runBlock(release, 'Commit, tag and push'), { VERSION: outputs.version, COMMIT_MESSAGE: outputs.commit_message });

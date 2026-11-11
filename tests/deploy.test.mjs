@@ -34,6 +34,7 @@ before(() => {
   git(dir, 'init', '-q', '-b', 'master', work);
   git(work, 'add', '-A');
   git(work, 'commit', '-q', '-m', 'test: scratch site');
+  git(work, 'tag', '-a', '6.0.0', '-m', '6.0.0');
   git(dir, 'clone', '-q', '--bare', work, join(dir, 'origin.git'));
   clone = join(dir, 'live');
   git(dir, 'clone', '-q', join(dir, 'origin.git'), clone);
@@ -87,6 +88,25 @@ test('it refuses a checkout with changes', () => {
   rmSync(join(clone, 'stray.txt'));
   assert.equal(result.status, 1);
   assert.match(result.stderr, /the checkout has changes/);
+});
+
+test('it refuses a master head that is no release: no X.Y.Z tag on origin', () => {
+  // A merge pushed to master whose release commit hasn't landed, or whose release failed
+  const work = join(dir, 'unreleased-work');
+  git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
+  git(work, 'commit', '-q', '--allow-empty', '-m', 'Merge pull request #9 from me/dev');
+  git(work, 'tag', 'v6.0.1');
+  git(dir, 'clone', '-q', '--bare', work, join(dir, 'unreleased-origin.git'));
+  const live = join(dir, 'unreleased-live');
+  git(dir, 'clone', '-q', join(dir, 'unreleased-origin.git'), live);
+  const unreleased = sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live);
+  assert.equal(unreleased.status, 1);
+  assert.match(unreleased.stderr, /master at \w{7} is no release \(no X\.Y\.Z tag on it\)/);
+  assert.doesNotMatch(unreleased.stdout, /npm ci/);
+  // Tagged on origin only (the release job's push), it ships
+  git(work, 'tag', '6.0.1');
+  git(work, 'push', '-q', join(dir, 'unreleased-origin.git'), '6.0.1');
+  assert.equal(sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live).status, 0);
 });
 
 test('it refuses a site folder that is not a link to a release', () => {
@@ -217,6 +237,7 @@ test('a whole deploy whose prune fails switches the site, then ends red and says
   writeFileSync(join(work, 'tools', 'check-build.mjs'), '');
   git(work, 'add', '-A');
   git(work, 'commit', '-q', '-m', 'test: a build check that passes');
+  git(work, 'tag', '6.0.1');
   git(dir, 'clone', '-q', '--bare', work, join(dir, 'full-origin.git'));
   const live = join(dir, 'full-live');
   git(dir, 'clone', '-q', join(dir, 'full-origin.git'), live);
