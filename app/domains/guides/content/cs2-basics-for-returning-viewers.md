@@ -1,47 +1,47 @@
 ---
-title: CS2 basics for returning viewers
-description: What changed since CS:GO and what to know to follow a CS2 match again: rounds, overtime, the economy and the map pool. As of November 2026.
+title: CS2 basics: what changed since CS:GO
+description: Returning to CS2 after CS:GO? Catch up on rounds, overtime, money, smokes and the map pool. Updated for November 2026.
 order: 7
 ---
-**The short answer:** the game is the same at heart. Two teams of five play rounds, and money decides what they can buy. The biggest change for a viewer is that maps are shorter: at most 24 rounds before overtime, where CS:GO had 30. Smoke grenades now behave differently, and the map pool has changed. As of November 2026, it is Ancient, Anubis, Cache, Dust II, Inferno, Mirage and Nuke.
+**The short answer:** the core game is familiar. Two teams of five compete in rounds, with money limiting what each player can buy. For viewers, the biggest change is shorter maps, with at most 24 rounds before overtime, compared with 30 in CS:GO. Smoke grenades behave differently too, and the map pool has changed. As of November 2026, it is Ancient, Anubis, Cache, Dust II, Inferno, Mirage and Nuke.
 
 ## A map, round by round
 
-A match is played on one or more maps. On each map, one team plays the Terrorists, who try to plant the bomb, and the other plays the Counter-Terrorists, who try to stop them. Halfway through, the teams swap sides.
+A match consists of one or more maps. On each map, the Terrorists try to plant the bomb. The Counter-Terrorists try to stop them. The teams swap sides halfway through the map.
 
 As of November 2026:
 
-- **A map has at most 24 rounds.** The first team to win 13 takes the map. That holds at the Majors, in the game's Premier and Competitive modes, and at ESL's events.
-- **A round lasts 1 minute 55 seconds** at ESL's events. Once the bomb is planted, it goes off after 40 seconds unless it is defused.
+- **Regulation lasts at most 24 rounds.** The first team to win 13 rounds wins the map. This applies at the Majors, in the game's Premier and Competitive modes, and at ESL's events.
+- **A round lasts 1 minute 55 seconds** at ESL's events. Once the bomb is planted, it explodes after 40 seconds unless the Counter-Terrorists defuse it.
 
 ## Overtime
 
-If the teams are level after 24 rounds, the map goes to overtime:
+If the teams are tied after 24 rounds, they play overtime:
 
-- **Six more rounds.** The first team to win four of them takes the map. The teams swap sides halfway through.
+- **Six more rounds.** The first team to win four of those rounds wins the map. The teams swap sides halfway through.
 - **Money is reset.** Every player starts each overtime with 12,500 dollars.
-- **It goes on until someone wins.** If the overtime ends level too, another one follows.
+- **Repeat until a team wins.** If an overtime ends in a tie, the teams play another.
 
-This is how ESL's rules describe it, as of November 2026. Valve's post of August 2023 on CS2 set the six-round overtime for Premier, Competitive and the Majors.
+These are ESL's overtime rules as of November 2026. Valve's August 2023 post about CS2 set six-round overtime for Premier, Competitive and the Majors.
 
 ## The economy
 
-Money is what makes CS2 a game of plans, not only of aim. Each player has their own money, and spends it at the start of a round on weapons, armor and grenades.
+Money makes planning part of CS2 alongside aim. Each player has a separate budget to spend on weapons, armour and grenades at the start of each round.
 
-- **The first round is a pistol round.** At ESL's events, as of November 2026, players start the map with 800 dollars, which doesn't buy much.
-- **Money comes from the round.** A team earns money from how the round ends. Kills bring money too, and so does planting the bomb, even when it is defused.
+- **The first round is a pistol round.** At ESL's events, as of November 2026, players start the map with 800 dollars, which leaves little to spend.
+- **Round outcomes bring money.** What a team earns depends on how the round ends. Players also earn money from kills and from planting the bomb, even if the other team defuses it.
 - **Losing still pays.** A team that loses a round gets a loss bonus.
-- **Survivors can keep their weapons.** A player who lives through a round usually keeps what they carry for the next one. Not always: for one, nobody carries weapons into overtime.
+- **Survivors can keep their weapons.** A player who survives a round usually carries their equipment into the next. There are exceptions: for example, nobody carries weapons into overtime.
 
-That gives the rhythm casters talk about:
+These limits explain the buying decisions commentators describe:
 
-- **A full buy:** the team has enough money for rifles, armor and grenades for everyone.
-- **An eco round:** the team buys little or nothing, to save for a full buy in the next round.
+- **A full buy:** the team has enough money for rifles, armour and grenades for everyone.
+- **An eco round:** the team buys little or nothing so it can afford a full buy next round.
 - **A force buy:** the team spends what it has on cheaper weapons, because it can't afford to lose the round.
 
 ## The map pool
 
-As of November 2026, Valve's competitive map pool, the Active Duty map group, is these seven maps.
+As of November 2026, Valve's competitive map pool, called the Active Duty map group, contains these seven maps.
 
 - Ancient
 - Anubis
@@ -51,19 +51,19 @@ As of November 2026, Valve's competitive map pool, the Active Duty map group, is
 - Mirage
 - Nuke
 
-Valve changes the pool from time to time, usually one map at a time. In 2026, Anubis came back in January, in place of Train. Cache joined in July, in place of Overpass.
+Valve updates the pool from time to time, usually replacing one map at a time. In 2026, Anubis came back in January, in place of Train. Cache joined in July, in place of Overpass.
 
-The same pool is used in Premier, the game's ranked mode, and at the Majors. Before each series, the teams take turns removing maps and picking the ones they want to play. [CS2 formats explained](/guides/cs2-formats-explained) covers how.
+The same pool applies in Premier, the game's ranked mode, and at the Majors. Before each series, the teams take turns removing maps and picking the ones they want to play. [CS2 tournament formats: series, Swiss and brackets](/guides/cs2-formats-explained) covers how.
 
 ## What changed from CS:GO
 
 - **Shorter maps.** In CS:GO, a map took 16 round wins. In CS2, it takes 13, with at most 24 rounds before overtime.
-- **Smokes that move.** A smoke grenade now fills the space around it: it spreads through doorways, up and down stairs and along corridors. Bullets and HE grenades can push the smoke aside for a moment and open a line of sight.
-- **Shots count when they happen.** The server now knows the exact moment a player moves, shoots or throws, instead of only checking at fixed intervals called ticks. Valve calls this sub-tick.
-- **Maps that look different.** Many maps have been rebuilt or relit in the new engine, Source 2. At CS2's launch, some, such as Dust II, kept their layout and only got better lighting.
+- **Smokes that move.** Smoke now fills the space around the grenade: it spreads through doorways, up and down stairs and along corridors. Bullets and HE grenades can push the smoke aside for a moment and open a line of sight.
+- **Shots count when they happen.** The server now knows the exact moment a player moves, shoots or throws, rather than checking only at fixed intervals called ticks. Valve calls this sub-tick.
+- **Maps that look different.** Many maps have been rebuilt or relit in the new engine, Source 2. At CS2's launch, some, such as Dust II, kept the same layout and received lighting improvements only.
 
-The Majors have changed too. [How the CS2 Majors work](/guides/how-cs2-majors-work) explains their current format.
+The Majors have changed too. [CS2 Majors explained: format, invitations and stages](/guides/how-cs2-majors-work) explains their current format.
 
 ## Ready to watch
 
-You now know enough to follow a match again. To pick one, use "What should I watch?" on the [home page](/). To watch it without the result spoiled, see [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers).
+These basics are enough to follow a match again. To choose one, use "What should I watch?" on the [home page](/). For ways to avoid learning the result before you watch, see [Watch CS2 VODs without spoilers](/guides/watch-cs2-without-spoilers).

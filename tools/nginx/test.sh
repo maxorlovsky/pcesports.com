@@ -221,7 +221,7 @@ check http $www /.well-known/acme-challenge/no-such-token 404
 check https $www / 200 'What should I watch?'
 check https $www /privacy 200 'What we collect'
 # A guide's page and the list are <name>.html beside a folder of the same name (the guides and their payloads)
-check https $www /guides 200 'How to watch CS2 without spoilers'
+check https $www /guides 200 'Watch CS2 VODs without spoilers'
 check https $www /guides/watch-cs2-without-spoilers 200 'Where results leak'
 check https $www /guides/watch-cs2-without-spoilers/_payload.json 200
 check https $www /guides/no-such-guide 404

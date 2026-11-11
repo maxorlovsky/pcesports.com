@@ -1,73 +1,73 @@
 ---
-title: CS2 formats explained
-description: Best-of-one, three and five, Swiss stages, groups, single and double elimination, and what stage names like "Lower Bracket Final" or "Round 5" mean.
+title: CS2 tournament formats: series, Swiss and brackets
+description: Understand CS2 series, Swiss stages, groups and elimination brackets, plus match labels such as "Lower Bracket Final" and "Round 5".
 order: 3
 ---
-**The short answer:** a CS2 match is a series of maps, and the team that wins more of them wins the match. An event puts matches together in stages. A first stage, a group or a Swiss stage, gives every team more than one chance. A bracket at the end then decides the title, and there a loss often ends a team's event.
+**The short answer:** a CS2 match is a series of maps. The team that wins more maps wins the match. Tournaments group matches into stages. An opening group or Swiss stage gives each team more than one chance. A final bracket decides the title, and losing there often means elimination.
 
-The stage names on this site come from PandaScore, the site's match data source. This guide explains them.
+The stage names on this site come from PandaScore, the site's source for match data. Here is what those names mean.
 
 ## Maps and series
 
-A **map** is one game, played on one of the maps in the competitive map pool. Teams play rounds on it until one side has won enough of them. A map that is level at the end goes to overtime.
+A **map** is one game, played on one of the maps in the competitive map pool. The teams play rounds until one side has enough round wins. If regulation ends in a tie, they play overtime.
 
-A **match**, or series, is a set of maps. There are three common lengths.
+A **match**, also called a series, consists of a set of maps. These are the three common series lengths.
 
 - **Best-of-one:** one map decides the match.
 - **Best-of-three:** the first team to win two maps wins. A third map is played only when each team has won one.
 - **Best-of-five:** the first team to win three maps wins. The fourth and fifth maps are played only when needed.
 
-Longer series are fairer, because one bad map doesn't decide them, but they take longer. That is why many events play best-of-one early on, and best-of-three or best-of-five when more is at stake.
+Longer series are fairer because one bad map cannot decide the match. They also take more time. Many events therefore use best-of-one matches early on, then best-of-three or best-of-five series when more is at stake.
 
 Before a series, the teams take turns removing maps from the pool and picking the ones they want to play. In a best-of-one they remove maps until one is left.
 
 ## Swiss stage
 
-A Swiss stage is a way to sort many teams quickly without playing everyone:
+A Swiss stage sorts a large field quickly without making every team play every other team:
 
 - In each round, teams play an opponent with the same record of wins and losses.
 - A team that reaches the set number of wins goes through. A team that reaches the set number of losses is out.
-- At a Major, as of November 2026, three wins go through and three losses are out. A match that can send a team through or knock it out is a best-of-three. The others are best-of-one.
+- At a Major, as of November 2026, three wins send a team through, while three losses eliminate it. A match that can send a team through or knock it out is a best-of-three. The others are best-of-one.
 
-On this site a Swiss match shows as **Round** and a number: "Round 1" is the first round of the stage, "Round 5" the fifth. With three wins or three losses to finish, the fifth round is the last one. Every team in it has two wins and two losses, so each of its matches decides who goes through.
+On this site, a Swiss match appears as **Round** and a number: "Round 1" is the first round of the stage, "Round 5" the fifth. When teams finish at three wins or three losses, the fifth round is the last. Every team in it has two wins and two losses, so each of its matches decides who goes through.
 
 ## Groups
 
-In a group, a few teams play each other, and the best of them go through. There are three common kinds:
+A group puts a few teams together to compete for places in the next stage. The best teams advance. There are three common group formats:
 
 - **Round robin:** every team plays every other team once. The table decides who goes through.
-- **A four-team bracket:** two opening matches. Their winners meet in the **Winners Match**, and their losers in the **Elimination Match**, which knocks one team out. How many teams go through, and whether a deciding match follows, depends on the event.
-- **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with upper and lower bracket rounds (below). How many teams go through, and from which rounds, depends on the event too.
+- **A four-team bracket:** two opening matches. The winners meet in the **Winners Match**. The losers meet in the **Elimination Match**, where one team is knocked out. How many teams go through, and whether a deciding match follows, depends on the event.
+- **A bracket inside a group:** a bigger group can be played as a small double-elimination bracket of its own, with upper and lower bracket rounds (below). The event also decides how many teams advance and which rounds qualify them.
 
-On this site a group shows as **Group A**, **Group B** and so on, followed by the match's round where PandaScore names it.
+On this site, groups appear as **Group A**, **Group B** and so on. The match's round follows when PandaScore provides a name for it.
 
 ## Single elimination
 
-In single elimination, the team that loses a match is out. Each round halves the field:
+In single elimination, losing a match means elimination. Each round halves the number of teams left:
 
-- **Quarter-finals:** eight teams, four matches. At some events the best teams of the stage before skip them and start in the semi-finals, so there are fewer quarter-finals.
+- **Quarter-finals:** eight teams, four matches. At some events the best teams from the previous stage skip this round and start in the semi-finals, so there are fewer quarter-finals.
 - **Semi-finals:** four teams, two matches.
 - **Grand final:** the last two teams, for the title.
 
-Some events also play a **third-place match** between the losing semi-finalists. The number after a round's name, as in "Semifinal 1" or "Quarterfinal 2", only counts the matches of that round. It is not a seed and says nothing about the teams.
+Some events also play a **third-place match** between the losing semi-finalists. The number after a round's name, as in "Semifinal 1" or "Quarterfinal 2", simply numbers the matches within that round. It does not indicate a seed or tell you anything about the teams.
 
 ## Double elimination: upper and lower bracket
 
 In double elimination, a team is out only after it loses twice:
 
 - Every team starts in the **upper bracket**.
-- A team that loses in the upper bracket drops to the **lower bracket**. There, one more loss and it is out.
+- A team that loses in the upper bracket drops to the **lower bracket**. One more loss there eliminates it.
 - In a playoff bracket, the **upper bracket final** sends its winner to the grand final, and its loser drops to the lower bracket.
 - The **lower bracket final** is the last match of the lower bracket. In a playoff bracket, its winner takes the other place in the grand final.
 
-So a lower bracket final is a team's last chance. Inside a group, the bracket can stop earlier. At some events, both teams of the upper bracket final are already through, and the lower bracket final decides the last place.
+A lower bracket final is therefore a team's last chance. A bracket within a group can end before a grand final. At some events, both teams in the upper bracket final have already qualified, and the lower bracket final decides the last place.
 
 On this site these rounds show as "Upper Bracket Quarterfinal", "Upper Bracket Semifinal", "Upper Bracket Final", and the same names with "Lower Bracket".
 
 ## The stage names on this site
 
-Each match card shows the stage, then the round inside it where PandaScore names one, for example "Playoffs" and "Lower Bracket Final", or "Group Stage" and "Round 5". Both come from PandaScore as it names them. A stage name never tells you who won that match.
+Each match card shows the stage, then the round inside it where PandaScore names one, for example "Playoffs" and "Lower Bracket Final", or "Group Stage" and "Round 5". The site uses PandaScore's names for both. A stage name never tells you who won that match.
 
-Later rounds do name the teams that won earlier ones. That is why the site keeps the teams hidden until you tap: knowing who plays in a semi-final tells you who won the quarter-finals. More on that in [How to watch CS2 without spoilers](/guides/watch-cs2-without-spoilers).
+Later rounds name teams that won earlier matches. The site therefore hides team names until you tap: knowing who plays in a semi-final tells you who won the quarter-finals. More on that in [Watch CS2 VODs without spoilers](/guides/watch-cs2-without-spoilers).
 
-How much each stage counts for the site's rating is in [How "What should I watch?" rates matches](/guides/how-the-watch-rating-works).
+For the points each stage contributes to the site's rating, see [How PCesports rates CS2 matches to watch](/guides/how-the-watch-rating-works).

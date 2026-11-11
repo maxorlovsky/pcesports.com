@@ -93,3 +93,23 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
   copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays out.
 - **Typography:** straight quotes and plain hyphens only, no curly quotes, long dashes or ellipsis characters.
 - **One claim per sentence** where possible, so a rewrite can't silently change a fact.
+
+## Shared terms
+
+Use these terms consistently in guide prose. Keep quoted interface labels and PandaScore's round names as they appear
+on screen (for example, "Lower Bracket Final" and "Semifinal 1").
+
+- **Match** or **series**: the whole contest between two teams; a **map** is one game within it; a **round** is one
+  round within a map. A tournament's round is named in its stage context.
+- **Best-of-one**, **best-of-three**, **best-of-five**: spell out series lengths, including in the rating guide,
+  where numbers must come from code. Do not mix these with BO1, BO3 or best-of-3.
+- **Swiss stage**, **group**, **playoffs**, **single elimination**, **double elimination**: the stage or format.
+  Use **upper bracket**, **lower bracket**, **quarter-finals**, **semi-finals** and **grand final** for their parts.
+- **VOD**: a full-match recording posted by the organiser; expand it as **video on demand** when defining it.
+  Use **full-match VOD** when the distinction from highlights or a full broadcast day matters.
+- **Valve Regional Standings (VRS)**: introduce the full name before the abbreviation. Use **global list** and
+  **regional list** for its lists, **roster** for the players who hold a ranking or invitation, and **club** for
+  their organisation. The site's own **team rating** is separate from the VRS.
+- **Stakes**, **closeness**, **rating**, **label**: the rating's two inputs, their total, and the label that total
+  determines. Keep the generated labels and numbers as placeholders.
+- Use **organiser**, **armour** and **Autoplay** consistently; retain proper names such as ESL Pro League.
