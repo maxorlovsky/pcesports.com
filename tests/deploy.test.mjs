@@ -229,6 +229,30 @@ test('a release with a folder the deploy user can\'t read never claims that no o
   }
 });
 
+test('a whole deploy refuses an untagged head it pulled, and builds nothing', () => {
+  // The live clone at the tagged release; origin then gets a merge whose release run hasn't tagged it yet
+  const work = join(dir, 'pulled-work');
+  git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
+  git(dir, 'clone', '-q', '--bare', work, join(dir, 'pulled-origin.git'));
+  const live = join(dir, 'pulled-live');
+  git(dir, 'clone', '-q', join(dir, 'pulled-origin.git'), live);
+  git(work, 'commit', '-q', '--allow-empty', '-m', 'Merge pull request #9 from me/dev');
+  git(work, 'push', '-q', join(dir, 'pulled-origin.git'), 'master');
+  const bin = join(dir, 'pulled-bin');
+  mkdirSync(bin);
+  writeFileSync(join(bin, 'npm'), '#!/bin/sh\necho "npm $*" >> "$0.log"\n', { mode: 0o755 });
+  // The dry run, which pulls nothing, refuses it too: it checks the head a deploy would pull, not the tagged one it is on
+  const dry = sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live);
+  assert.equal(dry.status, 1, dry.stdout);
+  assert.match(dry.stderr, /is no release/);
+  const result = sh('node', ['tools/deploy/deploy.mjs'], live, { PATH: `${bin}:${process.env.PATH}` });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /master at \w{7} is no release \(no X\.Y\.Z tag on it\)/);
+  assert.equal(git(live, 'log', '-1', '--format=%s'), 'Merge pull request #9 from me/dev');
+  assert.equal(existsSync(join(bin, 'npm.log')), false);
+  for (const left of ['site', '.releases']) assert.equal(existsSync(join(live, left)), false, left);
+});
+
 test('a whole deploy whose prune fails switches the site, then ends red and says so', (t) => {
   if (process.getuid() === 0) return t.skip('root can delete anything');
   // A site whose build is a stub: an npm that only writes .output/public, and a build check that passes

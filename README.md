@@ -194,8 +194,9 @@ pushed straight to it included, is a release, in the CI workflow (`.github/workf
 
 Only a release deploys: the deploy refuses a `master` whose head carries no `X.Y.Z` tag (see "Deploy"). A release that
 failed leaves `master` untagged, so no deploy ships it, the data job's included, until it is finished; those deploys go
-red meanwhile, and the site keeps its last release. A data deploy that reaches the server in the minute between a
-merge and its release commit goes red the same way, and changes nothing.
+red meanwhile, and the site keeps its last release. A data deploy that reaches the server between a merge and its
+release commit (until that merge's run pushes it, which waits for a running push's run first) goes red the same way and
+changes nothing. So does a release's own deploy when `master` moved on during its run: the next release ships both.
 
 The release commit can't release again: the run its push starts (with `RELEASE_TOKEN`; the default token's pushes start
 none) skips every job, since the run that made it already checked and deploys it. The data job's run
@@ -209,8 +210,9 @@ The `data` branch is never part of a release: the release pushes `master`, its t
 Don't bump the version by hand, and don't start a commit on `master` with `chore(release): `.
 `node tools/release/next-version.mjs [--ref <rev>]` prints what a release of a `master` commit would get, without
 writing anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released nothing,
-and the next push's run releases those commits too. Any other release that goes red before "Commit, tag and push"
-(two `release:*` labels, a branch rule) leaves `master` unreleased: fix the cause and re-run the failed jobs. A run
+and the next push's run releases those commits too. Any other release that goes red by the end of "Commit, tag and
+push" (two `release:*` labels, a branch rule that rejects the push) leaves `master` unreleased: fix the cause and re-run
+the failed jobs. A run
 that fails after "Commit, tag and push" has released the version already, and a re-run stops at "Tag X.Y.Z already
 exists". Finish by hand instead: `gh release create X.Y.Z --verify-tag --generate-notes` if the Release is missing,
 then deploy it (Actions → CI → Run workflow, on master), and merge `master` into `dev`.
@@ -239,8 +241,8 @@ a deploy key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy`
    owns (a root-owned `.well-known` is certbot's: see "On max-cloud").
 
 Actions → CI → Run workflow, on master, deploys again without a new commit and without a release; the data job starts
-the same run after it publishes new data. `npm run deploy -- --dry-run` in the clone checks the same and prints the
-steps without running them.
+the same run after it publishes new data. `npm run deploy -- --dry-run` in the clone checks the same (for the release:
+origin's `master`, which a deploy would pull) and prints the steps without running them.
 
 ### On max-cloud
 
@@ -272,9 +274,9 @@ steps without running them.
   ```
 
   Whatever command it is sent, it deploys, except `dry-run`, which checks that git reaches GitHub from that shell and
-  then runs the dry run: `ssh -i <key> max@<host> dry-run` ends in `Dry run: nothing ran.` A forced command runs in a
-  shell that read no login profile, so node, npm, git and flock must be on that shell's own PATH (the script adds
-  `~/.local/bin`), and the clone's GitHub access must work without an SSH agent.
+  then runs the dry run: `ssh -i <key> max@<host> dry-run` ends in `Dry run: nothing ran.` while origin's `master` is
+  a release. A forced command runs in a shell that read no login profile, so node, npm, git and flock must be on that
+  shell's own PATH (the script adds `~/.local/bin`), and the clone's GitHub access must work without an SSH agent.
 - The repository secrets: `PROD_DEPLOY_HOST`, `PROD_DEPLOY_SSH_USER` (`max`), `PROD_DEPLOY_SSH_KEY` (the deploy key's
   private half) and, if SSH isn't on port 22, `PROD_DEPLOY_SSH_PORT`.
 
