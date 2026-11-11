@@ -5,7 +5,8 @@ import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { GUIDES_DIR, GUIDE_FACTS, WORDS_PER_MINUTE, loadGuides, parseGuide, parseInline, parseMarkdown, textOf, wordsOf } from '../app/domains/guides/index.ts';
+import { GUIDES_DIR, GUIDE_FACTS, RATING_FACTS, WORDS_PER_MINUTE, loadGuides, parseGuide, parseInline, parseMarkdown, textOf, vodChannelList, wordsOf } from '../app/domains/guides/index.ts';
+import { CHANNELS_LIST, VOD_CHANNELS } from '../app/domains/vods/index.ts';
 import { CLOSE_MINUTES, LABELS, LIST_DAYS, MUST_WATCH, OVERTIME_MINUTES, RESULTS_DAYS, UPSET_CHANCE, WORTH_A_WATCH, closeness, eventPoints, labelOf, stagePoints, strengthPoints } from '../app/domains/watch/index.ts';
 import { checkBuild } from '../tools/check-build.mjs';
 
@@ -13,6 +14,7 @@ const ROOT = join(import.meta.dirname, '..');
 const guides = loadGuides(ROOT);
 const sources = Object.fromEntries(readdirSync(join(ROOT, GUIDES_DIR)).map((name) => [name.slice(0, -3), readFileSync(join(ROOT, GUIDES_DIR, name), 'utf8')]));
 const RATING_GUIDE = 'how-the-watch-rating-works';
+const VOD_GUIDE = 'where-to-watch-official-cs2-vods';
 const textOfGuide = (guide) => [guide.title, guide.description, ...guide.blocks.flatMap((block) => ('items' in block ? block.items : [block.inlines]).map(textOf))].join('\n');
 
 test('the Markdown subset parses headings, paragraphs, lists, bold and links', () => {
@@ -27,6 +29,7 @@ test('the Markdown subset parses headings, paragraphs, lists, bold and links', (
     { kind: 'ol', items: [[{ kind: 'text', text: 'first' }], [{ kind: 'link', text: 'out', href: 'https://example.com' }]] },
   ]);
   assert.deepEqual(parseInline('**The short answer:** do this.'), [{ kind: 'strong', text: 'The short answer:' }, { kind: 'text', text: ' do this.' }]);
+  assert.deepEqual(parseInline('GAM3RS_X runs it.'), [{ kind: 'text', text: 'GAM3RS_X runs it.' }]);
 });
 
 const unsupported = [
@@ -35,6 +38,8 @@ const unsupported = [
   ['a table', '| a | b |'],
   ['a star list', '* item'],
   ['emphasis', 'some *word*'],
+  ['underscore emphasis', 'some _word_'],
+  ['an underscore before a word', 'some _word'],
   ['code', 'a `cmd`'],
   ['HTML', 'a <b>tag</b>'],
   ['an image', '![alt](/x.png)'],
@@ -148,7 +153,7 @@ test('the rating guide\'s facts are what the watch domain\'s code does, every on
     closeMinutes: CLOSE_MINUTES,
     closeMap: closeness({ bestOf: 3, maps: [{ seconds: 1800 }, { seconds: CLOSE_MINUTES * 60 + 30 }], winnerChance: 0.5 }),
   };
-  assert.deepEqual(GUIDE_FACTS, Object.fromEntries(Object.entries(expected).map(([name, value]) => [name, String(value)])));
+  assert.deepEqual(RATING_FACTS, Object.fromEntries(Object.entries(expected).map(([name, value]) => [name, String(value)])));
   // What the guide says around them: the thresholds are where the labels change; semi-finals of a bracket score as
   // semi-finals; a shorter map, or the favourite winning, adds nothing.
   assert.equal(labelOf(MUST_WATCH - 0.01), LABELS[1]);
@@ -156,15 +161,15 @@ test('the rating guide\'s facts are what the watch domain\'s code does, every on
   assert.equal(playoff('Lower Bracket Semifinal 1'), playoff('Semifinal 1'));
   // Outside the playoffs, a round scores by its name as the group lines list them, and a Swiss round by the records.
   for (const round of ['Elimination Match', 'Decider Match', 'Winners Match', 'Upper Bracket Final', 'Lower Bracket Semifinal 1', 'Lower Bracket Quarterfinal 2']) {
-    assert.equal(group(round, 'Group A'), Number(GUIDE_FACTS.groupDecider), round);
+    assert.equal(group(round, 'Group A'), Number(RATING_FACTS.groupDecider), round);
   }
   for (const round of ['Upper Bracket Semifinal 1', 'Upper Bracket Quarterfinal 1', 'Third Place Match', 'Opening Match']) {
-    assert.equal(group(round, 'Group A'), Number(GUIDE_FACTS.otherGroup), round);
+    assert.equal(group(round, 'Group A'), Number(RATING_FACTS.otherGroup), round);
   }
   const swiss = (records) => stagePoints({ name: 'Round 4: X vs Y', stage: 'Swiss Stage', teams: [{ id: 1 }, { id: 2 }] }, new Map(records));
-  assert.equal(swiss([[1, [2, 1]], [2, [1, 1]]]), Number(GUIDE_FACTS.groupDecider));
-  assert.equal(swiss([[1, [1, 2]]]), Number(GUIDE_FACTS.groupDecider));
-  assert.equal(swiss([[1, [1, 1]], [2, [1, 0]]]), Number(GUIDE_FACTS.otherGroup));
+  assert.equal(swiss([[1, [2, 1]], [2, [1, 1]]]), Number(RATING_FACTS.groupDecider));
+  assert.equal(swiss([[1, [1, 2]]]), Number(RATING_FACTS.groupDecider));
+  assert.equal(swiss([[1, [1, 1]], [2, [1, 0]]]), Number(RATING_FACTS.otherGroup));
   assert.equal(closeness({ bestOf: 1, maps: [{ seconds: CLOSE_MINUTES * 60 - 60 }], winnerChance: UPSET_CHANCE }), 0);
 });
 
@@ -204,8 +209,29 @@ test('the rating guide puts each fact where it belongs: a wrong placeholder on a
     if (written) assert.ok(typeof written === 'string' ? line.includes(written) : written.test(line), `"${line}" doesn't say ${written}`);
     facts.forEach((name) => stated.add(name));
   }
-  const numbers = Object.keys(GUIDE_FACTS).filter((name) => !labels.has(name));
+  const numbers = Object.keys(RATING_FACTS).filter((name) => !labels.has(name));
   assert.deepEqual(numbers.filter((name) => !stated.has(name)), [], 'every fact the rating guide can state, it states');
+});
+
+test('the VOD guide lists every VOD channel of the whitelist, and a channel added there appears in it', () => {
+  const links = (guide) => guide.blocks.flatMap((block) => ('items' in block ? block.items.flat() : block.inlines)).filter((inline) => inline.kind === 'link');
+  const channelLinks = (guide) => links(guide).filter((link) => link.href.startsWith('https://www.youtube.com/'));
+  const guide = guides.find((each) => each.slug === VOD_GUIDE);
+  assert.deepEqual(channelLinks(guide), VOD_CHANNELS.map((channel) => ({ kind: 'link', text: channel.name, href: `https://www.youtube.com/channel/${channel.id}` })));
+  for (const channel of VOD_CHANNELS) assert.ok(textOfGuide(guide).includes(`${channel.organizers.join(' and ')}: ${channel.name}`), channel.name);
+  // The source types no channel: every one comes from the whitelist (a main channel may share its organiser's name).
+  for (const channel of CHANNELS_LIST) assert.ok(!sources[VOD_GUIDE].includes(channel.id), `${channel.id} is typed by hand`);
+  for (const channel of VOD_CHANNELS) assert.ok(!sources[VOD_GUIDE].includes(channel.name), `${channel.name} is typed by hand`);
+
+  // A VOD channel added to the whitelist, for a new organiser with no other channel, and for one with a main channel.
+  const added = { id: 'UCnewnewnewnewnewnewnewn', name: 'New Org VODs', handle: '@neworgvods', organizers: ['New Org'], role: 'vods', uploads: 'UUnewnewnewnewnewnewnewn', verified: '2026-11-11' };
+  const second = { ...added, id: 'UCeslsecondsecondsecondse', name: 'ESL Second Archive', organizers: ['ESL'] };
+  const facts = { ...GUIDE_FACTS, vodChannels: vodChannelList([...VOD_CHANNELS, added, second], [...CHANNELS_LIST, added, second]) };
+  const grown = parseGuide(VOD_GUIDE, sources[VOD_GUIDE], facts);
+  assert.equal(channelLinks(grown).length, VOD_CHANNELS.length + 2);
+  assert.ok(textOfGuide(grown).includes('New Org: New Org VODs, its main channel'));
+  assert.match(textOfGuide(grown), /^ESL: ESL Second Archive$/m);
+  assert.ok(channelLinks(grown).some((link) => link.href === `https://www.youtube.com/channel/${added.id}`));
 });
 
 test('no guide holds anything the build\'s spoiler check reads as a score, a map count or a winner, whatever the data', () => {
