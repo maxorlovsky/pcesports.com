@@ -303,6 +303,64 @@ describe('the CI workflow', () => {
     assert.match(lines, /\n {4}concurrency:\n {6}group: deploy-production\n {6}cancel-in-progress: false\n/);
   });
 
+  // A step's `run: |` block, as GitHub Actions runs it (bash -eo pipefail)
+  const runBlock = (lines, stepName) => {
+    const step = lines.slice(lines.indexOf(`- name: ${stepName}\n`));
+    const block = /\n {8}run: \|\n((?: {10}.*\n)+)/.exec(step);
+    assert.ok(block, `no run block in ${stepName}`);
+    return block[1].replace(/^ {10}/gm, '');
+  };
+
+  test('its release and merge-back steps, on a scratch origin: an atomic master + annotated tag push, dev merged, data untouched', () => {
+    dir = mkdtempSync(join(tmpdir(), 'pce-release-steps-'));
+    const sh = (cwd, script, env = {}) => {
+      const result = spawnSync('bash', ['--noprofile', '--norc', '-eo', 'pipefail', '-c', script], {
+        cwd, encoding: 'utf8', env: { ...process.env, GIT_CONFIG_GLOBAL: '/dev/null', ...env },
+      });
+      assert.equal(result.status, 0, `${script}\n${result.stdout}${result.stderr}`);
+      return result.stdout.trim();
+    };
+    const origin = join(dir, 'origin.git');
+    const work = join(dir, 'work');
+    const who = 'git -c user.name=Test -c user.email=test@example.com -c core.hooksPath=/dev/null';
+    sh(dir, 'git init -q --bare -b master origin.git && git init -q -b master work');
+    for (const file of ['package.json', 'package-lock.json']) copyFileSync(join(REPO, file), join(work, file));
+    mkdirSync(join(work, 'tools', 'release'), { recursive: true });
+    copyFileSync(SCRIPT, join(work, 'tools', 'release', 'next-version.mjs'));
+    sh(work, `${who} add -A && ${who} commit -q -m 'chore: start' && git remote add origin ../origin.git
+      ${who} switch -q -c data && ${who} commit -q --allow-empty -m 'data' && git switch -q master
+      ${who} switch -q -c dev && ${who} commit -q --allow-empty -m 'feat(guides): a guide'
+      git switch -q master && ${who} merge -q --no-ff -m 'Merge pull request #71 from me/dev' dev
+      git push -q origin master dev data`);
+    const data = sh(work, 'git rev-parse origin/data');
+
+    // The runner: a clone at the pushed merge, then the release job's steps, as the workflow has them
+    sh(dir, 'git clone -q origin.git runner');
+    const runner = join(dir, 'runner');
+    const release = job('release');
+    const picked = sh(runner, 'node tools/release/next-version.mjs --write', { GITHUB_OUTPUT: join(dir, 'output') });
+    assert.match(picked, /^Version: 6\.1\.0 \(minor\)$/m);
+    const outputs = Object.fromEntries(readFileSync(join(dir, 'output'), 'utf8').trim().split('\n').map((line) => line.split('=')));
+    sh(runner, runBlock(release, 'Commit, tag and push'), { VERSION: outputs.version, COMMIT_MESSAGE: outputs.commit_message });
+
+    const inOrigin = (args) => sh(origin, `git ${args}`);
+    assert.equal(inOrigin('log -1 --format=%s master'), 'chore(release): 6.1.0');
+    assert.equal(inOrigin('cat-file -t 6.1.0'), 'tag');
+    assert.equal(inOrigin('rev-parse 6.1.0^{commit}'), inOrigin('rev-parse master'));
+    assert.equal(inOrigin('diff --name-only master^ master'), 'package-lock.json\npackage.json');
+    assert.equal(JSON.parse(inOrigin('show master:package-lock.json')).packages[''].version, '6.1.0');
+
+    // merge-back, from a fresh clone of master
+    sh(dir, 'git clone -q -b master origin.git merger');
+    sh(join(dir, 'merger'), runBlock(job('merge-back'), 'Merge master into dev'));
+    assert.equal(inOrigin('merge-base --is-ancestor master dev && echo yes'), 'yes');
+    assert.equal(inOrigin('rev-parse data'), data);
+
+    // The next release counts from the tag, through the merge-back
+    sh(runner, 'git fetch -q origin dev');
+    assert.match(sh(runner, 'node tools/release/next-version.mjs --ref origin/dev'), /last tag 6\.1\.0/);
+  });
+
   test('keeps pushes and manual runs in concurrency groups of their own', () => {
     assert.ok(workflow.includes(`concurrency:
   group: ci-\${{ github.event.pull_request.number || format('{0}-{1}', github.event_name, github.ref) }}
