@@ -33,11 +33,11 @@ Seeding determines the pairings. Before the Major, all 32 teams are seeded by th
 
 ### The playoffs
 
-As of November 2026, the quarter-finals and semi-finals are best-of-3. The grand final has been a best-of-5 at the last two Majors: first at Budapest in December 2025, then at Cologne in June 2026. Valve's written rules still say best-of-3 for every playoff match.
+As of November 2026, the quarter-finals and semi-finals are best-of-3. The grand final has been a best-of-5 at the last two Majors: for the first time at Budapest in December 2025, then again at Cologne in June 2026. Valve's written rules still say best-of-3 for every playoff match.
 
 Before each match, the teams take turns removing maps from the map pool. In a best-of-3 they also pick the maps they want to play. Valve's rules set the order of those turns for every Major.
 
-## How teams qualify
+## How teams get a place
 
 As of November 2026:
 

@@ -52,7 +52,7 @@ The final values determine the order of rosters, on the global list and on their
 
 ### At the Majors
 
-Major invitations come from this ranking. Places in each stage are allocated among the three regions, with invitations drawn from each region's list. The global list only determines seeding after the teams qualify. [CS2 Majors explained: format, invitations and stages](/guides/how-cs2-majors-work) has the details.
+Major invitations come from this ranking. Places in each stage are allocated among the three regions, with invitations drawn from each region's list. The global list only determines seeding once the teams have a place. [CS2 Majors explained: format, invitations and stages](/guides/how-cs2-majors-work) has the details.
 
 ### At other events
 

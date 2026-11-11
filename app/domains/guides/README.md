@@ -92,16 +92,16 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
   days. "As of <month year>" goes in the body, at the section it dates: the page doesn't show the description. Never
   copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays out.
 - **Typography:** straight quotes and plain hyphens only, no curly quotes, long dashes or ellipsis characters.
-- **One claim per sentence** where possible, so a rewrite can't silently change a fact; keep each claim's subject and qualifiers.
+- **One claim per sentence** where possible, so a rewrite can't silently change a fact; keep each claim's subject
+  and qualifiers.
 
 ## Shared terms
 
 Use these terms consistently in guide prose. Keep quoted interface labels and PandaScore's round names as they appear
 on screen (for example, "Lower Bracket Final" and "Semifinal 1").
 
-- **Match**: the whole contest between two teams; define "series" once as a synonym, then use "match". A **map** is
-  one game within a match; a **round** is one
-  round within a map. A tournament's round is named in its stage context.
+- **Match**: the whole contest between two teams; define "series" once as a synonym, then use "match". A **map**
+  is one game within a match; a **round** is one round within a map. A tournament's round is named in its stage context.
 - **Best-of-1**, **best-of-3**, **best-of-5**: use these spellings. Do not mix them with BO1, BO3 or best-of-three.
   The rating guide explains the same example in words to keep its rule against typing numbers by hand.
 - **Swiss stage**, **group**, **playoffs**, **single elimination**, **double elimination**: the stage or format.
@@ -113,4 +113,5 @@ on screen (for example, "Lower Bracket Final" and "Semifinal 1").
   their organisation. The site's own **team rating** is separate from the VRS.
 - **Stakes**, **closeness**, **rating**, **label**: the rating's two inputs, their total, and the label that total
   determines. Keep the generated labels and numbers as placeholders.
-- Use **organiser**, **armour**, **licence** (noun) and **Autoplay** consistently; retain proper names such as ESL Pro League.
+- Use **organiser**, **armour**, **licence** (noun) and **Autoplay** consistently;
+  retain proper names such as ESL Pro League.

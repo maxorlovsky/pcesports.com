@@ -1,6 +1,6 @@
 ---
 title: CS2 basics: what changed since CS:GO
-description: Returning to CS2 after CS:GO? Catch up on rounds, overtime, money, smokes and the map pool. Updated for November 2026.
+description: Returning to CS2 after CS:GO? Catch up on rounds, overtime, money, smokes and the map pool. As of November 2026.
 order: 7
 ---
 **The short answer:** the core game is familiar. Two teams of five compete in rounds, with money limiting what each player can buy. For viewers, the biggest change is shorter maps, with at most 24 rounds before overtime, compared with 30 in CS:GO. Smoke grenades behave differently too, and the map pool has changed. As of November 2026, it is Ancient, Anubis, Cache, Dust II, Inferno, Mirage and Nuke.

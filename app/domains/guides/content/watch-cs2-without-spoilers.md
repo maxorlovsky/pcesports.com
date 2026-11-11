@@ -1,6 +1,6 @@
 ---
 title: Watch CS2 VODs without spoilers
-description: Avoid CS2 spoilers in video lengths, chapters, titles, recommendations and feeds. A practical routine for watching full-match VODs on YouTube.
+description: Avoid CS2 spoilers in lengths, chapters, thumbnails, titles, recommendations, comments, feeds and search. A routine for full-match VODs on YouTube.
 order: 1
 ---
 **The short answer:** choose your match before browsing elsewhere. Follow a direct link to the full-match VOD. Avoid social feeds, search results and the organiser's short clips until you have finished watching.
@@ -25,7 +25,7 @@ YouTube can add chapters automatically. Chapters may also appear in the video's 
 
 ### Thumbnails and titles
 
-An organiser's full-match VOD is mostly safe when viewed in isolation. In the sample this site checked by hand, from ESL and PGL, the thumbnails showed both teams' logos and no score. The titles this site has seen name the teams and event, and sometimes the stage. They do not name the result.
+The organisers' own full-match VODs are mostly safe when viewed in isolation. In the sample this site checked by hand, from ESL and PGL, the thumbnails showed both teams' logos and no score. The titles this site has seen name the teams and event, and sometimes the stage. They do not name the result.
 
 Other matches' titles pose a risk. A semi-final video names its two teams, so it tells you who won the quarter-finals that led to it. Browsing uploads exposes you to all those titles at once.
 

@@ -1,6 +1,6 @@
 ---
 title: CS2 formats explained: best-of-3, Swiss and brackets
-description: Understand best-of-3 matches, Swiss stages, groups and elimination brackets, plus match labels such as "Lower Bracket Final" and "Round 5".
+description: CS2 formats explained: best-of-1, best-of-3 and best-of-5, Swiss stages, groups, single and double elimination, and the round names on match cards.
 order: 3
 ---
 **The short answer:** a CS2 match is played over a set of maps. The team that wins more maps wins the match. Tournaments group matches into stages. An opening group or Swiss stage gives each team more than one chance. A final bracket decides the title, and losing there often means elimination.

@@ -44,7 +44,7 @@ Closeness uses only the maps that every match of that length must play. For a ma
 
 Adding stakes and closeness gives the final rating:
 
-- **{{labelMustWatch}}:** a rating of {{mustWatch}} or more. These matches combine high stakes with closeness, or have the highest stakes alone. Start here.
+- **{{labelMustWatch}}:** a rating of {{mustWatch}} or more. These matches combine high stakes with closeness, or have the very highest stakes alone. Start here.
 - **{{labelWorthAWatch}}:** a rating of {{worthAWatch}} or more. A good match to choose when you have an evening free.
 - **{{labelForFans}}:** a rating below {{worthAWatch}}. Mainly for viewers who closely follow the teams or the event.
 
