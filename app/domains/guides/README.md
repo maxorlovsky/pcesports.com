@@ -92,7 +92,7 @@ The owner's rules (the site is for busy people), each held by `tests/guides.test
   days. "As of <month year>" goes in the body, at the section it dates: the page doesn't show the description. Never
   copy Liquipedia's or HLTV's text; a fact that can't be confirmed stays out.
 - **Typography:** straight quotes and plain hyphens only, no curly quotes, long dashes or ellipsis characters.
-- **One claim per sentence:** preserve its subject and qualifiers when rewriting.
+- **One claim per sentence** where possible, so a rewrite can't silently change a fact; keep each claim's subject and qualifiers.
 
 ## Shared terms
 
