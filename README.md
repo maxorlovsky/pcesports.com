@@ -193,8 +193,9 @@ pushed straight to it included, is a release, in the CI workflow (`.github/workf
    whose release (the next patch) deploys.
 
 Only a release deploys: the deploy refuses a `master` whose head carries no `X.Y.Z` tag (see "Deploy"). A release that
-failed leaves `master` untagged, so no deploy ships it, the data job's included, until it is finished; those deploys go
-red meanwhile, and the site keeps its last release. A data deploy that reaches the server between a merge and its
+failed by the end of "Commit, tag and push" leaves `master` untagged, so no deploy ships it, the data job's included,
+until it is finished; those deploys go red meanwhile, and the site keeps its last release. One that failed later (the
+GitHub Release) has its tag, so its run's deploy is skipped but the next data deploy ships it. A data deploy that reaches the server between a merge and its
 release commit (until that merge's run pushes it, which waits for a running push's run first) goes red the same way and
 changes nothing. So does a release's own deploy when `master` moved on during its run: the next release ships both.
 
@@ -202,8 +203,8 @@ The release commit can't release again: the run its push starts (with `RELEASE_T
 none) skips every job, since the run that made it already checked and deploys it. The data job's run
 (`gh workflow run ci.yml --ref master`, a `workflow_dispatch`) and Actions → CI → Run workflow on master never
 release: they run the validators and deploy, with no version, tag or GitHub Release (on another branch they only run
-the validators). Pushes and those manual runs queue in concurrency groups of their own, so a data deploy never
-replaces a waiting release run. Deploys share one group with one waiting place, so a data deploy can replace a release
+the validators). Pushes, those manual runs and each release commit's own run queue in concurrency groups of their own,
+so neither of the others ever replaces a waiting release run. Deploys share one group with one waiting place, so a data deploy can replace a release
 run's waiting deploy: the release run shows it cancelled, and the data deploy, which pulls `master`, ships the release.
 The `data` branch is never part of a release: the release pushes `master`, its tag and `dev` only.
 

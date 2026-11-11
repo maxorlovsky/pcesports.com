@@ -24,10 +24,13 @@ permissions:
 
 # A newer push to the same pull request cancels the run it replaces. Runs on master never cancel a running one; GitHub
 # keeps only the newest one waiting, whose release counts the commits of the pushes it replaced. Pushes and manual runs
-# (the data job's) wait in groups of their own, so a manual run never replaces a waiting push and leaves its commits
-# unreleased; the deploy job's own group keeps deploys apart
+# (the data job's) wait in groups of their own, and so does each release commit's own run (it skips every job), so
+# neither ever replaces a waiting push and leaves its commits unreleased; the deploy job's own group keeps deploys apart
 concurrency:
-  group: ci-${{ github.event.pull_request.number || format('{0}-{1}', github.event_name, github.ref) }}
+  group: "ci-${{ github.event.pull_request.number
+    || (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(release): ')
+    && format('release-commit-{0}', github.sha))
+    || format('{0}-{1}', github.event_name, github.ref) }}"
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:

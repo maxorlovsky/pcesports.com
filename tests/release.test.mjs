@@ -258,7 +258,8 @@ describe('next-version.mjs on a git history', () => {
 });
 
 describe('the CI workflow', () => {
-  const workflow = readFileSync(join(REPO, '.github', 'workflows', 'ci.yml'), 'utf8');
+  // Without its comment lines: a setting commented out is gone, not still matched
+  const workflow = readFileSync(join(REPO, '.github', 'workflows', 'ci.yml'), 'utf8').replace(/^[ \t]*#.*\n/gm, '');
   // A job's lines, from its `  <name>:` line to the next job (or the end)
   const job = (name) => {
     const start = workflow.indexOf(`\n  ${name}:\n`);
@@ -362,9 +363,12 @@ describe('the CI workflow', () => {
     assert.match(sh(runner, 'node tools/release/next-version.mjs --ref origin/dev'), /last tag 6\.1\.0/);
   });
 
-  test('keeps pushes and manual runs in concurrency groups of their own', () => {
+  test('keeps pushes, manual runs and each release commit\'s own run in concurrency groups of their own', () => {
     assert.ok(workflow.includes(`concurrency:
-  group: ci-\${{ github.event.pull_request.number || format('{0}-{1}', github.event_name, github.ref) }}
+  group: "ci-\${{ github.event.pull_request.number
+    || (github.event_name == 'push' && ${isReleaseCommit}
+    && format('release-commit-{0}', github.sha))
+    || format('{0}-{1}', github.event_name, github.ref) }}"
   cancel-in-progress: \${{ github.event_name == 'pull_request' }}
 `));
   });
