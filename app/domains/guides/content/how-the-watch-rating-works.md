@@ -3,7 +3,7 @@ title: How PCesports rates CS2 matches to watch
 description: How PCesports combines stakes and closeness to label finished CS2 matches, what each label means, and how the rating avoids revealing results.
 order: 4
 ---
-**The short answer:** each finished CS2 match in PandaScore's top two tiers gets a label if it has an official full-match VOD: {{labelMustWatch}}, {{labelWorthAWatch}} or {{labelForFans}}. The rating combines stakes and closeness. Stakes describe what the match would decide, which was known before it began. Closeness describes how close it was, which is known only afterwards. The label reveals neither the winner nor the score or number of maps played.
+**The short answer:** each finished CS2 match in PandaScore's top two tiers gets a label if it has an official full-match VOD: {{labelMustWatch}}, {{labelWorthAWatch}} or {{labelForFans}}. The rating combines stakes and closeness. Stakes describe what the match would decide, which was known before it began. Closeness describes how close it was, which is known only afterwards. The label never reveals the winner, the score or the number of maps played.
 
 ## Stakes: known before the match
 
@@ -20,7 +20,7 @@ The stakes combine points for the stage, the event and the teams.
 - in a Swiss stage, a round where one of the teams has two wins or two losses: {{groupDecider}}
 - any other group or Swiss match: {{otherGroup}}
 
-The site identifies the stage from PandaScore's round names. Those names help estimate which matches decide qualification or elimination. They do not describe every event's format exactly.
+The site identifies the stage from PandaScore's round names. This gives a useful estimate of which matches decide something, rather than an exact rule for every event.
 
 **The event:**
 

@@ -9,7 +9,7 @@ The stage names on this site come from PandaScore, the site's source for match d
 
 ## Maps and series
 
-A **map** is one game, played on one of the maps in the competitive map pool. The teams play rounds until one side has enough round wins. If regulation ends in a tie, they play overtime.
+A **map** is one game, played on one of the maps in the competitive map pool. The teams play rounds until one side has enough round wins. If the teams are tied after those rounds, they play overtime.
 
 A **match**, also called a series, consists of a set of maps. These are the three common series lengths.
 

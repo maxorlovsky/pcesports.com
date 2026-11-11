@@ -42,7 +42,7 @@ Valve's announcements were read through the Steam news API
 (`https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=730&feeds=steam_community_announcements`), the
 same posts as the store pages linked above.
 
-## How the CS2 Majors work (`how-cs2-majors-work.md`)
+## CS2 Majors explained: format, invitations and stages (`how-cs2-majors-work.md`)
 
 | Fact (as of November 2026) | Source |
 |---|---|
@@ -67,7 +67,7 @@ same posts as the store pages linked above.
 Left out because no primary source confirmed it when this guide was written: the prize pool, and the Singapore Major's
 dates and organiser. PGL's own page now gives both (P1), and the season guide uses them.
 
-## How to watch CS2 without spoilers (`watch-cs2-without-spoilers.md`)
+## Watch CS2 VODs without spoilers (`watch-cs2-without-spoilers.md`)
 
 | Fact (as of November 2026) | Source |
 |---|---|
@@ -88,7 +88,7 @@ bar, which "can show" when the video starts or pauses, while the mouse moves ove
 on the video. A tip to skip the pre-show with the keyboard was left out: seeking with the keys may show the progress
 bar, which couldn't be checked without a browser that plays YouTube.
 
-## CS2 formats explained (`cs2-formats-explained.md`)
+## CS2 tournament formats: series, Swiss and brackets (`cs2-formats-explained.md`)
 
 | Fact | Source |
 |---|---|
@@ -104,7 +104,7 @@ groups are double-elimination brackets ending in an upper and a lower bracket fi
 playoffs; BLAST Rivals Fall 2026's groups have a Winners Match and an Elimination Match and no deciding match, with two
 quarter-finals in its playoffs.
 
-## The CS2 season in 5 minutes (`cs2-season-in-5-minutes.md`)
+## The CS2 season: Majors, organisers and key events (`cs2-season-in-5-minutes.md`)
 
 | Fact (as of November 2026) | Source |
 |---|---|
@@ -123,7 +123,7 @@ quarter-finals in its playoffs.
 | ESL's 2027 list: IEM Kraków starts on January 27 (arena days February 4 to 7), Cologne in August (starts August 2) | E1 (each event's card: "Tournament starts on Jan 27", "Tournament starts on Aug 2") |
 | A Major: Valve's rules, 32 teams from every region, items sold in the game | the Majors guide's rows: V1, V5, V6 |
 
-## How the Valve Regional Standings work (`how-the-valve-regional-standings-work.md`)
+## Valve Regional Standings: how the CS2 ranking works (`how-the-valve-regional-standings-work.md`)
 
 The guide reproduces no list, rank, point value or match from Valve's repository; it explains the model and links
 the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`, section 1).
@@ -144,7 +144,7 @@ the repository (its license is unclear: `docs/feasibility/cs2-data-and-vods.md`,
 | Invitation rules: lists, count and starting rank chosen by the organiser; the latest version on the invite date; versions in `invitation/`; in order; declines go down the list; at least three of the invited players play; open qualifiers fill the gaps; two wildcards per eight VRS invites, with their conditions | V7, 1.1, 3.2.1 to 3.2.7, 3.6 |
 | Valve's files credit HLTV.org for the event data | V8 (the standings file's last line) |
 
-## CS2 basics for returning viewers (`cs2-basics-for-returning-viewers.md`)
+## CS2 basics: what changed since CS:GO (`cs2-basics-for-returning-viewers.md`)
 
 | Fact (as of November 2026) | Source |
 |---|---|
@@ -162,7 +162,7 @@ The buy words (full buy, eco round, force buy) are the community's own terms, ex
 because no primary source confirmed it: the round win and loss bonus amounts, weapon prices, and whether money resets
 at half-time.
 
-## Where to watch official CS2 VODs (`where-to-watch-official-cs2-vods.md`)
+## Official CS2 VODs: where to watch full matches (`where-to-watch-official-cs2-vods.md`)
 
 The channel list isn't typed: `{{vodChannels}}` is filled from `app/domains/vods/channels.json` at build time
 (`app/domains/guides/README.md`), with each channel's name and a link by its id. The rest:

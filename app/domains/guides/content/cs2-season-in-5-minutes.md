@@ -7,7 +7,7 @@ order: 5
 
 ## Who runs the events
 
-Valve makes the game. Independent companies called tournament organisers run the events under a license from Valve. As of November 2026, the biggest organisers are:
+Valve makes the game but does not run the events. Independent companies called tournament organisers run the events under a licence from Valve. As of November 2026, the biggest organisers are:
 
 - **ESL** runs the ESL Pro Tour. Its two top-level series are Intel Extreme Masters (IEM) and ESL Pro League. ESL calls its two biggest events of the year its Championships.
 - **BLAST** runs BLAST Premier. Its events are called Open, Rivals and Bounty. Its schedule for 2027 lists events from January to November.
@@ -47,7 +47,7 @@ As of November 2026, there are two Majors a year. In 2025 and 2026, they occupy 
 - **The first Major ended in June.** In 2025 it was in Austin, and in 2026 in Cologne.
 - **The second Major runs from late November into December.** In 2025 it was in Budapest. In 2026 it is the PGL Singapore Major, scheduled from late November to mid-December.
 
-Other organisers' events fill the calendar between the Majors.
+Between the Majors, the organisers' own events fill the calendar.
 
 As of November 2026, the organisers' 2027 calendars show:
 

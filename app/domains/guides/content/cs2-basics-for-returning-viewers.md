@@ -11,7 +11,7 @@ A match consists of one or more maps. On each map, the Terrorists try to plant t
 
 As of November 2026:
 
-- **Regulation lasts at most 24 rounds.** The first team to win 13 rounds wins the map. This applies at the Majors, in the game's Premier and Competitive modes, and at ESL's events.
+- **Before overtime, a map has at most 24 rounds.** The first team to win 13 rounds wins the map. This applies at the Majors, in the game's Premier and Competitive modes, and at ESL's events.
 - **A round lasts 1 minute 55 seconds** at ESL's events. Once the bomb is planted, it explodes after 40 seconds unless the Counter-Terrorists defuse it.
 
 ## Overtime

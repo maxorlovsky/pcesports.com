@@ -1,6 +1,6 @@
 ---
 title: Official CS2 VODs: where to watch full matches
-description: Find official full-match CS2 VODs on YouTube, learn which channels to use, and see which organisers do not post full-match videos there.
+description: Find official full-match CS2 VODs on YouTube, learn which channels to use, and see which organisers do not post full-match VODs there.
 order: 8
 ---
 **The short answer:** the organisers listed below upload full-match VODs to YouTube. Some other organisers do not post full matches there, so you cannot use YouTube to catch up on those events.
@@ -13,7 +13,7 @@ These channels contain the organisers' full-match VODs. PCesports reads them to 
 
 {{vodChannels}}
 
-The site checked each channel before it began reading uploads. The organiser's website must link either to that channel or to a main channel that features it. To join the list, a channel must contain full matches, with a separate video for each match.
+The site checked each channel before it began reading uploads. The organiser's website must link either to that channel or to the organiser's main channel, which features it. To join the list, a channel must contain full matches, with a separate video for each match.
 
 ## How the channels are organised
 
@@ -32,7 +32,7 @@ If you want to watch a match without knowing the result, follow a direct link to
 
 ## Organisers without full-match VODs on YouTube
 
-As of November 2026, three organisers whose events are in the site's match data post no full-match videos on YouTube. The check, carried out in November 2026, covered the organisers' and events' websites and the YouTube channels they link. The Thunderpick World Championship's site was checked through a July 2026 archive because the live site blocks automated readers.
+As of November 2026, three organisers whose events are in the site's match data post no full-match VODs on YouTube. The check, carried out in November 2026, covered the organisers' and events' websites and the YouTube channels they link. The Thunderpick World Championship's site was checked through a July 2026 archive because the live site blocks automated readers.
 
 - **Perfect World (CS Asia Championships):** its site links a YouTube channel with no recent videos. The event's own site names only Chinese video platforms.
 - **FISSURE (FISSURE Playground):** the event's page links a YouTube channel in Russian. It contains full broadcast days and highlights rather than a separate video for each match.
@@ -45,7 +45,7 @@ Only matches with a full-match VOD appear in the site's list. Matches from these
 - **One link for each match.** The site finds each finished match's video on the organiser's channel by matching the teams and event in its title.
 - **A card without video details.** The list on the [home page](/) shows each match as the site's own card, with no thumbnail, no video length and no title from YouTube. "Watch the VOD" opens the organiser's video on YouTube.
 - **Only official videos.** Every linked VOD comes from the organiser. The site does not link copies uploaded by other people.
-- **Checked every day.** Every day, the site verifies the channel's uploads playlist against its record. If the channel was found through the main channel, it also checks that the main channel still features it. A failed check stops the site from reading that channel.
+- **Checked every day.** Every day, the site checks each channel's uploads playlist against its record. If the channel was found through the main channel, it also checks that the main channel still features it. A failed check stops the site from reading that channel.
 - **Deleted videos are removed.** The site rechecks each link at least once a week and removes videos that have been deleted.
 
 [How PCesports rates CS2 matches to watch](/guides/how-the-watch-rating-works) explains how the site selects matches to watch.

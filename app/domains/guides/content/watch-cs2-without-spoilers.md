@@ -11,13 +11,13 @@ Below are the places where results can appear and the steps you can take to avoi
 
 ### The video's length
 
-YouTube shows a full-match video's length on its thumbnail, in search results and in the player. A best-of-three that reaches a third map is noticeably longer than one that ends after two. The length alone can therefore reveal the number of maps played.
+YouTube shows a full-match VOD's length on its thumbnail, in search results and in the player. A best-of-three that reaches a third map is noticeably longer than one that ends after two. The length alone can therefore reveal the number of maps played.
 
 **What to do:** don't look for the video on the organiser's channel page or in search results, where video lengths are visible. Follow a direct link to the video instead. Moving the mouse over the player can reveal its controls, including the time. Once playback starts, keep the mouse away from the player.
 
 ### Chapters
 
-At ESL and PGL, the two organisers this site examined in detail, most full-match videos list their chapters in the description: one chapter per map played, often with highlight moments too. The player then splits its progress bar into those chapters. A glance at the bar can reveal the number of maps played. Chapter names can also reveal what happened.
+At ESL and PGL, the two organisers this site examined in detail, most full-match VODs list their chapters in the description: one chapter per map played, often with highlight moments too. The player then splits its progress bar into those chapters. A glance at the bar can reveal the number of maps played. Chapter names can also reveal what happened.
 
 YouTube can add chapters automatically. Chapters may also appear in the video's transcript.
 
@@ -25,7 +25,7 @@ YouTube can add chapters automatically. Chapters may also appear in the video's 
 
 ### Thumbnails and titles
 
-An organiser's full-match video is mostly safe when viewed in isolation. In the sample this site checked by hand, from ESL and PGL, the thumbnails showed both teams' logos and no score. The titles this site has seen name the teams and event, and sometimes the stage. They do not name the result.
+An organiser's full-match VOD is mostly safe when viewed in isolation. In the sample this site checked by hand, from ESL and PGL, the thumbnails showed both teams' logos and no score. The titles this site has seen name the teams and event, and sometimes the stage. They do not name the result.
 
 Other matches' titles pose a risk. A semi-final video names its two teams, so it tells you who won the quarter-finals that led to it. Browsing uploads exposes you to all those titles at once.
 
@@ -33,7 +33,7 @@ Other matches' titles pose a risk. A semi-final video names its two teams, so it
 
 ### The organiser's other uploads
 
-At ESL and PGL, the organisers' main channels post short clips that name who was knocked out or who reached the final. Each organiser keeps its full-match VODs on a separate channel devoted to full matches. StarLadder posts its full matches on its main channel, next to its clips.
+At ESL and PGL, the organisers' main channels post short clips that name who was knocked out or who reached the final. Both keep their full-match VODs on a separate channel devoted to full matches. StarLadder posts its full matches on its main channel, next to its clips.
 
 **What to do:** don't browse an organiser's channel or its short clips during an event you want to watch later. Follow a direct link to each full-match VOD. If YouTube suggests clips, skip them.
 
@@ -59,14 +59,14 @@ Searching for a team or an event can show news headlines and video titles that c
 
 ## How PCesports keeps results hidden
 
-The home page lists the finished matches of PandaScore's top two tiers from the last {{listDays}} days that have an official full-match video. The list is designed to keep results hidden:
+The home page lists the finished matches of PandaScore's top two tiers from the last {{listDays}} days that have an official full-match VOD. The list is designed to keep results hidden:
 
 - **Its own card for each match.** A card shows the event, the stage, the date and a label. There is no YouTube thumbnail, no video length, no chapters and no video title.
 - **Hidden team names.** The teams stay hidden until you tap "Show teams". A later round's teams would tell you who won the earlier ones.
-- **Labels that keep results hidden.** The site assigns the label after the match. It reveals neither the winner nor the score or number of maps played. Matches with the same label are ordered by what was at stake, which is known before the match, so the order gives nothing away either.
-- **The organiser's own full video.** "Watch the VOD" opens the organiser's full-match video on YouTube.
+- **Labels that keep results hidden.** The site assigns the label after the match. It never reveals the winner, the score or the number of maps played. Matches with the same label are ordered by what was at stake, which is known before the match, so the order gives nothing away either.
+- **The organiser's own full-match VOD.** "Watch the VOD" opens the organiser's full-match VOD on YouTube.
 
-After the link opens YouTube, you are on YouTube's own page. Video length, chapters, comments and suggestions are still there, so the precautions above still apply.
+After the link opens YouTube, you are on YouTube's own page. Video length, chapters, comments and suggestions are still there, so the precautions above apply.
 
 For an explanation of the labels, read [How PCesports rates CS2 matches to watch](/guides/how-the-watch-rating-works).
 

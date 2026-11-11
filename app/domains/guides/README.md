@@ -101,8 +101,8 @@ on screen (for example, "Lower Bracket Final" and "Semifinal 1").
 
 - **Match** or **series**: the whole contest between two teams; a **map** is one game within it; a **round** is one
   round within a map. A tournament's round is named in its stage context.
-- **Best-of-one**, **best-of-three**, **best-of-five**: spell out series lengths, including in the rating guide,
-  where numbers must come from code. Do not mix these with BO1, BO3 or best-of-3.
+- **Best-of-one**, **best-of-three**, **best-of-five**: spell out series lengths. Do not mix these with BO1, BO3
+  or best-of-3.
 - **Swiss stage**, **group**, **playoffs**, **single elimination**, **double elimination**: the stage or format.
   Use **upper bracket**, **lower bracket**, **quarter-finals**, **semi-finals** and **grand final** for their parts.
 - **VOD**: a full-match recording posted by the organiser; expand it as **video on demand** when defining it.
@@ -112,4 +112,4 @@ on screen (for example, "Lower Bracket Final" and "Semifinal 1").
   their organisation. The site's own **team rating** is separate from the VRS.
 - **Stakes**, **closeness**, **rating**, **label**: the rating's two inputs, their total, and the label that total
   determines. Keep the generated labels and numbers as placeholders.
-- Use **organiser**, **armour** and **Autoplay** consistently; retain proper names such as ESL Pro League.
+- Use **organiser**, **armour**, **licence** (noun) and **Autoplay** consistently; retain proper names such as ESL Pro League.
