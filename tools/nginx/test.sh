@@ -220,13 +220,23 @@ check http $www /.well-known/acme-challenge/no-such-token 404
 # Pages, readable without JavaScript
 check https $www / 200 'What should I watch?'
 check https $www /privacy 200 'What we collect'
+# A guide's page and the list are <name>.html beside a folder of the same name (the guides and their payloads)
+check https $www /guides 200 'Watch CS2 VODs without spoilers'
+check https $www /guides/watch-cs2-without-spoilers 200 'Where results leak'
+check https $www /guides/watch-cs2-without-spoilers/_payload.json 200
+check https $www /guides/no-such-guide 404
 check https $www /sitemap.xml 200 "<loc>$canon/privacy</loc>"
+check https $www /sitemap.xml 200 "<loc>$canon/guides/watch-cs2-without-spoilers</loc>"
 check https $www /robots.txt 200 "Sitemap: $canon/sitemap.xml"
 check https $www /og.png 200
 # One address per page
 check https $www /privacy/ 301 "$canon/privacy"
 check https $www /privacy.html 301 "$canon/privacy"
 check https $www '/privacy.html?a=1' 301 "$canon/privacy?a=1"
+check https $www /guides/ 301 "$canon/guides"
+check https $www /guides.html 301 "$canon/guides"
+check https $www /guides/watch-cs2-without-spoilers/ 301 "$canon/guides/watch-cs2-without-spoilers"
+check https $www /guides/watch-cs2-without-spoilers.html 301 "$canon/guides/watch-cs2-without-spoilers"
 # A carriage return in the address stays escaped in the redirect, never a header of its own. curl's redirect_url
 # escapes it either way, so the raw HTTP/1.1 headers are read too
 check https $www '/a%0dSet-Cookie:%20x=1.html' 301 "$canon/a%0DSet-Cookie:%20x=1"

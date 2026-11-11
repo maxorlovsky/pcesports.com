@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { DATA_CREDITS } from '../site.ts';
+import { useAnalyticsConsent } from './useAnalyticsConsent.ts';
+
+const { ready, reopen } = useAnalyticsConsent();
 
 // The year of the build; every deploy rebuilds the site
 const year = new Date().getFullYear();
@@ -16,7 +19,10 @@ const year = new Date().getFullYear();
       </ul>
       <nav aria-label="Footer">
         <ul class="footer-links">
+          <li><NuxtLink to="/guides">Guides</NuxtLink></li>
           <li><NuxtLink to="/privacy">Privacy</NuxtLink></li>
+          <!-- Only once the page runs its script: without one there is nothing to choose -->
+          <li v-if="ready"><button type="button" class="footer-button" @click="reopen">Cookie settings</button></li>
         </ul>
       </nav>
     </div>
@@ -60,6 +66,23 @@ const year = new Date().getFullYear();
 }
 
 .site-footer a:hover {
+  color: var(--color-text);
+}
+
+/* A button that reads as the links beside it */
+.footer-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.footer-button:hover {
   color: var(--color-text);
 }
 </style>

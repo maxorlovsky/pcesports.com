@@ -1,7 +1,7 @@
 # pcesports.com: agent instructions
 
 PCesports (<https://www.pcesports.com>): esports for people who don't have time to follow everything. A "What should
-I watch?" page for CS2 matches with links to the official full-match VODs, and later guides. A static Nuxt site:
+I watch?" page for CS2 matches with links to the official full-match VODs, and short guides. A static Nuxt site:
 `nuxt generate` renders every page to HTML, nginx on max-cloud serves the files, nothing else runs in production.
 
 Where things are: `README.md` (run, checks, deploy, the server), `docs/architecture.md` (the domains and their rules),
@@ -11,10 +11,10 @@ site, left as they are.
 
 ## Branches
 
-Work goes into `dev` through a pull request. The owner merges `dev` into `master`, and every push to `master` deploys
-(`.github/workflows/ci.yml`). Never push to `dev` or `master`, never deploy, and add no version bump or release
-automation unless a card asks for it. The `data` branch is the data job's alone (`README.md`, "Data job"): data
-files only, one commit, never merged; agents never push to it.
+Work goes into `dev` through a pull request. The owner merges `dev` into `master`, and every push to `master` releases
+and deploys (`.github/workflows/ci.yml`). Never push to `dev` or `master`, never deploy, and never bump the version by
+hand. The `data` branch is the data job's alone (`README.md`, "Data job"): data files only, one commit, never merged;
+agents never push to it.
 
 ## Domains
 

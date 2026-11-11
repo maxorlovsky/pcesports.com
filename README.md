@@ -24,8 +24,8 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
 |---|---|
 | `npm run lint` | ESLint (TypeScript, Vue) and Stylelint (CSS, Vue styles) |
 | `npm run typecheck` | `vue-tsc` through `nuxt typecheck` |
-| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `matches`, `vods` and `watch` rules and the data job (against fake APIs and a scratch origin) |
-| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
+| `npm test` | `tests/`, with Node's test runner: the architecture rules (`docs/architecture.md`), AGENTS.md's size, the build check, the deploy script, the `site` domain's consent rules, the `matches`, `vods` and `watch` rules, the guides (their format, length, typography, the rating guide's facts, and no spoiler the build check reads), the data job (against fake APIs and a scratch origin) and the release (its version rules, and the CI workflow's release, merge-back and deploy jobs, their steps run on a scratch origin) |
+| `npm run generate` then `npm run check:build` | each page's content is in its HTML (readable with JavaScript off; the guides' pages are read from `app/domains/guides/content/`), its title, description, canonical URL and Open Graph tags, the sitemap and robots.txt, nothing of the old site, no Google analytics tag in a page's HTML, and no result of a listed match (a result field, a winner's id or name, a map length, a score or map count in a page or a script's strings) (`tools/check-build.mjs`) |
 | `npm run nginx:test` | `tools/nginx/nginx.prod.conf` in a throwaway nginx: its TLS rules (see "On max-cloud"), `nginx -t`, then the answers of the pages, the redirects to www, the old URLs, Let's Encrypt's challenge and the three headers of every HTTPS 2xx and 3xx answer (`tools/nginx/test.sh`). Needs nginx, so it runs on the factory machine, not in CI |
 
 ## Where things are
@@ -34,11 +34,15 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
   lists what it owns.
   - `site`: the site's address, the sitemap's pages, the footer's data credits and the contact address (`site.ts`),
     the layout, header and footer, `usePageSeo` (every page's title, description, canonical URL and Open Graph tags),
-    and the privacy and 404 pages' content.
+    the analytics consent banner and Google Analytics, which loads only after "Accept" (its `README.md`), and the
+    privacy and 404 pages' content.
   - `matches` and `vods`: the CS2 matches from PandaScore and their official VODs, which the data job keeps current
     (see "Data job").
   - `watch`: the after-match rating and the "What should I watch?" list the data job writes, and the home page that
     shows it (its `README.md` has the formula and the no-spoiler rules).
+  - `guides`: the guides, one Markdown file each in `app/domains/guides/content/`, at `/guides` and `/guides/<slug>`
+    (its `README.md`: adding a guide, the format, the rules every guide keeps). `docs/guides-sources.md` lists the
+    primary source of every fact in them that can change.
 - `app/app.vue`, `app/pages/`, `app/layouts/`, `app/error.vue`, `server/routes/`: the thin shell Nuxt needs in fixed
   places; each file renders or serves one domain's view or function.
 - `app/assets/css/tokens.css`: the design tokens (colours, type, spacing, radii) as CSS variables, which components
@@ -48,15 +52,16 @@ request into dev or master (`.github/workflows/ci.yml`), except the nginx one.
   (`tools/og-image.mjs` renders it).
 - `tools/nginx/`: production's vhost and the old URLs' redirects (`docs/old-urls.md`).
 - `tools/deploy/`: the deploy and its SSH forced command. `tools/data-job/`: the data job, and `pull.mjs`, which puts
-  the data branch's files in place for a build.
-- `docs/`: the architecture, the feasibility report and the old URLs. `experiments/`: the data experiments (not part
-  of the site).
+  the data branch's files in place for a build. `tools/release/`: the next release's version (see "Releasing").
+- `docs/`: the architecture, the feasibility report, the guides' sources and the old URLs. `experiments/`: the data
+  experiments (not part of the site).
 - `AGENTS.md` (`CLAUDE.md` imports it): the rules coding agents work by.
 
 ## Branches
 
-Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` deploys. The
-`data` branch is the data job's (see "Data job"): data files only, one commit, never merged.
+Work goes into `dev` through pull requests. The owner merges `dev` into `master`, and a push to `master` releases a new
+version and deploys it (see "Releasing"). The `data` branch is the data job's (see "Data job"): data files only, one
+commit, never merged.
 
 ## Data job
 
@@ -164,14 +169,69 @@ branch as it was, so if the job stays off for good, within 30 days delete the br
 the state folder (`state.json` holds titles and ids) and the job's clone, then deploy again (Actions → CI → Run
 workflow, on master) so the site drops the ids too: their YouTube data is no longer refreshed.
 
+## Releasing
+
+A release is a pull request from `dev` into `master`, merged with a merge commit. Every push to `master`, a hotfix
+pushed straight to it included, is a release, in the CI workflow (`.github/workflows/ci.yml`):
+
+1. `tools/release/next-version.mjs` picks the next version from the commits since the last version tag (`X.Y.Z`, no
+   `v`), merge commits (subject "Merge …") left out: a `type!:` subject or a `BREAKING CHANGE:` footer is major,
+   otherwise any `feat` is minor, otherwise patch. It bumps the higher of the last tag and `package.json`, so the first
+   release continues from 6.0.0; with no tag yet, it counts the merge's own commits (`HEAD^1..HEAD^2`), or a direct
+   push's head commit.
+2. A label on the `dev` → `master` pull request wins over the commits: `release:major`, `release:minor` or
+   `release:patch`. Two of them fail the run; remove one and re-run it.
+3. It writes the version into `package.json` and `package-lock.json`, commits `chore(release): X.Y.Z` to `master`,
+   tags it `X.Y.Z` (annotated) and pushes both in one atomic push, then publishes the GitHub Release `X.Y.Z` with
+   generated notes. The job summary shows the version, the reason for its level and the commits it counted.
+4. A job of its own merges `master` back into `dev`, so `dev` carries the version and the next release counts from its
+   tag. On a conflict it goes red and nothing is forced: merge `master` into `dev` by hand. It never holds back the
+   deploy.
+5. The validators run beside the release, on the pushed commit (the release commit only changes the version). Once
+   both pass, the deploy job deploys once (see "Deploy"): the server pulls `master`, the release commit. Validators
+   that fail deploy nothing, but the version is tagged and its GitHub Release published: fix it in a new pull request,
+   whose release (the next patch) deploys.
+
+Only a release deploys: the deploy refuses a `master` whose head carries no `X.Y.Z` tag (see "Deploy"). A release that
+failed by the end of "Commit, tag and push" leaves `master` untagged, so no deploy ships it, the data job's included,
+until it is finished; those deploys go red meanwhile, and the site keeps its last release. One that failed later (the
+GitHub Release) has its tag, so its run's deploy is skipped but the next data deploy ships it. A data deploy that reaches the server between a merge and its
+release commit (until that merge's run pushes it, which waits for a running push's run first) goes red the same way and
+changes nothing. So does a release's own deploy when `master` moved on during its run: the next release ships both.
+
+The release commit can't release again: the run its push starts (with `RELEASE_TOKEN`; the default token's pushes start
+none) skips every job, since the run that made it already checked and deploys it. The data job's run
+(`gh workflow run ci.yml --ref master`, a `workflow_dispatch`) and Actions → CI → Run workflow on master never
+release: they run the validators and deploy, with no version, tag or GitHub Release (on another branch they only run
+the validators). Pushes, those manual runs and each release commit's own run queue in concurrency groups of their own,
+so neither of the others ever replaces a waiting release run. Deploys share one group with one waiting place, so a data deploy can replace a release
+run's waiting deploy: the release run shows it cancelled, and the data deploy, which pulls `master`, ships the release.
+The `data` branch is never part of a release: the release pushes `master`, its tag and `dev` only.
+
+Don't bump the version by hand, and don't start a commit on `master` with `chore(release): `. `node
+tools/release/next-version.mjs [--ref <rev>]` prints what a release of a `master` commit would get, without writing
+anything. A run that goes red because its push was rejected (`master` moved on meanwhile) released nothing, and the next
+push's run releases those commits too. Any other release that goes red by the end of "Commit, tag and push" (two
+`release:*` labels, a branch rule that rejects the push) leaves `master` unreleased: fix the cause and re-run the failed
+jobs. A run that fails after "Commit, tag and push" has released the version already, and a re-run stops at "Tag X.Y.Z
+already exists". Finish by hand instead: `gh release create X.Y.Z --verify-tag --generate-notes` if the Release is
+missing, then deploy it (Actions → CI → Run workflow, on master), and merge `master` into `dev`.
+
+GitHub Actions' own token pushes the release commit, the tag and the merge into `dev`, unless a branch rule on
+`master` or `dev` stops it (a required pull request or required status checks). Then the repository secret
+`RELEASE_TOKEN` pushes instead: a fine-grained token (this repository only, Contents: Read and write) of the owner's,
+who must be allowed past the rule (an admin, with the rule not applied to admins). Until it exists, a rule on `master`
+turns the release red before anything is pushed or deployed, and one on `dev` only the merge back.
+
 ## Deploy
 
-Every push to master deploys: the CI workflow runs the checks, then its deploy job SSHes into max-cloud with a deploy
-key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the live clone, `/var/www/pcesports.com`
-(user `max`), which:
+Every release deploys (see "Releasing"): the CI workflow runs the checks, then its deploy job SSHes into max-cloud with
+a deploy key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the live clone,
+`/var/www/pcesports.com` (user `max`), which:
 
 1. refuses any branch but master, a checkout with changes, and a second deploy while one runs;
-2. pulls master (fast-forward only) and runs the deploy it pulled;
+2. pulls master (fast-forward only) and runs the deploy it pulled, then refuses a head that is no release, pulled or
+   not: one with no `X.Y.Z` tag on origin (see "Releasing");
 3. puts the data branch's files into the domains' data folders (`tools/data-job/pull.mjs`, see "Data job"); a fetch that
    fails stops the deploy, so a release never ships older data;
 4. runs `npm ci`, `npm run generate` and the build check, on the server's own Node.js, which must be 24 or later;
@@ -180,9 +240,9 @@ key that can only run `tools/deploy/ssh.sh`. That runs `npm run deploy` in the l
    deleted. One it can't delete leaves the site switched but ends the run red, naming the files in it that another user
    owns (a root-owned `.well-known` is certbot's: see "On max-cloud").
 
-Actions → CI → Run workflow, on master, deploys again without a new commit; the data job starts the same run after it
-publishes new data. `npm run deploy -- --dry-run` in the clone checks the same and prints the steps without running
-them.
+Actions → CI → Run workflow, on master, deploys again without a new commit and without a release; the data job starts
+the same run after it publishes new data. `npm run deploy -- --dry-run` in the clone checks the same (for the release:
+origin's `master`, which a deploy would pull) and prints the steps without running them.
 
 ### On max-cloud
 
@@ -214,9 +274,9 @@ them.
   ```
 
   Whatever command it is sent, it deploys, except `dry-run`, which checks that git reaches GitHub from that shell and
-  then runs the dry run: `ssh -i <key> max@<host> dry-run` ends in `Dry run: nothing ran.` A forced command runs in a
-  shell that read no login profile, so node, npm, git and flock must be on that shell's own PATH (the script adds
-  `~/.local/bin`), and the clone's GitHub access must work without an SSH agent.
+  then runs the dry run: `ssh -i <key> max@<host> dry-run` ends in `Dry run: nothing ran.` while origin's `master` is
+  a release. A forced command runs in a shell that read no login profile, so node, npm, git and flock must be on that
+  shell's own PATH (the script adds `~/.local/bin`), and the clone's GitHub access must work without an SSH agent.
 - The repository secrets: `PROD_DEPLOY_HOST`, `PROD_DEPLOY_SSH_USER` (`max`), `PROD_DEPLOY_SSH_KEY` (the deploy key's
   private half) and, if SSH isn't on port 22, `PROD_DEPLOY_SSH_PORT`.
 

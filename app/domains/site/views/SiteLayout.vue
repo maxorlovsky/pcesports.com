@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SiteHeader from '../ui/SiteHeader.vue';
 import SiteFooter from '../ui/SiteFooter.vue';
+import ConsentBanner from '../ui/ConsentBanner.vue';
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import SiteFooter from '../ui/SiteFooter.vue';
       <slot />
     </main>
     <SiteFooter />
+    <ConsentBanner />
   </div>
 </template>
 

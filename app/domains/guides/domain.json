@@ -1,0 +1,9 @@
+{
+  "name": "guides",
+  "owns": [
+    "the guides: one Markdown file each in content/, and the format they are written in",
+    "the guides' pages: the list at /guides and each guide at /guides/<slug>",
+    "the facts a guide takes from the site's code (the rating's numbers and labels, the VOD channels of the whitelist)"
+  ],
+  "allowedDomainDependencies": ["site", "vods", "watch"]
+}

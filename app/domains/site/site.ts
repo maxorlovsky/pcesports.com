@@ -3,7 +3,10 @@ export const SITE_URL = 'https://www.pcesports.com';
 export const SITE_NAME = 'PCesports';
 export const CONTACT_EMAIL = 'pentaclickesports@gmail.com';
 
-/** Every page the sitemap lists. The 404 page stays out. */
+/**
+ * The pages the sitemap lists but the guides (the `guides` domain adds those in server/routes/sitemap.xml.ts): the home
+ * page and this domain's. The 404 page stays out.
+ */
 export const SITEMAP_PATHS = ['/', '/privacy'];
 
 /** Credits the footer shows, on every page, for the data the pages use. PandaScore's terms ask for its credit. */
@@ -14,9 +17,9 @@ export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path}`;
 }
 
-/** The sitemap's XML, which `server/routes/sitemap.xml.ts` serves and `nuxt generate` prerenders. */
-export function sitemapXml(): string {
-  const urls = SITEMAP_PATHS.map((path) => `  <url><loc>${absoluteUrl(path)}</loc></url>`).join('\n');
+/** The sitemap's XML of `paths`, which `server/routes/sitemap.xml.ts` serves and `nuxt generate` prerenders. */
+export function sitemapXml(paths: string[]): string {
+  const urls = paths.map((path) => `  <url><loc>${absoluteUrl(path)}</loc></url>`).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }

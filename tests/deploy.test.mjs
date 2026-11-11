@@ -34,6 +34,7 @@ before(() => {
   git(dir, 'init', '-q', '-b', 'master', work);
   git(work, 'add', '-A');
   git(work, 'commit', '-q', '-m', 'test: scratch site');
+  git(work, 'tag', '-a', '6.0.0', '-m', '6.0.0');
   git(dir, 'clone', '-q', '--bare', work, join(dir, 'origin.git'));
   clone = join(dir, 'live');
   git(dir, 'clone', '-q', join(dir, 'origin.git'), clone);
@@ -87,6 +88,25 @@ test('it refuses a checkout with changes', () => {
   rmSync(join(clone, 'stray.txt'));
   assert.equal(result.status, 1);
   assert.match(result.stderr, /the checkout has changes/);
+});
+
+test('it refuses a master head that is no release: no X.Y.Z tag on origin', () => {
+  // A merge pushed to master whose release commit hasn't landed, or whose release failed
+  const work = join(dir, 'unreleased-work');
+  git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
+  git(work, 'commit', '-q', '--allow-empty', '-m', 'Merge pull request #9 from me/dev');
+  git(work, 'tag', 'v6.0.1');
+  git(dir, 'clone', '-q', '--bare', work, join(dir, 'unreleased-origin.git'));
+  const live = join(dir, 'unreleased-live');
+  git(dir, 'clone', '-q', join(dir, 'unreleased-origin.git'), live);
+  const unreleased = sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live);
+  assert.equal(unreleased.status, 1);
+  assert.match(unreleased.stderr, /master at \w{7} is no release \(no X\.Y\.Z tag on it\)/);
+  assert.doesNotMatch(unreleased.stdout, /npm ci/);
+  // Tagged on origin only (the release job's push), it ships
+  git(work, 'tag', '6.0.1');
+  git(work, 'push', '-q', join(dir, 'unreleased-origin.git'), '6.0.1');
+  assert.equal(sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live).status, 0);
 });
 
 test('it refuses a site folder that is not a link to a release', () => {
@@ -209,6 +229,35 @@ test('a release with a folder the deploy user can\'t read never claims that no o
   }
 });
 
+test('a whole deploy refuses an untagged head, pulled or not, and builds nothing', () => {
+  // The live clone at the tagged release; origin then gets a merge whose release run hasn't tagged it yet
+  const work = join(dir, 'pulled-work');
+  git(dir, 'clone', '-q', join(dir, 'origin.git'), work);
+  git(dir, 'clone', '-q', '--bare', work, join(dir, 'pulled-origin.git'));
+  const live = join(dir, 'pulled-live');
+  git(dir, 'clone', '-q', join(dir, 'pulled-origin.git'), live);
+  git(work, 'commit', '-q', '--allow-empty', '-m', 'Merge pull request #9 from me/dev');
+  git(work, 'push', '-q', join(dir, 'pulled-origin.git'), 'master');
+  const bin = join(dir, 'pulled-bin');
+  mkdirSync(bin);
+  writeFileSync(join(bin, 'npm'), '#!/bin/sh\necho "npm $*" >> "$0.log"\n', { mode: 0o755 });
+  // The dry run, which pulls nothing, refuses it too: it checks the head a deploy would pull, not the tagged one it is on
+  const dry = sh('node', ['tools/deploy/deploy.mjs', '--dry-run'], live);
+  assert.equal(dry.status, 1, dry.stdout);
+  assert.match(dry.stderr, /is no release/);
+  const result = sh('node', ['tools/deploy/deploy.mjs'], live, { PATH: `${bin}:${process.env.PATH}` });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /master at \w{7} is no release \(no X\.Y\.Z tag on it\)/);
+  assert.equal(git(live, 'log', '-1', '--format=%s'), 'Merge pull request #9 from me/dev');
+  assert.equal(existsSync(join(bin, 'npm.log')), false);
+  // The next deploy (the data job's, while the release is still broken) pulls nothing new and refuses the same
+  const again = sh('node', ['tools/deploy/deploy.mjs'], live, { PATH: `${bin}:${process.env.PATH}` });
+  assert.equal(again.status, 1, again.stderr);
+  assert.match(again.stderr, /is no release/);
+  assert.equal(existsSync(join(bin, 'npm.log')), false);
+  for (const left of ['site', '.releases']) assert.equal(existsSync(join(live, left)), false, left);
+});
+
 test('a whole deploy whose prune fails switches the site, then ends red and says so', (t) => {
   if (process.getuid() === 0) return t.skip('root can delete anything');
   // A site whose build is a stub: an npm that only writes .output/public, and a build check that passes
@@ -217,6 +266,7 @@ test('a whole deploy whose prune fails switches the site, then ends red and says
   writeFileSync(join(work, 'tools', 'check-build.mjs'), '');
   git(work, 'add', '-A');
   git(work, 'commit', '-q', '-m', 'test: a build check that passes');
+  git(work, 'tag', '6.0.1');
   git(dir, 'clone', '-q', '--bare', work, join(dir, 'full-origin.git'));
   const live = join(dir, 'full-live');
   git(dir, 'clone', '-q', join(dir, 'full-origin.git'), live);

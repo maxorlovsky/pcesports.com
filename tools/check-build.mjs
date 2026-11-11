@@ -2,26 +2,45 @@
 // by the deploy before the site's link moves (tools/deploy/deploy.mjs), and in CI.
 //   node tools/check-build.mjs <dir>
 // Each page must carry its content in the HTML itself (readable with JavaScript off) and its SEO tags; the sitemap
-// must list exactly the indexable pages, at the canonical host; nothing of the old site may come back; and no result
-// of a match the home page lists (score, winner, map count) may be anywhere in it (AGENTS.md, "No spoilers").
+// must list exactly the indexable pages, at the canonical host; nothing of the old site may come back; no page's HTML
+// may load Google's analytics tag, which waits for the visitor's "Accept"; and no result of a match the home page lists
+// (score, winner, map count) may be anywhere in it (AGENTS.md, "No spoilers").
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { tokenizer } from 'acorn';
 import { decodeHTML } from 'entities';
+import { loadGuides, textOf } from '../app/domains/guides/index.ts';
 import { MATCHES_FILE, WATCH_FILE } from './data-job/job.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
 const SITE_URL = 'https://www.pcesports.com';
-/** Each page the build must have: its file, its path, and a sentence its HTML must hold without JavaScript. */
+
+/** The guides' pages: the list, with every guide's title and description, and each guide, with every block of its body. */
+export function guidePages(root = ROOT) {
+  const guides = loadGuides(root);
+  const texts = (blocks) => blocks.flatMap((block) => ('items' in block ? block.items : [block.inlines]).map(textOf));
+  return [
+    { file: 'guides.html', path: '/guides', text: guides.flatMap((guide) => [guide.title, guide.description]) },
+    ...guides.map((guide) => ({ file: `guides/${guide.slug}.html`, path: `/guides/${guide.slug}`, text: texts(guide.blocks) })),
+  ];
+}
+
+/** Each page the build must have: its file, its path, and the text (one or several) its HTML must hold without JavaScript. */
 export const PAGES = [
   { file: 'index.html', path: '/', text: 'What should I watch?' },
   { file: 'privacy.html', path: '/privacy', text: 'What we collect' },
   { file: '404.html', path: null, text: 'This page is not here' },
+  ...guidePages(),
 ];
 /** What the old site had and the new one must not: the deleted Twitter account, the LoL background, the icon font. */
 const BANNED = [/(twitter|x)\.com\/pcesports/i, /icomoon/i, /bg\.jpg/i, /fonts\.googleapis\.com/i];
+/**
+ * Google's analytics tag, which only the visitor's "Accept" may load (the `site` domain's script): a page whose HTML
+ * names it would load it, or reach Google, before any choice.
+ */
+const GOOGLE_TAG = /googletagmanager\.com|google-analytics\.com|\bgtag\(/i;
 
 function files(dir) {
   return readdirSync(dir).flatMap((name) => {
@@ -193,8 +212,9 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     if (!title) problem(`${file}: no <title>`);
     if (!attr(html, /<meta name="description" content="([^"]+)"/)) problem(`${file}: no meta description`);
     // The content is in the HTML, not built by a script: what a reader with JavaScript off and a crawler see
-    const visible = html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '');
-    if (!visible.replace(/&#39;|&#x27;/g, '\'').includes(text)) problem(`${file}: "${text}" is not in its HTML`);
+    // White space as a browser shows it: one space for each run, as the markup around a link or a list leaves it
+    const visible = decodeHTML(html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ');
+    for (const sentence of [text].flat()) if (!visible.includes(sentence.replace(/\s+/g, ' '))) problem(`${file}: "${sentence}" is not in its HTML`);
     for (const property of ['og:title', 'og:description', 'og:image', 'og:type']) {
       if (!attr(html, new RegExp(`<meta property="${property}" content="([^"]+)"`))) problem(`${file}: no ${property}`);
     }
@@ -230,6 +250,7 @@ export function checkBuild(dir, { data = buildData() } = {}) {
     if (!/\.(html|js|css|json|xml|txt)$/.test(name)) continue;
     const content = readFileSync(path, 'utf8');
     for (const pattern of BANNED) if (pattern.test(content)) problem(`${name}: matches ${pattern}, which the new site dropped`);
+    if (name.endsWith('.html') && GOOGLE_TAG.test(content)) problem(`${name}: names Google's analytics tag, which only loads after "Accept"`);
     if (!/\.(html|js|json|css)$/.test(name)) continue;
     const { data, code, values, text } = parts(name, content);
     const key = data.match(RESULT_KEY) ?? code.match(RESULT_KEY_IN_CODE);
