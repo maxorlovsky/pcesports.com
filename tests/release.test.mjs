@@ -98,15 +98,17 @@ test('the last release tag is the highest X.Y.Z tag, compared as numbers, withou
 test('writing the version changes only the version lines of package.json and package-lock.json', () => {
   dir = mkdtempSync(join(tmpdir(), 'pce-release-write-'));
   for (const file of ['package.json', 'package-lock.json']) copyFileSync(join(REPO, file), join(dir, file));
-  writeVersion(dir, '9.8.7');
+  // One major above the repository's own version, so it differs from it whatever that is
+  const version = `${Number(JSON.parse(readFileSync(join(REPO, 'package.json'), 'utf8')).version.split('.')[0]) + 1}.8.7`;
+  writeVersion(dir, version);
   const changedLines = (file) => {
     const before = readFileSync(join(REPO, file), 'utf8').split('\n');
     const after = readFileSync(join(dir, file), 'utf8').split('\n');
     assert.equal(after.length, before.length);
     return after.filter((line, index) => line !== before[index]);
   };
-  assert.deepEqual(changedLines('package.json'), ['  "version": "9.8.7",']);
-  assert.deepEqual(changedLines('package-lock.json'), ['  "version": "9.8.7",', '      "version": "9.8.7",']);
+  assert.deepEqual(changedLines('package.json'), [`  "version": "${version}",`]);
+  assert.deepEqual(changedLines('package-lock.json'), [`  "version": "${version}",`, `      "version": "${version}",`]);
 });
 
 describe('next-version.mjs on a git history', () => {
@@ -327,6 +329,8 @@ describe('the CI workflow', () => {
     const who = 'git -c user.name=Test -c user.email=test@example.com -c core.hooksPath=/dev/null';
     sh(dir, 'git init -q --bare -b master origin.git && git init -q -b master work');
     for (const file of ['package.json', 'package-lock.json']) copyFileSync(join(REPO, file), join(work, file));
+    // At 6.0.0 whatever the repository's own version is now, so the feat below makes it 6.1.0
+    writeVersion(work, '6.0.0');
     mkdirSync(join(work, 'tools', 'release'), { recursive: true });
     copyFileSync(SCRIPT, join(work, 'tools', 'release', 'next-version.mjs'));
     sh(work, `${who} add -A && ${who} commit -q -m 'chore: start' && git remote add origin ../origin.git
