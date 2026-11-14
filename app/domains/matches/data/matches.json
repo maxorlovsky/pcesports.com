@@ -1,0 +1,1032 @@
+{
+  "source": "PandaScore",
+  "matches": [
+    {
+      "id": 1781482,
+      "name": "Quarterfinal 1: PRV vs NAVI",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-06T06:30:00Z",
+      "beginAt": "2026-11-06T06:34:45Z",
+      "endAt": "2026-11-06T10:13:47Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133719,
+          "slug": "parivision",
+          "name": "PARIVISION",
+          "acronym": "PRV"
+        },
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        }
+      ],
+      "winnerId": 3216,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        4094,
+        3433,
+        3198
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-06T10:16:42Z"
+    },
+    {
+      "id": 1781483,
+      "name": "Quarterfinal 2: FURIA vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-06T11:00:00Z",
+      "beginAt": "2026-11-06T11:07:04Z",
+      "endAt": "2026-11-06T14:25:35Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 133458,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2311,
+        3304,
+        3996
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-06T14:28:30Z"
+    },
+    {
+      "id": 1781484,
+      "name": "Semifinal 1: MGLZ vs NAVI",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-07T06:30:00Z",
+      "beginAt": "2026-11-07T06:34:16Z",
+      "endAt": "2026-11-07T08:46:29Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        }
+      ],
+      "winnerId": 3272,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        3535,
+        3257
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-07T08:48:58Z"
+    },
+    {
+      "id": 1781485,
+      "name": "Semifinal 2: MOUZ vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-07T09:45:00Z",
+      "beginAt": "2026-11-07T09:50:27Z",
+      "endAt": "2026-11-07T11:35:21Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2680,
+        2516
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-07T11:37:09Z"
+    },
+    {
+      "id": 1781487,
+      "name": "Third Place Match: NAVI vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-08T04:00:00Z",
+      "beginAt": "2026-11-08T04:06:00Z",
+      "endAt": "2026-11-08T05:53:27Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 3216,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2647,
+        2686
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-08T05:58:29Z"
+    },
+    {
+      "id": 1781486,
+      "name": "Grand Final: MGLZ vs MOUZ",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-08T07:30:00Z",
+      "beginAt": "2026-11-08T07:32:30Z",
+      "endAt": "2026-11-08T10:08:47Z",
+      "bestOf": 5,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        0,
+        3
+      ],
+      "mapSeconds": [
+        2224,
+        2488,
+        2474
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-08T10:09:44Z"
+    },
+    {
+      "id": 1762450,
+      "name": "LGC vs FURIA",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T02:00:00Z",
+      "beginAt": "2026-11-11T02:02:16Z",
+      "endAt": "2026-11-11T04:04:14Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133708,
+          "slug": "legacy-48cb0f61-07e7-4b0d-85a0-5f837e29c807",
+          "name": "Legacy",
+          "acronym": "LGC"
+        },
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        3689,
+        2572
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:43:47Z"
+    },
+    {
+      "id": 1762451,
+      "name": "VIT vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T04:15:00Z",
+      "beginAt": "2026-11-11T04:18:50Z",
+      "endAt": "2026-11-11T06:18:33Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 3455,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        3159,
+        2974
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:43:50Z"
+    },
+    {
+      "id": 1762459,
+      "name": "TS vs FUT",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T06:30:00Z",
+      "beginAt": "2026-11-11T06:32:18Z",
+      "endAt": "2026-11-11T09:16:22Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        3375,
+        1964,
+        2206
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:44:19Z"
+    },
+    {
+      "id": 1762460,
+      "name": "MOUZ vs G2",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T09:30:00Z",
+      "beginAt": "2026-11-11T09:36:33Z",
+      "endAt": "2026-11-11T12:47:53Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        },
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        }
+      ],
+      "winnerId": 3210,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2505,
+        3766,
+        2958
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T12:53:42Z"
+    },
+    {
+      "id": 1762452,
+      "name": "Elimination Match: LGC vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T02:00:00Z",
+      "beginAt": "2026-11-12T02:01:06Z",
+      "endAt": "2026-11-12T03:49:52Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133708,
+          "slug": "legacy-48cb0f61-07e7-4b0d-85a0-5f837e29c807",
+          "name": "Legacy",
+          "acronym": "LGC"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 130564,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2925,
+        2373
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T03:50:59Z"
+    },
+    {
+      "id": 1762453,
+      "name": "Winners Match: FURIA vs VIT",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T04:00:00Z",
+      "beginAt": "2026-11-12T04:07:32Z",
+      "endAt": "2026-11-12T06:46:56Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2413,
+        3134,
+        1578
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T06:50:52Z"
+    },
+    {
+      "id": 1762461,
+      "name": "Elimination Match: FUT vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T07:00:00Z",
+      "beginAt": "2026-11-12T06:59:20Z",
+      "endAt": "2026-11-12T10:32:43Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        4518,
+        3768,
+        2185
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T10:41:00Z"
+    },
+    {
+      "id": 1762462,
+      "name": "Winners Match: TS vs G2",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T10:50:00Z",
+      "beginAt": "2026-11-12T10:44:33Z",
+      "endAt": "2026-11-12T13:45:10Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2915,
+        2419,
+        2324
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T13:47:14Z"
+    },
+    {
+      "id": 1762445,
+      "name": "Quarterfinal 1: VIT vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-13T08:00:00Z",
+      "beginAt": "2026-11-13T08:03:22Z",
+      "endAt": "2026-11-13T10:09:24Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2748,
+        3780
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-13T10:14:02Z"
+    },
+    {
+      "id": 1762446,
+      "name": "Quarterfinal 2: G2 vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-13T11:00:00Z",
+      "beginAt": "2026-11-13T11:01:51Z",
+      "endAt": "2026-11-13T14:09:18Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 130564,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        3583,
+        1953,
+        3061
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-13T14:14:13Z"
+    },
+    {
+      "id": 1762447,
+      "name": "Semifinal 1: TS vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-14T08:00:00Z",
+      "beginAt": "2026-11-14T08:01:26Z",
+      "endAt": "2026-11-14T09:52:51Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2679,
+        3044
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-14T09:56:39Z"
+    },
+    {
+      "id": 1762448,
+      "name": "Semifinal 2: FURIA vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "running",
+      "scheduledAt": "2026-11-14T10:45:00Z",
+      "beginAt": "2026-11-14T10:48:52Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        5048
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-14T12:29:28Z"
+    },
+    {
+      "id": 1762449,
+      "name": "Grand Final: TS vs TBD",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-15T08:00:00Z",
+      "beginAt": "2026-11-15T08:00:00Z",
+      "endAt": null,
+      "bestOf": 5,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-14T09:52:53Z"
+    },
+    {
+      "id": 1789254,
+      "name": "Round 1: 9z vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T04:00:00Z",
+      "beginAt": "2026-11-24T04:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126709,
+          "slug": "9z",
+          "name": "9z",
+          "acronym": "9z"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:40:36Z"
+    },
+    {
+      "id": 1789257,
+      "name": "Round 1: HERO vs IMP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T04:00:00Z",
+      "beginAt": "2026-11-24T04:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        },
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:40:48Z"
+    },
+    {
+      "id": 1789253,
+      "name": "Round 1: 100T vs CW",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T05:00:00Z",
+      "beginAt": "2026-11-24T05:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        },
+        {
+          "id": 134264,
+          "slug": "chinggis-warriors",
+          "name": "Chinggis Warriors",
+          "acronym": "CW"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:41:02Z"
+    },
+    {
+      "id": 1789258,
+      "name": "Round 1: NIP vs M80",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T05:00:00Z",
+      "beginAt": "2026-11-24T05:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        },
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:38:54Z"
+    },
+    {
+      "id": 1789259,
+      "name": "Round 1: PV vs DEN",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T06:00:00Z",
+      "beginAt": "2026-11-24T06:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        },
+        {
+          "id": 138988,
+          "slug": "dendele-cs",
+          "name": "DENDELE CS",
+          "acronym": "DEN"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:39:23Z"
+    },
+    {
+      "id": 1789260,
+      "name": "Round 1: TL vs GOSH",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T06:00:00Z",
+      "beginAt": "2026-11-24T06:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        },
+        {
+          "id": 139562,
+          "slug": "gosh",
+          "name": "GOSH",
+          "acronym": "GOSH"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:39:31Z"
+    },
+    {
+      "id": 1789255,
+      "name": "Round 1: EF vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T07:00:00Z",
+      "beginAt": "2026-11-24T07:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:41:10Z"
+    },
+    {
+      "id": 1789256,
+      "name": "Round 1: FaZe vs WC",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-24T07:00:00Z",
+      "beginAt": "2026-11-24T07:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3212,
+          "slug": "faze",
+          "name": "FaZe",
+          "acronym": "FaZe"
+        },
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T08:41:16Z"
+    }
+  ]
+}

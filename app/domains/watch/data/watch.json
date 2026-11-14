@@ -1,0 +1,161 @@
+{
+  "source": "PandaScore",
+  "entries": [
+    {
+      "matchId": 1781486,
+      "start": "2026-11-08T07:32:30Z",
+      "event": "IEM Beijing 2026",
+      "stage": "Playoffs · Grand Final",
+      "teams": [
+        "TheMongolz",
+        "MOUZ"
+      ],
+      "label": "Must watch",
+      "videoId": "-dUpUx4AGns"
+    },
+    {
+      "matchId": 1762447,
+      "start": "2026-11-14T08:01:26Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Playoffs · Semifinal 1",
+      "teams": [
+        "Spirit",
+        "MOUZ"
+      ],
+      "label": "Must watch",
+      "videoId": "RFFJZ8RzYz4"
+    },
+    {
+      "matchId": 1762445,
+      "start": "2026-11-13T08:03:22Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Playoffs · Quarterfinal 1",
+      "teams": [
+        "Vitality",
+        "MOUZ"
+      ],
+      "label": "Must watch",
+      "videoId": "0lKJzq6Jv0o"
+    },
+    {
+      "matchId": 1762461,
+      "start": "2026-11-12T06:59:20Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group B · Elimination Match",
+      "teams": [
+        "FUT Esports",
+        "MOUZ"
+      ],
+      "label": "Must watch",
+      "videoId": "LhqXCuBLXkA"
+    },
+    {
+      "matchId": 1762453,
+      "start": "2026-11-12T04:07:32Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group A · Winners Match",
+      "teams": [
+        "FURIA",
+        "Vitality"
+      ],
+      "label": "Worth a watch",
+      "videoId": "e-HPF_4rGIw"
+    },
+    {
+      "matchId": 1762462,
+      "start": "2026-11-12T10:44:33Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group B · Winners Match",
+      "teams": [
+        "Spirit",
+        "G2"
+      ],
+      "label": "Worth a watch",
+      "videoId": "OO6vlPylfxs"
+    },
+    {
+      "matchId": 1762446,
+      "start": "2026-11-13T11:01:51Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Playoffs · Quarterfinal 2",
+      "teams": [
+        "G2",
+        "Team Falcons"
+      ],
+      "label": "Worth a watch",
+      "videoId": "oCyxhurYJVk"
+    },
+    {
+      "matchId": 1781487,
+      "start": "2026-11-08T04:06:00Z",
+      "event": "IEM Beijing 2026",
+      "stage": "Playoffs · Third Place Match",
+      "teams": [
+        "Natus Vincere",
+        "BetBoom Team"
+      ],
+      "label": "Worth a watch",
+      "videoId": "To8AW-Tgn04"
+    },
+    {
+      "matchId": 1762459,
+      "start": "2026-11-11T06:32:18Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group B",
+      "teams": [
+        "Spirit",
+        "FUT Esports"
+      ],
+      "label": "Worth a watch",
+      "videoId": "-J1UzMnFsqo"
+    },
+    {
+      "matchId": 1762451,
+      "start": "2026-11-11T04:18:50Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group A",
+      "teams": [
+        "Vitality",
+        "Team Falcons"
+      ],
+      "label": "Worth a watch",
+      "videoId": "bPEdav9fUks"
+    },
+    {
+      "matchId": 1762460,
+      "start": "2026-11-11T09:36:33Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group B",
+      "teams": [
+        "MOUZ",
+        "G2"
+      ],
+      "label": "Worth a watch",
+      "videoId": "RK3ZWWzOWB8"
+    },
+    {
+      "matchId": 1762450,
+      "start": "2026-11-11T02:02:16Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group A",
+      "teams": [
+        "Legacy",
+        "FURIA"
+      ],
+      "label": "Worth a watch",
+      "videoId": "O-Fs7ZVTffY"
+    },
+    {
+      "matchId": 1762452,
+      "start": "2026-11-12T02:01:06Z",
+      "event": "BLAST Rivals Fall 2026",
+      "stage": "Group A · Elimination Match",
+      "teams": [
+        "Legacy",
+        "Team Falcons"
+      ],
+      "label": "For fans",
+      "videoId": "tqJdtvoPZ4c"
+    }
+  ]
+}
