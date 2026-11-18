@@ -60,6 +60,8 @@ runs the same, except nginx, on every pull request into `dev` or `master`.
 
 Build and look: `npm run generate`, then `npm run preview` serves `.output/public` as nginx would (`PORT=<port>`; pick
 a free one and stop it afterwards).
+A scratch copy (`git archive` plus a symlinked `node_modules`) runs every check as it is, and writes nothing into the
+linked checkout (`nuxt.config.ts`).
 
 ## Never
 
