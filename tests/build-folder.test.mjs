@@ -1,6 +1,7 @@
 // Where `nuxt generate` builds (nuxt.config.ts). A reviewer's scratch copy, with node_modules symlinked to a checkout's,
 // must build in its own .nuxt and take no Nuxt CLI lock, never in node_modules/.cache/nuxt, which is that checkout's.
-// Any other checkout keeps Nuxt's default. Each case loads the real config in a child process, as the Nuxt CLI does.
+// Any other checkout keeps Nuxt's default. Each case loads the real config with @nuxt/kit, as the Nuxt CLI does, in a
+// child process of its own, so its cwd and the environment it sets stay apart.
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, mkdtempSync, rmSync, symlinkSync } from 'node:fs';

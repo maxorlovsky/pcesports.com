@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 // A scratch copy whose node_modules is a symlink to another checkout's (how reviewers check a branch). Once the copy has
 // a .nuxt (`nuxt prepare` or `nuxt typecheck` made one), Nuxt builds into node_modules/.cache/nuxt/.nuxt: the other
 // checkout's folder, where the build also fails (`#internal/nuxt/paths`). Such a copy builds in its own .nuxt instead,
-// and skips the Nuxt CLI's lock, whose file would go into that folder too. Any other checkout keeps Nuxt's defaults.
+// and skips the Nuxt CLI's locks: the output lock's file goes into the linked node_modules/.cache/nuxt. Any other
+// checkout keeps Nuxt's defaults.
 const nodeModules = join(dirname(fileURLToPath(import.meta.url)), 'node_modules');
 const nodeModulesLinked = lstatSync(nodeModules, { throwIfNoEntry: false })?.isSymbolicLink() ?? false;
 if (nodeModulesLinked) process.env.NUXT_IGNORE_LOCK ??= '1';
