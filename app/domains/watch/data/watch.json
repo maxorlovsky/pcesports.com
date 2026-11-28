@@ -1,0 +1,593 @@
+{
+  "source": "PandaScore",
+  "entries": [
+    {
+      "matchId": 1816925,
+      "start": "2026-11-26T11:20:31Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "Imperial",
+        "Liquid"
+      ],
+      "label": "Worth a watch",
+      "videoId": "DdBe6iciD1g"
+    },
+    {
+      "matchId": 1816917,
+      "start": "2026-11-25T08:31:22Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "Imperial",
+        "FlyQuest"
+      ],
+      "label": "Worth a watch",
+      "videoId": "yLF2UqLeMGI"
+    },
+    {
+      "matchId": 1816929,
+      "start": "2026-11-27T12:08:22Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 5",
+      "teams": [
+        "M80",
+        "100 Thieves"
+      ],
+      "label": "Worth a watch",
+      "videoId": "EtYz0yez64c"
+    },
+    {
+      "matchId": 1816928,
+      "start": "2026-11-27T08:29:07Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 5",
+      "teams": [
+        "Imperial",
+        "Wildcard"
+      ],
+      "label": "Worth a watch",
+      "videoId": "1NrYLuoQ5Rc"
+    },
+    {
+      "matchId": 1816923,
+      "start": "2026-11-26T09:00:16Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "Lynn Vision",
+        "PVISION"
+      ],
+      "label": "Worth a watch",
+      "videoId": "M5-PVludFUw"
+    },
+    {
+      "matchId": 1817112,
+      "start": "2026-11-28T12:44:56Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "Natus Vincere",
+        "Astralis"
+      ],
+      "label": "Worth a watch",
+      "videoId": "ov4x3HW80S4"
+    },
+    {
+      "matchId": 1817102,
+      "start": "2026-11-28T07:22:21Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "Natus Vincere",
+        "PVISION"
+      ],
+      "label": "Worth a watch",
+      "videoId": "XFok7ZNv_7c"
+    },
+    {
+      "matchId": 1816927,
+      "start": "2026-11-27T06:02:18Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 5",
+      "teams": [
+        "Lynn Vision",
+        "Heroic"
+      ],
+      "label": "For fans",
+      "videoId": "X1aL1O4i1kA"
+    },
+    {
+      "matchId": 1816926,
+      "start": "2026-11-26T12:11:12Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "Wildcard",
+        "Chinggis Warriors"
+      ],
+      "label": "For fans",
+      "videoId": "BdqsHOUy_fo"
+    },
+    {
+      "matchId": 1816924,
+      "start": "2026-11-26T09:05:45Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "100 Thieves",
+        "9z"
+      ],
+      "label": "For fans",
+      "videoId": "FDDDQRmIauw"
+    },
+    {
+      "matchId": 1816922,
+      "start": "2026-11-26T06:02:02Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "M80",
+        "Eternal Fire"
+      ],
+      "label": "For fans",
+      "videoId": "8vfVDQjOWbs"
+    },
+    {
+      "matchId": 1816921,
+      "start": "2026-11-26T06:01:52Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 4",
+      "teams": [
+        "Heroic",
+        "FaZe"
+      ],
+      "label": "For fans",
+      "videoId": "0C-EFwM7YEs"
+    },
+    {
+      "matchId": 1816920,
+      "start": "2026-11-25T11:03:27Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "NIP",
+        "Liquid"
+      ],
+      "label": "For fans",
+      "videoId": "n6qkiicKVQY"
+    },
+    {
+      "matchId": 1816919,
+      "start": "2026-11-25T10:06:40Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "GOSH",
+        "Chinggis Warriors"
+      ],
+      "label": "For fans",
+      "videoId": "YpmvYFZnuGI"
+    },
+    {
+      "matchId": 1816918,
+      "start": "2026-11-25T08:09:30Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "9z",
+        "DENDELE CS"
+      ],
+      "label": "For fans",
+      "videoId": "MhUMnhXn55Q"
+    },
+    {
+      "matchId": 1817110,
+      "start": "2026-11-28T11:41:40Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "FUT Esports",
+        "100 Thieves"
+      ],
+      "label": "For fans",
+      "videoId": "RSx4c69yJNI"
+    },
+    {
+      "matchId": 1817025,
+      "start": "2026-11-28T04:01:10Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "FUT Esports",
+        "FlyQuest"
+      ],
+      "label": "For fans",
+      "videoId": "H6Hjs2MdwjM"
+    },
+    {
+      "matchId": 1817108,
+      "start": "2026-11-28T10:32:30Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "THE ONE",
+        "TheMongolz"
+      ],
+      "label": "For fans",
+      "videoId": "XgdsUyM5L84"
+    },
+    {
+      "matchId": 1817103,
+      "start": "2026-11-28T05:09:16Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "Astralis",
+        "Imperial"
+      ],
+      "label": "For fans",
+      "videoId": "c78Mdl56xMY"
+    },
+    {
+      "matchId": 1817105,
+      "start": "2026-11-28T04:02:04Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "TheMongolz",
+        "Lynn Vision"
+      ],
+      "label": "For fans",
+      "videoId": "jpYIEwz3SGs"
+    },
+    {
+      "matchId": 1817101,
+      "start": "2026-11-28T06:17:11Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "G2",
+        "Liquid"
+      ],
+      "label": "For fans",
+      "videoId": "oBgYeVetIcU"
+    },
+    {
+      "matchId": 1817104,
+      "start": "2026-11-28T07:28:34Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "MIBR",
+        "100 Thieves"
+      ],
+      "label": "For fans",
+      "videoId": "l0iElcaLMOI"
+    },
+    {
+      "matchId": 1817100,
+      "start": "2026-11-28T06:14:12Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "THE ONE",
+        "Eternal Fire"
+      ],
+      "label": "For fans",
+      "videoId": "u2Vq_OL5YnY"
+    },
+    {
+      "matchId": 1816907,
+      "start": "2026-11-24T09:48:50Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "100 Thieves",
+        "Imperial"
+      ],
+      "label": "For fans",
+      "videoId": "0exAGjTwl3I"
+    },
+    {
+      "matchId": 1817109,
+      "start": "2026-11-28T10:18:28Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "Liquid",
+        "Eternal Fire"
+      ],
+      "label": "For fans",
+      "videoId": "Y7bfhaRmmlU"
+    },
+    {
+      "matchId": 1817113,
+      "start": "2026-11-28T13:31:27Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "FlyQuest",
+        "PVISION"
+      ],
+      "label": "For fans",
+      "videoId": "_dMrxZUwX5s"
+    },
+    {
+      "matchId": 1789253,
+      "start": "2026-11-24T05:26:47Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "100 Thieves",
+        "Chinggis Warriors"
+      ],
+      "label": "For fans",
+      "videoId": "PsrUzYqzcVk"
+    },
+    {
+      "matchId": 1789260,
+      "start": "2026-11-24T06:10:31Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "Liquid",
+        "GOSH"
+      ],
+      "label": "For fans",
+      "videoId": "1M0N_FZk1zo"
+    },
+    {
+      "matchId": 1816913,
+      "start": "2026-11-25T06:03:07Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "Eternal Fire",
+        "100 Thieves"
+      ],
+      "label": "For fans",
+      "videoId": "Xw2AJ3mU2Q8"
+    },
+    {
+      "matchId": 1816916,
+      "start": "2026-11-25T07:12:34Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "PVISION",
+        "FaZe"
+      ],
+      "label": "For fans",
+      "videoId": "zz_1DdYXoL0"
+    },
+    {
+      "matchId": 1817111,
+      "start": "2026-11-28T11:59:25Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "MIBR",
+        "Imperial"
+      ],
+      "label": "For fans",
+      "videoId": "u_zZWV4ekqE"
+    },
+    {
+      "matchId": 1817024,
+      "start": "2026-11-28T05:13:17Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 1",
+      "teams": [
+        "Nemiga",
+        "NIP"
+      ],
+      "label": "For fans",
+      "videoId": "8mvX-sQ3xnk"
+    },
+    {
+      "matchId": 1817107,
+      "start": "2026-11-28T09:25:45Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "Nemiga",
+        "Lynn Vision"
+      ],
+      "label": "For fans",
+      "videoId": "pXOxEWc2__I"
+    },
+    {
+      "matchId": 1817106,
+      "start": "2026-11-28T09:26:17Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 2 · Round 2",
+      "teams": [
+        "G2",
+        "NIP"
+      ],
+      "label": "For fans",
+      "videoId": "bl8XGDYQITc"
+    },
+    {
+      "matchId": 1816911,
+      "start": "2026-11-24T11:53:52Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "Liquid",
+        "Wildcard"
+      ],
+      "label": "For fans",
+      "videoId": "aTrHsuiK_B4"
+    },
+    {
+      "matchId": 1816909,
+      "start": "2026-11-24T11:03:28Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "PVISION",
+        "FlyQuest"
+      ],
+      "label": "For fans",
+      "videoId": "ivYA0jhe36g"
+    },
+    {
+      "matchId": 1816912,
+      "start": "2026-11-24T12:11:08Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "FaZe",
+        "GOSH"
+      ],
+      "label": "For fans",
+      "videoId": "sRwExqSXBUs"
+    },
+    {
+      "matchId": 1789259,
+      "start": "2026-11-24T06:28:17Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "PVISION",
+        "DENDELE CS"
+      ],
+      "label": "For fans",
+      "videoId": "KJjF9OdrUHg"
+    },
+    {
+      "matchId": 1816915,
+      "start": "2026-11-25T07:03:26Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "Wildcard",
+        "Lynn Vision"
+      ],
+      "label": "For fans",
+      "videoId": "0-aHOjCVKc8"
+    },
+    {
+      "matchId": 1816914,
+      "start": "2026-11-25T06:01:46Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 3",
+      "teams": [
+        "Heroic",
+        "M80"
+      ],
+      "label": "For fans",
+      "videoId": "XWC3l6l1Agk"
+    },
+    {
+      "matchId": 1816910,
+      "start": "2026-11-24T10:51:07Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "Eternal Fire",
+        "DENDELE CS"
+      ],
+      "label": "For fans",
+      "videoId": "7DtJSohMhXU"
+    },
+    {
+      "matchId": 1816908,
+      "start": "2026-11-24T09:40:56Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "9z",
+        "M80"
+      ],
+      "label": "For fans",
+      "videoId": "XQuLTW9aBeM"
+    },
+    {
+      "matchId": 1816906,
+      "start": "2026-11-24T08:50:07Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "Heroic",
+        "Chinggis Warriors"
+      ],
+      "label": "For fans",
+      "videoId": "eF8yk3TiwBo"
+    },
+    {
+      "matchId": 1816902,
+      "start": "2026-11-24T08:49:07Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 2",
+      "teams": [
+        "NIP",
+        "Lynn Vision"
+      ],
+      "label": "For fans",
+      "videoId": "wNIDbCmvoNI"
+    },
+    {
+      "matchId": 1789255,
+      "start": "2026-11-24T07:21:59Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "Eternal Fire",
+        "FlyQuest"
+      ],
+      "label": "For fans",
+      "videoId": "RduM9Yjydlg"
+    },
+    {
+      "matchId": 1789256,
+      "start": "2026-11-24T07:01:08Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "FaZe",
+        "Wildcard"
+      ],
+      "label": "For fans",
+      "videoId": "5g-cMIdKdOM"
+    },
+    {
+      "matchId": 1789258,
+      "start": "2026-11-24T05:04:13Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "NIP",
+        "M80"
+      ],
+      "label": "For fans",
+      "videoId": "_goOJ02CAuM"
+    },
+    {
+      "matchId": 1789257,
+      "start": "2026-11-24T04:08:17Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "Heroic",
+        "Imperial"
+      ],
+      "label": "For fans",
+      "videoId": "RDZVqR1EmT4"
+    },
+    {
+      "matchId": 1789254,
+      "start": "2026-11-24T04:04:23Z",
+      "event": "PGL Major Singapore 2026",
+      "stage": "Stage 1 · Round 1",
+      "teams": [
+        "9z",
+        "Lynn Vision"
+      ],
+      "label": "For fans",
+      "videoId": "UZFr8PSMvjk"
+    }
+  ]
+}

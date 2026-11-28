@@ -1,0 +1,3886 @@
+{
+  "source": "PandaScore",
+  "matches": [
+    {
+      "id": 1781482,
+      "name": "Quarterfinal 1: PRV vs NAVI",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-06T06:30:00Z",
+      "beginAt": "2026-11-06T06:34:45Z",
+      "endAt": "2026-11-06T10:13:47Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133719,
+          "slug": "parivision",
+          "name": "PARIVISION",
+          "acronym": "PRV"
+        },
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        }
+      ],
+      "winnerId": 3216,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        4094,
+        3433,
+        3198
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-06T10:16:42Z"
+    },
+    {
+      "id": 1781483,
+      "name": "Quarterfinal 2: FURIA vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-06T11:00:00Z",
+      "beginAt": "2026-11-06T11:07:04Z",
+      "endAt": "2026-11-06T14:25:35Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 133458,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2311,
+        3304,
+        3996
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-06T14:28:30Z"
+    },
+    {
+      "id": 1781484,
+      "name": "Semifinal 1: MGLZ vs NAVI",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-07T06:30:00Z",
+      "beginAt": "2026-11-07T06:34:16Z",
+      "endAt": "2026-11-07T08:46:29Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        }
+      ],
+      "winnerId": 3272,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        3535,
+        3257
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-07T08:48:58Z"
+    },
+    {
+      "id": 1781485,
+      "name": "Semifinal 2: MOUZ vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-07T09:45:00Z",
+      "beginAt": "2026-11-07T09:50:27Z",
+      "endAt": "2026-11-07T11:35:21Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2680,
+        2516
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-07T11:37:09Z"
+    },
+    {
+      "id": 1781487,
+      "name": "Third Place Match: NAVI vs BB",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-08T04:00:00Z",
+      "beginAt": "2026-11-08T04:06:00Z",
+      "endAt": "2026-11-08T05:53:27Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        },
+        {
+          "id": 133458,
+          "slug": "betboom-team-cs-go",
+          "name": "BetBoom Team",
+          "acronym": "BB"
+        }
+      ],
+      "winnerId": 3216,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2647,
+        2686
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-08T05:58:29Z"
+    },
+    {
+      "id": 1781486,
+      "name": "Grand Final: MGLZ vs MOUZ",
+      "league": "IEM",
+      "serie": "Beijing 2026",
+      "stage": "Playoffs",
+      "organizer": "ESL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-08T07:30:00Z",
+      "beginAt": "2026-11-08T07:32:30Z",
+      "endAt": "2026-11-08T10:08:47Z",
+      "bestOf": 5,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        0,
+        3
+      ],
+      "mapSeconds": [
+        2224,
+        2488,
+        2474
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-08T10:09:44Z"
+    },
+    {
+      "id": 1762450,
+      "name": "LGC vs FURIA",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T02:00:00Z",
+      "beginAt": "2026-11-11T02:02:16Z",
+      "endAt": "2026-11-11T04:04:14Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133708,
+          "slug": "legacy-48cb0f61-07e7-4b0d-85a0-5f837e29c807",
+          "name": "Legacy",
+          "acronym": "LGC"
+        },
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        3689,
+        2572
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:43:47Z"
+    },
+    {
+      "id": 1762451,
+      "name": "VIT vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T04:15:00Z",
+      "beginAt": "2026-11-11T04:18:50Z",
+      "endAt": "2026-11-11T06:18:33Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 3455,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        3159,
+        2974
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:43:50Z"
+    },
+    {
+      "id": 1762459,
+      "name": "TS vs FUT",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T06:30:00Z",
+      "beginAt": "2026-11-11T06:32:18Z",
+      "endAt": "2026-11-11T09:16:22Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        3375,
+        1964,
+        2206
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T09:44:19Z"
+    },
+    {
+      "id": 1762460,
+      "name": "MOUZ vs G2",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-11T09:30:00Z",
+      "beginAt": "2026-11-11T09:36:33Z",
+      "endAt": "2026-11-11T12:47:53Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        },
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        }
+      ],
+      "winnerId": 3210,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2505,
+        3766,
+        2958
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-11T12:53:42Z"
+    },
+    {
+      "id": 1762452,
+      "name": "Elimination Match: LGC vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T02:00:00Z",
+      "beginAt": "2026-11-12T02:01:06Z",
+      "endAt": "2026-11-12T03:49:52Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133708,
+          "slug": "legacy-48cb0f61-07e7-4b0d-85a0-5f837e29c807",
+          "name": "Legacy",
+          "acronym": "LGC"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 130564,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2925,
+        2373
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T03:50:59Z"
+    },
+    {
+      "id": 1762453,
+      "name": "Winners Match: FURIA vs VIT",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group A",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T04:00:00Z",
+      "beginAt": "2026-11-12T04:07:32Z",
+      "endAt": "2026-11-12T06:46:56Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2413,
+        3134,
+        1578
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T06:50:52Z"
+    },
+    {
+      "id": 1762461,
+      "name": "Elimination Match: FUT vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T07:00:00Z",
+      "beginAt": "2026-11-12T06:59:20Z",
+      "endAt": "2026-11-12T10:32:43Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        4518,
+        3768,
+        2185
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T10:41:00Z"
+    },
+    {
+      "id": 1762462,
+      "name": "Winners Match: TS vs G2",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Group B",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-12T10:50:00Z",
+      "beginAt": "2026-11-12T10:44:33Z",
+      "endAt": "2026-11-12T13:45:10Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2915,
+        2419,
+        2324
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-12T13:47:14Z"
+    },
+    {
+      "id": 1762445,
+      "name": "Quarterfinal 1: VIT vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-13T08:00:00Z",
+      "beginAt": "2026-11-13T08:03:22Z",
+      "endAt": "2026-11-13T10:09:24Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3455,
+          "slug": "vitality-cs-go",
+          "name": "Vitality",
+          "acronym": "VIT"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 3240,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2748,
+        3780
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-13T10:14:02Z"
+    },
+    {
+      "id": 1762446,
+      "name": "Quarterfinal 2: G2 vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-13T11:00:00Z",
+      "beginAt": "2026-11-13T11:01:51Z",
+      "endAt": "2026-11-13T14:09:18Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 130564,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        3583,
+        1953,
+        3061
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-13T14:14:13Z"
+    },
+    {
+      "id": 1762447,
+      "name": "Semifinal 1: TS vs MOUZ",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-14T08:00:00Z",
+      "beginAt": "2026-11-14T08:01:26Z",
+      "endAt": "2026-11-14T09:52:51Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 3240,
+          "slug": "mousesports-cs-go",
+          "name": "MOUZ",
+          "acronym": "MOUZ"
+        }
+      ],
+      "winnerId": 124523,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2679,
+        3044
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-14T09:56:39Z"
+    },
+    {
+      "id": 1762448,
+      "name": "Semifinal 2: FURIA vs FAL",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-14T10:45:00Z",
+      "beginAt": "2026-11-14T10:48:52Z",
+      "endAt": "2026-11-14T13:25:06Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        },
+        {
+          "id": 130564,
+          "slug": "falcons-esports",
+          "name": "Team Falcons",
+          "acronym": "FAL"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        5048,
+        3343
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-14T13:28:53Z"
+    },
+    {
+      "id": 1762449,
+      "name": "Grand Final: TS vs FURIA",
+      "league": "BLAST Rivals",
+      "serie": "Fall 2026",
+      "stage": "Playoffs",
+      "organizer": "BLAST",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-15T08:00:00Z",
+      "beginAt": "2026-11-15T08:05:35Z",
+      "endAt": "2026-11-15T11:00:12Z",
+      "bestOf": 5,
+      "teams": [
+        {
+          "id": 124523,
+          "slug": "spirit",
+          "name": "Spirit",
+          "acronym": "TS"
+        },
+        {
+          "id": 124530,
+          "slug": "furia",
+          "name": "FURIA",
+          "acronym": "FURIA"
+        }
+      ],
+      "winnerId": 124530,
+      "score": [
+        0,
+        3
+      ],
+      "mapSeconds": [
+        3227,
+        2508,
+        2645
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-15T11:04:39Z"
+    },
+    {
+      "id": 1789254,
+      "name": "Round 1: 9z vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T04:00:00Z",
+      "beginAt": "2026-11-24T04:04:23Z",
+      "endAt": "2026-11-24T05:06:36Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126709,
+          "slug": "9z",
+          "name": "9z",
+          "acronym": "9z"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": 126439,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3733
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T05:09:12Z"
+    },
+    {
+      "id": 1789257,
+      "name": "Round 1: HERO vs IMP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T04:00:00Z",
+      "beginAt": "2026-11-24T04:08:17Z",
+      "endAt": "2026-11-24T04:47:57Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        },
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        }
+      ],
+      "winnerId": 126377,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        2380
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T04:55:40Z"
+    },
+    {
+      "id": 1789258,
+      "name": "Round 1: NIP vs M80",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T05:00:00Z",
+      "beginAt": "2026-11-24T05:04:13Z",
+      "endAt": "2026-11-24T05:55:31Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        },
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        }
+      ],
+      "winnerId": 3218,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3077
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T06:06:39Z"
+    },
+    {
+      "id": 1789253,
+      "name": "Round 1: 100T vs CW",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T05:25:00Z",
+      "beginAt": "2026-11-24T05:26:47Z",
+      "endAt": "2026-11-24T06:09:53Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        },
+        {
+          "id": 134264,
+          "slug": "chinggis-warriors",
+          "name": "Chinggis Warriors",
+          "acronym": "CW"
+        }
+      ],
+      "winnerId": 126452,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2586
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T06:19:33Z"
+    },
+    {
+      "id": 1789260,
+      "name": "Round 1: TL vs GOSH",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T06:10:00Z",
+      "beginAt": "2026-11-24T06:10:31Z",
+      "endAt": "2026-11-24T06:39:19Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        },
+        {
+          "id": 139562,
+          "slug": "gosh",
+          "name": "GOSH",
+          "acronym": "GOSH"
+        }
+      ],
+      "winnerId": 3213,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        1728
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T06:41:16Z"
+    },
+    {
+      "id": 1789259,
+      "name": "Round 1: PV vs DEN",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T06:25:00Z",
+      "beginAt": "2026-11-24T06:28:17Z",
+      "endAt": "2026-11-24T07:03:30Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        },
+        {
+          "id": 138988,
+          "slug": "dendele-cs",
+          "name": "DENDELE CS",
+          "acronym": "DEN"
+        }
+      ],
+      "winnerId": 139565,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2113
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T07:06:24Z"
+    },
+    {
+      "id": 1789256,
+      "name": "Round 1: FaZe vs WC",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T07:00:00Z",
+      "beginAt": "2026-11-24T07:01:08Z",
+      "endAt": "2026-11-24T07:47:48Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3212,
+          "slug": "faze",
+          "name": "FaZe",
+          "acronym": "FaZe"
+        },
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        }
+      ],
+      "winnerId": 135273,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        2800
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T07:50:47Z"
+    },
+    {
+      "id": 1789255,
+      "name": "Round 1: EF vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T07:15:00Z",
+      "beginAt": "2026-11-24T07:21:59Z",
+      "endAt": "2026-11-24T08:06:16Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": 134746,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        2657
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T08:07:57Z"
+    },
+    {
+      "id": 1816902,
+      "name": "Round 2: NIP vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T08:45:00Z",
+      "beginAt": "2026-11-24T08:49:07Z",
+      "endAt": "2026-11-24T09:33:40Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": 3218,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2673
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T09:39:18Z"
+    },
+    {
+      "id": 1816906,
+      "name": "Round 2: HERO vs CW",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T08:45:00Z",
+      "beginAt": "2026-11-24T08:50:07Z",
+      "endAt": "2026-11-24T09:20:04Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        },
+        {
+          "id": 134264,
+          "slug": "chinggis-warriors",
+          "name": "Chinggis Warriors",
+          "acronym": "CW"
+        }
+      ],
+      "winnerId": 3246,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        1797
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T09:21:34Z"
+    },
+    {
+      "id": 1816908,
+      "name": "Round 2: 9z vs M80",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T09:35:00Z",
+      "beginAt": "2026-11-24T09:40:56Z",
+      "endAt": "2026-11-24T10:32:12Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126709,
+          "slug": "9z",
+          "name": "9z",
+          "acronym": "9z"
+        },
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        }
+      ],
+      "winnerId": 133435,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3076
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T10:34:23Z"
+    },
+    {
+      "id": 1816907,
+      "name": "Round 2: 100T vs IMP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T10:00:00Z",
+      "beginAt": "2026-11-24T09:48:50Z",
+      "endAt": "2026-11-24T10:47:19Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        },
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        }
+      ],
+      "winnerId": 126377,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3509
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T10:52:03Z"
+    },
+    {
+      "id": 1816910,
+      "name": "Round 2: EF vs DEN",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T10:50:00Z",
+      "beginAt": "2026-11-24T10:51:07Z",
+      "endAt": "2026-11-24T11:36:28Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        },
+        {
+          "id": 138988,
+          "slug": "dendele-cs",
+          "name": "DENDELE CS",
+          "acronym": "DEN"
+        }
+      ],
+      "winnerId": 129413,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2721
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T11:41:04Z"
+    },
+    {
+      "id": 1816909,
+      "name": "Round 2: PV vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T11:00:00Z",
+      "beginAt": "2026-11-24T11:03:28Z",
+      "endAt": "2026-11-24T11:55:17Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": 134746,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3109
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T11:58:20Z"
+    },
+    {
+      "id": 1816911,
+      "name": "Round 2: TL vs WC",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T12:00:00Z",
+      "beginAt": "2026-11-24T11:53:52Z",
+      "endAt": "2026-11-24T12:37:12Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        },
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        }
+      ],
+      "winnerId": 3213,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2600
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T12:56:00Z"
+    },
+    {
+      "id": 1816912,
+      "name": "Round 2: FaZe vs GOSH",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-24T12:10:00Z",
+      "beginAt": "2026-11-24T12:11:08Z",
+      "endAt": "2026-11-24T12:43:01Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3212,
+          "slug": "faze",
+          "name": "FaZe",
+          "acronym": "FaZe"
+        },
+        {
+          "id": 139562,
+          "slug": "gosh",
+          "name": "GOSH",
+          "acronym": "GOSH"
+        }
+      ],
+      "winnerId": 3212,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        1913
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-24T12:48:25Z"
+    },
+    {
+      "id": 1816914,
+      "name": "Round 3: HERO vs M80",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T06:00:00Z",
+      "beginAt": "2026-11-25T06:01:46Z",
+      "endAt": "2026-11-25T06:57:08Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        },
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        }
+      ],
+      "winnerId": 133435,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3322
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T07:01:29Z"
+    },
+    {
+      "id": 1816913,
+      "name": "Round 3: EF vs 100T",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T06:00:00Z",
+      "beginAt": "2026-11-25T06:03:07Z",
+      "endAt": "2026-11-25T06:43:22Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        },
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        }
+      ],
+      "winnerId": 129413,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2415
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T06:49:49Z"
+    },
+    {
+      "id": 1816915,
+      "name": "Round 3: WC vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T07:00:00Z",
+      "beginAt": "2026-11-25T07:03:26Z",
+      "endAt": "2026-11-25T07:49:51Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": 126439,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        2785
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T07:57:15Z"
+    },
+    {
+      "id": 1816916,
+      "name": "Round 3: PV vs FaZe",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T07:15:00Z",
+      "beginAt": "2026-11-25T07:12:34Z",
+      "endAt": "2026-11-25T08:13:33Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        },
+        {
+          "id": 3212,
+          "slug": "faze",
+          "name": "FaZe",
+          "acronym": "FaZe"
+        }
+      ],
+      "winnerId": 139565,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3659
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T08:16:45Z"
+    },
+    {
+      "id": 1816918,
+      "name": "Round 3: 9z vs DEN",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T08:10:00Z",
+      "beginAt": "2026-11-25T08:09:30Z",
+      "endAt": "2026-11-25T09:45:29Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126709,
+          "slug": "9z",
+          "name": "9z",
+          "acronym": "9z"
+        },
+        {
+          "id": 138988,
+          "slug": "dendele-cs",
+          "name": "DENDELE CS",
+          "acronym": "DEN"
+        }
+      ],
+      "winnerId": 126709,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        1930,
+        2519
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T09:48:10Z"
+    },
+    {
+      "id": 1816917,
+      "name": "Round 3: IMP vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T08:30:00Z",
+      "beginAt": "2026-11-25T08:31:22Z",
+      "endAt": "2026-11-25T10:35:31Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": 134746,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        3290,
+        2941
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T10:39:24Z"
+    },
+    {
+      "id": 1816919,
+      "name": "Round 3: GOSH vs CW",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T10:10:00Z",
+      "beginAt": "2026-11-25T10:06:40Z",
+      "endAt": "2026-11-25T13:10:33Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 139562,
+          "slug": "gosh",
+          "name": "GOSH",
+          "acronym": "GOSH"
+        },
+        {
+          "id": 134264,
+          "slug": "chinggis-warriors",
+          "name": "Chinggis Warriors",
+          "acronym": "CW"
+        }
+      ],
+      "winnerId": 134264,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2842,
+        2347,
+        3204
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T13:12:08Z"
+    },
+    {
+      "id": 1816920,
+      "name": "Round 3: NIP vs TL",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-25T11:00:00Z",
+      "beginAt": "2026-11-25T11:03:27Z",
+      "endAt": "2026-11-25T12:37:03Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        },
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        }
+      ],
+      "winnerId": 3218,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        1830,
+        2504
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-25T12:42:22Z"
+    },
+    {
+      "id": 1816921,
+      "name": "Round 4: HERO vs FaZe",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T06:00:00Z",
+      "beginAt": "2026-11-26T06:01:52Z",
+      "endAt": "2026-11-26T08:42:19Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        },
+        {
+          "id": 3212,
+          "slug": "faze",
+          "name": "FaZe",
+          "acronym": "FaZe"
+        }
+      ],
+      "winnerId": 3246,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2170,
+        2967,
+        2082
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T08:45:16Z"
+    },
+    {
+      "id": 1816922,
+      "name": "Round 4: M80 vs EF",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T06:00:00Z",
+      "beginAt": "2026-11-26T06:02:02Z",
+      "endAt": "2026-11-26T08:34:45Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        },
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        }
+      ],
+      "winnerId": 129413,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2775,
+        1781,
+        2112
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T08:39:51Z"
+    },
+    {
+      "id": 1816923,
+      "name": "Round 4: LVG vs PV",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T09:00:00Z",
+      "beginAt": "2026-11-26T09:00:16Z",
+      "endAt": "2026-11-26T10:58:39Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        },
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        }
+      ],
+      "winnerId": 139565,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2760,
+        3131
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T11:05:50Z"
+    },
+    {
+      "id": 1816924,
+      "name": "Round 4: 100T vs 9z",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T09:10:00Z",
+      "beginAt": "2026-11-26T09:05:45Z",
+      "endAt": "2026-11-26T11:48:08Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        },
+        {
+          "id": 126709,
+          "slug": "9z",
+          "name": "9z",
+          "acronym": "9z"
+        }
+      ],
+      "winnerId": 126452,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2463,
+        2419,
+        2379
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T11:52:44Z"
+    },
+    {
+      "id": 1816925,
+      "name": "Round 4: IMP vs TL",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T11:20:00Z",
+      "beginAt": "2026-11-26T11:20:31Z",
+      "endAt": "2026-11-26T13:38:03Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        },
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        }
+      ],
+      "winnerId": 3213,
+      "score": [
+        0,
+        2
+      ],
+      "mapSeconds": [
+        2618,
+        4391
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T13:41:47Z"
+    },
+    {
+      "id": 1816926,
+      "name": "Round 4: WC vs CW",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-26T12:10:00Z",
+      "beginAt": "2026-11-26T12:11:12Z",
+      "endAt": "2026-11-26T15:35:12Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        },
+        {
+          "id": 134264,
+          "slug": "chinggis-warriors",
+          "name": "Chinggis Warriors",
+          "acronym": "CW"
+        }
+      ],
+      "winnerId": 135273,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        2624,
+        2942,
+        4323
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-26T15:38:09Z"
+    },
+    {
+      "id": 1816927,
+      "name": "Round 5: LVG vs HERO",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-27T06:00:00Z",
+      "beginAt": "2026-11-27T06:02:18Z",
+      "endAt": "2026-11-27T07:58:37Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        },
+        {
+          "id": 3246,
+          "slug": "heroic",
+          "name": "Heroic",
+          "acronym": "HERO"
+        }
+      ],
+      "winnerId": 126439,
+      "score": [
+        2,
+        0
+      ],
+      "mapSeconds": [
+        2908,
+        2775
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-27T08:00:35Z"
+    },
+    {
+      "id": 1816928,
+      "name": "Round 5: IMP vs WC",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-27T08:30:00Z",
+      "beginAt": "2026-11-27T08:29:07Z",
+      "endAt": "2026-11-27T11:40:30Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        },
+        {
+          "id": 135273,
+          "slug": "wildcard",
+          "name": "Wildcard",
+          "acronym": "WC"
+        }
+      ],
+      "winnerId": 126377,
+      "score": [
+        2,
+        1
+      ],
+      "mapSeconds": [
+        3461,
+        2880,
+        2648
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-27T11:47:55Z"
+    },
+    {
+      "id": 1816929,
+      "name": "Round 5: M80 vs 100T",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 1",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-27T12:10:00Z",
+      "beginAt": "2026-11-27T12:08:22Z",
+      "endAt": "2026-11-27T14:58:11Z",
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 133435,
+          "slug": "m80-cs-go",
+          "name": "M80",
+          "acronym": "M80"
+        },
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        }
+      ],
+      "winnerId": 126452,
+      "score": [
+        1,
+        2
+      ],
+      "mapSeconds": [
+        2418,
+        3099,
+        2193
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-27T15:03:09Z"
+    },
+    {
+      "id": 1817025,
+      "name": "Round 1: FUT vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T04:00:00Z",
+      "beginAt": "2026-11-28T04:01:10Z",
+      "endAt": "2026-11-28T04:53:54Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": 136955,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3164
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T05:03:47Z"
+    },
+    {
+      "id": 1817105,
+      "name": "Round 1: MGLZ vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T04:00:00Z",
+      "beginAt": "2026-11-28T04:02:04Z",
+      "endAt": "2026-11-28T04:53:27Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": 3272,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3083
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T04:56:22Z"
+    },
+    {
+      "id": 1817103,
+      "name": "Round 1: AST vs IMP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T05:10:00Z",
+      "beginAt": "2026-11-28T05:09:16Z",
+      "endAt": "2026-11-28T05:58:47Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3209,
+          "slug": "astralis",
+          "name": "Astralis",
+          "acronym": "AST"
+        },
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        }
+      ],
+      "winnerId": 3209,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2971
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T06:44:37Z"
+    },
+    {
+      "id": 1817024,
+      "name": "Round 1: NEMI vs NIP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T05:10:00Z",
+      "beginAt": "2026-11-28T05:13:17Z",
+      "endAt": "2026-11-28T05:55:10Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 124522,
+          "slug": "nemiga",
+          "name": "Nemiga",
+          "acronym": "NEMI"
+        },
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        }
+      ],
+      "winnerId": 3218,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        2513
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T06:00:15Z"
+    },
+    {
+      "id": 1817100,
+      "name": "Round 1: ONE vs EF",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T06:15:00Z",
+      "beginAt": "2026-11-28T06:14:12Z",
+      "endAt": "2026-11-28T07:05:35Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139563,
+          "slug": "the-one",
+          "name": "THE ONE",
+          "acronym": "ONE"
+        },
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        }
+      ],
+      "winnerId": 139563,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3082
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T07:09:49Z"
+    },
+    {
+      "id": 1817101,
+      "name": "Round 1: G2 vs TL",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T06:15:00Z",
+      "beginAt": "2026-11-28T06:17:11Z",
+      "endAt": "2026-11-28T07:04:17Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        },
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        }
+      ],
+      "winnerId": 3210,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2826
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T08:31:24Z"
+    },
+    {
+      "id": 1817102,
+      "name": "Round 1: NAVI vs PRV vs PV",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T07:15:00Z",
+      "beginAt": "2026-11-28T07:22:21Z",
+      "endAt": "2026-11-28T08:15:43Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        },
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        }
+      ],
+      "winnerId": 3216,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3202
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T08:24:16Z"
+    },
+    {
+      "id": 1817104,
+      "name": "Round 1: MIBR vs 100T",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T07:25:00Z",
+      "beginAt": "2026-11-28T07:28:34Z",
+      "endAt": "2026-11-28T08:22:29Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3250,
+          "slug": "mibr",
+          "name": "MIBR",
+          "acronym": "MIBR"
+        },
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        }
+      ],
+      "winnerId": 126452,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3235
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T08:26:42Z"
+    },
+    {
+      "id": 1817107,
+      "name": "Round 2: NEMI vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T09:20:00Z",
+      "beginAt": "2026-11-28T09:25:45Z",
+      "endAt": "2026-11-28T09:50:02Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 124522,
+          "slug": "nemiga",
+          "name": "Nemiga",
+          "acronym": "NEMI"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": 124522,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        1457
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T09:55:35Z"
+    },
+    {
+      "id": 1817106,
+      "name": "Round 2: G2 vs NIP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T09:20:00Z",
+      "beginAt": "2026-11-28T09:26:17Z",
+      "endAt": "2026-11-28T10:16:21Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        },
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        }
+      ],
+      "winnerId": 3210,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3004
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T10:25:44Z"
+    },
+    {
+      "id": 1817109,
+      "name": "Round 2: TL vs EF",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T10:10:00Z",
+      "beginAt": "2026-11-28T10:18:28Z",
+      "endAt": "2026-11-28T11:38:54Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        },
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        }
+      ],
+      "winnerId": 3213,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        4826
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T11:44:24Z"
+    },
+    {
+      "id": 1817108,
+      "name": "Round 2: ONE vs MGLZ",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T10:30:00Z",
+      "beginAt": "2026-11-28T10:32:30Z",
+      "endAt": "2026-11-28T11:25:46Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 139563,
+          "slug": "the-one",
+          "name": "THE ONE",
+          "acronym": "ONE"
+        },
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        }
+      ],
+      "winnerId": 139563,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        3196
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T11:36:52Z"
+    },
+    {
+      "id": 1817110,
+      "name": "Round 2: FUT vs 100T",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T11:40:00Z",
+      "beginAt": "2026-11-28T11:41:40Z",
+      "endAt": "2026-11-28T12:28:14Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        },
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        }
+      ],
+      "winnerId": 136955,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        2794
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T13:42:45Z"
+    },
+    {
+      "id": 1817111,
+      "name": "Round 2: MIBR vs IMP",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T12:00:00Z",
+      "beginAt": "2026-11-28T11:59:25Z",
+      "endAt": "2026-11-28T13:12:05Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3250,
+          "slug": "mibr",
+          "name": "MIBR",
+          "acronym": "MIBR"
+        },
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        }
+      ],
+      "winnerId": 3250,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        4360
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T13:18:50Z"
+    },
+    {
+      "id": 1817112,
+      "name": "Round 2: NAVI vs AST",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T12:45:00Z",
+      "beginAt": "2026-11-28T12:44:56Z",
+      "endAt": "2026-11-28T13:39:58Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        },
+        {
+          "id": 3209,
+          "slug": "astralis",
+          "name": "Astralis",
+          "acronym": "AST"
+        }
+      ],
+      "winnerId": 3209,
+      "score": [
+        0,
+        1
+      ],
+      "mapSeconds": [
+        3302
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T13:43:44Z"
+    },
+    {
+      "id": 1817113,
+      "name": "Round 2: FLY vs PV",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "finished",
+      "scheduledAt": "2026-11-28T13:30:00Z",
+      "beginAt": "2026-11-28T13:31:27Z",
+      "endAt": "2026-11-28T14:47:48Z",
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        },
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        }
+      ],
+      "winnerId": 134746,
+      "score": [
+        1,
+        0
+      ],
+      "mapSeconds": [
+        4581
+      ],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T14:52:13Z"
+    },
+    {
+      "id": 1817114,
+      "name": "Round 3: 100T vs NEMI",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T06:00:00Z",
+      "beginAt": "2026-11-29T06:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 126452,
+          "slug": "100-thieves-cs-go",
+          "name": "100 Thieves",
+          "acronym": "100T"
+        },
+        {
+          "id": 124522,
+          "slug": "nemiga",
+          "name": "Nemiga",
+          "acronym": "NEMI"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:55:45Z"
+    },
+    {
+      "id": 1817115,
+      "name": "Round 3: NIP vs MIBR",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T06:00:00Z",
+      "beginAt": "2026-11-29T06:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3218,
+          "slug": "nip",
+          "name": "NIP",
+          "acronym": "NIP"
+        },
+        {
+          "id": 3250,
+          "slug": "mibr",
+          "name": "MIBR",
+          "acronym": "MIBR"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:55:50Z"
+    },
+    {
+      "id": 1817116,
+      "name": "Round 3: NAVI vs TL",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T07:00:00Z",
+      "beginAt": "2026-11-29T07:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3216,
+          "slug": "natus-vincere-cs-go",
+          "name": "Natus Vincere",
+          "acronym": "NAVI"
+        },
+        {
+          "id": 3213,
+          "slug": "liquid-cs-go",
+          "name": "Liquid",
+          "acronym": "TL"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:55:52Z"
+    },
+    {
+      "id": 1817117,
+      "name": "Round 3: MGLZ vs FLY",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T07:00:00Z",
+      "beginAt": "2026-11-29T07:00:00Z",
+      "endAt": null,
+      "bestOf": 1,
+      "teams": [
+        {
+          "id": 3272,
+          "slug": "themongolz",
+          "name": "TheMongolz",
+          "acronym": "MGLZ"
+        },
+        {
+          "id": 134746,
+          "slug": "flyquest-cs-go",
+          "name": "FlyQuest",
+          "acronym": "FLY"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:55:53Z"
+    },
+    {
+      "id": 1817118,
+      "name": "Round 3: G2 vs ONE",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T08:00:00Z",
+      "beginAt": "2026-11-29T08:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 3210,
+          "slug": "g2",
+          "name": "G2",
+          "acronym": "G2"
+        },
+        {
+          "id": 139563,
+          "slug": "the-one",
+          "name": "THE ONE",
+          "acronym": "ONE"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:56:01Z"
+    },
+    {
+      "id": 1817119,
+      "name": "Round 3: EF vs LVG",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T08:00:00Z",
+      "beginAt": "2026-11-29T08:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 129413,
+          "slug": "eternal-fire",
+          "name": "Eternal Fire",
+          "acronym": "EF"
+        },
+        {
+          "id": 126439,
+          "slug": "lynn-vision",
+          "name": "Lynn Vision",
+          "acronym": "LVG"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:55:59Z"
+    },
+    {
+      "id": 1817120,
+      "name": "Round 3: FUT vs AST",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T10:30:00Z",
+      "beginAt": "2026-11-29T10:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 136955,
+          "slug": "fut-esports-cs-go",
+          "name": "FUT Esports",
+          "acronym": "FUT"
+        },
+        {
+          "id": 3209,
+          "slug": "astralis",
+          "name": "Astralis",
+          "acronym": "AST"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:56:12Z"
+    },
+    {
+      "id": 1817121,
+      "name": "Round 3: IMP vs PV",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-29T10:30:00Z",
+      "beginAt": "2026-11-29T10:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [
+        {
+          "id": 126377,
+          "slug": "imperial-cs-go",
+          "name": "Imperial",
+          "acronym": "IMP"
+        },
+        {
+          "id": 139565,
+          "slug": "pvision",
+          "name": "PVISION",
+          "acronym": "PV"
+        }
+      ],
+      "winnerId": null,
+      "score": [
+        0,
+        0
+      ],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-28T18:56:15Z"
+    },
+    {
+      "id": 1817122,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T06:00:00Z",
+      "beginAt": "2026-11-30T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817123,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T06:00:00Z",
+      "beginAt": "2026-11-30T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817124,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T08:30:00Z",
+      "beginAt": "2026-11-30T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:13Z"
+    },
+    {
+      "id": 1817125,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T08:30:00Z",
+      "beginAt": "2026-11-30T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:15Z"
+    },
+    {
+      "id": 1817126,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T11:00:00Z",
+      "beginAt": "2026-11-30T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:15Z"
+    },
+    {
+      "id": 1817127,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-11-30T11:00:00Z",
+      "beginAt": "2026-11-30T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817128,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-01T06:00:00Z",
+      "beginAt": "2026-12-01T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817129,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-01T08:30:00Z",
+      "beginAt": "2026-12-01T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817130,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 2",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-01T11:00:00Z",
+      "beginAt": "2026-12-01T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:16:14Z"
+    },
+    {
+      "id": 1817136,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T04:00:00Z",
+      "beginAt": "2026-12-02T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817137,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T04:00:00Z",
+      "beginAt": "2026-12-02T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817138,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T06:30:00Z",
+      "beginAt": "2026-12-02T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817139,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T06:30:00Z",
+      "beginAt": "2026-12-02T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817140,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T09:00:00Z",
+      "beginAt": "2026-12-02T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817141,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T09:00:00Z",
+      "beginAt": "2026-12-02T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817142,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T11:30:00Z",
+      "beginAt": "2026-12-02T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817143,
+      "name": "Round 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-02T11:30:00Z",
+      "beginAt": "2026-12-02T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817144,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T04:00:00Z",
+      "beginAt": "2026-12-03T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817145,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T04:00:00Z",
+      "beginAt": "2026-12-03T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817146,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T06:30:00Z",
+      "beginAt": "2026-12-03T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817147,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T06:30:00Z",
+      "beginAt": "2026-12-03T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817150,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T09:00:00Z",
+      "beginAt": "2026-12-03T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817154,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T09:00:00Z",
+      "beginAt": "2026-12-03T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817155,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T11:30:00Z",
+      "beginAt": "2026-12-03T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817156,
+      "name": "Round 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-03T11:30:00Z",
+      "beginAt": "2026-12-03T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817157,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T04:00:00Z",
+      "beginAt": "2026-12-04T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817158,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T04:00:00Z",
+      "beginAt": "2026-12-04T04:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817159,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T06:30:00Z",
+      "beginAt": "2026-12-04T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817160,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T06:30:00Z",
+      "beginAt": "2026-12-04T06:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817161,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T09:00:00Z",
+      "beginAt": "2026-12-04T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817162,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T09:00:00Z",
+      "beginAt": "2026-12-04T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817163,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T11:30:00Z",
+      "beginAt": "2026-12-04T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817164,
+      "name": "Round 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-04T11:30:00Z",
+      "beginAt": "2026-12-04T11:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817165,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T06:00:00Z",
+      "beginAt": "2026-12-05T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817166,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T06:00:00Z",
+      "beginAt": "2026-12-05T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817167,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T08:30:00Z",
+      "beginAt": "2026-12-05T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817168,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T08:30:00Z",
+      "beginAt": "2026-12-05T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817169,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T11:00:00Z",
+      "beginAt": "2026-12-05T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817170,
+      "name": "Round 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-05T11:00:00Z",
+      "beginAt": "2026-12-05T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817171,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-06T06:00:00Z",
+      "beginAt": "2026-12-06T06:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:07Z"
+    },
+    {
+      "id": 1817172,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-06T08:30:00Z",
+      "beginAt": "2026-12-06T08:30:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817173,
+      "name": "Round 5: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Stage 3",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-06T11:00:00Z",
+      "beginAt": "2026-12-06T11:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:30:08Z"
+    },
+    {
+      "id": 1817174,
+      "name": "Quarterfinal 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-10T09:00:00Z",
+      "beginAt": "2026-12-10T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:32:29Z"
+    },
+    {
+      "id": 1817175,
+      "name": "Quarterfinal 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-10T12:00:00Z",
+      "beginAt": "2026-12-10T12:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:32:29Z"
+    },
+    {
+      "id": 1817176,
+      "name": "Quarterfinal 3: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-11T09:00:00Z",
+      "beginAt": "2026-12-11T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:32:29Z"
+    },
+    {
+      "id": 1817177,
+      "name": "Quarterfinal 4: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-11T12:00:00Z",
+      "beginAt": "2026-12-11T12:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:35:29Z"
+    },
+    {
+      "id": 1817178,
+      "name": "Semifinal 1: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-12T09:00:00Z",
+      "beginAt": "2026-12-12T09:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:32:29Z"
+    },
+    {
+      "id": 1817179,
+      "name": "Semifinal 2: TBD vs TBD",
+      "league": "PGL Major",
+      "serie": "Singapore 2026",
+      "stage": "Playoffs",
+      "organizer": "PGL",
+      "tier": "s",
+      "status": "not_started",
+      "scheduledAt": "2026-12-12T12:00:00Z",
+      "beginAt": "2026-12-12T12:00:00Z",
+      "endAt": null,
+      "bestOf": 3,
+      "teams": [],
+      "winnerId": null,
+      "score": [],
+      "mapSeconds": [],
+      "forfeit": false,
+      "modifiedAt": "2026-11-16T16:32:29Z"
+    }
+  ]
+}
